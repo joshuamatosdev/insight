@@ -5,3 +5,4 @@ export { PresolicationPage } from './PresolicationPage';
 export { SolicitationPage } from './SolicitationPage';
 export { NAICSPage } from './NAICSPage';
 export { SBIRPage } from './SBIRPage';
+export { SBIRAwardsPage } from './SBIRAwardsPage';

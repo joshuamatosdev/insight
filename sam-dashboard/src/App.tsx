@@ -32,6 +32,7 @@ import {
   SolicitationPage,
   NAICSPage,
   SBIRPage,
+  SBIRAwardsPage,
 } from './pages';
 import { useOpportunities } from './hooks';
 import { exportToCSV } from './services';
@@ -43,6 +44,7 @@ type ViewSection =
   | 'presolicitation'
   | 'solicitation'
   | 'sbir'
+  | 'sbir-awards'
   | `naics-${string}`;
 
 function App() {
@@ -143,6 +145,8 @@ function App() {
         return <SolicitationPage opportunities={opportunities} />;
       case 'sbir':
         return <SBIRPage opportunities={opportunities} />;
+      case 'sbir-awards':
+        return <SBIRAwardsPage />;
       default:
         if (currentSection.startsWith('naics-')) {
           const naicsCode = currentSection.replace('naics-', '');
@@ -216,10 +220,16 @@ function App() {
         <SidebarNav>
           <SidebarNavItem
             icon={<CheckCircleIcon size="sm" />}
-            label="SBIR / STTR"
+            label="SBIR / STTR (SAM.gov)"
             badge={<Badge variant="success" size="sm">{counts.sbir}</Badge>}
             isActive={currentSection === 'sbir'}
             onClick={() => setCurrentSection('sbir')}
+          />
+          <SidebarNavItem
+            icon={<CheckCircleIcon size="sm" />}
+            label="SBIR.gov Awards"
+            isActive={currentSection === 'sbir-awards'}
+            onClick={() => setCurrentSection('sbir-awards')}
           />
         </SidebarNav>
       </SidebarSection>

@@ -95,7 +95,7 @@ sam:
     rate-limit-ms: 500
     
     # ============================================
-    # SBIR/STTR Configuration
+    # SBIR/STTR Configuration (SAM.gov keyword search)
     # ============================================
     sbir-enabled: true
     sbir-keywords:
@@ -103,6 +103,46 @@ sam:
       - "STTR"
       - "Small Business Innovation Research"
       - "Small Business Technology Transfer"
+
+# ============================================
+# SBIR.gov API Configuration
+# https://www.sbir.gov/api
+# ============================================
+sbir:
+  gov:
+    enabled: true
+    base-url: https://api.www.sbir.gov/public/api
+    # Agencies to fetch awards from
+    # Valid: DOD, HHS, NASA, NSF, DOE, USDA, EPA, DOC, ED, DOT, DHS
+    agencies:
+      - DOD
+      - NASA
+      - NSF
+      - DOE
+      - HHS
+    rows-per-request: 100
+    max-results: 2000
+    rate-limit-ms: 500
+    # Keywords to filter IT-related awards
+    it-keywords:
+      - software
+      - cybersecurity
+      - cloud
+      - AI
+      - artificial intelligence
+      - machine learning
+      - data analytics
+      - IT
+      - information technology
+      - computer
+      - programming
+      - SaaS
+      - automation
+      - digital transformation
+      - API
+      - microservices
+      - DevOps
+      - platform
 
 # Actuator endpoints for health checks and monitoring
 management:
