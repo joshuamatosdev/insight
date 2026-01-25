@@ -143,7 +143,41 @@ public class IngestionService {
         opportunity.setNaicsCode(dto.naicsCode());
         opportunity.setType(dto.type());
         opportunity.setUrl(dto.uiLink());
+        opportunity.setSource("SAM.gov");
+        
+        // Detect SBIR/STTR from title
+        String title = dto.title() != null ? dto.title().toUpperCase() : "";
+        opportunity.setIsSbir(title.contains("SBIR"));
+        opportunity.setIsSttr(title.contains("STTR"));
+        opportunity.setSbirPhase(detectSbirPhase(title));
+        
         return opportunity;
+    }
+    
+    /**
+     * Detects SBIR/STTR phase from opportunity title.
+     * Looks for patterns like "Phase I", "Phase II", "Phase III", "Phase 1", etc.
+     */
+    private String detectSbirPhase(String title) {
+        if (title == null) return null;
+        String upperTitle = title.toUpperCase();
+        
+        // Check for Phase III / Phase 3
+        if (upperTitle.contains("PHASE III") || upperTitle.contains("PHASE 3")) {
+            return "III";
+        }
+        // Check for Phase II / Phase 2
+        if (upperTitle.contains("PHASE II") || upperTitle.contains("PHASE 2")) {
+            return "II";
+        }
+        // Check for Phase I / Phase 1 (check after II/III to avoid false matches)
+        if (upperTitle.contains("PHASE I") || upperTitle.contains("PHASE 1")) {
+            // Make sure it's not Phase II or III
+            if (!upperTitle.contains("PHASE II") && !upperTitle.contains("PHASE III")) {
+                return "I";
+            }
+        }
+        return null;
     }
 
     /**
@@ -156,6 +190,12 @@ public class IngestionService {
         opportunity.setNaicsCode(dto.naicsCode());
         opportunity.setType(dto.type());
         opportunity.setUrl(dto.uiLink());
+        
+        // Update SBIR/STTR flags
+        String title = dto.title() != null ? dto.title().toUpperCase() : "";
+        opportunity.setIsSbir(title.contains("SBIR"));
+        opportunity.setIsSttr(title.contains("STTR"));
+        opportunity.setSbirPhase(detectSbirPhase(title));
     }
 
     /**
@@ -224,6 +264,73 @@ public class IngestionService {
                 duration, newCount.get(), updatedCount.get(), totalSaved);
 
         return totalSaved;
+    }
+
+    /**
+     * Ingests SBIR/STTR opportunities by searching for keywords.
+     * Called as part of the main ingestion or separately.
+     *
+     * @return IngestionResult with counts
+     */
+    @Transactional
+    public IngestionResult ingestSbirSttr() {
+        if (!samApiClient.isSbirEnabled()) {
+            log.info("SBIR/STTR ingestion is disabled");
+            return new IngestionResult(0, 0, 0);
+        }
+
+        log.info("Starting SBIR/STTR ingestion");
+        long startTime = System.currentTimeMillis();
+
+        AtomicInteger newCount = new AtomicInteger(0);
+        AtomicInteger updatedCount = new AtomicInteger(0);
+
+        try {
+            List<SamOpportunityDto> sbirOpportunities = samApiClient.fetchAllSbirSttr();
+            log.info("Fetched {} SBIR/STTR opportunities from SAM.gov", sbirOpportunities.size());
+
+            for (SamOpportunityDto dto : sbirOpportunities) {
+                try {
+                    processOpportunity(dto, newCount, updatedCount);
+                } catch (Exception e) {
+                    log.error("Failed to process SBIR opportunity: {}", dto.solicitationNumber(), e);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error during SBIR/STTR ingestion", e);
+        }
+
+        long duration = System.currentTimeMillis() - startTime;
+        log.info("SBIR/STTR ingestion completed in {}ms. New: {}, Updated: {}",
+                duration, newCount.get(), updatedCount.get());
+
+        return new IngestionResult(newCount.get(), updatedCount.get(), duration);
+    }
+
+    /**
+     * Runs full ingestion including regular opportunities and SBIR/STTR.
+     *
+     * @return Combined IngestionResult
+     */
+    @Transactional
+    public IngestionResult runFullIngestion() {
+        log.info("Starting full ingestion (regular + SBIR/STTR)");
+        long startTime = System.currentTimeMillis();
+
+        // Run regular ingestion
+        IngestionResult regularResult = runIngestion();
+
+        // Run SBIR/STTR ingestion
+        IngestionResult sbirResult = ingestSbirSttr();
+
+        long totalDuration = System.currentTimeMillis() - startTime;
+        int totalNew = regularResult.newRecords() + sbirResult.newRecords();
+        int totalUpdated = regularResult.updatedRecords() + sbirResult.updatedRecords();
+
+        log.info("Full ingestion completed in {}ms. Total New: {}, Total Updated: {}",
+                totalDuration, totalNew, totalUpdated);
+
+        return new IngestionResult(totalNew, totalUpdated, totalDuration);
     }
 
     /**

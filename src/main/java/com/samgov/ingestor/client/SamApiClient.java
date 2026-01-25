@@ -228,4 +228,78 @@ public class SamApiClient {
                 .flatMap(naics -> fetchOpportunitiesWithParams(naics, ptype, properties.getLimit()).stream())
                 .toList();
     }
+
+    /**
+     * Fetches SBIR/STTR opportunities by searching for keywords in titles.
+     * Searches across all procurement types to capture SBIR Phase I, II, III.
+     *
+     * @param keyword The keyword to search (e.g., "SBIR" or "STTR")
+     * @return List of matching opportunities
+     */
+    public List<SamOpportunityDto> fetchSbirOpportunities(String keyword) {
+        applyRateLimit();
+
+        String postedFrom = LocalDate.now()
+                .minusDays(properties.getPostedWithinDays())
+                .format(DATE_FORMATTER);
+        String postedTo = LocalDate.now().format(DATE_FORMATTER);
+
+        log.info("Fetching SBIR/STTR opportunities - keyword: {}, postedFrom: {}, postedTo: {}",
+                keyword, postedFrom, postedTo);
+
+        try {
+            SamSearchResponse response = restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .queryParam("api_key", "{apiKey}")
+                            .queryParam("postedFrom", "{postedFrom}")
+                            .queryParam("postedTo", "{postedTo}")
+                            .queryParam("limit", "{limit}")
+                            .queryParam("title", "{title}")
+                            .build(properties.getApiKey(), postedFrom, postedTo, 
+                                   properties.getLimit(), keyword))
+                    .retrieve()
+                    .body(SamSearchResponse.class);
+
+            if (response == null) {
+                log.warn("Received null response from SAM.gov API for SBIR search");
+                return List.of();
+            }
+
+            List<SamOpportunityDto> opportunities = response.getOpportunities();
+            log.info("Successfully fetched {} {} opportunities (total available: {})",
+                    opportunities.size(), keyword, response.totalRecords());
+
+            return opportunities;
+
+        } catch (RestClientException e) {
+            log.error("Error fetching {} opportunities from SAM.gov: {}", keyword, e.getMessage());
+            return List.of();
+        } catch (Exception e) {
+            log.error("Unexpected error fetching {} opportunities: {}", keyword, e.getMessage(), e);
+            return List.of();
+        }
+    }
+
+    /**
+     * Fetches all SBIR and STTR opportunities using configured keywords.
+     *
+     * @return Combined list of SBIR and STTR opportunities
+     */
+    public List<SamOpportunityDto> fetchAllSbirSttr() {
+        if (!properties.isSbirEnabled()) {
+            log.info("SBIR/STTR search is disabled");
+            return List.of();
+        }
+
+        return properties.getSbirKeywords().stream()
+                .flatMap(keyword -> fetchSbirOpportunities(keyword).stream())
+                .toList();
+    }
+
+    /**
+     * Check if SBIR/STTR search is enabled.
+     */
+    public boolean isSbirEnabled() {
+        return properties.isSbirEnabled();
+    }
 }

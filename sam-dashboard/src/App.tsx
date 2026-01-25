@@ -11,6 +11,7 @@ import {
   RefreshIcon,
   DownloadIcon,
   BuildingCheckIcon,
+  CheckCircleIcon,
 } from './components/primitives';
 import {
   AppLayout,
@@ -22,7 +23,7 @@ import {
   SidebarNavItem,
   HStack,
 } from './components/layout';
-import { getOpportunityType } from './components/domain';
+import { getOpportunityType, isSbirOpportunity } from './components/domain';
 import {
   DashboardPage,
   AllOpportunitiesPage,
@@ -30,6 +31,7 @@ import {
   PresolicationPage,
   SolicitationPage,
   NAICSPage,
+  SBIRPage,
 } from './pages';
 import { useOpportunities } from './hooks';
 import { exportToCSV } from './services';
@@ -40,6 +42,7 @@ type ViewSection =
   | 'sources-sought'
   | 'presolicitation'
   | 'solicitation'
+  | 'sbir'
   | `naics-${string}`;
 
 function App() {
@@ -57,12 +60,14 @@ function App() {
     const solicitation = opportunities.filter(
       (o) => getOpportunityType(o.type) === 'solicitation'
     ).length;
+    const sbir = opportunities.filter(isSbirOpportunity).length;
 
     return {
       total: opportunities.length,
       sourcesSought,
       presolicitation,
       solicitation,
+      sbir,
     };
   }, [opportunities]);
 
@@ -136,6 +141,8 @@ function App() {
         return <PresolicationPage opportunities={opportunities} />;
       case 'solicitation':
         return <SolicitationPage opportunities={opportunities} />;
+      case 'sbir':
+        return <SBIRPage opportunities={opportunities} />;
       default:
         if (currentSection.startsWith('naics-')) {
           const naicsCode = currentSection.replace('naics-', '');
@@ -201,6 +208,18 @@ function App() {
             badge={<Badge variant="success" size="sm">{counts.solicitation}</Badge>}
             isActive={currentSection === 'solicitation'}
             onClick={() => setCurrentSection('solicitation')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Innovation Programs">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<CheckCircleIcon size="sm" />}
+            label="SBIR / STTR"
+            badge={<Badge variant="success" size="sm">{counts.sbir}</Badge>}
+            isActive={currentSection === 'sbir'}
+            onClick={() => setCurrentSection('sbir')}
           />
         </SidebarNav>
       </SidebarSection>

@@ -4,3 +4,4 @@ export { SourcesSoughtPage } from './SourcesSoughtPage';
 export { PresolicationPage } from './PresolicationPage';
 export { SolicitationPage } from './SolicitationPage';
 export { NAICSPage } from './NAICSPage';
+export { SBIRPage } from './SBIRPage';

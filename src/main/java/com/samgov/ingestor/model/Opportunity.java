@@ -44,4 +44,16 @@ public class Opportunity {
 
     @Column(name = "url")
     private String url;
+    
+    @Column(name = "sbir_phase")
+    private String sbirPhase;
+    
+    @Column(name = "is_sbir")
+    private Boolean isSbir;
+    
+    @Column(name = "is_sttr")
+    private Boolean isSttr;
+    
+    @Column(name = "source")
+    private String source;
 }

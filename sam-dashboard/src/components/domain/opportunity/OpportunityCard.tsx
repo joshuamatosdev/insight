@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { Opportunity, getOpportunityType } from './Opportunity.types';
 import { Text, Button, ExternalLinkIcon } from '../../primitives';
 import { Card, CardHeader, CardBody, HStack, Grid } from '../../layout';
@@ -9,9 +9,10 @@ interface OpportunityCardProps {
   opportunity: Opportunity;
   className?: string;
   style?: CSSProperties;
+  extraBadge?: ReactNode;
 }
 
-export function OpportunityCard({ opportunity, className, style }: OpportunityCardProps) {
+export function OpportunityCard({ opportunity, className, style, extraBadge }: OpportunityCardProps) {
   const formatDate = (dateStr: string | undefined): string => {
     if (!dateStr) return 'N/A';
     try {
@@ -67,6 +68,7 @@ export function OpportunityCard({ opportunity, className, style }: OpportunityCa
           <HStack spacing="var(--spacing-2)">
             <NAICSBadge code={opportunity.naicsCode} />
             <TypeBadge type={getOpportunityType(opportunity.type)} label={opportunity.type} />
+            {extraBadge}
           </HStack>
         </HStack>
       </CardHeader>

@@ -93,6 +93,16 @@ sam:
     set-aside: ""
     # Rate limiting (ms between API calls)
     rate-limit-ms: 500
+    
+    # ============================================
+    # SBIR/STTR Configuration
+    # ============================================
+    sbir-enabled: true
+    sbir-keywords:
+      - "SBIR"
+      - "STTR"
+      - "Small Business Innovation Research"
+      - "Small Business Technology Transfer"
 
 # Actuator endpoints for health checks and monitoring
 management:

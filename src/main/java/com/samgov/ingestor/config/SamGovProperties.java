@@ -38,6 +38,10 @@ public class SamGovProperties {
     
     @Min(value = 0, message = "Rate limit cannot be negative")
     private long rateLimitMs = 500;
+    
+    // SBIR/STTR search configuration
+    private boolean sbirEnabled = true;
+    private List<String> sbirKeywords = List.of("SBIR", "STTR");
 
     // Getters and Setters
 
@@ -103,5 +107,21 @@ public class SamGovProperties {
 
     public void setRateLimitMs(long rateLimitMs) {
         this.rateLimitMs = rateLimitMs;
+    }
+
+    public boolean isSbirEnabled() {
+        return sbirEnabled;
+    }
+
+    public void setSbirEnabled(boolean sbirEnabled) {
+        this.sbirEnabled = sbirEnabled;
+    }
+
+    public List<String> getSbirKeywords() {
+        return sbirKeywords;
+    }
+
+    public void setSbirKeywords(List<String> sbirKeywords) {
+        this.sbirKeywords = sbirKeywords;
     }
 }

@@ -145,4 +145,122 @@ public class IngestController {
     public ResponseEntity<Map<String, Object>> searchSourcesSought() {
         return searchOpportunities("r", null);
     }
+
+    /**
+     * Triggers SBIR/STTR-only ingestion.
+     * POST /api/ingest/sbir
+     *
+     * @return Status message with SBIR ingestion results
+     */
+    @PostMapping("/ingest/sbir")
+    public ResponseEntity<Map<String, Object>> triggerSbirIngestion() {
+        log.info("SBIR/STTR ingestion triggered via API");
+
+        try {
+            IngestionResult result = ingestionService.ingestSbirSttr();
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "type", "SBIR/STTR",
+                    "message", result.toMessage(),
+                    "newRecords", result.newRecords(),
+                    "updatedRecords", result.updatedRecords(),
+                    "durationMs", result.durationMs()
+            ));
+        } catch (Exception e) {
+            log.error("SBIR/STTR ingestion failed", e);
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "status", "error",
+                    "message", "SBIR/STTR ingestion failed: " + e.getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Triggers full ingestion (regular + SBIR/STTR).
+     * POST /api/ingest/full
+     *
+     * @return Status message with full ingestion results
+     */
+    @PostMapping("/ingest/full")
+    public ResponseEntity<Map<String, Object>> triggerFullIngestion() {
+        log.info("Full ingestion (regular + SBIR/STTR) triggered via API");
+
+        try {
+            IngestionResult result = ingestionService.runFullIngestion();
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "type", "Full (Regular + SBIR/STTR)",
+                    "message", result.toMessage(),
+                    "newRecords", result.newRecords(),
+                    "updatedRecords", result.updatedRecords(),
+                    "durationMs", result.durationMs()
+            ));
+        } catch (Exception e) {
+            log.error("Full ingestion failed", e);
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "status", "error",
+                    "message", "Full ingestion failed: " + e.getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Returns SBIR/STTR opportunities from the database.
+     * GET /api/opportunities/sbir
+     *
+     * @param phase Optional phase filter (I, II, III)
+     * @return List of SBIR opportunities
+     */
+    @GetMapping("/opportunities/sbir")
+    public ResponseEntity<List<Opportunity>> getSbirOpportunities(
+            @RequestParam(required = false) String phase) {
+        log.info("Fetching SBIR opportunities, phase filter: {}", phase);
+        
+        List<Opportunity> opportunities;
+        if (phase != null && !phase.isBlank()) {
+            opportunities = opportunityRepository.findSbirSttrByPhase(phase.toUpperCase());
+        } else {
+            opportunities = opportunityRepository.findAllSbirSttr();
+        }
+        
+        log.info("Returning {} SBIR/STTR opportunities", opportunities.size());
+        return ResponseEntity.ok(opportunities);
+    }
+
+    /**
+     * Search SAM.gov directly for SBIR/STTR opportunities.
+     * GET /api/search/sbir
+     *
+     * @return Live SBIR/STTR results from SAM.gov API
+     */
+    @GetMapping("/search/sbir")
+    public ResponseEntity<Map<String, Object>> searchSbirOpportunities() {
+        log.info("Searching SAM.gov for SBIR/STTR opportunities");
+        long startTime = System.currentTimeMillis();
+
+        try {
+            List<SamOpportunityDto> results = samApiClient.fetchAllSbirSttr();
+            long duration = System.currentTimeMillis() - startTime;
+
+            log.info("SBIR/STTR search completed: {} opportunities found in {}ms",
+                    results.size(), duration);
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "type", "SBIR/STTR",
+                    "count", results.size(),
+                    "durationMs", duration,
+                    "opportunities", results
+            ));
+
+        } catch (Exception e) {
+            log.error("SBIR/STTR search failed", e);
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "status", "error",
+                    "message", "SBIR/STTR search failed: " + e.getMessage()
+            ));
+        }
+    }
 }

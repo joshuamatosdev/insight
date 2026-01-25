@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Opportunity } from './Opportunity.types';
 import { OpportunityCard } from './OpportunityCard';
 import { Text } from '../../primitives';
@@ -6,9 +7,14 @@ import { Stack } from '../../layout';
 interface OpportunityListProps {
   opportunities: Opportunity[];
   emptyMessage?: string;
+  renderBadge?: (opportunity: Opportunity) => ReactNode;
 }
 
-export function OpportunityList({ opportunities, emptyMessage = 'No opportunities found.' }: OpportunityListProps) {
+export function OpportunityList({ 
+  opportunities, 
+  emptyMessage = 'No opportunities found.',
+  renderBadge,
+}: OpportunityListProps) {
   if (opportunities.length === 0) {
     return (
       <div
@@ -29,7 +35,11 @@ export function OpportunityList({ opportunities, emptyMessage = 'No opportunitie
   return (
     <Stack spacing="var(--spacing-4)">
       {opportunities.map((opportunity) => (
-        <OpportunityCard key={opportunity.id} opportunity={opportunity} />
+        <OpportunityCard 
+          key={opportunity.id} 
+          opportunity={opportunity}
+          extraBadge={renderBadge?.(opportunity)}
+        />
       ))}
     </Stack>
   );
