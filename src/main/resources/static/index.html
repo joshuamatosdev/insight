@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM.gov Opportunities Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            padding: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header h4 {
+            color: #fff;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .sidebar-header small {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .nav-section {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-section-title {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1.5rem;
+            margin: 0;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border-left-color: #0d6efd;
+        }
+        
+        .sidebar .nav-link.active {
+            background: rgba(13, 110, 253, 0.2);
+            color: #fff;
+            border-left-color: #0d6efd;
+        }
+        
+        .sidebar .nav-link .badge {
+            margin-left: auto;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            min-height: 100vh;
+            background: #f8f9fa;
+        }
+        
+        /* Cards */
+        .opportunity-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .opportunity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        
+        .opportunity-card .card-header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 1rem 1.25rem;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .opportunity-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .naics-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .type-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .type-sources-sought {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .type-presolicitation {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .type-solicitation {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #fff;
+        }
+        
+        .stat-card.primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .stat-card.success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .stat-card.warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .stat-card.info { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        
+        .stat-card h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section-header h3 {
+            margin: 0;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        
+        /* Loading Spinner */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+        
+        /* Scrollspy highlight fix */
+        .content-section {
+            scroll-margin-top: 20px;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-toggle {
+                display: block !important;
+            }
+        }
+        
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+        }
+        
+        /* Table styles */
+        .table-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead th {
+            background: #1a1a2e;
+            color: #fff;
+            font-weight: 500;
+            border: none;
+            padding: 1rem;
+        }
+        
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Deadline colors */
+        .deadline-urgent { color: #dc3545; font-weight: 600; }
+        .deadline-soon { color: #fd7e14; font-weight: 500; }
+        .deadline-normal { color: #198754; }
+    </style>
+</head>
+<body>
+    <!-- Mobile Toggle Button -->
+    <button class="btn btn-primary mobile-toggle" onclick="toggleSidebar()">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4><i class="bi bi-building-check me-2"></i>SAM.gov</h4>
+            <small>Opportunities Dashboard</small>
+        </div>
+        
+        <div class="nav-section">
+            <p class="nav-section-title">Overview</p>
+            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <i class="bi bi-speedometer2"></i>
+                Dashboard
+            </a>
+            <a href="#all-opportunities" class="nav-link" data-section="all-opportunities">
+                <i class="bi bi-list-ul"></i>
+                All Opportunities
+                <span class="badge bg-primary" id="total-count">0</span>
+            </a>
+        </div>
+        
+        <div class="nav-section">
+            <p class="nav-section-title">By Type</p>
+            <a href="#sources-sought" class="nav-link" data-section="sources-sought">
+                <i class="bi bi-search"></i>
+                Sources Sought
+                <span class="badge bg-info" id="sources-sought-count">0</span>
+            </a>
+            <a href="#presolicitation" class="nav-link" data-section="presolicitation">
+                <i class="bi bi-file-earmark-text"></i>
+                Presolicitation
+                <span class="badge bg-warning" id="presol-count">0</span>
+            </a>
+            <a href="#solicitation" class="nav-link" data-section="solicitation">
+                <i class="bi bi-file-earmark-check"></i>
+                Solicitation
+                <span class="badge bg-success" id="sol-count">0</span>
+            </a>
+        </div>
+        
+        <div class="nav-section">
+            <p class="nav-section-title">By NAICS Code</p>
+            <div id="naics-nav">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <p class="nav-section-title">Actions</p>
+            <a href="#" class="nav-link" onclick="refreshData()">
+                <i class="bi bi-arrow-clockwise"></i>
+                Refresh Data
+            </a>
+            <a href="#" class="nav-link" onclick="exportCSV()">
+                <i class="bi bi-download"></i>
+                Export CSV
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section">
+            <div class="section-header">
+                <h3><i class="bi bi-speedometer2 me-2"></i>Dashboard Overview</h3>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card primary">
+                        <h2 id="stat-total">-</h2>
+                        <p>Total Opportunities</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card success">
+                        <h2 id="stat-sources">-</h2>
+                        <p>Sources Sought</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card warning">
+                        <h2 id="stat-urgent">-</h2>
+                        <p>Deadline < 7 Days</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card info">
+                        <h2 id="stat-naics">-</h2>
+                        <p>NAICS Codes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card opportunity-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Recent Opportunities</h5>
+                            <a href="#all-opportunities" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Type</th>
+                                            <th>NAICS</th>
+                                            <th>Deadline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-opportunities">
+                                        <tr><td colspan="4" class="text-center py-4">Loading...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card opportunity-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">NAICS Distribution</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="naics-distribution">
+                                <div class="loading-container">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Opportunities Section -->
+        <section id="all-opportunities" class="content-section" style="display: none;">
+            <div class="section-header d-flex justify-content-between align-items-center">
+                <h3><i class="bi bi-list-ul me-2"></i>All Opportunities</h3>
+                <div class="d-flex gap-2">
+                    <input type="text" class="form-control" id="search-input" placeholder="Search..." style="width: 250px;">
+                    <select class="form-select" id="sort-select" style="width: 180px;">
+                        <option value="deadline">Sort by Deadline</option>
+                        <option value="posted">Sort by Posted Date</option>
+                        <option value="title">Sort by Title</option>
+                    </select>
+                </div>
+            </div>
+            <div id="all-opportunities-list">
+                <div class="loading-container">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sources Sought Section -->
+        <section id="sources-sought" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h3><i class="bi bi-search me-2"></i>Sources Sought</h3>
+            </div>
+            <div id="sources-sought-list">
+                <div class="loading-container">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Presolicitation Section -->
+        <section id="presolicitation" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h3><i class="bi bi-file-earmark-text me-2"></i>Presolicitation</h3>
+            </div>
+            <div id="presolicitation-list">
+                <div class="loading-container">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solicitation Section -->
+        <section id="solicitation" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h3><i class="bi bi-file-earmark-check me-2"></i>Solicitation</h3>
+            </div>
+            <div id="solicitation-list">
+                <div class="loading-container">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NAICS Sections (dynamically created) -->
+        <div id="naics-sections"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global data store
+        let opportunities = [];
+        
+        // NAICS Code descriptions
+        const naicsDescriptions = {
+            '541511': 'Custom Computer Programming',
+            '541512': 'Computer Systems Design',
+            '541513': 'Computer Facilities Management',
+            '541519': 'Other Computer Related Services',
+            '518210': 'Data Processing & Hosting',
+            '513210': 'Software Publishers',
+            '541611': 'Admin Management Consulting',
+            '541618': 'Other Management Consulting',
+            '541690': 'Other Scientific Consulting',
+            '541330': 'Engineering Services',
+            '541715': 'R&D Physical/Bio Sciences',
+            '541713': 'R&D Nanotechnology',
+            '541714': 'R&D Biotechnology',
+            '541720': 'R&D Social Sciences',
+            '611420': 'Computer Training',
+            '611430': 'Professional Management Training',
+            '541360': 'Geophysical Surveying',
+            '541370': 'Surveying & Mapping',
+            '541990': 'Other Professional Services'
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setupNavigation();
+            setupSearch();
+        });
+        
+        // Load data from API
+        async function loadData() {
+            try {
+                const response = await fetch('/api/opportunities');
+                opportunities = await response.json();
+                renderDashboard();
+                renderAllSections();
+                updateCounts();
+                buildNaicsNav();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('recent-opportunities').innerHTML = 
+                    '<tr><td colspan="4" class="text-center text-danger py-4">Error loading data. Is the server running?</td></tr>';
+            }
+        }
+        
+        // Refresh data
+        async function refreshData() {
+            try {
+                await fetch('/api/ingest', { method: 'POST' });
+                await loadData();
+                alert('Data refreshed successfully!');
+            } catch (error) {
+                alert('Error refreshing data: ' + error.message);
+            }
+        }
+        
+        // Update sidebar counts
+        function updateCounts() {
+            document.getElementById('total-count').textContent = opportunities.length;
+            document.getElementById('stat-total').textContent = opportunities.length;
+            
+            const sourcesSought = opportunities.filter(o => o.type?.toLowerCase().includes('sources sought')).length;
+            document.getElementById('sources-sought-count').textContent = sourcesSought;
+            document.getElementById('stat-sources').textContent = sourcesSought;
+            
+            const presol = opportunities.filter(o => o.type?.toLowerCase().includes('presol')).length;
+            document.getElementById('presol-count').textContent = presol;
+            
+            const sol = opportunities.filter(o => 
+                o.type?.toLowerCase().includes('solicitation') && 
+                !o.type?.toLowerCase().includes('presol')
+            ).length;
+            document.getElementById('sol-count').textContent = sol;
+            
+            // Urgent (deadline within 7 days)
+            const now = new Date();
+            const urgent = opportunities.filter(o => {
+                if (!o.responseDeadLine) return false;
+                const deadline = new Date(o.responseDeadLine);
+                const daysUntil = (deadline - now) / (1000 * 60 * 60 * 24);
+                return daysUntil >= 0 && daysUntil <= 7;
+            }).length;
+            document.getElementById('stat-urgent').textContent = urgent;
+            
+            // Unique NAICS
+            const uniqueNaics = new Set(opportunities.map(o => o.naicsCode).filter(Boolean));
+            document.getElementById('stat-naics').textContent = uniqueNaics.size;
+        }
+        
+        // Build NAICS navigation
+        function buildNaicsNav() {
+            const naicsNav = document.getElementById('naics-nav');
+            const naicsSections = document.getElementById('naics-sections');
+            
+            // Group by NAICS
+            const naicsGroups = {};
+            opportunities.forEach(o => {
+                if (o.naicsCode) {
+                    if (!naicsGroups[o.naicsCode]) naicsGroups[o.naicsCode] = [];
+                    naicsGroups[o.naicsCode].push(o);
+                }
+            });
+            
+            naicsNav.innerHTML = '';
+            naicsSections.innerHTML = '';
+            
+            Object.keys(naicsGroups).sort().forEach(naics => {
+                const count = naicsGroups[naics].length;
+                const description = naicsDescriptions[naics] || 'Other';
+                
+                // Add nav link
+                naicsNav.innerHTML += `
+                    <a href="#naics-${naics}" class="nav-link" data-section="naics-${naics}">
+                        <i class="bi bi-tag"></i>
+                        ${naics}
+                        <span class="badge bg-secondary">${count}</span>
+                    </a>
+                `;
+                
+                // Add section
+                naicsSections.innerHTML += `
+                    <section id="naics-${naics}" class="content-section" style="display: none;">
+                        <div class="section-header">
+                            <h3><i class="bi bi-tag me-2"></i>NAICS ${naics}: ${description}</h3>
+                        </div>
+                        <div id="naics-${naics}-list">
+                            ${renderOpportunityCards(naicsGroups[naics])}
+                        </div>
+                    </section>
+                `;
+            });
+            
+            // Re-setup navigation for new sections
+            setupNavigation();
+        }
+        
+        // Render dashboard
+        function renderDashboard() {
+            // Recent opportunities (last 10)
+            const recent = [...opportunities]
+                .sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate))
+                .slice(0, 10);
+            
+            const tbody = document.getElementById('recent-opportunities');
+            tbody.innerHTML = recent.map(o => `
+                <tr>
+                    <td>
+                        <a href="${o.url || '#'}" target="_blank" class="text-decoration-none">
+                            ${truncate(o.title, 50)}
+                        </a>
+                    </td>
+                    <td><span class="type-badge ${getTypeBadgeClass(o.type)}">${o.type || 'N/A'}</span></td>
+                    <td><span class="naics-badge">${o.naicsCode || 'N/A'}</span></td>
+                    <td class="${getDeadlineClass(o.responseDeadLine)}">${formatDate(o.responseDeadLine)}</td>
+                </tr>
+            `).join('');
+            
+            // NAICS distribution
+            const naicsGroups = {};
+            opportunities.forEach(o => {
+                if (o.naicsCode) {
+                    naicsGroups[o.naicsCode] = (naicsGroups[o.naicsCode] || 0) + 1;
+                }
+            });
+            
+            const distDiv = document.getElementById('naics-distribution');
+            distDiv.innerHTML = Object.entries(naicsGroups)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 8)
+                .map(([naics, count]) => `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>${naics}</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="progress" style="width: 100px; height: 8px;">
+                                <div class="progress-bar" style="width: ${(count / opportunities.length) * 100}%"></div>
+                            </div>
+                            <span class="badge bg-secondary">${count}</span>
+                        </div>
+                    </div>
+                `).join('');
+        }
+        
+        // Render all sections
+        function renderAllSections() {
+            // All opportunities
+            document.getElementById('all-opportunities-list').innerHTML = renderOpportunityCards(opportunities);
+            
+            // Sources Sought
+            const sourcesSought = opportunities.filter(o => o.type?.toLowerCase().includes('sources sought'));
+            document.getElementById('sources-sought-list').innerHTML = renderOpportunityCards(sourcesSought);
+            
+            // Presolicitation
+            const presol = opportunities.filter(o => o.type?.toLowerCase().includes('presol'));
+            document.getElementById('presolicitation-list').innerHTML = renderOpportunityCards(presol);
+            
+            // Solicitation
+            const sol = opportunities.filter(o => 
+                o.type?.toLowerCase().includes('solicitation') && 
+                !o.type?.toLowerCase().includes('presol')
+            );
+            document.getElementById('solicitation-list').innerHTML = renderOpportunityCards(sol);
+        }
+        
+        // Render opportunity cards
+        function renderOpportunityCards(opps) {
+            if (!opps.length) {
+                return '<div class="alert alert-info">No opportunities found in this category.</div>';
+            }
+            
+            return opps.map(o => `
+                <div class="card opportunity-card">
+                    <div class="card-header d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">
+                                <a href="${o.url || '#'}" target="_blank" class="text-decoration-none text-dark">
+                                    ${o.title || 'Untitled'}
+                                </a>
+                            </h6>
+                            <small class="text-muted">${o.solicitationNumber || 'N/A'}</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <span class="naics-badge">${o.naicsCode || 'N/A'}</span>
+                            <span class="type-badge ${getTypeBadgeClass(o.type)}">${o.type || 'N/A'}</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <small class="text-muted d-block">Posted Date</small>
+                                <strong>${formatDate(o.postedDate)}</strong>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted d-block">Response Deadline</small>
+                                <strong class="${getDeadlineClass(o.responseDeadLine)}">${formatDate(o.responseDeadLine)}</strong>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <a href="${o.url || '#'}" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i>View on SAM.gov
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Setup navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = link.dataset.section;
+                    showSection(sectionId);
+                    
+                    // Update active state
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    // Close mobile sidebar
+                    if (window.innerWidth < 992) {
+                        document.getElementById('sidebar').classList.remove('show');
+                    }
+                });
+            });
+        }
+        
+        // Show section
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.style.display = 'block';
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Setup search
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const filtered = opportunities.filter(o => 
+                    o.title?.toLowerCase().includes(query) ||
+                    o.solicitationNumber?.toLowerCase().includes(query) ||
+                    o.naicsCode?.includes(query)
+                );
+                document.getElementById('all-opportunities-list').innerHTML = renderOpportunityCards(filtered);
+            });
+            
+            const sortSelect = document.getElementById('sort-select');
+            sortSelect.addEventListener('change', (e) => {
+                let sorted = [...opportunities];
+                switch (e.target.value) {
+                    case 'deadline':
+                        sorted.sort((a, b) => new Date(a.responseDeadLine || '9999') - new Date(b.responseDeadLine || '9999'));
+                        break;
+                    case 'posted':
+                        sorted.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+                        break;
+                    case 'title':
+                        sorted.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+                        break;
+                }
+                document.getElementById('all-opportunities-list').innerHTML = renderOpportunityCards(sorted);
+            });
+        }
+        
+        // Toggle sidebar (mobile)
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+        
+        // Export CSV
+        function exportCSV() {
+            const headers = ['Title', 'Solicitation Number', 'Type', 'NAICS Code', 'Posted Date', 'Deadline', 'URL'];
+            const rows = opportunities.map(o => [
+                `"${(o.title || '').replace(/"/g, '""')}"`,
+                o.solicitationNumber || '',
+                o.type || '',
+                o.naicsCode || '',
+                o.postedDate || '',
+                o.responseDeadLine || '',
+                o.url || ''
+            ]);
+            
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sam-opportunities-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+        
+        // Utility functions
+        function truncate(str, len) {
+            if (!str) return 'N/A';
+            return str.length > len ? str.substring(0, len) + '...' : str;
+        }
+        
+        function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            try {
+                return new Date(dateStr).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+            } catch {
+                return dateStr;
+            }
+        }
+        
+        function getTypeBadgeClass(type) {
+            if (!type) return '';
+            const t = type.toLowerCase();
+            if (t.includes('sources sought')) return 'type-sources-sought';
+            if (t.includes('presol')) return 'type-presolicitation';
+            if (t.includes('solicitation')) return 'type-solicitation';
+            return '';
+        }
+        
+        function getDeadlineClass(deadline) {
+            if (!deadline) return '';
+            const now = new Date();
+            const dl = new Date(deadline);
+            const daysUntil = (dl - now) / (1000 * 60 * 60 * 24);
+            if (daysUntil < 0) return 'text-muted';
+            if (daysUntil <= 3) return 'deadline-urgent';
+            if (daysUntil <= 7) return 'deadline-soon';
+            return 'deadline-normal';
+        }
+    </script>
+</body>
+</html>

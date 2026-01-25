@@ -1,0 +1,123 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+    
+  application:
+    name: sam-gov-ingestor
+    
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:sam_opportunities}
+    username: ${POSTGRES_USER:dev_user}
+    password: ${POSTGRES_PASSWORD:dev_pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  jpa:
+    # Disable Open Session In View - anti-pattern that keeps connections open during rendering
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # Batch insert optimization - dramatically improves bulk save performance
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+
+  threads:
+    virtual:
+      enabled: true
+
+sam:
+  gov:
+    api-key: ${SAM_API_KEY}
+    base-url: https://api.sam.gov/opportunities/v2/search
+    
+    # ============================================
+    # NAICS CODES - Organized by Category
+    # ============================================
+    naics-codes:
+      # --- Core Software + IT Delivery (must-have) ---
+      - "541511"  # Custom Computer Programming Services
+      - "541512"  # Computer Systems Design Services (integration/design/implementation)
+      - "541513"  # Computer Facilities Management Services (on-site ops/management)
+      - "541519"  # Other Computer Related Services (catch-all IT services)
+      
+      # --- Cloud / Hosting / Platforms ---
+      - "518210"  # Computing Infrastructure, Data Processing, Web Hosting
+      
+      # --- SaaS Product (if selling product, not just services) ---
+      - "513210"  # Software Publishers
+      
+      # --- Cyber / Resilience / IR-Adjacent ---
+      # (541519 and 541512 already listed above)
+      
+      # --- Data / Analytics / Decision Intelligence ---
+      - "541611"  # Administrative & General Management Consulting
+      - "541618"  # Other Management Consulting Services
+      - "541690"  # Other Scientific and Technical Consulting
+      
+      # --- Engineering / Mission Engineering-Adjacent ---
+      - "541330"  # Engineering Services
+      
+      # --- R&D (prototypes, applied research, pilots) ---
+      - "541715"  # R&D Physical/Engineering/Life Sciences (except Nano/Biotech)
+      - "541713"  # R&D in Nanotechnology (DoD-style R&D buys)
+      - "541714"  # R&D in Biotechnology (health/biomed if applicable)
+      - "541720"  # R&D Social Sciences/Humanities (human-systems/policy analytics)
+      
+      # --- Training / Enablement ---
+      - "611420"  # Computer Training
+      - "611430"  # Professional and Management Development Training
+      
+      # --- GIS / Mapping-Adjacent (city/county geo + dashboard) ---
+      - "541360"  # Geophysical Surveying and Mapping Services
+      - "541370"  # Surveying and Mapping (except Geophysical)
+      
+      # --- Catch-All Professional Services ---
+      - "541990"  # All Other Professional, Scientific, and Technical Services
+    # Search parameters
+    limit: 1000
+    posted-within-days: 30
+    # Procurement types: o=Original, k=Combined Synopsis/Solicitation, p=Presolicitation, r=Sources Sought
+    ptype: "k,o"
+    # Set-aside filters (optional, comma-separated)
+    # SBA, 8A, HUBZone, SDVOSB, WOSB, EDWOSB, etc.
+    set-aside: ""
+    # Rate limiting (ms between API calls)
+    rate-limit-ms: 500
+
+# Actuator endpoints for health checks and monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+  info:
+    env:
+      enabled: true
+
+# Application info
+info:
+  app:
+    name: SAM.gov Opportunity Ingestor
+    description: Ingests government contract opportunities from SAM.gov
+    version: 1.0.0
+
+# Logging
+logging:
+  level:
+    com.samgov.ingestor: INFO
+    org.hibernate.SQL: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
