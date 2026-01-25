@@ -1,29 +1,131 @@
-# Environment files
+# ============================================
+# Environment & Secrets
+# ============================================
 .env
 .env.local
 .env.*.local
+*.pem
+*.key
+credentials.json
+secrets.yaml
 
-# Gradle
+# ============================================
+# Java / Gradle
+# ============================================
 .gradle/
 build/
 bin/
+out/
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
 
-# IDE
+# Gradle wrapper (optional - some prefer to commit these)
+# !gradle/wrapper/gradle-wrapper.jar
+
+# ============================================
+# Spring Boot
+# ============================================
+HELP.md
+application-local.yaml
+application-local.properties
+spring-shell.log
+
+# ============================================
+# IDE - IntelliJ IDEA
+# ============================================
 .idea/
 *.iml
+*.ipr
+*.iws
+.idea_modules/
+atlassian-ide-plugin.xml
+
+# ============================================
+# IDE - VS Code
+# ============================================
 .vscode/
+*.code-workspace
+.history/
 
-# Database
+# ============================================
+# IDE - Eclipse
+# ============================================
+.classpath
+.project
+.settings/
+.factorypath
+
+# ============================================
+# Database / Docker Volumes
+# ============================================
 pg-data/
+postgres-data/
+data/
+*.db
+*.sqlite
 
-# Logs
+# ============================================
+# Logs & Temporary Files
+# ============================================
 *.log
 logs/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
 
-# OS
+# ============================================
+# OS Generated
+# ============================================
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
-# Frontend
+# ============================================
+# Frontend - Node.js / npm / Vite
+# ============================================
 sam-dashboard/node_modules/
 sam-dashboard/dist/
+sam-dashboard/.vite/
+sam-dashboard/coverage/
+sam-dashboard/.eslintcache
+sam-dashboard/*.tsbuildinfo
+node_modules/
+
+# ============================================
+# Test Output
+# ============================================
+test-results/
+test-output/
+coverage/
+*.lcov
+.nyc_output/
+
+# ============================================
+# Package Manager Locks (optional)
+# Some teams prefer to commit these
+# ============================================
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ============================================
+# Misc
+# ============================================
+*.bak
+*.backup
+*.orig
+.terraform/
+*.tfstate
+*.tfstate.*
