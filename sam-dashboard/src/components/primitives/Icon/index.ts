@@ -15,3 +15,4 @@ export { MenuIcon, HamburgerIcon } from './icons/MenuIcon';
 export { ChevronRightIcon, ChevronLeftIcon, ChevronDownIcon, ChevronUpIcon } from './icons/ChevronIcon';
 export { BuildingIcon, BuildingCheckIcon } from './icons/BuildingIcon';
 export { CalendarIcon, ClockIcon } from './icons/CalendarIcon';
+export { LogoutIcon, BoxArrowRightIcon } from './icons/LogoutIcon';

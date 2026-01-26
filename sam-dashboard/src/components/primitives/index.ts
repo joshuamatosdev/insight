@@ -34,6 +34,8 @@ export {
   BuildingCheckIcon,
   CalendarIcon,
   ClockIcon,
+  LogoutIcon,
+  BoxArrowRightIcon,
 } from './Icon';
 export type { IconProps, IconSize, IconColor, IconComponentProps } from './Icon';
 

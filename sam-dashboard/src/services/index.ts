@@ -1,7 +1,7 @@
-export { 
-  fetchOpportunities, 
+export {
+  fetchOpportunities,
   fetchSbirOpportunities,
-  triggerIngest, 
+  triggerIngest,
   triggerFullIngest,
   triggerSbirIngest,
   // SBIR.gov
@@ -12,3 +12,11 @@ export {
   fetchSbirAgencies,
 } from './api';
 export { exportToCSV } from './csv';
+export {
+  login,
+  register,
+  refreshToken,
+  validateToken,
+  createAuthenticatedFetch,
+  getAuthHeader,
+} from './auth';
