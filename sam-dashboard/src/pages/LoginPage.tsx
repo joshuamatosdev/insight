@@ -1,4 +1,4 @@
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
+import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth';
 import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/layout';
@@ -90,11 +90,15 @@ export function LoginPage(): React.ReactElement {
     [form, login]
   );
 
-  // Navigate on successful authentication
+  // Get isAuthenticated from the same useAuth call
   const { isAuthenticated } = useAuth();
-  if (isAuthenticated) {
-    navigate(from, { replace: true });
-  }
+
+  // Navigate on successful authentication (in useEffect to avoid setState during render)
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, from]);
 
   return (
     <Flex

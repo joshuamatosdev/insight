@@ -3,9 +3,73 @@ import type {
   LoginResponse,
   RegisterData,
   AuthError,
+  User,
 } from '../auth/Auth.types';
 
 const API_BASE = '/api/v1/auth';
+
+/**
+ * API response wrapper format from backend
+ */
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  meta?: {
+    timestamp: string;
+  };
+}
+
+/**
+ * Raw user from API (snake_case)
+ */
+interface ApiUser {
+  id: string;
+  email: string;
+  display_name: string;
+  email_verified: boolean;
+  first_name?: string;
+  last_name?: string;
+}
+
+/**
+ * Raw auth response from API (snake_case)
+ */
+interface ApiAuthResponse {
+  access_token: string;
+  refresh_token: string;
+  user: ApiUser;
+  mfa_required?: boolean;
+}
+
+/**
+ * Transforms API user to frontend User type
+ */
+function transformUser(apiUser: ApiUser): User {
+  // Parse display_name to get first/last name if not provided
+  const nameParts = apiUser.display_name.split(' ');
+  const firstName = apiUser.first_name ?? nameParts[0] ?? '';
+  const lastName = apiUser.last_name ?? nameParts.slice(1).join(' ') ?? '';
+
+  return {
+    id: apiUser.id,
+    email: apiUser.email,
+    firstName,
+    lastName,
+  };
+}
+
+/**
+ * Transforms API auth response to frontend LoginResponse type
+ */
+function transformAuthResponse(apiResponse: ApiResponse<ApiAuthResponse>): LoginResponse {
+  const data = apiResponse.data;
+  return {
+    token: data.access_token,
+    refreshToken: data.refresh_token,
+    user: transformUser(data.user),
+    mfaRequired: data.mfa_required,
+  };
+}
 
 /**
  * Parses error response from auth API
@@ -14,7 +78,7 @@ async function parseAuthError(response: Response): Promise<AuthError> {
   try {
     const data = await response.json();
     return {
-      message: data.message ?? 'Authentication failed',
+      message: data.message ?? data.error ?? 'Authentication failed',
       field: data.field,
       code: data.code,
     };
@@ -43,7 +107,8 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
     throw error;
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<ApiAuthResponse> = await response.json();
+  return transformAuthResponse(apiResponse);
 }
 
 /**
@@ -55,7 +120,13 @@ export async function register(data: RegisterData): Promise<LoginResponse> {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      organizationName: data.companyName,
+    }),
   });
 
   if (response.ok === false) {
@@ -63,7 +134,8 @@ export async function register(data: RegisterData): Promise<LoginResponse> {
     throw error;
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<ApiAuthResponse> = await response.json();
+  return transformAuthResponse(apiResponse);
 }
 
 /**
@@ -74,8 +146,8 @@ export async function refreshToken(currentRefreshToken: string): Promise<LoginRe
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${currentRefreshToken}`,
     },
-    body: JSON.stringify({ refreshToken: currentRefreshToken }),
   });
 
   if (response.ok === false) {
@@ -83,21 +155,36 @@ export async function refreshToken(currentRefreshToken: string): Promise<LoginRe
     throw error;
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<ApiAuthResponse> = await response.json();
+  return transformAuthResponse(apiResponse);
 }
 
 /**
  * Validates if a token is still valid
+ * Note: Backend doesn't have a dedicated validate endpoint,
+ * so we just check if the token exists and is not expired (basic check)
  */
 export async function validateToken(token: string): Promise<boolean> {
+  if (token.length === 0) {
+    return false;
+  }
+
+  // Try to decode JWT and check expiration
   try {
-    const response = await fetch(`${API_BASE}/validate`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.ok;
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      return false;
+    }
+
+    const payload = JSON.parse(atob(parts[1] ?? ''));
+    const exp = payload.exp as number | undefined;
+
+    if (exp === undefined) {
+      return true; // No expiration, assume valid
+    }
+
+    // Check if token is expired (exp is in seconds)
+    return Date.now() < exp * 1000;
   } catch {
     return false;
   }
