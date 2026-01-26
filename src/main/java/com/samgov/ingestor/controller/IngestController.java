@@ -9,6 +9,7 @@ import com.samgov.ingestor.service.IngestionService.IngestionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
+@PreAuthorize("isAuthenticated()")
 public class IngestController {
 
     private static final Logger log = LoggerFactory.getLogger(IngestController.class);
@@ -42,6 +44,7 @@ public class IngestController {
      * @return Status message with ingestion results
      */
     @PostMapping("/ingest")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<Map<String, Object>> triggerIngestion() {
         log.info("Manual ingestion triggered via API");
 
@@ -153,6 +156,7 @@ public class IngestController {
      * @return Status message with SBIR ingestion results
      */
     @PostMapping("/ingest/sbir")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<Map<String, Object>> triggerSbirIngestion() {
         log.info("SBIR/STTR ingestion triggered via API");
 
@@ -183,6 +187,7 @@ public class IngestController {
      * @return Status message with full ingestion results
      */
     @PostMapping("/ingest/full")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<Map<String, Object>> triggerFullIngestion() {
         log.info("Full ingestion (regular + SBIR/STTR) triggered via API");
 

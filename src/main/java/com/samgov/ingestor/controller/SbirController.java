@@ -10,6 +10,7 @@ import com.samgov.ingestor.service.SbirIngestionService.SbirStats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Year;
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/sbir")
+@PreAuthorize("isAuthenticated()")
 public class SbirController {
 
     private static final Logger log = LoggerFactory.getLogger(SbirController.class);
@@ -44,6 +46,7 @@ public class SbirController {
      * POST /api/sbir/ingest
      */
     @PostMapping("/ingest")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<Map<String, Object>> ingestAwards() {
         log.info("SBIR.gov ingestion triggered via API");
 
@@ -72,6 +75,7 @@ public class SbirController {
      * POST /api/sbir/ingest/{agency}?year=2024
      */
     @PostMapping("/ingest/{agency}")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public ResponseEntity<Map<String, Object>> ingestByAgency(
             @PathVariable String agency,
             @RequestParam(required = false) Integer year) {

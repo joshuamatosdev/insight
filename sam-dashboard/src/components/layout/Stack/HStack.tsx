@@ -23,6 +23,7 @@ export function HStack({
   className,
   style,
   children,
+  ...rest
 }: HStackProps) {
   const stackStyles: CSSProperties = {
     display: 'flex',
@@ -34,7 +35,7 @@ export function HStack({
   };
 
   return (
-    <div className={className} style={stackStyles}>
+    <div className={className} style={stackStyles} {...rest}>
       {children}
     </div>
   );

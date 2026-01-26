@@ -1,6 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
-export interface StackProps {
+export interface StackProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   spacing?: string | number;
   align?: 'start' | 'end' | 'center' | 'stretch';
   className?: string;

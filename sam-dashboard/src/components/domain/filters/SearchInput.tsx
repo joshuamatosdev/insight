@@ -1,13 +1,5 @@
-import { CSSProperties } from 'react';
+import { SearchInputProps } from './Filters.types';
 import { Input, SearchIcon } from '../../primitives';
-
-interface SearchInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  style?: CSSProperties;
-}
 
 export function SearchInput({
   value,

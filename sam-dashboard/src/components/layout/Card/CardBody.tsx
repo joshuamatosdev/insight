@@ -8,14 +8,14 @@ const paddingStyles: Record<string, CSSProperties> = {
   lg: { padding: 'var(--spacing-6)' },
 };
 
-export function CardBody({ padding = 'md', className, style, children }: CardBodyProps) {
+export function CardBody({ padding = 'md', className, style, children, ...rest }: CardBodyProps) {
   const bodyStyles: CSSProperties = {
     ...paddingStyles[padding],
     ...style,
   };
 
   return (
-    <div className={className} style={bodyStyles}>
+    <div className={className} style={bodyStyles} {...rest}>
       {children}
     </div>
   );

@@ -15,18 +15,13 @@ import {
   HStack,
 } from '../components/layout';
 import {
-  Opportunity,
   getOpportunityType,
   OpportunityTable,
   StatCard,
   StatsGrid,
   NAICSDistribution,
 } from '../components/domain';
-
-interface DashboardPageProps {
-  opportunities: Opportunity[];
-  onNavigate: (section: string) => void;
-}
+import { DashboardPageProps } from './Pages.types';
 
 export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps) {
   const stats = useMemo(() => {

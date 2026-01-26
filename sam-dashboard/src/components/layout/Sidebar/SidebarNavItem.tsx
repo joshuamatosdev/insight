@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, KeyboardEvent, useState } from 'react';
 import { SidebarNavItemProps } from './Sidebar.types';
 
 export function SidebarNavItem({
@@ -36,17 +36,32 @@ export function SidebarNavItem({
     marginLeft: 'auto',
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick?.();
+    }
+  };
+
   return (
     <a
+      href="#"
       className={className}
       style={itemStyles}
-      onClick={onClick}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick?.();
+      }}
+      onKeyDown={handleKeyDown}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      role="button"
+      tabIndex={0}
+      aria-current={isActive ? 'page' : undefined}
     >
-      {icon}
+      {icon !== undefined && icon !== null && icon}
       <span>{label}</span>
-      {badge && <span style={badgeContainerStyles}>{badge}</span>}
+      {badge !== undefined && badge !== null && <span style={badgeContainerStyles}>{badge}</span>}
     </a>
   );
 }

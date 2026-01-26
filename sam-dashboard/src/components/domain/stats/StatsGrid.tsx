@@ -1,10 +1,5 @@
-import { ReactNode } from 'react';
+import { StatsGridProps } from './Stats.types';
 import { Grid } from '../../layout';
-
-interface StatsGridProps {
-  children: ReactNode;
-  columns?: number;
-}
 
 export function StatsGrid({ children, columns = 4 }: StatsGridProps) {
   return (

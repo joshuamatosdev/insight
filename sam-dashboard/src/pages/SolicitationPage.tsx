@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
 import { FileCheckIcon } from '../components/primitives';
 import { Section, SectionHeader } from '../components/layout';
-import { Opportunity, getOpportunityType, OpportunityList } from '../components/domain';
-
-interface SolicitationPageProps {
-  opportunities: Opportunity[];
-}
+import { getOpportunityType, OpportunityList } from '../components/domain';
+import { SolicitationPageProps } from './Pages.types';
 
 export function SolicitationPage({ opportunities }: SolicitationPageProps) {
   const solicitations = useMemo(() => {

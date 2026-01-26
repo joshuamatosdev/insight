@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from 'react';
 
-export type StatVariant = 'primary' | 'success' | 'warning' | 'info';
+export type StatVariant = 'primary' | 'success' | 'warning' | 'info' | 'secondary' | 'danger';
 
 export interface StatCardProps {
   variant?: StatVariant;
@@ -9,4 +9,9 @@ export interface StatCardProps {
   icon?: ReactNode;
   className?: string;
   style?: CSSProperties;
+}
+
+export interface StatsGridProps {
+  children: ReactNode;
+  columns?: number;
 }

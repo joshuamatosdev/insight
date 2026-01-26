@@ -1,3 +1,12 @@
+export type {
+  AllOpportunitiesPageProps,
+  DashboardPageProps,
+  NAICSPageProps,
+  PresolicationPageProps,
+  SBIRPageProps,
+  SolicitationPageProps,
+  SourcesSoughtPageProps,
+} from './Pages.types';
 export { DashboardPage } from './DashboardPage';
 export { AllOpportunitiesPage } from './AllOpportunitiesPage';
 export { SourcesSoughtPage } from './SourcesSoughtPage';

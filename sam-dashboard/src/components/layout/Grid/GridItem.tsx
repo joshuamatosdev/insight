@@ -11,6 +11,7 @@ export function GridItem({
   className,
   style,
   children,
+  ...rest
 }: GridItemProps) {
   const itemStyles: CSSProperties = {
     ...(colSpan && { gridColumn: `span ${colSpan}` }),
@@ -23,7 +24,7 @@ export function GridItem({
   };
 
   return (
-    <div className={className} style={itemStyles}>
+    <div className={className} style={itemStyles} {...rest}>
       {children}
     </div>
   );

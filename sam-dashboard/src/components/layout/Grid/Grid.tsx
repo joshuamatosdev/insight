@@ -10,6 +10,7 @@ export function Grid({
   className,
   style,
   children,
+  ...rest
 }: GridProps) {
   const gridStyles: CSSProperties = {
     display: 'grid',
@@ -22,7 +23,7 @@ export function Grid({
   };
 
   return (
-    <div className={className} style={gridStyles}>
+    <div className={className} style={gridStyles} {...rest}>
       {children}
     </div>
   );

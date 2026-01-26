@@ -1,3 +1,18 @@
+import { CSSProperties } from 'react';
+
+export interface NAICSBadgeProps {
+  code: string | undefined;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export interface NAICSDistributionProps {
+  distribution: Record<string, number>;
+  total: number;
+  maxItems?: number;
+  className?: string;
+}
+
 export const NAICS_DESCRIPTIONS: Record<string, string> = {
   '541511': 'Custom Computer Programming',
   '541512': 'Computer Systems Design',

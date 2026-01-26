@@ -22,6 +22,9 @@ import {
   SidebarNav,
   SidebarNavItem,
   HStack,
+  Flex,
+  Box,
+  Stack,
 } from './components/layout';
 import { getOpportunityType, isSbirOpportunity } from './components/domain';
 import {
@@ -50,6 +53,7 @@ type ViewSection =
 function App() {
   const { opportunities, isLoading, error, ingest } = useOpportunities();
   const [currentSection, setCurrentSection] = useState<ViewSection>('dashboard');
+  const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
 
   // Calculate counts
   const counts = useMemo(() => {
@@ -85,8 +89,14 @@ function App() {
   }, [opportunities]);
 
   const handleRefresh = async () => {
-    await ingest();
-    alert('Data refreshed successfully!');
+    setRefreshMessage(null);
+    try {
+      await ingest();
+      setRefreshMessage('Data refreshed successfully!');
+      setTimeout(() => setRefreshMessage(null), 5000);
+    } catch {
+      setRefreshMessage('Failed to refresh data');
+    }
   };
 
   const handleExport = () => {
@@ -96,24 +106,17 @@ function App() {
   const renderContent = () => {
     if (isLoading) {
       return (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '300px',
-          }}
-        >
+        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
           <Text variant="body" color="muted">
             Loading opportunities...
           </Text>
-        </div>
+        </Flex>
       );
     }
 
     if (error) {
       return (
-        <div
+        <Box
           style={{
             padding: 'var(--spacing-8)',
             textAlign: 'center',
@@ -124,7 +127,7 @@ function App() {
           <Text variant="body" color="danger">
             Error loading data: {error.message}
           </Text>
-        </div>
+        </Box>
       );
     }
 
@@ -161,14 +164,14 @@ function App() {
       <SidebarHeader>
         <HStack spacing="var(--spacing-2)" align="center">
           <BuildingCheckIcon size="lg" color="white" />
-          <div>
+          <Stack spacing="0">
             <Text variant="heading4" color="white" weight="semibold">
               SAM.gov
             </Text>
             <Text variant="caption" color="white" style={{ opacity: 0.6 }}>
               Opportunities Dashboard
             </Text>
-          </div>
+          </Stack>
         </HStack>
       </SidebarHeader>
 
@@ -268,7 +271,27 @@ function App() {
 
   return (
     <AppLayout sidebar={sidebar}>
-      <MainContent>{renderContent()}</MainContent>
+      <MainContent>
+        {refreshMessage !== null && (
+          <Box
+            style={{
+              padding: 'var(--spacing-3) var(--spacing-4)',
+              marginBottom: 'var(--spacing-4)',
+              backgroundColor: refreshMessage.includes('Failed') ? 'var(--color-danger-light)' : 'var(--color-success-light)',
+              borderRadius: 'var(--radius-md)',
+              border: `1px solid ${refreshMessage.includes('Failed') ? 'var(--color-danger)' : 'var(--color-success)'}`,
+            }}
+          >
+            <Text
+              variant="bodySmall"
+              color={refreshMessage.includes('Failed') ? 'danger' : 'success'}
+            >
+              {refreshMessage}
+            </Text>
+          </Box>
+        )}
+        {renderContent()}
+      </MainContent>
     </AppLayout>
   );
 }

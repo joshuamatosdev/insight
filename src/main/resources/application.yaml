@@ -164,6 +164,27 @@ info:
     description: Ingests government contract opportunities from SAM.gov
     version: 1.0.0
 
+# JWT Configuration
+# SECURITY: JWT_SECRET must be set in environment/secrets for production
+# Generate with: openssl rand -base64 32
+jwt:
+  secret: ${JWT_SECRET}  # Required - no default for security
+  expiration: 86400000  # 24 hours in milliseconds
+  refresh-expiration: 604800000  # 7 days in milliseconds
+
+# Application Configuration
+app:
+  name: ${APP_NAME:SAM.gov Contract Intelligence}
+  base-url: ${APP_BASE_URL:http://localhost:3000}
+  email:
+    provider: ${EMAIL_PROVIDER:console}  # console, smtp, sendgrid, ses
+  password-reset:
+    expiration-hours: 24
+  invitation:
+    expiration-days: 7
+  session:
+    max-per-user: 10
+
 # Logging
 logging:
   level:

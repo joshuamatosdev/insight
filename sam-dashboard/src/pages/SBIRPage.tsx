@@ -7,21 +7,15 @@ import {
   CardHeader,
   CardBody,
   HStack,
-  Grid,
-  GridItem,
 } from '../components/layout';
 import {
-  Opportunity,
   isSbirOpportunity,
   getSbirPhaseLabel,
   OpportunityList,
   StatCard,
   StatsGrid,
 } from '../components/domain';
-
-interface SBIRPageProps {
-  opportunities: Opportunity[];
-}
+import { SBIRPageProps } from './Pages.types';
 
 type PhaseFilter = 'all' | 'I' | 'II' | 'III';
 
@@ -102,9 +96,9 @@ export function SBIRPage({ opportunities }: SBIRPageProps) {
             emptyMessage="No SBIR/STTR opportunities found."
             renderBadge={(opp) => (
               <HStack spacing="var(--spacing-2)">
-                {opp.isSbir && <Badge variant="info" size="sm">SBIR</Badge>}
-                {opp.isSttr && <Badge variant="success" size="sm">STTR</Badge>}
-                {opp.sbirPhase && (
+                {opp.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
+                {opp.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
+                {opp.sbirPhase !== null && opp.sbirPhase !== undefined && (
                   <Badge variant="warning" size="sm">
                     {getSbirPhaseLabel(opp.sbirPhase)}
                   </Badge>

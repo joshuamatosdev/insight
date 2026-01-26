@@ -3,7 +3,7 @@ import { SectionHeaderProps } from './Section.types';
 import { Text } from '../../primitives';
 import { HStack } from '../Stack';
 
-export function SectionHeader({ title, icon, actions, className, style }: SectionHeaderProps) {
+export function SectionHeader({ title, icon, actions, className, style, ...rest }: SectionHeaderProps) {
   const headerStyles: CSSProperties = {
     padding: 'var(--spacing-4) 0',
     marginBottom: 'var(--spacing-6)',
@@ -12,7 +12,7 @@ export function SectionHeader({ title, icon, actions, className, style }: Sectio
   };
 
   return (
-    <div className={className} style={headerStyles}>
+    <div className={className} style={headerStyles} {...rest}>
       <HStack justify="between" align="center">
         <HStack spacing="var(--spacing-2)" align="center">
           {icon}

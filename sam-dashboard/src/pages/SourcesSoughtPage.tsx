@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
 import { SearchIcon } from '../components/primitives';
 import { Section, SectionHeader } from '../components/layout';
-import { Opportunity, getOpportunityType, OpportunityList } from '../components/domain';
-
-interface SourcesSoughtPageProps {
-  opportunities: Opportunity[];
-}
+import { getOpportunityType, OpportunityList } from '../components/domain';
+import { SourcesSoughtPageProps } from './Pages.types';
 
 export function SourcesSoughtPage({ opportunities }: SourcesSoughtPageProps) {
   const sourcesSought = useMemo(() => {

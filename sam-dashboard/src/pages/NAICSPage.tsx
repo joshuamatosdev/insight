@@ -1,12 +1,8 @@
 import { useMemo } from 'react';
 import { TagIcon } from '../components/primitives';
 import { Section, SectionHeader } from '../components/layout';
-import { Opportunity, OpportunityList, getNAICSDescription } from '../components/domain';
-
-interface NAICSPageProps {
-  naicsCode: string;
-  opportunities: Opportunity[];
-}
+import { OpportunityList, getNAICSDescription } from '../components/domain';
+import { NAICSPageProps } from './Pages.types';
 
 export function NAICSPage({ naicsCode, opportunities }: NAICSPageProps) {
   const filteredOpportunities = useMemo(() => {

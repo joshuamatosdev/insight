@@ -1,3 +1,3 @@
-export type { StatVariant, StatCardProps } from './Stats.types';
+export type { StatVariant, StatCardProps, StatsGridProps } from './Stats.types';
 export { StatCard } from './StatCard';
 export { StatsGrid } from './StatsGrid';

@@ -8,10 +8,7 @@ import {
   FilterState,
   SortOption,
 } from '../components/domain';
-
-interface AllOpportunitiesPageProps {
-  opportunities: Opportunity[];
-}
+import { AllOpportunitiesPageProps } from './Pages.types';
 
 export function AllOpportunitiesPage({ opportunities }: AllOpportunitiesPageProps) {
   const [filters, setFilters] = useState<FilterState>({

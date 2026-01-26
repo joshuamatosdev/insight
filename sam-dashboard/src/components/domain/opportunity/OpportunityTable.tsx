@@ -1,13 +1,8 @@
-import { Opportunity, getOpportunityType } from './Opportunity.types';
+import { OpportunityTableProps, getOpportunityType } from './Opportunity.types';
 import { Text } from '../../primitives';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableHeaderCell } from '../../layout';
+import { Table, TableHead, TableBody, TableRow, TableCell, TableHeaderCell, Box } from '../../layout';
 import { NAICSBadge } from '../naics';
 import { TypeBadge } from './TypeBadge';
-
-interface OpportunityTableProps {
-  opportunities: Opportunity[];
-  maxRows?: number;
-}
 
 export function OpportunityTable({ opportunities, maxRows }: OpportunityTableProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -43,16 +38,16 @@ export function OpportunityTable({ opportunities, maxRows }: OpportunityTablePro
 
   if (opportunities.length === 0) {
     return (
-      <div style={{ padding: 'var(--spacing-4)', textAlign: 'center' }}>
+      <Box style={{ padding: 'var(--spacing-4)', textAlign: 'center' }}>
         <Text variant="body" color="muted">
           No opportunities to display.
         </Text>
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden' }}>
+    <Box style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden' }}>
       <Table>
         <TableHead>
           <TableRow isHoverable={false}>
@@ -92,7 +87,7 @@ export function OpportunityTable({ opportunities, maxRows }: OpportunityTablePro
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Box>
   );
 }
 

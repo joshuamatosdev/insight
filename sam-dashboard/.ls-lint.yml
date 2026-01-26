@@ -1,0 +1,74 @@
+# ls-lint configuration
+# Enforces file naming conventions
+
+ls:
+  # ===========================================
+  # SOURCE FILES
+  # ===========================================
+  src:
+    .tsx: PascalCase | kebab-case
+    .ts: PascalCase | kebab-case | camelCase
+    .css: kebab-case
+
+  # ===========================================
+  # COMPONENTS
+  # ===========================================
+  src/components:
+    .dir: PascalCase | lowercase | kebab-case
+
+  src/components/*:
+    .tsx: PascalCase
+    .ts: PascalCase | camelCase
+
+  src/components/domain:
+    .dir: lowercase
+
+  src/components/domain/*:
+    .tsx: PascalCase
+    .ts: PascalCase | camelCase
+
+  src/components/layout:
+    .dir: PascalCase
+
+  src/components/layout/*:
+    .tsx: PascalCase
+    .ts: PascalCase | camelCase
+
+  src/components/primitives:
+    .dir: PascalCase
+
+  src/components/primitives/*:
+    .tsx: PascalCase
+    .ts: PascalCase | camelCase
+
+  # ===========================================
+  # HOOKS
+  # ===========================================
+  src/hooks:
+    .ts: camelCase
+
+  # ===========================================
+  # SERVICES
+  # ===========================================
+  src/services:
+    .ts: camelCase | kebab-case
+
+  # ===========================================
+  # PAGES
+  # ===========================================
+  src/pages:
+    .tsx: PascalCase
+
+  # ===========================================
+  # TYPES
+  # ===========================================
+  src/types:
+    .ts: PascalCase | kebab-case
+
+ignore:
+  - node_modules
+  - build
+  - dist
+  - .git
+  - public
+  - .vite

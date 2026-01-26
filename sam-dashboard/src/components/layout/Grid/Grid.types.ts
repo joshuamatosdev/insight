@@ -1,6 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
-export interface GridProps {
+export interface GridProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   columns?: number | string;
   rows?: number | string;
   gap?: string | number;
@@ -11,7 +11,7 @@ export interface GridProps {
   children: ReactNode;
 }
 
-export interface GridItemProps {
+export interface GridItemProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   colSpan?: number;
   rowSpan?: number;
   colStart?: number;

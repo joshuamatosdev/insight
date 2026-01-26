@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+
+# Build outputs
+build/
+out/
+target/
+*.class
+*.jar
+!gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Node (frontend)
+sam-dashboard/node_modules/
+sam-dashboard/dist/
+sam-dashboard/build/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive files
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+
+# Test outputs
+test-results/
+coverage/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# IDE settings
+.serena/
+.claude/

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Text, Badge, Button, CheckCircleIcon, RefreshIcon, SearchIcon, Input } from '../components/primitives';
 import {
   Section,
@@ -7,9 +7,7 @@ import {
   CardHeader,
   CardBody,
   HStack,
-  Stack,
-  Grid,
-  GridItem,
+  Box,
 } from '../components/layout';
 import {
   SbirAward,
@@ -30,8 +28,10 @@ export function SBIRAwardsPage() {
   const [agencyFilter, setAgencyFilter] = useState<string>('');
   const [phaseFilter, setPhaseFilter] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [ingestError, setIngestError] = useState<string | null>(null);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -41,25 +41,29 @@ export function SBIRAwardsPage() {
       ]);
       setAwards(awardsData);
       setStats(statsData);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load data'));
+    } catch (e) {
+      setError(e instanceof Error ? e : new Error('Failed to load data'));
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [agencyFilter, phaseFilter]);
 
   useEffect(() => {
     loadData();
-  }, [agencyFilter, phaseFilter]);
+  }, [loadData]);
 
   const handleIngest = async () => {
     try {
       setIsIngesting(true);
+      setSuccessMessage(null);
+      setIngestError(null);
       await triggerSbirGovIngest();
       await loadData();
-      alert('SBIR.gov data ingested successfully!');
-    } catch (err) {
-      alert('Failed to ingest SBIR.gov data');
+      setSuccessMessage('SBIR.gov data ingested successfully!');
+      // Auto-clear success message after 5 seconds
+      setTimeout(() => setSuccessMessage(null), 5000);
+    } catch {
+      setIngestError('Failed to ingest SBIR.gov data');
     } finally {
       setIsIngesting(false);
     }
@@ -74,8 +78,8 @@ export function SBIRAwardsPage() {
       setIsLoading(true);
       const results = await searchSbirAwards(searchQuery);
       setAwards(results);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Search failed'));
+    } catch (e) {
+      setError(e instanceof Error ? e : new Error('Search failed'));
     } finally {
       setIsLoading(false);
     }
@@ -85,18 +89,18 @@ export function SBIRAwardsPage() {
     return awards;
   }, [awards]);
 
-  if (isLoading && !awards.length) {
+  if (isLoading && awards.length === 0) {
     return (
       <Section id="sbir-awards">
         <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg" />} />
-        <div style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
           <Text variant="body" color="muted">Loading SBIR.gov awards...</Text>
-        </div>
+        </Box>
       </Section>
     );
   }
 
-  if (error && !awards.length) {
+  if (error !== null && awards.length === 0) {
     return (
       <Section id="sbir-awards">
         <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg" />} />
@@ -116,7 +120,7 @@ export function SBIRAwardsPage() {
     <Section id="sbir-awards">
       <SectionHeader title="SBIR.gov Awards Database" icon={<CheckCircleIcon size="lg" />} />
 
-      {stats && (
+      {stats !== null && (
         <StatsGrid columns={5}>
           <StatCard variant="primary" value={stats.totalAwards} label="Total Awards" />
           <StatCard variant="info" value={stats.sbirCount} label="SBIR" />
@@ -133,6 +137,7 @@ export function SBIRAwardsPage() {
               <select
                 value={agencyFilter}
                 onChange={(e) => setAgencyFilter(e.target.value)}
+                aria-label="Filter by agency"
                 style={{
                   padding: 'var(--spacing-2) var(--spacing-3)',
                   borderRadius: 'var(--radius-md)',
@@ -140,13 +145,14 @@ export function SBIRAwardsPage() {
                 }}
               >
                 <option value="">All Agencies</option>
-                {stats?.agencies.map((a) => (
+                {(stats?.agencies ?? []).map((a) => (
                   <option key={a} value={a}>{a} - {getAgencyFullName(a)}</option>
                 ))}
               </select>
               <select
                 value={phaseFilter}
                 onChange={(e) => setPhaseFilter(e.target.value)}
+                aria-label="Filter by phase"
                 style={{
                   padding: 'var(--spacing-2) var(--spacing-3)',
                   borderRadius: 'var(--radius-md)',
@@ -154,12 +160,12 @@ export function SBIRAwardsPage() {
                 }}
               >
                 <option value="">All Phases</option>
-                {stats?.phases.map((p) => (
+                {(stats?.phases ?? []).map((p) => (
                   <option key={p} value={p}>Phase {p}</option>
                 ))}
               </select>
             </HStack>
-            
+
             <HStack spacing="var(--spacing-2)">
               <Input
                 placeholder="Search keywords..."
@@ -184,15 +190,25 @@ export function SBIRAwardsPage() {
             </Button>
           </HStack>
         </CardHeader>
+        {successMessage !== null && (
+          <Box style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-success-bg)', borderBottom: '1px solid var(--color-success)' }}>
+            <Text variant="bodySmall" color="success">{successMessage}</Text>
+          </Box>
+        )}
+        {ingestError !== null && (
+          <Box style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-danger-bg)', borderBottom: '1px solid var(--color-danger)' }}>
+            <Text variant="bodySmall" color="danger">{ingestError}</Text>
+          </Box>
+        )}
         <CardBody padding="none">
           {filteredAwards.length === 0 ? (
-            <div style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+            <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
               <Text variant="body" color="muted">
                 No SBIR awards found. Click "Fetch from SBIR.gov" to load data.
               </Text>
-            </div>
+            </Box>
           ) : (
-            <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+            <Box style={{ maxHeight: '600px', overflowY: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ backgroundColor: 'var(--color-bg-secondary)', position: 'sticky', top: 0 }}>
@@ -226,8 +242,8 @@ export function SBIRAwardsPage() {
                           rel="noopener noreferrer"
                           style={{ textDecoration: 'none' }}
                         >
-                          <Text variant="bodySmall" style={{ 
-                            overflow: 'hidden', 
+                          <Text variant="bodySmall" style={{
+                            overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
@@ -237,8 +253,8 @@ export function SBIRAwardsPage() {
                           </Text>
                         </a>
                         <HStack spacing="var(--spacing-1)" style={{ marginTop: 'var(--spacing-1)' }}>
-                          {award.isSbir && <Badge variant="info" size="sm">SBIR</Badge>}
-                          {award.isSttr && <Badge variant="success" size="sm">STTR</Badge>}
+                          {award.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
+                          {award.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
                         </HStack>
                       </td>
                       <td style={{ padding: 'var(--spacing-3)' }}>
@@ -265,13 +281,13 @@ export function SBIRAwardsPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </Box>
           )}
         </CardBody>
       </Card>
 
       <Text variant="caption" color="muted" style={{ marginTop: 'var(--spacing-4)', textAlign: 'center', display: 'block' }}>
-        Data source: <a href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</a> - 
+        Data source: <a href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</a> -
         Small Business Innovation Research / Small Business Technology Transfer
       </Text>
     </Section>

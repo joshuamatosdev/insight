@@ -1,10 +1,6 @@
 import { CSSProperties } from 'react';
-
-interface NAICSBadgeProps {
-  code: string | undefined;
-  className?: string;
-  style?: CSSProperties;
-}
+import { Box } from '../../layout';
+import { NAICSBadgeProps } from './NAICS.types';
 
 export function NAICSBadge({ code, className, style }: NAICSBadgeProps) {
   const badgeStyles: CSSProperties = {
@@ -21,9 +17,9 @@ export function NAICSBadge({ code, className, style }: NAICSBadgeProps) {
   };
 
   return (
-    <span className={className} style={badgeStyles}>
+    <Box as="span" className={className} style={badgeStyles}>
       {code || 'N/A'}
-    </span>
+    </Box>
   );
 }
 

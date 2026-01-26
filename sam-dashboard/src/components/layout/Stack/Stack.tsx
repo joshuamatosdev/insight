@@ -14,6 +14,7 @@ export function Stack({
   className,
   style,
   children,
+  ...rest
 }: StackProps) {
   const stackStyles: CSSProperties = {
     display: 'flex',
@@ -24,7 +25,7 @@ export function Stack({
   };
 
   return (
-    <div className={className} style={stackStyles}>
+    <div className={className} style={stackStyles} {...rest}>
       {children}
     </div>
   );

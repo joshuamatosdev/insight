@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import { CardHeaderProps } from './Card.types';
 
-export function CardHeader({ className, style, children }: CardHeaderProps) {
+export function CardHeader({ className, style, children, ...rest }: CardHeaderProps) {
   const headerStyles: CSSProperties = {
     padding: 'var(--spacing-4) var(--spacing-5)',
     backgroundColor: 'var(--color-white)',
@@ -10,7 +10,7 @@ export function CardHeader({ className, style, children }: CardHeaderProps) {
   };
 
   return (
-    <div className={className} style={headerStyles}>
+    <div className={className} style={headerStyles} {...rest}>
       {children}
     </div>
   );

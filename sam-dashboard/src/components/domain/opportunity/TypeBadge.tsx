@@ -1,12 +1,6 @@
 import { CSSProperties } from 'react';
-import { OpportunityType } from './Opportunity.types';
-
-interface TypeBadgeProps {
-  type: OpportunityType;
-  label?: string;
-  className?: string;
-  style?: CSSProperties;
-}
+import { OpportunityType, TypeBadgeProps } from './Opportunity.types';
+import { Box } from '../../layout';
 
 const typeStyles: Record<OpportunityType, CSSProperties> = {
   'sources-sought': {
@@ -18,6 +12,14 @@ const typeStyles: Record<OpportunityType, CSSProperties> = {
     color: '#e65100',
   },
   solicitation: {
+    backgroundColor: 'var(--color-success-light)',
+    color: '#2e7d32',
+  },
+  sbir: {
+    backgroundColor: 'var(--color-success-light)',
+    color: '#2e7d32',
+  },
+  sttr: {
     backgroundColor: 'var(--color-success-light)',
     color: '#2e7d32',
   },
@@ -43,9 +45,9 @@ export function TypeBadge({ type, label, className, style }: TypeBadgeProps) {
   const displayLabel = label || type.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 
   return (
-    <span className={className} style={badgeStyles}>
+    <Box as="span" className={className} style={badgeStyles}>
       {displayLabel}
-    </span>
+    </Box>
   );
 }
 

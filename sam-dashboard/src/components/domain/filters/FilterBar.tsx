@@ -1,15 +1,7 @@
-import { CSSProperties } from 'react';
+import { FilterBarProps } from './Filters.types';
 import { HStack } from '../../layout';
 import { SearchInput } from './SearchInput';
 import { SortSelect } from './SortSelect';
-import { FilterState } from './Filters.types';
-
-interface FilterBarProps {
-  filters: FilterState;
-  onFilterChange: (filters: FilterState) => void;
-  className?: string;
-  style?: CSSProperties;
-}
 
 export function FilterBar({ filters, onFilterChange, className, style }: FilterBarProps) {
   return (

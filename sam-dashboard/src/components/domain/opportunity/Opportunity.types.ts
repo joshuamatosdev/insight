@@ -1,3 +1,5 @@
+import { CSSProperties, ReactNode } from 'react';
+
 export interface Opportunity {
   id: string;
   title: string;
@@ -39,4 +41,33 @@ export function getSbirLabel(opportunity: Opportunity): string | null {
 export function getSbirPhaseLabel(phase: string | null | undefined): string {
   if (!phase) return '';
   return `Phase ${phase}`;
+}
+
+export interface OpportunityCardProps {
+  opportunity: Opportunity;
+  className?: string;
+  style?: CSSProperties;
+  extraBadge?: ReactNode;
+}
+
+export interface OpportunityListProps {
+  opportunities: Opportunity[];
+  emptyMessage?: string;
+  renderBadge?: (opportunity: Opportunity) => ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export interface OpportunityTableProps {
+  opportunities: Opportunity[];
+  maxRows?: number;
+  className?: string;
+  style?: CSSProperties;
+}
+
+export interface TypeBadgeProps {
+  type: OpportunityType;
+  label?: string;
+  className?: string;
+  style?: CSSProperties;
 }

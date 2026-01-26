@@ -50,6 +50,7 @@ export function Badge({
   className,
   style,
   children,
+  ...rest
 }: BadgeProps) {
   const baseStyles: CSSProperties = {
     display: 'inline-flex',
@@ -65,7 +66,7 @@ export function Badge({
   };
 
   return (
-    <span className={className} style={baseStyles}>
+    <span className={className} style={baseStyles} {...rest}>
       {children}
     </span>
   );

@@ -1,16 +1,9 @@
-import { CSSProperties, ReactNode } from 'react';
-import { Opportunity, getOpportunityType } from './Opportunity.types';
+import { CSSProperties } from 'react';
+import { OpportunityCardProps, getOpportunityType } from './Opportunity.types';
 import { Text, Button, ExternalLinkIcon } from '../../primitives';
-import { Card, CardHeader, CardBody, HStack, Grid } from '../../layout';
+import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../layout';
 import { NAICSBadge } from '../naics';
 import { TypeBadge } from './TypeBadge';
-
-interface OpportunityCardProps {
-  opportunity: Opportunity;
-  className?: string;
-  style?: CSSProperties;
-  extraBadge?: ReactNode;
-}
 
 export function OpportunityCard({ opportunity, className, style, extraBadge }: OpportunityCardProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -46,7 +39,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
     <Card className={className} style={cardStyles}>
       <CardHeader>
         <HStack justify="between" align="start">
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <Box style={{ flex: 1, minWidth: 0 }}>
             <a
               href={opportunity.url || '#'}
               target="_blank"
@@ -64,7 +57,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
             <Text variant="bodySmall" color="muted">
               {opportunity.solicitationNumber || 'N/A'}
             </Text>
-          </div>
+          </Box>
           <HStack spacing="var(--spacing-2)">
             <NAICSBadge code={opportunity.naicsCode} />
             <TypeBadge type={getOpportunityType(opportunity.type)} label={opportunity.type} />
@@ -74,23 +67,23 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
       </CardHeader>
       <CardBody>
         <Grid columns={3} gap="var(--spacing-4)">
-          <div>
-            <Text variant="caption" color="muted" style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}>
+          <Stack spacing="var(--spacing-1)">
+            <Text variant="caption" color="muted">
               Posted Date
             </Text>
             <Text variant="body" weight="semibold">
               {formatDate(opportunity.postedDate)}
             </Text>
-          </div>
-          <div>
-            <Text variant="caption" color="muted" style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}>
+          </Stack>
+          <Stack spacing="var(--spacing-1)">
+            <Text variant="caption" color="muted">
               Response Deadline
             </Text>
             <Text variant="body" weight="semibold" color={getDeadlineColor(opportunity.responseDeadLine)}>
               {formatDate(opportunity.responseDeadLine)}
             </Text>
-          </div>
-          <div style={{ textAlign: 'right' }}>
+          </Stack>
+          <Box style={{ textAlign: 'right' }}>
             <a
               href={opportunity.url || '#'}
               target="_blank"
@@ -105,7 +98,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
                 View on SAM.gov
               </Button>
             </a>
-          </div>
+          </Box>
         </Grid>
       </CardBody>
     </Card>

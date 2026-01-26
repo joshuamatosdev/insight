@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'io.freefair.lombok' version '8.4'
+    id 'org.cyclonedx.bom' version '1.8.2'
 }
 
 group = 'com.samgov'
@@ -11,10 +13,9 @@ java {
     sourceCompatibility = '21'
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+// Configure Lombok annotation processing
+compileJava {
+    options.compilerArgs += ['-Xlint:processing']
 }
 
 repositories {
@@ -26,18 +27,57 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JWT for authentication
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
+    // TOTP for MFA
+    implementation 'dev.samstevens.totp:totp:1.7.1'
+
+    // OpenAPI/Swagger documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // Caching
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
     runtimeOnly 'org.postgresql:postgresql'
-    
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.testcontainers:junit-jupiter'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// SBOM Generation Configuration
+cyclonedxBom {
+    includeConfigs = ["runtimeClasspath"]
+    skipConfigs = ["compileClasspath", "testCompileClasspath"]
+    projectType = "application"
+    schemaVersion = "1.5"
+    destination = file("build/reports/sbom")
+    outputName = "bom"
+    outputFormat = "json"
+    includeBomSerialNumber = true
+    componentVersion = version
+}
+
+// Copy SBOM to resources for runtime access
+tasks.register('copySbomToResources', Copy) {
+    dependsOn cyclonedxBom
+    from 'build/reports/sbom'
+    into 'src/main/resources/sbom'
+}
+
+tasks.named('processResources') {
+    dependsOn copySbomToResources
 }

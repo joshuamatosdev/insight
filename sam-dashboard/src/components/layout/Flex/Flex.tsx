@@ -27,6 +27,7 @@ export function Flex({
   className,
   style,
   children,
+  ...rest
 }: FlexProps) {
   const flexStyles: CSSProperties = {
     display: 'flex',
@@ -39,7 +40,7 @@ export function Flex({
   };
 
   return (
-    <div className={className} style={flexStyles}>
+    <div className={className} style={flexStyles} {...rest}>
       {children}
     </div>
   );

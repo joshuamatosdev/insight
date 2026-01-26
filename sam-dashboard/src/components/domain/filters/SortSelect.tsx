@@ -1,13 +1,5 @@
-import { CSSProperties } from 'react';
+import { SortSelectProps, SortOption } from './Filters.types';
 import { Select } from '../../primitives';
-import { SortOption } from './Filters.types';
-
-interface SortSelectProps {
-  value: SortOption;
-  onChange: (value: SortOption) => void;
-  className?: string;
-  style?: CSSProperties;
-}
 
 const SORT_OPTIONS = [
   { value: 'deadline', label: 'Sort by Deadline' },

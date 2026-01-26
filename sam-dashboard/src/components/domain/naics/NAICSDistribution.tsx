@@ -1,14 +1,6 @@
-import { CSSProperties } from 'react';
 import { Text, Badge } from '../../primitives';
-import { HStack, Stack } from '../../layout';
-
-interface NAICSDistributionProps {
-  distribution: Record<string, number>;
-  total: number;
-  maxItems?: number;
-  className?: string;
-  style?: CSSProperties;
-}
+import { HStack, Stack, Box } from '../../layout';
+import { NAICSDistributionProps } from './NAICS.types';
 
 export function NAICSDistribution({
   distribution,
@@ -37,7 +29,7 @@ export function NAICSDistribution({
           <HStack key={naics} justify="between" align="center">
             <Text variant="bodySmall">{naics}</Text>
             <HStack spacing="var(--spacing-2)" align="center">
-              <div
+              <Box
                 style={{
                   width: '100px',
                   height: '8px',
@@ -46,7 +38,7 @@ export function NAICSDistribution({
                   overflow: 'hidden',
                 }}
               >
-                <div
+                <Box
                   style={{
                     width: `${percentage}%`,
                     height: '100%',
@@ -55,7 +47,7 @@ export function NAICSDistribution({
                     transition: 'width var(--transition-normal)',
                   }}
                 />
-              </div>
+              </Box>
               <Badge variant="secondary" size="sm">
                 {count}
               </Badge>

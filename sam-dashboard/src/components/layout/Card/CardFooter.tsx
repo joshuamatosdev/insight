@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import { CardFooterProps } from './Card.types';
 
-export function CardFooter({ className, style, children }: CardFooterProps) {
+export function CardFooter({ className, style, children, ...rest }: CardFooterProps) {
   const footerStyles: CSSProperties = {
     padding: 'var(--spacing-4) var(--spacing-5)',
     backgroundColor: 'var(--color-gray-50)',
@@ -10,7 +10,7 @@ export function CardFooter({ className, style, children }: CardFooterProps) {
   };
 
   return (
-    <div className={className} style={footerStyles}>
+    <div className={className} style={footerStyles} {...rest}>
       {children}
     </div>
   );

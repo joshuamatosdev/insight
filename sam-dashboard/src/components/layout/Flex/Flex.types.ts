@@ -1,6 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
-export interface FlexProps {
+export interface FlexProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justify?: 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly';
   align?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';

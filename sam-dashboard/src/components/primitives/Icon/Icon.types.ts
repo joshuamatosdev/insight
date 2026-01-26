@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, SVGAttributes } from 'react';
 
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type IconColor = 'inherit' | 'primary' | 'secondary' | 'muted' | 'success' | 'warning' | 'danger' | 'info' | 'white';
@@ -11,7 +11,7 @@ export interface IconProps {
   children?: ReactNode;
 }
 
-export interface IconComponentProps extends IconProps {
+export interface IconComponentProps extends Omit<SVGAttributes<SVGSVGElement>, 'style'>, IconProps {
   viewBox?: string;
   paths: string[];
   fillRule?: 'nonzero' | 'evenodd';

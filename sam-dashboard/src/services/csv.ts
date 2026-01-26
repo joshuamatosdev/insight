@@ -27,7 +27,8 @@ export function exportToCSV(opportunities: Opportunity[], filename?: string): vo
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename || `sam-opportunities-${new Date().toISOString().split('T')[0]}.csv`;
+  const datePart = new Date().toISOString().split('T').at(0) ?? 'export';
+  a.download = filename ?? `sam-opportunities-${datePart}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

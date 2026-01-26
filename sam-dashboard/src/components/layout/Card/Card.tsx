@@ -24,6 +24,7 @@ export function Card({
   className,
   style,
   children,
+  ...rest
 }: CardProps) {
   const cardStyles: CSSProperties = {
     borderRadius: 'var(--radius-xl)',
@@ -34,7 +35,7 @@ export function Card({
   };
 
   return (
-    <div className={className} style={cardStyles}>
+    <div className={className} style={cardStyles} {...rest}>
       {children}
     </div>
   );

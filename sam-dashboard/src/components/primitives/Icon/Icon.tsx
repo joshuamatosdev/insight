@@ -29,6 +29,7 @@ export function Icon({
   viewBox = '0 0 16 16',
   paths,
   fillRule = 'nonzero',
+  ...rest
 }: IconComponentProps) {
   const iconStyles: CSSProperties = {
     width: sizeMap[size],
@@ -45,6 +46,7 @@ export function Icon({
       className={className}
       style={iconStyles}
       aria-hidden="true"
+      {...rest}
     >
       {paths.map((d, i) => (
         <path key={i} d={d} fillRule={fillRule} />

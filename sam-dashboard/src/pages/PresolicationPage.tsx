@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
 import { FileTextIcon } from '../components/primitives';
 import { Section, SectionHeader } from '../components/layout';
-import { Opportunity, getOpportunityType, OpportunityList } from '../components/domain';
-
-interface PresolicationPageProps {
-  opportunities: Opportunity[];
-}
+import { getOpportunityType, OpportunityList } from '../components/domain';
+import { PresolicationPageProps } from './Pages.types';
 
 export function PresolicationPage({ opportunities }: PresolicationPageProps) {
   const presolicitations = useMemo(() => {
