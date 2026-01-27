@@ -1,0 +1,308 @@
+/**
+ * Roles Management Page
+ * Lists all roles with ability to create, edit, and delete
+ */
+
+import { useState, useEffect, useCallback } from 'react';
+import { Text, Button, Badge, PlusIcon, PencilIcon, TrashIcon } from '../../components/primitives';
+import {
+  Section,
+  SectionHeader,
+  Card,
+  CardBody,
+  Stack,
+  Flex,
+  Box,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
+  HStack,
+} from '../../components/layout';
+import { RoleFormModal } from '../../components/domain/rbac';
+import { fetchRoles, fetchPermissions, createRole, updateRole, deleteRole } from '../../services';
+import type {
+  Role,
+  PermissionsByCategory,
+  RoleFormState,
+  AdminPageState,
+  CreateRoleRequest,
+  UpdateRoleRequest,
+} from '../../types';
+
+/**
+ * Format date for display
+ */
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+/**
+ * Roles Admin Page Component
+ */
+export function RolesPage(): React.ReactElement {
+  const [pageState, setPageState] = useState<AdminPageState>('loading');
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [permissions, setPermissions] = useState<PermissionsByCategory>({});
+  const [error, setError] = useState<string | null>(null);
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingRole, setEditingRole] = useState<Role | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const loadData = useCallback(async () => {
+    setPageState('loading');
+    setError(null);
+    try {
+      const [rolesData, permissionsData] = await Promise.all([
+        fetchRoles(),
+        fetchPermissions(),
+      ]);
+      setRoles(rolesData);
+      setPermissions(permissionsData);
+      setPageState('loaded');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load data');
+      setPageState('error');
+    }
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const handleCreateClick = useCallback(() => {
+    setEditingRole(null);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleEditClick = useCallback((role: Role) => {
+    setEditingRole(role);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setEditingRole(null);
+  }, []);
+
+  const handleSubmitRole = useCallback(
+    async (formData: RoleFormState) => {
+      setIsSubmitting(true);
+      setError(null);
+      try {
+        if (editingRole !== null) {
+          // Update existing role
+          const request: UpdateRoleRequest = {
+            name: formData.name,
+            description: formData.description.length > 0 ? formData.description : undefined,
+            permissions: formData.permissions,
+          };
+          await updateRole(editingRole.id, request);
+        } else {
+          // Create new role
+          const request: CreateRoleRequest = {
+            name: formData.name,
+            description: formData.description.length > 0 ? formData.description : undefined,
+            permissions: formData.permissions,
+          };
+          await createRole(request);
+        }
+
+        setIsModalOpen(false);
+        setEditingRole(null);
+        await loadData();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to save role');
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [editingRole, loadData]
+  );
+
+  const handleDeleteRole = useCallback(
+    async (role: Role) => {
+      if (role.isSystemRole) {
+        setError('System roles cannot be deleted');
+        return;
+      }
+
+      const confirmed = window.confirm(
+        `Are you sure you want to delete the role "${role.name}"? This action cannot be undone.`
+      );
+      if (confirmed === false) {
+        return;
+      }
+
+      setError(null);
+      try {
+        await deleteRole(role.id);
+        await loadData();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to delete role');
+      }
+    },
+    [loadData]
+  );
+
+  if (pageState === 'loading') {
+    return (
+      <Section id="roles-admin">
+        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+          <Text variant="body" color="muted">
+            Loading roles...
+          </Text>
+        </Flex>
+      </Section>
+    );
+  }
+
+  if (pageState === 'error' && roles.length === 0) {
+    return (
+      <Section id="roles-admin">
+        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+          <Stack spacing="var(--spacing-4)" align="center">
+            <Text variant="body" color="danger">
+              {error ?? 'Failed to load roles'}
+            </Text>
+            <Button variant="primary" onClick={loadData}>
+              Retry
+            </Button>
+          </Stack>
+        </Flex>
+      </Section>
+    );
+  }
+
+  return (
+    <Section id="roles-admin">
+      <SectionHeader
+        title="Role Management"
+        actions={
+          <Button variant="primary" onClick={handleCreateClick}>
+            <HStack spacing="var(--spacing-1)" align="center">
+              <PlusIcon size="sm" />
+              <Text as="span" variant="bodySmall" color="white">
+                Create Role
+              </Text>
+            </HStack>
+          </Button>
+        }
+      />
+
+      {error !== null && (
+        <Box
+          style={{
+            padding: 'var(--spacing-3)',
+            marginBottom: 'var(--spacing-4)',
+            backgroundColor: 'var(--color-danger-light)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-danger)',
+          }}
+        >
+          <Text variant="bodySmall" color="danger">
+            {error}
+          </Text>
+        </Box>
+      )}
+
+      <Card variant="default">
+        <CardBody padding="none">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeaderCell>Role Name</TableHeaderCell>
+                <TableHeaderCell>Description</TableHeaderCell>
+                <TableHeaderCell align="center">Permissions</TableHeaderCell>
+                <TableHeaderCell>Created</TableHeaderCell>
+                <TableHeaderCell align="center">Actions</TableHeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {roles.map((role) => (
+                <TableRow key={role.id} isHoverable>
+                  <TableCell>
+                    <HStack spacing="var(--spacing-2)" align="center">
+                      <Text variant="bodySmall" weight="medium">
+                        {role.name}
+                      </Text>
+                      {role.isSystemRole && (
+                        <Badge variant="secondary" size="sm">
+                          System
+                        </Badge>
+                      )}
+                    </HStack>
+                  </TableCell>
+                  <TableCell>
+                    <Text variant="bodySmall" color="muted">
+                      {role.description ?? '-'}
+                    </Text>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Badge variant="info" size="sm">
+                      {role.permissions.length}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Text variant="caption" color="muted">
+                      {formatDate(role.createdAt)}
+                    </Text>
+                  </TableCell>
+                  <TableCell align="center">
+                    <HStack spacing="var(--spacing-1)" justify="center">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEditClick(role)}
+                        aria-label={`Edit ${role.name}`}
+                      >
+                        <PencilIcon size="sm" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteRole(role)}
+                        aria-label={`Delete ${role.name}`}
+                        isDisabled={role.isSystemRole}
+                      >
+                        <TrashIcon size="sm" color={role.isSystemRole ? 'muted' : 'danger'} />
+                      </Button>
+                    </HStack>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {roles.length === 0 && (
+                <TableRow>
+                  <TableCell>
+                    <Text variant="body" color="muted" style={{ padding: 'var(--spacing-8)' }}>
+                      No roles found. Create your first role to get started.
+                    </Text>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardBody>
+      </Card>
+
+      <RoleFormModal
+        isOpen={isModalOpen}
+        role={editingRole}
+        permissions={permissions}
+        isSubmitting={isSubmitting}
+        onSubmit={handleSubmitRole}
+        onClose={handleCloseModal}
+      />
+    </Section>
+  );
+}
+
+export default RolesPage;

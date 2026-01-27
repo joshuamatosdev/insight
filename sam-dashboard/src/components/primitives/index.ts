@@ -46,6 +46,11 @@ export {
   TrashFillIcon,
   PencilIcon,
   PencilSquareIcon,
+  ShieldIcon,
+  ShieldLockIcon,
+  UsersIcon,
+  UserIcon,
+  KeyIcon,
 } from './Icon';
 export type { IconProps, IconSize, IconColor, IconComponentProps } from './Icon';
 

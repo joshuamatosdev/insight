@@ -20,3 +20,5 @@ export { BellIcon, BellFillIcon, BellSlashIcon } from './icons/BellIcon';
 export { PlusIcon, PlusCircleIcon, PlusLgIcon } from './icons/PlusIcon';
 export { TrashIcon, TrashFillIcon } from './icons/TrashIcon';
 export { PencilIcon, PencilSquareIcon } from './icons/PencilIcon';
+export { ShieldIcon, ShieldLockIcon } from './icons/ShieldIcon';
+export { UsersIcon, UserIcon, KeyIcon } from './icons/UsersIcon';

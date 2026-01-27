@@ -14,6 +14,9 @@ import {
   CheckCircleIcon,
   LogoutIcon,
   BellIcon,
+  ShieldIcon,
+  KeyIcon,
+  UsersIcon,
 } from './components/primitives';
 import {
   AppLayout,
@@ -39,6 +42,9 @@ import {
   SBIRPage,
   SBIRAwardsPage,
   AlertsPage,
+  AdminRolesPage,
+  PermissionsPage,
+  UserRolesPage,
 } from './pages';
 import { useOpportunities } from './hooks';
 import { exportToCSV } from './services';
@@ -53,6 +59,9 @@ type ViewSection =
   | 'sbir'
   | 'sbir-awards'
   | 'alerts'
+  | 'admin-roles'
+  | 'admin-permissions'
+  | 'admin-user-roles'
   | `naics-${string}`;
 
 export function Dashboard() {
@@ -162,6 +171,12 @@ export function Dashboard() {
         return <SBIRAwardsPage />;
       case 'alerts':
         return <AlertsPage />;
+      case 'admin-roles':
+        return <AdminRolesPage />;
+      case 'admin-permissions':
+        return <PermissionsPage />;
+      case 'admin-user-roles':
+        return <UserRolesPage />;
       default:
         if (currentSection.startsWith('naics-')) {
           const naicsCode = currentSection.replace('naics-', '');
@@ -267,6 +282,29 @@ export function Dashboard() {
               onClick={() => setCurrentSection(`naics-${naics}`)}
             />
           ))}
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Administration">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<ShieldIcon size="sm" />}
+            label="Roles"
+            isActive={currentSection === 'admin-roles'}
+            onClick={() => setCurrentSection('admin-roles')}
+          />
+          <SidebarNavItem
+            icon={<KeyIcon size="sm" />}
+            label="Permissions"
+            isActive={currentSection === 'admin-permissions'}
+            onClick={() => setCurrentSection('admin-permissions')}
+          />
+          <SidebarNavItem
+            icon={<UsersIcon size="sm" />}
+            label="User Roles"
+            isActive={currentSection === 'admin-user-roles'}
+            onClick={() => setCurrentSection('admin-user-roles')}
+          />
         </SidebarNav>
       </SidebarSection>
 
