@@ -15,7 +15,7 @@ import com.samgov.ingestor.repository.TenantMembershipRepository;
 import com.samgov.ingestor.repository.TenantRepository;
 import com.samgov.ingestor.repository.UserRepository;
 import com.samgov.ingestor.service.MilestoneService.CreateMilestoneRequest;
-import com.samgov.ingestor.service.MilestoneService.MilestoneStatus;
+import com.samgov.ingestor.model.Milestone.MilestoneStatus;
 import com.samgov.ingestor.service.MilestoneService.UpdateMilestoneRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

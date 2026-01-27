@@ -14,9 +14,9 @@ import com.samgov.ingestor.repository.RoleRepository;
 import com.samgov.ingestor.repository.TenantMembershipRepository;
 import com.samgov.ingestor.repository.TenantRepository;
 import com.samgov.ingestor.repository.UserRepository;
+import com.samgov.ingestor.model.FeatureRequest.FeatureRequestPriority;
+import com.samgov.ingestor.model.FeatureRequest.FeatureRequestStatus;
 import com.samgov.ingestor.service.FeatureRequestService.CreateFeatureRequestRequest;
-import com.samgov.ingestor.service.FeatureRequestService.FeaturePriority;
-import com.samgov.ingestor.service.FeatureRequestService.FeatureRequestStatus;
 import com.samgov.ingestor.service.FeatureRequestService.UpdateFeatureRequestRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -186,7 +186,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
             testContract.getId(),
             title,
             "Description for " + title,
-            FeaturePriority.MEDIUM,
+            FeatureRequestPriority.MEDIUM,
             null
         );
     }
@@ -222,7 +222,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
                 testContract.getId(),
                 null, // missing title
                 "Description",
-                FeaturePriority.MEDIUM,
+                FeatureRequestPriority.MEDIUM,
                 null
             );
 
@@ -239,7 +239,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
                 UUID.randomUUID(), // non-existent contract
                 "Feature",
                 "Description",
-                FeaturePriority.MEDIUM,
+                FeatureRequestPriority.MEDIUM,
                 null
             );
 
@@ -398,7 +398,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
             UpdateFeatureRequestRequest updateRequest = new UpdateFeatureRequestRequest(
                 "Updated Title",
                 "Updated description",
-                FeaturePriority.HIGH,
+                FeatureRequestPriority.HIGH,
                 "UI/UX"
             );
 

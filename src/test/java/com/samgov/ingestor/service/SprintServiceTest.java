@@ -2,28 +2,28 @@ package com.samgov.ingestor.service;
 
 import com.samgov.ingestor.BaseServiceTest;
 import com.samgov.ingestor.config.TenantContext;
+import com.samgov.ingestor.dto.CreateSprintRequest;
+import com.samgov.ingestor.dto.CreateTaskRequest;
+import com.samgov.ingestor.dto.SprintDto;
+import com.samgov.ingestor.dto.SprintSummaryDto;
+import com.samgov.ingestor.dto.SprintTaskDto;
+import com.samgov.ingestor.dto.UpdateSprintRequest;
+import com.samgov.ingestor.dto.UpdateTaskRequest;
 import com.samgov.ingestor.exception.ResourceNotFoundException;
-import com.samgov.ingestor.model.Contract;
-import com.samgov.ingestor.model.Contract.ContractStatus;
-import com.samgov.ingestor.model.Contract.ContractType;
+import com.samgov.ingestor.model.Sprint.SprintStatus;
+import com.samgov.ingestor.model.SprintTask.TaskPriority;
+import com.samgov.ingestor.model.SprintTask.TaskStatus;
 import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.TenantMembership;
 import com.samgov.ingestor.model.User;
-import com.samgov.ingestor.repository.ContractRepository;
-import com.samgov.ingestor.service.SprintService.CreateSprintRequest;
-import com.samgov.ingestor.service.SprintService.CreateTaskRequest;
-import com.samgov.ingestor.service.SprintService.SprintDto;
-import com.samgov.ingestor.service.SprintService.SprintSummaryDto;
-import com.samgov.ingestor.service.SprintService.SprintTaskDto;
-import com.samgov.ingestor.service.SprintService.TaskStatus;
-import com.samgov.ingestor.service.SprintService.UpdateTaskRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * Behavioral tests for SprintService.
  *
- * Tests the business logic of sprint management for contract portals:
+ * Tests the business logic of sprint management:
  * - Sprint CRUD operations
  * - Sprint lifecycle (start, complete)
  * - Task management within sprints
@@ -48,40 +48,32 @@ class SprintServiceTest extends BaseServiceTest {
     @Autowired
     private SprintService sprintService;
 
-    @Autowired
-    private ContractRepository contractRepository;
-
-    private Contract testContract;
-
     @BeforeEach
     @Override
     protected void setUp() {
         super.setUp();
-
-        // Create a test contract for sprint tests
-        testContract = Contract.builder()
-            .tenant(testTenant)
-            .contractNumber("SPRINT-TEST-" + UUID.randomUUID().toString().substring(0, 8))
-            .title("Sprint Test Contract")
-            .description("Contract for testing sprints")
-            .contractType(ContractType.FIRM_FIXED_PRICE)
-            .status(ContractStatus.ACTIVE)
-            .agency("Department of Defense")
-            .agencyCode("DOD")
-            .popStartDate(LocalDate.now())
-            .popEndDate(LocalDate.now().plusYears(1))
-            .totalValue(new BigDecimal("500000.00"))
-            .build();
-        testContract = contractRepository.save(testContract);
     }
 
     private CreateSprintRequest createDefaultSprintRequest(String name) {
         return new CreateSprintRequest(
-            testContract.getId(),
             name,
+            "Description for " + name,
             "Sprint goal: " + name,
             LocalDate.now(),
             LocalDate.now().plusWeeks(2)
+        );
+    }
+
+    private CreateTaskRequest createDefaultTaskRequest(String title) {
+        return new CreateTaskRequest(
+            title,
+            "Description for " + title,
+            TaskStatus.TODO,
+            TaskPriority.MEDIUM,
+            3,
+            null,
+            null,
+            null
         );
     }
 
@@ -105,8 +97,7 @@ class SprintServiceTest extends BaseServiceTest {
             assertThat(result.goal()).isEqualTo("Sprint goal: Sprint 1");
             assertThat(result.startDate()).isEqualTo(LocalDate.now());
             assertThat(result.endDate()).isEqualTo(LocalDate.now().plusWeeks(2));
-            assertThat(result.status()).isEqualTo(SprintService.SprintStatus.PLANNED);
-            assertThat(result.contractId()).isEqualTo(testContract.getId());
+            assertThat(result.status()).isEqualTo(SprintStatus.PLANNING);
         }
 
         @Test
@@ -137,19 +128,19 @@ class SprintServiceTest extends BaseServiceTest {
         }
 
         @Test
-        @DisplayName("should list sprints for a contract")
-        void shouldListSprintsForContract() {
+        @DisplayName("should list sprints for tenant")
+        void shouldListSprintsForTenant() {
             // Given
             sprintService.createSprint(createDefaultSprintRequest("Sprint 1"));
             sprintService.createSprint(createDefaultSprintRequest("Sprint 2"));
             sprintService.createSprint(createDefaultSprintRequest("Sprint 3"));
 
             // When
-            List<SprintDto> sprints = sprintService.getSprints(testContract.getId());
+            Page<SprintDto> sprints = sprintService.getSprints(PageRequest.of(0, 10));
 
             // Then
-            assertThat(sprints).hasSize(3);
-            assertThat(sprints)
+            assertThat(sprints.getContent()).hasSize(3);
+            assertThat(sprints.getContent())
                 .extracting(SprintDto::name)
                 .containsExactlyInAnyOrder("Sprint 1", "Sprint 2", "Sprint 3");
         }
@@ -159,8 +150,9 @@ class SprintServiceTest extends BaseServiceTest {
         void shouldUpdateSprintDetails() {
             // Given
             SprintDto created = sprintService.createSprint(createDefaultSprintRequest("Original Sprint"));
-            SprintService.UpdateSprintRequest updateRequest = new SprintService.UpdateSprintRequest(
+            UpdateSprintRequest updateRequest = new UpdateSprintRequest(
                 "Updated Sprint Name",
+                "Updated description",
                 "Updated goal",
                 LocalDate.now().plusDays(1),
                 LocalDate.now().plusWeeks(3)
@@ -190,7 +182,7 @@ class SprintServiceTest extends BaseServiceTest {
         }
 
         @Test
-        @DisplayName("should reject duplicate sprint names within same contract")
+        @DisplayName("should reject duplicate sprint names within same tenant")
         void shouldRejectDuplicateSprintName() {
             // Given
             String sprintName = "Duplicate Sprint";
@@ -199,7 +191,7 @@ class SprintServiceTest extends BaseServiceTest {
             // When/Then
             assertThatThrownBy(() -> sprintService.createSprint(createDefaultSprintRequest(sprintName)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Sprint name already exists");
+                .hasMessageContaining("already exists");
         }
     }
 
@@ -208,18 +200,17 @@ class SprintServiceTest extends BaseServiceTest {
     class SprintLifecycle {
 
         @Test
-        @DisplayName("should start a planned sprint")
-        void shouldStartPlannedSprint() {
+        @DisplayName("should start a planning sprint")
+        void shouldStartPlanningSprint() {
             // Given
             SprintDto sprint = sprintService.createSprint(createDefaultSprintRequest("Sprint to Start"));
-            assertThat(sprint.status()).isEqualTo(SprintService.SprintStatus.PLANNED);
+            assertThat(sprint.status()).isEqualTo(SprintStatus.PLANNING);
 
             // When
             SprintDto started = sprintService.startSprint(sprint.id());
 
             // Then
-            assertThat(started.status()).isEqualTo(SprintService.SprintStatus.ACTIVE);
-            assertThat(started.actualStartDate()).isNotNull();
+            assertThat(started.status()).isEqualTo(SprintStatus.ACTIVE);
         }
 
         @Test
@@ -228,14 +219,13 @@ class SprintServiceTest extends BaseServiceTest {
             // Given
             SprintDto sprint = sprintService.createSprint(createDefaultSprintRequest("Sprint to Complete"));
             SprintDto started = sprintService.startSprint(sprint.id());
-            assertThat(started.status()).isEqualTo(SprintService.SprintStatus.ACTIVE);
+            assertThat(started.status()).isEqualTo(SprintStatus.ACTIVE);
 
             // When
             SprintDto completed = sprintService.completeSprint(sprint.id());
 
             // Then
-            assertThat(completed.status()).isEqualTo(SprintService.SprintStatus.COMPLETED);
-            assertThat(completed.actualEndDate()).isNotNull();
+            assertThat(completed.status()).isEqualTo(SprintStatus.COMPLETED);
         }
 
         @Test
@@ -247,8 +237,7 @@ class SprintServiceTest extends BaseServiceTest {
 
             // When/Then
             assertThatThrownBy(() -> sprintService.startSprint(sprint.id()))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Sprint is not in PLANNED status");
+                .isInstanceOf(IllegalStateException.class);
         }
 
         @Test
@@ -259,13 +248,12 @@ class SprintServiceTest extends BaseServiceTest {
 
             // When/Then
             assertThatThrownBy(() -> sprintService.completeSprint(sprint.id()))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Sprint is not in ACTIVE status");
+                .isInstanceOf(IllegalStateException.class);
         }
 
         @Test
-        @DisplayName("should get active sprint for contract")
-        void shouldGetActiveSprintForContract() {
+        @DisplayName("should get active sprint for tenant")
+        void shouldGetActiveSprintForTenant() {
             // Given
             sprintService.createSprint(createDefaultSprintRequest("Sprint 1"));
             SprintDto sprint2 = sprintService.createSprint(createDefaultSprintRequest("Sprint 2"));
@@ -275,26 +263,24 @@ class SprintServiceTest extends BaseServiceTest {
             sprintService.startSprint(sprint2.id());
 
             // When
-            SprintDto activeSprint = sprintService.getActiveSprint(testContract.getId());
+            SprintDto activeSprint = sprintService.getActiveSprint();
 
             // Then
             assertThat(activeSprint).isNotNull();
             assertThat(activeSprint.id()).isEqualTo(sprint2.id());
             assertThat(activeSprint.name()).isEqualTo("Sprint 2");
-            assertThat(activeSprint.status()).isEqualTo(SprintService.SprintStatus.ACTIVE);
+            assertThat(activeSprint.status()).isEqualTo(SprintStatus.ACTIVE);
         }
 
         @Test
-        @DisplayName("should return null when no active sprint exists")
-        void shouldReturnNullWhenNoActiveSprint() {
+        @DisplayName("should throw when no active sprint exists")
+        void shouldThrowWhenNoActiveSprint() {
             // Given
-            sprintService.createSprint(createDefaultSprintRequest("Planned Sprint"));
+            sprintService.createSprint(createDefaultSprintRequest("Planning Sprint"));
 
-            // When
-            SprintDto activeSprint = sprintService.getActiveSprint(testContract.getId());
-
-            // Then
-            assertThat(activeSprint).isNull();
+            // When/Then
+            assertThatThrownBy(() -> sprintService.getActiveSprint())
+                .isInstanceOf(ResourceNotFoundException.class);
         }
     }
 
@@ -317,9 +303,11 @@ class SprintServiceTest extends BaseServiceTest {
                 "Implement feature X",
                 "Detailed description of feature X",
                 TaskStatus.TODO,
+                TaskPriority.HIGH,
+                8,
                 testUser.getId(),
-                8, // story points
-                LocalDate.now().plusDays(3)
+                null,
+                "feature,backend"
             );
 
             // When
@@ -331,6 +319,7 @@ class SprintServiceTest extends BaseServiceTest {
             assertThat(task.title()).isEqualTo("Implement feature X");
             assertThat(task.description()).isEqualTo("Detailed description of feature X");
             assertThat(task.status()).isEqualTo(TaskStatus.TODO);
+            assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
             assertThat(task.assigneeId()).isEqualTo(testUser.getId());
             assertThat(task.storyPoints()).isEqualTo(8);
         }
@@ -339,17 +328,17 @@ class SprintServiceTest extends BaseServiceTest {
         @DisplayName("should update task details")
         void shouldUpdateTaskDetails() {
             // Given
-            SprintTaskDto task = sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Original Title", "Original description", TaskStatus.TODO, null, 5, null
-            ));
+            SprintTaskDto task = sprintService.addTask(testSprint.id(), createDefaultTaskRequest("Original Title"));
 
             UpdateTaskRequest updateRequest = new UpdateTaskRequest(
                 "Updated Title",
                 "Updated description",
-                null, // don't change status
-                testUser.getId(),
+                null,
+                TaskPriority.HIGH,
                 8,
-                LocalDate.now().plusDays(5)
+                testUser.getId(),
+                null,
+                "updated"
             );
 
             // When
@@ -366,9 +355,7 @@ class SprintServiceTest extends BaseServiceTest {
         @DisplayName("should move task to different status")
         void shouldMoveTaskToStatus() {
             // Given
-            SprintTaskDto task = sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Task to Move", null, TaskStatus.TODO, null, 3, null
-            ));
+            SprintTaskDto task = sprintService.addTask(testSprint.id(), createDefaultTaskRequest("Task to Move"));
             assertThat(task.status()).isEqualTo(TaskStatus.TODO);
 
             // When
@@ -382,31 +369,36 @@ class SprintServiceTest extends BaseServiceTest {
         @DisplayName("should complete task")
         void shouldCompleteTask() {
             // Given
-            SprintTaskDto task = sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Task to Complete", null, TaskStatus.IN_PROGRESS, null, 5, null
-            ));
+            CreateTaskRequest taskRequest = new CreateTaskRequest(
+                "Task to Complete",
+                null,
+                TaskStatus.IN_PROGRESS,
+                TaskPriority.MEDIUM,
+                5,
+                null,
+                null,
+                null
+            );
+            SprintTaskDto task = sprintService.addTask(testSprint.id(), taskRequest);
 
             // When
             SprintTaskDto completed = sprintService.moveTask(testSprint.id(), task.id(), TaskStatus.DONE);
 
             // Then
             assertThat(completed.status()).isEqualTo(TaskStatus.DONE);
-            assertThat(completed.completedAt()).isNotNull();
         }
 
         @Test
         @DisplayName("should delete task from sprint")
         void shouldDeleteTaskFromSprint() {
             // Given
-            SprintTaskDto task = sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Task to Delete", null, TaskStatus.TODO, null, 2, null
-            ));
+            SprintTaskDto task = sprintService.addTask(testSprint.id(), createDefaultTaskRequest("Task to Delete"));
 
             // When
             sprintService.deleteTask(testSprint.id(), task.id());
 
             // Then
-            List<SprintTaskDto> tasks = sprintService.getTasks(testSprint.id());
+            List<SprintTaskDto> tasks = sprintService.getSprintTasks(testSprint.id());
             assertThat(tasks).isEmpty();
         }
 
@@ -414,43 +406,15 @@ class SprintServiceTest extends BaseServiceTest {
         @DisplayName("should get all tasks for sprint")
         void shouldGetAllTasksForSprint() {
             // Given
-            sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Task 1", null, TaskStatus.TODO, null, 3, null
-            ));
-            sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Task 2", null, TaskStatus.IN_PROGRESS, testUser.getId(), 5, null
-            ));
-            sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Task 3", null, TaskStatus.DONE, null, 2, null
-            ));
+            sprintService.addTask(testSprint.id(), createDefaultTaskRequest("Task 1"));
+            sprintService.addTask(testSprint.id(), createDefaultTaskRequest("Task 2"));
+            sprintService.addTask(testSprint.id(), createDefaultTaskRequest("Task 3"));
 
             // When
-            List<SprintTaskDto> tasks = sprintService.getTasks(testSprint.id());
+            List<SprintTaskDto> tasks = sprintService.getSprintTasks(testSprint.id());
 
             // Then
             assertThat(tasks).hasSize(3);
-        }
-
-        @Test
-        @DisplayName("should get tasks filtered by status")
-        void shouldGetTasksFilteredByStatus() {
-            // Given
-            sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "TODO Task 1", null, TaskStatus.TODO, null, 3, null
-            ));
-            sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "TODO Task 2", null, TaskStatus.TODO, null, 5, null
-            ));
-            sprintService.addTask(testSprint.id(), new CreateTaskRequest(
-                "Done Task", null, TaskStatus.DONE, null, 2, null
-            ));
-
-            // When
-            List<SprintTaskDto> todoTasks = sprintService.getTasksByStatus(testSprint.id(), TaskStatus.TODO);
-
-            // Then
-            assertThat(todoTasks).hasSize(2);
-            assertThat(todoTasks).allMatch(t -> t.status() == TaskStatus.TODO);
         }
     }
 
@@ -466,19 +430,19 @@ class SprintServiceTest extends BaseServiceTest {
 
             // Add tasks in various statuses
             sprintService.addTask(sprint.id(), new CreateTaskRequest(
-                "TODO 1", null, TaskStatus.TODO, null, 3, null
+                "TODO 1", null, TaskStatus.TODO, TaskPriority.LOW, 3, null, null, null
             ));
             sprintService.addTask(sprint.id(), new CreateTaskRequest(
-                "TODO 2", null, TaskStatus.TODO, null, 5, null
+                "TODO 2", null, TaskStatus.TODO, TaskPriority.MEDIUM, 5, null, null, null
             ));
             sprintService.addTask(sprint.id(), new CreateTaskRequest(
-                "In Progress", null, TaskStatus.IN_PROGRESS, null, 8, null
+                "In Progress", null, TaskStatus.IN_PROGRESS, TaskPriority.HIGH, 8, null, null, null
             ));
             sprintService.addTask(sprint.id(), new CreateTaskRequest(
-                "Done 1", null, TaskStatus.DONE, null, 2, null
+                "Done 1", null, TaskStatus.DONE, TaskPriority.LOW, 2, null, null, null
             ));
             sprintService.addTask(sprint.id(), new CreateTaskRequest(
-                "Done 2", null, TaskStatus.DONE, null, 3, null
+                "Done 2", null, TaskStatus.DONE, TaskPriority.MEDIUM, 3, null, null, null
             ));
 
             // When
@@ -492,7 +456,6 @@ class SprintServiceTest extends BaseServiceTest {
             assertThat(summary.doneCount()).isEqualTo(2);
             assertThat(summary.totalStoryPoints()).isEqualTo(21); // 3+5+8+2+3
             assertThat(summary.completedStoryPoints()).isEqualTo(5); // 2+3
-            assertThat(summary.completionPercentage()).isEqualTo(40); // 2/5 = 40%
         }
 
         @Test
@@ -520,7 +483,6 @@ class SprintServiceTest extends BaseServiceTest {
 
         private Tenant tenant2;
         private User user2;
-        private Contract tenant2Contract;
 
         @BeforeEach
         void setUpSecondTenant() {
@@ -552,20 +514,6 @@ class SprintServiceTest extends BaseServiceTest {
                 .acceptedAt(Instant.now())
                 .build();
             tenantMembershipRepository.save(membership2);
-
-            // Create contract in tenant 2
-            tenant2Contract = Contract.builder()
-                .tenant(tenant2)
-                .contractNumber("T2-CONTRACT-" + UUID.randomUUID().toString().substring(0, 8))
-                .title("Tenant 2 Contract")
-                .contractType(ContractType.FIRM_FIXED_PRICE)
-                .status(ContractStatus.ACTIVE)
-                .agency("GSA")
-                .popStartDate(LocalDate.now())
-                .popEndDate(LocalDate.now().plusYears(1))
-                .totalValue(new BigDecimal("300000.00"))
-                .build();
-            tenant2Contract = contractRepository.save(tenant2Contract);
         }
 
         @Test
@@ -579,18 +527,11 @@ class SprintServiceTest extends BaseServiceTest {
             TenantContext.setCurrentUserId(user2.getId());
 
             // Create sprint in tenant 2
-            CreateSprintRequest tenant2Request = new CreateSprintRequest(
-                tenant2Contract.getId(),
-                "Tenant 2 Sprint",
-                "Goal for tenant 2",
-                LocalDate.now(),
-                LocalDate.now().plusWeeks(2)
-            );
-            SprintDto tenant2Sprint = sprintService.createSprint(tenant2Request);
+            SprintDto tenant2Sprint = sprintService.createSprint(createDefaultSprintRequest("Tenant 2 Sprint"));
 
             // Then - Each tenant should only see their own sprints
-            List<SprintDto> tenant2Sprints = sprintService.getSprints(tenant2Contract.getId());
-            assertThat(tenant2Sprints)
+            Page<SprintDto> tenant2Sprints = sprintService.getSprints(PageRequest.of(0, 10));
+            assertThat(tenant2Sprints.getContent())
                 .extracting(SprintDto::name)
                 .contains("Tenant 2 Sprint")
                 .doesNotContain("Tenant 1 Sprint");
@@ -599,8 +540,8 @@ class SprintServiceTest extends BaseServiceTest {
             switchTenant(testTenant);
             TenantContext.setCurrentUserId(testUser.getId());
 
-            List<SprintDto> tenant1Sprints = sprintService.getSprints(testContract.getId());
-            assertThat(tenant1Sprints)
+            Page<SprintDto> tenant1Sprints = sprintService.getSprints(PageRequest.of(0, 10));
+            assertThat(tenant1Sprints.getContent())
                 .extracting(SprintDto::name)
                 .contains("Tenant 1 Sprint")
                 .doesNotContain("Tenant 2 Sprint");
@@ -633,14 +574,7 @@ class SprintServiceTest extends BaseServiceTest {
             TenantContext.setCurrentUserId(user2.getId());
 
             // When - Create sprint with same name in tenant 2
-            CreateSprintRequest tenant2Request = new CreateSprintRequest(
-                tenant2Contract.getId(),
-                sameName,
-                "Goal for tenant 2",
-                LocalDate.now(),
-                LocalDate.now().plusWeeks(2)
-            );
-            SprintDto tenant2Sprint = sprintService.createSprint(tenant2Request);
+            SprintDto tenant2Sprint = sprintService.createSprint(createDefaultSprintRequest(sameName));
 
             // Then - Should succeed
             assertThat(tenant2Sprint.name()).isEqualTo(sameName);

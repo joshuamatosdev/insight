@@ -11,9 +11,9 @@ import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.TenantMembership;
 import com.samgov.ingestor.model.User;
 import com.samgov.ingestor.repository.ContractRepository;
-import com.samgov.ingestor.service.MessagingService.CreateMessageRequest;
-import com.samgov.ingestor.service.MessagingService.MessageDto;
-import com.samgov.ingestor.service.MessagingService.MessageThreadDto;
+import com.samgov.ingestor.dto.MessageDTO;
+import com.samgov.ingestor.dto.MessageThreadDTO;
+import com.samgov.ingestor.dto.SendMessageRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -106,7 +106,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should send message and create new thread if no thread exists")
         void shouldSendMessageAndCreateThread() {
             // Given
-            CreateMessageRequest request = new CreateMessageRequest(
+            SendMessageRequest request = new SendMessageRequest(
                 testContract.getId(),
                 null, // no existing thread
                 recipient.getId(),
@@ -115,7 +115,7 @@ class MessagingServiceTest extends BaseServiceTest {
             );
 
             // When
-            MessageDto result = messagingService.sendMessage(request);
+            MessageDTO result = messagingService.sendMessage(request);
 
             // Then
             assertThat(result).isNotNull();
@@ -132,24 +132,24 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should send message to existing thread")
         void shouldSendMessageToExistingThread() {
             // Given - create initial message and thread
-            CreateMessageRequest initialRequest = new CreateMessageRequest(
+            SendMessageRequest initialRequest = new SendMessageRequest(
                 testContract.getId(),
                 null,
                 recipient.getId(),
                 "Initial Subject",
                 "Initial message body"
             );
-            MessageDto initialMessage = messagingService.sendMessage(initialRequest);
+            MessageDTO initialMessage = messagingService.sendMessage(initialRequest);
 
             // When - reply to the thread
-            CreateMessageRequest replyRequest = new CreateMessageRequest(
+            SendMessageRequest replyRequest = new SendMessageRequest(
                 testContract.getId(),
                 initialMessage.threadId(),
                 recipient.getId(),
                 null, // subject inherited from thread
                 "Reply to initial message"
             );
-            MessageDto reply = messagingService.sendMessage(replyRequest);
+            MessageDTO reply = messagingService.sendMessage(replyRequest);
 
             // Then
             assertThat(reply.threadId()).isEqualTo(initialMessage.threadId());
@@ -160,7 +160,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should throw exception when sending to non-existent recipient")
         void shouldThrowExceptionForNonExistentRecipient() {
             // Given
-            CreateMessageRequest request = new CreateMessageRequest(
+            SendMessageRequest request = new SendMessageRequest(
                 testContract.getId(),
                 null,
                 UUID.randomUUID(), // non-existent recipient
@@ -183,7 +183,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should reply to thread successfully")
         void shouldReplyToThreadSuccessfully() {
             // Given - create a thread first
-            MessageDto initial = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO initial = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(),
                 null,
                 recipient.getId(),
@@ -192,7 +192,7 @@ class MessagingServiceTest extends BaseServiceTest {
             ));
 
             // When
-            MessageDto reply = messagingService.replyToThread(
+            MessageDTO reply = messagingService.replyToThread(
                 initial.threadId(),
                 "I think we need to extend the deadline."
             );
@@ -219,7 +219,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should update thread lastMessageAt when replying")
         void shouldUpdateThreadLastMessageAtWhenReplying() throws InterruptedException {
             // Given
-            MessageDto initial = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO initial = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(),
                 null,
                 recipient.getId(),
@@ -227,7 +227,7 @@ class MessagingServiceTest extends BaseServiceTest {
                 "Initial message"
             ));
 
-            MessageThreadDto threadBefore = messagingService.getThread(initial.threadId());
+            MessageThreadDTO threadBefore = messagingService.getThread(initial.threadId());
             Instant lastMessageBefore = threadBefore.lastMessageAt();
 
             // Wait a bit to ensure timestamp differs
@@ -237,7 +237,7 @@ class MessagingServiceTest extends BaseServiceTest {
             messagingService.replyToThread(initial.threadId(), "Reply message");
 
             // Then
-            MessageThreadDto threadAfter = messagingService.getThread(initial.threadId());
+            MessageThreadDTO threadAfter = messagingService.getThread(initial.threadId());
             assertThat(threadAfter.lastMessageAt()).isAfter(lastMessageBefore);
         }
     }
@@ -250,7 +250,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should mark individual message as read")
         void shouldMarkMessageAsRead() {
             // Given - send message and switch to recipient
-            MessageDto message = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO message = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(),
                 null,
                 recipient.getId(),
@@ -262,14 +262,14 @@ class MessagingServiceTest extends BaseServiceTest {
             switchUser(recipient);
 
             // Verify it's unread initially
-            MessageDto unread = messagingService.getMessage(message.id());
+            MessageDTO unread = messagingService.getMessage(message.id());
             assertThat(unread.isRead()).isFalse();
 
             // When
             messagingService.markAsRead(message.id());
 
             // Then
-            MessageDto read = messagingService.getMessage(message.id());
+            MessageDTO read = messagingService.getMessage(message.id());
             assertThat(read.isRead()).isTrue();
             assertThat(read.readAt()).isNotNull();
         }
@@ -278,7 +278,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should mark all messages in thread as read")
         void shouldMarkThreadAsRead() {
             // Given - send multiple messages
-            MessageDto msg1 = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO msg1 = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(),
                 null,
                 recipient.getId(),
@@ -296,16 +296,16 @@ class MessagingServiceTest extends BaseServiceTest {
             messagingService.markThreadAsRead(msg1.threadId());
 
             // Then
-            List<MessageDto> messages = messagingService.getMessagesInThread(msg1.threadId());
+            List<MessageDTO> messages = messagingService.getMessagesInThread(msg1.threadId());
             assertThat(messages).hasSize(3);
-            assertThat(messages).allMatch(MessageDto::isRead);
+            assertThat(messages).allMatch(MessageDTO::isRead);
         }
 
         @Test
         @DisplayName("should not affect messages already read")
         void shouldNotAffectAlreadyReadMessages() {
             // Given
-            MessageDto message = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO message = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(),
                 null,
                 recipient.getId(),
@@ -315,14 +315,14 @@ class MessagingServiceTest extends BaseServiceTest {
 
             switchUser(recipient);
             messagingService.markAsRead(message.id());
-            MessageDto readOnce = messagingService.getMessage(message.id());
+            MessageDTO readOnce = messagingService.getMessage(message.id());
             Instant firstReadAt = readOnce.readAt();
 
             // When - mark as read again
             messagingService.markAsRead(message.id());
 
             // Then - readAt should not change
-            MessageDto readTwice = messagingService.getMessage(message.id());
+            MessageDTO readTwice = messagingService.getMessage(message.id());
             assertThat(readTwice.readAt()).isEqualTo(firstReadAt);
         }
     }
@@ -335,13 +335,13 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should return correct unread count")
         void shouldReturnCorrectUnreadCount() {
             // Given - send multiple messages to recipient
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Message 1", "Body 1"
             ));
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Message 2", "Body 2"
             ));
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Message 3", "Body 3"
             ));
 
@@ -359,10 +359,10 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should decrement unread count when marking message as read")
         void shouldDecrementUnreadCountWhenMarking() {
             // Given
-            MessageDto msg1 = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO msg1 = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Message 1", "Body 1"
             ));
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Message 2", "Body 2"
             ));
 
@@ -394,13 +394,13 @@ class MessagingServiceTest extends BaseServiceTest {
             contract2 = contractRepository.save(contract2);
 
             // Send messages to different contracts
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Contract 1 Msg", "Body"
             ));
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 contract2.getId(), null, recipient.getId(), "Contract 2 Msg 1", "Body"
             ));
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 contract2.getId(), null, recipient.getId(), "Contract 2 Msg 2", "Body"
             ));
 
@@ -424,19 +424,19 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should return threads ordered by lastMessageAt descending")
         void shouldReturnThreadsOrderedByLastMessageAt() throws InterruptedException {
             // Given - create threads with different last message times
-            MessageDto thread1 = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO thread1 = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Thread 1", "First thread"
             ));
 
             Thread.sleep(10);
 
-            MessageDto thread2 = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO thread2 = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Thread 2", "Second thread"
             ));
 
             Thread.sleep(10);
 
-            MessageDto thread3 = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO thread3 = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Thread 3", "Third thread"
             ));
 
@@ -445,7 +445,7 @@ class MessagingServiceTest extends BaseServiceTest {
             messagingService.replyToThread(thread1.threadId(), "New reply to thread 1");
 
             // When
-            List<MessageThreadDto> threads = messagingService.getThreads(
+            List<MessageThreadDTO> threads = messagingService.getThreads(
                 testContract.getId(),
                 PageRequest.of(0, 10)
             ).getContent();
@@ -461,12 +461,12 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should return thread with participant information")
         void shouldReturnThreadWithParticipants() {
             // Given
-            MessageDto message = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO message = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Subject", "Body"
             ));
 
             // When
-            MessageThreadDto thread = messagingService.getThread(message.threadId());
+            MessageThreadDTO thread = messagingService.getThread(message.threadId());
 
             // Then
             assertThat(thread).isNotNull();
@@ -480,14 +480,14 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should return thread message count")
         void shouldReturnThreadMessageCount() {
             // Given
-            MessageDto initial = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO initial = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Subject", "Message 1"
             ));
             messagingService.replyToThread(initial.threadId(), "Message 2");
             messagingService.replyToThread(initial.threadId(), "Message 3");
 
             // When
-            MessageThreadDto thread = messagingService.getThread(initial.threadId());
+            MessageThreadDTO thread = messagingService.getThread(initial.threadId());
 
             // Then
             assertThat(thread.messageCount()).isEqualTo(3);
@@ -573,7 +573,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should isolate messages between tenants")
         void shouldIsolateMessagesBetweenTenants() {
             // Given - Create message in tenant 1
-            MessageDto tenant1Msg = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO tenant1Msg = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Tenant 1 Message", "Body"
             ));
 
@@ -582,17 +582,17 @@ class MessagingServiceTest extends BaseServiceTest {
             TenantContext.setCurrentUserId(tenant2User.getId());
 
             // Create message in tenant 2
-            MessageDto tenant2Msg = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO tenant2Msg = messagingService.sendMessage(new SendMessageRequest(
                 tenant2Contract.getId(), null, tenant2Recipient.getId(), "Tenant 2 Message", "Body"
             ));
 
             // Then - Each tenant should only see their own messages
-            Page<MessageThreadDto> tenant2Threads = messagingService.getThreads(
+            Page<MessageThreadDTO> tenant2Threads = messagingService.getThreads(
                 tenant2Contract.getId(),
                 PageRequest.of(0, 10)
             );
             assertThat(tenant2Threads.getContent())
-                .extracting(MessageThreadDto::subject)
+                .extracting(MessageThreadDTO::subject)
                 .contains("Tenant 2 Message")
                 .doesNotContain("Tenant 1 Message");
 
@@ -600,12 +600,12 @@ class MessagingServiceTest extends BaseServiceTest {
             switchTenant(testTenant);
             TenantContext.setCurrentUserId(testUser.getId());
 
-            Page<MessageThreadDto> tenant1Threads = messagingService.getThreads(
+            Page<MessageThreadDTO> tenant1Threads = messagingService.getThreads(
                 testContract.getId(),
                 PageRequest.of(0, 10)
             );
             assertThat(tenant1Threads.getContent())
-                .extracting(MessageThreadDto::subject)
+                .extracting(MessageThreadDTO::subject)
                 .contains("Tenant 1 Message")
                 .doesNotContain("Tenant 2 Message");
         }
@@ -614,7 +614,7 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should not allow access to other tenant's messages by ID")
         void shouldNotAllowCrossTenantMessageAccess() {
             // Given - Create message in tenant 1
-            MessageDto tenant1Msg = messagingService.sendMessage(new CreateMessageRequest(
+            MessageDTO tenant1Msg = messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Subject", "Body"
             ));
 
@@ -631,10 +631,10 @@ class MessagingServiceTest extends BaseServiceTest {
         @DisplayName("should isolate unread counts between tenants")
         void shouldIsolateUnreadCountsBetweenTenants() {
             // Given - Send messages in tenant 1
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Msg 1", "Body"
             ));
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 testContract.getId(), null, recipient.getId(), "Msg 2", "Body"
             ));
 
@@ -642,7 +642,7 @@ class MessagingServiceTest extends BaseServiceTest {
             switchTenant(tenant2);
             TenantContext.setCurrentUserId(tenant2User.getId());
 
-            messagingService.sendMessage(new CreateMessageRequest(
+            messagingService.sendMessage(new SendMessageRequest(
                 tenant2Contract.getId(), null, tenant2Recipient.getId(), "T2 Msg", "Body"
             ));
 

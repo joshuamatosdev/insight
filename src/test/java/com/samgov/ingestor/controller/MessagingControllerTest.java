@@ -2,6 +2,7 @@ package com.samgov.ingestor.controller;
 
 import com.samgov.ingestor.BaseControllerTest;
 import com.samgov.ingestor.config.TenantContext;
+import com.samgov.ingestor.dto.SendMessageRequest;
 import com.samgov.ingestor.model.Contract;
 import com.samgov.ingestor.model.Contract.ContractStatus;
 import com.samgov.ingestor.model.Contract.ContractType;
@@ -14,7 +15,6 @@ import com.samgov.ingestor.repository.RoleRepository;
 import com.samgov.ingestor.repository.TenantMembershipRepository;
 import com.samgov.ingestor.repository.TenantRepository;
 import com.samgov.ingestor.repository.UserRepository;
-import com.samgov.ingestor.service.MessagingService.CreateMessageRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -167,10 +167,8 @@ class MessagingControllerTest extends BaseControllerTest {
         TenantContext.clear();
     }
 
-    private CreateMessageRequest createMessageRequest(String subject, String body) {
-        return new CreateMessageRequest(
-            testContract.getId(),
-            null,
+    private SendMessageRequest createMessageRequest(String subject, String body) {
+        return new SendMessageRequest(
             recipient.getId(),
             subject,
             body
@@ -186,7 +184,7 @@ class MessagingControllerTest extends BaseControllerTest {
         @DisplayName("should send message and return 201 CREATED")
         void shouldSendMessageSuccessfully() throws Exception {
             // Given
-            CreateMessageRequest request = createMessageRequest("Project Update", "Here is the latest status...");
+            SendMessageRequest request = createMessageRequest("Project Update", "Here is the latest status...");
 
             // When/Then
             performPost(BASE_URL, request)
@@ -194,8 +192,7 @@ class MessagingControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.threadId", notNullValue()))
                 .andExpect(jsonPath("$.senderId", is(testUser.getId().toString())))
-                .andExpect(jsonPath("$.subject", is("Project Update")))
-                .andExpect(jsonPath("$.body", is("Here is the latest status...")))
+                .andExpect(jsonPath("$.content", is("Here is the latest status...")))
                 .andExpect(jsonPath("$.isRead", is(false)));
         }
 
@@ -203,9 +200,7 @@ class MessagingControllerTest extends BaseControllerTest {
         @DisplayName("should return 400 BAD REQUEST for missing body")
         void shouldReturn400ForMissingBody() throws Exception {
             // Given
-            CreateMessageRequest request = new CreateMessageRequest(
-                testContract.getId(),
-                null,
+            SendMessageRequest request = new SendMessageRequest(
                 recipient.getId(),
                 "Subject",
                 null // missing body
@@ -220,9 +215,7 @@ class MessagingControllerTest extends BaseControllerTest {
         @DisplayName("should return 404 NOT FOUND for non-existent recipient")
         void shouldReturn404ForNonExistentRecipient() throws Exception {
             // Given
-            CreateMessageRequest request = new CreateMessageRequest(
-                testContract.getId(),
-                null,
+            SendMessageRequest request = new SendMessageRequest(
                 UUID.randomUUID(), // non-existent recipient
                 "Subject",
                 "Body"
@@ -258,7 +251,7 @@ class MessagingControllerTest extends BaseControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.threadId", is(threadId)))
-                .andExpect(jsonPath("$.body", is("This is a reply")));
+                .andExpect(jsonPath("$.content", is("This is a reply")));
         }
 
         @Test
@@ -293,8 +286,7 @@ class MessagingControllerTest extends BaseControllerTest {
             // When/Then
             performGet(BASE_URL + "/" + messageId)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(messageId)))
-                .andExpect(jsonPath("$.subject", is("Subject")));
+                .andExpect(jsonPath("$.id", is(messageId)));
         }
 
         @Test

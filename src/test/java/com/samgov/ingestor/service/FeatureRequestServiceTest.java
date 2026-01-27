@@ -11,10 +11,10 @@ import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.TenantMembership;
 import com.samgov.ingestor.model.User;
 import com.samgov.ingestor.repository.ContractRepository;
+import com.samgov.ingestor.model.FeatureRequest.FeatureRequestPriority;
+import com.samgov.ingestor.model.FeatureRequest.FeatureRequestStatus;
 import com.samgov.ingestor.service.FeatureRequestService.CreateFeatureRequestRequest;
 import com.samgov.ingestor.service.FeatureRequestService.FeatureRequestDto;
-import com.samgov.ingestor.service.FeatureRequestService.FeatureRequestStatus;
-import com.samgov.ingestor.service.FeatureRequestService.FeaturePriority;
 import com.samgov.ingestor.service.FeatureRequestService.UpdateFeatureRequestRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -105,7 +105,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             testContract.getId(),
             title,
             "Description for " + title,
-            FeaturePriority.MEDIUM,
+            FeatureRequestPriority.MEDIUM,
             null // category
         );
     }
@@ -128,7 +128,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             assertThat(result.id()).isNotNull();
             assertThat(result.title()).isEqualTo("Add dark mode");
             assertThat(result.description()).isEqualTo("Description for Add dark mode");
-            assertThat(result.priority()).isEqualTo(FeaturePriority.MEDIUM);
+            assertThat(result.priority()).isEqualTo(FeatureRequestPriority.MEDIUM);
             assertThat(result.status()).isEqualTo(FeatureRequestStatus.SUBMITTED);
             assertThat(result.voteCount()).isZero();
             assertThat(result.submitterId()).isEqualTo(testUser.getId());
@@ -196,7 +196,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             UpdateFeatureRequestRequest updateRequest = new UpdateFeatureRequestRequest(
                 "Updated Title",
                 "Updated description",
-                FeaturePriority.HIGH,
+                FeatureRequestPriority.HIGH,
                 "UI/UX"
             );
 
@@ -209,7 +209,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             // Then
             assertThat(result.title()).isEqualTo("Updated Title");
             assertThat(result.description()).isEqualTo("Updated description");
-            assertThat(result.priority()).isEqualTo(FeaturePriority.HIGH);
+            assertThat(result.priority()).isEqualTo(FeatureRequestPriority.HIGH);
             assertThat(result.category()).isEqualTo("UI/UX");
         }
 
@@ -647,7 +647,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
                     tenant2Contract.getId(),
                     "Tenant 2 Feature",
                     "Description",
-                    FeaturePriority.MEDIUM,
+                    FeatureRequestPriority.MEDIUM,
                     null
                 )
             );
