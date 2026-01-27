@@ -1,29 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Card, CardBody, Flex, Stack, Box, Grid } from '../components/layout';
 import { Text, Button, Badge } from '../components/primitives';
+import type { Role, PermissionsByCategory, RolesPageState } from './types';
 
 const API_BASE = '/api/v1';
-
-interface Role {
-  id: string;
-  name: string;
-  description: string;
-  permissions: string[];
-  isSystemRole: boolean;
-  createdAt: string;
-}
-
-interface PermissionsByCategory {
-  [category: string]: Array<{
-    id: string;
-    code: string;
-    displayName: string;
-    description: string;
-    category: string;
-  }>;
-}
-
-type PageState = 'loading' | 'error' | 'loaded';
 
 /**
  * Get auth token from localStorage
@@ -45,7 +25,7 @@ function getAuthToken(): string | null {
  * Roles management page
  */
 export function RolesPage(): React.ReactElement {
-  const [pageState, setPageState] = useState<PageState>('loading');
+  const [pageState, setPageState] = useState<RolesPageState>('loading');
   const [roles, setRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<PermissionsByCategory>({});
   const [error, setError] = useState<string | null>(null);

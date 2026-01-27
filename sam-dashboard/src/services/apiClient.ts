@@ -14,46 +14,10 @@
  *   const result = await apiClient.post('/api/v1/auth/login', { email, password });
  */
 
-import type { paths, components } from '../types/api.generated';
+import type { ApiError, ApiResult } from './types';
 
-// Export component types for convenience
-export type { paths, components };
-
-/**
- * Extract the response type for a given path and method
- */
-export type ApiResponse<
-  Path extends keyof paths,
-  Method extends keyof paths[Path]
-> = paths[Path][Method] extends { responses: { 200: { content: { 'application/json': infer T } } } }
-  ? T
-  : never;
-
-/**
- * Extract the request body type for a given path and method
- */
-export type ApiRequestBody<
-  Path extends keyof paths,
-  Method extends keyof paths[Path]
-> = paths[Path][Method] extends { requestBody: { content: { 'application/json': infer T } } }
-  ? T
-  : never;
-
-/**
- * API error response
- */
-export interface ApiError {
-  message: string;
-  status: number;
-  errors?: Record<string, string[]>;
-}
-
-/**
- * Result type for API calls
- */
-export type ApiResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: ApiError };
+// Re-export types for convenience
+export type { ApiError, ApiResult } from './types';
 
 const API_BASE = '/api/v1';
 

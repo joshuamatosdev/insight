@@ -2,17 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Card, CardBody, Flex, Stack, Box } from '../components/layout';
 import { Text, Button, BuildingCheckIcon } from '../components/primitives';
+import type { VerificationStatus, VerifyEmailResult } from './types';
 
 const API_BASE = '/api/v1';
-
-type VerificationStatus = 'loading' | 'success' | 'error' | 'no-token';
 
 /**
  * Verify email token with the API
  */
-async function verifyEmailToken(
-  verificationToken: string
-): Promise<{ success: boolean; message: string }> {
+async function verifyEmailToken(verificationToken: string): Promise<VerifyEmailResult> {
   try {
     const response = await fetch(`${API_BASE}/auth/verify-email`, {
       method: 'POST',

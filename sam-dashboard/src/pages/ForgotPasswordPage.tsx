@@ -2,16 +2,9 @@ import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/layout';
 import { Text, Button, Input, BuildingCheckIcon } from '../components/primitives';
+import type { ForgotPasswordFormState, ForgotPasswordFormErrors } from './types';
 
 const API_BASE = '/api/v1';
-
-interface FormState {
-  email: string;
-}
-
-interface FormErrors {
-  email?: string;
-}
 
 /**
  * Validates email format
@@ -24,8 +17,8 @@ function isValidEmail(email: string): boolean {
 /**
  * Validates form and returns errors
  */
-function validateForm(form: FormState): FormErrors {
-  const errors: FormErrors = {};
+function validateForm(form: ForgotPasswordFormState): ForgotPasswordFormErrors {
+  const errors: ForgotPasswordFormErrors = {};
 
   if (form.email.trim().length === 0) {
     errors.email = 'Email is required';
@@ -40,8 +33,8 @@ function validateForm(form: FormState): FormErrors {
  * Forgot password page - allows users to request a password reset link
  */
 export function ForgotPasswordPage(): React.ReactElement {
-  const [form, setForm] = useState<FormState>({ email: '' });
-  const [validationErrors, setValidationErrors] = useState<FormErrors>({});
+  const [form, setForm] = useState<ForgotPasswordFormState>({ email: '' });
+  const [validationErrors, setValidationErrors] = useState<ForgotPasswordFormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);

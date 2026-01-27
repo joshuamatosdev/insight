@@ -2,20 +2,13 @@ import { useState, useEffect, useCallback, FormEvent, ChangeEvent } from 'react'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/layout';
 import { Text, Button, Input, BuildingCheckIcon } from '../components/primitives';
+import type {
+  ResetPasswordFormState,
+  ResetPasswordFormErrors,
+  ResetPasswordPageState,
+} from './types';
 
 const API_BASE = '/api/v1';
-
-interface FormState {
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  password?: string;
-  confirmPassword?: string;
-}
-
-type PageState = 'validating' | 'invalid' | 'form' | 'success';
 
 /**
  * Validates password strength
@@ -30,8 +23,8 @@ function isStrongPassword(password: string): boolean {
 /**
  * Validates form and returns errors
  */
-function validateForm(form: FormState): FormErrors {
-  const errors: FormErrors = {};
+function validateForm(form: ResetPasswordFormState): ResetPasswordFormErrors {
+  const errors: ResetPasswordFormErrors = {};
 
   if (form.password.length === 0) {
     errors.password = 'Password is required';
@@ -56,9 +49,9 @@ export function ResetPasswordPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
 
-  const [pageState, setPageState] = useState<PageState>(token !== null ? 'validating' : 'invalid');
-  const [form, setForm] = useState<FormState>({ password: '', confirmPassword: '' });
-  const [validationErrors, setValidationErrors] = useState<FormErrors>({});
+  const [pageState, setPageState] = useState<ResetPasswordPageState>(token !== null ? 'validating' : 'invalid');
+  const [form, setForm] = useState<ResetPasswordFormState>({ password: '', confirmPassword: '' });
+  const [validationErrors, setValidationErrors] = useState<ResetPasswordFormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
