@@ -326,7 +326,7 @@ public class FeatureRequestService {
     public Page<FeatureRequestDto> getMyFeatureRequests(Pageable pageable) {
         UUID tenantId = TenantContext.getCurrentTenantId();
         UUID userId = TenantContext.getCurrentUserId();
-        return featureRequestRepository.findByTenantIdAndCreatedById(tenantId, userId, pageable)
+        return featureRequestRepository.findByTenantIdAndSubmittedById(tenantId, userId, pageable)
                 .map(this::toDto);
     }
 
@@ -408,8 +408,8 @@ public class FeatureRequestService {
             FeatureRequestPriority priority,
             Integer voteCount,
             Boolean hasVoted,
-            UUID createdById,
-            String createdByName,
+            UUID submittedById,
+            String submittedByName,
             String adminNotes,
             String targetRelease,
             Instant completedAt,
