@@ -1,14 +1,14 @@
 package com.samgov.ingestor.controller;
 
+import com.samgov.ingestor.dto.CreateSprintRequest;
+import com.samgov.ingestor.dto.CreateTaskRequest;
+import com.samgov.ingestor.dto.SprintDto;
+import com.samgov.ingestor.dto.SprintSummaryDto;
+import com.samgov.ingestor.dto.SprintTaskDto;
+import com.samgov.ingestor.dto.UpdateSprintRequest;
+import com.samgov.ingestor.dto.UpdateTaskRequest;
 import com.samgov.ingestor.model.SprintTask.TaskStatus;
 import com.samgov.ingestor.service.SprintService;
-import com.samgov.ingestor.service.SprintService.CreateSprintRequest;
-import com.samgov.ingestor.service.SprintService.CreateTaskRequest;
-import com.samgov.ingestor.service.SprintService.SprintDto;
-import com.samgov.ingestor.service.SprintService.SprintSummaryDto;
-import com.samgov.ingestor.service.SprintService.TaskDto;
-import com.samgov.ingestor.service.SprintService.UpdateSprintRequest;
-import com.samgov.ingestor.service.SprintService.UpdateTaskRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -113,42 +113,42 @@ public class SprintController {
     // Task endpoints
 
     @GetMapping("/{id}/tasks")
-    public ResponseEntity<List<TaskDto>> getSprintTasks(@PathVariable UUID id) {
-        List<TaskDto> tasks = sprintService.getSprintTasks(id);
+    public ResponseEntity<List<SprintTaskDto>> getSprintTasks(@PathVariable UUID id) {
+        List<SprintTaskDto> tasks = sprintService.getSprintTasks(id);
         return ResponseEntity.ok(tasks);
     }
 
     @PostMapping("/{id}/tasks")
     @PreAuthorize("@tenantSecurityService.hasPermission('SPRINT_TASK_CREATE')")
-    public ResponseEntity<TaskDto> addTask(
+    public ResponseEntity<SprintTaskDto> addTask(
         @PathVariable UUID id,
         @Valid @RequestBody CreateTaskRequest request
     ) {
         log.info("Adding task to sprint: {}", id);
-        TaskDto task = sprintService.addTask(id, request);
+        SprintTaskDto task = sprintService.addTask(id, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
 
     @PutMapping("/{sprintId}/tasks/{taskId}")
     @PreAuthorize("@tenantSecurityService.hasPermission('SPRINT_TASK_UPDATE')")
-    public ResponseEntity<TaskDto> updateTask(
+    public ResponseEntity<SprintTaskDto> updateTask(
         @PathVariable UUID sprintId,
         @PathVariable UUID taskId,
         @Valid @RequestBody UpdateTaskRequest request
     ) {
-        TaskDto task = sprintService.updateTask(sprintId, taskId, request);
+        SprintTaskDto task = sprintService.updateTask(sprintId, taskId, request);
         return ResponseEntity.ok(task);
     }
 
     @PutMapping("/{sprintId}/tasks/{taskId}/status")
     @PreAuthorize("@tenantSecurityService.hasPermission('SPRINT_TASK_UPDATE')")
-    public ResponseEntity<TaskDto> moveTask(
+    public ResponseEntity<SprintTaskDto> moveTask(
         @PathVariable UUID sprintId,
         @PathVariable UUID taskId,
         @RequestParam TaskStatus status
     ) {
         log.info("Moving task {} to status: {}", taskId, status);
-        TaskDto task = sprintService.moveTask(sprintId, taskId, status);
+        SprintTaskDto task = sprintService.moveTask(sprintId, taskId, status);
         return ResponseEntity.ok(task);
     }
 
