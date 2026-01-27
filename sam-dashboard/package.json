@@ -19,8 +19,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "preview": "vite preview",
-    "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/types/api.generated.ts",
-    "generate:types:file": "openapi-typescript ./openapi.json -o src/types/api.generated.ts"
+    "generate:types": "node scripts/generate-api-types.js",
+    "generate:types:save": "node scripts/generate-api-types.js --save-spec",
+    "generate:types:offline": "node scripts/generate-api-types.js --from-file"
   },
   "dependencies": {
     "react": "^19.2.0",
