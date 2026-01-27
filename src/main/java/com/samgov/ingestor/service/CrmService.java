@@ -292,8 +292,14 @@ public class CrmService {
         return contactRepository.searchContacts(tenantId, keyword, pageable);
     }
 
-    public List<Contact> getContactsByOrganization(UUID organizationId) {
-        return contactRepository.findByOrganizationIdAndStatusNot(organizationId, ContactStatus.ARCHIVED);
+    public List<Contact> getContactsByOrganization(UUID tenantId, UUID organizationId) {
+        return contactRepository.findByTenantIdAndOrganizationIdAndStatusNot(
+            tenantId, organizationId, ContactStatus.ARCHIVED);
+    }
+
+    public Page<Contact> listContactsByOrganization(UUID tenantId, UUID organizationId, Pageable pageable) {
+        return contactRepository.findByTenantIdAndOrganizationIdAndStatusNot(
+            tenantId, organizationId, ContactStatus.ARCHIVED, pageable);
     }
 
     public Page<Contact> getContactsByType(UUID tenantId, ContactType type, Pageable pageable) {

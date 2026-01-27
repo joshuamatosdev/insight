@@ -1,6 +1,7 @@
 package com.samgov.ingestor.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
@@ -11,8 +12,11 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
  *
  * Uses Spring Data Elasticsearch with the new Elasticsearch Java Client.
  * Connection URI is configurable via environment variable ELASTICSEARCH_URI.
+ *
+ * Disabled when elasticsearch.enabled=false (e.g., in tests).
  */
 @Configuration
+@ConditionalOnExpression("${elasticsearch.enabled:true}")
 @EnableElasticsearchRepositories(basePackages = "com.samgov.ingestor.elasticsearch")
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
 

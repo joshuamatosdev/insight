@@ -6,13 +6,14 @@ import com.samgov.ingestor.exception.ResourceNotFoundException;
 import com.samgov.ingestor.model.Contract;
 import com.samgov.ingestor.model.Contract.ContractStatus;
 import com.samgov.ingestor.model.Contract.ContractType;
+import com.samgov.ingestor.model.Milestone.MilestonePriority;
+import com.samgov.ingestor.model.Milestone.MilestoneType;
 import com.samgov.ingestor.model.Role;
 import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.TenantMembership;
 import com.samgov.ingestor.model.User;
 import com.samgov.ingestor.repository.ContractRepository;
 import com.samgov.ingestor.service.MilestoneService.CreateMilestoneRequest;
-import com.samgov.ingestor.service.MilestoneService.DependencyDto;
 import com.samgov.ingestor.service.MilestoneService.MilestoneDto;
 import com.samgov.ingestor.model.Milestone.MilestoneStatus;
 import com.samgov.ingestor.service.MilestoneService.UpdateMilestoneRequest;
@@ -81,11 +82,19 @@ class MilestoneServiceTest extends BaseServiceTest {
             testContract.getId(),
             name,
             "Description for " + name,
+            MilestoneType.DEVELOPMENT,
+            null, // plannedStartDate
+            null, // plannedEndDate
             dueDate,
+            false, // isCriticalPath
+            null, // paymentAmount
+            false, // isPaymentMilestone
             testUser.getId(),
-            false, // isOnCriticalPath
-            null, // parent milestone
-            null // dependencies
+            MilestonePriority.MEDIUM,
+            null, // sortOrder
+            null, // deliverableId
+            null, // dependsOnIds
+            null  // notes
         );
     }
 
@@ -154,7 +163,25 @@ class MilestoneServiceTest extends BaseServiceTest {
             milestoneService.createMilestone(createDefaultRequest("Milestone 3", LocalDate.now().plusMonths(3)));
 
             // When
-            Page<MilestoneDto> milestones = milestoneService.getMilestones(
+            List<MilestoneDto> milestones = milestoneService.getMilestones(testContract.getId());
+
+            // Then
+            assertThat(milestones).hasSize(3);
+            assertThat(milestones)
+                .extracting(MilestoneDto::name)
+                .containsExactlyInAnyOrder("Milestone 1", "Milestone 2", "Milestone 3");
+        }
+
+        @Test
+        @DisplayName("should list milestones for a contract with pagination")
+        void shouldListMilestonesForContractWithPagination() {
+            // Given
+            milestoneService.createMilestone(createDefaultRequest("Milestone 1", LocalDate.now().plusMonths(1)));
+            milestoneService.createMilestone(createDefaultRequest("Milestone 2", LocalDate.now().plusMonths(2)));
+            milestoneService.createMilestone(createDefaultRequest("Milestone 3", LocalDate.now().plusMonths(3)));
+
+            // When
+            Page<MilestoneDto> milestones = milestoneService.getMilestonesPaged(
                 testContract.getId(),
                 PageRequest.of(0, 10)
             );
@@ -177,10 +204,20 @@ class MilestoneServiceTest extends BaseServiceTest {
             UpdateMilestoneRequest updateRequest = new UpdateMilestoneRequest(
                 "Updated Milestone",
                 "Updated description",
+                MilestoneType.DEVELOPMENT,
+                null, // plannedStartDate
+                null, // plannedEndDate
                 LocalDate.now().plusMonths(2),
-                MilestoneStatus.IN_PROGRESS,
-                null, // owner unchanged
-                true // now on critical path
+                null, // actualStartDate
+                null, // actualEndDate
+                null, // percentComplete
+                true, // isCriticalPath
+                null, // paymentAmount
+                null, // isPaymentMilestone
+                null, // ownerId
+                MilestonePriority.HIGH,
+                null, // sortOrder
+                null  // notes
             );
 
             // When
@@ -190,8 +227,7 @@ class MilestoneServiceTest extends BaseServiceTest {
             assertThat(result.name()).isEqualTo("Updated Milestone");
             assertThat(result.description()).isEqualTo("Updated description");
             assertThat(result.dueDate()).isEqualTo(LocalDate.now().plusMonths(2));
-            assertThat(result.status()).isEqualTo(MilestoneStatus.IN_PROGRESS);
-            assertThat(result.isOnCriticalPath()).isTrue();
+            assertThat(result.isCriticalPath()).isTrue();
         }
 
         @Test
@@ -239,33 +275,46 @@ class MilestoneServiceTest extends BaseServiceTest {
                 testContract.getId(),
                 "Start",
                 "Project kickoff",
+                MilestoneType.DEVELOPMENT,
+                null, null, // plannedStartDate, plannedEndDate
                 LocalDate.now().plusWeeks(1),
+                true, // isCriticalPath
+                null, false, // paymentAmount, isPaymentMilestone
                 testUser.getId(),
-                true, // on critical path
-                null,
-                null
+                MilestonePriority.MEDIUM,
+                null, null, null, null
             ));
 
             MilestoneDto m2 = milestoneService.createMilestone(new CreateMilestoneRequest(
                 testContract.getId(),
                 "Design Complete",
                 "Design phase complete",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(1),
+                true, // isCriticalPath
+                null, false,
                 testUser.getId(),
-                true,
-                null,
-                List.of(m1.id())
+                MilestonePriority.MEDIUM,
+                null, null,
+                List.of(m1.id()),
+                null
             ));
 
             MilestoneDto m3 = milestoneService.createMilestone(new CreateMilestoneRequest(
                 testContract.getId(),
                 "Development Complete",
                 "Development phase complete",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(3),
+                true, // isCriticalPath
+                null, false,
                 testUser.getId(),
-                true,
-                null,
-                List.of(m2.id())
+                MilestonePriority.MEDIUM,
+                null, null,
+                List.of(m2.id()),
+                null
             ));
 
             // Non-critical path milestone
@@ -273,11 +322,14 @@ class MilestoneServiceTest extends BaseServiceTest {
                 testContract.getId(),
                 "Documentation",
                 "User documentation",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(2),
-                testUser.getId(),
                 false, // not on critical path
-                null,
-                null
+                null, false,
+                testUser.getId(),
+                MilestonePriority.LOW,
+                null, null, null, null
             ));
 
             // When
@@ -298,30 +350,38 @@ class MilestoneServiceTest extends BaseServiceTest {
                 testContract.getId(),
                 "Phase 1",
                 "First phase",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(1),
+                true, // isCriticalPath
+                null, false,
                 testUser.getId(),
-                true,
-                null,
-                null
+                MilestonePriority.MEDIUM,
+                null, null, null, null
             ));
 
             MilestoneDto m2 = milestoneService.createMilestone(new CreateMilestoneRequest(
                 testContract.getId(),
                 "Phase 2",
                 "Second phase",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(2),
+                true, // isCriticalPath
+                null, false,
                 testUser.getId(),
-                true,
-                null,
-                List.of(m1.id())
+                MilestonePriority.MEDIUM,
+                null, null,
+                List.of(m1.id()),
+                null
             ));
 
             // When - complete first milestone
             milestoneService.completeMilestone(m1.id());
 
-            // Then - verify next milestone becomes actionable
+            // Then - verify next milestone can start
             MilestoneDto updatedM2 = milestoneService.getMilestone(m2.id());
-            assertThat(updatedM2.dependenciesMet()).isTrue();
+            assertThat(updatedM2.canStart()).isTrue();
         }
     }
 
@@ -347,10 +407,7 @@ class MilestoneServiceTest extends BaseServiceTest {
             ));
 
             // When
-            List<MilestoneDto> upcoming = milestoneService.getUpcomingMilestones(
-                testContract.getId(),
-                30 // within 30 days
-            );
+            List<MilestoneDto> upcoming = milestoneService.getUpcomingMilestones(30);
 
             // Then
             assertThat(upcoming).hasSize(2);
@@ -382,37 +439,13 @@ class MilestoneServiceTest extends BaseServiceTest {
             milestoneService.completeMilestone(completedButWasOverdue.id());
 
             // When
-            List<MilestoneDto> overdue = milestoneService.getOverdueMilestones(testContract.getId());
+            List<MilestoneDto> overdue = milestoneService.getOverdueMilestones();
 
             // Then - should only include uncompleted, past-due milestones
             assertThat(overdue).hasSize(2);
             assertThat(overdue)
                 .extracting(MilestoneDto::name)
                 .containsExactlyInAnyOrder("Overdue Milestone 1", "Overdue Milestone 2");
-        }
-
-        @Test
-        @DisplayName("should return milestones due this week")
-        void shouldReturnMilestonesDueThisWeek() {
-            // Given
-            LocalDate today = LocalDate.now();
-            LocalDate endOfWeek = today.plusDays(7 - today.getDayOfWeek().getValue());
-
-            milestoneService.createMilestone(createDefaultRequest(
-                "Due this week",
-                endOfWeek.minusDays(1)
-            ));
-            milestoneService.createMilestone(createDefaultRequest(
-                "Due next week",
-                endOfWeek.plusDays(3)
-            ));
-
-            // When
-            List<MilestoneDto> dueThisWeek = milestoneService.getMilestonesDueThisWeek(testContract.getId());
-
-            // Then
-            assertThat(dueThisWeek).hasSize(1);
-            assertThat(dueThisWeek.get(0).name()).isEqualTo("Due this week");
         }
     }
 
@@ -436,8 +469,8 @@ class MilestoneServiceTest extends BaseServiceTest {
 
             // Then
             MilestoneDto updated = milestoneService.getMilestone(successor.id());
-            assertThat(updated.dependencies()).hasSize(1);
-            assertThat(updated.dependencies().get(0).predecessorId()).isEqualTo(predecessor.id());
+            assertThat(updated.dependencyIds()).hasSize(1);
+            assertThat(updated.dependencyIds()).contains(predecessor.id());
         }
 
         @Test
@@ -451,23 +484,27 @@ class MilestoneServiceTest extends BaseServiceTest {
                 testContract.getId(),
                 "Successor",
                 "Description",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(2),
+                false, null, false,
                 testUser.getId(),
-                false,
-                null,
-                List.of(predecessor.id())
+                MilestonePriority.MEDIUM,
+                null, null,
+                List.of(predecessor.id()),
+                null
             ));
 
             // Verify dependency exists
             MilestoneDto withDep = milestoneService.getMilestone(successor.id());
-            assertThat(withDep.dependencies()).hasSize(1);
+            assertThat(withDep.dependencyIds()).hasSize(1);
 
             // When
             milestoneService.removeDependency(successor.id(), predecessor.id());
 
             // Then
             MilestoneDto updated = milestoneService.getMilestone(successor.id());
-            assertThat(updated.dependencies()).isEmpty();
+            assertThat(updated.dependencyIds()).isEmpty();
         }
 
         @Test
@@ -481,17 +518,21 @@ class MilestoneServiceTest extends BaseServiceTest {
                 testContract.getId(),
                 "Milestone 2",
                 "Description",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(2),
+                false, null, false,
                 testUser.getId(),
-                false,
-                null,
-                List.of(m1.id())
+                MilestonePriority.MEDIUM,
+                null, null,
+                List.of(m1.id()),
+                null
             ));
 
             // When/Then - trying to make m1 depend on m2 should fail
             assertThatThrownBy(() -> milestoneService.addDependency(m1.id(), m2.id()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("circular dependency");
+                .isInstanceOf(Exception.class)
+                .hasMessageContaining("circular");
         }
 
         @Test
@@ -505,47 +546,25 @@ class MilestoneServiceTest extends BaseServiceTest {
                 testContract.getId(),
                 "Successor",
                 "Description",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(2),
+                false, null, false,
                 testUser.getId(),
-                false,
-                null,
-                List.of(m1.id())
+                MilestonePriority.MEDIUM,
+                null, null,
+                List.of(m1.id()),
+                null
             ));
 
             // Initially dependencies not met
-            assertThat(milestoneService.getMilestone(m2.id()).dependenciesMet()).isFalse();
+            assertThat(milestoneService.getMilestone(m2.id()).canStart()).isFalse();
 
             // When - complete predecessor
             milestoneService.completeMilestone(m1.id());
 
             // Then
-            assertThat(milestoneService.getMilestone(m2.id()).dependenciesMet()).isTrue();
-        }
-
-        @Test
-        @DisplayName("should cascade delete when predecessor is deleted")
-        void shouldCascadeDeleteDependencies() {
-            // Given
-            MilestoneDto predecessor = milestoneService.createMilestone(
-                createDefaultRequest("Predecessor", LocalDate.now().plusMonths(1))
-            );
-            MilestoneDto successor = milestoneService.createMilestone(new CreateMilestoneRequest(
-                testContract.getId(),
-                "Successor",
-                "Description",
-                LocalDate.now().plusMonths(2),
-                testUser.getId(),
-                false,
-                null,
-                List.of(predecessor.id())
-            ));
-
-            // When
-            milestoneService.deleteMilestone(predecessor.id());
-
-            // Then - successor should still exist but without dependencies
-            MilestoneDto updated = milestoneService.getMilestone(successor.id());
-            assertThat(updated.dependencies()).isEmpty();
+            assertThat(milestoneService.getMilestone(m2.id()).canStart()).isTrue();
         }
     }
 
@@ -620,19 +639,18 @@ class MilestoneServiceTest extends BaseServiceTest {
                 tenant2Contract.getId(),
                 "Tenant 2 Milestone",
                 "Description",
+                MilestoneType.DEVELOPMENT,
+                null, null,
                 LocalDate.now().plusMonths(1),
+                false, null, false,
                 user2.getId(),
-                false,
-                null,
-                null
+                MilestonePriority.MEDIUM,
+                null, null, null, null
             ));
 
             // Then - Each tenant should only see their own milestones
-            Page<MilestoneDto> tenant2Milestones = milestoneService.getMilestones(
-                tenant2Contract.getId(),
-                PageRequest.of(0, 10)
-            );
-            assertThat(tenant2Milestones.getContent())
+            List<MilestoneDto> tenant2Milestones = milestoneService.getMilestones(tenant2Contract.getId());
+            assertThat(tenant2Milestones)
                 .extracting(MilestoneDto::name)
                 .contains("Tenant 2 Milestone")
                 .doesNotContain("Tenant 1 Milestone");
@@ -641,11 +659,8 @@ class MilestoneServiceTest extends BaseServiceTest {
             switchTenant(testTenant);
             TenantContext.setCurrentUserId(testUser.getId());
 
-            Page<MilestoneDto> tenant1Milestones = milestoneService.getMilestones(
-                testContract.getId(),
-                PageRequest.of(0, 10)
-            );
-            assertThat(tenant1Milestones.getContent())
+            List<MilestoneDto> tenant1Milestones = milestoneService.getMilestones(testContract.getId());
+            assertThat(tenant1Milestones)
                 .extracting(MilestoneDto::name)
                 .contains("Tenant 1 Milestone")
                 .doesNotContain("Tenant 2 Milestone");

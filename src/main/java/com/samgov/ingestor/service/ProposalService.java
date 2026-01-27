@@ -50,7 +50,7 @@ public class ProposalService {
         return proposalRepository.findByTenantIdAndStatus(tenantId, status);
     }
 
-    public List<Proposal> getProposalsByOpportunity(UUID opportunityId) {
+    public List<Proposal> getProposalsByOpportunity(String opportunityId) {
         return proposalRepository.findByOpportunityId(opportunityId);
     }
 

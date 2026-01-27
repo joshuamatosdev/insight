@@ -1,6 +1,5 @@
 package com.samgov.ingestor.service;
 
-import com.samgov.ingestor.BaseServiceTest;
 import com.samgov.ingestor.config.JwtService;
 import com.samgov.ingestor.config.OAuth2Properties;
 import com.samgov.ingestor.dto.AuthenticationResponse;
@@ -13,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -27,7 +28,13 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class OAuth2UserServiceTest extends BaseServiceTest {
+/**
+ * Unit tests for OAuth2UserService.
+ * Uses mocks to test OAuth2 login, provider linking, and unlinking.
+ */
+@ExtendWith(MockitoExtension.class)
+@DisplayName("OAuth2UserService")
+class OAuth2UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -47,7 +54,7 @@ class OAuth2UserServiceTest extends BaseServiceTest {
     private OAuth2UserService oauth2UserService;
 
     @BeforeEach
-    protected void setUp() {
+    void setUp() {
         oauth2UserService = new OAuth2UserService(
             userRepository,
             oauthConnectionRepository,

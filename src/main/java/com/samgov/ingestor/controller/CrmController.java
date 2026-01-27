@@ -100,7 +100,17 @@ public class CrmController {
     @GetMapping("/contacts/organization/{organizationId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'BD_MANAGER', 'CONTRACT_MANAGER', 'USER')")
     public ResponseEntity<List<Contact>> getContactsByOrganization(@PathVariable UUID organizationId) {
-        return ResponseEntity.ok(crmService.getContactsByOrganization(organizationId));
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(crmService.getContactsByOrganization(tenantId, organizationId));
+    }
+
+    @GetMapping("/contacts/organization/{organizationId}/page")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BD_MANAGER', 'CONTRACT_MANAGER', 'USER')")
+    public ResponseEntity<Page<Contact>> listContactsByOrganization(
+            @PathVariable UUID organizationId,
+            Pageable pageable) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(crmService.listContactsByOrganization(tenantId, organizationId, pageable));
     }
 
     @GetMapping("/contacts/government")

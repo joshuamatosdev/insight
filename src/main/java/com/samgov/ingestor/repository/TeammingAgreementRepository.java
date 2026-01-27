@@ -24,7 +24,7 @@ public interface TeammingAgreementRepository extends JpaRepository<TeammingAgree
 
     List<TeammingAgreement> findByPartnerId(UUID partnerId);
 
-    List<TeammingAgreement> findByOpportunityId(UUID opportunityId);
+    List<TeammingAgreement> findByOpportunityId(String opportunityId);
 
     List<TeammingAgreement> findByProposalId(UUID proposalId);
 

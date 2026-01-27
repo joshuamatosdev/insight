@@ -23,7 +23,7 @@ public interface ProposalRepository extends JpaRepository<Proposal, UUID> {
 
     Optional<Proposal> findByIdAndTenantId(UUID id, UUID tenantId);
 
-    List<Proposal> findByOpportunityId(UUID opportunityId);
+    List<Proposal> findByOpportunityId(String opportunityId);
 
     List<Proposal> findByPipelineOpportunityId(UUID pipelineOpportunityId);
 

@@ -5,6 +5,17 @@ spring:
   application:
     name: sam-gov-ingestor-test
 
+  # Disable Redis and Elasticsearch autoconfiguration for tests
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.data.redis.RedisHealthContributorAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.data.redis.RedisReactiveHealthContributorAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration
+      - org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticsearchReactiveHealthContributorAutoConfiguration
+
   # Use dev PostgreSQL server
   datasource:
     url: jdbc:postgresql://localhost:5433/sam_test
@@ -28,9 +39,25 @@ spring:
     virtual:
       enabled: false
 
-  # Elasticsearch configuration for tests (will be overridden by Testcontainers)
+  # Elasticsearch disabled for tests (no running ES instance required)
+  # Enable this if you have Elasticsearch running locally
   elasticsearch:
     uris: ${ELASTICSEARCH_URI:http://localhost:9200}
+
+  # Disable Elasticsearch repository scanning for tests
+  data:
+    elasticsearch:
+      repositories:
+        enabled: false
+
+# Disable Elasticsearch for tests
+elasticsearch:
+  enabled: false
+
+  # Do NOT configure Redis - use ConcurrentMapCacheManager fallback instead
+  # (Redis is only enabled when spring.data.redis.host is set)
+  cache:
+    type: simple
 
 # Disable scheduled tasks during tests
 sam:

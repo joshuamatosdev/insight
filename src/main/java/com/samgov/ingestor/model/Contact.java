@@ -1,6 +1,11 @@
 package com.samgov.ingestor.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +20,10 @@ import java.util.UUID;
     @Index(name = "idx_contact_email", columnList = "email"),
     @Index(name = "idx_contact_name", columnList = "last_name, first_name")
 })
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contact {
 
     public enum ContactType {
@@ -79,6 +88,7 @@ public class Contact {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private ContactStatus status = ContactStatus.ACTIVE;
 
     // Job information
@@ -135,6 +145,7 @@ public class Contact {
 
     // Related entities
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Interaction> interactions = new ArrayList<>();
 
     // Preferences
@@ -219,358 +230,5 @@ public class Contact {
     public void addInteraction(Interaction interaction) {
         interactions.add(interaction);
         interaction.setContact(this);
-    }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Tenant getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(Tenant tenant) {
-        this.tenant = tenant;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public ContactType getContactType() {
-        return contactType;
-    }
-
-    public void setContactType(ContactType contactType) {
-        this.contactType = contactType;
-    }
-
-    public ContactStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ContactStatus status) {
-        this.status = status;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getRoleDescription() {
-        return roleDescription;
-    }
-
-    public void setRoleDescription(String roleDescription) {
-        this.roleDescription = roleDescription;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmailSecondary() {
-        return emailSecondary;
-    }
-
-    public void setEmailSecondary(String emailSecondary) {
-        this.emailSecondary = emailSecondary;
-    }
-
-    public String getPhoneWork() {
-        return phoneWork;
-    }
-
-    public void setPhoneWork(String phoneWork) {
-        this.phoneWork = phoneWork;
-    }
-
-    public String getPhoneMobile() {
-        return phoneMobile;
-    }
-
-    public void setPhoneMobile(String phoneMobile) {
-        this.phoneMobile = phoneMobile;
-    }
-
-    public String getPhoneFax() {
-        return phoneFax;
-    }
-
-    public void setPhoneFax(String phoneFax) {
-        this.phoneFax = phoneFax;
-    }
-
-    public String getAddressLine1() {
-        return addressLine1;
-    }
-
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
-    }
-
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getLinkedinUrl() {
-        return linkedinUrl;
-    }
-
-    public void setLinkedinUrl(String linkedinUrl) {
-        this.linkedinUrl = linkedinUrl;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public List<Interaction> getInteractions() {
-        return interactions;
-    }
-
-    public void setInteractions(List<Interaction> interactions) {
-        this.interactions = interactions;
-    }
-
-    public String getPreferredContactMethod() {
-        return preferredContactMethod;
-    }
-
-    public void setPreferredContactMethod(String preferredContactMethod) {
-        this.preferredContactMethod = preferredContactMethod;
-    }
-
-    public String getBestTimeToContact() {
-        return bestTimeToContact;
-    }
-
-    public void setBestTimeToContact(String bestTimeToContact) {
-        this.bestTimeToContact = bestTimeToContact;
-    }
-
-    public String getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Integer getRelationshipScore() {
-        return relationshipScore;
-    }
-
-    public void setRelationshipScore(Integer relationshipScore) {
-        this.relationshipScore = relationshipScore;
-    }
-
-    public LocalDate getLastContactDate() {
-        return lastContactDate;
-    }
-
-    public void setLastContactDate(LocalDate lastContactDate) {
-        this.lastContactDate = lastContactDate;
-    }
-
-    public LocalDate getNextFollowupDate() {
-        return nextFollowupDate;
-    }
-
-    public void setNextFollowupDate(LocalDate nextFollowupDate) {
-        this.nextFollowupDate = nextFollowupDate;
-    }
-
-    public String getFollowupNotes() {
-        return followupNotes;
-    }
-
-    public void setFollowupNotes(String followupNotes) {
-        this.followupNotes = followupNotes;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getReferralSource() {
-        return referralSource;
-    }
-
-    public void setReferralSource(String referralSource) {
-        this.referralSource = referralSource;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

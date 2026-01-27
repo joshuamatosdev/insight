@@ -4,7 +4,13 @@ import './styles/tailwind.css';
 import './styles/base.css';
 import App from './App';
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+
+if (rootElement === null) {
+  throw new Error('Root element not found. Ensure index.html contains <div id="root"></div>');
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <App />
   </StrictMode>

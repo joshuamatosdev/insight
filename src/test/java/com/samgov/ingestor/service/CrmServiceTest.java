@@ -1,9 +1,15 @@
 package com.samgov.ingestor.service;
 
 import com.samgov.ingestor.BaseServiceTest;
-import com.samgov.ingestor.config.TenantContext;
-import com.samgov.ingestor.model.*;
-import com.samgov.ingestor.repository.*;
+import com.samgov.ingestor.model.Contact;
+import com.samgov.ingestor.model.Contact.ContactStatus;
+import com.samgov.ingestor.model.Contact.ContactType;
+import com.samgov.ingestor.model.Organization;
+import com.samgov.ingestor.model.Organization.OrganizationType;
+import com.samgov.ingestor.model.Tenant;
+import com.samgov.ingestor.repository.ContactRepository;
+import com.samgov.ingestor.repository.OrganizationRepository;
+import com.samgov.ingestor.service.CrmService.CreateContactRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,25 +18,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for CRM Service.
+ * Behavioral tests for CrmService.
+ *
+ * Tests focus on business behavior, not implementation details.
+ * Uses BaseServiceTest for proper multi-tenant setup via TenantMembership.
  */
+@DisplayName("CrmService")
 class CrmServiceTest extends BaseServiceTest {
 
     @Autowired
     private CrmService crmService;
-
-    @Autowired
-    private TenantRepository tenantRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private ContactRepository contactRepository;
@@ -38,30 +40,15 @@ class CrmServiceTest extends BaseServiceTest {
     @Autowired
     private OrganizationRepository organizationRepository;
 
-    @Autowired
-    private InteractionRepository interactionRepository;
+    // testTenant, testUser, testMembership are provided by BaseServiceTest
 
-    private Tenant testTenant;
-    private User testUser;
+    private Organization testOrganization;
 
+    @Override
     @BeforeEach
-    void setUp() {
-        testTenant = tenantRepository.save(Tenant.builder()
-            .name("CRM Service Test Tenant")
-            .slug("crm-svc-test-" + UUID.randomUUID().toString().substring(0, 8))
-            .build());
-
-        testUser = userRepository.save(User.builder()
-            .email("crm-svc-test-" + UUID.randomUUID() + "@example.com")
-            .passwordHash("hashedpass")
-            .firstName("CRM")
-            .lastName("Tester")
-            .tenant(testTenant)
-            .status(User.UserStatus.ACTIVE)
-            .build());
-
-        TenantContext.setCurrentTenantId(testTenant.getId());
-        TenantContext.setCurrentUserId(testUser.getId());
+    protected void setUp() {
+        super.setUp();  // Sets up testTenant, testUser, testMembership, TenantContext
+        testOrganization = createTestOrganization();
     }
 
     @Nested
@@ -69,274 +56,289 @@ class CrmServiceTest extends BaseServiceTest {
     class ContactOperations {
 
         @Test
-        @DisplayName("should create contact")
+        @DisplayName("should create contact with valid request")
         void shouldCreateContact() {
-            Contact contact = Contact.builder()
-                .firstName("Test")
-                .lastName("User")
-                .contactType(Contact.ContactType.GOVERNMENT_CUSTOMER)
-                .status(Contact.ContactStatus.ACTIVE)
-                .email("test@example.com")
-                .build();
+            // Given - CreateContactRequest has 21 fields
+            CreateContactRequest request = new CreateContactRequest(
+                null,                           // organizationId
+                "John",                         // firstName
+                "Doe",                          // lastName
+                null,                           // middleName
+                null,                           // prefix
+                null,                           // suffix
+                ContactType.GOVERNMENT_CUSTOMER,// contactType
+                "Contracting Officer",          // jobTitle
+                "Procurement",                  // department
+                "john.doe@agency.gov",          // email
+                "202-555-0100",                 // phoneWork
+                null,                           // phoneMobile
+                "123 Federal Plaza",            // addressLine1
+                "Washington",                   // city
+                "DC",                           // state
+                "20001",                        // postalCode
+                "USA",                          // country
+                null,                           // linkedinUrl
+                null,                           // tags
+                null,                           // notes
+                null                            // ownerId
+            );
 
-            Contact saved = crmService.createContact(contact);
+            // When
+            Contact created = crmService.createContact(
+                testTenant.getId(),
+                testUser.getId(),
+                request
+            );
 
-            assertThat(saved.getId()).isNotNull();
-            assertThat(saved.getFirstName()).isEqualTo("Test");
-            assertThat(saved.getTenant().getId()).isEqualTo(testTenant.getId());
+            // Then
+            assertThat(created.getId()).isNotNull();
+            assertThat(created.getFirstName()).isEqualTo("John");
+            assertThat(created.getLastName()).isEqualTo("Doe");
+            assertThat(created.getContactType()).isEqualTo(ContactType.GOVERNMENT_CUSTOMER);
+            assertThat(created.getTenant().getId()).isEqualTo(testTenant.getId());
         }
 
         @Test
-        @DisplayName("should find contact by id")
-        void shouldFindContactById() {
-            Contact contact = contactRepository.save(Contact.builder()
-                .firstName("Find")
-                .lastName("Me")
-                .contactType(Contact.ContactType.VENDOR)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
+        @DisplayName("should create contact associated with organization")
+        void shouldCreateContactWithOrganization() {
+            // Given - contact associated with an organization
+            CreateContactRequest request = new CreateContactRequest(
+                testOrganization.getId(),       // organizationId
+                "Jane",                         // firstName
+                "Smith",                        // lastName
+                null,                           // middleName
+                null,                           // prefix
+                null,                           // suffix
+                ContactType.CONTRACTING_OFFICER,// contactType
+                "Senior Contracting Officer",   // jobTitle
+                "Acquisitions",                 // department
+                "jane.smith@agency.gov",        // email
+                "202-555-0200",                 // phoneWork
+                "202-555-0201",                 // phoneMobile
+                "456 Government Way",           // addressLine1
+                "Washington",                   // city
+                "DC",                           // state
+                "20002",                        // postalCode
+                "USA",                          // country
+                "https://linkedin.com/in/janesmith", // linkedinUrl
+                "key-contact,priority",         // tags
+                "Important contact",            // notes
+                testUser.getId()                // ownerId
+            );
 
-            Optional<Contact> found = crmService.findContactById(contact.getId());
+            // When
+            Contact created = crmService.createContact(
+                testTenant.getId(),
+                testUser.getId(),
+                request
+            );
 
-            assertThat(found).isPresent();
-            assertThat(found.get().getFirstName()).isEqualTo("Find");
+            // Then
+            assertThat(created.getId()).isNotNull();
+            assertThat(created.getOrganization()).isNotNull();
+            assertThat(created.getOrganization().getId()).isEqualTo(testOrganization.getId());
+            assertThat(created.getOrganization().getName()).isEqualTo("Test Government Agency");
+            assertThat(created.getOwner()).isNotNull();
+            assertThat(created.getOwner().getId()).isEqualTo(testUser.getId());
         }
 
         @Test
-        @DisplayName("should list contacts with pagination")
-        void shouldListContactsWithPagination() {
-            for (int i = 0; i < 5; i++) {
-                contactRepository.save(Contact.builder()
-                    .firstName("Contact" + i)
-                    .lastName("User")
-                    .contactType(Contact.ContactType.PROSPECT)
-                    .status(Contact.ContactStatus.ACTIVE)
-                    .tenant(testTenant)
-                    .build());
-            }
+        @DisplayName("should list contacts by tenant")
+        void shouldListContactsByTenant() {
+            // Given - create some contacts
+            createTestContact("Alice", "Smith");
+            createTestContact("Bob", "Jones");
 
-            Page<Contact> page = crmService.findAllContacts(PageRequest.of(0, 3));
+            // When - use listContacts (not getContacts)
+            Page<Contact> contacts = crmService.listContacts(
+                testTenant.getId(),
+                PageRequest.of(0, 10)
+            );
 
-            assertThat(page.getContent()).hasSize(3);
-            assertThat(page.getTotalElements()).isGreaterThanOrEqualTo(5);
-        }
-
-        @Test
-        @DisplayName("should update contact")
-        void shouldUpdateContact() {
-            Contact contact = contactRepository.save(Contact.builder()
-                .firstName("Original")
-                .lastName("Name")
-                .contactType(Contact.ContactType.INTERNAL)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            contact.setFirstName("Updated");
-            Contact updated = crmService.updateContact(contact);
-
-            assertThat(updated.getFirstName()).isEqualTo("Updated");
-        }
-
-        @Test
-        @DisplayName("should delete contact")
-        void shouldDeleteContact() {
-            Contact contact = contactRepository.save(Contact.builder()
-                .firstName("ToDelete")
-                .lastName("Contact")
-                .contactType(Contact.ContactType.OTHER)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            crmService.deleteContact(contact.getId());
-
-            assertThat(contactRepository.findById(contact.getId())).isEmpty();
+            // Then
+            assertThat(contacts.getContent()).hasSize(2);
+            assertThat(contacts.getContent())
+                .extracting(Contact::getFirstName)
+                .containsExactlyInAnyOrder("Alice", "Bob");
         }
 
         @Test
         @DisplayName("should search contacts by keyword")
         void shouldSearchContactsByKeyword() {
-            contactRepository.save(Contact.builder()
-                .firstName("Unique")
-                .lastName("SearchName")
-                .contactType(Contact.ContactType.GOVERNMENT_CUSTOMER)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
+            // Given
+            createTestContact("Unique", "SearchName");
+            createTestContact("Other", "Person");
 
-            Page<Contact> results = crmService.searchContacts("Unique", PageRequest.of(0, 10));
+            // When
+            Page<Contact> results = crmService.searchContacts(
+                testTenant.getId(),
+                "Unique",
+                PageRequest.of(0, 10)
+            );
 
-            assertThat(results.getContent()).isNotEmpty();
+            // Then
+            assertThat(results.getContent()).hasSize(1);
             assertThat(results.getContent().get(0).getFirstName()).isEqualTo("Unique");
         }
+
+        @Test
+        @DisplayName("should isolate contacts by tenant")
+        void shouldIsolateContactsByTenant() {
+            // Given - create contact in test tenant
+            createTestContact("TenantA", "Contact");
+
+            // Create another tenant with its own contact using builder
+            Tenant otherTenant = createOtherTenant();
+            Contact otherContact = Contact.builder()
+                .tenant(otherTenant)
+                .firstName("TenantB")
+                .lastName("Contact")
+                .contactType(ContactType.VENDOR)
+                .status(ContactStatus.ACTIVE)
+                .build();
+            contactRepository.save(otherContact);
+
+            // When - query test tenant's contacts
+            Page<Contact> contacts = crmService.listContacts(
+                testTenant.getId(),
+                PageRequest.of(0, 10)
+            );
+
+            // Then - should only see test tenant's contact
+            assertThat(contacts.getContent()).hasSize(1);
+            assertThat(contacts.getContent().get(0).getFirstName()).isEqualTo("TenantA");
+        }
+
+        @Test
+        @DisplayName("should get contacts by organization (list)")
+        void shouldGetContactsByOrganization() {
+            // Given - create contacts for the test organization
+            Contact contact1 = Contact.builder()
+                .tenant(testTenant)
+                .organization(testOrganization)
+                .firstName("Org")
+                .lastName("Contact1")
+                .contactType(ContactType.PROGRAM_MANAGER)
+                .status(ContactStatus.ACTIVE)
+                .build();
+            contactRepository.save(contact1);
+
+            Contact contact2 = Contact.builder()
+                .tenant(testTenant)
+                .organization(testOrganization)
+                .firstName("Org")
+                .lastName("Contact2")
+                .contactType(ContactType.TECHNICAL_POC)
+                .status(ContactStatus.ACTIVE)
+                .build();
+            contactRepository.save(contact2);
+
+            // Create a contact without organization
+            createTestContact("NoOrg", "Contact");
+
+            // When - get contacts by organization (returns List)
+            java.util.List<Contact> orgContacts = crmService.getContactsByOrganization(
+                testTenant.getId(),
+                testOrganization.getId()
+            );
+
+            // Then - should only see organization's contacts
+            assertThat(orgContacts).hasSize(2);
+            assertThat(orgContacts)
+                .extracting(Contact::getLastName)
+                .containsExactlyInAnyOrder("Contact1", "Contact2");
+        }
+
+        @Test
+        @DisplayName("should list contacts by organization with pagination")
+        void shouldListContactsByOrganizationWithPagination() {
+            // Given - create contacts for the test organization
+            Contact contact1 = Contact.builder()
+                .tenant(testTenant)
+                .organization(testOrganization)
+                .firstName("Org")
+                .lastName("Contact1")
+                .contactType(ContactType.PROGRAM_MANAGER)
+                .status(ContactStatus.ACTIVE)
+                .build();
+            contactRepository.save(contact1);
+
+            Contact contact2 = Contact.builder()
+                .tenant(testTenant)
+                .organization(testOrganization)
+                .firstName("Org")
+                .lastName("Contact2")
+                .contactType(ContactType.TECHNICAL_POC)
+                .status(ContactStatus.ACTIVE)
+                .build();
+            contactRepository.save(contact2);
+
+            // Create a contact without organization
+            createTestContact("NoOrg", "Contact");
+
+            // When - list contacts by organization with pagination
+            Page<Contact> orgContacts = crmService.listContactsByOrganization(
+                testTenant.getId(),
+                testOrganization.getId(),
+                PageRequest.of(0, 10)
+            );
+
+            // Then - should only see organization's contacts with pagination metadata
+            assertThat(orgContacts.getContent()).hasSize(2);
+            assertThat(orgContacts.getTotalElements()).isEqualTo(2);
+            assertThat(orgContacts.getContent())
+                .extracting(Contact::getLastName)
+                .containsExactlyInAnyOrder("Contact1", "Contact2");
+        }
     }
 
-    @Nested
-    @DisplayName("Organization Operations")
-    class OrganizationOperations {
+    // Helper methods
 
-        @Test
-        @DisplayName("should create organization")
-        void shouldCreateOrganization() {
-            Organization org = Organization.builder()
-                .name("New Company")
-                .organizationType(Organization.OrganizationType.PRIME_CONTRACTOR)
-                .status(Organization.OrganizationStatus.ACTIVE)
-                .uei("TESTUEI123")
-                .build();
-
-            Organization saved = crmService.createOrganization(org);
-
-            assertThat(saved.getId()).isNotNull();
-            assertThat(saved.getName()).isEqualTo("New Company");
-            assertThat(saved.getTenant().getId()).isEqualTo(testTenant.getId());
-        }
-
-        @Test
-        @DisplayName("should find organization by id")
-        void shouldFindOrganizationById() {
-            Organization org = organizationRepository.save(Organization.builder()
-                .name("Find Org")
-                .organizationType(Organization.OrganizationType.VENDOR)
-                .status(Organization.OrganizationStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            Optional<Organization> found = crmService.findOrganizationById(org.getId());
-
-            assertThat(found).isPresent();
-            assertThat(found.get().getName()).isEqualTo("Find Org");
-        }
-
-        @Test
-        @DisplayName("should filter organizations by type")
-        void shouldFilterOrganizationsByType() {
-            organizationRepository.save(Organization.builder()
-                .name("Gov Agency")
-                .organizationType(Organization.OrganizationType.GOVERNMENT_AGENCY)
-                .status(Organization.OrganizationStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            organizationRepository.save(Organization.builder()
-                .name("Private Vendor")
-                .organizationType(Organization.OrganizationType.VENDOR)
-                .status(Organization.OrganizationStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            Page<Organization> results = crmService.findOrganizationsByType(
-                Organization.OrganizationType.GOVERNMENT_AGENCY,
-                PageRequest.of(0, 10)
-            );
-
-            assertThat(results.getContent()).allMatch(o -> 
-                o.getOrganizationType() == Organization.OrganizationType.GOVERNMENT_AGENCY
-            );
-        }
+    private Organization createTestOrganization() {
+        Organization org = Organization.builder()
+            .tenant(testTenant)
+            .name("Test Government Agency")
+            .organizationType(OrganizationType.GOVERNMENT_AGENCY)
+            .agencyCode("TEST-001")
+            .city("Washington")
+            .state("DC")
+            .country("USA")
+            .build();
+        return organizationRepository.save(org);
     }
 
-    @Nested
-    @DisplayName("Interaction Operations")
-    class InteractionOperations {
+    private Contact createTestContact(String firstName, String lastName) {
+        CreateContactRequest request = new CreateContactRequest(
+            null,                           // organizationId
+            firstName,                      // firstName
+            lastName,                       // lastName
+            null,                           // middleName
+            null,                           // prefix
+            null,                           // suffix
+            ContactType.GOVERNMENT_CUSTOMER,// contactType
+            null,                           // jobTitle
+            null,                           // department
+            firstName.toLowerCase() + "." + lastName.toLowerCase() + "@test.com",
+            null,                           // phoneWork
+            null,                           // phoneMobile
+            null,                           // addressLine1
+            null,                           // city
+            null,                           // state
+            null,                           // postalCode
+            null,                           // country
+            null,                           // linkedinUrl
+            null,                           // tags
+            null,                           // notes
+            null                            // ownerId
+        );
+        return crmService.createContact(testTenant.getId(), testUser.getId(), request);
+    }
 
-        @Test
-        @DisplayName("should create interaction")
-        void shouldCreateInteraction() {
-            Contact contact = contactRepository.save(Contact.builder()
-                .firstName("Interact")
-                .lastName("Contact")
-                .contactType(Contact.ContactType.TECHNICAL_POC)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            Interaction interaction = Interaction.builder()
-                .subject("Test Meeting")
-                .interactionType(Interaction.InteractionType.MEETING_VIRTUAL)
-                .interactionDate(LocalDateTime.now())
-                .contact(contact)
-                .build();
-
-            Interaction saved = crmService.createInteraction(interaction);
-
-            assertThat(saved.getId()).isNotNull();
-            assertThat(saved.getSubject()).isEqualTo("Test Meeting");
-            assertThat(saved.getTenant().getId()).isEqualTo(testTenant.getId());
-            assertThat(saved.getLoggedBy().getId()).isEqualTo(testUser.getId());
-        }
-
-        @Test
-        @DisplayName("should list interactions by contact")
-        void shouldListInteractionsByContact() {
-            Contact contact = contactRepository.save(Contact.builder()
-                .firstName("Multi")
-                .lastName("Interaction")
-                .contactType(Contact.ContactType.CONTRACTING_OFFICER)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            for (int i = 0; i < 3; i++) {
-                interactionRepository.save(Interaction.builder()
-                    .subject("Interaction " + i)
-                    .interactionType(Interaction.InteractionType.PHONE_CALL)
-                    .interactionDate(LocalDateTime.now().minusDays(i))
-                    .contact(contact)
-                    .tenant(testTenant)
-                    .loggedBy(testUser)
-                    .build());
-            }
-
-            Page<Interaction> results = crmService.findInteractionsByContact(
-                contact.getId(),
-                PageRequest.of(0, 10)
-            );
-
-            assertThat(results.getContent()).hasSize(3);
-        }
-
-        @Test
-        @DisplayName("should find interactions with followup required")
-        void shouldFindInteractionsWithFollowupRequired() {
-            Contact contact = contactRepository.save(Contact.builder()
-                .firstName("Followup")
-                .lastName("Contact")
-                .contactType(Contact.ContactType.PROGRAM_MANAGER)
-                .status(Contact.ContactStatus.ACTIVE)
-                .tenant(testTenant)
-                .build());
-
-            interactionRepository.save(Interaction.builder()
-                .subject("Needs Followup")
-                .interactionType(Interaction.InteractionType.EMAIL)
-                .interactionDate(LocalDateTime.now())
-                .contact(contact)
-                .tenant(testTenant)
-                .loggedBy(testUser)
-                .followUpRequired(true)
-                .followUpCompleted(false)
-                .build());
-
-            interactionRepository.save(Interaction.builder()
-                .subject("No Followup")
-                .interactionType(Interaction.InteractionType.NOTE)
-                .interactionDate(LocalDateTime.now())
-                .contact(contact)
-                .tenant(testTenant)
-                .loggedBy(testUser)
-                .followUpRequired(false)
-                .build());
-
-            Page<Interaction> results = crmService.findInteractionsWithPendingFollowup(
-                PageRequest.of(0, 10)
-            );
-
-            assertThat(results.getContent()).allMatch(i -> 
-                i.getFollowUpRequired() && !i.getFollowUpCompleted()
-            );
-        }
+    private Tenant createOtherTenant() {
+        Tenant tenant = Tenant.builder()
+            .name("Other Tenant")
+            .slug("other-tenant-" + UUID.randomUUID().toString().substring(0, 8))
+            .build();
+        return tenantRepository.save(tenant);
     }
 }

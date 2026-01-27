@@ -8,6 +8,7 @@ import com.samgov.ingestor.model.Opportunity.OpportunityStatus;
 import com.samgov.ingestor.repository.OpportunityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -26,9 +27,12 @@ import java.util.concurrent.CompletableFuture;
  * - Fuzzy matching for typo tolerance
  * - Faceted filtering
  * - Bulk indexing operations
+ *
+ * Only available when elasticsearch.enabled=true (default).
  */
 @Slf4j
 @Service
+@ConditionalOnExpression("${elasticsearch.enabled:true}")
 @RequiredArgsConstructor
 public class ElasticsearchService {
 

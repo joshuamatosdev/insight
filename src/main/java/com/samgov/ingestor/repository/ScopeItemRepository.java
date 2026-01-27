@@ -157,7 +157,7 @@ public interface ScopeItemRepository extends JpaRepository<ScopeItem, UUID> {
     @Query("""
         SELECT s FROM ScopeItem s
         WHERE s.contract.id = :contractId
-        AND (LOWER(s.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        AND (LOWER(s.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
              OR LOWER(s.description) LIKE LOWER(CONCAT('%', :keyword, '%'))
              OR LOWER(s.wbsCode) LIKE LOWER(CONCAT('%', :keyword, '%')))
         ORDER BY s.sortOrder ASC

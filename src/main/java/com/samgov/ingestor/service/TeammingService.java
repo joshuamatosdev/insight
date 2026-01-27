@@ -103,7 +103,7 @@ public class TeammingService {
         return agreementRepository.findByPartnerId(partnerId);
     }
 
-    public List<TeammingAgreement> getAgreementsByOpportunity(UUID opportunityId) {
+    public List<TeammingAgreement> getAgreementsByOpportunity(String opportunityId) {
         return agreementRepository.findByOpportunityId(opportunityId);
     }
 

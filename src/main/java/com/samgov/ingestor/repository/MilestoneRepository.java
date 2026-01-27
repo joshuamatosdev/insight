@@ -19,11 +19,11 @@ import java.util.UUID;
 public interface MilestoneRepository extends JpaRepository<Milestone, UUID>, JpaSpecificationExecutor<Milestone> {
 
     // Basic tenant-scoped queries
-    Page<Milestone> findByTenantId(UUID tenantId, Pageable pageable);
+    Page<Milestone> findByTenant_Id(UUID tenantId, Pageable pageable);
 
-    List<Milestone> findByTenantId(UUID tenantId);
+    List<Milestone> findByTenant_Id(UUID tenantId);
 
-    Optional<Milestone> findByTenantIdAndId(UUID tenantId, UUID id);
+    Optional<Milestone> findByTenant_IdAndId(UUID tenantId, UUID id);
 
     // By contract
     List<Milestone> findByContractIdOrderBySortOrderAsc(UUID contractId);
@@ -37,7 +37,7 @@ public interface MilestoneRepository extends JpaRepository<Milestone, UUID>, Jpa
     // By status
     List<Milestone> findByContractIdAndStatus(UUID contractId, MilestoneStatus status);
 
-    Page<Milestone> findByTenantIdAndStatus(UUID tenantId, MilestoneStatus status, Pageable pageable);
+    Page<Milestone> findByTenant_IdAndStatus(UUID tenantId, MilestoneStatus status, Pageable pageable);
 
     // Critical path milestones
     @Query("""
@@ -48,7 +48,7 @@ public interface MilestoneRepository extends JpaRepository<Milestone, UUID>, Jpa
         """)
     List<Milestone> findCriticalPathByContractId(@Param("contractId") UUID contractId);
 
-    List<Milestone> findByTenantIdAndIsCriticalPathTrue(UUID tenantId);
+    List<Milestone> findByTenant_IdAndIsCriticalPathTrue(UUID tenantId);
 
     // Upcoming milestones (due within N days)
     @Query("""
@@ -126,7 +126,7 @@ public interface MilestoneRepository extends JpaRepository<Milestone, UUID>, Jpa
     List<Milestone> findPaymentMilestonesByContractId(@Param("contractId") UUID contractId);
 
     // Milestones by owner
-    Page<Milestone> findByTenantIdAndOwnerId(UUID tenantId, UUID ownerId, Pageable pageable);
+    Page<Milestone> findByTenant_IdAndOwner_Id(UUID tenantId, UUID ownerId, Pageable pageable);
 
     List<Milestone> findByOwnerIdAndStatusNot(UUID ownerId, MilestoneStatus status);
 

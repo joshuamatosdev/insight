@@ -126,7 +126,7 @@ public class ProposalController {
 
     @GetMapping("/opportunity/{opportunityId}")
     public ResponseEntity<List<Proposal>> getByOpportunity(
-            @PathVariable UUID opportunityId) {
+            @PathVariable String opportunityId) {
         return ResponseEntity.ok(proposalService.getProposalsByOpportunity(opportunityId));
     }
 

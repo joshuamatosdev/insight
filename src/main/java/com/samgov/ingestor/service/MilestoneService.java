@@ -49,7 +49,7 @@ public class MilestoneService {
 
     public MilestoneDto getMilestone(UUID milestoneId) {
         UUID tenantId = TenantContext.getCurrentTenantId();
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
         return toDto(milestone);
     }
@@ -135,7 +135,7 @@ public class MilestoneService {
     @Transactional
     public MilestoneDto updateMilestone(UUID milestoneId, UpdateMilestoneRequest request) {
         UUID tenantId = TenantContext.getCurrentTenantId();
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
 
         if (request.name() != null) milestone.setName(request.name());
@@ -170,7 +170,7 @@ public class MilestoneService {
     @Transactional
     public void deleteMilestone(UUID milestoneId) {
         UUID tenantId = TenantContext.getCurrentTenantId();
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
 
         // Check if any milestones depend on this one
@@ -195,7 +195,7 @@ public class MilestoneService {
     @Transactional
     public MilestoneDto updateStatus(UUID milestoneId, MilestoneStatus status) {
         UUID tenantId = TenantContext.getCurrentTenantId();
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
 
         // Validate status transition
@@ -231,7 +231,7 @@ public class MilestoneService {
     @Transactional
     public MilestoneDto completeMilestone(UUID milestoneId, String completionNotes) {
         UUID tenantId = TenantContext.getCurrentTenantId();
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
 
         milestone.setStatus(MilestoneStatus.COMPLETED);
@@ -306,10 +306,10 @@ public class MilestoneService {
             throw new BadRequestException("A milestone cannot depend on itself");
         }
 
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
 
-        Milestone dependency = milestoneRepository.findByTenantIdAndId(tenantId, dependsOnId)
+        Milestone dependency = milestoneRepository.findByTenant_IdAndId(tenantId, dependsOnId)
             .orElseThrow(() -> new ResourceNotFoundException("Dependency milestone not found"));
 
         // Verify both milestones belong to the same contract
@@ -335,10 +335,10 @@ public class MilestoneService {
     public MilestoneDto removeDependency(UUID milestoneId, UUID dependsOnId) {
         UUID tenantId = TenantContext.getCurrentTenantId();
 
-        Milestone milestone = milestoneRepository.findByTenantIdAndId(tenantId, milestoneId)
+        Milestone milestone = milestoneRepository.findByTenant_IdAndId(tenantId, milestoneId)
             .orElseThrow(() -> new ResourceNotFoundException("Milestone not found"));
 
-        Milestone dependency = milestoneRepository.findByTenantIdAndId(tenantId, dependsOnId)
+        Milestone dependency = milestoneRepository.findByTenant_IdAndId(tenantId, dependsOnId)
             .orElseThrow(() -> new ResourceNotFoundException("Dependency milestone not found"));
 
         milestone.removeDependency(dependency);

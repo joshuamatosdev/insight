@@ -27,10 +27,19 @@ public interface ContactRepository extends JpaRepository<Contact, UUID>, JpaSpec
 
     boolean existsByTenantIdAndEmail(UUID tenantId, String email);
 
-    // By organization
-    List<Contact> findByOrganizationIdAndStatusNot(UUID organizationId, ContactStatus status);
+    // By organization (with tenant isolation)
+    Page<Contact> findByTenantIdAndOrganizationIdAndStatusNot(
+        UUID tenantId,
+        UUID organizationId,
+        ContactStatus status,
+        Pageable pageable
+    );
 
-    Page<Contact> findByOrganizationIdAndStatusNot(UUID organizationId, ContactStatus status, Pageable pageable);
+    List<Contact> findByTenantIdAndOrganizationIdAndStatusNot(
+        UUID tenantId,
+        UUID organizationId,
+        ContactStatus status
+    );
 
     // By type
     Page<Contact> findByTenantIdAndContactTypeAndStatusNot(

@@ -3,16 +3,12 @@ package com.samgov.ingestor.service;
 import com.samgov.ingestor.BaseServiceTest;
 import com.samgov.ingestor.config.TenantContext;
 import com.samgov.ingestor.exception.ResourceNotFoundException;
-import com.samgov.ingestor.model.Contract;
-import com.samgov.ingestor.model.Contract.ContractStatus;
-import com.samgov.ingestor.model.Contract.ContractType;
+import com.samgov.ingestor.model.FeatureRequest.FeatureRequestCategory;
+import com.samgov.ingestor.model.FeatureRequest.FeatureRequestStatus;
 import com.samgov.ingestor.model.Role;
 import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.TenantMembership;
 import com.samgov.ingestor.model.User;
-import com.samgov.ingestor.repository.ContractRepository;
-import com.samgov.ingestor.model.FeatureRequest.FeatureRequestPriority;
-import com.samgov.ingestor.model.FeatureRequest.FeatureRequestStatus;
 import com.samgov.ingestor.service.FeatureRequestService.CreateFeatureRequestRequest;
 import com.samgov.ingestor.service.FeatureRequestService.FeatureRequestDto;
 import com.samgov.ingestor.service.FeatureRequestService.UpdateFeatureRequestRequest;
@@ -24,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * Tests the business logic of feature request management for contractor portals:
  * - Feature request CRUD operations
  * - Voting functionality (vote/unvote)
- * - Status management (admin only)
+ * - Status management
  * - Ordering by votes
  * - Duplicate vote prevention
  * - Multi-tenant isolation
@@ -50,10 +44,6 @@ class FeatureRequestServiceTest extends BaseServiceTest {
     @Autowired
     private FeatureRequestService featureRequestService;
 
-    @Autowired
-    private ContractRepository contractRepository;
-
-    private Contract testContract;
     private User adminUser;
 
     @BeforeEach
@@ -82,31 +72,13 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             .acceptedAt(Instant.now())
             .build();
         tenantMembershipRepository.save(adminMembership);
-
-        // Create a test contract for feature requests
-        testContract = Contract.builder()
-            .tenant(testTenant)
-            .contractNumber("FEATURE-TEST-" + UUID.randomUUID().toString().substring(0, 8))
-            .title("Feature Request Test Contract")
-            .description("Contract for testing feature requests")
-            .contractType(ContractType.FIRM_FIXED_PRICE)
-            .status(ContractStatus.ACTIVE)
-            .agency("Department of Defense")
-            .agencyCode("DOD")
-            .popStartDate(LocalDate.now())
-            .popEndDate(LocalDate.now().plusYears(1))
-            .totalValue(new BigDecimal("500000.00"))
-            .build();
-        testContract = contractRepository.save(testContract);
     }
 
     private CreateFeatureRequestRequest createDefaultRequest(String title) {
         return new CreateFeatureRequestRequest(
-            testContract.getId(),
             title,
             "Description for " + title,
-            FeatureRequestPriority.MEDIUM,
-            null // category
+            FeatureRequestCategory.UI_UX
         );
     }
 
@@ -128,11 +100,10 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             assertThat(result.id()).isNotNull();
             assertThat(result.title()).isEqualTo("Add dark mode");
             assertThat(result.description()).isEqualTo("Description for Add dark mode");
-            assertThat(result.priority()).isEqualTo(FeatureRequestPriority.MEDIUM);
+            assertThat(result.category()).isEqualTo(FeatureRequestCategory.UI_UX);
             assertThat(result.status()).isEqualTo(FeatureRequestStatus.SUBMITTED);
             assertThat(result.voteCount()).isZero();
-            assertThat(result.submitterId()).isEqualTo(testUser.getId());
-            assertThat(result.contractId()).isEqualTo(testContract.getId());
+            assertThat(result.submittedById()).isEqualTo(testUser.getId());
         }
 
         @Test
@@ -160,13 +131,12 @@ class FeatureRequestServiceTest extends BaseServiceTest {
 
             // When/Then
             assertThatThrownBy(() -> featureRequestService.getFeatureRequest(nonExistentId))
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessageContaining("Feature request not found");
+                .isInstanceOf(ResourceNotFoundException.class);
         }
 
         @Test
-        @DisplayName("should list feature requests for a contract")
-        void shouldListFeatureRequestsForContract() {
+        @DisplayName("should list feature requests for a tenant")
+        void shouldListFeatureRequestsForTenant() {
             // Given
             featureRequestService.createFeatureRequest(createDefaultRequest("Feature 1"));
             featureRequestService.createFeatureRequest(createDefaultRequest("Feature 2"));
@@ -174,7 +144,8 @@ class FeatureRequestServiceTest extends BaseServiceTest {
 
             // When
             Page<FeatureRequestDto> requests = featureRequestService.getFeatureRequests(
-                testContract.getId(),
+                null,  // no status filter
+                null,  // default sort
                 PageRequest.of(0, 10)
             );
 
@@ -196,8 +167,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             UpdateFeatureRequestRequest updateRequest = new UpdateFeatureRequestRequest(
                 "Updated Title",
                 "Updated description",
-                FeatureRequestPriority.HIGH,
-                "UI/UX"
+                FeatureRequestCategory.REPORTING
             );
 
             // When
@@ -209,8 +179,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             // Then
             assertThat(result.title()).isEqualTo("Updated Title");
             assertThat(result.description()).isEqualTo("Updated description");
-            assertThat(result.priority()).isEqualTo(FeatureRequestPriority.HIGH);
-            assertThat(result.category()).isEqualTo("UI/UX");
+            assertThat(result.category()).isEqualTo(FeatureRequestCategory.REPORTING);
         }
 
         @Test
@@ -358,11 +327,8 @@ class FeatureRequestServiceTest extends BaseServiceTest {
         }
 
         @Test
-        @DisplayName("should update status to UNDER_REVIEW when admin")
-        void shouldUpdateStatusToUnderReviewWhenAdmin() {
-            // Given - switch to admin user
-            switchUser(adminUser);
-
+        @DisplayName("should update status to UNDER_REVIEW")
+        void shouldUpdateStatusToUnderReview() {
             // When
             FeatureRequestDto result = featureRequestService.updateStatus(
                 featureRequest.id(),
@@ -374,68 +340,59 @@ class FeatureRequestServiceTest extends BaseServiceTest {
         }
 
         @Test
-        @DisplayName("should update status to APPROVED when admin")
-        void shouldUpdateStatusToApprovedWhenAdmin() {
-            // Given - switch to admin user
-            switchUser(adminUser);
+        @DisplayName("should update status to PLANNED")
+        void shouldUpdateStatusToPlanned() {
+            // When
+            FeatureRequestDto result = featureRequestService.updateStatus(
+                featureRequest.id(),
+                FeatureRequestStatus.PLANNED
+            );
+
+            // Then
+            assertThat(result.status()).isEqualTo(FeatureRequestStatus.PLANNED);
+        }
+
+        @Test
+        @DisplayName("should update status to DECLINED")
+        void shouldUpdateStatusToDeclined() {
+            // When
+            FeatureRequestDto result = featureRequestService.updateStatus(
+                featureRequest.id(),
+                FeatureRequestStatus.DECLINED
+            );
+
+            // Then
+            assertThat(result.status()).isEqualTo(FeatureRequestStatus.DECLINED);
+        }
+
+        @Test
+        @DisplayName("should update status to COMPLETED and set completedAt")
+        void shouldUpdateStatusToCompletedAndSetCompletedAt() {
+            // First move to IN_PROGRESS
+            featureRequestService.updateStatus(featureRequest.id(), FeatureRequestStatus.IN_PROGRESS);
 
             // When
             FeatureRequestDto result = featureRequestService.updateStatus(
                 featureRequest.id(),
-                FeatureRequestStatus.APPROVED
+                FeatureRequestStatus.COMPLETED
             );
 
             // Then
-            assertThat(result.status()).isEqualTo(FeatureRequestStatus.APPROVED);
+            assertThat(result.status()).isEqualTo(FeatureRequestStatus.COMPLETED);
+            assertThat(result.completedAt()).isNotNull();
         }
 
         @Test
-        @DisplayName("should update status to REJECTED when admin")
-        void shouldUpdateStatusToRejectedWhenAdmin() {
-            // Given - switch to admin user
-            switchUser(adminUser);
-
+        @DisplayName("should update status to IN_PROGRESS")
+        void shouldUpdateStatusToInProgress() {
             // When
             FeatureRequestDto result = featureRequestService.updateStatus(
                 featureRequest.id(),
-                FeatureRequestStatus.REJECTED
+                FeatureRequestStatus.IN_PROGRESS
             );
 
             // Then
-            assertThat(result.status()).isEqualTo(FeatureRequestStatus.REJECTED);
-        }
-
-        @Test
-        @DisplayName("should update status to IMPLEMENTED when admin")
-        void shouldUpdateStatusToImplementedWhenAdmin() {
-            // Given - switch to admin user
-            switchUser(adminUser);
-
-            // First approve
-            featureRequestService.updateStatus(featureRequest.id(), FeatureRequestStatus.APPROVED);
-
-            // When
-            FeatureRequestDto result = featureRequestService.updateStatus(
-                featureRequest.id(),
-                FeatureRequestStatus.IMPLEMENTED
-            );
-
-            // Then
-            assertThat(result.status()).isEqualTo(FeatureRequestStatus.IMPLEMENTED);
-        }
-
-        @Test
-        @DisplayName("should reject status update from non-admin user")
-        void shouldRejectStatusUpdateFromNonAdminUser() {
-            // Given - using regular test user (not admin)
-
-            // When/Then
-            assertThatThrownBy(() -> featureRequestService.updateStatus(
-                featureRequest.id(),
-                FeatureRequestStatus.APPROVED
-            ))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Only admins can update status");
+            assertThat(result.status()).isEqualTo(FeatureRequestStatus.IN_PROGRESS);
         }
     }
 
@@ -491,10 +448,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             featureRequestService.vote(feature3.id());
 
             // When
-            List<FeatureRequestDto> topVoted = featureRequestService.getTopVoted(
-                testContract.getId(),
-                10
-            );
+            List<FeatureRequestDto> topVoted = featureRequestService.getTopVoted(10);
 
             // Then
             assertThat(topVoted).hasSize(3);
@@ -517,10 +471,7 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             }
 
             // When
-            List<FeatureRequestDto> topVoted = featureRequestService.getTopVoted(
-                testContract.getId(),
-                5
-            );
+            List<FeatureRequestDto> topVoted = featureRequestService.getTopVoted(5);
 
             // Then
             assertThat(topVoted).hasSize(5);
@@ -538,23 +489,21 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             FeatureRequestDto submitted = featureRequestService.createFeatureRequest(
                 createDefaultRequest("Submitted Feature")
             );
-            FeatureRequestDto approved = featureRequestService.createFeatureRequest(
-                createDefaultRequest("Approved Feature")
+            FeatureRequestDto planned = featureRequestService.createFeatureRequest(
+                createDefaultRequest("Planned Feature")
             );
-            FeatureRequestDto rejected = featureRequestService.createFeatureRequest(
-                createDefaultRequest("Rejected Feature")
+            FeatureRequestDto declined = featureRequestService.createFeatureRequest(
+                createDefaultRequest("Declined Feature")
             );
 
-            // Update statuses as admin
-            switchUser(adminUser);
-            featureRequestService.updateStatus(approved.id(), FeatureRequestStatus.APPROVED);
-            featureRequestService.updateStatus(rejected.id(), FeatureRequestStatus.REJECTED);
+            // Update statuses
+            featureRequestService.updateStatus(planned.id(), FeatureRequestStatus.PLANNED);
+            featureRequestService.updateStatus(declined.id(), FeatureRequestStatus.DECLINED);
 
             // When - filter by SUBMITTED
-            switchUser(testUser);
-            Page<FeatureRequestDto> submittedRequests = featureRequestService.getFeatureRequestsByStatus(
-                testContract.getId(),
+            Page<FeatureRequestDto> submittedRequests = featureRequestService.getFeatureRequests(
                 FeatureRequestStatus.SUBMITTED,
+                null,
                 PageRequest.of(0, 10)
             );
 
@@ -562,16 +511,16 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             assertThat(submittedRequests.getContent()).hasSize(1);
             assertThat(submittedRequests.getContent().get(0).title()).isEqualTo("Submitted Feature");
 
-            // When - filter by APPROVED
-            Page<FeatureRequestDto> approvedRequests = featureRequestService.getFeatureRequestsByStatus(
-                testContract.getId(),
-                FeatureRequestStatus.APPROVED,
+            // When - filter by PLANNED
+            Page<FeatureRequestDto> plannedRequests = featureRequestService.getFeatureRequests(
+                FeatureRequestStatus.PLANNED,
+                null,
                 PageRequest.of(0, 10)
             );
 
             // Then
-            assertThat(approvedRequests.getContent()).hasSize(1);
-            assertThat(approvedRequests.getContent().get(0).title()).isEqualTo("Approved Feature");
+            assertThat(plannedRequests.getContent()).hasSize(1);
+            assertThat(plannedRequests.getContent().get(0).title()).isEqualTo("Planned Feature");
         }
     }
 
@@ -581,7 +530,6 @@ class FeatureRequestServiceTest extends BaseServiceTest {
 
         private Tenant tenant2;
         private User user2;
-        private Contract tenant2Contract;
 
         @BeforeEach
         void setUpSecondTenant() {
@@ -613,20 +561,6 @@ class FeatureRequestServiceTest extends BaseServiceTest {
                 .acceptedAt(Instant.now())
                 .build();
             tenantMembershipRepository.save(membership2);
-
-            // Create contract in tenant 2
-            tenant2Contract = Contract.builder()
-                .tenant(tenant2)
-                .contractNumber("T2-CONTRACT-" + UUID.randomUUID().toString().substring(0, 8))
-                .title("Tenant 2 Contract")
-                .contractType(ContractType.FIRM_FIXED_PRICE)
-                .status(ContractStatus.ACTIVE)
-                .agency("GSA")
-                .popStartDate(LocalDate.now())
-                .popEndDate(LocalDate.now().plusYears(1))
-                .totalValue(new BigDecimal("300000.00"))
-                .build();
-            tenant2Contract = contractRepository.save(tenant2Contract);
         }
 
         @Test
@@ -644,17 +578,16 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             // Create feature request in tenant 2
             FeatureRequestDto tenant2Feature = featureRequestService.createFeatureRequest(
                 new CreateFeatureRequestRequest(
-                    tenant2Contract.getId(),
                     "Tenant 2 Feature",
                     "Description",
-                    FeatureRequestPriority.MEDIUM,
-                    null
+                    FeatureRequestCategory.CONTRACTS
                 )
             );
 
             // Then - Each tenant should only see their own feature requests
             Page<FeatureRequestDto> tenant2Features = featureRequestService.getFeatureRequests(
-                tenant2Contract.getId(),
+                null,
+                null,
                 PageRequest.of(0, 10)
             );
             assertThat(tenant2Features.getContent())
@@ -667,7 +600,8 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             TenantContext.setCurrentUserId(testUser.getId());
 
             Page<FeatureRequestDto> tenant1Features = featureRequestService.getFeatureRequests(
-                testContract.getId(),
+                null,
+                null,
                 PageRequest.of(0, 10)
             );
             assertThat(tenant1Features.getContent())
@@ -691,6 +625,97 @@ class FeatureRequestServiceTest extends BaseServiceTest {
             // When/Then - Attempting to access tenant 1's feature request should fail
             assertThatThrownBy(() -> featureRequestService.getFeatureRequest(tenant1Feature.id()))
                 .isInstanceOf(ResourceNotFoundException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("My Feature Requests")
+    class MyFeatureRequests {
+
+        @Test
+        @DisplayName("should return only feature requests created by current user")
+        void shouldReturnOnlyMyFeatureRequests() {
+            // Given - Create feature request as test user
+            featureRequestService.createFeatureRequest(
+                createDefaultRequest("My Feature")
+            );
+
+            // Create second user and their feature request
+            User user2 = User.builder()
+                .email("user2-" + UUID.randomUUID().toString().substring(0, 8) + "@example.com")
+                .passwordHash("$2a$10$test.hash")
+                .firstName("User")
+                .lastName("Two")
+                .status(User.UserStatus.ACTIVE)
+                .emailVerified(true)
+                .build();
+            user2 = userRepository.save(user2);
+
+            var role2 = createTestRole(testTenant, Role.USER);
+            TenantMembership membership2 = TenantMembership.builder()
+                .user(user2)
+                .tenant(testTenant)
+                .role(role2)
+                .isDefault(true)
+                .acceptedAt(Instant.now())
+                .build();
+            tenantMembershipRepository.save(membership2);
+
+            switchUser(user2);
+            featureRequestService.createFeatureRequest(
+                createDefaultRequest("Other User Feature")
+            );
+
+            // When - Get my feature requests as user2
+            Page<FeatureRequestDto> myRequests = featureRequestService.getMyFeatureRequests(
+                PageRequest.of(0, 10)
+            );
+
+            // Then
+            assertThat(myRequests.getContent()).hasSize(1);
+            assertThat(myRequests.getContent().get(0).title()).isEqualTo("Other User Feature");
+        }
+    }
+
+    @Nested
+    @DisplayName("Search Feature Requests")
+    class SearchFeatureRequests {
+
+        @Test
+        @DisplayName("should search feature requests by keyword")
+        void shouldSearchByKeyword() {
+            // Given
+            featureRequestService.createFeatureRequest(
+                new CreateFeatureRequestRequest(
+                    "Dark mode support",
+                    "Add dark mode to the UI",
+                    FeatureRequestCategory.UI_UX
+                )
+            );
+            featureRequestService.createFeatureRequest(
+                new CreateFeatureRequestRequest(
+                    "Export reports",
+                    "Export reports to PDF",
+                    FeatureRequestCategory.REPORTING
+                )
+            );
+            featureRequestService.createFeatureRequest(
+                new CreateFeatureRequestRequest(
+                    "Light theme",
+                    "Improve light theme colors",
+                    FeatureRequestCategory.UI_UX
+                )
+            );
+
+            // When
+            Page<FeatureRequestDto> results = featureRequestService.searchFeatureRequests(
+                "dark",
+                PageRequest.of(0, 10)
+            );
+
+            // Then
+            assertThat(results.getContent()).hasSize(1);
+            assertThat(results.getContent().get(0).title()).isEqualTo("Dark mode support");
         }
     }
 }

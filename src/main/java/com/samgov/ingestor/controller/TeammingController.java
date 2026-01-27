@@ -163,7 +163,7 @@ public class TeammingController {
 
     @GetMapping("/agreements/opportunity/{opportunityId}")
     public ResponseEntity<List<TeammingAgreement>> getAgreementsByOpportunity(
-            @PathVariable UUID opportunityId) {
+            @PathVariable String opportunityId) {
         return ResponseEntity.ok(teammingService.getAgreementsByOpportunity(opportunityId));
     }
 

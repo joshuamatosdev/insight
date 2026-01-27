@@ -21,7 +21,7 @@ public interface CapturePlanRepository extends JpaRepository<CapturePlan, UUID> 
 
     Optional<CapturePlan> findByIdAndTenantId(UUID id, UUID tenantId);
 
-    List<CapturePlan> findByOpportunityId(UUID opportunityId);
+    List<CapturePlan> findByOpportunityId(String opportunityId);
 
     List<CapturePlan> findByTenantIdAndStatus(UUID tenantId, CaptureStatus status);
 
