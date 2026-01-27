@@ -8,6 +8,7 @@ export type {
   SourcesSoughtPageProps,
 } from './Pages.types';
 export type { LoginFormState, LoginFormErrors } from './LoginPage.types';
+export type { AuditLogPageProps } from './AuditLogPage.types';
 export { DashboardPage } from './DashboardPage';
 export { AllOpportunitiesPage } from './AllOpportunitiesPage';
 export { SourcesSoughtPage } from './SourcesSoughtPage';
@@ -17,3 +18,4 @@ export { NAICSPage } from './NAICSPage';
 export { SBIRPage } from './SBIRPage';
 export { SBIRAwardsPage } from './SBIRAwardsPage';
 export { LoginPage } from './LoginPage';
+export { AuditLogPage } from './AuditLogPage';
