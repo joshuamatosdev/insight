@@ -1,4 +1,4 @@
-# SAMGov Monitoring Stack
+# Insight Contract Intelligence Platform - Monitoring Stack
 
 This directory contains the configuration for the Prometheus + Grafana monitoring stack.
 
@@ -28,7 +28,7 @@ This directory contains the configuration for the Prometheus + Grafana monitorin
    - Prometheus: http://localhost:9090
    - Grafana: http://localhost:3001 (default: admin/admin)
 
-3. **The SAMGov dashboard** is auto-provisioned and available in Grafana.
+3. **The Insight dashboard** is auto-provisioned and available in Grafana.
 
 ## Directory Structure
 

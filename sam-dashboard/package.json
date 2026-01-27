@@ -1,7 +1,8 @@
 {
-  "name": "sam-dashboard",
+  "name": "insight-dashboard",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Insight Contract Intelligence Platform - Frontend Dashboard",
   "type": "module",
   "scripts": {
     "dev": "vite",

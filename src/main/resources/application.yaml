@@ -3,7 +3,7 @@ spring:
     import: optional:file:.env[.properties]
 
   application:
-    name: sam-gov-ingestor
+    name: insight-platform
     
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:sam_opportunities}
@@ -204,8 +204,8 @@ management:
 # Application info
 info:
   app:
-    name: SAM.gov Opportunity Ingestor
-    description: Ingests government contract opportunities from SAM.gov
+    name: Insight Contract Intelligence Platform
+    description: Multi-source government and commercial contract intelligence
     version: 1.0.0
 
 # JWT Configuration
@@ -218,8 +218,12 @@ jwt:
 
 # Application Configuration
 app:
-  name: ${APP_NAME:SAM.gov Contract Intelligence}
+  name: ${APP_NAME:Insight Contract Intelligence}
   base-url: ${APP_BASE_URL:http://localhost:3000}
+  production-url: ${APP_PRODUCTION_URL:https://insight.doctrineone.us}
+  api-url: ${APP_API_URL:http://localhost:8080}
+  docs-url: ${APP_DOCS_URL:https://docs.insight.doctrineone.us}
+  support-email: ${APP_SUPPORT_EMAIL:support@doctrineone.us}
   email:
     provider: ${EMAIL_PROVIDER:console}  # console, smtp, sendgrid, ses
   password-reset:
@@ -234,7 +238,7 @@ app:
 # For local development, use LocalStack with AWS_S3_ENDPOINT override
 aws:
   s3:
-    bucket: ${AWS_S3_BUCKET:samgov-files}
+    bucket: ${AWS_S3_BUCKET:insight-files}
     region: ${AWS_REGION:us-east-1}
     endpoint: ${AWS_S3_ENDPOINT:}  # Set to LocalStack URL for local development
     presigned-url-expiration-minutes: ${AWS_S3_PRESIGNED_EXPIRATION:15}

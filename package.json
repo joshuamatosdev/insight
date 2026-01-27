@@ -1,7 +1,7 @@
 {
-  "name": "samgov",
+  "name": "insight-platform",
   "version": "1.0.0",
-  "description": "SAMGov Contract Intelligence Platform",
+  "description": "Insight Contract Intelligence Platform",
   "type": "module",
   "scripts": {
     "git:agent": "node --import=tsx scripts/git-agent-runner.ts",

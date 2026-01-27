@@ -20,15 +20,28 @@ import java.util.Map;
 
 /**
  * Enhanced OpenAPI configuration with detailed documentation.
+ * All user-visible strings are configurable via application.yaml
  */
 @Configuration
 public class OpenApiEnhancedConfig {
 
-    @Value("${app.version:1.0.0}")
+    @Value("${info.app.version:1.0.0}")
     private String appVersion;
 
-    @Value("${app.base-url:http://localhost:8080}")
+    @Value("${app.api-url:http://localhost:8080}")
     private String baseUrl;
+
+    @Value("${app.name:Insight Contract Intelligence}")
+    private String appName;
+
+    @Value("${app.production-url:https://insight.doctrineone.us}")
+    private String productionUrl;
+
+    @Value("${app.docs-url:https://docs.insight.doctrineone.us}")
+    private String docsUrl;
+
+    @Value("${app.support-email:support@doctrineone.us}")
+    private String supportEmail;
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -43,32 +56,32 @@ public class OpenApiEnhancedConfig {
 
     private Info apiInfo() {
         return new Info()
-            .title("SAM.gov Contract Intelligence API")
+            .title(appName + " API")
             .description("""
                 ## Overview
-                
-                The SAM.gov Contract Intelligence API provides access to government contracting 
+
+                The %s API provides access to government and commercial contracting
                 opportunities, contract management, and business intelligence features.
-                
+
                 ## Authentication
-                
-                All API endpoints (except `/auth/*`) require a valid JWT token in the 
+
+                All API endpoints (except `/auth/*`) require a valid JWT token in the
                 `Authorization` header:
-                
+
                 ```
                 Authorization: Bearer <your-jwt-token>
                 ```
-                
+
                 ## Rate Limiting
-                
+
                 - General API: 100 requests/minute
                 - Authentication endpoints: 10 requests/minute
                 - Export endpoints: 5 requests/minute
-                
+
                 ## Error Handling
-                
+
                 All errors follow a consistent format:
-                
+
                 ```json
                 {
                   "error": "ERROR_CODE",
@@ -77,26 +90,26 @@ public class OpenApiEnhancedConfig {
                   "path": "/api/v1/resource"
                 }
                 ```
-                
+
                 ## Pagination
-                
+
                 List endpoints support pagination with `page` and `size` parameters.
                 Response includes `totalElements`, `totalPages`, and `number` (current page).
-                """)
+                """.formatted(appName))
             .version(appVersion)
             .contact(new Contact()
                 .name("API Support")
-                .email("api-support@samgov.example.com")
-                .url("https://docs.samgov.example.com"))
+                .email(supportEmail)
+                .url(docsUrl))
             .license(new License()
                 .name("Proprietary")
-                .url("https://samgov.example.com/license"));
+                .url(productionUrl + "/license"));
     }
 
     private ExternalDocumentation externalDocs() {
         return new ExternalDocumentation()
-            .description("SAM.gov Contract Intelligence Documentation")
-            .url("https://docs.samgov.example.com");
+            .description(appName + " Documentation")
+            .url(docsUrl);
     }
 
     private List<Server> servers() {
@@ -105,11 +118,8 @@ public class OpenApiEnhancedConfig {
                 .url(baseUrl)
                 .description("Current Environment"),
             new Server()
-                .url("https://api.samgov.example.com")
-                .description("Production"),
-            new Server()
-                .url("https://api-staging.samgov.example.com")
-                .description("Staging")
+                .url(productionUrl)
+                .description("Production")
         );
     }
 
@@ -118,7 +128,7 @@ public class OpenApiEnhancedConfig {
             new Tag().name("Authentication")
                 .description("User authentication and authorization"),
             new Tag().name("Opportunities")
-                .description("Government contracting opportunities from SAM.gov"),
+                .description("Government and commercial contracting opportunities"),
             new Tag().name("Contracts")
                 .description("Contract management and tracking"),
             new Tag().name("Pipeline")

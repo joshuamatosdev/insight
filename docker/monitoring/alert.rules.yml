@@ -1,4 +1,4 @@
-# Prometheus Alerting Rules for SAMGov
+# Prometheus Alerting Rules for Insight Contract Intelligence Platform
 # https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
 
 groups:
@@ -8,14 +8,14 @@ groups:
     rules:
       # Service is down
       - alert: ServiceDown
-        expr: up{job="samgov-backend"} == 0
+        expr: up{job="insight-backend"} == 0
         for: 1m
         labels:
           severity: critical
           team: platform
         annotations:
-          summary: "SAMGov backend service is down"
-          description: "The SAMGov backend service has been unreachable for more than 1 minute."
+          summary: "Insight backend service is down"
+          description: "The Insight backend service has been unreachable for more than 1 minute."
           runbook_url: "https://wiki.example.com/runbooks/service-down"
 
       # High error rate

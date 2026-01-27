@@ -1,6 +1,8 @@
-# CLAUDE.md - SAMGov Contract Intelligence Platform
+# CLAUDE.md - Insight Contract Intelligence Platform
 
 This file provides guidance to Claude Code when working with code in this repository.
+
+**Production URL:** https://insight.doctrineone.us
 
 ---
 
@@ -8,7 +10,7 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 Government & Commercial Contract Intelligence Platform
 - **Backend**: Java Spring Boot (existing)
-- **Frontend**: React + TypeScript + Vite (sam-dashboard)
+- **Frontend**: React + TypeScript + Vite (insight-dashboard)
 - **Database**: PostgreSQL
 - **Target**: Multi-Tenant SaaS for federal, state/local, and B2B contracting
 

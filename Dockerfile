@@ -1,5 +1,5 @@
 # =============================================================================
-# SAMGov Backend - Multi-Stage Docker Build
+# Insight Contract Intelligence Platform - Backend Docker Build
 # =============================================================================
 # This Dockerfile uses multi-stage builds to create a minimal, secure
 # production image for the Spring Boot application.
@@ -64,9 +64,9 @@ FROM eclipse-temurin:21-jre-alpine AS runtime
 ARG BUILD_ENV=production
 
 # Labels
-LABEL maintainer="SAMGov Team"
+LABEL maintainer="Insight Team <support@doctrineone.us>"
 LABEL version="1.0.0"
-LABEL description="SAMGov Contract Intelligence Platform - Backend API"
+LABEL description="Insight Contract Intelligence Platform - Backend API"
 
 WORKDIR /app
 

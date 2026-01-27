@@ -1,5 +1,5 @@
 # =============================================================================
-# SAMGov Frontend - Multi-Stage Docker Build
+# Insight Contract Intelligence Platform - Frontend Docker Build
 # =============================================================================
 # This Dockerfile uses multi-stage builds to create a minimal, secure
 # production image serving the React application via nginx.
@@ -63,9 +63,9 @@ RUN ls -la dist/ && \
 FROM nginx:1.25-alpine AS runtime
 
 # Labels
-LABEL maintainer="SAMGov Team"
+LABEL maintainer="Insight Team <support@doctrineone.us>"
 LABEL version="1.0.0"
-LABEL description="SAMGov Contract Intelligence Platform - Frontend"
+LABEL description="Insight Contract Intelligence Platform - Frontend"
 
 # Install runtime dependencies
 RUN apk add --no-cache \

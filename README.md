@@ -1,8 +1,10 @@
-# SAM.gov Opportunity Ingestor - Manager's Guide
+# Insight Contract Intelligence Platform
 
-[![CI](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/ci.yml)
-[![CD](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/cd.yml/badge.svg)](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/cd.yml)
-[![Security](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/security.yml/badge.svg)](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/security.yml)
+**Production:** https://insight.doctrineone.us
+
+[![CI](https://github.com/joshuamatosdev/insight/actions/workflows/ci.yml/badge.svg)](https://github.com/joshuamatosdev/insight/actions/workflows/ci.yml)
+[![CD](https://github.com/joshuamatosdev/insight/actions/workflows/cd.yml/badge.svg)](https://github.com/joshuamatosdev/insight/actions/workflows/cd.yml)
+[![Security](https://github.com/joshuamatosdev/insight/actions/workflows/security.yml/badge.svg)](https://github.com/joshuamatosdev/insight/actions/workflows/security.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.org/projects/jdk/21/)
 [![Node](https://img.shields.io/badge/Node-20-green.svg)](https://nodejs.org/)
@@ -26,7 +28,7 @@ For this project size, **do not launch 10 agents**. You'll spend more time fixin
 
 ## 📋 Summary Checklist
 
-- [ ] Create Project Folder (`sam-gov-ingestor`)
+- [ ] Create Project Folder (`insight`)
 - [ ] Save `00_SHARED_CONTRACT.md` (the "Shared Brain")
 - [ ] Launch **Window 1**: Paste Contract + DB Instructions
 - [ ] Launch **Window 2**: Paste Contract + API Instructions

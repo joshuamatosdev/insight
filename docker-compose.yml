@@ -6,7 +6,7 @@ services:
   # =============================================================================
   postgres:
     image: postgres:16-alpine
-    container_name: sam_postgres
+    container_name: insight_postgres
     env_file:
       - .env
     environment:
@@ -24,14 +24,14 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - sam-network
+      - insight-network
 
   # =============================================================================
   # Redis Cache
   # =============================================================================
   redis:
     image: redis:7-alpine
-    container_name: sam_redis
+    container_name: insight_redis
     ports:
       - "${REDIS_PORT:-6379}:6379"
     volumes:
@@ -43,20 +43,20 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - sam-network
+      - insight-network
 
   # =============================================================================
   # Elasticsearch for Full-Text Search
   # =============================================================================
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
-    container_name: sam_elasticsearch
+    container_name: insight_elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - xpack.security.enrollment.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - cluster.name=sam-cluster
+      - cluster.name=insight-cluster
     ports:
       - "${ELASTICSEARCH_PORT:-9200}:9200"
       - "9300:9300"
@@ -69,7 +69,7 @@ services:
       retries: 5
       start_period: 60s
     networks:
-      - sam-network
+      - insight-network
     ulimits:
       memlock:
         soft: -1
@@ -83,7 +83,7 @@ services:
   # =============================================================================
   localstack:
     image: localstack/localstack:3.0
-    container_name: sam_localstack
+    container_name: insight_localstack
     ports:
       - "${LOCALSTACK_PORT:-4566}:4566"
     environment:
@@ -94,13 +94,14 @@ services:
     volumes:
       - localstack-data:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/localstack-init:/etc/localstack/init/ready.d:ro
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:4566/_localstack/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
-      - sam-network
+      - insight-network
 
   # =============================================================================
   # Spring Boot Backend
@@ -109,7 +110,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sam_backend
+    container_name: insight_backend
     env_file:
       - .env
     environment:
@@ -142,14 +143,14 @@ services:
       retries: 5
       start_period: 120s
     networks:
-      - sam-network
+      - insight-network
 
   # =============================================================================
   # Prometheus Monitoring
   # =============================================================================
   prometheus:
     image: prom/prometheus:v2.48.0
-    container_name: sam_prometheus
+    container_name: insight_prometheus
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     volumes:
@@ -169,7 +170,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - sam-network
+      - insight-network
     depends_on:
       backend:
         condition: service_healthy
@@ -179,7 +180,7 @@ services:
   # =============================================================================
   grafana:
     image: grafana/grafana:10.2.0
-    container_name: sam_grafana
+    container_name: insight_grafana
     ports:
       - "${GRAFANA_PORT:-3001}:3000"
     environment:
@@ -198,7 +199,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - sam-network
+      - insight-network
     depends_on:
       - prometheus
 
@@ -209,7 +210,7 @@ services:
     build:
       context: ./sam-dashboard
       dockerfile: Dockerfile
-    container_name: sam_frontend
+    container_name: insight_frontend
     ports:
       - "${FRONTEND_PORT:-3000}:80"
     environment:
@@ -223,15 +224,15 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      - sam-network
+      - insight-network
 
 # =============================================================================
 # Networks
 # =============================================================================
 networks:
-  sam-network:
+  insight-network:
     driver: bridge
-    name: sam-network
+    name: insight-network
 
 # =============================================================================
 # Volumes
@@ -240,12 +241,12 @@ volumes:
   pg-data:
     name: sam_pg_data
   redis-data:
-    name: sam_redis_data
+    name: insight_redis_data
   es-data:
     name: sam_es_data
   localstack-data:
-    name: sam_localstack_data
+    name: insight_localstack_data
   prometheus-data:
-    name: sam_prometheus_data
+    name: insight_prometheus_data
   grafana-data:
-    name: sam_grafana_data
+    name: insight_grafana_data
