@@ -16,3 +16,4 @@ export { ChevronRightIcon, ChevronLeftIcon, ChevronDownIcon, ChevronUpIcon } fro
 export { BuildingIcon, BuildingCheckIcon } from './icons/BuildingIcon';
 export { CalendarIcon, ClockIcon } from './icons/CalendarIcon';
 export { LogoutIcon, BoxArrowRightIcon } from './icons/LogoutIcon';
+export { BellIcon } from './icons/BellIcon';

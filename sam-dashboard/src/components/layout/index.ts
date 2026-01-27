@@ -51,3 +51,11 @@ export type {
 
 export { AppLayout, MainContent } from './AppLayout';
 export type { AppLayoutProps, MainContentProps } from './AppLayout';
+
+export { NotificationBell, NotificationDropdown } from './NotificationBell';
+export type {
+  NotificationBellProps,
+  NotificationDropdownProps,
+  Notification,
+  NotificationType,
+} from './NotificationBell';
