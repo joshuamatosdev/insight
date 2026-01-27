@@ -128,6 +128,12 @@ public class AuditLog {
         DOCUMENT_CREATED,
         DOCUMENT_UPDATED,
 
+        // File storage management (S3)
+        FILE_UPLOADED,
+        FILE_DOWNLOADED,
+        FILE_DELETED,
+        FILE_PURGED,
+
         // Template management
         TEMPLATE_CREATED,
         TEMPLATE_UPDATED,

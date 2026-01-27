@@ -28,6 +28,10 @@ spring:
     virtual:
       enabled: false
 
+  # Elasticsearch configuration for tests (will be overridden by Testcontainers)
+  elasticsearch:
+    uris: ${ELASTICSEARCH_URI:http://localhost:9200}
+
 # Disable scheduled tasks during tests
 sam:
   gov:
@@ -89,6 +93,19 @@ rate:
     requests-per-minute: 100000
     window-seconds: 1
     cleanup-interval-seconds: 3600
+
+# AWS S3 Configuration for tests (mocked)
+# Set enabled to false to use mock beans from TestS3Config
+aws:
+  s3:
+    enabled: false
+    bucket: test-bucket
+    region: us-east-1
+    endpoint: ""
+    presigned-url-expiration-minutes: 15
+  credentials:
+    access-key: test-access-key
+    secret-key: test-secret-key
 
 # Reduce logging noise in tests
 logging:

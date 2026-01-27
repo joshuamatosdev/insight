@@ -1,5 +1,16 @@
 # SAM.gov Opportunity Ingestor - Manager's Guide
 
+[![CI](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/ci.yml)
+[![CD](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/cd.yml/badge.svg)](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/cd.yml)
+[![Security](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/security.yml/badge.svg)](https://github.com/YOUR_USERNAME/SAMGov/actions/workflows/security.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.org/projects/jdk/21/)
+[![Node](https://img.shields.io/badge/Node-20-green.svg)](https://nodejs.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
+
+> **Note:** Replace `YOUR_USERNAME` in the badge URLs with your actual GitHub username or organization name.
+
 > **The Parallel Agent Strategy for Solo Developers**
 
 ## ⚡ The Magic Number: 2 + 1

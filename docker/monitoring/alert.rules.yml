@@ -1,0 +1,234 @@
+# Prometheus Alerting Rules for SAMGov
+# https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+
+groups:
+  # Application Health Alerts
+  - name: application_health
+    interval: 30s
+    rules:
+      # Service is down
+      - alert: ServiceDown
+        expr: up{job="samgov-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "SAMGov backend service is down"
+          description: "The SAMGov backend service has been unreachable for more than 1 minute."
+          runbook_url: "https://wiki.example.com/runbooks/service-down"
+
+      # High error rate
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m]))
+          / sum(rate(http_server_requests_seconds_count[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "High HTTP error rate detected"
+          description: "More than 5% of HTTP requests are returning 5xx errors over the last 5 minutes."
+
+      # Critical error rate
+      - alert: CriticalErrorRate
+        expr: |
+          sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m]))
+          / sum(rate(http_server_requests_seconds_count[5m])) > 0.20
+        for: 2m
+        labels:
+          severity: critical
+          team: backend
+        annotations:
+          summary: "Critical HTTP error rate"
+          description: "More than 20% of HTTP requests are failing. Immediate action required."
+
+  # JVM Memory Alerts
+  - name: jvm_memory
+    interval: 30s
+    rules:
+      # High heap memory usage
+      - alert: HighHeapMemoryUsage
+        expr: |
+          jvm_memory_used_bytes{area="heap"}
+          / jvm_memory_max_bytes{area="heap"} > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High JVM heap memory usage"
+          description: "JVM heap memory usage is above 85% for more than 5 minutes. Current: {{ $value | humanizePercentage }}"
+
+      # Critical heap memory usage
+      - alert: CriticalHeapMemoryUsage
+        expr: |
+          jvm_memory_used_bytes{area="heap"}
+          / jvm_memory_max_bytes{area="heap"} > 0.95
+        for: 2m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Critical JVM heap memory usage"
+          description: "JVM heap memory usage is above 95%. OOM is imminent. Current: {{ $value | humanizePercentage }}"
+
+      # High GC pause time
+      - alert: HighGCPauseTime
+        expr: |
+          increase(jvm_gc_pause_seconds_sum[5m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High garbage collection pause time"
+          description: "Total GC pause time exceeded 5 seconds in the last 5 minutes."
+
+  # Database Connection Pool Alerts
+  - name: database_pool
+    interval: 30s
+    rules:
+      # Connection pool saturation
+      - alert: DatabasePoolExhaustion
+        expr: |
+          hikaricp_connections_active
+          / hikaricp_connections_max > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "Database connection pool near exhaustion"
+          description: "HikariCP connection pool is above 90% utilization."
+
+      # Connection acquisition timeout
+      - alert: DatabaseConnectionTimeout
+        expr: |
+          increase(hikaricp_connections_timeout_total[5m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+          team: backend
+        annotations:
+          summary: "Database connection timeout detected"
+          description: "HikariCP reported connection acquisition timeouts. Check database health."
+
+      # Pending connections
+      - alert: DatabasePendingConnections
+        expr: |
+          hikaricp_connections_pending > 5
+        for: 2m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "High pending database connections"
+          description: "More than 5 threads are waiting for database connections."
+
+  # Latency Alerts
+  - name: latency
+    interval: 30s
+    rules:
+      # High API latency (P95)
+      - alert: HighAPILatency
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(http_server_requests_seconds_bucket[5m])) by (le, uri)
+          ) > 2
+        for: 5m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "High API latency detected"
+          description: "95th percentile API latency is above 2 seconds for {{ $labels.uri }}"
+
+      # Very high API latency (P99)
+      - alert: VeryHighAPILatency
+        expr: |
+          histogram_quantile(0.99,
+            sum(rate(http_server_requests_seconds_bucket[5m])) by (le)
+          ) > 5
+        for: 5m
+        labels:
+          severity: critical
+          team: backend
+        annotations:
+          summary: "Very high API latency"
+          description: "99th percentile API latency is above 5 seconds."
+
+  # Business Metrics Alerts
+  - name: business_metrics
+    interval: 1m
+    rules:
+      # No opportunities ingested (data pipeline issue)
+      - alert: NoOpportunitiesIngested
+        expr: |
+          increase(samgov_opportunities_indexed_total[1h]) == 0
+        for: 2h
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "No opportunities indexed"
+          description: "No new opportunities have been indexed in the last 2 hours. Check ingestion pipeline."
+
+      # High SAM.gov API error rate
+      - alert: HighSamGovAPIErrors
+        expr: |
+          sum(rate(samgov_api_calls_total{status="error"}[15m]))
+          / sum(rate(samgov_api_calls_total[15m])) > 0.1
+        for: 15m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "High SAM.gov API error rate"
+          description: "More than 10% of SAM.gov API calls are failing."
+
+  # Cache Alerts
+  - name: cache_metrics
+    interval: 30s
+    rules:
+      # Low cache hit rate
+      - alert: LowCacheHitRate
+        expr: |
+          sum(rate(cache_gets_hit_total[5m]))
+          / (sum(rate(cache_gets_hit_total[5m])) + sum(rate(cache_gets_miss_total[5m]))) < 0.5
+        for: 10m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is below 50%. Consider reviewing cache configuration."
+
+  # Thread Pool Alerts
+  - name: thread_pool
+    interval: 30s
+    rules:
+      # High thread count
+      - alert: HighThreadCount
+        expr: |
+          jvm_threads_live_threads > 500
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High JVM thread count"
+          description: "JVM is running more than 500 live threads. Possible thread leak."
+
+      # Deadlocked threads
+      - alert: DeadlockedThreads
+        expr: |
+          jvm_threads_deadlocked > 0
+        for: 1m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Deadlocked threads detected"
+          description: "JVM has detected deadlocked threads. Immediate investigation required."

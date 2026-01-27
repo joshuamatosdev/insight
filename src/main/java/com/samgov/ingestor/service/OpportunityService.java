@@ -1,11 +1,15 @@
 package com.samgov.ingestor.service;
 
+import com.samgov.ingestor.config.CacheConfig;
+import com.samgov.ingestor.config.TenantContext;
 import com.samgov.ingestor.dto.OpportunityDto;
 import com.samgov.ingestor.model.Opportunity;
 import com.samgov.ingestor.model.Opportunity.OpportunityStatus;
 import com.samgov.ingestor.repository.OpportunityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -27,9 +32,16 @@ public class OpportunityService {
 
     /**
      * Get opportunity by ID.
+     * Results are cached per tenant for 5 minutes (default).
      */
     @Transactional(readOnly = true)
+    @Cacheable(
+        value = CacheConfig.OPPORTUNITIES_CACHE,
+        key = "'tenant:' + T(com.samgov.ingestor.config.TenantContext).getCurrentTenantId() + ':opportunity:' + #id",
+        unless = "#result == null || !#result.isPresent()"
+    )
     public Optional<OpportunityDto> getById(String id) {
+        log.debug("Cache miss for opportunity ID: {}", id);
         return opportunityRepository.findById(id)
             .map(OpportunityDto::fromEntity);
     }
@@ -150,9 +162,15 @@ public class OpportunityService {
 
     /**
      * Get dashboard statistics.
+     * Results are cached per tenant for 2 minutes (short TTL for frequently updated data).
      */
     @Transactional(readOnly = true)
+    @Cacheable(
+        value = CacheConfig.OPPORTUNITIES_CACHE,
+        key = "'tenant:' + T(com.samgov.ingestor.config.TenantContext).getCurrentTenantId() + ':dashboard:stats'"
+    )
     public DashboardStats getDashboardStats() {
+        log.debug("Cache miss for dashboard stats");
         LocalDate today = LocalDate.now();
         LocalDate sevenDaysFromNow = today.plusDays(7);
 
@@ -166,9 +184,15 @@ public class OpportunityService {
 
     /**
      * Get distinct filter options.
+     * Results are cached for 10 minutes since filter options change infrequently.
      */
     @Transactional(readOnly = true)
+    @Cacheable(
+        value = CacheConfig.OPPORTUNITIES_CACHE,
+        key = "'tenant:' + T(com.samgov.ingestor.config.TenantContext).getCurrentTenantId() + ':filter:options'"
+    )
     public FilterOptions getFilterOptions() {
+        log.debug("Cache miss for filter options");
         List<String> agencies = opportunityRepository.findDistinctAgencies();
         List<String> setAsideTypes = opportunityRepository.findDistinctSetAsideTypes();
         List<String> naicsCodes = opportunityRepository.findDistinctNaicsCodes();
@@ -308,9 +332,12 @@ public class OpportunityService {
 
     /**
      * Ingest opportunities from SAM.gov API.
+     * Evicts the opportunities cache after ingestion completes.
+     *
      * @return number of new opportunities ingested
      */
     @Transactional
+    @CacheEvict(value = CacheConfig.OPPORTUNITIES_CACHE, allEntries = true)
     public int ingestFromSamGov() {
         log.info("Starting SAM.gov opportunity ingestion");
         // Implementation would call SAM.gov API
@@ -320,9 +347,12 @@ public class OpportunityService {
 
     /**
      * Ingest opportunities from SBIR.gov API.
+     * Evicts the opportunities cache after ingestion completes.
+     *
      * @return number of new opportunities ingested
      */
     @Transactional
+    @CacheEvict(value = CacheConfig.OPPORTUNITIES_CACHE, allEntries = true)
     public int ingestFromSbirGov() {
         log.info("Starting SBIR.gov opportunity ingestion");
         // Implementation would call SBIR.gov API
@@ -331,10 +361,13 @@ public class OpportunityService {
 
     /**
      * Ingest opportunities from state procurement portal.
+     * Evicts the opportunities cache after ingestion completes.
+     *
      * @param stateCode the two-letter state code
      * @return number of new opportunities ingested
      */
     @Transactional
+    @CacheEvict(value = CacheConfig.OPPORTUNITIES_CACHE, allEntries = true)
     public int ingestFromStatePortal(String stateCode) {
         log.info("Starting state portal ingestion for: {}", stateCode);
         // Implementation would call state-specific API
@@ -343,10 +376,13 @@ public class OpportunityService {
 
     /**
      * Ingest opportunities from local government portal.
+     * Evicts the opportunities cache after ingestion completes.
+     *
      * @param localEntityId the local entity identifier
      * @return number of new opportunities ingested
      */
     @Transactional
+    @CacheEvict(value = CacheConfig.OPPORTUNITIES_CACHE, allEntries = true)
     public int ingestFromLocalPortal(String localEntityId) {
         log.info("Starting local portal ingestion for: {}", localEntityId);
         // Implementation would call local-specific API
@@ -359,10 +395,13 @@ public class OpportunityService {
 
     /**
      * Archive opportunities older than specified days.
+     * Evicts the opportunities cache to ensure fresh data after modification.
+     *
      * @param daysOld opportunities closed more than this many days ago
      * @return number of opportunities archived
      */
     @Transactional
+    @CacheEvict(value = CacheConfig.OPPORTUNITIES_CACHE, allEntries = true)
     public int archiveOldOpportunities(int daysOld) {
         LocalDate cutoffDate = LocalDate.now().minusDays(daysOld);
         List<Opportunity> toArchive = opportunityRepository.findByStatusAndResponseDeadLineBefore(
@@ -371,15 +410,18 @@ public class OpportunityService {
         toArchive.forEach(opp -> opp.setStatus(OpportunityStatus.ARCHIVED));
         opportunityRepository.saveAll(toArchive);
 
-        log.info("Archived {} opportunities older than {} days", toArchive.size(), daysOld);
+        log.info("Archived {} opportunities older than {} days, cache evicted", toArchive.size(), daysOld);
         return toArchive.size();
     }
 
     /**
      * Update opportunities that are past their deadline to CLOSED status.
+     * Evicts the opportunities cache to ensure fresh data after modification.
+     *
      * @return number of opportunities updated
      */
     @Transactional
+    @CacheEvict(value = CacheConfig.OPPORTUNITIES_CACHE, allEntries = true)
     public int updateExpiredOpportunities() {
         LocalDate today = LocalDate.now();
         List<Opportunity> expired = opportunityRepository.findByStatusAndResponseDeadLineBefore(
@@ -388,7 +430,7 @@ public class OpportunityService {
         expired.forEach(opp -> opp.setStatus(OpportunityStatus.CLOSED));
         opportunityRepository.saveAll(expired);
 
-        log.info("Updated {} expired opportunities to CLOSED status", expired.size());
+        log.info("Updated {} expired opportunities to CLOSED status, cache evicted", expired.size());
         return expired.size();
     }
 

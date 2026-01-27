@@ -1,5 +1,5 @@
 # =============================================================================
-# Docker Ignore File - Backend (Spring Boot)
+# Docker Ignore File - Frontend (React/Vite)
 # =============================================================================
 # This file specifies which files and directories should be excluded from
 # the Docker build context to reduce build time and image size.
@@ -13,50 +13,36 @@
 .gitattributes
 
 # -----------------------------------------------------------------------------
-# Build outputs
+# Dependencies (will be installed fresh in container)
 # -----------------------------------------------------------------------------
+node_modules/
+
+# -----------------------------------------------------------------------------
+# Build outputs (we rebuild in container)
+# -----------------------------------------------------------------------------
+dist/
 build/
-out/
-target/
-bin/
-*.class
-*.jar
-!gradle-wrapper.jar
+.cache/
+.vite/
 
 # -----------------------------------------------------------------------------
 # IDE and Editor files
 # -----------------------------------------------------------------------------
 .idea/
 *.iml
-*.ipr
-*.iws
 .vscode/
 *.swp
 *.swo
 *.sublime-*
-.project
-.classpath
-.settings/
-
-# -----------------------------------------------------------------------------
-# Frontend (built separately)
-# -----------------------------------------------------------------------------
-sam-dashboard/
-!sam-dashboard/dist/
-
-# -----------------------------------------------------------------------------
-# Gradle cache (use container's cache)
-# -----------------------------------------------------------------------------
-.gradle/
-gradle-app.setting
-!gradle/wrapper/gradle-wrapper.jar
-!gradle/wrapper/gradle-wrapper.properties
 
 # -----------------------------------------------------------------------------
 # Logs
 # -----------------------------------------------------------------------------
 *.log
 logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # -----------------------------------------------------------------------------
 # OS files
@@ -73,8 +59,6 @@ Desktop.ini
 !.env.example
 *.pem
 *.key
-*.p12
-*.jks
 credentials.json
 secrets/
 *.secret
@@ -85,47 +69,54 @@ secrets/
 test-results/
 coverage/
 *.test
-*.spec
+playwright-report/
+test-output.log
+test-out.txt
 
 # -----------------------------------------------------------------------------
-# Documentation (not needed in runtime)
+# Documentation
 # -----------------------------------------------------------------------------
 docs/
 *.md
 !README.md
-LICENSE
 
 # -----------------------------------------------------------------------------
 # Docker files (not needed in context)
 # -----------------------------------------------------------------------------
-docker-compose*.yml
 Dockerfile*
 .docker/
 
 # -----------------------------------------------------------------------------
-# CI/CD
+# E2E tests (not needed for production build)
 # -----------------------------------------------------------------------------
-.github/
-.gitlab-ci.yml
-.circleci/
-Jenkinsfile
-azure-pipelines.yml
+e2e/
+playwright.config.ts
 
 # -----------------------------------------------------------------------------
-# Local development files
+# Scripts (not needed in container)
 # -----------------------------------------------------------------------------
-pg-data/
-.serena/
-.claude/
-*.local
-local/
+scripts/
 
 # -----------------------------------------------------------------------------
-# Terraform/Infrastructure
+# Type generation (not needed in runtime)
 # -----------------------------------------------------------------------------
-*.tfstate
-*.tfstate.*
-.terraform/
+*.spec.json
+openapi.json
+
+# -----------------------------------------------------------------------------
+# Linting and config (not needed in runtime)
+# -----------------------------------------------------------------------------
+.ls-lint.yml
+eslint.config.js
+eslint-plugin-*.js
+vitest.config.ts
+tsconfig*.json
+
+# -----------------------------------------------------------------------------
+# Storybook (if present)
+# -----------------------------------------------------------------------------
+.storybook/
+storybook-static/
 
 # -----------------------------------------------------------------------------
 # Temporary files

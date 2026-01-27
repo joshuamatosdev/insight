@@ -1,0 +1,41 @@
+# =============================================================================
+# SAMGov Frontend - Development Dockerfile
+# =============================================================================
+# This Dockerfile is optimized for development with hot reloading.
+# It runs the Vite dev server instead of building static assets.
+# =============================================================================
+
+FROM node:20-alpine
+
+# Labels
+LABEL maintainer="SAMGov Team"
+LABEL version="1.0.0"
+LABEL description="SAMGov Frontend - Development Server"
+
+WORKDIR /app
+
+# Install dependencies
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/cache/apk/*
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install all dependencies (including dev)
+RUN npm install
+
+# Copy source files
+COPY . .
+
+# Environment variables
+ENV NODE_ENV=development
+ENV VITE_API_URL=http://localhost:8080
+
+# Expose Vite dev server port
+EXPOSE 5173
+
+# Start development server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

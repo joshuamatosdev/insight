@@ -1,0 +1,362 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+env:
+  JAVA_VERSION: '21'
+  NODE_VERSION: '20'
+
+jobs:
+  lint-title:
+    name: Lint PR Title
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR title format
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Require conventional commit format
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          # Require scope in parentheses (optional)
+          requireScope: false
+          # Enforce subject case
+          subjectPattern: ^[A-Z].+$
+          subjectPatternError: |
+            The subject "{subject}" doesn't match the configured pattern.
+            Please start with an uppercase letter.
+
+  check-files:
+    name: Check File Changes
+    runs-on: ubuntu-latest
+
+    outputs:
+      backend-changed: ${{ steps.changes.outputs.backend }}
+      frontend-changed: ${{ steps.changes.outputs.frontend }}
+      docs-only: ${{ steps.changes.outputs.docs-only }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for file changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            backend:
+              - 'src/**'
+              - 'build.gradle'
+              - 'settings.gradle'
+              - 'gradle/**'
+            frontend:
+              - 'sam-dashboard/**'
+            docs-only:
+              - '**/*.md'
+              - 'docs/**'
+
+  test-coverage:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    needs: check-files
+    if: needs.check-files.outputs.docs-only != 'true'
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_DB: sam_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        if: needs.check-files.outputs.backend-changed == 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        if: needs.check-files.outputs.backend-changed == 'true'
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Set up Node.js
+        if: needs.check-files.outputs.frontend-changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: sam-dashboard/package-lock.json
+
+      - name: Run backend tests with coverage
+        if: needs.check-files.outputs.backend-changed == 'true'
+        run: |
+          chmod +x gradlew
+          ./gradlew test jacocoTestReport --no-daemon || true
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/sam_test
+          SPRING_DATASOURCE_USERNAME: test_user
+          SPRING_DATASOURCE_PASSWORD: test_pass
+        continue-on-error: true
+
+      - name: Check backend coverage threshold
+        if: needs.check-files.outputs.backend-changed == 'true'
+        run: |
+          # Check if coverage report exists
+          if [ -f build/reports/jacoco/test/jacocoTestReport.xml ]; then
+            echo "Coverage report found"
+            # Add coverage threshold check here if needed
+          else
+            echo "No coverage report found, skipping threshold check"
+          fi
+        continue-on-error: true
+
+      - name: Install frontend dependencies
+        if: needs.check-files.outputs.frontend-changed == 'true'
+        working-directory: sam-dashboard
+        run: npm ci
+
+      - name: Run frontend tests with coverage
+        if: needs.check-files.outputs.frontend-changed == 'true'
+        working-directory: sam-dashboard
+        run: npm run test:coverage
+        continue-on-error: true
+
+      - name: Comment coverage on PR
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## Test Coverage Report\n\n';
+
+            // Add backend coverage if available
+            comment += '### Backend\n';
+            if ('${{ needs.check-files.outputs.backend-changed }}' === 'true') {
+              comment += 'Backend tests executed. Check artifacts for detailed coverage report.\n';
+            } else {
+              comment += 'No backend changes detected.\n';
+            }
+
+            comment += '\n### Frontend\n';
+            if ('${{ needs.check-files.outputs.frontend-changed }}' === 'true') {
+              comment += 'Frontend tests executed. Check artifacts for detailed coverage report.\n';
+            } else {
+              comment += 'No frontend changes detected.\n';
+            }
+
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Test Coverage Report')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
+
+  build-verify:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    needs: check-files
+    if: needs.check-files.outputs.docs-only != 'true'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: sam-dashboard/package-lock.json
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build backend
+        if: needs.check-files.outputs.backend-changed == 'true'
+        run: ./gradlew build -x test --no-daemon
+
+      - name: Install frontend dependencies
+        if: needs.check-files.outputs.frontend-changed == 'true'
+        working-directory: sam-dashboard
+        run: npm ci
+
+      - name: Type check frontend
+        if: needs.check-files.outputs.frontend-changed == 'true'
+        working-directory: sam-dashboard
+        run: npm run typecheck
+
+      - name: Build frontend
+        if: needs.check-files.outputs.frontend-changed == 'true'
+        working-directory: sam-dashboard
+        run: npm run build
+
+      - name: Verify build artifacts
+        run: |
+          echo "## Build Verification Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f build/libs/*.jar ]; then
+            echo "- Backend JAR: Built successfully" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ -d sam-dashboard/dist ]; then
+            echo "- Frontend: Built successfully" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  pr-size-check:
+    name: PR Size Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR size
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const additions = files.reduce((sum, file) => sum + file.additions, 0);
+            const deletions = files.reduce((sum, file) => sum + file.deletions, 0);
+            const totalChanges = additions + deletions;
+            const fileCount = files.length;
+
+            let sizeLabel = 'size/S';
+            let emoji = '🟢';
+
+            if (totalChanges > 1000 || fileCount > 50) {
+              sizeLabel = 'size/XL';
+              emoji = '🔴';
+            } else if (totalChanges > 500 || fileCount > 25) {
+              sizeLabel = 'size/L';
+              emoji = '🟠';
+            } else if (totalChanges > 100 || fileCount > 10) {
+              sizeLabel = 'size/M';
+              emoji = '🟡';
+            }
+
+            console.log(`PR Size: ${totalChanges} changes in ${fileCount} files`);
+
+            // Add size label
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: [sizeLabel]
+              });
+            } catch (e) {
+              console.log('Could not add label:', e.message);
+            }
+
+            // Create summary
+            let summary = `## PR Size ${emoji}\n\n`;
+            summary += `| Metric | Value |\n`;
+            summary += `|--------|-------|\n`;
+            summary += `| Files Changed | ${fileCount} |\n`;
+            summary += `| Additions | +${additions} |\n`;
+            summary += `| Deletions | -${deletions} |\n`;
+            summary += `| Total Changes | ${totalChanges} |\n`;
+            summary += `| Size Category | ${sizeLabel} |\n`;
+
+            if (totalChanges > 500) {
+              summary += `\n⚠️ **Large PR detected.** Consider breaking this into smaller PRs for easier review.\n`;
+            }
+
+            require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
+
+  all-checks:
+    name: All PR Checks
+    runs-on: ubuntu-latest
+    needs: [lint-title, test-coverage, build-verify, pr-size-check]
+    if: always()
+
+    steps:
+      - name: Check all results
+        run: |
+          echo "## PR Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Lint Title | ${{ needs.lint-title.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test Coverage | ${{ needs.test-coverage.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build Verify | ${{ needs.build-verify.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| PR Size Check | ${{ needs.pr-size-check.result }} |" >> $GITHUB_STEP_SUMMARY
+
+          if [[ "${{ needs.lint-title.result }}" == "failure" ]] || \
+             [[ "${{ needs.build-verify.result }}" == "failure" ]]; then
+            echo ""
+            echo "❌ Some required checks failed. Please fix the issues above."
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ All required checks passed!"

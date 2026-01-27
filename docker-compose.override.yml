@@ -1,0 +1,108 @@
+# =============================================================================
+# Docker Compose Override for Local Development
+# =============================================================================
+# This file is automatically loaded by docker-compose and provides
+# development-specific configurations.
+#
+# Usage: docker-compose up (this file is auto-loaded)
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL - Development Settings
+  # ---------------------------------------------------------------------------
+  postgres:
+    # Use host directory for easier data inspection during development
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+      - ./docker/init-scripts:/docker-entrypoint-initdb.d:ro
+    # Enable logging for debugging
+    command: >
+      postgres
+      -c logging_collector=on
+      -c log_statement=all
+      -c log_duration=on
+
+  # ---------------------------------------------------------------------------
+  # Redis - Development Settings
+  # ---------------------------------------------------------------------------
+  redis:
+    # Expose debug commands
+    command: redis-server --appendonly yes --loglevel verbose
+
+  # ---------------------------------------------------------------------------
+  # Elasticsearch - Development Settings
+  # ---------------------------------------------------------------------------
+  elasticsearch:
+    environment:
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - logger.level=WARN
+
+  # ---------------------------------------------------------------------------
+  # LocalStack - Development Settings
+  # ---------------------------------------------------------------------------
+  localstack:
+    environment:
+      - DEBUG=1
+    # Mount init scripts for S3 bucket creation
+    volumes:
+      - localstack-data:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/localstack-init:/etc/localstack/init/ready.d:ro
+
+  # ---------------------------------------------------------------------------
+  # Backend - Development Settings
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,dev
+      - LOGGING_LEVEL_ROOT=INFO
+      - LOGGING_LEVEL_COM_SAMGOV=DEBUG
+    volumes:
+      # Hot reload: mount source for development
+      - ./src:/app/src:ro
+      - ./build.gradle:/app/build.gradle:ro
+      - ./settings.gradle:/app/settings.gradle:ro
+    # Override entrypoint for development with hot reload
+    command: ["./gradlew", "bootRun", "--no-daemon"]
+    # Remove health check during dev to speed up startup
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 60s
+      start_period: 180s
+
+  # ---------------------------------------------------------------------------
+  # Frontend - Development Settings
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./sam-dashboard
+      dockerfile: Dockerfile.dev
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    volumes:
+      # Hot reload: mount source for development
+      - ./sam-dashboard/src:/app/src:ro
+      - ./sam-dashboard/public:/app/public:ro
+      - ./sam-dashboard/index.html:/app/index.html:ro
+    ports:
+      - "${FRONTEND_PORT:-3000}:5173"
+    # Override for Vite dev server
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    healthcheck:
+      disable: true
+
+# =============================================================================
+# Development Volumes
+# =============================================================================
+volumes:
+  pg-data:
+  redis-data:
+  es-data:
+  localstack-data:

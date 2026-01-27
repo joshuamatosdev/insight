@@ -1,0 +1,238 @@
+# =============================================================================
+# Docker Compose Production Configuration
+# =============================================================================
+# This file provides production-specific settings with security hardening,
+# resource limits, and optimized configurations.
+#
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL - Production Settings
+  # ---------------------------------------------------------------------------
+  postgres:
+    restart: always
+    environment:
+      # Strong password should be provided via secrets
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    # Production-optimized settings
+    command: >
+      postgres
+      -c max_connections=200
+      -c shared_buffers=512MB
+      -c effective_cache_size=1536MB
+      -c maintenance_work_mem=128MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c min_wal_size=1GB
+      -c max_wal_size=4GB
+      -c log_statement=none
+      -c log_duration=off
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # Redis - Production Settings
+  # ---------------------------------------------------------------------------
+  redis:
+    restart: always
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # Elasticsearch - Production Settings
+  # ---------------------------------------------------------------------------
+  elasticsearch:
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD_FILE=/run/secrets/elastic_password
+    secrets:
+      - elastic_password
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # LocalStack - NOT INCLUDED IN PRODUCTION
+  # ---------------------------------------------------------------------------
+  # In production, use real AWS S3 services
+  localstack:
+    profiles:
+      - development-only
+    # This service will not start in production
+
+  # ---------------------------------------------------------------------------
+  # Backend - Production Settings
+  # ---------------------------------------------------------------------------
+  backend:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUILD_ENV=production
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - JAVA_OPTS=-Xms512m -Xmx1g -XX:+UseG1GC -XX:MaxGCPauseMillis=200
+      - LOGGING_LEVEL_ROOT=WARN
+      - LOGGING_LEVEL_COM_SAMGOV=INFO
+      # Use real AWS in production
+      - AWS_ENDPOINT_URL=
+    secrets:
+      - db_password
+      - api_keys
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1536M
+        reservations:
+          cpus: '0.5'
+          memory: 768M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  # ---------------------------------------------------------------------------
+  # Frontend - Production Settings
+  # ---------------------------------------------------------------------------
+  frontend:
+    restart: always
+    build:
+      context: ./sam-dashboard
+      dockerfile: Dockerfile
+      args:
+        - BUILD_ENV=production
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        order: start-first
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# =============================================================================
+# Secrets (Docker Swarm or external secrets management)
+# =============================================================================
+secrets:
+  postgres_password:
+    external: true
+  elastic_password:
+    external: true
+  db_password:
+    external: true
+  api_keys:
+    external: true
+
+# =============================================================================
+# Production Networks
+# =============================================================================
+networks:
+  sam-network:
+    driver: overlay
+    attachable: true
+    driver_opts:
+      encrypted: "true"
+
+# =============================================================================
+# Production Volumes
+# =============================================================================
+volumes:
+  pg-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/postgres
+      o: bind
+  redis-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/redis
+      o: bind
+  es-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/elasticsearch
+      o: bind

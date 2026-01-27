@@ -1,0 +1,23 @@
+# Grafana Dashboard Provisioning
+# https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards
+
+apiVersion: 1
+
+providers:
+  # Dashboard provider for SAMGov dashboards
+  - name: 'SAMGov Dashboards'
+    # Unique identifier
+    orgId: 1
+    # Type of provider (file-based)
+    type: file
+    # Disable dashboard deletion from UI
+    disableDeletion: false
+    # Allow UI updates (set to false to make dashboards read-only)
+    updateIntervalSeconds: 30
+    # Allow editing dashboards in the UI
+    allowUiUpdates: true
+    options:
+      # Path where dashboard JSON files are stored
+      path: /var/lib/grafana/dashboards
+      # Enable folder creation from filename
+      foldersFromFilesStructure: false
