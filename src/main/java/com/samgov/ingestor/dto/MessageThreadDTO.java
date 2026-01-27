@@ -15,6 +15,7 @@ public record MessageThreadDTO(
     UUID id,
     String subject,
     UUID creatorId,
+    String creatorName,
     List<ParticipantDTO> participants,
     int unreadCount,
     Instant lastMessageAt,
@@ -44,7 +45,8 @@ public record MessageThreadDTO(
         return new MessageThreadDTO(
             entity.getId(),
             entity.getSubject(),
-            entity.getCreatorId(),
+            entity.getCreator() != null ? entity.getCreator().getId() : null,
+            entity.getCreator() != null ? entity.getCreator().getFullName() : null,
             participantDTOs,
             unreadCount,
             entity.getLastMessageAt(),

@@ -47,7 +47,7 @@ public interface MessageThreadRepository extends JpaRepository<MessageThread, UU
     @Query("""
         SELECT t FROM MessageThread t
         WHERE t.deleted = false
-        AND t.tenantId = :tenantId
+        AND t.tenant.id = :tenantId
         AND EXISTS (
             SELECT 1 FROM MessageThreadParticipant p1
             WHERE p1.threadId = t.id AND p1.userId = :userId1

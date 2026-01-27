@@ -113,8 +113,8 @@ public class MessagingService {
         } else {
             // Create new thread
             thread = MessageThread.builder()
-                .tenantId(tenantId)
-                .creatorId(senderId)
+                .tenant(tenant)
+                .creator(sender)
                 .subject(request.subject())
                 .build();
             thread = threadRepository.save(thread);

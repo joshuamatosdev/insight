@@ -16,6 +16,7 @@ public record ThreadWithMessagesDTO(
     UUID id,
     String subject,
     UUID creatorId,
+    String creatorName,
     List<MessageThreadDTO.ParticipantDTO> participants,
     List<MessageDTO> messages,
     int totalMessages,
@@ -48,7 +49,8 @@ public record ThreadWithMessagesDTO(
         return new ThreadWithMessagesDTO(
             thread.getId(),
             thread.getSubject(),
-            thread.getCreatorId(),
+            thread.getCreator() != null ? thread.getCreator().getId() : null,
+            thread.getCreator() != null ? thread.getCreator().getFullName() : null,
             participantDTOs,
             messageDTOs,
             messages.size(),
