@@ -13,6 +13,7 @@ import {
   BuildingCheckIcon,
   CheckCircleIcon,
   LogoutIcon,
+  BellIcon,
 } from './components/primitives';
 import {
   AppLayout,
@@ -37,6 +38,7 @@ import {
   NAICSPage,
   SBIRPage,
   SBIRAwardsPage,
+  AlertsPage,
 } from './pages';
 import { useOpportunities } from './hooks';
 import { exportToCSV } from './services';
@@ -50,6 +52,7 @@ type ViewSection =
   | 'solicitation'
   | 'sbir'
   | 'sbir-awards'
+  | 'alerts'
   | `naics-${string}`;
 
 export function Dashboard() {
@@ -157,6 +160,8 @@ export function Dashboard() {
         return <SBIRPage opportunities={opportunities} />;
       case 'sbir-awards':
         return <SBIRAwardsPage />;
+      case 'alerts':
+        return <AlertsPage />;
       default:
         if (currentSection.startsWith('naics-')) {
           const naicsCode = currentSection.replace('naics-', '');
@@ -196,6 +201,12 @@ export function Dashboard() {
             badge={<Badge variant="primary" size="sm">{counts.total}</Badge>}
             isActive={currentSection === 'all-opportunities'}
             onClick={() => setCurrentSection('all-opportunities')}
+          />
+          <SidebarNavItem
+            icon={<BellIcon size="sm" />}
+            label="Alerts"
+            isActive={currentSection === 'alerts'}
+            onClick={() => setCurrentSection('alerts')}
           />
         </SidebarNav>
       </SidebarSection>

@@ -10,6 +10,13 @@ export {
   searchSbirAwards,
   triggerSbirGovIngest,
   fetchSbirAgencies,
+  // Opportunity Alerts
+  fetchOpportunityAlerts,
+  fetchOpportunityAlert,
+  createOpportunityAlert,
+  updateOpportunityAlert,
+  deleteOpportunityAlert,
+  toggleOpportunityAlert,
 } from './api';
 export { exportToCSV } from './csv';
 export {
