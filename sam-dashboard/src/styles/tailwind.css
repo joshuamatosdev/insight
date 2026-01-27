@@ -1,250 +1,45 @@
-/* Tailwind CSS v4 */
 @import 'tailwindcss';
+@import './base.css';
+@import './typography.css' layer(components);
 
-/* Inter Font (Catalyst default) */
+/* Inter Font */
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/inter/700.css';
 
-/*
- * Insight Platform Theme - Catalyst-style with semantic aliases
- *
- * Usage: bg-accent, text-accent, border-accent, etc.
- * Or via CSS variables: var(--color-primary), var(--spacing-4), etc.
- */
 @theme {
-  /* Font Family */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  /* Reset text scale to customize */
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2.25rem;
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 3rem;
+  --text-6xl: 3rem;
+  --text-6xl--line-height: 3.5rem;
+  --text-7xl: 4rem;
+  --text-7xl--line-height: 4.5rem;
 
-  /* =========================================================================
-   * SEMANTIC COLOR ALIASES (Light Mode)
-   * Change these to rebrand the entire app
-   * ========================================================================= */
+  /* Extended border radius */
+  --radius-4xl: 2.5rem;
 
-  /* Primary / Accent - main brand color */
-  --color-primary: #2563eb;           /* blue-600 */
-  --color-primary-hover: #1d4ed8;     /* blue-700 */
-  --color-primary-light: #dbeafe;     /* blue-100 */
-  --color-primary-50: #eff6ff;        /* blue-50 */
-  --color-primary-100: #dbeafe;       /* blue-100 */
+  /* Font families */
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans--font-feature-settings: 'cv11';
 
-  /* Accent aliases (same as primary for consistency) */
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-accent-light: #dbeafe;
-
-  /* Danger / Destructive - errors, deletions */
-  --color-danger: #dc2626;            /* red-600 */
-  --color-danger-hover: #b91c1c;      /* red-700 */
-  --color-danger-light: #fef2f2;      /* red-50 */
-  --color-danger-50: #fef2f2;         /* red-50 */
-  --color-danger-100: #fee2e2;        /* red-100 */
-  --color-destructive: #dc2626;
-  --color-destructive-hover: #b91c1c;
-
-  /* Success - confirmations, completed states */
-  --color-success: #16a34a;           /* green-600 */
-  --color-success-hover: #15803d;     /* green-700 */
-  --color-success-light: #f0fdf4;     /* green-50 */
-  --color-success-50: #f0fdf4;        /* green-50 */
-  --color-success-100: #dcfce7;       /* green-100 */
-
-  /* Warning - caution states */
-  --color-warning: #d97706;           /* amber-600 */
-  --color-warning-hover: #b45309;     /* amber-700 */
-  --color-warning-light: #fffbeb;     /* amber-50 */
-  --color-warning-50: #fffbeb;        /* amber-50 */
-  --color-warning-100: #fef3c7;       /* amber-100 */
-  --color-warning-700: #b45309;       /* amber-700 */
-
-  /* Info - informational states */
-  --color-info: #0284c7;              /* sky-600 */
-  --color-info-hover: #0369a1;        /* sky-700 */
-  --color-info-light: #f0f9ff;        /* sky-50 */
-  --color-info-50: #f0f9ff;           /* sky-50 */
-
-  /* Muted - secondary text, disabled states */
-  --color-muted: #71717a;             /* zinc-500 */
-  --color-muted-foreground: #a1a1aa;  /* zinc-400 */
-
-  /* =========================================================================
-   * GRAY SCALE (Zinc-based for Catalyst look)
-   * ========================================================================= */
-  --color-white: #ffffff;
-  --color-black: #000000;
-
-  --color-gray-50: #fafafa;           /* zinc-50 */
-  --color-gray-100: #f4f4f5;          /* zinc-100 */
-  --color-gray-200: #e4e4e7;          /* zinc-200 */
-  --color-gray-300: #d4d4d8;          /* zinc-300 */
-  --color-gray-400: #a1a1aa;          /* zinc-400 */
-  --color-gray-500: #71717a;          /* zinc-500 */
-  --color-gray-600: #52525b;          /* zinc-600 */
-  --color-gray-700: #3f3f46;          /* zinc-700 */
-  --color-gray-800: #27272a;          /* zinc-800 */
-  --color-gray-900: #18181b;          /* zinc-900 */
-  --color-gray-950: #09090b;          /* zinc-950 */
-
-  /* =========================================================================
-   * SPACING SCALE (matches Tailwind defaults)
-   * ========================================================================= */
-  --spacing-0: 0;
-  --spacing-1: 0.25rem;               /* 4px */
-  --spacing-2: 0.5rem;                /* 8px */
-  --spacing-3: 0.75rem;               /* 12px */
-  --spacing-4: 1rem;                  /* 16px */
-  --spacing-5: 1.25rem;               /* 20px */
-  --spacing-6: 1.5rem;                /* 24px */
-  --spacing-8: 2rem;                  /* 32px */
-  --spacing-10: 2.5rem;               /* 40px */
-  --spacing-12: 3rem;                 /* 48px */
-  --spacing-16: 4rem;                 /* 64px */
-  --spacing-20: 5rem;                 /* 80px */
-  --spacing-24: 6rem;                 /* 96px */
-
-  /* =========================================================================
-   * FONT SIZES
-   * ========================================================================= */
-  --font-size-xs: 0.75rem;            /* 12px */
-  --font-size-sm: 0.875rem;           /* 14px */
-  --font-size-base: 1rem;             /* 16px */
-  --font-size-lg: 1.125rem;           /* 18px */
-  --font-size-xl: 1.25rem;            /* 20px */
-  --font-size-2xl: 1.5rem;            /* 24px */
-  --font-size-3xl: 1.875rem;          /* 30px */
-  --font-size-4xl: 2.25rem;           /* 36px */
-  --font-size-5xl: 3rem;              /* 48px */
-
-  /* =========================================================================
-   * BORDER RADIUS
-   * ========================================================================= */
-  --radius-none: 0;
-  --radius-sm: 0.125rem;              /* 2px */
-  --radius-md: 0.375rem;              /* 6px */
-  --radius-lg: 0.5rem;                /* 8px */
-  --radius-xl: 0.75rem;               /* 12px */
-  --radius-2xl: 1rem;                 /* 16px */
-  --radius-3xl: 1.5rem;               /* 24px */
-  --radius-full: 9999px;
-
-  /* =========================================================================
-   * SHADOWS
-   * ========================================================================= */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-
-  /* =========================================================================
-   * TRANSITIONS
-   * ========================================================================= */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
-
-  /* =========================================================================
-   * Z-INDEX SCALE
-   * ========================================================================= */
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
-
-  /* =========================================================================
-   * GRADIENTS
-   * ========================================================================= */
-  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  --gradient-secondary: linear-gradient(135deg, #71717a 0%, #52525b 100%);
-  --gradient-success: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-  --gradient-warning: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-  --gradient-danger: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-  --gradient-info: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  --gradient-sidebar: linear-gradient(180deg, #18181b 0%, #27272a 100%);
-
-  /* =========================================================================
-   * LAYOUT
-   * ========================================================================= */
-  --sidebar-width: 16rem;             /* 256px */
-  --sidebar-collapsed-width: 4rem;    /* 64px */
-  --header-height: 4rem;              /* 64px */
-  --max-content-width: 80rem;         /* 1280px */
-}
-
-/*
- * =========================================================================
- * DARK MODE OVERRIDES
- * Lighter shades for dark backgrounds (Catalyst pattern)
- * =========================================================================
- */
-.dark {
-  /* Primary / Accent */
-  --color-primary: #3b82f6;           /* blue-500 */
-  --color-primary-hover: #60a5fa;     /* blue-400 */
-  --color-primary-light: #1e3a8a;     /* blue-900 */
-  --color-primary-50: #172554;        /* blue-950 */
-  --color-primary-100: #1e3a8a;       /* blue-900 */
-
-  --color-accent: #3b82f6;
-  --color-accent-hover: #60a5fa;
-  --color-accent-light: #1e3a8a;
-
-  /* Danger / Destructive */
-  --color-danger: #ef4444;            /* red-500 */
-  --color-danger-hover: #f87171;      /* red-400 */
-  --color-danger-light: #450a0a;      /* red-950 */
-  --color-danger-50: #450a0a;
-  --color-danger-100: #7f1d1d;        /* red-900 */
-  --color-destructive: #ef4444;
-  --color-destructive-hover: #f87171;
-
-  /* Success */
-  --color-success: #22c55e;           /* green-500 */
-  --color-success-hover: #4ade80;     /* green-400 */
-  --color-success-light: #052e16;     /* green-950 */
-  --color-success-50: #052e16;
-  --color-success-100: #14532d;       /* green-900 */
-
-  /* Warning */
-  --color-warning: #f59e0b;           /* amber-500 */
-  --color-warning-hover: #fbbf24;     /* amber-400 */
-  --color-warning-light: #451a03;     /* amber-950 */
-  --color-warning-50: #451a03;
-  --color-warning-100: #78350f;       /* amber-900 */
-  --color-warning-700: #fbbf24;       /* amber-400 (inverted for dark) */
-
-  /* Info */
-  --color-info: #0ea5e9;              /* sky-500 */
-  --color-info-hover: #38bdf8;        /* sky-400 */
-  --color-info-light: #082f49;        /* sky-950 */
-  --color-info-50: #082f49;
-
-  /* Muted */
-  --color-muted: #a1a1aa;             /* zinc-400 */
-  --color-muted-foreground: #d4d4d8;  /* zinc-300 */
-
-  /* Gray Scale (inverted for dark mode) */
-  --color-gray-50: #27272a;           /* zinc-800 */
-  --color-gray-100: #3f3f46;          /* zinc-700 */
-  --color-gray-200: #52525b;          /* zinc-600 */
-  --color-gray-300: #71717a;          /* zinc-500 */
-  --color-gray-400: #a1a1aa;          /* zinc-400 */
-  --color-gray-500: #d4d4d8;          /* zinc-300 */
-  --color-gray-600: #e4e4e7;          /* zinc-200 */
-  --color-gray-700: #f4f4f5;          /* zinc-100 */
-  --color-gray-800: #fafafa;          /* zinc-50 */
-  --color-gray-900: #ffffff;          /* white */
-
-  /* Gradients (darker variants) */
-  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-  --gradient-secondary: linear-gradient(135deg, #a1a1aa 0%, #d4d4d8 100%);
-  --gradient-success: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
-  --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-  --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-  --gradient-info: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
-  --gradient-sidebar: linear-gradient(180deg, #09090b 0%, #18181b 100%);
+  --font-display: Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }

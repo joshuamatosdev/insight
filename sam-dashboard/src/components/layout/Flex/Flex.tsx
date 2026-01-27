@@ -1,21 +1,43 @@
-import { CSSProperties } from 'react';
+import clsx from 'clsx';
 import { FlexProps } from './Flex.types';
 
+const directionMap: Record<string, string> = {
+  row: 'flex-row',
+  'row-reverse': 'flex-row-reverse',
+  column: 'flex-col',
+  'column-reverse': 'flex-col-reverse',
+};
+
 const justifyMap: Record<string, string> = {
-  start: 'flex-start',
-  end: 'flex-end',
-  center: 'center',
-  between: 'space-between',
-  around: 'space-around',
-  evenly: 'space-evenly',
+  start: 'justify-start',
+  end: 'justify-end',
+  center: 'justify-center',
+  between: 'justify-between',
+  around: 'justify-around',
+  evenly: 'justify-evenly',
 };
 
 const alignMap: Record<string, string> = {
-  start: 'flex-start',
-  end: 'flex-end',
-  center: 'center',
-  baseline: 'baseline',
-  stretch: 'stretch',
+  start: 'items-start',
+  end: 'items-end',
+  center: 'items-center',
+  baseline: 'items-baseline',
+  stretch: 'items-stretch',
+};
+
+const wrapMap: Record<string, string> = {
+  nowrap: 'flex-nowrap',
+  wrap: 'flex-wrap',
+  'wrap-reverse': 'flex-wrap-reverse',
+};
+
+const gapMap: Record<string, string> = {
+  none: 'gap-0',
+  xs: 'gap-1',
+  sm: 'gap-2',
+  md: 'gap-4',
+  lg: 'gap-6',
+  xl: 'gap-8',
 };
 
 export function Flex({
@@ -25,22 +47,24 @@ export function Flex({
   wrap = 'nowrap',
   gap,
   className,
-  style,
   children,
   ...rest
 }: FlexProps) {
-  const flexStyles: CSSProperties = {
-    display: 'flex',
-    flexDirection: direction,
-    justifyContent: justifyMap[justify],
-    alignItems: alignMap[align],
-    flexWrap: wrap,
-    gap: typeof gap === 'number' ? `${gap}px` : gap,
-    ...style,
-  };
+  const gapClass = gap !== undefined && gap !== null ? gapMap[gap] ?? '' : '';
 
   return (
-    <div className={className} style={flexStyles} {...rest}>
+    <div
+      className={clsx(
+        'flex',
+        directionMap[direction],
+        justifyMap[justify],
+        alignMap[align],
+        wrapMap[wrap],
+        gapClass,
+        className
+      )}
+      {...rest}
+    >
       {children}
     </div>
   );

@@ -1,0 +1,218 @@
+/*
+ * Typography styles for prose content
+ * Based on Tailwind UI Studio template
+ * Uses Tailwind v4 CSS functions: --spacing(), --theme(), var(--color-*)
+ */
+
+.typography {
+  color: var(--color-zinc-950);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+
+  :where(.typography > *) {
+    margin-top: --spacing(4);
+    margin-bottom: --spacing(4);
+  }
+
+  /* Headings */
+  :where(h1) {
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+    margin-top: --spacing(12);
+    margin-bottom: --spacing(4);
+  }
+
+  :where(h2) {
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    margin-top: --spacing(10);
+  }
+
+  :where(h3) {
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+    margin-top: --spacing(8);
+  }
+
+  :where(h2 + h3) {
+    margin-top: 0;
+  }
+
+  /* Lists */
+  :where(ul, ol) {
+    padding-left: 1.5rem;
+  }
+
+  :where(ul) {
+    list-style-type: disc;
+  }
+
+  :where(ol) {
+    list-style-type: decimal;
+  }
+
+  :where(li) {
+    padding-left: --spacing(2);
+    margin-top: --spacing(2);
+  }
+
+  :where(li)::marker {
+    color: var(--color-zinc-500);
+  }
+
+  :where(li > *),
+  :where(li li) {
+    margin-top: --spacing(2);
+  }
+
+  :where(ol > li)::marker {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Tables */
+  :where(table) {
+    width: 100%;
+    text-align: left;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  :where(th) {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  :where(thead th) {
+    padding-bottom: --spacing(3);
+    border-bottom: 1px solid var(--color-zinc-200);
+  }
+
+  :where(td) {
+    vertical-align: top;
+    padding-top: --spacing(3);
+    padding-bottom: --spacing(3);
+    border-bottom: 1px solid var(--color-zinc-100);
+  }
+
+  :where(:is(th, td):not(:last-child)) {
+    padding-right: --spacing(4);
+  }
+
+  /* Code blocks */
+  :where(pre) {
+    display: flex;
+    background-color: var(--color-zinc-900);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    margin-top: --spacing(6);
+    margin-bottom: --spacing(6);
+  }
+
+  :where(pre code) {
+    flex: none;
+    padding: --spacing(4);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--color-zinc-100);
+  }
+
+  /* <hr> */
+  :where(hr) {
+    border-color: var(--color-zinc-200);
+    margin-top: --spacing(12);
+    margin-bottom: --spacing(12);
+  }
+
+  /* Inline text */
+  :where(a) {
+    color: var(--color-blue-600);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+    text-decoration-skip-ink: none;
+    font-weight: var(--font-weight-medium);
+  }
+
+  :where(a:hover) {
+    color: var(--color-blue-700);
+  }
+
+  :where(strong) {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  :where(code:not(pre code)) {
+    font-size: calc(14 / 16 * 1em);
+    font-weight: var(--font-weight-medium);
+    background-color: var(--color-zinc-100);
+    padding: --spacing(0.5) --spacing(1);
+    border-radius: var(--radius-sm);
+  }
+
+  :where(h2 code, h3 code) {
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Blockquote */
+  :where(blockquote) {
+    border-left: 3px solid var(--color-zinc-300);
+    padding-left: --spacing(4);
+    font-style: italic;
+    color: var(--color-zinc-600);
+  }
+
+  /* Spacing overrides */
+  :where(.typography:first-child > :first-child),
+  :where(li > :first-child) {
+    margin-top: 0 !important;
+  }
+
+  :where(.typography:last-child > :last-child),
+  :where(li > :last-child) {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Dark mode typography */
+.dark .typography {
+  color: var(--color-zinc-100);
+
+  :where(thead th) {
+    border-bottom-color: var(--color-zinc-700);
+  }
+
+  :where(td) {
+    border-bottom-color: var(--color-zinc-800);
+  }
+
+  :where(hr) {
+    border-color: var(--color-zinc-700);
+  }
+
+  :where(a) {
+    color: var(--color-blue-400);
+  }
+
+  :where(a:hover) {
+    color: var(--color-blue-300);
+  }
+
+  :where(code:not(pre code)) {
+    background-color: var(--color-zinc-800);
+  }
+
+  :where(blockquote) {
+    border-left-color: var(--color-zinc-600);
+    color: var(--color-zinc-400);
+  }
+
+  :where(li)::marker {
+    color: var(--color-zinc-400);
+  }
+}

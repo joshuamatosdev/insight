@@ -1,31 +1,73 @@
-import { CSSProperties } from 'react';
-import { StackProps } from './Stack.types';
+import clsx from 'clsx';
+import { StackProps, HStackProps } from './Stack.types';
 
 const alignMap: Record<string, string> = {
-  start: 'flex-start',
-  end: 'flex-end',
-  center: 'center',
-  stretch: 'stretch',
+  start: 'items-start',
+  end: 'items-end',
+  center: 'items-center',
+  stretch: 'items-stretch',
+  baseline: 'items-baseline',
+};
+
+const justifyMap: Record<string, string> = {
+  start: 'justify-start',
+  end: 'justify-end',
+  center: 'justify-center',
+  between: 'justify-between',
+  around: 'justify-around',
+};
+
+const spacingMap: Record<string, string> = {
+  none: 'gap-0',
+  xs: 'gap-1',
+  sm: 'gap-2',
+  md: 'gap-4',
+  lg: 'gap-6',
+  xl: 'gap-8',
+  '2xl': 'gap-12',
 };
 
 export function Stack({
-  spacing = 'var(--spacing-4)',
+  spacing = 'md',
   align = 'stretch',
   className,
-  style,
   children,
   ...rest
 }: StackProps) {
-  const stackStyles: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: alignMap[align],
-    gap: typeof spacing === 'number' ? `${spacing}px` : spacing,
-    ...style,
-  };
-
   return (
-    <div className={className} style={stackStyles} {...rest}>
+    <div
+      className={clsx(
+        'flex flex-col',
+        alignMap[align],
+        spacingMap[spacing],
+        className
+      )}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function HStack({
+  spacing = 'md',
+  justify = 'start',
+  align = 'center',
+  className,
+  children,
+  ...rest
+}: HStackProps) {
+  return (
+    <div
+      className={clsx(
+        'flex flex-row',
+        alignMap[align],
+        justifyMap[justify],
+        spacingMap[spacing],
+        className
+      )}
+      {...rest}
+    >
       {children}
     </div>
   );
