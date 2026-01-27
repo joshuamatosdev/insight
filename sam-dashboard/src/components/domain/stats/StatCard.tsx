@@ -1,46 +1,47 @@
-import { CSSProperties } from 'react';
-import { StatCardProps, StatVariant } from './Stats.types';
-import { Text } from '../../primitives';
-import { HStack, Box, Stack } from '../../layout';
+import { StatCardProps } from './Stats.types';
+import clsx from 'clsx';
 
-const variantStyles: Record<StatVariant, CSSProperties> = {
-  primary: { background: 'var(--gradient-primary)' },
-  success: { background: 'var(--gradient-success)' },
-  warning: { background: 'var(--gradient-warning)' },
-  info: { background: 'var(--gradient-info)' },
-  secondary: { background: 'var(--gradient-secondary, linear-gradient(135deg, #6b7280 0%, #4b5563 100%))' },
-  danger: { background: 'var(--gradient-danger, linear-gradient(135deg, #ef4444 0%, #dc2626 100%))' },
-};
-
-export function StatCard({ variant = 'primary', value, label, icon, className, style }: StatCardProps) {
-  const cardStyles: CSSProperties = {
-    borderRadius: 'var(--radius-xl)',
-    padding: 'var(--spacing-6)',
-    color: 'var(--color-white)',
-    ...variantStyles[variant],
-    ...style,
+export function StatCard({ value, label, icon, change, className }: StatCardProps) {
+  const getChangeColor = (type: 'positive' | 'negative' | 'neutral'): string => {
+    if (type === 'positive') {
+      return 'text-success';
+    }
+    if (type === 'negative') {
+      return 'text-danger';
+    }
+    return 'text-on-surface-muted';
   };
 
   return (
-    <Box className={className} style={cardStyles}>
-      <HStack justify="between" align="start">
-        <Stack spacing="var(--spacing-1)">
-          <Text
-            variant="heading1"
-            color="white"
-            style={{ fontSize: 'var(--font-size-5xl)' }}
-          >
-            {value}
-          </Text>
-          <Text variant="body" color="white" style={{ opacity: 0.9 }}>
-            {label}
-          </Text>
-        </Stack>
-        {icon && (
-          <Box style={{ opacity: 0.8 }}>{icon}</Box>
-        )}
-      </HStack>
-    </Box>
+    <div
+      className={clsx(
+        'flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2',
+        'border-t border-border px-4 py-10 sm:px-6 xl:px-8',
+        'lg:border-t-0',
+        className
+      )}
+    >
+      <dt className="text-sm/6 font-medium text-on-surface-muted">
+        {label}
+      </dt>
+
+      {change !== undefined && change !== null && (
+        <dd className={clsx('text-xs font-medium', getChangeColor(change.type))}>
+          {change.value}
+        </dd>
+      )}
+
+      <dd className="w-full flex-none text-3xl/10 font-medium tracking-tight text-on-surface">
+        <div className="flex items-center justify-between">
+          <span>{value}</span>
+          {icon !== undefined && icon !== null && (
+            <span className="text-on-surface-muted opacity-60">
+              {icon}
+            </span>
+          )}
+        </div>
+      </dd>
+    </div>
   );
 }
 

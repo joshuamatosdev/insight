@@ -1,54 +1,33 @@
 /**
- * ComplianceStatusBadge - Status indicator for certifications and clearances
+ * ComplianceStatusBadge - Pocket-style ring badge for certification and clearance statuses
  */
 
-import { Badge } from '../../primitives';
-import type { BadgeVariant } from '../../primitives';
+import clsx from 'clsx';
 import type { ComplianceStatusBadgeProps, CertificationStatus, ClearanceStatus } from './Compliance.types';
 
 /**
- * Maps certification status to badge variant
+ * Pocket-style status colors (muted, not bright)
  */
-function getCertificationStatusVariant(status: CertificationStatus): BadgeVariant {
-  switch (status) {
-    case 'ACTIVE':
-      return 'success';
-    case 'PENDING':
-    case 'RENEWAL_IN_PROGRESS':
-      return 'info';
-    case 'EXPIRING_SOON':
-      return 'warning';
-    case 'EXPIRED':
-    case 'SUSPENDED':
-    case 'REVOKED':
-      return 'danger';
-    case 'GRADUATED':
-      return 'secondary';
-    default:
-      return 'secondary';
-  }
-}
+const certificationStatusColors: Record<CertificationStatus, string> = {
+  ACTIVE: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  PENDING: 'text-warning-text bg-warning-bg ring-warning/20',
+  RENEWAL_IN_PROGRESS: 'text-warning-text bg-warning-bg ring-warning/20',
+  EXPIRING_SOON: 'text-warning-text bg-warning-bg ring-warning/20',
+  EXPIRED: 'text-danger-text bg-danger-bg ring-danger/10',
+  SUSPENDED: 'text-danger-text bg-danger-bg ring-danger/10',
+  REVOKED: 'text-danger-text bg-danger-bg ring-danger/10',
+  GRADUATED: 'text-gray-600 bg-gray-50 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20',
+};
 
-/**
- * Maps clearance status to badge variant
- */
-function getClearanceStatusVariant(status: ClearanceStatus): BadgeVariant {
-  switch (status) {
-    case 'ACTIVE':
-      return 'success';
-    case 'PENDING':
-    case 'INTERIM':
-      return 'info';
-    case 'EXPIRED':
-    case 'SUSPENDED':
-    case 'REVOKED':
-      return 'danger';
-    case 'INACTIVE':
-      return 'secondary';
-    default:
-      return 'secondary';
-  }
-}
+const clearanceStatusColors: Record<ClearanceStatus, string> = {
+  ACTIVE: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  PENDING: 'text-warning-text bg-warning-bg ring-warning/20',
+  INTERIM: 'text-warning-text bg-warning-bg ring-warning/20',
+  EXPIRED: 'text-danger-text bg-danger-bg ring-danger/10',
+  SUSPENDED: 'text-danger-text bg-danger-bg ring-danger/10',
+  REVOKED: 'text-danger-text bg-danger-bg ring-danger/10',
+  INACTIVE: 'text-gray-600 bg-gray-50 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20',
+};
 
 /**
  * Formats status text for display
@@ -77,20 +56,31 @@ function isCertificationStatus(status: string): status is CertificationStatus {
   return certStatuses.includes(status as CertificationStatus);
 }
 
+/**
+ * Gets the color class for a given status
+ */
+function getStatusColor(status: CertificationStatus | ClearanceStatus, type: 'certification' | 'clearance'): string {
+  if (type === 'certification' && isCertificationStatus(status)) {
+    return certificationStatusColors[status as CertificationStatus];
+  }
+  return clearanceStatusColors[status as ClearanceStatus];
+}
+
 export function ComplianceStatusBadge({
   status,
   type = 'certification',
-  size = 'sm',
 }: ComplianceStatusBadgeProps): React.ReactElement {
-  const variant =
-    type === 'certification' && isCertificationStatus(status)
-      ? getCertificationStatusVariant(status as CertificationStatus)
-      : getClearanceStatusVariant(status as ClearanceStatus);
+  const colorClass = getStatusColor(status, type);
 
   return (
-    <Badge variant={variant} size={size}>
+    <div
+      className={clsx(
+        colorClass,
+        'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset'
+      )}
+    >
       {formatStatusText(status)}
-    </Badge>
+    </div>
   );
 }
 

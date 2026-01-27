@@ -43,15 +43,22 @@
   --font-display: Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /*
-   * Semantic Colors
+   * Semantic Colors - Pocket Template Aesthetics
+   * 95% monochrome (black, white, grays) + ONE accent color (cyan)
+   * Body text should be GRAY not black
    * Change these values to update the entire app's color scheme.
    * Use classes like: text-primary, bg-surface, border-border
    */
 
-  /* Primary brand color */
-  --color-primary: var(--color-blue-600);
-  --color-primary-hover: var(--color-blue-700);
-  --color-primary-light: var(--color-blue-100);
+  /* Primary brand color = BLACK (not blue) */
+  --color-primary: var(--color-zinc-950);
+  --color-primary-hover: var(--color-zinc-800);
+  --color-primary-light: var(--color-zinc-100);
+
+  /* Accent color = CYAN (used sparingly) */
+  --color-accent: var(--color-cyan-500);
+  --color-accent-hover: var(--color-cyan-400);
+  --color-accent-light: var(--color-cyan-50);
 
   /* Surface colors (backgrounds) */
   --color-surface: var(--color-white);
@@ -59,15 +66,23 @@
   --color-surface-container: var(--color-zinc-100);
   --color-surface-elevated: var(--color-white);
 
-  /* Text colors */
-  --color-on-surface: var(--color-zinc-950);
+  /* Text colors - body text should be GRAY */
+  --color-on-surface: var(--color-zinc-900);
   --color-on-surface-muted: var(--color-zinc-500);
+  --color-on-surface-subtle: var(--color-zinc-400);
 
-  /* Border colors */
+  /* Border colors - very subtle */
   --color-border: var(--color-zinc-200);
   --color-border-light: var(--color-zinc-100);
 
-  /* Status colors */
+  /* Card styling */
+  --color-card-bg: var(--color-white);
+  --color-card-border: var(--color-zinc-200);
+
+  /* The dark frame border */
+  --color-frame: var(--color-zinc-900);
+
+  /* Status colors - minimal, used sparingly */
   --color-success: var(--color-emerald-600);
   --color-success-bg: var(--color-emerald-50);
   --color-success-text: var(--color-emerald-700);
@@ -80,58 +95,103 @@
   --color-warning-bg: var(--color-amber-50);
   --color-warning-text: var(--color-amber-700);
 
-  --color-info: var(--color-sky-500);
-  --color-info-bg: var(--color-sky-50);
-  --color-info-text: var(--color-sky-700);
+  --color-info: var(--color-cyan-500);
+  --color-info-bg: var(--color-cyan-50);
+  --color-info-text: var(--color-cyan-700);
 }
 
 /*
- * Dark mode overrides
+ * Dark mode overrides - Pocket Template Aesthetics
+ * Dark background with same cyan accent
  * These values automatically apply when dark mode is active.
  */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: var(--color-blue-400);
-    --color-primary-hover: var(--color-blue-300);
-    --color-primary-light: var(--color-blue-900);
+    --color-primary: var(--color-zinc-100);
+    --color-primary-hover: var(--color-zinc-200);
+    --color-primary-light: var(--color-zinc-800);
 
-    --color-surface: var(--color-zinc-900);
-    --color-surface-secondary: var(--color-zinc-800);
-    --color-surface-container: var(--color-zinc-800);
-    --color-surface-elevated: var(--color-zinc-800);
+    --color-accent: var(--color-cyan-400);
+    --color-accent-hover: var(--color-cyan-300);
+    --color-accent-light: var(--color-cyan-950);
 
-    --color-on-surface: var(--color-zinc-50);
+    --color-surface: var(--color-zinc-950);
+    --color-surface-secondary: var(--color-zinc-900);
+    --color-surface-container: var(--color-zinc-900);
+    --color-surface-elevated: var(--color-zinc-900);
+
+    --color-on-surface: var(--color-zinc-100);
     --color-on-surface-muted: var(--color-zinc-400);
+    --color-on-surface-subtle: var(--color-zinc-500);
 
-    --color-border: var(--color-zinc-700);
-    --color-border-light: var(--color-zinc-800);
+    --color-border: var(--color-zinc-800);
+    --color-border-light: var(--color-zinc-900);
 
+    --color-card-bg: var(--color-zinc-900);
+    --color-card-border: var(--color-zinc-800);
+
+    --color-frame: var(--color-zinc-100);
+
+    /* Status colors - dark mode overrides */
+    --color-success: var(--color-emerald-400);
     --color-success-bg: var(--color-emerald-950);
+    --color-success-text: var(--color-emerald-300);
+
+    --color-danger: var(--color-red-400);
     --color-danger-bg: var(--color-red-950);
+    --color-danger-text: var(--color-red-300);
+
+    --color-warning: var(--color-amber-400);
     --color-warning-bg: var(--color-amber-950);
-    --color-info-bg: var(--color-sky-950);
+    --color-warning-text: var(--color-amber-300);
+
+    --color-info: var(--color-cyan-400);
+    --color-info-bg: var(--color-cyan-950);
+    --color-info-text: var(--color-cyan-300);
   }
 }
 
 /* Manual dark mode class override */
 .dark {
-  --color-primary: var(--color-blue-400);
-  --color-primary-hover: var(--color-blue-300);
-  --color-primary-light: var(--color-blue-900);
+  --color-primary: var(--color-zinc-100);
+  --color-primary-hover: var(--color-zinc-200);
+  --color-primary-light: var(--color-zinc-800);
 
-  --color-surface: var(--color-zinc-900);
-  --color-surface-secondary: var(--color-zinc-800);
-  --color-surface-container: var(--color-zinc-800);
-  --color-surface-elevated: var(--color-zinc-800);
+  --color-accent: var(--color-cyan-400);
+  --color-accent-hover: var(--color-cyan-300);
+  --color-accent-light: var(--color-cyan-950);
 
-  --color-on-surface: var(--color-zinc-50);
+  --color-surface: var(--color-zinc-950);
+  --color-surface-secondary: var(--color-zinc-900);
+  --color-surface-container: var(--color-zinc-900);
+  --color-surface-elevated: var(--color-zinc-900);
+
+  --color-on-surface: var(--color-zinc-100);
   --color-on-surface-muted: var(--color-zinc-400);
+  --color-on-surface-subtle: var(--color-zinc-500);
 
-  --color-border: var(--color-zinc-700);
-  --color-border-light: var(--color-zinc-800);
+  --color-border: var(--color-zinc-800);
+  --color-border-light: var(--color-zinc-900);
 
+  --color-card-bg: var(--color-zinc-900);
+  --color-card-border: var(--color-zinc-800);
+
+  --color-frame: var(--color-zinc-100);
+
+  /* Status colors - dark mode overrides */
+  --color-success: var(--color-emerald-400);
   --color-success-bg: var(--color-emerald-950);
+  --color-success-text: var(--color-emerald-300);
+
+  --color-danger: var(--color-red-400);
   --color-danger-bg: var(--color-red-950);
+  --color-danger-text: var(--color-red-300);
+
+  --color-warning: var(--color-amber-400);
   --color-warning-bg: var(--color-amber-950);
-  --color-info-bg: var(--color-sky-950);
+  --color-warning-text: var(--color-amber-300);
+
+  --color-info: var(--color-cyan-400);
+  --color-info-bg: var(--color-cyan-950);
+  --color-info-text: var(--color-cyan-300);
 }

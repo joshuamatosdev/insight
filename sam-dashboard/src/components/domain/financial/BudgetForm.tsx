@@ -2,8 +2,20 @@
  * BudgetForm - Form for creating/editing budget items
  */
 import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { Text, Button, Input, Select } from '../../primitives';
-import { Stack, HStack, Grid, GridItem, Box } from '../../layout';
+import clsx from 'clsx';
+import {
+  Button,
+  Field,
+  FieldGroup,
+  Fieldset,
+  Input,
+  Label,
+  Select,
+  InlineAlert,
+  InlineAlertTitle,
+  InlineAlertDescription,
+} from '../../catalyst';
+import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
 import type { BudgetFormProps } from './Financial.types';
 import type { BudgetFormState, BudgetFormErrors, BudgetCategory } from '../../../types/financial.types';
 import { getCategoryLabel } from '../../../services/financialService';
@@ -81,253 +93,154 @@ export function BudgetForm({
   );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack spacing="var(--spacing-4)">
-        {errors.general !== undefined && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
-            }}
-          >
-            <Text variant="bodySmall" color="danger">
-              {errors.general}
-            </Text>
-          </Box>
-        )}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {errors.general !== undefined && (
+        <InlineAlert color="error" icon={ExclamationTriangleIcon}>
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>{errors.general}</InlineAlertDescription>
+        </InlineAlert>
+      )}
 
-        {/* Budget Name */}
-        <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
-            Budget Name *
-          </Text>
-          <Input
-            type="text"
-            value={form.name}
-            onChange={handleInputChange('name')}
-            placeholder="e.g., FY2024 Q1 Labor"
-            fullWidth
-            isInvalid={errors.name !== undefined}
-          />
-          {errors.name !== undefined && (
-            <Text
-              variant="caption"
-              color="danger"
-              className="mt-1"
-            >
-              {errors.name}
-            </Text>
-          )}
-        </Box>
-
-        {/* Category */}
-        <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
-            Category *
-          </Text>
-          <Select
-            value={form.category}
-            onChange={handleSelectChange('category')}
-            fullWidth
-          >
-            {BUDGET_CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {getCategoryLabel(cat)}
-              </option>
-            ))}
-          </Select>
-        </Box>
-
-        {/* Amounts */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Budgeted Amount ($) *
-            </Text>
+      <Fieldset>
+        <FieldGroup>
+          {/* Budget Name */}
+          <Field>
+            <Label>Budget Name *</Label>
             <Input
-              type="number"
-              value={form.budgetedAmount}
-              onChange={handleInputChange('budgetedAmount')}
-              placeholder="e.g., 100000"
-              fullWidth
-              isInvalid={errors.budgetedAmount !== undefined}
+              type="text"
+              value={form.name}
+              onChange={handleInputChange('name')}
+              placeholder="e.g., FY2024 Q1 Labor"
+              invalid={errors.name !== undefined}
             />
-            {errors.budgetedAmount !== undefined && (
-              <Text
-                variant="caption"
-                color="danger"
-                className="mt-1"
-              >
-                {errors.budgetedAmount}
-              </Text>
+            {errors.name !== undefined && (
+              <p className="mt-1 text-sm text-danger">{errors.name}</p>
             )}
-          </GridItem>
+          </Field>
 
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
+          {/* Category */}
+          <Field>
+            <Label>Category *</Label>
+            <Select
+              value={form.category}
+              onChange={handleSelectChange('category')}
             >
-              Forecast Amount ($)
-            </Text>
+              {BUDGET_CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {getCategoryLabel(cat)}
+                </option>
+              ))}
+            </Select>
+          </Field>
+
+          {/* Amounts */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Field>
+              <Label>Budgeted Amount ($) *</Label>
+              <Input
+                type="number"
+                value={form.budgetedAmount}
+                onChange={handleInputChange('budgetedAmount')}
+                placeholder="e.g., 100000"
+                invalid={errors.budgetedAmount !== undefined}
+              />
+              {errors.budgetedAmount !== undefined && (
+                <p className="mt-1 text-sm text-danger">{errors.budgetedAmount}</p>
+              )}
+            </Field>
+
+            <Field>
+              <Label>Forecast Amount ($)</Label>
+              <Input
+                type="number"
+                value={form.forecastAmount}
+                onChange={handleInputChange('forecastAmount')}
+                placeholder="Optional forecast"
+              />
+            </Field>
+          </div>
+
+          {/* Period */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Field>
+              <Label>Period Start</Label>
+              <Input
+                type="date"
+                value={form.periodStart}
+                onChange={handleInputChange('periodStart')}
+              />
+            </Field>
+
+            <Field>
+              <Label>Period End</Label>
+              <Input
+                type="date"
+                value={form.periodEnd}
+                onChange={handleInputChange('periodEnd')}
+              />
+            </Field>
+          </div>
+
+          {/* Fiscal Info */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Field>
+              <Label>Fiscal Year</Label>
+              <Input
+                type="number"
+                value={form.fiscalYear}
+                onChange={handleInputChange('fiscalYear')}
+                placeholder="e.g., 2024"
+              />
+            </Field>
+
+            <Field>
+              <Label>Fiscal Period</Label>
+              <Input
+                type="number"
+                value={form.fiscalPeriod}
+                onChange={handleInputChange('fiscalPeriod')}
+                placeholder="e.g., 1"
+              />
+            </Field>
+          </div>
+
+          {/* Description */}
+          <Field>
+            <Label>Description</Label>
             <Input
-              type="number"
-              value={form.forecastAmount}
-              onChange={handleInputChange('forecastAmount')}
-              placeholder="Optional forecast"
-              fullWidth
+              type="text"
+              value={form.description}
+              onChange={handleInputChange('description')}
+              placeholder="Optional description"
             />
-          </GridItem>
-        </Grid>
+          </Field>
 
-        {/* Period */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Period Start
-            </Text>
+          {/* Notes */}
+          <Field>
+            <Label>Notes</Label>
             <Input
-              type="date"
-              value={form.periodStart}
-              onChange={handleInputChange('periodStart')}
-              fullWidth
+              type="text"
+              value={form.notes}
+              onChange={handleInputChange('notes')}
+              placeholder="Optional notes"
             />
-          </GridItem>
+          </Field>
+        </FieldGroup>
+      </Fieldset>
 
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Period End
-            </Text>
-            <Input
-              type="date"
-              value={form.periodEnd}
-              onChange={handleInputChange('periodEnd')}
-              fullWidth
-            />
-          </GridItem>
-        </Grid>
-
-        {/* Fiscal Info */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Fiscal Year
-            </Text>
-            <Input
-              type="number"
-              value={form.fiscalYear}
-              onChange={handleInputChange('fiscalYear')}
-              placeholder="e.g., 2024"
-              fullWidth
-            />
-          </GridItem>
-
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Fiscal Period
-            </Text>
-            <Input
-              type="number"
-              value={form.fiscalPeriod}
-              onChange={handleInputChange('fiscalPeriod')}
-              placeholder="e.g., 1"
-              fullWidth
-            />
-          </GridItem>
-        </Grid>
-
-        {/* Description */}
-        <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
-            Description
-          </Text>
-          <Input
-            type="text"
-            value={form.description}
-            onChange={handleInputChange('description')}
-            placeholder="Optional description"
-            fullWidth
-          />
-        </Box>
-
-        {/* Notes */}
-        <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
-            Notes
-          </Text>
-          <Input
-            type="text"
-            value={form.notes}
-            onChange={handleInputChange('notes')}
-            placeholder="Optional notes"
-            fullWidth
-          />
-        </Box>
-
-        {/* Submit buttons */}
-        <HStack justify="end" spacing="var(--spacing-2)">
-          <Button variant="outline" type="button" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            isLoading={isSubmitting}
-            isDisabled={isSubmitting}
-          >
-            {initialData.name !== '' ? 'Update Budget' : 'Create Budget'}
-          </Button>
-        </HStack>
-      </Stack>
+      {/* Submit buttons */}
+      <div className="flex items-center justify-end gap-3 border-t border-zinc-950/5 pt-6 dark:border-white/10">
+        <Button plain type="button" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button
+          color="cyan"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {initialData.name !== '' ? 'Update Budget' : 'Create Budget'}
+        </Button>
+      </div>
     </form>
   );
 }

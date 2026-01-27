@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../../layout';
-import { Text, Button } from '../../primitives';
+import clsx from 'clsx';
+import { Badge } from '../../catalyst/badge';
+import { Button } from '../../catalyst/button';
+import { Heading, Subheading } from '../../catalyst/heading';
+import { Text, Strong } from '../../catalyst/text';
 import {
   AISummary,
   AIFitScore,
@@ -64,193 +67,199 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
   }, [activeTab, opportunityId]);
 
   const renderScoreBar = (score: number, label: string) => (
-    <Stack spacing="var(--spacing-1)">
-      <Flex justify="space-between">
-        <Text variant="caption">{label}</Text>
-        <Text variant="caption" style={{ fontWeight: 600 }}>{score}%</Text>
-      </Flex>
-      <Box
-        style={{
-          height: '8px',
-          backgroundColor: 'var(--color-gray-200)',
-          borderRadius: '4px',
-          overflow: 'hidden',
-        }}
-      >
-        <Box
-          style={{
-            width: `${score}%`,
-            height: '100%',
-            backgroundColor: score >= 70 ? 'var(--color-success)' : score >= 50 ? 'var(--color-warning)' : 'var(--color-danger)',
-            transition: 'width 0.3s ease',
-          }}
+    <div className="space-y-1">
+      <div className="flex items-center justify-between">
+        <Text className="text-xs">{label}</Text>
+        <Text className="text-xs font-semibold">{score}%</Text>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
+        <div
+          className={clsx(
+            'h-full transition-all duration-300',
+            score >= 70 && 'bg-success',
+            score >= 50 && score < 70 && 'bg-warning',
+            score < 50 && 'bg-danger'
+          )}
+          style={{ width: `${score}%` }}
         />
-      </Box>
-    </Stack>
+      </div>
+    </div>
   );
 
   const renderSummary = () => {
     if (summary === null) return null;
     return (
-      <Stack spacing="var(--spacing-4)">
-        <Box>
-          <Text variant="body" style={{ fontWeight: 600 }}>Executive Summary</Text>
-          <Text variant="body">{summary.executiveSummary}</Text>
-        </Box>
-        <Box>
-          <Text variant="body" style={{ fontWeight: 600 }}>Key Points</Text>
-          <Stack spacing="var(--spacing-1)">
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <Subheading>Executive Summary</Subheading>
+          <Text>{summary.executiveSummary}</Text>
+        </div>
+        <div className="space-y-2">
+          <Subheading>Key Points</Subheading>
+          <ul className="space-y-1">
             {summary.keyPoints.map((point, i) => (
-              <Text key={i} variant="caption">• {point}</Text>
+              <li key={i}>
+                <Text className="text-sm">• {point}</Text>
+              </li>
             ))}
-          </Stack>
-        </Box>
-        <Text variant="caption" color="muted">
+          </ul>
+        </div>
+        <Text className="text-xs text-on-surface-muted">
           Confidence: {summary.confidence}%
         </Text>
-      </Stack>
+      </div>
     );
   };
 
   const renderFitScore = () => {
     if (fitScore === null) return null;
     return (
-      <Stack spacing="var(--spacing-4)">
-        <Flex align="center" gap="md">
-          <Box
-            style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              backgroundColor: fitScore.overallScore >= 70 ? 'var(--color-success)' : 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '24px',
-              fontWeight: 700,
-            }}
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <div
+            className={clsx(
+              'flex h-20 w-20 items-center justify-center rounded-full text-2xl font-bold text-white',
+              fitScore.overallScore >= 70 ? 'bg-emerald-500' : 'bg-amber-500'
+            )}
           >
             {fitScore.overallScore}
-          </Box>
-          <Stack spacing="0">
-            <Text variant="heading4">Overall Fit Score</Text>
-            <Text variant="caption" color="muted">{fitScore.reasoning}</Text>
-          </Stack>
-        </Flex>
+          </div>
+          <div className="space-y-1">
+            <Subheading>Overall Fit Score</Subheading>
+            <Text className="text-sm">{fitScore.reasoning}</Text>
+          </div>
+        </div>
 
-        <Stack spacing="var(--spacing-2)">
+        <div className="space-y-4">
           {renderScoreBar(fitScore.naicsScore, 'NAICS Match')}
           {renderScoreBar(fitScore.pastPerformanceScore, 'Past Performance')}
           {renderScoreBar(fitScore.certificationScore, 'Certifications')}
           {renderScoreBar(fitScore.geographicScore, 'Geographic')}
-        </Stack>
+        </div>
 
-        <Box>
-          <Text variant="body" style={{ fontWeight: 600, color: 'var(--color-success)' }}>Strengths</Text>
-          <Stack spacing="var(--spacing-1)">
+        <div className="space-y-2">
+          <Subheading className="text-success">Strengths</Subheading>
+          <ul className="space-y-1">
             {fitScore.strengths.map((s, i) => (
-              <Text key={i} variant="caption">✓ {s}</Text>
+              <li key={i}>
+                <Text className="text-sm">✓ {s}</Text>
+              </li>
             ))}
-          </Stack>
-        </Box>
+          </ul>
+        </div>
 
-        <Box>
-          <Text variant="body" style={{ fontWeight: 600, color: 'var(--color-danger)' }}>Gaps</Text>
-          <Stack spacing="var(--spacing-1)">
+        <div className="space-y-2">
+          <Subheading className="text-danger">Gaps</Subheading>
+          <ul className="space-y-1">
             {fitScore.weaknesses.map((w, i) => (
-              <Text key={i} variant="caption">• {w}</Text>
+              <li key={i}>
+                <Text className="text-sm">• {w}</Text>
+              </li>
             ))}
-          </Stack>
-        </Box>
-      </Stack>
+          </ul>
+        </div>
+      </div>
     );
   };
 
   const renderRiskAssessment = () => {
     if (riskAssessment === null) return null;
-    const riskColor = {
-      LOW: 'var(--color-success)',
-      MEDIUM: 'var(--color-warning)',
-      HIGH: 'var(--color-danger)',
-      CRITICAL: 'var(--color-danger)',
+
+    const getRiskBadgeColor = (risk: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL') => {
+      switch (risk) {
+        case 'LOW':
+          return 'lime';
+        case 'MEDIUM':
+          return 'amber';
+        case 'HIGH':
+        case 'CRITICAL':
+          return 'rose';
+      }
     };
+
+    const getRiskBorderColor = (severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL') => {
+      switch (severity) {
+        case 'LOW':
+          return 'border-l-lime-500';
+        case 'MEDIUM':
+          return 'border-l-amber-500';
+        case 'HIGH':
+        case 'CRITICAL':
+          return 'border-l-rose-500';
+      }
+    };
+
     return (
-      <Stack spacing="var(--spacing-4)">
-        <Flex align="center" gap="sm">
-          <Box
-            style={{
-              padding: 'var(--spacing-2) var(--spacing-3)',
-              backgroundColor: riskColor[riskAssessment.overallRisk],
-              borderRadius: '4px',
-              color: 'white',
-              fontWeight: 600,
-            }}
-          >
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <Badge color={getRiskBadgeColor(riskAssessment.overallRisk)}>
             {riskAssessment.overallRisk} RISK
-          </Box>
-        </Flex>
+          </Badge>
+        </div>
 
         {riskAssessment.risks.length > 0 && (
-          <Box>
-            <Text variant="body" style={{ fontWeight: 600 }}>Identified Risks</Text>
-            <Stack spacing="var(--spacing-2)">
+          <div className="space-y-3">
+            <Subheading>Identified Risks</Subheading>
+            <div className="space-y-3">
               {riskAssessment.risks.map((risk, i) => (
-                <Box
+                <div
                   key={i}
-                  style={{
-                    padding: 'var(--spacing-2)',
-                    backgroundColor: 'var(--color-gray-50)',
-                    borderRadius: '4px',
-                    borderLeft: `3px solid ${riskColor[risk.severity]}`,
-                  }}
+                  className={clsx(
+                    'rounded-lg border-l-4 bg-zinc-50 p-3 dark:bg-zinc-800/50',
+                    getRiskBorderColor(risk.severity)
+                  )}
                 >
-                  <Text variant="caption" style={{ fontWeight: 600 }}>{risk.category}</Text>
-                  <Text variant="caption">{risk.description}</Text>
-                </Box>
+                  <Strong className="text-sm">{risk.category}</Strong>
+                  <Text className="mt-1 text-sm">{risk.description}</Text>
+                </div>
               ))}
-            </Stack>
-          </Box>
+            </div>
+          </div>
         )}
 
-        <Box>
-          <Text variant="body" style={{ fontWeight: 600 }}>Mitigations</Text>
-          <Stack spacing="var(--spacing-1)">
+        <div className="space-y-2">
+          <Subheading>Mitigations</Subheading>
+          <ul className="space-y-1">
             {riskAssessment.mitigations.map((m, i) => (
-              <Text key={i} variant="caption">→ {m}</Text>
+              <li key={i}>
+                <Text className="text-sm">→ {m}</Text>
+              </li>
             ))}
-          </Stack>
-        </Box>
-      </Stack>
+          </ul>
+        </div>
+      </div>
     );
   };
 
   return (
-    <Card variant="bordered">
-      <CardBody padding="md">
-        <Stack spacing="var(--spacing-4)">
-          <Flex align="center" gap="sm">
-            <Text style={{ fontSize: '20px' }}>🤖</Text>
-            <Text variant="heading5">AI Insights</Text>
-          </Flex>
+    <div className="rounded-lg bg-surface shadow-sm ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10">
+      <div className="p-6">
+        <div className="space-y-6">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">🤖</span>
+            <Heading level={3}>AI Insights</Heading>
+          </div>
 
           {/* Tabs */}
-          <Flex gap="sm">
+          <div className="flex gap-2">
             {(['summary', 'fit', 'risk'] as Tab[]).map((tab) => (
               <Button
                 key={tab}
-                variant={activeTab === tab ? 'primary' : 'ghost'}
-                size="sm"
+                color={activeTab === tab ? 'dark/zinc' : 'white'}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab === 'summary' ? 'Summary' : tab === 'fit' ? 'Fit Score' : 'Risks'}
               </Button>
             ))}
-          </Flex>
+          </div>
 
           {/* Content */}
-          {loading && <Text variant="caption" color="muted">Analyzing...</Text>}
-          {error !== null && <Text variant="caption" style={{ color: 'var(--color-danger)' }}>{error}</Text>}
+          {loading && (
+            <Text className="text-sm text-on-surface-muted">Analyzing...</Text>
+          )}
+          {error !== null && (
+            <Text className="text-sm text-danger">{error}</Text>
+          )}
           {loading === false && error === null && (
             <>
               {activeTab === 'summary' && renderSummary()}
@@ -258,9 +267,9 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
               {activeTab === 'risk' && renderRiskAssessment()}
             </>
           )}
-        </Stack>
-      </CardBody>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 }
 

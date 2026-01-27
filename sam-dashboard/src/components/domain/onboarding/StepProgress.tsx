@@ -1,5 +1,5 @@
-import { Flex, Box } from '../../layout';
-import { Text } from '../../primitives';
+import clsx from 'clsx';
+import { Badge } from '../../catalyst';
 
 interface Step {
   stepNumber: number;
@@ -19,87 +19,63 @@ interface StepProgressProps {
  */
 export function StepProgress({ steps, currentStep }: StepProgressProps): React.ReactElement {
   return (
-    <Flex
-      direction="column"
-      gap="sm"
-      style={{ width: '100%', marginBottom: 'var(--spacing-6)' }}
-    >
-      <Flex gap="sm" align="center" style={{ width: '100%' }}>
+    <div className="mb-6 w-full space-y-2">
+      <div className="flex w-full items-center gap-2">
         {steps.map((step, index) => {
           const isComplete = step.complete;
           const isCurrent = step.stepNumber === currentStep;
           const isPast = step.stepNumber < currentStep;
 
           return (
-            <Flex key={step.stepNumber} align="center" style={{ flex: 1 }}>
+            <div key={step.stepNumber} className="flex flex-1 items-center">
               {/* Step Circle */}
-              <Box
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  backgroundColor: isComplete
-                    ? 'var(--color-success)'
-                    : isCurrent
-                    ? 'var(--color-primary)'
-                    : 'var(--color-gray-200)',
-                  color: isComplete || isCurrent ? 'white' : 'var(--color-gray-600)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  flexShrink: 0,
-                }}
+              <div
+                className={clsx(
+                  'flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold',
+                  isComplete && 'bg-green-500 text-white dark:bg-green-600',
+                  isCurrent && !isComplete && 'bg-blue-600 text-white dark:bg-blue-500',
+                  !isCurrent && !isComplete && 'bg-zinc-200 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400'
+                )}
               >
                 {isComplete ? '✓' : step.stepNumber}
-              </Box>
+              </div>
 
               {/* Connecting Line */}
               {index < steps.length - 1 && (
-                <Box
-                  style={{
-                    flex: 1,
-                    height: '2px',
-                    backgroundColor: isPast || isComplete
-                      ? 'var(--color-success)'
-                      : 'var(--color-gray-200)',
-                    marginLeft: 'var(--spacing-2)',
-                    marginRight: 'var(--spacing-2)',
-                  }}
+                <div
+                  className={clsx(
+                    'mx-2 h-0.5 flex-1',
+                    (isPast || isComplete) ? 'bg-green-500 dark:bg-green-600' : 'bg-zinc-200 dark:bg-zinc-700'
+                  )}
                 />
               )}
-            </Flex>
+            </div>
           );
         })}
-      </Flex>
+      </div>
 
       {/* Step Labels */}
-      <Flex gap="sm" style={{ width: '100%' }}>
+      <div className="flex w-full gap-2">
         {steps.map((step) => (
-          <Box
+          <div
             key={step.stepNumber}
-            style={{
-              flex: 1,
-              textAlign: 'center',
-            }}
+            className="flex-1 text-center"
           >
-            <Text
-              variant="caption"
-              style={{
-                color: step.stepNumber === currentStep
-                  ? 'var(--color-primary)'
-                  : 'var(--color-gray-600)',
-                fontWeight: step.stepNumber === currentStep ? 600 : 400,
-              }}
+            <p
+              className={clsx(
+                'text-xs',
+                step.stepNumber === currentStep
+                  ? 'font-semibold text-blue-600 dark:text-blue-400'
+                  : 'text-zinc-600 dark:text-zinc-400'
+              )}
             >
               {step.title}
-              {step.required && <span style={{ color: 'var(--color-danger)' }}> *</span>}
-            </Text>
-          </Box>
+              {step.required && <span className="text-danger"> *</span>}
+            </p>
+          </div>
         ))}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 }
 

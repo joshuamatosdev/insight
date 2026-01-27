@@ -1,102 +1,75 @@
 /**
- * FinancialSummaryCard - Displays key financial metrics
+ * FinancialSummaryCard - Displays key financial metrics using flat grid pattern
  */
-import { CSSProperties } from 'react';
-import { Text, Badge } from '../../primitives';
-import { Card, CardBody, Grid, GridItem, Stack, HStack, Box } from '../../layout';
+import clsx from 'clsx';
+import { Badge } from '../../catalyst';
 import type { FinancialSummaryCardProps } from './Financial.types';
 import { formatCurrency } from '../../../services/financialService';
 
 export function FinancialSummaryCard({
   summary,
   className,
-  style,
 }: FinancialSummaryCardProps) {
-  const metricCardStyle: CSSProperties = {
-    padding: 'var(--spacing-4)',
-    borderRadius: 'var(--radius-lg)',
-    backgroundColor: 'var(--color-gray-50)',
-  };
+  const stats = [
+    {
+      label: 'Total Invoiced',
+      value: formatCurrency(summary.totalInvoiced),
+      color: 'text-on-surface',
+    },
+    {
+      label: 'Outstanding',
+      value: formatCurrency(summary.totalOutstanding),
+      color: summary.totalOutstanding > 0
+        ? 'text-warning'
+        : 'text-success',
+    },
+    {
+      label: 'Draft Invoices',
+      value: summary.draftInvoices.toString(),
+      color: 'text-on-surface',
+    },
+    {
+      label: 'Submitted',
+      value: summary.submittedInvoices.toString(),
+      color: 'text-accent',
+    },
+  ];
 
   return (
-    <Card variant="elevated" className={className} style={style}>
-      <CardBody padding="lg">
-        <Stack spacing="var(--spacing-4)">
-          <HStack justify="between" align="center">
-            <Text variant="heading5" weight="semibold">
-              Financial Overview
-            </Text>
-            {summary.overdueInvoices > 0 && (
-              <Badge variant="danger" size="sm">
-                {summary.overdueInvoices} Overdue
-              </Badge>
+    <div className={clsx('rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10', className)}>
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-border px-6 py-4 dark:border-white/10">
+        <h3 className="text-base/6 font-semibold text-on-surface">
+          Financial Overview
+        </h3>
+        {summary.overdueInvoices > 0 && (
+          <Badge color="red">
+            {summary.overdueInvoices} Overdue
+          </Badge>
+        )}
+      </div>
+
+      {/* Stats Grid */}
+      <dl className="grid grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, idx) => (
+          <div
+            key={stat.label}
+            className={clsx(
+              'px-6 py-6',
+              idx !== 0 && 'border-l border-border dark:border-white/10',
+              idx >= 2 && 'border-t border-border lg:border-t-0 dark:border-white/10'
             )}
-          </HStack>
-
-          <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="var(--spacing-4)">
-            {/* Total Invoiced */}
-            <GridItem>
-              <Box style={metricCardStyle}>
-                <Stack spacing="var(--spacing-1)">
-                  <Text variant="caption" color="muted" weight="medium">
-                    Total Invoiced
-                  </Text>
-                  <Text variant="heading4" weight="semibold" color="primary">
-                    {formatCurrency(summary.totalInvoiced)}
-                  </Text>
-                </Stack>
-              </Box>
-            </GridItem>
-
-            {/* Outstanding Balance */}
-            <GridItem>
-              <Box style={metricCardStyle}>
-                <Stack spacing="var(--spacing-1)">
-                  <Text variant="caption" color="muted" weight="medium">
-                    Outstanding
-                  </Text>
-                  <Text
-                    variant="heading4"
-                    weight="semibold"
-                    color={summary.totalOutstanding > 0 ? 'warning' : 'success'}
-                  >
-                    {formatCurrency(summary.totalOutstanding)}
-                  </Text>
-                </Stack>
-              </Box>
-            </GridItem>
-
-            {/* Draft Invoices */}
-            <GridItem>
-              <Box style={metricCardStyle}>
-                <Stack spacing="var(--spacing-1)">
-                  <Text variant="caption" color="muted" weight="medium">
-                    Draft Invoices
-                  </Text>
-                  <Text variant="heading4" weight="semibold">
-                    {summary.draftInvoices}
-                  </Text>
-                </Stack>
-              </Box>
-            </GridItem>
-
-            {/* Submitted Invoices */}
-            <GridItem>
-              <Box style={metricCardStyle}>
-                <Stack spacing="var(--spacing-1)">
-                  <Text variant="caption" color="muted" weight="medium">
-                    Submitted
-                  </Text>
-                  <Text variant="heading4" weight="semibold" color="info">
-                    {summary.submittedInvoices}
-                  </Text>
-                </Stack>
-              </Box>
-            </GridItem>
-          </Grid>
-        </Stack>
-      </CardBody>
-    </Card>
+          >
+            <dt className="text-sm/6 font-medium text-on-surface-muted">
+              {stat.label}
+            </dt>
+            <dd className={clsx('mt-1 text-2xl/8 font-semibold tracking-tight', stat.color)}>
+              {stat.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }
 

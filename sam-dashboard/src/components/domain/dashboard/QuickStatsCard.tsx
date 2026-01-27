@@ -1,5 +1,4 @@
-import { Card, CardBody, Flex, Stack, Box } from '../../../components/layout';
-import { Text } from '../../../components/primitives';
+import clsx from 'clsx';
 
 interface QuickStatsCardProps {
   title: string;
@@ -7,11 +6,10 @@ interface QuickStatsCardProps {
   change?: number;
   changeLabel?: string;
   icon?: React.ReactNode;
-  color?: 'primary' | 'success' | 'warning' | 'danger';
 }
 
 /**
- * Quick stats card for key metrics
+ * Quick stats card for key metrics - Pocket design aesthetic
  */
 export function QuickStatsCard({
   title,
@@ -19,32 +17,18 @@ export function QuickStatsCard({
   change,
   changeLabel,
   icon,
-  color = 'primary',
 }: QuickStatsCardProps): React.ReactElement {
-  const getColorValue = (): string => {
-    switch (color) {
-      case 'primary':
-        return 'var(--color-primary)';
-      case 'success':
-        return 'var(--color-success)';
-      case 'warning':
-        return 'var(--color-warning)';
-      case 'danger':
-        return 'var(--color-danger)';
-    }
-  };
-
   const getChangeColor = (): string => {
     if (change === undefined) {
-      return 'var(--color-gray-500)';
+      return 'text-on-surface-muted';
     }
     if (change > 0) {
-      return 'var(--color-success)';
+      return 'text-success';
     }
     if (change < 0) {
-      return 'var(--color-danger)';
+      return 'text-danger';
     }
-    return 'var(--color-gray-500)';
+    return 'text-on-surface-muted';
   };
 
   const formatChange = (): string => {
@@ -56,56 +40,43 @@ export function QuickStatsCard({
   };
 
   return (
-    <Card>
-      <CardBody>
-        <Flex justify="space-between" align="flex-start">
-          <Stack spacing="var(--spacing-1)">
-            <Text variant="caption" color="muted">
-              {title}
-            </Text>
-            <Text variant="heading3" style={{ color: getColorValue() }}>
-              {value}
-            </Text>
-            {(change !== undefined || changeLabel !== undefined) && (
-              <Flex align="center" gap="xs">
-                {change !== undefined && (
-                  <Text
-                    variant="caption"
-                    style={{
-                      color: getChangeColor(),
-                      fontWeight: 600,
-                    }}
-                  >
-                    {formatChange()}
-                  </Text>
-                )}
-                {changeLabel !== undefined && (
-                  <Text variant="caption" color="muted">
-                    {changeLabel}
-                  </Text>
-                )}
-              </Flex>
-            )}
-          </Stack>
-          {icon !== undefined && (
-            <Box
-              style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '8px',
-                backgroundColor: `${getColorValue()}20`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: getColorValue(),
-              }}
-            >
-              {icon}
-            </Box>
+    <div
+      className={clsx(
+        'rounded-lg bg-white p-6',
+        'ring-1 ring-zinc-950/5',
+        'dark:bg-zinc-900 dark:ring-white/10'
+      )}
+    >
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
+          <dt className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {title}
+          </dt>
+          <dd className="mt-2 text-3xl font-medium tracking-tight text-zinc-900 dark:text-white">
+            {value}
+          </dd>
+          {(change !== undefined || changeLabel !== undefined) && (
+            <dd className="mt-2 flex items-center gap-2">
+              {change !== undefined && (
+                <span className={clsx('text-xs font-medium', getChangeColor())}>
+                  {formatChange()}
+                </span>
+              )}
+              {changeLabel !== undefined && (
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                  {changeLabel}
+                </span>
+              )}
+            </dd>
           )}
-        </Flex>
-      </CardBody>
-    </Card>
+        </div>
+        {icon !== undefined && (
+          <div className="text-zinc-400 dark:text-zinc-500">
+            {icon}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

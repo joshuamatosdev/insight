@@ -1,40 +1,43 @@
-import { CSSProperties } from 'react';
-import { Badge } from '../../primitives';
-import type { BadgeVariant } from '../../primitives';
+/**
+ * ContractStatusBadge - Pocket-style ring badge for contract statuses
+ */
+
+import clsx from 'clsx';
 import type { ContractStatusBadgeProps, ContractStatus } from './Contract.types';
 import { getContractStatusLabel } from './Contract.types';
 
-function getStatusVariant(status: ContractStatus): BadgeVariant {
-  const variantMap: Record<ContractStatus, BadgeVariant> = {
-    DRAFT: 'secondary',
-    AWARDED: 'info',
-    PENDING_SIGNATURE: 'warning',
-    ACTIVE: 'success',
-    ON_HOLD: 'warning',
-    COMPLETED: 'primary',
-    TERMINATED: 'danger',
-    CANCELLED: 'danger',
-    CLOSED: 'secondary',
-  };
-  return variantMap[status];
-}
+/**
+ * Pocket-style status colors (muted, not bright)
+ */
+const statusColors: Record<ContractStatus, string> = {
+  ACTIVE: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  COMPLETED: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  AWARDED: 'text-blue-700 bg-blue-50 ring-blue-600/20 dark:bg-blue-500/10 dark:text-blue-400 dark:ring-blue-500/20',
+  PENDING_SIGNATURE: 'text-warning-text bg-warning-bg ring-warning/20',
+  ON_HOLD: 'text-warning-text bg-warning-bg ring-warning/20',
+  TERMINATED: 'text-danger-text bg-danger-bg ring-danger/10',
+  CANCELLED: 'text-danger-text bg-danger-bg ring-danger/10',
+  DRAFT: 'text-gray-600 bg-gray-50 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20',
+  CLOSED: 'text-gray-600 bg-gray-50 ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20',
+};
 
 export function ContractStatusBadge({
   status,
   className,
-  style,
 }: ContractStatusBadgeProps) {
-  const variant = getStatusVariant(status);
+  const colorClass = statusColors[status];
   const label = getContractStatusLabel(status);
 
-  const badgeStyles: CSSProperties = {
-    ...style,
-  };
-
   return (
-    <Badge variant={variant} size="sm" className={className} style={badgeStyles}>
+    <div
+      className={clsx(
+        colorClass,
+        'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',
+        className
+      )}
+    >
       {label}
-    </Badge>
+    </div>
   );
 }
 

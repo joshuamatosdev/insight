@@ -2,8 +2,19 @@
  * InvoiceForm - Form for creating/editing invoices
  */
 import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { Text, Button, Input, Select } from '../../primitives';
-import { Stack, HStack, Grid, GridItem, Box } from '../../layout';
+import {
+  Button,
+  Field,
+  FieldGroup,
+  Fieldset,
+  Input,
+  Label,
+  Select,
+  InlineAlert,
+  InlineAlertTitle,
+  InlineAlertDescription,
+} from '../../catalyst';
+import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
 import type { InvoiceFormProps } from './Financial.types';
 import type { InvoiceFormState, InvoiceFormErrors, InvoiceType } from '../../../types/financial.types';
 
@@ -83,227 +94,138 @@ export function InvoiceForm({
   );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack spacing="var(--spacing-4)">
-        {errors.general !== undefined && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
-            }}
-          >
-            <Text variant="bodySmall" color="danger">
-              {errors.general}
-            </Text>
-          </Box>
-        )}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {errors.general !== undefined && (
+        <InlineAlert color="error" icon={ExclamationTriangleIcon}>
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>{errors.general}</InlineAlertDescription>
+        </InlineAlert>
+      )}
 
-        {/* Contract Selection */}
-        <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
-            Contract *
-          </Text>
-          <Select
-            value={form.contractId}
-            onChange={handleSelectChange('contractId')}
-            fullWidth
-          >
-            <option value="">Select a contract</option>
-            {contracts.map((contract) => (
-              <option key={contract.id} value={contract.id}>
-                {contract.contractNumber}
-              </option>
-            ))}
-          </Select>
-          {errors.contractId !== undefined && (
-            <Text
-              variant="caption"
-              color="danger"
-              className="mt-1"
-            >
-              {errors.contractId}
-            </Text>
-          )}
-        </Box>
-
-        {/* Invoice Number and Type */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Invoice Number *
-            </Text>
-            <Input
-              type="text"
-              value={form.invoiceNumber}
-              onChange={handleInputChange('invoiceNumber')}
-              placeholder="e.g., INV-2024-001"
-              fullWidth
-              isInvalid={errors.invoiceNumber !== undefined}
-            />
-            {errors.invoiceNumber !== undefined && (
-              <Text
-                variant="caption"
-                color="danger"
-                className="mt-1"
-              >
-                {errors.invoiceNumber}
-              </Text>
-            )}
-          </GridItem>
-
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Invoice Type *
-            </Text>
+      <Fieldset>
+        <FieldGroup>
+          {/* Contract Selection */}
+          <Field>
+            <Label>Contract *</Label>
             <Select
-              value={form.invoiceType}
-              onChange={handleSelectChange('invoiceType')}
-              fullWidth
+              value={form.contractId}
+              onChange={handleSelectChange('contractId')}
             >
-              {INVOICE_TYPES.map((type) => (
-                <option key={type.value} value={type.value}>
-                  {type.label}
+              <option value="">Select a contract</option>
+              {contracts.map((contract) => (
+                <option key={contract.id} value={contract.id}>
+                  {contract.contractNumber}
                 </option>
               ))}
             </Select>
-          </GridItem>
-        </Grid>
-
-        {/* Invoice Date and Due Date */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Invoice Date *
-            </Text>
-            <Input
-              type="date"
-              value={form.invoiceDate}
-              onChange={handleInputChange('invoiceDate')}
-              fullWidth
-              isInvalid={errors.invoiceDate !== undefined}
-            />
-            {errors.invoiceDate !== undefined && (
-              <Text
-                variant="caption"
-                color="danger"
-                className="mt-1"
-              >
-                {errors.invoiceDate}
-              </Text>
+            {errors.contractId !== undefined && (
+              <p className="mt-1 text-sm text-danger">{errors.contractId}</p>
             )}
-          </GridItem>
+          </Field>
 
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Due Date
-            </Text>
+          {/* Invoice Number and Type */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Field>
+              <Label>Invoice Number *</Label>
+              <Input
+                type="text"
+                value={form.invoiceNumber}
+                onChange={handleInputChange('invoiceNumber')}
+                placeholder="e.g., INV-2024-001"
+                invalid={errors.invoiceNumber !== undefined}
+              />
+              {errors.invoiceNumber !== undefined && (
+                <p className="mt-1 text-sm text-danger">{errors.invoiceNumber}</p>
+              )}
+            </Field>
+
+            <Field>
+              <Label>Invoice Type *</Label>
+              <Select
+                value={form.invoiceType}
+                onChange={handleSelectChange('invoiceType')}
+              >
+                {INVOICE_TYPES.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+          </div>
+
+          {/* Invoice Date and Due Date */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Field>
+              <Label>Invoice Date *</Label>
+              <Input
+                type="date"
+                value={form.invoiceDate}
+                onChange={handleInputChange('invoiceDate')}
+                invalid={errors.invoiceDate !== undefined}
+              />
+              {errors.invoiceDate !== undefined && (
+                <p className="mt-1 text-sm text-danger">{errors.invoiceDate}</p>
+              )}
+            </Field>
+
+            <Field>
+              <Label>Due Date</Label>
+              <Input
+                type="date"
+                value={form.dueDate}
+                onChange={handleInputChange('dueDate')}
+              />
+            </Field>
+          </div>
+
+          {/* Performance Period */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Field>
+              <Label>Period Start</Label>
+              <Input
+                type="date"
+                value={form.periodStart}
+                onChange={handleInputChange('periodStart')}
+              />
+            </Field>
+
+            <Field>
+              <Label>Period End</Label>
+              <Input
+                type="date"
+                value={form.periodEnd}
+                onChange={handleInputChange('periodEnd')}
+              />
+            </Field>
+          </div>
+
+          {/* Notes */}
+          <Field>
+            <Label>Notes</Label>
             <Input
-              type="date"
-              value={form.dueDate}
-              onChange={handleInputChange('dueDate')}
-              fullWidth
+              type="text"
+              value={form.notes}
+              onChange={handleInputChange('notes')}
+              placeholder="Optional notes"
             />
-          </GridItem>
-        </Grid>
+          </Field>
+        </FieldGroup>
+      </Fieldset>
 
-        {/* Performance Period */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Period Start
-            </Text>
-            <Input
-              type="date"
-              value={form.periodStart}
-              onChange={handleInputChange('periodStart')}
-              fullWidth
-            />
-          </GridItem>
-
-          <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
-              Period End
-            </Text>
-            <Input
-              type="date"
-              value={form.periodEnd}
-              onChange={handleInputChange('periodEnd')}
-              fullWidth
-            />
-          </GridItem>
-        </Grid>
-
-        {/* Notes */}
-        <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
-            Notes
-          </Text>
-          <Input
-            type="text"
-            value={form.notes}
-            onChange={handleInputChange('notes')}
-            placeholder="Optional notes"
-            fullWidth
-          />
-        </Box>
-
-        {/* Submit buttons */}
-        <HStack justify="end" spacing="var(--spacing-2)">
-          <Button variant="outline" type="button" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            isLoading={isSubmitting}
-            isDisabled={isSubmitting}
-          >
-            {initialData.invoiceNumber !== '' ? 'Update Invoice' : 'Create Invoice'}
-          </Button>
-        </HStack>
-      </Stack>
+      {/* Submit buttons */}
+      <div className="flex items-center justify-end gap-3 border-t border-zinc-950/5 pt-6 dark:border-white/10">
+        <Button plain type="button" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button
+          color="cyan"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {initialData.invoiceNumber !== '' ? 'Update Invoice' : 'Create Invoice'}
+        </Button>
+      </div>
     </form>
   );
 }

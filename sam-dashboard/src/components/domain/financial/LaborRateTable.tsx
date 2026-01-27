@@ -1,19 +1,17 @@
 /**
  * LaborRateTable - Table display of labor rates
  */
-import { Text, Badge, Button, PencilIcon, TrashIcon } from '../../primitives';
+import clsx from 'clsx';
+import { Badge, Button } from '../../catalyst';
+import { PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 import {
-  Card,
-  CardBody,
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeaderCell,
+  TableHeader,
   TableCell,
-  HStack,
-  Flex,
-} from '../../layout';
+} from '../../catalyst';
 import type { LaborRateTableProps } from './Financial.types';
 import { formatCurrency, formatDate } from '../../../services/financialService';
 
@@ -23,152 +21,151 @@ export function LaborRateTable({
   onToggleActive,
   onDelete,
   className,
-  style,
 }: LaborRateTableProps) {
   if (rates.length === 0) {
     return (
-      <Card variant="outlined" className={className} style={style}>
-        <CardBody>
-          <Flex
-            direction="column"
-            align="center"
-            justify="center"
-            className="p-8"
-          >
-            <Text variant="body" color="muted">
-              No labor rates configured yet.
-            </Text>
-          </Flex>
-        </CardBody>
-      </Card>
+      <div className={clsx(
+        'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
+        className
+      )}>
+        <div className="flex flex-col items-center justify-center px-6 py-12">
+          <p className="text-sm/6 text-on-surface-muted">
+            No labor rates configured yet.
+          </p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card variant="outlined" className={className} style={style}>
-      <CardBody padding="none">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeaderCell>Labor Category</TableHeaderCell>
-              <TableHeaderCell>Experience</TableHeaderCell>
-              <TableHeaderCell align="right">Base Rate</TableHeaderCell>
-              <TableHeaderCell align="right">Fully Burdened</TableHeaderCell>
-              <TableHeaderCell align="right">Billing Rate</TableHeaderCell>
-              <TableHeaderCell>Effective Period</TableHeaderCell>
-              <TableHeaderCell align="center">Status</TableHeaderCell>
-              <TableHeaderCell align="center">Actions</TableHeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rates.map((rate) => (
-              <TableRow key={rate.id}>
-                <TableCell>
-                  <Text variant="bodySmall" weight="medium">
+    <div className={clsx(
+      'rounded-lg bg-white ring-1 ring-zinc-950/5 dark:bg-zinc-800/50 dark:ring-white/10 overflow-hidden',
+      className
+    )}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>Labor Category</TableHeader>
+            <TableHeader>Experience</TableHeader>
+            <TableHeader className="text-right">Base Rate</TableHeader>
+            <TableHeader className="text-right">Fully Burdened</TableHeader>
+            <TableHeader className="text-right">Billing Rate</TableHeader>
+            <TableHeader>Effective Period</TableHeader>
+            <TableHeader className="text-center">Status</TableHeader>
+            <TableHeader className="text-center">Actions</TableHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rates.map((rate) => (
+            <TableRow key={rate.id}>
+              <TableCell>
+                <div>
+                  <p className="font-medium text-on-surface">
                     {rate.laborCategory}
-                  </Text>
+                  </p>
                   {rate.laborCategoryDescription !== null && (
-                    <Text variant="caption" color="muted">
+                    <p className="text-xs text-on-surface-muted">
                       {rate.laborCategoryDescription}
-                    </Text>
+                    </p>
                   )}
-                </TableCell>
-                <TableCell>
-                  <Text variant="bodySmall">
+                </div>
+              </TableCell>
+              <TableCell>
+                <div>
+                  <p className="text-on-surface">
                     {rate.minYearsExperience !== null || rate.maxYearsExperience !== null
                       ? `${rate.minYearsExperience ?? 0}-${rate.maxYearsExperience ?? '+'} years`
                       : '-'}
-                  </Text>
+                  </p>
                   {rate.educationRequirement !== null && (
-                    <Text variant="caption" color="muted">
+                    <p className="text-xs text-on-surface-muted">
                       {rate.educationRequirement}
-                    </Text>
+                    </p>
                   )}
-                </TableCell>
-                <TableCell align="right">
-                  <Text variant="bodySmall">{formatCurrency(rate.baseRate)}</Text>
+                </div>
+              </TableCell>
+              <TableCell className="text-right">
+                <div>
+                  <p className="text-on-surface">{formatCurrency(rate.baseRate)}</p>
                   {rate.rateType !== null && (
-                    <Text variant="caption" color="muted">
+                    <p className="text-xs text-on-surface-muted">
                       /{rate.rateType.toLowerCase()}
-                    </Text>
+                    </p>
                   )}
-                </TableCell>
-                <TableCell align="right">
-                  <Text variant="bodySmall" weight="medium">
-                    {rate.fullyBurdenedRate !== null
-                      ? formatCurrency(rate.fullyBurdenedRate)
-                      : '-'}
-                  </Text>
-                </TableCell>
-                <TableCell align="right">
-                  <Text variant="bodySmall" weight="medium" color="primary">
-                    {rate.billingRate !== null ? formatCurrency(rate.billingRate) : '-'}
-                  </Text>
-                </TableCell>
-                <TableCell>
-                  <Text variant="bodySmall">
+                </div>
+              </TableCell>
+              <TableCell className="text-right font-medium text-on-surface">
+                {rate.fullyBurdenedRate !== null
+                  ? formatCurrency(rate.fullyBurdenedRate)
+                  : '-'}
+              </TableCell>
+              <TableCell className="text-right font-medium text-accent">
+                {rate.billingRate !== null ? formatCurrency(rate.billingRate) : '-'}
+              </TableCell>
+              <TableCell>
+                <div>
+                  <p className="text-on-surface">
                     {rate.effectiveDate !== null
                       ? formatDate(rate.effectiveDate)
                       : 'No start'}
                     {' - '}
                     {rate.endDate !== null ? formatDate(rate.endDate) : 'Ongoing'}
-                  </Text>
+                  </p>
                   {rate.fiscalYear !== null && (
-                    <Text variant="caption" color="muted">
+                    <p className="text-xs text-on-surface-muted">
                       FY{rate.fiscalYear}
-                    </Text>
+                    </p>
                   )}
-                </TableCell>
-                <TableCell align="center">
-                  <Badge
-                    variant={rate.isActive ? 'success' : 'secondary'}
-                    size="sm"
-                  >
-                    {rate.isActive ? 'Active' : 'Inactive'}
-                  </Badge>
-                </TableCell>
-                <TableCell align="center">
-                  <HStack spacing="var(--spacing-1)" justify="center">
-                    {onToggleActive !== undefined && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onToggleActive(rate.id, !rate.isActive)}
-                        aria-label={rate.isActive ? 'Deactivate rate' : 'Activate rate'}
-                      >
-                        <Text variant="caption" color={rate.isActive ? 'danger' : 'success'}>
-                          {rate.isActive ? 'Disable' : 'Enable'}
-                        </Text>
-                      </Button>
-                    )}
-                    {onEdit !== undefined && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onEdit(rate)}
-                        aria-label="Edit labor rate"
-                      >
-                        <PencilIcon size="sm" />
-                      </Button>
-                    )}
-                    {onDelete !== undefined && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onDelete(rate.id)}
-                        aria-label="Delete labor rate"
-                      >
-                        <TrashIcon size="sm" color="danger" />
-                      </Button>
-                    )}
-                  </HStack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardBody>
-    </Card>
+                </div>
+              </TableCell>
+              <TableCell className="text-center">
+                <Badge color={rate.isActive ? 'green' : 'zinc'}>
+                  {rate.isActive ? 'Active' : 'Inactive'}
+                </Badge>
+              </TableCell>
+              <TableCell className="text-center">
+                <div className="flex items-center justify-center gap-1">
+                  {onToggleActive !== undefined && (
+                    <Button
+                      plain
+                      onClick={() => onToggleActive(rate.id, !rate.isActive)}
+                      aria-label={rate.isActive ? 'Deactivate rate' : 'Activate rate'}
+                    >
+                      <span className={clsx(
+                        'text-xs',
+                        rate.isActive
+                          ? 'text-danger'
+                          : 'text-success'
+                      )}>
+                        {rate.isActive ? 'Disable' : 'Enable'}
+                      </span>
+                    </Button>
+                  )}
+                  {onEdit !== undefined && (
+                    <Button
+                      plain
+                      onClick={() => onEdit(rate)}
+                      aria-label="Edit labor rate"
+                    >
+                      <PencilIcon className="size-4" />
+                    </Button>
+                  )}
+                  {onDelete !== undefined && (
+                    <Button
+                      plain
+                      onClick={() => onDelete(rate.id)}
+                      aria-label="Delete labor rate"
+                    >
+                      <TrashIcon className="size-4 text-danger" />
+                    </Button>
+                  )}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 

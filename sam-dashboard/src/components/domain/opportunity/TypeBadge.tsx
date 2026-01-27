@@ -1,51 +1,22 @@
-import { CSSProperties } from 'react';
 import { OpportunityType, TypeBadgeProps } from './Opportunity.types';
 import { Box } from '../../layout';
 
-const typeStyles: Record<OpportunityType, CSSProperties> = {
-  'sources-sought': {
-    backgroundColor: 'var(--color-info-light)',
-    color: '#1565c0',
-  },
-  presolicitation: {
-    backgroundColor: 'var(--color-warning-light)',
-    color: '#e65100',
-  },
-  solicitation: {
-    backgroundColor: 'var(--color-success-light)',
-    color: '#2e7d32',
-  },
-  sbir: {
-    backgroundColor: 'var(--color-success-light)',
-    color: '#2e7d32',
-  },
-  sttr: {
-    backgroundColor: 'var(--color-success-light)',
-    color: '#2e7d32',
-  },
-  other: {
-    backgroundColor: 'var(--color-gray-200)',
-    color: 'var(--color-gray-700)',
-  },
+const typeClasses: Record<OpportunityType, string> = {
+  'sources-sought': 'text-blue-600 bg-blue-50 ring-blue-500/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20',
+  presolicitation: 'text-warning bg-warning-bg ring-warning/10',
+  solicitation: 'text-success bg-success-bg ring-success/10',
+  sbir: 'text-success bg-success-bg ring-success/10',
+  sttr: 'text-success bg-success-bg ring-success/10',
+  other: 'text-zinc-600 bg-zinc-50 ring-zinc-500/10 dark:bg-zinc-400/10 dark:text-zinc-400 dark:ring-zinc-400/20',
 };
 
 export function TypeBadge({ type, label, className, style }: TypeBadgeProps) {
-  const badgeStyles: CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '0.35rem 0.75rem',
-    borderRadius: 'var(--radius-full)',
-    fontSize: 'var(--font-size-xs)',
-    fontWeight: 'var(--font-weight-medium)' as unknown as number,
-    whiteSpace: 'nowrap',
-    ...typeStyles[type],
-    ...style,
-  };
-
   const displayLabel = label || type.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 
+  const badgeClasses = `inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset whitespace-nowrap ${typeClasses[type]} ${className || ''}`;
+
   return (
-    <Box as="span" className={className} style={badgeStyles}>
+    <Box as="span" className={badgeClasses} style={style}>
       {displayLabel}
     </Box>
   );

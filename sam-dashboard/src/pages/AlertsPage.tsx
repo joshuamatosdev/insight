@@ -143,7 +143,7 @@ function AlertCard({
     <Card variant="default">
       <CardHeader>
         <HStack justify="between" align="center">
-          <HStack spacing="var(--spacing-2)" align="center">
+          <HStack spacing="sm" align="center">
             <BellIcon
               size="sm"
               color={alert.enabled ? 'primary' : 'muted'}
@@ -162,14 +162,14 @@ function AlertCard({
       </CardHeader>
 
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           {alert.description !== null && alert.description.length > 0 && (
             <Text variant="bodySmall" color="muted">
               {alert.description}
             </Text>
           )}
 
-          <Grid columns="1fr 1fr" gap="var(--spacing-3)">
+          <Grid columns="1fr 1fr" gap="md">
             <GridItem>
               <Text variant="caption" color="muted" weight="medium">
                 NAICS Codes
@@ -223,7 +223,7 @@ function AlertCard({
             {alert.enabled ? 'Disable' : 'Enable'}
           </Button>
 
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <Button
               variant="ghost"
               size="sm"
@@ -324,16 +324,9 @@ function AlertForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {errors.general !== undefined && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
-            }}
-          >
+          <Box className="p-3 bg-danger-bg rounded-md border border-red-500">
             <Text variant="bodySmall" color="danger">
               {errors.general}
             </Text>
@@ -443,7 +436,7 @@ function AlertForm({
         </Box>
 
         {/* Value Range */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+        <Grid columns="1fr 1fr" gap="md">
           <GridItem>
             <Text
               as="label"
@@ -502,7 +495,7 @@ function AlertForm({
         </Grid>
 
         {/* Submit buttons */}
-        <HStack justify="end" spacing="var(--spacing-2)">
+        <HStack justify="end" spacing="sm">
           <Button variant="outline" type="button" onClick={onCancel}>
             Cancel
           </Button>
@@ -672,7 +665,7 @@ export function AlertsPage(): React.ReactElement {
         actions={
           showForm === false && (
             <Button variant="primary" onClick={handleCreateClick}>
-              <HStack spacing="var(--spacing-1)" align="center">
+              <HStack spacing="xs" align="center">
                 <PlusIcon size="sm" />
                 <Text as="span" variant="bodySmall" color="white">
                   Create Alert
@@ -684,15 +677,7 @@ export function AlertsPage(): React.ReactElement {
       />
 
       {error !== null && (
-        <Box
-          style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
-          }}
-        >
+        <Box className="p-3 mb-4 bg-danger-bg rounded-md border border-red-500">
           <Text variant="bodySmall" color="danger">
             {error}
           </Text>
@@ -728,7 +713,7 @@ export function AlertsPage(): React.ReactElement {
                 Create an alert to get notified when matching opportunities are posted.
               </Text>
               <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <PlusIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     Create Your First Alert
@@ -739,7 +724,7 @@ export function AlertsPage(): React.ReactElement {
           </CardBody>
         </Card>
       ) : (
-        <Grid columns="repeat(auto-fill, minmax(400px, 1fr))" gap="var(--spacing-4)">
+        <Grid columns="repeat(auto-fill, minmax(400px, 1fr))" gap="md">
           {alerts.map((alert) => (
             <GridItem key={alert.id}>
               <AlertCard

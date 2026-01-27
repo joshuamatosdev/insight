@@ -29,6 +29,7 @@ export default defineConfig([
       'strict-architecture/one-interface-per-file': 'warn',
       'strict-architecture/max-function-body-statements': ['warn', { max: 15 }],
       'strict-architecture/require-barrel-import': 'warn',
+      'strict-architecture/no-redundant-dark-overrides': 'warn',
     },
   },
 ])

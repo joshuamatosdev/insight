@@ -1,8 +1,9 @@
 /**
- * InvoiceCard - Displays invoice summary
+ * InvoiceCard - Displays invoice summary with Pocket-style design
  */
-import { Text, Badge, Button, FileTextIcon, PencilIcon, TrashIcon } from '../../primitives';
-import { Card, CardHeader, CardBody, CardFooter, Stack, HStack, Grid, GridItem } from '../../layout';
+import clsx from 'clsx';
+import { Badge, Button } from '../../catalyst';
+import { DocumentTextIcon, PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 import type { InvoiceCardProps } from './Financial.types';
 import {
   formatCurrency,
@@ -11,180 +12,189 @@ import {
   getStatusLabel,
 } from '../../../services/financialService';
 
+// Map status colors to Catalyst badge colors
+function getBadgeColor(status: string): 'green' | 'yellow' | 'red' | 'zinc' | 'cyan' {
+  const colorMap: Record<string, 'green' | 'yellow' | 'red' | 'zinc' | 'cyan'> = {
+    success: 'green',
+    warning: 'yellow',
+    danger: 'red',
+    secondary: 'zinc',
+    info: 'cyan',
+    primary: 'cyan',
+  };
+  const color = getStatusColor(status);
+  return colorMap[color] ?? 'zinc';
+}
+
 export function InvoiceCard({
   invoice,
   onView,
   onSubmit,
   onDelete,
   className,
-  style,
 }: InvoiceCardProps) {
   const canSubmit = invoice.status === 'DRAFT';
   const canDelete = invoice.status === 'DRAFT';
 
   return (
-    <Card variant="outlined" className={className} style={style}>
-      <CardHeader>
-        <HStack justify="between" align="start">
-          <HStack spacing="var(--spacing-2)" align="center">
-            <FileTextIcon size="sm" color="primary" />
-            <Stack spacing="0">
-              <Text variant="heading6" weight="semibold">
-                {invoice.invoiceNumber}
-              </Text>
-              <Text variant="caption" color="muted">
-                {invoice.contractNumber}
-              </Text>
-            </Stack>
-          </HStack>
-          <Badge variant={getStatusColor(invoice.status)} size="sm">
-            {getStatusLabel(invoice.status)}
-          </Badge>
-        </HStack>
-      </CardHeader>
+    <div className={clsx(
+      'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
+      className
+    )}>
+      {/* Header */}
+      <div className="flex items-start justify-between border-b border-border px-6 py-4 dark:border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-light">
+            <DocumentTextIcon className="h-5 w-5 text-accent" />
+          </div>
+          <div>
+            <h3 className="text-base/6 font-semibold text-on-surface">
+              {invoice.invoiceNumber}
+            </h3>
+            <p className="text-sm/5 text-on-surface-muted">
+              {invoice.contractNumber}
+            </p>
+          </div>
+        </div>
+        <Badge color={getBadgeColor(invoice.status)}>
+          {getStatusLabel(invoice.status)}
+        </Badge>
+      </div>
 
-      <CardBody>
-        <Stack spacing="var(--spacing-3)">
-          {/* Invoice Details */}
-          <Grid columns="1fr 1fr" gap="var(--spacing-3)">
-            <GridItem>
-              <Text variant="caption" color="muted" weight="medium">
-                Invoice Date
-              </Text>
-              <Text variant="bodySmall">{formatDate(invoice.invoiceDate)}</Text>
-            </GridItem>
+      {/* Body */}
+      <div className="px-6 py-5 space-y-5">
+        {/* Invoice Details */}
+        <dl className="grid grid-cols-2 gap-4">
+          <div>
+            <dt className="text-xs/5 font-medium text-on-surface-muted">
+              Invoice Date
+            </dt>
+            <dd className="text-sm/6 text-on-surface">
+              {formatDate(invoice.invoiceDate)}
+            </dd>
+          </div>
 
-            <GridItem>
-              <Text variant="caption" color="muted" weight="medium">
-                Due Date
-              </Text>
-              <Text
-                variant="bodySmall"
-                color={invoice.isOverdue ? 'danger' : undefined}
-              >
-                {formatDate(invoice.dueDate)}
-                {invoice.isOverdue && ' (Overdue)'}
-              </Text>
-            </GridItem>
+          <div>
+            <dt className="text-xs/5 font-medium text-on-surface-muted">
+              Due Date
+            </dt>
+            <dd className={clsx(
+              'text-sm/6',
+              invoice.isOverdue
+                ? 'text-danger'
+                : 'text-on-surface'
+            )}>
+              {formatDate(invoice.dueDate)}
+              {invoice.isOverdue && ' (Overdue)'}
+            </dd>
+          </div>
 
-            <GridItem>
-              <Text variant="caption" color="muted" weight="medium">
-                Period
-              </Text>
-              <Text variant="bodySmall">
-                {invoice.periodStart !== null && invoice.periodEnd !== null
-                  ? `${formatDate(invoice.periodStart)} - ${formatDate(invoice.periodEnd)}`
-                  : '-'}
-              </Text>
-            </GridItem>
+          <div>
+            <dt className="text-xs/5 font-medium text-on-surface-muted">
+              Period
+            </dt>
+            <dd className="text-sm/6 text-on-surface">
+              {invoice.periodStart !== null && invoice.periodEnd !== null
+                ? `${formatDate(invoice.periodStart)} - ${formatDate(invoice.periodEnd)}`
+                : '-'}
+            </dd>
+          </div>
 
-            <GridItem>
-              <Text variant="caption" color="muted" weight="medium">
-                Type
-              </Text>
-              <Text variant="bodySmall">{invoice.invoiceType}</Text>
-            </GridItem>
-          </Grid>
+          <div>
+            <dt className="text-xs/5 font-medium text-on-surface-muted">
+              Type
+            </dt>
+            <dd className="text-sm/6 text-on-surface">
+              {invoice.invoiceType}
+            </dd>
+          </div>
+        </dl>
 
-          {/* Amounts */}
-          <Stack
-            spacing="var(--spacing-2)"
-            style={{
-              paddingTop: 'var(--spacing-3)',
-              borderTop: '1px solid var(--color-gray-200)',
-            }}
-          >
-            <HStack justify="between">
-              <Text variant="bodySmall" color="muted">
-                Subtotal
-              </Text>
-              <Text variant="bodySmall">{formatCurrency(invoice.subtotal)}</Text>
-            </HStack>
-            {invoice.adjustments !== 0 && (
-              <HStack justify="between">
-                <Text variant="bodySmall" color="muted">
-                  Adjustments
-                </Text>
-                <Text variant="bodySmall">{formatCurrency(invoice.adjustments)}</Text>
-              </HStack>
-            )}
-            <HStack justify="between">
-              <Text variant="body" weight="semibold">
-                Total
-              </Text>
-              <Text variant="body" weight="semibold" color="primary">
-                {formatCurrency(invoice.totalAmount)}
-              </Text>
-            </HStack>
-            {invoice.amountPaid > 0 && (
-              <>
-                <HStack justify="between">
-                  <Text variant="bodySmall" color="muted">
-                    Paid
-                  </Text>
-                  <Text variant="bodySmall" color="success">
-                    {formatCurrency(invoice.amountPaid)}
-                  </Text>
-                </HStack>
-                <HStack justify="between">
-                  <Text variant="bodySmall" weight="medium">
-                    Balance
-                  </Text>
-                  <Text
-                    variant="bodySmall"
-                    weight="medium"
-                    color={invoice.balance > 0 ? 'warning' : 'success'}
-                  >
-                    {formatCurrency(invoice.balance)}
-                  </Text>
-                </HStack>
-              </>
-            )}
-          </Stack>
-
-          {/* Days Outstanding */}
-          {invoice.daysOutstanding !== null && invoice.daysOutstanding > 0 && (
-            <Text variant="caption" color="muted">
-              {invoice.daysOutstanding} days outstanding
-            </Text>
+        {/* Amounts */}
+        <dl className="space-y-2 border-t border-border pt-4 dark:border-white/10">
+          <div className="flex items-center justify-between">
+            <dt className="text-sm/6 text-on-surface-muted">Subtotal</dt>
+            <dd className="text-sm/6 text-on-surface">
+              {formatCurrency(invoice.subtotal)}
+            </dd>
+          </div>
+          {invoice.adjustments !== 0 && (
+            <div className="flex items-center justify-between">
+              <dt className="text-sm/6 text-on-surface-muted">Adjustments</dt>
+              <dd className="text-sm/6 text-on-surface">
+                {formatCurrency(invoice.adjustments)}
+              </dd>
+            </div>
           )}
-        </Stack>
-      </CardBody>
+          <div className="flex items-center justify-between">
+            <dt className="text-sm/6 font-semibold text-on-surface">Total</dt>
+            <dd className="text-sm/6 font-semibold text-accent">
+              {formatCurrency(invoice.totalAmount)}
+            </dd>
+          </div>
+          {invoice.amountPaid > 0 && (
+            <>
+              <div className="flex items-center justify-between">
+                <dt className="text-sm/6 text-on-surface-muted">Paid</dt>
+                <dd className="text-sm/6 text-success">
+                  {formatCurrency(invoice.amountPaid)}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-sm/6 font-medium text-on-surface">Balance</dt>
+                <dd className={clsx(
+                  'text-sm/6 font-medium',
+                  invoice.balance > 0
+                    ? 'text-warning'
+                    : 'text-success'
+                )}>
+                  {formatCurrency(invoice.balance)}
+                </dd>
+              </div>
+            </>
+          )}
+        </dl>
 
-      <CardFooter>
-        <HStack justify="between" align="center">
-          {canSubmit && onSubmit !== undefined && (
-            <Button variant="primary" size="sm" onClick={() => onSubmit(invoice.id)}>
-              Submit
+        {/* Days Outstanding */}
+        {invoice.daysOutstanding !== null && invoice.daysOutstanding > 0 && (
+          <p className="text-xs/5 text-on-surface-muted">
+            {invoice.daysOutstanding} days outstanding
+          </p>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between border-t border-border px-6 py-3 dark:border-white/10">
+        {canSubmit && onSubmit !== undefined ? (
+          <Button color="cyan" onClick={() => onSubmit(invoice.id)}>
+            Submit
+          </Button>
+        ) : (
+          <span />
+        )}
+
+        <div className="flex items-center gap-2">
+          {onView !== undefined && (
+            <Button
+              plain
+              onClick={() => onView(invoice)}
+              aria-label="View invoice"
+            >
+              <PencilIcon className="size-4" />
             </Button>
           )}
-          {!canSubmit && <span />}
-
-          <HStack spacing="var(--spacing-2)">
-            {onView !== undefined && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onView(invoice)}
-                aria-label="View invoice"
-              >
-                <PencilIcon size="sm" />
-              </Button>
-            )}
-            {canDelete && onDelete !== undefined && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onDelete(invoice.id)}
-                aria-label="Delete invoice"
-              >
-                <TrashIcon size="sm" color="danger" />
-              </Button>
-            )}
-          </HStack>
-        </HStack>
-      </CardFooter>
-    </Card>
+          {canDelete && onDelete !== undefined && (
+            <Button
+              plain
+              onClick={() => onDelete(invoice.id)}
+              aria-label="Delete invoice"
+            >
+              <TrashIcon className="size-4 text-danger" />
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

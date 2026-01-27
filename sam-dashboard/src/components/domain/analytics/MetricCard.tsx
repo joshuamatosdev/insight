@@ -1,24 +1,9 @@
-import { CSSProperties } from 'react';
 import { MetricCardProps } from './Analytics.types';
-import { Text } from '../../primitives';
-import { HStack, Box, Stack } from '../../layout';
-import { getChangeColor, formatChangePercent } from '../../../types/analytics.types';
-
-const variantStyles: Record<string, CSSProperties> = {
-  primary: { background: 'var(--gradient-primary)' },
-  success: { background: 'var(--gradient-success)' },
-  warning: { background: 'var(--gradient-warning)' },
-  info: { background: 'var(--gradient-info)' },
-  secondary: {
-    background: 'var(--gradient-secondary, linear-gradient(135deg, #6b7280 0%, #4b5563 100%))',
-  },
-  danger: {
-    background: 'var(--gradient-danger, linear-gradient(135deg, #ef4444 0%, #dc2626 100%))',
-  },
-};
+import { formatChangePercent } from '../../../types/analytics.types';
 
 /**
  * MetricCard displays a single metric with optional change indicator.
+ * Follows Pocket/Tailwind UI aesthetics with clean typography and no gradients.
  */
 export function MetricCard({
   title,
@@ -28,84 +13,58 @@ export function MetricCard({
   icon,
   variant = 'primary',
   loading = false,
-  className,
-  style,
+  className = '',
 }: MetricCardProps) {
-  const cardStyles: CSSProperties = {
-    borderRadius: 'var(--radius-xl)',
-    padding: 'var(--spacing-6)',
-    color: 'var(--color-white)',
-    minWidth: '200px',
-    ...variantStyles[variant],
-    ...style,
-  };
-
   const showChange = changePercent !== undefined && changePercent !== null;
+
+  // Determine trend color classes
+  const getTrendClasses = (percent: number | null | undefined): string => {
+    if (percent === null || percent === undefined) return 'text-on-surface-muted';
+    if (percent > 0) return 'text-success';
+    if (percent < 0) return 'text-danger';
+    return 'text-on-surface-muted';
+  };
 
   if (loading) {
     return (
-      <Box className={className} style={cardStyles}>
-        <Stack spacing="var(--spacing-2)">
-          <Box
-            style={{
-              width: '60%',
-              height: '16px',
-              background: 'rgba(255,255,255,0.3)',
-              borderRadius: 'var(--radius-sm)',
-            }}
-          />
-          <Box
-            style={{
-              width: '40%',
-              height: '32px',
-              background: 'rgba(255,255,255,0.3)',
-              borderRadius: 'var(--radius-sm)',
-            }}
-          />
-        </Stack>
-      </Box>
+      <div className={`rounded-lg bg-surface p-6 shadow dark:bg-zinc-900 ${className}`}>
+        <div className="space-y-3">
+          <div className="h-4 w-3/5 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
+          <div className="h-8 w-2/5 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box className={className} style={cardStyles}>
-      <HStack justify="between" align="start">
-        <Stack spacing="var(--spacing-1)">
-          <Text variant="caption" color="white" style={{ opacity: 0.8 }}>
+    <div className={`rounded-lg bg-surface p-6 shadow dark:bg-zinc-900 ${className}`}>
+      <div className="flex items-start justify-between">
+        <div className="space-y-1">
+          <p className="text-sm font-medium text-on-surface-muted">
             {title}
-          </Text>
-          <Text
-            variant="heading1"
-            color="white"
-            className="text-4xl font-bold"
-          >
+          </p>
+          <p className="text-3xl font-medium tracking-tight text-on-surface">
             {typeof value === 'number' ? value.toLocaleString() : value}
-          </Text>
+          </p>
           {showChange && (
-            <HStack spacing="var(--spacing-2)" align="center">
-              <Text
-                variant="caption"
-                style={{
-                  color: getChangeColor(changePercent),
-                  fontWeight: 600,
-                }}
-              >
+            <div className="flex items-center gap-2">
+              <span className={`text-xs font-medium ${getTrendClasses(changePercent)}`}>
                 {formatChangePercent(changePercent)}
-              </Text>
+              </span>
               {previousValue !== undefined && previousValue !== null && (
-                <Text variant="caption" color="white" style={{ opacity: 0.7 }}>
+                <span className="text-xs text-on-surface-muted">
                   vs {previousValue.toLocaleString()}
-                </Text>
+                </span>
               )}
-            </HStack>
+            </div>
           )}
-        </Stack>
+        </div>
         {icon !== undefined && icon !== null && (
-          <Box style={{ opacity: 0.8 }}>{icon}</Box>
+          <div className="text-on-surface-muted">
+            {icon}
+          </div>
         )}
-      </HStack>
-    </Box>
+      </div>
+    </div>
   );
 }
-
-export default MetricCard;

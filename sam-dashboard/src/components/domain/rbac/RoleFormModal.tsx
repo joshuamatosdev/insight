@@ -2,9 +2,22 @@
  * Modal for creating and editing roles
  */
 
-import { useState, useCallback, useEffect, FormEvent, ChangeEvent, CSSProperties } from 'react';
-import { Text, Button, Input } from '../../primitives';
-import { Card, CardHeader, CardBody, CardFooter, Stack, Flex, Box, HStack } from '../../layout';
+import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
+import clsx from 'clsx';
+import {
+  Dialog,
+  DialogTitle,
+  DialogBody,
+  DialogActions,
+  Button,
+  Field,
+  FieldGroup,
+  Fieldset,
+  Input,
+  Label,
+  Badge,
+  Text,
+} from '../../catalyst';
 import type { RoleFormModalProps, RoleFormState, RoleFormErrors } from './RoleFormModal.types';
 
 const INITIAL_FORM_STATE: RoleFormState = {
@@ -42,55 +55,6 @@ function validateForm(form: RoleFormState): RoleFormErrors {
 function formatCategoryName(category: string): string {
   return category.replace(/_/g, ' ');
 }
-
-/**
- * Modal overlay styles
- */
-const overlayStyles: CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 1000,
-};
-
-/**
- * Modal content styles
- */
-const modalStyles: CSSProperties = {
-  width: '100%',
-  maxWidth: '700px',
-  maxHeight: '90vh',
-  overflow: 'auto',
-};
-
-/**
- * Checkbox group styles
- */
-const checkboxGroupStyles: CSSProperties = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: 'var(--spacing-2)',
-};
-
-/**
- * Checkbox label styles
- */
-const checkboxLabelStyles: CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 'var(--spacing-1)',
-  padding: 'var(--spacing-1) var(--spacing-2)',
-  borderRadius: 'var(--radius-sm)',
-  backgroundColor: 'var(--color-gray-50)',
-  cursor: 'pointer',
-  fontSize: 'var(--font-size-sm)',
-};
 
 export function RoleFormModal({
   isOpen,
@@ -196,238 +160,160 @@ export function RoleFormModal({
     [onClose]
   );
 
-  if (isOpen === false) {
-    return null;
-  }
-
   const isEditMode = role !== null;
   const isSystemRole = role?.isSystemRole === true;
 
   return (
-    <div
-      style={overlayStyles}
-      onClick={handleOverlayClick}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="role-modal-title"
-    >
-      <Card variant="elevated" style={modalStyles}>
-        <CardHeader>
-          <Flex justify="between" align="center">
-            <Text id="role-modal-title" variant="heading5" weight="semibold">
-              {isEditMode ? 'Edit Role' : 'Create New Role'}
-            </Text>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              aria-label="Close modal"
-            >
-              &times;
-            </Button>
-          </Flex>
-        </CardHeader>
+    <Dialog open={isOpen} onClose={onClose} size="3xl">
+      <DialogTitle>{isEditMode ? 'Edit Role' : 'Create New Role'}</DialogTitle>
 
-        <form onSubmit={handleSubmit}>
-          <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              {errors.general !== undefined && (
-                <Box
-                  style={{
-                    padding: 'var(--spacing-3)',
-                    backgroundColor: 'var(--color-danger-light)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--color-danger)',
-                  }}
-                >
-                  <Text variant="bodySmall" color="danger">
-                    {errors.general}
+      <form onSubmit={handleSubmit}>
+        <DialogBody>
+          <div className="space-y-6">
+            {errors.general !== undefined && (
+              <div className="rounded-lg bg-danger-bg px-4 py-3 ring-1 ring-danger/20">
+                <Text className="text-sm text-danger-text">
+                  {errors.general}
+                </Text>
+              </div>
+            )}
+
+            {isSystemRole && (
+              <div className="rounded-lg bg-warning-bg px-4 py-3 ring-1 ring-warning/20">
+                <Text className="text-sm text-warning-text">
+                  System roles cannot be modified. You can only view their permissions.
+                </Text>
+              </div>
+            )}
+
+            <Fieldset>
+              <FieldGroup>
+                {/* Role Name */}
+                <Field>
+                  <Label>Role Name *</Label>
+                  <Input
+                    type="text"
+                    value={form.name}
+                    onChange={handleInputChange('name')}
+                    placeholder="e.g., CONTRACT_MANAGER"
+                    invalid={errors.name !== undefined}
+                    disabled={isSystemRole}
+                  />
+                  <Text className={clsx(
+                    'mt-1 text-xs',
+                    errors.name !== undefined ? 'text-danger' : 'text-on-surface-muted'
+                  )}>
+                    {errors.name ?? 'Uppercase letters and underscores only'}
                   </Text>
-                </Box>
-              )}
+                </Field>
 
-              {isSystemRole && (
-                <Box
-                  style={{
-                    padding: 'var(--spacing-3)',
-                    backgroundColor: 'var(--color-warning-light)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--color-warning)',
-                  }}
-                >
-                  <Text variant="bodySmall" color="warning">
-                    System roles cannot be modified. You can only view their permissions.
-                  </Text>
-                </Box>
-              )}
+                {/* Description */}
+                <Field>
+                  <Label>Description</Label>
+                  <Input
+                    type="text"
+                    value={form.description}
+                    onChange={handleInputChange('description')}
+                    placeholder="Brief description of this role"
+                    disabled={isSystemRole}
+                  />
+                  {errors.description !== undefined && (
+                    <Text className="mt-1 text-xs text-danger">
+                      {errors.description}
+                    </Text>
+                  )}
+                </Field>
+              </FieldGroup>
+            </Fieldset>
 
-              {/* Role Name */}
-              <Box>
-                <Text
-                  as="label"
-                  variant="bodySmall"
-                  weight="medium"
-                  className="block mb-1"
-                >
-                  Role Name *
-                </Text>
-                <Input
-                  type="text"
-                  value={form.name}
-                  onChange={handleInputChange('name')}
-                  placeholder="e.g., CONTRACT_MANAGER"
-                  fullWidth
-                  isInvalid={errors.name !== undefined}
-                  disabled={isSystemRole}
-                />
-                <Text
-                  variant="caption"
-                  color={errors.name !== undefined ? 'danger' : 'muted'}
-                  className="mt-1"
-                >
-                  {errors.name ?? 'Uppercase letters and underscores only'}
-                </Text>
-              </Box>
+            {/* Permissions */}
+            <div>
+              <Label className="mb-3">Permissions</Label>
 
-              {/* Description */}
-              <Box>
-                <Text
-                  as="label"
-                  variant="bodySmall"
-                  weight="medium"
-                  className="block mb-1"
-                >
-                  Description
-                </Text>
-                <Input
-                  type="text"
-                  value={form.description}
-                  onChange={handleInputChange('description')}
-                  placeholder="Brief description of this role"
-                  fullWidth
-                  disabled={isSystemRole}
-                />
-                {errors.description !== undefined && (
-                  <Text
-                    variant="caption"
-                    color="danger"
-                    className="mt-1"
-                  >
-                    {errors.description}
-                  </Text>
-                )}
-              </Box>
+              <div className="space-y-4">
+                {Object.entries(permissions).map(([category, categoryPermissions]) => {
+                  const allSelected = categoryPermissions.every((p) =>
+                    form.permissions.includes(p.code)
+                  );
 
-              {/* Permissions */}
-              <Box>
-                <Text
-                  as="label"
-                  variant="bodySmall"
-                  weight="medium"
-                  style={{ display: 'block', marginBottom: 'var(--spacing-2)' }}
-                >
-                  Permissions
-                </Text>
+                  return (
+                    <div
+                      key={category}
+                      className="rounded-lg bg-zinc-50 p-4 ring-1 ring-zinc-950/5 dark:bg-zinc-800/50 dark:ring-white/10"
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <Text className="text-sm font-semibold text-zinc-950 dark:text-white">
+                          {formatCategoryName(category)}
+                        </Text>
+                        {isSystemRole === false && (
+                          <Button
+                            type="button"
+                            plain
+                            onClick={() => handleSelectAllInCategory(categoryPermissions)}
+                          >
+                            {allSelected ? 'Deselect All' : 'Select All'}
+                          </Button>
+                        )}
+                      </div>
 
-                <Stack spacing="var(--spacing-3)">
-                  {Object.entries(permissions).map(([category, categoryPermissions]) => {
-                    const allSelected = categoryPermissions.every((p) =>
-                      form.permissions.includes(p.code)
-                    );
-                    const someSelected =
-                      allSelected === false &&
-                      categoryPermissions.some((p) => form.permissions.includes(p.code));
-
-                    return (
-                      <Box
-                        key={category}
-                        style={{
-                          padding: 'var(--spacing-3)',
-                          backgroundColor: 'var(--color-gray-50)',
-                          borderRadius: 'var(--radius-md)',
-                        }}
-                      >
-                        <HStack justify="between" align="center" className="mb-2">
-                          <Text variant="bodySmall" weight="semibold">
-                            {formatCategoryName(category)}
-                          </Text>
-                          {isSystemRole === false && (
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleSelectAllInCategory(categoryPermissions)}
+                      <div className="flex flex-wrap gap-2">
+                        {categoryPermissions.map((permission) => {
+                          const isChecked = form.permissions.includes(permission.code);
+                          return (
+                            <label
+                              key={permission.id}
+                              className={clsx(
+                                'flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm ring-1 transition-colors',
+                                isChecked
+                                  ? 'bg-blue-50 ring-blue-600/20 dark:bg-blue-950/50 dark:ring-blue-400/20'
+                                  : 'bg-white ring-zinc-950/5 dark:bg-zinc-900 dark:ring-white/10',
+                                isSystemRole && 'cursor-default opacity-70'
+                              )}
+                              title={permission.description}
                             >
-                              {allSelected ? 'Deselect All' : 'Select All'}
-                            </Button>
-                          )}
-                        </HStack>
+                              <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={() => handlePermissionToggle(permission.code)}
+                                disabled={isSystemRole}
+                                className={clsx(
+                                  'h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-600 dark:border-zinc-600 dark:bg-zinc-900',
+                                  isSystemRole ? 'cursor-default' : 'cursor-pointer'
+                                )}
+                              />
+                              <span className="text-zinc-950 dark:text-white">{permission.displayName}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
-                        <div style={checkboxGroupStyles}>
-                          {categoryPermissions.map((permission) => {
-                            const isChecked = form.permissions.includes(permission.code);
-                            return (
-                              <label
-                                key={permission.id}
-                                style={{
-                                  ...checkboxLabelStyles,
-                                  backgroundColor: isChecked
-                                    ? 'var(--color-primary-light)'
-                                    : 'var(--color-white)',
-                                  opacity: isSystemRole ? 0.7 : 1,
-                                  cursor: isSystemRole ? 'default' : 'pointer',
-                                }}
-                                title={permission.description}
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={isChecked}
-                                  onChange={() => handlePermissionToggle(permission.code)}
-                                  disabled={isSystemRole}
-                                  style={{ cursor: isSystemRole ? 'default' : 'pointer' }}
-                                />
-                                <span>{permission.displayName}</span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                      </Box>
-                    );
-                  })}
-                </Stack>
+              <Text className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
+                {form.permissions.length} permission
+                {form.permissions.length !== 1 ? 's' : ''} selected
+              </Text>
+            </div>
+          </div>
+        </DialogBody>
 
-                <Text
-                  variant="caption"
-                  color="muted"
-                  className="mt-2"
-                >
-                  {form.permissions.length} permission
-                  {form.permissions.length !== 1 ? 's' : ''} selected
-                </Text>
-              </Box>
-            </Stack>
-          </CardBody>
-
-          <CardFooter>
-            <HStack justify="end" spacing="var(--spacing-2)">
-              <Button variant="outline" type="button" onClick={onClose}>
-                {isSystemRole ? 'Close' : 'Cancel'}
-              </Button>
-              {isSystemRole === false && (
-                <Button
-                  variant="primary"
-                  type="submit"
-                  isLoading={isSubmitting}
-                  isDisabled={isSubmitting}
-                >
-                  {isEditMode ? 'Update Role' : 'Create Role'}
-                </Button>
-              )}
-            </HStack>
-          </CardFooter>
-        </form>
-      </Card>
-    </div>
+        <DialogActions>
+          <Button plain onClick={onClose}>
+            {isSystemRole ? 'Close' : 'Cancel'}
+          </Button>
+          {isSystemRole === false && (
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isEditMode ? 'Update Role' : 'Create Role'}
+            </Button>
+          )}
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }
 
