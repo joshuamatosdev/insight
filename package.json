@@ -4,9 +4,12 @@
   "description": "SAMGov Contract Intelligence Platform",
   "type": "module",
   "scripts": {
-    "git:agent": "npx tsx scripts/git-agent-runner.ts",
-    "git:merge": "npx tsx scripts/merge-manager.ts",
-    "git:merge:list": "npx tsx scripts/merge-manager.ts list"
+    "git:agent": "node --import=tsx scripts/git-agent-runner.ts",
+    "git:merge": "node --import=tsx scripts/merge-manager.ts",
+    "git:merge:list": "node --import=tsx scripts/merge-manager.ts list",
+    "wave:run": "node --import=tsx scripts/wave-executor.ts run",
+    "wave:status": "node --import=tsx scripts/wave-executor.ts status",
+    "wave:list": "node --import=tsx scripts/wave-executor.ts list"
   },
   "devDependencies": {
     "tsx": "^4.7.0",

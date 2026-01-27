@@ -93,9 +93,25 @@ export interface MergeResult {
 }
 
 /**
- * Result of verification steps
+ * Result of verification steps - dual layer for Java backend + TypeScript frontend
  */
 export interface VerificationResult {
+  readonly backend: BackendVerificationResult;
+  readonly frontend: FrontendVerificationResult;
+}
+
+/**
+ * Backend (Java/Gradle) verification results
+ */
+export interface BackendVerificationResult {
+  readonly build: VerificationStepResult;
+  readonly test: VerificationStepResult;
+}
+
+/**
+ * Frontend (TypeScript/React) verification results
+ */
+export interface FrontendVerificationResult {
   readonly typeCheck: VerificationStepResult;
   readonly lint: VerificationStepResult;
   readonly test: VerificationStepResult;

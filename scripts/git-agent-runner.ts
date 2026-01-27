@@ -49,9 +49,12 @@ import {
 const WORKTREE_DIR = '.agent-worktrees';
 
 /**
- * Path to agent definitions
+ * Paths to agent definitions (checked in order)
  */
-const AGENTS_DIR = '.claude/agents';
+const AGENT_PATHS = [
+  '.claude/agents',
+  '.github/agents',
+];
 
 /**
  * Parse command line arguments
@@ -108,34 +111,51 @@ function parseFrontmatter(content: string): Record<string, string> {
 
 /**
  * Load agent configuration from markdown file
+ * Searches multiple paths: .claude/agents/, .github/agents/
+ * Supports both .md and .agent.md extensions
  */
 async function loadAgentConfig(
   agentName: string,
   repoRoot: string
 ): Promise<Result<AgentConfig, Error>> {
-  const agentPath = path.join(repoRoot, AGENTS_DIR, `${agentName}.md`);
+  const extensions = ['.md', '.agent.md'];
+  const searchedPaths: string[] = [];
 
-  let content: string;
-  try {
-    content = await fs.readFile(agentPath, 'utf8');
-  } catch {
-    return err(new AgentNotFoundError(agentName, agentPath));
+  let content: string | undefined;
+  let foundPath: string | undefined;
+
+  // Search all paths and extensions
+  for (const agentDir of AGENT_PATHS) {
+    for (const ext of extensions) {
+      const agentPath = path.join(repoRoot, agentDir, `${agentName}${ext}`);
+      searchedPaths.push(agentPath);
+      try {
+        content = await fs.readFile(agentPath, 'utf8');
+        foundPath = agentPath;
+        break;
+      } catch {
+        // Continue searching
+      }
+    }
+    if (content !== undefined) {
+      break;
+    }
+  }
+
+  if (content === undefined || foundPath === undefined) {
+    return err(new AgentNotFoundError(agentName, searchedPaths.join(', ')));
   }
 
   const frontmatter = parseFrontmatter(content);
 
-  const name = frontmatter['name'];
+  const name = frontmatter['name'] ?? agentName;
   const description = frontmatter['description'];
   const toolsStr = frontmatter['tools'];
   const model = frontmatter['model'];
   const permissionMode = frontmatter['permissionMode'];
 
-  if (name === undefined || name === '') {
-    return err(new AgentConfigError(agentName, agentPath, 'Missing "name" in frontmatter'));
-  }
-
   if (description === undefined) {
-    return err(new AgentConfigError(agentName, agentPath, 'Missing "description" in frontmatter'));
+    return err(new AgentConfigError(agentName, foundPath, 'Missing "description" in frontmatter'));
   }
 
   const tools = toolsStr !== undefined

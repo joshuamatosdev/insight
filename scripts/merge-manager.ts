@@ -15,10 +15,13 @@
  *   npm run git:merge <branch> --skip-verify - Skip verification
  */
 
+import * as path from 'node:path';
 import {
   type MergeResult,
   type VerificationResult,
   type VerificationStepResult,
+  type BackendVerificationResult,
+  type FrontendVerificationResult,
   type Result,
   ok,
   execCommand,
@@ -164,42 +167,99 @@ async function runVerificationStep(
 }
 
 /**
- * Run all verification steps
+ * Detect if running on Windows
  */
-async function runVerification(cwd: string): Promise<VerificationResult> {
-  console.log('\n🔍 Running verification...\n');
+const isWindows = process.platform === 'win32';
 
-  // Backend verification (Java/Gradle)
-  process.stdout.write('  Gradle Build... ');
-  const typeCheck = await runVerificationStep(
-    'Gradle',
-    './gradlew',
+/**
+ * Get the gradle command for the current platform
+ */
+function getGradleCommand(): string {
+  return isWindows ? 'gradlew.bat' : './gradlew';
+}
+
+/**
+ * Run backend verification (Java/Gradle)
+ */
+async function runBackendVerification(cwd: string): Promise<BackendVerificationResult> {
+  const gradleCmd = getGradleCommand();
+
+  // Backend build (excluding tests for speed)
+  process.stdout.write('  Backend Build...   ');
+  const build = await runVerificationStep(
+    'Gradle Build',
+    gradleCmd,
     ['build', '-x', 'test'],
     cwd
   );
-  console.log(typeCheck.passed ? `✅ (${formatDuration(typeCheck.durationMs)})` : '❌');
+  console.log(build.passed ? `✅ (${formatDuration(build.durationMs)})` : '❌');
 
-  // Frontend type checking
-  process.stdout.write('  TypeScript...   ');
-  const lint = await runVerificationStep(
-    'TypeScript',
-    'npx',
-    ['tsc', '--noEmit'],
-    `${cwd}/sam-dashboard`
-  );
-  console.log(lint.passed ? `✅ (${formatDuration(lint.durationMs)})` : '❌');
-
-  // Testing
-  process.stdout.write('  Tests...        ');
+  // Backend tests
+  process.stdout.write('  Backend Tests...   ');
   const test = await runVerificationStep(
-    'Tests',
-    './gradlew',
+    'Gradle Test',
+    gradleCmd,
     ['test'],
     cwd
   );
   console.log(test.passed ? `✅ (${formatDuration(test.durationMs)})` : '❌');
 
+  return { build, test };
+}
+
+/**
+ * Run frontend verification (TypeScript/React)
+ */
+async function runFrontendVerification(cwd: string): Promise<FrontendVerificationResult> {
+  const frontendDir = path.join(cwd, 'sam-dashboard');
+
+  // TypeScript type checking
+  process.stdout.write('  Frontend Types...  ');
+  const typeCheck = await runVerificationStep(
+    'TypeScript',
+    'npx',
+    ['tsc', '--noEmit'],
+    frontendDir
+  );
+  console.log(typeCheck.passed ? `✅ (${formatDuration(typeCheck.durationMs)})` : '❌');
+
+  // ESLint
+  process.stdout.write('  Frontend Lint...   ');
+  const lint = await runVerificationStep(
+    'ESLint',
+    'npm',
+    ['run', 'lint'],
+    frontendDir
+  );
+  console.log(lint.passed ? `✅ (${formatDuration(lint.durationMs)})` : '❌');
+
+  // Frontend tests
+  process.stdout.write('  Frontend Tests...  ');
+  const test = await runVerificationStep(
+    'Vitest',
+    'npm',
+    ['test', '--', '--run'],
+    frontendDir
+  );
+  console.log(test.passed ? `✅ (${formatDuration(test.durationMs)})` : '❌');
+
   return { typeCheck, lint, test };
+}
+
+/**
+ * Run all verification steps (backend + frontend)
+ */
+async function runVerification(cwd: string): Promise<VerificationResult> {
+  console.log('\n🔍 Running verification...\n');
+  console.log('  Backend (Java/Gradle):');
+
+  const backend = await runBackendVerification(cwd);
+
+  console.log('\n  Frontend (TypeScript/React):');
+
+  const frontend = await runFrontendVerification(cwd);
+
+  return { backend, frontend };
 }
 
 /**
@@ -246,25 +306,40 @@ async function mergeCommand(
     // Run verification
     verification = await runVerification(repoRoot);
 
-    const allPassed = verification.typeCheck.passed &&
-      verification.lint.passed &&
-      verification.test.passed;
+    const backendPassed = verification.backend.build.passed &&
+      verification.backend.test.passed;
+
+    const frontendPassed = verification.frontend.typeCheck.passed &&
+      verification.frontend.lint.passed &&
+      verification.frontend.test.passed;
+
+    const allPassed = backendPassed && frontendPassed;
 
     if (allPassed === false) {
       console.log('\n❌ Verification failed. Fix issues and try again.\n');
 
-      // Show failed step outputs
-      if (verification.typeCheck.passed === false) {
-        console.log('Build errors:');
-        console.log(verification.typeCheck.output.substring(0, 2000));
+      // Show failed step outputs - Backend
+      if (verification.backend.build.passed === false) {
+        console.log('Backend Build errors:');
+        console.log(verification.backend.build.output.substring(0, 2000));
       }
-      if (verification.lint.passed === false) {
-        console.log('\nTypeScript errors:');
-        console.log(verification.lint.output.substring(0, 2000));
+      if (verification.backend.test.passed === false) {
+        console.log('\nBackend Test failures:');
+        console.log(verification.backend.test.output.substring(0, 2000));
       }
-      if (verification.test.passed === false) {
-        console.log('\nTest failures:');
-        console.log(verification.test.output.substring(0, 2000));
+
+      // Show failed step outputs - Frontend
+      if (verification.frontend.typeCheck.passed === false) {
+        console.log('\nFrontend TypeScript errors:');
+        console.log(verification.frontend.typeCheck.output.substring(0, 2000));
+      }
+      if (verification.frontend.lint.passed === false) {
+        console.log('\nFrontend Lint errors:');
+        console.log(verification.frontend.lint.output.substring(0, 2000));
+      }
+      if (verification.frontend.test.passed === false) {
+        console.log('\nFrontend Test failures:');
+        console.log(verification.frontend.test.output.substring(0, 2000));
       }
 
       // Return to original branch

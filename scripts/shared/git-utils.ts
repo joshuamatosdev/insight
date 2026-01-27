@@ -72,7 +72,7 @@ export async function listBranches(cwd?: string): Promise<Result<readonly string
 }
 
 /**
- * List agent branches (those starting with agent/)
+ * List agent branches (those starting with agent/ or claude/)
  */
 export async function listAgentBranches(cwd?: string): Promise<Result<readonly AgentBranchInfo[], Error>> {
   const branchesResult = await listBranches(cwd);
@@ -80,7 +80,10 @@ export async function listAgentBranches(cwd?: string): Promise<Result<readonly A
     return branchesResult;
   }
 
-  const agentBranches = branchesResult.data.filter(b => b.startsWith('agent/'));
+  // Include both agent/ and claude/ prefixes (for wave-based branches)
+  const agentBranches = branchesResult.data.filter(
+    b => b.startsWith('agent/') || b.startsWith('claude/') || b.startsWith('cursor/')
+  );
   const infos: AgentBranchInfo[] = [];
 
   for (const branchName of agentBranches) {
@@ -98,35 +101,59 @@ export async function listAgentBranches(cwd?: string): Promise<Result<readonly A
 
 /**
  * Parse agent branch info from branch name and git log
+ * Supports formats:
+ *   - agent/<agent-name>/<timestamp>-<slug>-<random>
+ *   - claude/wave<N>/<feature>/<timestamp>-<slug>-<random>
+ *   - cursor/wave<N>/<feature> (Cursor branches without timestamp)
  */
 async function getAgentBranchInfo(
   branchName: string,
   cwd?: string
 ): Promise<Result<AgentBranchInfo, Error>> {
-  // Parse branch name: agent/<agent-name>/<timestamp>-<slug>-<random>
-  const match = /^agent\/([^/]+)\/(\d{8}-\d{6})-([^-]+)-([a-z0-9]+)$/.exec(branchName);
+  let agentName: string;
+  let timestampStr: string | undefined;
+  let slug: string;
 
-  if (match === null) {
+  // Try standard agent format: agent/<agent-name>/<timestamp>-<slug>-<random>
+  const agentMatch = /^agent\/([^/]+)\/(\d{8}-\d{6})-([^-]+)-([a-z0-9]+)$/.exec(branchName);
+  
+  // Try wave format: claude/wave<N>/<feature>/<timestamp>-<slug>-<random>
+  const waveMatch = /^claude\/wave(\d+)\/([^/]+)\/(\d{8}-\d{6})-([^-]+)-([a-z0-9]+)$/.exec(branchName);
+  
+  // Try cursor wave format: cursor/wave<N>/<feature> (no timestamp)
+  const cursorMatch = /^cursor\/wave(\d+)\/([^/]+)$/.exec(branchName);
+
+  if (agentMatch !== null) {
+    agentName = agentMatch[1] ?? '';
+    timestampStr = agentMatch[2];
+    slug = agentMatch[3] ?? '';
+  } else if (waveMatch !== null) {
+    const waveNum = waveMatch[1];
+    const feature = waveMatch[2];
+    agentName = `wave${waveNum}-${feature}`;
+    timestampStr = waveMatch[3];
+    slug = waveMatch[4] ?? '';
+  } else if (cursorMatch !== null) {
+    const waveNum = cursorMatch[1];
+    const feature = cursorMatch[2];
+    agentName = `wave${waveNum}-${feature}`;
+    timestampStr = undefined;
+    slug = feature ?? '';
+  } else {
     return err(new Error(`Invalid agent branch format: ${branchName}`));
   }
 
-  const agentName = match[1];
-  const timestampStr = match[2];
-  const slug = match[3];
-
-  if (agentName === undefined || timestampStr === undefined || slug === undefined) {
-    return err(new Error(`Failed to parse agent branch: ${branchName}`));
+  // Parse timestamp if present
+  let timestamp = new Date();
+  if (timestampStr !== undefined) {
+    const year = parseInt(timestampStr.substring(0, 4), 10);
+    const month = parseInt(timestampStr.substring(4, 6), 10) - 1;
+    const day = parseInt(timestampStr.substring(6, 8), 10);
+    const hour = parseInt(timestampStr.substring(9, 11), 10);
+    const minute = parseInt(timestampStr.substring(11, 13), 10);
+    const second = parseInt(timestampStr.substring(13, 15), 10);
+    timestamp = new Date(year, month, day, hour, minute, second);
   }
-
-  // Parse timestamp: YYYYMMDD-HHMMSS
-  const year = parseInt(timestampStr.substring(0, 4), 10);
-  const month = parseInt(timestampStr.substring(4, 6), 10) - 1;
-  const day = parseInt(timestampStr.substring(6, 8), 10);
-  const hour = parseInt(timestampStr.substring(9, 11), 10);
-  const minute = parseInt(timestampStr.substring(11, 13), 10);
-  const second = parseInt(timestampStr.substring(13, 15), 10);
-
-  const timestamp = new Date(year, month, day, hour, minute, second);
 
   // Get commit count and last commit info
   const countResult = await execCommand(
@@ -495,6 +522,7 @@ export function sanitizeBranchName(input: string): string {
 
 /**
  * Generate a unique agent branch name
+ * Supports wave-based naming: wave1-xxx becomes claude/wave1/xxx
  */
 export function generateAgentBranchName(agentName: string, taskSlug: string): string {
   const sanitizedAgent = sanitizeBranchName(agentName);
@@ -514,6 +542,16 @@ export function generateAgentBranchName(agentName: string, taskSlug: string): st
 
   // Generate 6-char random suffix
   const random = Math.random().toString(36).substring(2, 8);
+
+  // Check for wave-based agent naming (e.g., wave1-registration)
+  const waveMatch = /^wave(\d+)-(.+)$/.exec(sanitizedAgent);
+  if (waveMatch !== null) {
+    const waveNumber = waveMatch[1];
+    const featureName = waveMatch[2];
+    if (waveNumber !== undefined && featureName !== undefined) {
+      return `claude/wave${waveNumber}/${featureName}/${timestamp}-${sanitizedSlug}-${random}`;
+    }
+  }
 
   return `agent/${sanitizedAgent}/${timestamp}-${sanitizedSlug}-${random}`;
 }
