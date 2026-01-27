@@ -50,3 +50,26 @@ export {
   updateUserRole,
   removeUserRole,
 } from './rbac';
+export {
+  fetchCurrentUsage,
+  fetchUsageForPeriod,
+  fetchUsageHistory,
+  fetchUsageLimits,
+  fetchUsageTrend,
+  calculatePercentage,
+  formatUsageNumber,
+  getUsageStatusColor,
+  getUsageStatusVariant,
+} from './usage';
+export {
+  fetchSubscription,
+  fetchPlans,
+  fetchBillingConfig,
+  subscribeToPlan,
+  cancelSubscription,
+  updatePlan,
+  isPlanUpgrade,
+  isPlanDowngrade,
+  formatPrice,
+  formatBillingDate,
+} from './billing';

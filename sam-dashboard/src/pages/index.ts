@@ -36,4 +36,7 @@ export { LoginPage } from './LoginPage';
 export { SettingsPage } from './SettingsPage';
 export { AuditLogPage } from './AuditLogPage';
 export { AlertsPage } from './AlertsPage';
+export { BillingPage } from './BillingPage';
+export { UsagePage } from './UsagePage';
+export type { UsagePageProps } from './UsagePage.types';
 export { RolesPage as AdminRolesPage, PermissionsPage, UserRolesPage } from './admin';

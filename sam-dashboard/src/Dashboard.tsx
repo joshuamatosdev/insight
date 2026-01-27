@@ -42,6 +42,7 @@ import {
   SBIRPage,
   SBIRAwardsPage,
   AlertsPage,
+  UsagePage,
   AdminRolesPage,
   PermissionsPage,
   UserRolesPage,
@@ -59,6 +60,7 @@ type ViewSection =
   | 'sbir'
   | 'sbir-awards'
   | 'alerts'
+  | 'usage'
   | 'admin-roles'
   | 'admin-permissions'
   | 'admin-user-roles'
@@ -171,6 +173,8 @@ export function Dashboard() {
         return <SBIRAwardsPage />;
       case 'alerts':
         return <AlertsPage />;
+      case 'usage':
+        return <UsagePage />;
       case 'admin-roles':
         return <AdminRolesPage />;
       case 'admin-permissions':
@@ -304,6 +308,17 @@ export function Dashboard() {
             label="User Roles"
             isActive={currentSection === 'admin-user-roles'}
             onClick={() => setCurrentSection('admin-user-roles')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Billing">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<SpeedometerIcon size="sm" />}
+            label="Usage & Limits"
+            isActive={currentSection === 'usage'}
+            onClick={() => setCurrentSection('usage')}
           />
         </SidebarNav>
       </SidebarSection>

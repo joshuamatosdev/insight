@@ -1,5 +1,7 @@
 package com.samgov.ingestor.controller;
 
+import com.samgov.ingestor.model.AnalyticsAggregate.MetricName;
+import com.samgov.ingestor.model.AnalyticsEvent;
 import com.samgov.ingestor.model.Dashboard;
 import com.samgov.ingestor.model.Dashboard.DashboardType;
 import com.samgov.ingestor.model.DashboardWidget;
@@ -11,6 +13,7 @@ import com.samgov.ingestor.service.AnalyticsService.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +21,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -305,6 +309,90 @@ public class AnalyticsController {
     public ResponseEntity<ComplianceSummaryDto> getComplianceSummary() {
         UUID tenantId = TenantContext.getCurrentTenantId();
         return ResponseEntity.ok(analyticsService.getComplianceSummary(tenantId));
+    }
+
+    // ==================== Event Tracking Endpoints (API v1) ====================
+
+    /**
+     * GET /api/v1/analytics/dashboard - Dashboard metrics
+     */
+    @GetMapping({"/v1/dashboard", "/dashboard"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
+    public ResponseEntity<DashboardStatsDto> getDashboardStats() {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(analyticsService.getDashboardStats(tenantId));
+    }
+
+    /**
+     * GET /api/v1/analytics/metrics - Custom metrics query
+     */
+    @GetMapping({"/v1/metrics", "/metrics"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER')")
+    public ResponseEntity<List<MetricDto>> getMetrics(
+            @RequestParam List<MetricName> metricNames,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(analyticsService.getMetrics(tenantId, metricNames, startDate, endDate));
+    }
+
+    /**
+     * GET /api/v1/analytics/trends - Trend data for charts
+     */
+    @GetMapping({"/v1/trends", "/trends"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
+    public ResponseEntity<TrendDataDto> getTrends(
+            @RequestParam MetricName metricName,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(analyticsService.getTrends(tenantId, metricName, startDate, endDate));
+    }
+
+    /**
+     * POST /api/v1/analytics/track - Track custom event
+     */
+    @PostMapping({"/v1/track", "/track"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
+    public ResponseEntity<AnalyticsEvent> trackEvent(
+            @Valid @RequestBody TrackEventRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        UUID userId = getUserId(userDetails);
+        AnalyticsEvent event = analyticsService.trackEvent(tenantId, userId, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(event);
+    }
+
+    /**
+     * GET /api/v1/analytics/activity - Activity feed
+     */
+    @GetMapping({"/v1/activity", "/activity"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
+    public ResponseEntity<List<ActivityItemDto>> getActivityFeed(
+            @RequestParam(defaultValue = "20") int limit) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(analyticsService.getActivityFeed(tenantId, limit));
+    }
+
+    /**
+     * GET /api/v1/analytics/top-performers - Top performers
+     */
+    @GetMapping({"/v1/top-performers", "/top-performers"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER')")
+    public ResponseEntity<List<TopPerformerDto>> getTopPerformers(
+            @RequestParam(defaultValue = "10") int limit) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(analyticsService.getTopPerformers(tenantId, limit));
+    }
+
+    /**
+     * GET /api/v1/analytics/events - Recent events (paginated)
+     */
+    @GetMapping({"/v1/events", "/events"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER')")
+    public ResponseEntity<Page<AnalyticsEvent>> getEvents(Pageable pageable) {
+        UUID tenantId = TenantContext.getCurrentTenantId();
+        return ResponseEntity.ok(analyticsService.getRecentEvents(tenantId, pageable));
     }
 
     // Helper method

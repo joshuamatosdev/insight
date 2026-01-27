@@ -1,6 +1,10 @@
 package com.samgov.ingestor.service;
 
 import com.samgov.ingestor.model.*;
+import com.samgov.ingestor.model.AnalyticsAggregate.MetricName;
+import com.samgov.ingestor.model.AnalyticsAggregate.Period;
+import com.samgov.ingestor.model.AnalyticsEvent.EntityType;
+import com.samgov.ingestor.model.AnalyticsEvent.EventType;
 import com.samgov.ingestor.model.AuditLog.AuditAction;
 import com.samgov.ingestor.model.Dashboard.DashboardType;
 import com.samgov.ingestor.model.DashboardWidget.DataSource;
@@ -10,22 +14,30 @@ import com.samgov.ingestor.model.SavedReport.ReportFormat;
 import com.samgov.ingestor.model.SavedReport.ReportType;
 import com.samgov.ingestor.model.SavedReport.ScheduleFrequency;
 import com.samgov.ingestor.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Service
 @Transactional
 public class AnalyticsService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AnalyticsService.class);
 
     private final SavedReportRepository reportRepository;
     private final DashboardRepository dashboardRepository;
@@ -39,6 +51,8 @@ public class AnalyticsService {
     private final InvoiceRepository invoiceRepository;
     private final CertificationRepository certificationRepository;
     private final AuditService auditService;
+    private final AnalyticsEventRepository analyticsEventRepository;
+    private final AnalyticsAggregateRepository analyticsAggregateRepository;
 
     public AnalyticsService(
             SavedReportRepository reportRepository,
@@ -52,7 +66,9 @@ public class AnalyticsService {
             ContractRepository contractRepository,
             InvoiceRepository invoiceRepository,
             CertificationRepository certificationRepository,
-            AuditService auditService) {
+            AuditService auditService,
+            AnalyticsEventRepository analyticsEventRepository,
+            AnalyticsAggregateRepository analyticsAggregateRepository) {
         this.reportRepository = reportRepository;
         this.dashboardRepository = dashboardRepository;
         this.widgetRepository = widgetRepository;
@@ -65,6 +81,8 @@ public class AnalyticsService {
         this.invoiceRepository = invoiceRepository;
         this.certificationRepository = certificationRepository;
         this.auditService = auditService;
+        this.analyticsEventRepository = analyticsEventRepository;
+        this.analyticsAggregateRepository = analyticsAggregateRepository;
     }
 
     // ==================== DTOs ====================
@@ -715,5 +733,589 @@ public class AnalyticsService {
             new InvoiceAgingDto("61-90 Days", ninetyDays, ninetyAmt),
             new InvoiceAgingDto("Over 90 Days", overNinety, overNinetyAmt)
         );
+    }
+
+    // ==================== Event Tracking DTOs ====================
+
+    public record TrackEventRequest(
+        EventType eventType,
+        EntityType entityType,
+        String entityId,
+        String properties,
+        String sessionId
+    ) {}
+
+    public record DashboardStatsDto(
+        long opportunitiesViewed,
+        long opportunitiesSaved,
+        BigDecimal pipelineValue,
+        Double winRate,
+        long activeUsers,
+        long recentActivity,
+        Map<String, Long> eventCounts,
+        List<TrendPointDto> viewsTrend
+    ) {}
+
+    public record MetricDto(
+        String name,
+        BigDecimal value,
+        BigDecimal previousValue,
+        Double changePercent,
+        String period
+    ) {}
+
+    public record TrendDataDto(
+        String metricName,
+        List<TrendPointDto> dataPoints,
+        BigDecimal total,
+        BigDecimal average
+    ) {}
+
+    public record TrendPointDto(
+        LocalDate date,
+        BigDecimal value
+    ) {}
+
+    public record ActivityItemDto(
+        UUID id,
+        UUID userId,
+        String userName,
+        EventType eventType,
+        String entityType,
+        String entityId,
+        String description,
+        Instant timestamp
+    ) {}
+
+    public record TopPerformerDto(
+        UUID userId,
+        String userName,
+        long actionCount,
+        BigDecimal value
+    ) {}
+
+    // ==================== Event Tracking Operations ====================
+
+    /**
+     * Track an analytics event.
+     */
+    public AnalyticsEvent trackEvent(UUID tenantId, UUID userId, TrackEventRequest request) {
+        Tenant tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
+
+        User user = null;
+        if (userId != null) {
+            user = userRepository.findById(userId).orElse(null);
+        }
+
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .tenant(tenant)
+                .user(user)
+                .eventType(request.eventType())
+                .entityType(request.entityType())
+                .entityId(request.entityId())
+                .properties(request.properties())
+                .sessionId(request.sessionId())
+                .build();
+
+        return analyticsEventRepository.save(event);
+    }
+
+    /**
+     * Track an event with additional context (for internal use).
+     */
+    public AnalyticsEvent trackEvent(
+            UUID tenantId,
+            UUID userId,
+            EventType eventType,
+            EntityType entityType,
+            String entityId,
+            String properties) {
+        TrackEventRequest request = new TrackEventRequest(eventType, entityType, entityId, properties, null);
+        return trackEvent(tenantId, userId, request);
+    }
+
+    /**
+     * Get recent events for a tenant.
+     */
+    public Page<AnalyticsEvent> getRecentEvents(UUID tenantId, Pageable pageable) {
+        return analyticsEventRepository.findByTenantIdOrderByTimestampDesc(tenantId, pageable);
+    }
+
+    /**
+     * Get events by type within a date range.
+     */
+    public List<AnalyticsEvent> getEventsByTypeAndDateRange(
+            UUID tenantId,
+            EventType eventType,
+            Instant startDate,
+            Instant endDate) {
+        return analyticsEventRepository.findByTenantIdAndEventTypeAndDateRange(
+                tenantId, eventType, startDate, endDate);
+    }
+
+    // ==================== Metrics & Dashboard Stats ====================
+
+    /**
+     * Get aggregated dashboard statistics for quick loading.
+     */
+    public DashboardStatsDto getDashboardStats(UUID tenantId) {
+        Instant thirtyDaysAgo = Instant.now().minus(30, ChronoUnit.DAYS);
+        Instant sevenDaysAgo = Instant.now().minus(7, ChronoUnit.DAYS);
+
+        // Count events
+        long opportunitiesViewed = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.OPPORTUNITY_VIEWED, thirtyDaysAgo);
+        long opportunitiesSaved = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.OPPORTUNITY_SAVED, thirtyDaysAgo);
+        long activeUsers = analyticsEventRepository.countDistinctUsersByTenantIdSince(
+                tenantId, sevenDaysAgo);
+        long recentActivity = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.PAGE_VIEW, sevenDaysAgo);
+
+        // Get pipeline value
+        BigDecimal pipelineValue = pipelineOpportunityRepository.sumEstimatedValueByTenantId(tenantId)
+                .orElse(BigDecimal.ZERO);
+
+        // Get event counts by type
+        Map<String, Long> eventCounts = new HashMap<>();
+        List<Object[]> counts = analyticsEventRepository.countByEventTypeInRange(
+                tenantId, thirtyDaysAgo, Instant.now());
+        for (Object[] row : counts) {
+            EventType type = (EventType) row[0];
+            Long count = (Long) row[1];
+            eventCounts.put(type.name(), count);
+        }
+
+        // Get views trend (last 30 days)
+        List<TrendPointDto> viewsTrend = getTrendForEventType(
+                tenantId, EventType.OPPORTUNITY_VIEWED, thirtyDaysAgo, Instant.now());
+
+        return new DashboardStatsDto(
+            opportunitiesViewed,
+            opportunitiesSaved,
+            pipelineValue,
+            calculateAverageWinRate(tenantId),
+            activeUsers,
+            recentActivity,
+            eventCounts,
+            viewsTrend
+        );
+    }
+
+    /**
+     * Get specific metrics by name within a date range.
+     */
+    public List<MetricDto> getMetrics(
+            UUID tenantId,
+            List<MetricName> metricNames,
+            LocalDate startDate,
+            LocalDate endDate) {
+        List<MetricDto> metrics = new ArrayList<>();
+        Period period = determinePeriod(startDate, endDate);
+
+        for (MetricName metricName : metricNames) {
+            List<AnalyticsAggregate> aggregates = analyticsAggregateRepository.findByMetricAndDateRange(
+                    tenantId, metricName, period, startDate, endDate);
+
+            if (!aggregates.isEmpty()) {
+                BigDecimal currentValue = aggregates.stream()
+                        .map(AnalyticsAggregate::getValue)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                // Get previous period for comparison
+                LocalDate previousStart = startDate.minus(
+                        ChronoUnit.DAYS.between(startDate, endDate), ChronoUnit.DAYS);
+                List<AnalyticsAggregate> previousAggregates = analyticsAggregateRepository.findByMetricAndDateRange(
+                        tenantId, metricName, period, previousStart, startDate.minusDays(1));
+
+                BigDecimal previousValue = previousAggregates.stream()
+                        .map(AnalyticsAggregate::getValue)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                Double changePercent = null;
+                if (previousValue.compareTo(BigDecimal.ZERO) > 0) {
+                    changePercent = currentValue.subtract(previousValue)
+                            .divide(previousValue, 4, RoundingMode.HALF_UP)
+                            .multiply(BigDecimal.valueOf(100))
+                            .doubleValue();
+                }
+
+                metrics.add(new MetricDto(
+                    metricName.name(),
+                    currentValue,
+                    previousValue,
+                    changePercent,
+                    period.name()
+                ));
+            }
+        }
+
+        return metrics;
+    }
+
+    /**
+     * Get trend data for charts.
+     */
+    public TrendDataDto getTrends(UUID tenantId, MetricName metricName, LocalDate startDate, LocalDate endDate) {
+        Period period = determinePeriod(startDate, endDate);
+
+        List<AnalyticsAggregate> aggregates = analyticsAggregateRepository.findByMetricAndDateRange(
+                tenantId, metricName, period, startDate, endDate);
+
+        List<TrendPointDto> dataPoints = aggregates.stream()
+                .map(a -> new TrendPointDto(a.getPeriodStart(), a.getValue()))
+                .toList();
+
+        BigDecimal total = aggregates.stream()
+                .map(AnalyticsAggregate::getValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal average = BigDecimal.ZERO;
+        if (!aggregates.isEmpty()) {
+            average = total.divide(BigDecimal.valueOf(aggregates.size()), 2, RoundingMode.HALF_UP);
+        }
+
+        return new TrendDataDto(metricName.name(), dataPoints, total, average);
+    }
+
+    /**
+     * Get activity feed for dashboard.
+     */
+    public List<ActivityItemDto> getActivityFeed(UUID tenantId, int limit) {
+        Instant since = Instant.now().minus(7, ChronoUnit.DAYS);
+        Page<AnalyticsEvent> events = analyticsEventRepository.findByTenantIdOrderByTimestampDesc(
+                tenantId, PageRequest.of(0, limit));
+
+        return events.getContent().stream()
+                .map(e -> new ActivityItemDto(
+                    e.getId(),
+                    e.getUser() != null ? e.getUser().getId() : null,
+                    e.getUser() != null ? e.getUser().getFirstName() + " " + e.getUser().getLastName() : "System",
+                    e.getEventType(),
+                    e.getEntityType() != null ? e.getEntityType().name() : null,
+                    e.getEntityId(),
+                    formatEventDescription(e),
+                    e.getTimestamp()
+                ))
+                .toList();
+    }
+
+    /**
+     * Get top performers by action count.
+     */
+    public List<TopPerformerDto> getTopPerformers(UUID tenantId, int limit) {
+        Instant thirtyDaysAgo = Instant.now().minus(30, ChronoUnit.DAYS);
+        List<Object[]> results = analyticsEventRepository.findMostActiveUsers(
+                tenantId, thirtyDaysAgo, PageRequest.of(0, limit));
+
+        List<TopPerformerDto> performers = new ArrayList<>();
+        for (Object[] row : results) {
+            UUID userId = (UUID) row[0];
+            Long count = (Long) row[1];
+
+            userRepository.findById(userId).ifPresent(user -> {
+                String userName = user.getFirstName() + " " + user.getLastName();
+                performers.add(new TopPerformerDto(userId, userName, count, BigDecimal.ZERO));
+            });
+        }
+
+        return performers;
+    }
+
+    // ==================== Aggregate Computation (Scheduled Job) ====================
+
+    /**
+     * Scheduled job to compute daily aggregates.
+     * Runs at 1:00 AM every day.
+     */
+    @Scheduled(cron = "0 0 1 * * *")
+    public void computeDailyAggregates() {
+        logger.info("Starting daily aggregate computation");
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+
+        List<Tenant> tenants = tenantRepository.findAll();
+        for (Tenant tenant : tenants) {
+            try {
+                computeAggregatesForTenant(tenant.getId(), yesterday, Period.DAILY);
+            } catch (Exception e) {
+                logger.error("Error computing daily aggregates for tenant {}: {}", tenant.getId(), e.getMessage());
+            }
+        }
+        logger.info("Completed daily aggregate computation");
+    }
+
+    /**
+     * Scheduled job to compute weekly aggregates.
+     * Runs at 2:00 AM every Monday.
+     */
+    @Scheduled(cron = "0 0 2 * * MON")
+    public void computeWeeklyAggregates() {
+        logger.info("Starting weekly aggregate computation");
+        LocalDate lastWeekStart = LocalDate.now().minusWeeks(1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+        List<Tenant> tenants = tenantRepository.findAll();
+        for (Tenant tenant : tenants) {
+            try {
+                computeAggregatesForTenant(tenant.getId(), lastWeekStart, Period.WEEKLY);
+            } catch (Exception e) {
+                logger.error("Error computing weekly aggregates for tenant {}: {}", tenant.getId(), e.getMessage());
+            }
+        }
+        logger.info("Completed weekly aggregate computation");
+    }
+
+    /**
+     * Scheduled job to compute monthly aggregates.
+     * Runs at 3:00 AM on the 1st of every month.
+     */
+    @Scheduled(cron = "0 0 3 1 * *")
+    public void computeMonthlyAggregates() {
+        logger.info("Starting monthly aggregate computation");
+        LocalDate lastMonthStart = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+
+        List<Tenant> tenants = tenantRepository.findAll();
+        for (Tenant tenant : tenants) {
+            try {
+                computeAggregatesForTenant(tenant.getId(), lastMonthStart, Period.MONTHLY);
+            } catch (Exception e) {
+                logger.error("Error computing monthly aggregates for tenant {}: {}", tenant.getId(), e.getMessage());
+            }
+        }
+        logger.info("Completed monthly aggregate computation");
+    }
+
+    /**
+     * Compute aggregates for a specific tenant and period.
+     */
+    public void computeAggregatesForTenant(UUID tenantId, LocalDate periodStart, Period period) {
+        Tenant tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
+
+        LocalDate periodEnd = calculatePeriodEnd(periodStart, period);
+        Instant startInstant = periodStart.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant endInstant = periodEnd.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+        // Compute event-based metrics
+        computeEventMetrics(tenant, periodStart, periodEnd, period, startInstant, endInstant);
+
+        // Compute pipeline metrics
+        computePipelineMetrics(tenant, periodStart, periodEnd, period);
+
+        // Compute contract/financial metrics
+        computeFinancialMetrics(tenant, periodStart, periodEnd, period);
+    }
+
+    private void computeEventMetrics(
+            Tenant tenant,
+            LocalDate periodStart,
+            LocalDate periodEnd,
+            Period period,
+            Instant startInstant,
+            Instant endInstant) {
+
+        UUID tenantId = tenant.getId();
+
+        // Opportunities Viewed
+        long opportunitiesViewed = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.OPPORTUNITY_VIEWED, startInstant);
+        saveAggregate(tenant, MetricName.OPPORTUNITIES_VIEWED, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(opportunitiesViewed), null, opportunitiesViewed);
+
+        // Opportunities Saved
+        long opportunitiesSaved = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.OPPORTUNITY_SAVED, startInstant);
+        saveAggregate(tenant, MetricName.OPPORTUNITIES_SAVED, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(opportunitiesSaved), null, opportunitiesSaved);
+
+        // Page Views
+        long pageViews = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.PAGE_VIEW, startInstant);
+        saveAggregate(tenant, MetricName.PAGE_VIEWS, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(pageViews), null, pageViews);
+
+        // Active Users
+        long activeUsers = analyticsEventRepository.countDistinctUsersByTenantIdSince(tenantId, startInstant);
+        saveAggregate(tenant, MetricName.ACTIVE_USERS, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(activeUsers), null, activeUsers);
+
+        // Searches Performed
+        long searches = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.SEARCH_PERFORMED, startInstant);
+        saveAggregate(tenant, MetricName.SEARCHES_PERFORMED, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(searches), null, searches);
+
+        // Reports Generated
+        long reports = analyticsEventRepository.countByTenantIdAndEventTypeSince(
+                tenantId, EventType.REPORT_GENERATED, startInstant);
+        saveAggregate(tenant, MetricName.REPORTS_GENERATED, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(reports), null, reports);
+    }
+
+    private void computePipelineMetrics(
+            Tenant tenant,
+            LocalDate periodStart,
+            LocalDate periodEnd,
+            Period period) {
+
+        UUID tenantId = tenant.getId();
+
+        // Pipeline Value Total
+        BigDecimal pipelineValue = pipelineOpportunityRepository.sumEstimatedValueByTenantId(tenantId)
+                .orElse(BigDecimal.ZERO);
+        saveAggregate(tenant, MetricName.PIPELINE_VALUE_TOTAL, null, null, period,
+                periodStart, periodEnd, pipelineValue, null, null);
+
+        // Pipeline Value Weighted
+        List<PipelineOpportunity> opportunities = pipelineOpportunityRepository.findByTenantIdWithDetails(tenantId);
+        BigDecimal weightedValue = opportunities.stream()
+                .filter(o -> o.getEstimatedValue() != null && o.getProbabilityOfWin() != null)
+                .map(o -> o.getEstimatedValue().multiply(BigDecimal.valueOf(o.getProbabilityOfWin() / 100.0)))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        saveAggregate(tenant, MetricName.PIPELINE_VALUE_WEIGHTED, null, null, period,
+                periodStart, periodEnd, weightedValue, null, null);
+
+        // Opportunities in Pipeline
+        long oppCount = opportunities.size();
+        saveAggregate(tenant, MetricName.OPPORTUNITIES_IN_PIPELINE, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(oppCount), null, oppCount);
+
+        // Average Deal Size
+        if (oppCount > 0) {
+            BigDecimal avgDealSize = pipelineValue.divide(BigDecimal.valueOf(oppCount), 2, RoundingMode.HALF_UP);
+            saveAggregate(tenant, MetricName.AVERAGE_DEAL_SIZE, null, null, period,
+                    periodStart, periodEnd, avgDealSize, null, oppCount);
+        }
+    }
+
+    private void computeFinancialMetrics(
+            Tenant tenant,
+            LocalDate periodStart,
+            LocalDate periodEnd,
+            Period period) {
+
+        UUID tenantId = tenant.getId();
+
+        // Active Contracts
+        long activeContracts = contractRepository.countByTenantIdAndStatusIn(tenantId,
+                List.of(Contract.ContractStatus.ACTIVE, Contract.ContractStatus.AWARDED));
+        saveAggregate(tenant, MetricName.ACTIVE_CONTRACTS, null, null, period,
+                periodStart, periodEnd, BigDecimal.valueOf(activeContracts), null, activeContracts);
+
+        // Contract Value Total
+        BigDecimal contractValue = contractRepository.sumTotalValueByTenantId(tenantId)
+                .orElse(BigDecimal.ZERO);
+        saveAggregate(tenant, MetricName.CONTRACT_VALUE_TOTAL, null, null, period,
+                periodStart, periodEnd, contractValue, null, null);
+
+        // Total Invoiced
+        BigDecimal totalInvoiced = invoiceRepository.sumTotalInvoicedByTenantId(tenantId)
+                .orElse(BigDecimal.ZERO);
+        saveAggregate(tenant, MetricName.INVOICES_SUBMITTED, null, null, period,
+                periodStart, periodEnd, totalInvoiced, null, null);
+
+        // Outstanding Receivables
+        BigDecimal outstanding = invoiceRepository.sumOutstandingByTenantId(tenantId)
+                .orElse(BigDecimal.ZERO);
+        saveAggregate(tenant, MetricName.OUTSTANDING_RECEIVABLES, null, null, period,
+                periodStart, periodEnd, outstanding, null, null);
+    }
+
+    private void saveAggregate(
+            Tenant tenant,
+            MetricName metricName,
+            String dimension,
+            String dimensionValue,
+            Period period,
+            LocalDate periodStart,
+            LocalDate periodEnd,
+            BigDecimal value,
+            BigDecimal secondaryValue,
+            Long recordCount) {
+
+        Optional<AnalyticsAggregate> existing = analyticsAggregateRepository
+                .findByTenantIdAndMetricNameAndDimensionAndDimensionValueAndPeriodAndPeriodStart(
+                        tenant.getId(), metricName, dimension, dimensionValue, period, periodStart);
+
+        AnalyticsAggregate aggregate;
+        if (existing.isPresent()) {
+            aggregate = existing.get();
+            aggregate.setValue(value);
+            aggregate.setSecondaryValue(secondaryValue);
+            aggregate.setRecordCount(recordCount);
+            aggregate.setComputedAt(Instant.now());
+        } else {
+            aggregate = AnalyticsAggregate.builder()
+                    .tenant(tenant)
+                    .metricName(metricName)
+                    .dimension(dimension)
+                    .dimensionValue(dimensionValue)
+                    .period(period)
+                    .periodStart(periodStart)
+                    .periodEnd(periodEnd)
+                    .value(value)
+                    .secondaryValue(secondaryValue)
+                    .recordCount(recordCount)
+                    .computedAt(Instant.now())
+                    .build();
+        }
+
+        analyticsAggregateRepository.save(aggregate);
+    }
+
+    // ==================== Helper Methods ====================
+
+    private List<TrendPointDto> getTrendForEventType(UUID tenantId, EventType eventType, Instant startDate, Instant endDate) {
+        List<Object[]> results = analyticsEventRepository.countByDateForEventType(
+                tenantId, eventType, startDate, endDate);
+
+        return results.stream()
+                .map(row -> {
+                    java.sql.Date sqlDate = (java.sql.Date) row[0];
+                    Long count = (Long) row[1];
+                    return new TrendPointDto(sqlDate.toLocalDate(), BigDecimal.valueOf(count));
+                })
+                .toList();
+    }
+
+    private Period determinePeriod(LocalDate startDate, LocalDate endDate) {
+        long days = ChronoUnit.DAYS.between(startDate, endDate);
+        if (days <= 7) {
+            return Period.DAILY;
+        } else if (days <= 60) {
+            return Period.WEEKLY;
+        } else {
+            return Period.MONTHLY;
+        }
+    }
+
+    private LocalDate calculatePeriodEnd(LocalDate periodStart, Period period) {
+        return switch (period) {
+            case DAILY -> periodStart;
+            case WEEKLY -> periodStart.plusDays(6);
+            case MONTHLY -> periodStart.plusMonths(1).minusDays(1);
+            case QUARTERLY -> periodStart.plusMonths(3).minusDays(1);
+            case YEARLY -> periodStart.plusYears(1).minusDays(1);
+        };
+    }
+
+    private String formatEventDescription(AnalyticsEvent event) {
+        String action = switch (event.getEventType()) {
+            case PAGE_VIEW -> "viewed a page";
+            case OPPORTUNITY_VIEWED -> "viewed opportunity";
+            case OPPORTUNITY_SAVED -> "saved opportunity";
+            case SEARCH_PERFORMED -> "performed a search";
+            case PIPELINE_OPPORTUNITY_ADDED -> "added to pipeline";
+            case PIPELINE_OPPORTUNITY_MOVED -> "moved in pipeline";
+            case CONTRACT_CREATED -> "created a contract";
+            case DOCUMENT_UPLOADED -> "uploaded a document";
+            case REPORT_GENERATED -> "generated a report";
+            default -> event.getEventType().name().toLowerCase().replace("_", " ");
+        };
+
+        if (event.getEntityId() != null) {
+            return action + " " + event.getEntityId();
+        }
+        return action;
     }
 }

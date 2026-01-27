@@ -185,6 +185,17 @@ app:
   session:
     max-per-user: 10
 
+# Stripe Configuration for Billing
+# SECURITY: All Stripe keys must be set via environment variables in production
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY:}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+  publishable-key: ${STRIPE_PUBLISHABLE_KEY:}
+  prices:
+    starter: ${STRIPE_PRICE_STARTER:}
+    professional: ${STRIPE_PRICE_PROFESSIONAL:}
+    enterprise: ${STRIPE_PRICE_ENTERPRISE:}
+
 # Logging
 logging:
   level:

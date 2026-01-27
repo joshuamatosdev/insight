@@ -21,6 +21,9 @@ public interface BudgetItemRepository extends JpaRepository<BudgetItem, UUID> {
 
     Page<BudgetItem> findByContractId(UUID contractId, Pageable pageable);
 
+    @Query("SELECT b FROM BudgetItem b WHERE b.contract.tenant.id = :tenantId")
+    Page<BudgetItem> findByTenantId(@Param("tenantId") UUID tenantId, Pageable pageable);
+
     Optional<BudgetItem> findByContractIdAndId(UUID contractId, UUID id);
 
     List<BudgetItem> findByContractIdAndCategory(UUID contractId, BudgetCategory category);
