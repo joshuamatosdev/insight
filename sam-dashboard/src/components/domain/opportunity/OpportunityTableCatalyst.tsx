@@ -12,9 +12,10 @@ import {
   TableRow,
   TableHeader,
   TableCell,
+  Badge,
+  Text,
 } from '../../catalyst'
-import { Badge } from '../../catalyst'
-import { Text } from '../../catalyst'
+import { Box } from '../../layout'
 import { OpportunityTableProps, getOpportunityType } from './Opportunity.types'
 
 export function OpportunityTableCatalyst({ opportunities, maxRows }: OpportunityTableProps) {
@@ -72,9 +73,9 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
 
   if (opportunities.length === 0) {
     return (
-      <div className="p-8 text-center">
+      <Box className="p-8 text-center">
         <Text className="text-zinc-500">No opportunities to display.</Text>
-      </div>
+      </Box>
     )
   }
 
