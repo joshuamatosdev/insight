@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider, ProtectedRoute } from './auth';
+import { ScrollToTop } from './components/catalyst';
 import {
   LoginPage,
   RegisterPage,
@@ -13,9 +15,11 @@ import { Dashboard } from './Dashboard';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <AuthProvider>
+          <Routes>
           {/* Public auth routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -42,9 +46,10 @@ function App() {
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

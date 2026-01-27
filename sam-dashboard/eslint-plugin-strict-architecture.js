@@ -162,9 +162,11 @@ const plugin = {
           '/components/primitives/',
           '/components/layout/',
           '/components/ui/',
+          '/components/catalyst/',
           '\\components\\primitives\\',
           '\\components\\layout\\',
           '\\components\\ui\\',
+          '\\components\\catalyst\\',
         ];
 
         return {

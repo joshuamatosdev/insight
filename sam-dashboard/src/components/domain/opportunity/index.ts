@@ -11,4 +11,5 @@ export { getOpportunityType, isSbirOpportunity, getSbirLabel, getSbirPhaseLabel 
 export { OpportunityCard } from './OpportunityCard';
 export { OpportunityList } from './OpportunityList';
 export { OpportunityTable } from './OpportunityTable';
+export { OpportunityTableCatalyst } from './OpportunityTableCatalyst';
 export { TypeBadge } from './TypeBadge';

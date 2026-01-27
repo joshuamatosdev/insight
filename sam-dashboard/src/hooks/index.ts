@@ -167,3 +167,7 @@ export { useFocusTrap } from './useFocusTrap';
 export type { UseFocusTrapOptions, UseFocusTrapReturn } from './useFocusTrap';
 export { useAnnounce } from './useAnnounce';
 export type { AnnouncePoliteness, UseAnnounceOptions, UseAnnounceReturn } from './useAnnounce';
+
+// Theme hooks
+export { useDarkMode } from './useDarkMode';
+export type { Theme } from './useDarkMode';

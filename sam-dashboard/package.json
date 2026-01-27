@@ -24,9 +24,19 @@
     "generate:types:offline": "node scripts/generate-api-types.js --from-file"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.29.2",
+    "motion": "^12.29.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.6.0"
+    "react-helmet-async": "^2.0.5",
+    "react-router-dom": "^7.6.0",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@axe-core/react": "^4.11.0",
