@@ -91,6 +91,74 @@ export {
   useFinancialSummary,
 } from './useFinancial';
 export { useOnboarding } from './useOnboarding';
+export {
+  useFiles,
+  useFile,
+  useFolders as useFileFolders,
+} from './useFiles';
+export type {
+  UseFilesReturn,
+  UseFileReturn,
+  UseFoldersReturn as UseFileFoldersReturn,
+} from './useFiles';
+export {
+  useNotifications,
+  useNotificationPreferences,
+} from './useNotifications';
+export type {
+  UseNotificationsReturn,
+  UseNotificationPreferencesReturn,
+} from './useNotifications';
+export {
+  useUsers,
+  useUser,
+  useCurrentUser,
+} from './useUsers';
+export type {
+  UseUsersReturn,
+  UseUserReturn,
+  UseCurrentUserReturn,
+} from './useUsers';
+export {
+  useSavedSearches,
+  useSavedSearch,
+  useSavedSearchResults,
+} from './useSavedSearches';
+export type {
+  UseSavedSearchesReturn,
+  UseSavedSearchReturn,
+  UseSavedSearchResultsReturn,
+} from './useSavedSearches';
+export {
+  useWebhooks,
+  useWebhook,
+  useWebhookDeliveries,
+} from './useWebhooks';
+export type {
+  UseWebhooksReturn,
+  UseWebhookReturn,
+  UseWebhookDeliveriesReturn,
+} from './useWebhooks';
+export {
+  useApiKeys,
+  useApiKey,
+  useApiKeyUsage,
+} from './useApiKeys';
+export type {
+  UseApiKeysReturn,
+  UseApiKeyReturn,
+  UseApiKeyUsageReturn,
+} from './useApiKeys';
+export {
+  useInvitations,
+  useInvitation,
+  useInvitationToken,
+} from './useInvitations';
+export type {
+  UseInvitationsReturn,
+  UseInvitationReturn,
+  UseInvitationTokenReturn,
+} from './useInvitations';
 
 // Accessibility hooks
 export { useKeyboardNavigation } from './useKeyboardNavigation';
