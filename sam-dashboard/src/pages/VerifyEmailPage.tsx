@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Card, CardBody, Flex, Stack, Box } from '../components/layout';
 import { Text, Button, BuildingCheckIcon } from '../components/primitives';
@@ -6,6 +6,33 @@ import { Text, Button, BuildingCheckIcon } from '../components/primitives';
 const API_BASE = '/api/v1';
 
 type VerificationStatus = 'loading' | 'success' | 'error' | 'no-token';
+
+/**
+ * Verify email token with the API
+ */
+async function verifyEmailToken(
+  verificationToken: string
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await fetch(`${API_BASE}/auth/verify-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: verificationToken }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success === true) {
+      return { success: true, message: 'Email verified successfully' };
+    } else {
+      return { success: false, message: data.message ?? 'Verification failed' };
+    }
+  } catch {
+    return { success: false, message: 'Unable to verify email. Please try again later.' };
+  }
+}
 
 /**
  * Email verification page - handles token verification from email links
@@ -17,36 +44,33 @@ export function VerifyEmailPage(): React.ReactElement {
 
   const [status, setStatus] = useState<VerificationStatus>(token !== null ? 'loading' : 'no-token');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const verifyEmail = useCallback(async (verificationToken: string) => {
-    try {
-      const response = await fetch(`${API_BASE}/auth/verify-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: verificationToken }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success === true) {
-        setStatus('success');
-      } else {
-        setStatus('error');
-        setErrorMessage(data.message ?? 'Verification failed');
-      }
-    } catch {
-      setStatus('error');
-      setErrorMessage('Unable to verify email. Please try again later.');
-    }
-  }, []);
+  const verificationAttempted = useRef(false);
 
   useEffect(() => {
-    if (token !== null && token.length > 0) {
-      verifyEmail(token);
+    if (token === null || token.length === 0 || verificationAttempted.current === true) {
+      return;
     }
-  }, [token, verifyEmail]);
+
+    verificationAttempted.current = true;
+
+    // Use an abort controller for cleanup
+    const abortController = new AbortController();
+
+    verifyEmailToken(token).then((result) => {
+      if (abortController.signal.aborted === false) {
+        if (result.success) {
+          setStatus('success');
+        } else {
+          setStatus('error');
+          setErrorMessage(result.message);
+        }
+      }
+    });
+
+    return () => {
+      abortController.abort();
+    };
+  }, [token]);
 
   const renderContent = (): React.ReactElement => {
     switch (status) {

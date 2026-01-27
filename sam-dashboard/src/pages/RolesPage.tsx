@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Card, CardHeader, CardBody, Flex, Stack, Box, Grid } from '../components/layout';
-import { Text, Button, Badge, Input } from '../components/primitives';
+import { Card, CardBody, Flex, Stack, Box, Grid } from '../components/layout';
+import { Text, Button, Badge } from '../components/primitives';
 
 const API_BASE = '/api/v1';
 
