@@ -16,12 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * E2E tests for DocumentController endpoints.
+ * E2E tests for ReportDefinitionController endpoints.
  */
-@DisplayName("DocumentController")
-class DocumentControllerTest extends BaseControllerTest {
+@DisplayName("ReportDefinitionController")
+class ReportDefinitionControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/documents";
+    private static final String BASE_URL = "/api/v1/report-definitions";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,25 +39,25 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents")
-    class GetDocuments {
+    @DisplayName("GET /api/v1/report-definitions")
+    class GetDefinitions {
 
         @Test
-        @DisplayName("should return paginated documents")
+        @DisplayName("should return report definitions")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_ReturnPaginatedDocuments() throws Exception {
+        void should_ReturnDefinitions() throws Exception {
             performGet(BASE_URL)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray());
+                .andExpect(jsonPath("$").isArray());
         }
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}")
-    class GetDocumentById {
+    @DisplayName("GET /api/v1/report-definitions/{id}")
+    class GetDefinitionById {
 
         @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 404 when definition not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performGet(BASE_URL + "/" + UUID.randomUUID())
@@ -66,28 +66,15 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}/download")
-    class DownloadDocument {
+    @DisplayName("POST /api/v1/report-definitions")
+    class CreateDefinition {
 
         @Test
-        @DisplayName("should return 404 when document not found")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performGet(BASE_URL + "/" + UUID.randomUUID() + "/download")
-                .andExpect(status().isNotFound());
-        }
-    }
-
-    @Nested
-    @DisplayName("DELETE /api/v1/documents/{id}")
-    class DeleteDocument {
-
-        @Test
-        @DisplayName("should return 404 when document not found")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performDelete(BASE_URL + "/" + UUID.randomUUID())
-                .andExpect(status().isNotFound());
+        @DisplayName("should return 400 when request is invalid")
+        @WithMockUser(username = "admin", roles = {"ADMIN"})
+        void should_Return400_When_Invalid() throws Exception {
+            performPost(BASE_URL, "{}")
+                .andExpect(status().isBadRequest());
         }
     }
 }

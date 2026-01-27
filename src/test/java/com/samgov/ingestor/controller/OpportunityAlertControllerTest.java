@@ -5,7 +5,6 @@ import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.User;
 import com.samgov.ingestor.repository.TenantRepository;
 import com.samgov.ingestor.repository.UserRepository;
-import com.samgov.ingestor.service.DashboardService.CreateDashboardRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,12 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * E2E tests for DashboardController endpoints.
+ * E2E tests for OpportunityAlertController endpoints.
  */
-@DisplayName("DashboardController")
-class DashboardControllerTest extends BaseControllerTest {
+@DisplayName("OpportunityAlertController")
+class OpportunityAlertControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/dashboards";
+    private static final String BASE_URL = "/api/v1/opportunity-alerts";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -49,7 +48,7 @@ class DashboardControllerTest extends BaseControllerTest {
         testTenantId = testTenant.getId();
 
         testUser = userRepository.save(User.builder()
-            .email("dashboard-test-" + UUID.randomUUID() + "@example.com")
+            .email("opp-alert-test-" + UUID.randomUUID() + "@example.com")
             .passwordHash(passwordEncoder.encode("Password123!"))
             .firstName("Test")
             .lastName("User")
@@ -61,13 +60,13 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards")
-    class GetDashboards {
+    @DisplayName("GET /api/v1/opportunity-alerts")
+    class GetAlerts {
 
         @Test
-        @DisplayName("should return paginated list of dashboards")
+        @DisplayName("should return paginated alerts")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_ReturnPaginatedDashboards() throws Exception {
+        void should_ReturnPaginatedAlerts() throws Exception {
             performGet(BASE_URL)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
@@ -75,11 +74,11 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards/{id}")
-    class GetDashboardById {
+    @DisplayName("GET /api/v1/opportunity-alerts/{id}")
+    class GetAlertById {
 
         @Test
-        @DisplayName("should return 404 when dashboard not found")
+        @DisplayName("should return 404 when alert not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performGet(BASE_URL + "/" + UUID.randomUUID())
@@ -88,66 +87,27 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards/default")
-    class GetDefaultDashboard {
+    @DisplayName("POST /api/v1/opportunity-alerts")
+    class CreateAlert {
 
         @Test
-        @DisplayName("should return 404 when no default dashboard exists")
+        @DisplayName("should return 400 when request is invalid")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NoDefault() throws Exception {
-            performGet(BASE_URL + "/default")
-                .andExpect(status().isNotFound());
-        }
-    }
-
-    @Nested
-    @DisplayName("POST /api/v1/dashboards")
-    class CreateDashboard {
-
-        @Test
-        @DisplayName("should return 400 when request body is invalid")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return400_When_RequestInvalid() throws Exception {
-            performPost(BASE_URL, new CreateDashboardRequest(null, null, false))
+        void should_Return400_When_Invalid() throws Exception {
+            performPost(BASE_URL, "{}")
                 .andExpect(status().isBadRequest());
         }
     }
 
     @Nested
-    @DisplayName("POST /api/v1/dashboards/{id}/widgets")
-    class AddWidget {
+    @DisplayName("DELETE /api/v1/opportunity-alerts/{id}")
+    class DeleteAlert {
 
         @Test
-        @DisplayName("should return 404 when dashboard not found")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_DashboardNotFound() throws Exception {
-            performPost(BASE_URL + "/" + UUID.randomUUID() + "/widgets", "{}")
-                .andExpect(status().isBadRequest());
-        }
-    }
-
-    @Nested
-    @DisplayName("DELETE /api/v1/dashboards/{id}")
-    class DeleteDashboard {
-
-        @Test
-        @DisplayName("should return 404 when deleting non-existent dashboard")
+        @DisplayName("should return 404 when alert not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performDelete(BASE_URL + "/" + UUID.randomUUID())
-                .andExpect(status().isNotFound());
-        }
-    }
-
-    @Nested
-    @DisplayName("DELETE /api/v1/dashboards/widgets/{widgetId}")
-    class DeleteWidget {
-
-        @Test
-        @DisplayName("should return 404 when deleting non-existent widget")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performDelete(BASE_URL + "/widgets/" + UUID.randomUUID())
                 .andExpect(status().isNotFound());
         }
     }

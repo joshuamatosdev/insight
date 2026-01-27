@@ -72,6 +72,9 @@ dependencies {
     // Rate limiting
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
 
+    // Rate limiting
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
+
     runtimeOnly 'org.postgresql:postgresql'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

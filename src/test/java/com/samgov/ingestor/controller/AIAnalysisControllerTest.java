@@ -1,7 +1,9 @@
 package com.samgov.ingestor.controller;
 
 import com.samgov.ingestor.BaseControllerTest;
+import com.samgov.ingestor.model.Opportunity;
 import com.samgov.ingestor.model.Tenant;
+import com.samgov.ingestor.repository.OpportunityRepository;
 import com.samgov.ingestor.repository.TenantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,15 +18,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * E2E tests for DocumentController endpoints.
+ * E2E tests for AIAnalysisController endpoints.
  */
-@DisplayName("DocumentController")
-class DocumentControllerTest extends BaseControllerTest {
+@DisplayName("AIAnalysisController")
+class AIAnalysisControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/documents";
+    private static final String BASE_URL = "/api/v1/ai";
 
     @Autowired
     private TenantRepository tenantRepository;
+
+    @Autowired
+    private OpportunityRepository opportunityRepository;
 
     private Tenant testTenant;
 
@@ -39,54 +44,53 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents")
-    class GetDocuments {
+    @DisplayName("GET /api/v1/ai/opportunities/{id}/summary")
+    class GetOpportunitySummary {
 
         @Test
-        @DisplayName("should return paginated documents")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_ReturnPaginatedDocuments() throws Exception {
-            performGet(BASE_URL)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray());
-        }
-    }
-
-    @Nested
-    @DisplayName("GET /api/v1/documents/{id}")
-    class GetDocumentById {
-
-        @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 404 when opportunity not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
-            performGet(BASE_URL + "/" + UUID.randomUUID())
+            performGet(BASE_URL + "/opportunities/" + UUID.randomUUID() + "/summary")
                 .andExpect(status().isNotFound());
         }
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}/download")
-    class DownloadDocument {
+    @DisplayName("GET /api/v1/ai/opportunities/{id}/fit-score")
+    class GetFitScore {
 
         @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 404 when opportunity not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
-            performGet(BASE_URL + "/" + UUID.randomUUID() + "/download")
+            performGet(BASE_URL + "/opportunities/" + UUID.randomUUID() + "/fit-score")
                 .andExpect(status().isNotFound());
         }
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/documents/{id}")
-    class DeleteDocument {
+    @DisplayName("GET /api/v1/ai/opportunities/{id}/risk-assessment")
+    class GetRiskAssessment {
 
         @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 404 when opportunity not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
-            performDelete(BASE_URL + "/" + UUID.randomUUID())
+            performGet(BASE_URL + "/opportunities/" + UUID.randomUUID() + "/risk-assessment")
+                .andExpect(status().isNotFound());
+        }
+    }
+
+    @Nested
+    @DisplayName("GET /api/v1/ai/opportunities/{id}/proposal-suggestions")
+    class GetProposalSuggestions {
+
+        @Test
+        @DisplayName("should return 404 when opportunity not found")
+        @WithMockUser(username = "user", roles = {"USER"})
+        void should_Return404_When_NotFound() throws Exception {
+            performGet(BASE_URL + "/opportunities/" + UUID.randomUUID() + "/proposal-suggestions")
                 .andExpect(status().isNotFound());
         }
     }

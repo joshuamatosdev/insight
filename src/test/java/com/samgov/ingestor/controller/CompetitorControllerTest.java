@@ -16,12 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * E2E tests for DocumentController endpoints.
+ * E2E tests for CompetitorController endpoints.
  */
-@DisplayName("DocumentController")
-class DocumentControllerTest extends BaseControllerTest {
+@DisplayName("CompetitorController")
+class CompetitorControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/documents";
+    private static final String BASE_URL = "/api/v1/competitors";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,13 +39,13 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents")
-    class GetDocuments {
+    @DisplayName("GET /api/v1/competitors")
+    class GetCompetitors {
 
         @Test
-        @DisplayName("should return paginated documents")
+        @DisplayName("should return paginated competitors")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_ReturnPaginatedDocuments() throws Exception {
+        void should_ReturnPaginatedCompetitors() throws Exception {
             performGet(BASE_URL)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
@@ -53,11 +53,11 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}")
-    class GetDocumentById {
+    @DisplayName("GET /api/v1/competitors/{id}")
+    class GetCompetitorById {
 
         @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 404 when competitor not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performGet(BASE_URL + "/" + UUID.randomUUID())
@@ -66,24 +66,24 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}/download")
-    class DownloadDocument {
+    @DisplayName("POST /api/v1/competitors")
+    class CreateCompetitor {
 
         @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 400 when request is invalid")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performGet(BASE_URL + "/" + UUID.randomUUID() + "/download")
-                .andExpect(status().isNotFound());
+        void should_Return400_When_Invalid() throws Exception {
+            performPost(BASE_URL, "{}")
+                .andExpect(status().isBadRequest());
         }
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/documents/{id}")
-    class DeleteDocument {
+    @DisplayName("DELETE /api/v1/competitors/{id}")
+    class DeleteCompetitor {
 
         @Test
-        @DisplayName("should return 404 when document not found")
+        @DisplayName("should return 404 when competitor not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performDelete(BASE_URL + "/" + UUID.randomUUID())

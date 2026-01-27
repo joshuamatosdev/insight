@@ -16,12 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * E2E tests for DocumentController endpoints.
+ * E2E tests for AuditController endpoints.
  */
-@DisplayName("DocumentController")
-class DocumentControllerTest extends BaseControllerTest {
+@DisplayName("AuditController")
+class AuditControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/documents";
+    private static final String BASE_URL = "/api/v1/audit";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,13 +39,13 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents")
-    class GetDocuments {
+    @DisplayName("GET /api/v1/audit")
+    class GetAuditLogs {
 
         @Test
-        @DisplayName("should return paginated documents")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_ReturnPaginatedDocuments() throws Exception {
+        @DisplayName("should return paginated audit logs")
+        @WithMockUser(username = "admin", roles = {"ADMIN"})
+        void should_ReturnPaginatedLogs() throws Exception {
             performGet(BASE_URL)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
@@ -53,12 +53,12 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}")
-    class GetDocumentById {
+    @DisplayName("GET /api/v1/audit/{id}")
+    class GetAuditLogById {
 
         @Test
-        @DisplayName("should return 404 when document not found")
-        @WithMockUser(username = "user", roles = {"USER"})
+        @DisplayName("should return 404 when log not found")
+        @WithMockUser(username = "admin", roles = {"ADMIN"})
         void should_Return404_When_NotFound() throws Exception {
             performGet(BASE_URL + "/" + UUID.randomUUID())
                 .andExpect(status().isNotFound());
@@ -66,28 +66,15 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}/download")
-    class DownloadDocument {
+    @DisplayName("GET /api/v1/audit/entity/{entityType}/{entityId}")
+    class GetAuditLogsByEntity {
 
         @Test
-        @DisplayName("should return 404 when document not found")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performGet(BASE_URL + "/" + UUID.randomUUID() + "/download")
-                .andExpect(status().isNotFound());
-        }
-    }
-
-    @Nested
-    @DisplayName("DELETE /api/v1/documents/{id}")
-    class DeleteDocument {
-
-        @Test
-        @DisplayName("should return 404 when document not found")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performDelete(BASE_URL + "/" + UUID.randomUUID())
-                .andExpect(status().isNotFound());
+        @DisplayName("should return audit logs for entity")
+        @WithMockUser(username = "admin", roles = {"ADMIN"})
+        void should_ReturnLogsForEntity() throws Exception {
+            performGet(BASE_URL + "/entity/USER/" + UUID.randomUUID())
+                .andExpect(status().isOk());
         }
     }
 }

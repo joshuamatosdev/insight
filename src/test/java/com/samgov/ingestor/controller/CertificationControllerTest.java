@@ -5,7 +5,6 @@ import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.User;
 import com.samgov.ingestor.repository.TenantRepository;
 import com.samgov.ingestor.repository.UserRepository;
-import com.samgov.ingestor.service.DashboardService.CreateDashboardRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,12 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * E2E tests for DashboardController endpoints.
+ * E2E tests for CertificationController endpoints.
  */
-@DisplayName("DashboardController")
-class DashboardControllerTest extends BaseControllerTest {
+@DisplayName("CertificationController")
+class CertificationControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/dashboards";
+    private static final String BASE_URL = "/api/v1/certifications";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -49,7 +48,7 @@ class DashboardControllerTest extends BaseControllerTest {
         testTenantId = testTenant.getId();
 
         testUser = userRepository.save(User.builder()
-            .email("dashboard-test-" + UUID.randomUUID() + "@example.com")
+            .email("cert-test-" + UUID.randomUUID() + "@example.com")
             .passwordHash(passwordEncoder.encode("Password123!"))
             .firstName("Test")
             .lastName("User")
@@ -61,25 +60,34 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards")
-    class GetDashboards {
+    @DisplayName("GET /api/v1/certifications")
+    class GetCertifications {
 
         @Test
-        @DisplayName("should return paginated list of dashboards")
+        @DisplayName("should return paginated certifications")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_ReturnPaginatedDashboards() throws Exception {
+        void should_ReturnPaginatedCertifications() throws Exception {
             performGet(BASE_URL)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray());
+        }
+
+        @Test
+        @DisplayName("should filter by type")
+        @WithMockUser(username = "user", roles = {"USER"})
+        void should_FilterByType() throws Exception {
+            performGet(BASE_URL + "?type=SMALL_BUSINESS")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards/{id}")
-    class GetDashboardById {
+    @DisplayName("GET /api/v1/certifications/{id}")
+    class GetCertificationById {
 
         @Test
-        @DisplayName("should return 404 when dashboard not found")
+        @DisplayName("should return 404 when certification not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performGet(BASE_URL + "/" + UUID.randomUUID())
@@ -88,50 +96,38 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards/default")
-    class GetDefaultDashboard {
+    @DisplayName("GET /api/v1/certifications/expiring")
+    class GetExpiringCertifications {
 
         @Test
-        @DisplayName("should return 404 when no default dashboard exists")
+        @DisplayName("should return expiring certifications")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NoDefault() throws Exception {
-            performGet(BASE_URL + "/default")
-                .andExpect(status().isNotFound());
+        void should_ReturnExpiringCertifications() throws Exception {
+            performGet(BASE_URL + "/expiring?daysAhead=30")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
         }
     }
 
     @Nested
-    @DisplayName("POST /api/v1/dashboards")
-    class CreateDashboard {
+    @DisplayName("POST /api/v1/certifications")
+    class CreateCertification {
 
         @Test
-        @DisplayName("should return 400 when request body is invalid")
+        @DisplayName("should return 400 when request is invalid")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return400_When_RequestInvalid() throws Exception {
-            performPost(BASE_URL, new CreateDashboardRequest(null, null, false))
+        void should_Return400_When_Invalid() throws Exception {
+            performPost(BASE_URL, "{}")
                 .andExpect(status().isBadRequest());
         }
     }
 
     @Nested
-    @DisplayName("POST /api/v1/dashboards/{id}/widgets")
-    class AddWidget {
+    @DisplayName("DELETE /api/v1/certifications/{id}")
+    class DeleteCertification {
 
         @Test
-        @DisplayName("should return 404 when dashboard not found")
-        @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_DashboardNotFound() throws Exception {
-            performPost(BASE_URL + "/" + UUID.randomUUID() + "/widgets", "{}")
-                .andExpect(status().isBadRequest());
-        }
-    }
-
-    @Nested
-    @DisplayName("DELETE /api/v1/dashboards/{id}")
-    class DeleteDashboard {
-
-        @Test
-        @DisplayName("should return 404 when deleting non-existent dashboard")
+        @DisplayName("should return 404 when certification not found")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_Return404_When_NotFound() throws Exception {
             performDelete(BASE_URL + "/" + UUID.randomUUID())
@@ -140,15 +136,16 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/dashboards/widgets/{widgetId}")
-    class DeleteWidget {
+    @DisplayName("GET /api/v1/certifications/types")
+    class GetCertificationTypes {
 
         @Test
-        @DisplayName("should return 404 when deleting non-existent widget")
+        @DisplayName("should return certification types")
         @WithMockUser(username = "user", roles = {"USER"})
-        void should_Return404_When_NotFound() throws Exception {
-            performDelete(BASE_URL + "/widgets/" + UUID.randomUUID())
-                .andExpect(status().isNotFound());
+        void should_ReturnTypes() throws Exception {
+            performGet(BASE_URL + "/types")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
         }
     }
 }
