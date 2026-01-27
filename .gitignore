@@ -111,6 +111,30 @@ test-output/
 coverage/
 *.lcov
 .nyc_output/
+sam-dashboard/test-out.txt
+sam-dashboard/test-results.json
+
+# ============================================
+# Playwright
+# ============================================
+.playwright-mcp/
+playwright-report/
+playwright/.cache/
+
+# ============================================
+# Serena AI Tool
+# ============================================
+.serena/
+
+# ============================================
+# Claude Code Local Settings
+# ============================================
+.claude/settings.local.json
+
+# ============================================
+# Windows Artifacts
+# ============================================
+nul
 
 # ============================================
 # Package Manager Locks (optional)
