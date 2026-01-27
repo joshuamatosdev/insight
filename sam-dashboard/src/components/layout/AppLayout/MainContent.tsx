@@ -1,7 +1,12 @@
 import { CSSProperties } from 'react';
 import { MainContentProps } from './AppLayout.types';
 
-export function MainContent({ className, style, children }: MainContentProps) {
+export function MainContent({
+  className,
+  style,
+  children,
+  id = 'main-content',
+}: MainContentProps) {
   const contentStyles: CSSProperties = {
     marginLeft: 'var(--sidebar-width)',
     padding: 'var(--spacing-8)',
@@ -12,7 +17,14 @@ export function MainContent({ className, style, children }: MainContentProps) {
   };
 
   return (
-    <main className={className} style={contentStyles}>
+    <main
+      id={id}
+      className={className}
+      style={contentStyles}
+      role="main"
+      aria-label="Main content"
+      tabIndex={-1}
+    >
       {children}
     </main>
   );

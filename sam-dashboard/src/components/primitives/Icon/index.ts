@@ -22,3 +22,4 @@ export { TrashIcon, TrashFillIcon } from './icons/TrashIcon';
 export { PencilIcon, PencilSquareIcon } from './icons/PencilIcon';
 export { ShieldIcon, ShieldLockIcon } from './icons/ShieldIcon';
 export { UsersIcon, UserIcon, KeyIcon } from './icons/UsersIcon';
+export { CurrencyIcon, DollarIcon, WalletIcon, CreditCardIcon } from './icons/CurrencyIcon';

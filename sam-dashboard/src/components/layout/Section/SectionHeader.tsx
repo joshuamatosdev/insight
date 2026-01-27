@@ -3,7 +3,15 @@ import { SectionHeaderProps } from './Section.types';
 import { Text } from '../../primitives';
 import { HStack } from '../Stack';
 
-export function SectionHeader({ title, icon, actions, className, style, ...rest }: SectionHeaderProps) {
+export function SectionHeader({
+  title,
+  icon,
+  actions,
+  className,
+  style,
+  id,
+  ...rest
+}: SectionHeaderProps) {
   const headerStyles: CSSProperties = {
     padding: 'var(--spacing-4) 0',
     marginBottom: 'var(--spacing-6)',
@@ -12,17 +20,17 @@ export function SectionHeader({ title, icon, actions, className, style, ...rest 
   };
 
   return (
-    <div className={className} style={headerStyles} {...rest}>
+    <header className={className} style={headerStyles} {...rest}>
       <HStack justify="between" align="center">
         <HStack spacing="var(--spacing-2)" align="center">
-          {icon}
-          <Text variant="heading3" color="primary">
+          {icon !== undefined && <span aria-hidden="true">{icon}</span>}
+          <Text id={id} variant="heading3" color="primary">
             {title}
           </Text>
         </HStack>
-        {actions && <div>{actions}</div>}
+        {actions !== undefined && <div role="group" aria-label="Section actions">{actions}</div>}
       </HStack>
-    </div>
+    </header>
   );
 }
 

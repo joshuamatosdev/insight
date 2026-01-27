@@ -9,12 +9,20 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   isInvalid?: boolean;
   fullWidth?: boolean;
   containerStyle?: CSSProperties;
+  /** ID of the element that describes the input (for error messages) */
+  'aria-describedby'?: string;
+  /** Error message ID for aria-errormessage */
+  'aria-errormessage'?: string;
 }
 
 export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   size?: InputSize;
   isInvalid?: boolean;
   fullWidth?: boolean;
-  options: Array<{ value: string; label: string }>;
+  options: Array<{ value: string; label: string; disabled?: boolean }>;
   placeholder?: string;
+  /** ID of the element that describes the select (for error messages) */
+  'aria-describedby'?: string;
+  /** Error message ID for aria-errormessage */
+  'aria-errormessage'?: string;
 }

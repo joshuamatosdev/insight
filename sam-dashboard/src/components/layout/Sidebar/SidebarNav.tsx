@@ -5,13 +5,16 @@ export function SidebarNav({ className, style, children }: SidebarNavProps) {
   const navStyles: CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
     ...style,
   };
 
   return (
-    <div className={className} style={navStyles}>
+    <ul className={className} style={navStyles} role="list">
       {children}
-    </div>
+    </ul>
   );
 }
 

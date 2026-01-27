@@ -12,6 +12,12 @@ export function SidebarNavItem({
 }: SidebarNavItemProps) {
   const [isHovered, setIsHovered] = useState(false);
 
+  const listItemStyles: CSSProperties = {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+  };
+
   const itemStyles: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
@@ -21,8 +27,8 @@ export function SidebarNavItem({
     background: isActive
       ? 'rgba(13, 110, 253, 0.2)'
       : isHovered
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'transparent',
+        ? 'rgba(255, 255, 255, 0.1)'
+        : 'transparent',
     borderLeft: `3px solid ${isActive ? 'var(--color-primary)' : 'transparent'}`,
     cursor: 'pointer',
     transition: 'var(--transition-fast)',
@@ -44,25 +50,33 @@ export function SidebarNavItem({
   };
 
   return (
-    <a
-      href="#"
-      className={className}
-      style={itemStyles}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick?.();
-      }}
-      onKeyDown={handleKeyDown}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      role="button"
-      tabIndex={0}
-      aria-current={isActive ? 'page' : undefined}
-    >
-      {icon !== undefined && icon !== null && icon}
-      <span>{label}</span>
-      {badge !== undefined && badge !== null && <span style={badgeContainerStyles}>{badge}</span>}
-    </a>
+    <li style={listItemStyles} role="listitem">
+      <a
+        href="#"
+        className={className}
+        style={itemStyles}
+        onClick={(e) => {
+          e.preventDefault();
+          onClick?.();
+        }}
+        onKeyDown={handleKeyDown}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        role="menuitem"
+        tabIndex={0}
+        aria-current={isActive ? 'page' : undefined}
+      >
+        {icon !== undefined && icon !== null && (
+          <span aria-hidden="true">{icon}</span>
+        )}
+        <span>{label}</span>
+        {badge !== undefined && badge !== null && (
+          <span style={badgeContainerStyles} aria-label={`${label} has notifications`}>
+            {badge}
+          </span>
+        )}
+      </a>
+    </li>
   );
 }
 

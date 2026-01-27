@@ -7,6 +7,8 @@ export interface SidebarProps {
   className?: string;
   style?: CSSProperties;
   children: ReactNode;
+  /** Accessible label for the sidebar navigation */
+  'aria-label'?: string;
 }
 
 export interface SidebarHeaderProps {

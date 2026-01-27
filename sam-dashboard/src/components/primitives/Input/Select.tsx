@@ -29,6 +29,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       placeholder,
       style,
       className,
+      required,
+      'aria-describedby': ariaDescribedBy,
+      'aria-errormessage': ariaErrorMessage,
       ...rest
     },
     ref
@@ -52,14 +55,24 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     };
 
     return (
-      <select ref={ref} className={className} style={selectStyles} {...rest}>
-        {placeholder && (
+      <select
+        ref={ref}
+        className={className}
+        style={selectStyles}
+        aria-invalid={isInvalid}
+        aria-required={required}
+        aria-describedby={ariaDescribedBy}
+        aria-errormessage={isInvalid ? ariaErrorMessage : undefined}
+        required={required}
+        {...rest}
+      >
+        {placeholder !== undefined && placeholder !== null && (
           <option value="" disabled>
             {placeholder}
           </option>
         )}
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value} disabled={option.disabled}>
             {option.label}
           </option>
         ))}

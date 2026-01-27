@@ -59,10 +59,57 @@ export {
   OrganizationDetailPage,
   InteractionsPage,
 } from './crm';
-export { ContractorDashboard } from './portal';
+export {
+  ContractorDashboard,
+  SprintTrackingPage,
+  FeatureRequestsPage,
+  MessagingPage,
+  MilestonesPage,
+  ScopeTrackerPage,
+} from './portal';
 export { OnboardingWizard } from './onboarding/OnboardingWizard';
 export {
   DocumentsPage,
   DocumentDetailPage,
   DocumentUploadPage,
 } from './documents';
+export {
+  ContractsPage,
+  ContractDetailPage,
+  ContractClinsPage,
+  DeliverablesPage,
+  ModificationsPage,
+} from './contracts';
+export type {
+  ContractsPageProps,
+  ContractDetailPageProps,
+  ContractClinsPageProps,
+  DeliverablesPageProps,
+  ModificationsPageProps,
+} from './contracts';
+export {
+  PipelinePage,
+  PipelineDetailPage,
+  ProposalPage,
+} from './pipeline';
+export {
+  FinancialDashboardPage,
+  BudgetsPage,
+  BudgetDetailPage,
+  InvoicesPage,
+  InvoiceDetailPage,
+  LaborRatesPage,
+} from './financial';
+export type {
+  FinancialDashboardPageProps,
+  BudgetDetailPageProps,
+  InvoicesPageProps,
+  InvoiceDetailPageProps,
+} from './financial';
+export {
+  CompliancePage,
+  CertificationsPage,
+  CertificationDetailPage,
+  ClearancesPage,
+  SbomDashboardPage,
+} from './compliance';

@@ -50,6 +50,8 @@ export function Badge({
   className,
   style,
   children,
+  isLive = false,
+  'aria-live': ariaLive,
   ...rest
 }: BadgeProps) {
   const baseStyles: CSSProperties = {
@@ -65,8 +67,18 @@ export function Badge({
     ...style,
   };
 
+  // Determine role and aria-live based on props
+  const role = isLive ? 'status' : undefined;
+  const liveValue = isLive && ariaLive === undefined ? 'polite' : ariaLive;
+
   return (
-    <span className={className} style={baseStyles} {...rest}>
+    <span
+      className={className}
+      style={baseStyles}
+      role={role}
+      aria-live={liveValue}
+      {...rest}
+    >
       {children}
     </span>
   );

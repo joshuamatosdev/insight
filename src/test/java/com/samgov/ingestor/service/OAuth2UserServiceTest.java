@@ -109,7 +109,8 @@ class OAuth2UserServiceTest extends BaseServiceTest {
             assertThat(response.getAccessToken()).isEqualTo("access-token");
             assertThat(response.getRefreshToken()).isEqualTo("refresh-token");
             
-            verify(userRepository).save(any(User.class));
+            // Called twice: once to create user, once to update lastLoginAt
+            verify(userRepository, times(2)).save(any(User.class));
             verify(oauthConnectionRepository).save(any(OAuthConnection.class));
         }
 

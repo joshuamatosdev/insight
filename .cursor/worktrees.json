@@ -1,0 +1,12 @@
+{
+  "setup-worktree-windows": [
+    "copy %ROOT_WORKTREE_PATH%\\.env .env",
+    "cd sam-dashboard && npm ci",
+    "gradlew.bat build -x test"
+  ],
+  "setup-worktree-unix": [
+    "cp $ROOT_WORKTREE_PATH/.env .env",
+    "cd sam-dashboard && npm ci",
+    "./gradlew build -x test"
+  ]
+}

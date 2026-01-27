@@ -46,7 +46,7 @@ public class AIAnalysisService {
             return createDisabledSummary();
         }
 
-        Opportunity opportunity = opportunityRepository.findById(opportunityId)
+        Opportunity opportunity = opportunityRepository.findById(opportunityId.toString())
             .orElseThrow(() -> new IllegalArgumentException("Opportunity not found: " + opportunityId));
 
         log.info("Generating AI summary for opportunity: {}", opportunityId);
@@ -82,7 +82,7 @@ public class AIAnalysisService {
             return createDisabledFitScore();
         }
 
-        Opportunity opportunity = opportunityRepository.findById(opportunityId)
+        Opportunity opportunity = opportunityRepository.findById(opportunityId.toString())
             .orElseThrow(() -> new IllegalArgumentException("Opportunity not found: " + opportunityId));
 
         log.info("Calculating AI fit score for opportunity: {} and tenant: {}", opportunityId, tenantId);
@@ -121,7 +121,7 @@ public class AIAnalysisService {
             return createDisabledRiskAssessment();
         }
 
-        Opportunity opportunity = opportunityRepository.findById(opportunityId)
+        Opportunity opportunity = opportunityRepository.findById(opportunityId.toString())
             .orElseThrow(() -> new IllegalArgumentException("Opportunity not found: " + opportunityId));
 
         log.info("Performing AI risk assessment for opportunity: {}", opportunityId);
@@ -158,7 +158,7 @@ public class AIAnalysisService {
             return createDisabledProposalSuggestions();
         }
 
-        Opportunity opportunity = opportunityRepository.findById(opportunityId)
+        Opportunity opportunity = opportunityRepository.findById(opportunityId.toString())
             .orElseThrow(() -> new IllegalArgumentException("Opportunity not found: " + opportunityId));
 
         log.info("Generating AI proposal suggestions for opportunity: {}", opportunityId);
@@ -211,9 +211,9 @@ public class AIAnalysisService {
             opportunity.getTitle(),
             opportunity.getType(),
             opportunity.getNaicsCode(),
-            opportunity.getSetAside() != null ? opportunity.getSetAside() : "None",
+            opportunity.getSetAsideType() != null ? opportunity.getSetAsideType() : "None",
             opportunity.getDescription() != null ? opportunity.getDescription() : "N/A",
-            opportunity.getResponseDeadline()
+            opportunity.getResponseDeadLine()
         );
     }
 
@@ -232,8 +232,8 @@ public class AIAnalysisService {
             opportunity.getTitle(),
             opportunity.getType(),
             opportunity.getNaicsCode(),
-            opportunity.getSetAside() != null ? opportunity.getSetAside() : "None",
-            opportunity.getPlaceOfPerformance() != null ? opportunity.getPlaceOfPerformance() : "N/A"
+            opportunity.getSetAsideType() != null ? opportunity.getSetAsideType() : "None",
+            getPlaceOfPerformance(opportunity)
         );
     }
 
@@ -250,9 +250,25 @@ public class AIAnalysisService {
             opportunity.getTitle(),
             opportunity.getType(),
             opportunity.getNaicsCode(),
-            opportunity.getResponseDeadline(),
+            opportunity.getResponseDeadLine(),
             opportunity.getDescription() != null ? opportunity.getDescription() : "N/A"
         );
+    }
+
+    private String getPlaceOfPerformance(Opportunity opportunity) {
+        StringBuilder sb = new StringBuilder();
+        if (opportunity.getPlaceOfPerformanceCity() != null) {
+            sb.append(opportunity.getPlaceOfPerformanceCity());
+        }
+        if (opportunity.getPlaceOfPerformanceState() != null) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(opportunity.getPlaceOfPerformanceState());
+        }
+        if (opportunity.getPlaceOfPerformanceCountry() != null) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(opportunity.getPlaceOfPerformanceCountry());
+        }
+        return sb.length() > 0 ? sb.toString() : "N/A";
     }
 
     private String buildProposalPrompt(Opportunity opportunity, UUID tenantId) {
@@ -268,7 +284,7 @@ public class AIAnalysisService {
             opportunity.getTitle(),
             opportunity.getType(),
             opportunity.getNaicsCode(),
-            opportunity.getSetAside() != null ? opportunity.getSetAside() : "None",
+            opportunity.getSetAsideType() != null ? opportunity.getSetAsideType() : "None",
             opportunity.getDescription() != null ? opportunity.getDescription() : "N/A"
         );
     }
@@ -279,12 +295,12 @@ public class AIAnalysisService {
             .keyPoints(List.of(
                 "NAICS: " + opportunity.getNaicsCode(),
                 "Type: " + opportunity.getType(),
-                "Deadline: " + opportunity.getResponseDeadline()
+                "Deadline: " + opportunity.getResponseDeadLine()
             ))
             .scopeSummary("This opportunity involves " + opportunity.getType() + " work.")
             .timeline(List.of(
                 "Posted: " + opportunity.getPostedDate(),
-                "Response Due: " + opportunity.getResponseDeadline()
+                "Response Due: " + opportunity.getResponseDeadLine()
             ))
             .budgetAnalysis("See opportunity details for budget information.")
             .confidence(50)

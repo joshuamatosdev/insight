@@ -10,9 +10,9 @@ export function SidebarHeader({ className, style, children }: SidebarHeaderProps
   };
 
   return (
-    <div className={className} style={headerStyles}>
+    <header className={className} style={headerStyles} role="banner">
       {children}
-    </div>
+    </header>
   );
 }
 

@@ -14,6 +14,12 @@ export interface ButtonBaseProps extends ButtonHTMLAttributes<HTMLButtonElement>
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
+  /** Accessible label for the button (required when children is not text) */
+  'aria-label'?: string;
+  /** Whether the button is pressed (for toggle buttons) */
+  'aria-pressed'?: boolean | 'mixed';
+  /** Loading state announcement for screen readers */
+  loadingText?: string;
 }
 
 export interface IconButtonProps extends Omit<ButtonBaseProps, 'leftIcon' | 'rightIcon' | 'children'> {

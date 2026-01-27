@@ -19,6 +19,8 @@ import {
   UsersIcon,
   UserIcon,
   CalendarIcon,
+  CurrencyIcon,
+  PlusCircleIcon,
 } from './components/primitives';
 import {
   AppLayout,
@@ -55,10 +57,31 @@ import {
   ReportsListPage,
   ReportBuilderPage,
   ContractorDashboard,
+  SprintTrackingPage,
+  FeatureRequestsPage,
+  MessagingPage,
+  MilestonesPage,
+  ScopeTrackerPage,
   SettingsPage,
   AuditLogPage,
   BillingPage,
   DocumentsPage,
+  PipelinePage,
+  PipelineDetailPage,
+  ProposalPage,
+  ContractsPage,
+  ContractDetailPage,
+  FinancialDashboardPage,
+  BudgetsPage,
+  BudgetDetailPage,
+  InvoicesPage,
+  InvoiceDetailPage,
+  LaborRatesPage,
+  CompliancePage,
+  CertificationsPage,
+  CertificationDetailPage,
+  ClearancesPage,
+  SbomDashboardPage,
 } from './pages';
 import { useOpportunities } from './hooks';
 import { exportToCSV } from './services';
@@ -84,10 +107,29 @@ type ViewSection =
   | 'reports-list'
   | 'reports-builder'
   | 'portal'
+  | 'portal-sprints'
+  | 'portal-features'
+  | 'portal-messaging'
+  | 'portal-milestones'
+  | 'portal-scope'
   | 'settings'
   | 'audit-log'
   | 'billing'
   | 'documents'
+  | 'pipeline'
+  | 'contracts'
+  | 'financial'
+  | 'financial-budgets'
+  | 'financial-invoices'
+  | 'financial-labor-rates'
+  | 'compliance'
+  | 'certifications'
+  | 'clearances'
+  | 'sbom'
+  | `contract-${string}`
+  | `budget-${string}`
+  | `invoice-${string}`
+  | `certification-${string}`
   | `naics-${string}`;
 
 export function Dashboard() {
@@ -95,6 +137,7 @@ export function Dashboard() {
   const { user, logout } = useAuth();
   const [currentSection, setCurrentSection] = useState<ViewSection>('dashboard');
   const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
+  const [selectedContractId, setSelectedContractId] = useState<string | null>(null);
 
   // Calculate counts
   const counts = useMemo(() => {
@@ -219,6 +262,16 @@ export function Dashboard() {
         return <ReportBuilderPage />;
       case 'portal':
         return <ContractorDashboard />;
+      case 'portal-sprints':
+        return <SprintTrackingPage />;
+      case 'portal-features':
+        return <FeatureRequestsPage />;
+      case 'portal-messaging':
+        return <MessagingPage />;
+      case 'portal-milestones':
+        return <MilestonesPage />;
+      case 'portal-scope':
+        return <ScopeTrackerPage />;
       case 'settings':
         return <SettingsPage />;
       case 'audit-log':
@@ -227,7 +280,91 @@ export function Dashboard() {
         return <BillingPage />;
       case 'documents':
         return <DocumentsPage />;
+      case 'pipeline':
+        return <PipelinePage />;
+      case 'contracts':
+        return (
+          <ContractsPage
+            onContractSelect={(contractId) => {
+              setSelectedContractId(contractId);
+              setCurrentSection(`contract-${contractId}` as ViewSection);
+            }}
+          />
+        );
+      case 'financial':
+        return <FinancialDashboardPage />;
+      case 'financial-budgets':
+        return (
+          <BudgetsPage
+            onViewBudget={(id) => setCurrentSection(`budget-${id}` as ViewSection)}
+          />
+        );
+      case 'financial-invoices':
+        return (
+          <InvoicesPage
+            onViewInvoice={(id) => setCurrentSection(`invoice-${id}` as ViewSection)}
+          />
+        );
+      case 'financial-labor-rates':
+        return <LaborRatesPage />;
+      case 'compliance':
+        return (
+          <CompliancePage
+            onNavigate={(section) => setCurrentSection(section as ViewSection)}
+          />
+        );
+      case 'certifications':
+        return (
+          <CertificationsPage
+            onViewDetails={(cert) =>
+              setCurrentSection(`certification-${cert.id}` as ViewSection)
+            }
+          />
+        );
+      case 'clearances':
+        return <ClearancesPage />;
+      case 'sbom':
+        return <SbomDashboardPage />;
       default:
+        if (currentSection.startsWith('contract-')) {
+          const contractId = currentSection.replace('contract-', '');
+          return (
+            <ContractDetailPage
+              contractId={contractId}
+              onBack={() => {
+                setSelectedContractId(null);
+                setCurrentSection('contracts');
+              }}
+            />
+          );
+        }
+        if (currentSection.startsWith('budget-')) {
+          const budgetId = currentSection.replace('budget-', '');
+          return (
+            <BudgetDetailPage
+              budgetId={budgetId}
+              onBack={() => setCurrentSection('financial-budgets')}
+            />
+          );
+        }
+        if (currentSection.startsWith('invoice-')) {
+          const invoiceId = currentSection.replace('invoice-', '');
+          return (
+            <InvoiceDetailPage
+              invoiceId={invoiceId}
+              onBack={() => setCurrentSection('financial-invoices')}
+            />
+          );
+        }
+        if (currentSection.startsWith('certification-')) {
+          const certificationId = currentSection.replace('certification-', '');
+          return (
+            <CertificationDetailPage
+              certificationId={certificationId}
+              onBack={() => setCurrentSection('certifications')}
+            />
+          );
+        }
         if (currentSection.startsWith('naics-')) {
           const naicsCode = currentSection.replace('naics-', '');
           return <NAICSPage naicsCode={naicsCode} opportunities={opportunities} />;
@@ -335,6 +472,57 @@ export function Dashboard() {
         </SidebarNav>
       </SidebarSection>
 
+      <SidebarSection title="Pipeline">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<ListUlIcon size="sm" />}
+            label="Pipeline Board"
+            isActive={currentSection === 'pipeline'}
+            onClick={() => setCurrentSection('pipeline')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Contract Management">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<FileCheckIcon size="sm" />}
+            label="Contracts"
+            isActive={currentSection === 'contracts' || currentSection.startsWith('contract-')}
+            onClick={() => setCurrentSection('contracts')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Financial">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<CurrencyIcon size="sm" />}
+            label="Financial Dashboard"
+            isActive={currentSection === 'financial'}
+            onClick={() => setCurrentSection('financial')}
+          />
+          <SidebarNavItem
+            icon={<CurrencyIcon size="sm" />}
+            label="Budgets"
+            isActive={currentSection === 'financial-budgets' || currentSection.startsWith('budget-')}
+            onClick={() => setCurrentSection('financial-budgets')}
+          />
+          <SidebarNavItem
+            icon={<FileTextIcon size="sm" />}
+            label="Invoices"
+            isActive={currentSection === 'financial-invoices' || currentSection.startsWith('invoice-')}
+            onClick={() => setCurrentSection('financial-invoices')}
+          />
+          <SidebarNavItem
+            icon={<UsersIcon size="sm" />}
+            label="Labor Rates"
+            isActive={currentSection === 'financial-labor-rates'}
+            onClick={() => setCurrentSection('financial-labor-rates')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
       <SidebarSection title="CRM">
         <SidebarNav>
           <SidebarNavItem
@@ -369,6 +557,35 @@ export function Dashboard() {
         </SidebarNav>
       </SidebarSection>
 
+      <SidebarSection title="Compliance">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<FileCheckIcon size="sm" />}
+            label="Overview"
+            isActive={currentSection === 'compliance'}
+            onClick={() => setCurrentSection('compliance')}
+          />
+          <SidebarNavItem
+            icon={<FileCheckIcon size="sm" />}
+            label="Certifications"
+            isActive={currentSection === 'certifications' || currentSection.startsWith('certification-')}
+            onClick={() => setCurrentSection('certifications')}
+          />
+          <SidebarNavItem
+            icon={<ShieldIcon size="sm" />}
+            label="Security Clearances"
+            isActive={currentSection === 'clearances'}
+            onClick={() => setCurrentSection('clearances')}
+          />
+          <SidebarNavItem
+            icon={<ListUlIcon size="sm" />}
+            label="SBOM Dashboard"
+            isActive={currentSection === 'sbom'}
+            onClick={() => setCurrentSection('sbom')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
       <SidebarSection title="Insights">
         <SidebarNav>
           <SidebarNavItem
@@ -395,10 +612,40 @@ export function Dashboard() {
       <SidebarSection title="Portal">
         <SidebarNav>
           <SidebarNavItem
-            icon={<ListUlIcon size="sm" />}
+            icon={<SpeedometerIcon size="sm" />}
             label="Contractor Dashboard"
             isActive={currentSection === 'portal'}
             onClick={() => setCurrentSection('portal')}
+          />
+          <SidebarNavItem
+            icon={<ListUlIcon size="sm" />}
+            label="Sprint Tracking"
+            isActive={currentSection === 'portal-sprints'}
+            onClick={() => setCurrentSection('portal-sprints')}
+          />
+          <SidebarNavItem
+            icon={<PlusCircleIcon size="sm" />}
+            label="Feature Requests"
+            isActive={currentSection === 'portal-features'}
+            onClick={() => setCurrentSection('portal-features')}
+          />
+          <SidebarNavItem
+            icon={<BellIcon size="sm" />}
+            label="Messaging"
+            isActive={currentSection === 'portal-messaging'}
+            onClick={() => setCurrentSection('portal-messaging')}
+          />
+          <SidebarNavItem
+            icon={<CalendarIcon size="sm" />}
+            label="Milestones"
+            isActive={currentSection === 'portal-milestones'}
+            onClick={() => setCurrentSection('portal-milestones')}
+          />
+          <SidebarNavItem
+            icon={<FileCheckIcon size="sm" />}
+            label="Scope Tracker"
+            isActive={currentSection === 'portal-scope'}
+            onClick={() => setCurrentSection('portal-scope')}
           />
         </SidebarNav>
       </SidebarSection>

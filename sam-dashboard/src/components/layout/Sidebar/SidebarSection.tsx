@@ -1,8 +1,10 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useId } from 'react';
 import { SidebarSectionProps } from './Sidebar.types';
 import { Text } from '../../primitives';
 
 export function SidebarSection({ title, className, style, children }: SidebarSectionProps) {
+  const titleId = useId();
+
   const sectionStyles: CSSProperties = {
     padding: 'var(--spacing-4) 0',
     borderBottom: '1px solid var(--color-dark-border)',
@@ -16,8 +18,14 @@ export function SidebarSection({ title, className, style, children }: SidebarSec
   };
 
   return (
-    <div className={className} style={sectionStyles}>
+    <section
+      className={className}
+      style={sectionStyles}
+      aria-labelledby={titleId}
+      role="group"
+    >
       <Text
+        id={titleId}
         variant="caption"
         color="white"
         style={{ ...titleStyles, opacity: 0.5 }}
@@ -25,7 +33,7 @@ export function SidebarSection({ title, className, style, children }: SidebarSec
         {title}
       </Text>
       {children}
-    </div>
+    </section>
   );
 }
 

@@ -24,6 +24,9 @@ export function Card({
   className,
   style,
   children,
+  as = 'article',
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   ...rest
 }: CardProps) {
   const cardStyles: CSSProperties = {
@@ -34,8 +37,18 @@ export function Card({
     ...style,
   };
 
+  // Only apply role if not 'none' (allows opting out)
+  const role = as !== 'none' ? as : undefined;
+
   return (
-    <div className={className} style={cardStyles} {...rest}>
+    <div
+      className={className}
+      style={cardStyles}
+      role={role}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      {...rest}
+    >
       {children}
     </div>
   );

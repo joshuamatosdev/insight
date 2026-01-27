@@ -47,6 +47,19 @@ const sizeStyles: Record<ButtonSize, CSSProperties> = {
   },
 };
 
+/** Visually hidden styles for screen reader text */
+const srOnlyStyles: CSSProperties = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  margin: '-1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
   (
     {
@@ -60,6 +73,8 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
       className,
       style,
       children,
+      loadingText = 'Loading',
+      'aria-pressed': ariaPressed,
       ...rest
     },
     ref
@@ -82,29 +97,38 @@ export const ButtonBase = forwardRef<HTMLButtonElement, ButtonBaseProps>(
       ...style,
     };
 
+    const isDisabledOrLoading = isDisabled || isLoading;
+
     return (
       <button
         ref={ref}
         className={className}
         style={baseStyles}
-        disabled={isDisabled || isLoading}
+        disabled={isDisabledOrLoading}
+        aria-disabled={isDisabledOrLoading}
+        aria-busy={isLoading}
+        aria-pressed={ariaPressed}
         {...rest}
       >
         {isLoading && (
-          <span
-            style={{
-              width: '1em',
-              height: '1em',
-              border: '2px solid currentColor',
-              borderRightColor: 'transparent',
-              borderRadius: '50%',
-              animation: 'spin 0.6s linear infinite',
-            }}
-          />
+          <>
+            <span
+              aria-hidden="true"
+              style={{
+                width: '1em',
+                height: '1em',
+                border: '2px solid currentColor',
+                borderRightColor: 'transparent',
+                borderRadius: '50%',
+                animation: 'spin 0.6s linear infinite',
+              }}
+            />
+            <span style={srOnlyStyles}>{loadingText}</span>
+          </>
         )}
-        {!isLoading && leftIcon}
+        {isLoading === false && leftIcon}
         {children}
-        {!isLoading && rightIcon}
+        {isLoading === false && rightIcon}
       </button>
     );
   }

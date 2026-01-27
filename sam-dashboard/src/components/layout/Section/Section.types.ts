@@ -5,6 +5,10 @@ export interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, 'style'>
   className?: string;
   style?: CSSProperties;
   children: ReactNode;
+  /** Accessible label for the section */
+  'aria-label'?: string;
+  /** ID of element labelling this section */
+  'aria-labelledby'?: string;
 }
 
 export interface SectionHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
@@ -13,4 +17,6 @@ export interface SectionHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>,
   actions?: ReactNode;
   className?: string;
   style?: CSSProperties;
+  /** ID for the header (used for aria-labelledby) */
+  id?: string;
 }

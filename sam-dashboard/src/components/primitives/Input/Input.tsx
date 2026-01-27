@@ -30,11 +30,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       containerStyle,
       style,
       className,
+      required,
+      'aria-describedby': ariaDescribedBy,
+      'aria-errormessage': ariaErrorMessage,
       ...rest
     },
     ref
   ) => {
-    const hasIcon = leftIcon || rightIcon;
+    const hasIcon = leftIcon !== undefined || rightIcon !== undefined;
 
     const inputStyles: CSSProperties = {
       fontFamily: 'var(--font-family)',
@@ -45,8 +48,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       transition: 'var(--transition-fast)',
       width: fullWidth ? '100%' : 'auto',
       ...sizeStyles[size],
-      ...(leftIcon && { paddingLeft: '2.5rem' }),
-      ...(rightIcon && { paddingRight: '2.5rem' }),
+      ...(leftIcon !== undefined && { paddingLeft: '2.5rem' }),
+      ...(rightIcon !== undefined && { paddingRight: '2.5rem' }),
       ...style,
     };
 
@@ -68,21 +71,39 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       pointerEvents: 'none',
     };
 
+    const inputElement = (
+      <input
+        ref={ref}
+        className={className}
+        style={inputStyles}
+        aria-invalid={isInvalid}
+        aria-required={required}
+        aria-describedby={ariaDescribedBy}
+        aria-errormessage={isInvalid ? ariaErrorMessage : undefined}
+        required={required}
+        {...rest}
+      />
+    );
+
     if (hasIcon) {
       return (
         <div style={wrapperStyles}>
-          {leftIcon && (
-            <span style={{ ...iconBaseStyles, left: '0.75rem' }}>{leftIcon}</span>
+          {leftIcon !== undefined && (
+            <span aria-hidden="true" style={{ ...iconBaseStyles, left: '0.75rem' }}>
+              {leftIcon}
+            </span>
           )}
-          <input ref={ref} className={className} style={inputStyles} {...rest} />
-          {rightIcon && (
-            <span style={{ ...iconBaseStyles, right: '0.75rem' }}>{rightIcon}</span>
+          {inputElement}
+          {rightIcon !== undefined && (
+            <span aria-hidden="true" style={{ ...iconBaseStyles, right: '0.75rem' }}>
+              {rightIcon}
+            </span>
           )}
         </div>
       );
     }
 
-    return <input ref={ref} className={className} style={inputStyles} {...rest} />;
+    return inputElement;
   }
 );
 

@@ -7,6 +7,7 @@ export function Sidebar({
   className,
   style,
   children,
+  'aria-label': ariaLabel = 'Main navigation',
 }: SidebarProps) {
   const sidebarStyles: CSSProperties = {
     position: 'fixed',
@@ -24,9 +25,17 @@ export function Sidebar({
   };
 
   return (
-    <nav className={className} style={sidebarStyles}>
-      {children}
-    </nav>
+    <aside
+      className={className}
+      style={sidebarStyles}
+      role="complementary"
+      aria-label={ariaLabel}
+      aria-hidden={isOpen === false}
+    >
+      <nav role="navigation" aria-label={ariaLabel}>
+        {children}
+      </nav>
+    </aside>
   );
 }
 
