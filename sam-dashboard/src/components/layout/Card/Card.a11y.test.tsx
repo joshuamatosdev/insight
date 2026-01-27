@@ -2,7 +2,9 @@ import { render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import { describe, expect, it } from 'vitest';
 
-import { Card, CardHeader, CardBody } from './Card';
+import { Card } from './Card';
+import { CardHeader } from './CardHeader';
+import { CardBody } from './CardBody';
 
 expect.extend(toHaveNoViolations);
 
