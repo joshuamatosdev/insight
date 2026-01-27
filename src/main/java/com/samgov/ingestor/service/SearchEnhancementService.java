@@ -79,7 +79,7 @@ public class SearchEnhancementService {
             "desc".equalsIgnoreCase(request.getSortOrder()) 
                 ? Sort.Direction.DESC 
                 : Sort.Direction.ASC,
-            request.getSortBy() != null ? request.getSortBy() : "responseDeadline"
+            request.getSortBy() != null ? request.getSortBy() : "responseDeadLine"
         );
 
         Pageable pageable = PageRequest.of(
