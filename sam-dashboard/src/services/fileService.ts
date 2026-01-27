@@ -34,7 +34,7 @@ export interface UploadResponse {
   presignedUrl?: string;
 }
 
-const FILE_BASE = '/api/files';
+const FILE_BASE = '/files';
 
 export async function uploadFile(
   file: File,

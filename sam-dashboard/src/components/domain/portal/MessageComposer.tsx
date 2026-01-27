@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { MessageComposerProps } from './Portal.types';
-import { Text, Button, Input } from '../../primitives';
-import { Card, CardHeader, CardBody, CardFooter, Stack, Box, Flex } from '../../layout';
+import { Text, Button, Input } from '../../catalyst/primitives';
+import { Card, CardHeader, CardBody, CardFooter, Stack, Box, Flex } from '../../catalyst/layout';
 
 /**
  * Component for composing and sending new messages.

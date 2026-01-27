@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/layout/Section';
-import { Stack, HStack } from '../../components/layout/Stack';
-import { Box } from '../../components/layout/Box';
-import { Card, CardHeader, CardBody } from '../../components/layout/Card';
+import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
+import { Stack, HStack } from '../../components/catalyst/layout/Stack';
+import { Box } from '../../components/catalyst/layout/Box';
+import { Card, CardHeader, CardBody } from '../../components/catalyst/layout/Card';
 import { Text } from '../../components/catalyst/primitives/Text';
 import { Button } from '../../components/catalyst/primitives/Button';
 import { Badge } from '../../components/catalyst/primitives/Badge';

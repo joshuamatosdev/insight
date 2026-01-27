@@ -1,5 +1,5 @@
-import { Stack } from '../../layout/Stack';
-import { Text } from '../../primitives/Text';
+import { Stack } from '../../catalyst/layout/Stack';
+import { Text } from '../../catalyst/primitives/Text';
 import { InteractionCard } from './InteractionCard';
 import type { Interaction } from '../../../types/crm';
 

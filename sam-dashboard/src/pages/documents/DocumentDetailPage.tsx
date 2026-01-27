@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/layout/Section';
-import { Stack, HStack } from '../../components/layout/Stack';
+import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
+import { Stack, HStack } from '../../components/catalyst/layout/Stack';
 import { Button } from '../../components/catalyst/primitives/Button';
 import { Text } from '../../components/catalyst/primitives/Text';
 import { DocumentViewer } from '../../components/domain/documents';

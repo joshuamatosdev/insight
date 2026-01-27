@@ -28,7 +28,7 @@ export interface CreateApiKeyRequest {
   ipWhitelist?: string[];
 }
 
-const API_KEY_BASE = '/api/api-keys';
+const API_KEY_BASE = '/api-keys';
 
 export async function fetchApiKeys(): Promise<ApiKey[]> {
   const response = await apiClient.get(API_KEY_BASE);

@@ -2,8 +2,8 @@
  * CertificationList - List of certifications with grid layout
  */
 
-import { Text, FileCheckIcon } from '../../primitives';
-import { Grid, GridItem, Flex, Card, CardBody } from '../../layout';
+import { Text, FileCheckIcon } from '../../catalyst/primitives';
+import { Grid, GridItem, Flex, Card, CardBody } from '../../catalyst/layout';
 import { CertificationCard } from './CertificationCard';
 import type { CertificationListProps } from './Compliance.types';
 

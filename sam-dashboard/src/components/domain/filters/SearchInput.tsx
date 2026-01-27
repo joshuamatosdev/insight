@@ -1,5 +1,5 @@
 import { SearchInputProps } from './Filters.types';
-import { Input, SearchIcon } from '../../primitives';
+import { Input, SearchIcon } from '../../catalyst/primitives';
 
 export function SearchInput({
   value,

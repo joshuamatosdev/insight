@@ -1,4 +1,4 @@
-import { Box } from '../../layout';
+import { Box } from '../../catalyst/layout';
 import { NAICSBadgeProps } from './NAICS.types';
 
 export function NAICSBadge({ code, className, style }: NAICSBadgeProps) {

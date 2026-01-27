@@ -1,6 +1,6 @@
 import type { ColumnDefinition } from '../../../types/report.types';
-import { Text } from '../../primitives';
-import { Box, Stack } from '../../layout';
+import { Text } from '../../catalyst/primitives';
+import { Box, Stack } from '../../catalyst/layout';
 import { DraggableColumn } from './DraggableColumn';
 
 /**

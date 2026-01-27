@@ -2,8 +2,8 @@ import { useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { ScopeItemListProps, ScopeItemRowProps } from './Portal.types';
 import type { ScopeItem } from '../../../types/portal';
-import { Text, Badge, Button } from '../../primitives';
-import { Flex, Stack, Box, HStack } from '../../layout';
+import { Text, Badge, Button } from '../../catalyst/primitives';
+import { Flex, Stack, Box, HStack } from '../../catalyst/layout';
 
 /**
  * Individual scope item row component.

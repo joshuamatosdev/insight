@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Flex, Box } from '../../components/layout';
+import { Flex, Box } from '../../components/catalyst/layout';
 
 interface OtpInputProps {
   length?: number;

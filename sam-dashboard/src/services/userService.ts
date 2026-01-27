@@ -51,7 +51,7 @@ interface Page<T> {
   number: number;
 }
 
-const USER_BASE = '/api/users';
+const USER_BASE = '/users';
 
 export async function fetchUsers(
   page: number = 0,

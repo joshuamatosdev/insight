@@ -44,7 +44,7 @@ interface Page<T> {
   number: number;
 }
 
-const NOTIFICATION_BASE = '/api/notifications';
+const NOTIFICATION_BASE = '/notifications';
 
 export async function fetchNotifications(
   page: number = 0,

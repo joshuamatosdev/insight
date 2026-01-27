@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/layout/Section';
-import { Stack, HStack } from '../../components/layout/Stack';
-import { Box } from '../../components/layout/Box';
+import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
+import { Stack, HStack } from '../../components/catalyst/layout/Stack';
+import { Box } from '../../components/catalyst/layout/Box';
 import { Text } from '../../components/catalyst/primitives/Text';
 import { Button } from '../../components/catalyst/primitives/Button';
 import { Select } from '../../components/catalyst/primitives/Input';

@@ -6,7 +6,7 @@
  */
 
 import { Badge, Subheading, Text } from '../../catalyst'
-import { Box } from '../../layout'
+import { Box } from '../../catalyst/layout'
 
 interface StatProps {
   title: string

@@ -4,8 +4,8 @@ import type {
   FilterOperator,
   ColumnDefinition,
 } from '../../../types/report.types';
-import { Button, Input, Select, Text, TrashIcon, PlusIcon, IconButton } from '../../primitives';
-import { Box, Stack, Flex, Card, CardBody } from '../../layout';
+import { Button, Input, Select, Text, TrashIcon, PlusIcon, IconButton } from '../../catalyst/primitives';
+import { Box, Stack, Flex, Card, CardBody } from '../../catalyst/layout';
 
 /**
  * Filter operator options

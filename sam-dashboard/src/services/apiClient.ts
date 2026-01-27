@@ -8,10 +8,10 @@
  *   import { apiClient } from '@/services/apiClient';
  *
  *   // GET request
- *   const opportunities = await apiClient.get('/api/v1/opportunities');
+ *   const opportunities = await apiClient.get('/opportunities');
  *
  *   // POST request
- *   const result = await apiClient.post('/api/v1/auth/login', { email, password });
+ *   const result = await apiClient.post('/auth/login', { email, password });
  */
 
 import type { ApiError, ApiResult } from './types';
@@ -19,7 +19,7 @@ import type { ApiError, ApiResult } from './types';
 // Re-export types for convenience
 export type { ApiError, ApiResult } from './types';
 
-const API_BASE = '/api/v1';
+const API_BASE = '/api';
 
 /**
  * Get the stored auth token

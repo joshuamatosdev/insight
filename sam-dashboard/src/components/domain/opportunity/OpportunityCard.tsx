@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import { OpportunityCardProps, getOpportunityType } from './Opportunity.types';
-import { Text, Button, ExternalLinkIcon } from '../../primitives';
-import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../layout';
+import { Text, Button, ExternalLinkIcon } from '../../catalyst/primitives';
+import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../catalyst/layout';
 import { NAICSBadge } from '../naics';
 import { TypeBadge } from './TypeBadge';
 

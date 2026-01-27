@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import { ActivityFeedProps } from './Analytics.types';
-import { Text, Button, UserIcon } from '../../primitives';
-import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../layout';
+import { Text, Button, UserIcon } from '../../catalyst/primitives';
+import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../catalyst/layout';
 import { formatEventType } from '../../../types/analytics.types';
 
 /**

@@ -9,7 +9,7 @@ import {
 } from './Opportunity.types';
 import { OpportunityCard } from './OpportunityCard';
 import { TypeBadge } from './TypeBadge';
-import { Box } from '../../layout';
+import { Box } from '../../catalyst/layout';
 
 const mockOpportunity: Opportunity = {
   id: '1',

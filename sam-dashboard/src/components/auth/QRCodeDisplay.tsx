@@ -1,5 +1,5 @@
-import { Stack, Box, Card, CardBody } from '../../components/layout';
-import { Text, Button } from '../../components/primitives';
+import { Stack, Box, Card, CardBody } from '../../components/catalyst/layout';
+import { Text, Button } from '../../components/catalyst/primitives';
 
 interface QRCodeDisplayProps {
   qrCodeUrl: string;

@@ -69,7 +69,7 @@ export interface WebhookDelivery {
   deliveredAt: string | null;
 }
 
-const WEBHOOK_BASE = '/api/webhooks';
+const WEBHOOK_BASE = '/webhooks';
 
 export async function fetchWebhooks(): Promise<Webhook[]> {
   const response = await apiClient.get(WEBHOOK_BASE);

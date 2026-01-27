@@ -1,6 +1,6 @@
 import type { ColumnDefinition } from '../../../types/report.types';
-import { Badge, Text, TrashIcon, IconButton } from '../../primitives';
-import { Flex, Box } from '../../layout';
+import { Badge, Text, TrashIcon, IconButton } from '../../catalyst/primitives';
+import { Flex, Box } from '../../catalyst/layout';
 
 /**
  * Props for DraggableColumn component

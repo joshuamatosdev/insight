@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
-import { Text, Button, Badge, PencilIcon } from '../../primitives';
-import { Box, Card } from '../../layout';
+import { Text, Button, Badge, PencilIcon } from '../../catalyst/primitives';
+import { Box, Card } from '../../catalyst/layout';
 import {
   Table,
   TableHead,

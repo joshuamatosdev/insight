@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/layout/Section';
-import { Stack, HStack } from '../../components/layout/Stack';
+import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
+import { Stack, HStack } from '../../components/catalyst/layout/Stack';
 import { Input } from '../../components/catalyst/primitives/Input';
 import { Select } from '../../components/catalyst/primitives/Input';
 import { Button } from '../../components/catalyst/primitives/Button';

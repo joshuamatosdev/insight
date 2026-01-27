@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Stack, HStack } from '../../layout/Stack';
-import { Card, CardHeader, CardBody, CardFooter } from '../../layout/Card';
-import { Text } from '../../primitives/Text';
-import { Input } from '../../primitives/Input';
-import { Select } from '../../primitives/Input/Select';
-import { Button } from '../../primitives/Button';
+import { Stack, HStack } from '../../catalyst/layout/Stack';
+import { Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout/Card';
+import { Text } from '../../catalyst/primitives/Text';
+import { Input } from '../../catalyst/primitives/Input';
+import { Select } from '../../catalyst/primitives/Input/Select';
+import { Button } from '../../catalyst/primitives/Button';
 import type { Interaction, CreateInteractionRequest, InteractionType, InteractionOutcome } from '../../../types/crm';
 
 export interface InteractionFormProps {

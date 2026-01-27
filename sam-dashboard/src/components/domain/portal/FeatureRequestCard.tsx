@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { FeatureRequestCardProps } from './Portal.types';
-import { Text, Badge, Button } from '../../primitives';
-import { Card, CardBody, Flex, Stack, Box, HStack } from '../../layout';
+import { Text, Badge, Button } from '../../catalyst/primitives';
+import { Card, CardBody, Flex, Stack, Box, HStack } from '../../catalyst/layout';
 import { FeatureVoteButton } from './FeatureVoteButton';
 
 /**

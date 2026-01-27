@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import { TopPerformersTableProps } from './Analytics.types';
-import { Text, Badge, UserIcon } from '../../primitives';
-import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../layout';
+import { Text, Badge, UserIcon } from '../../catalyst/primitives';
+import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../catalyst/layout';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableHeader } from '../../catalyst';
 
 /**

@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { MilestoneTimelineProps } from './Portal.types';
 import type { Milestone } from '../../../types/portal';
-import { Text, Badge } from '../../primitives';
-import { Flex, Stack, Box } from '../../layout';
+import { Text, Badge } from '../../catalyst/primitives';
+import { Flex, Stack, Box } from '../../catalyst/layout';
 
 /**
  * Visual timeline component for displaying milestones.

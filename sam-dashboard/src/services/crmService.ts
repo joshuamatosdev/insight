@@ -23,7 +23,7 @@ interface Page<T> {
   number: number;
 }
 
-const CRM_BASE = '/api/crm';
+const CRM_BASE = '/crm';
 
 // ============ Contacts ============
 

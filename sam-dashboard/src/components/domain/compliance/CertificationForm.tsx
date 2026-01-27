@@ -3,8 +3,8 @@
  */
 
 import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { Text, Button, Input, Select } from '../../primitives';
-import { Card, CardHeader, CardBody, Stack, HStack, Box, Grid, GridItem } from '../../layout';
+import { Text, Button, Input, Select } from '../../catalyst/primitives';
+import { Card, CardHeader, CardBody, Stack, HStack, Box, Grid, GridItem } from '../../catalyst/layout';
 import type {
   CertificationFormProps,
   CertificationFormState,

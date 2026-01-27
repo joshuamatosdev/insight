@@ -1,9 +1,9 @@
-import { Card, CardHeader, CardBody } from '../../layout/Card';
-import { Stack, HStack } from '../../layout/Stack';
-import { Text } from '../../primitives/Text';
-import { Badge } from '../../primitives/Badge';
-import { Button } from '../../primitives/Button';
-import { FileIcon, DownloadIcon } from '../../primitives/Icon';
+import { Card, CardHeader, CardBody } from '../../catalyst/layout/Card';
+import { Stack, HStack } from '../../catalyst/layout/Stack';
+import { Text } from '../../catalyst/primitives/Text';
+import { Badge } from '../../catalyst/primitives/Badge';
+import { Button } from '../../catalyst/primitives/Button';
+import { FileIcon, DownloadIcon } from '../../catalyst/primitives/Icon';
 import type { Document } from '../../../types/documents';
 import {
   formatFileSize,

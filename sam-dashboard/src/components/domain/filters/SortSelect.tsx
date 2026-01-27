@@ -1,5 +1,5 @@
 import { SortSelectProps, SortOption } from './Filters.types';
-import { Select } from '../../primitives';
+import { Select } from '../../catalyst/primitives';
 
 const SORT_OPTIONS = [
   { value: 'deadline', label: 'Sort by Deadline' },

@@ -1,13 +1,13 @@
 import { CSSProperties } from 'react';
-import { Text, Badge, Button } from '../../primitives';
-import { Box, Stack, HStack, Card, CardBody, Grid } from '../../layout';
+import { Text, Badge, Button } from '../../catalyst/primitives';
+import { Box, Stack, HStack, Card, CardBody, Grid } from '../../catalyst/layout';
 import type {
   ModificationTimelineProps,
   ContractModification,
   ModificationStatus,
 } from './Contract.types';
 import { getModificationTypeLabel, formatCurrency, formatDate } from './Contract.types';
-import type { BadgeVariant } from '../../primitives';
+import type { BadgeVariant } from '../../catalyst/primitives';
 
 function getStatusVariant(status: ModificationStatus): BadgeVariant {
   const variantMap: Record<ModificationStatus, BadgeVariant> = {

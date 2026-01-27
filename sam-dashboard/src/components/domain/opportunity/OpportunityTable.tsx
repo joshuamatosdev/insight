@@ -1,5 +1,5 @@
 import { OpportunityTableProps } from './Opportunity.types';
-import { Box } from '../../layout';
+import { Box } from '../../catalyst/layout';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableHeader } from '../../catalyst';
 
 export function OpportunityTable({ opportunities, maxRows }: OpportunityTableProps) {

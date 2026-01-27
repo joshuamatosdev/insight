@@ -2,7 +2,7 @@
  * CertificationCard - Display a single certification
  */
 
-import { Text, Button, PencilIcon, TrashIcon, FileCheckIcon } from '../../primitives';
+import { Text, Button, PencilIcon, TrashIcon, FileCheckIcon } from '../../catalyst/primitives';
 import {
   Card,
   CardHeader,
@@ -12,7 +12,7 @@ import {
   HStack,
   Grid,
   GridItem,
-} from '../../layout';
+} from '../../catalyst/layout';
 import { ComplianceStatusBadge } from './ComplianceStatusBadge';
 import type { CertificationCardProps } from './Compliance.types';
 

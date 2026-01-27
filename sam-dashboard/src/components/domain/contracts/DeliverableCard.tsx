@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
-import { Text, Badge, Button, Select } from '../../primitives';
-import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../layout';
+import { Text, Badge, Button, Select } from '../../catalyst/primitives';
+import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../catalyst/layout';
 import type {
   DeliverableCardProps,
   DeliverableStatus,
@@ -8,7 +8,7 @@ import type {
   DeliverableFrequency,
 } from './Contract.types';
 import { getDeliverableStatusLabel, formatDate } from './Contract.types';
-import type { BadgeVariant } from '../../primitives';
+import type { BadgeVariant } from '../../catalyst/primitives';
 
 function getStatusVariant(status: DeliverableStatus): BadgeVariant {
   const variantMap: Record<DeliverableStatus, BadgeVariant> = {

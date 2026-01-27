@@ -69,7 +69,7 @@ interface Page<T> {
   number: number;
 }
 
-const SAVED_SEARCH_BASE = '/api/saved-searches';
+const SAVED_SEARCH_BASE = '/saved-searches';
 
 export async function fetchSavedSearches(): Promise<SavedSearch[]> {
   const response = await apiClient.get(SAVED_SEARCH_BASE);

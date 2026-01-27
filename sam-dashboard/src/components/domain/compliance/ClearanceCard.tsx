@@ -2,7 +2,7 @@
  * ClearanceCard - Display a single security clearance
  */
 
-import { Text, Button, PencilIcon, TrashIcon, ShieldLockIcon } from '../../primitives';
+import { Text, Button, PencilIcon, TrashIcon, ShieldLockIcon } from '../../catalyst/primitives';
 import {
   Card,
   CardHeader,
@@ -12,7 +12,7 @@ import {
   HStack,
   Grid,
   GridItem,
-} from '../../layout';
+} from '../../catalyst/layout';
 import { ComplianceStatusBadge } from './ComplianceStatusBadge';
 import type { ClearanceCardProps, ClearanceLevel, ClearanceType } from './Compliance.types';
 

@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { SprintBoardProps, SprintTaskCardProps } from './Portal.types';
 import type { SprintTask, SprintTaskStatus } from '../../../types/portal';
-import { Text, Badge, Button } from '../../primitives';
-import { Card, CardBody, Flex, Stack, Box, Grid } from '../../layout';
+import { Text, Badge, Button } from '../../catalyst/primitives';
+import { Card, CardBody, Flex, Stack, Box, Grid } from '../../catalyst/layout';
 
 const COLUMN_CONFIG: Array<{ status: SprintTaskStatus; label: string; color: string }> = [
   { status: 'TODO', label: 'To Do', color: '#a1a1aa' },

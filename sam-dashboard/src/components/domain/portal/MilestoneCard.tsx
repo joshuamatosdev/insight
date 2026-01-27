@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { MilestoneCardProps } from './Portal.types';
-import { Text, Badge, Button } from '../../primitives';
-import { Card, CardHeader, CardBody, CardFooter, Flex, Stack, Box, HStack } from '../../layout';
+import { Text, Badge, Button } from '../../catalyst/primitives';
+import { Card, CardHeader, CardBody, CardFooter, Flex, Stack, Box, HStack } from '../../catalyst/layout';
 
 /**
  * Card displaying milestone information.

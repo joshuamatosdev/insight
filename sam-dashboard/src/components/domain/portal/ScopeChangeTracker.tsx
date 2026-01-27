@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { ScopeChangeTrackerProps, ScopeChangeCardProps } from './Portal.types';
 import type { ScopeChange } from '../../../types/portal';
-import { Text, Badge, Button } from '../../primitives';
-import { Card, CardBody, Flex, Stack, Box, HStack } from '../../layout';
+import { Text, Badge, Button } from '../../catalyst/primitives';
+import { Card, CardBody, Flex, Stack, Box, HStack } from '../../catalyst/layout';
 
 /**
  * Individual scope change card.

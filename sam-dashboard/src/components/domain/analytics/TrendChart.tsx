@@ -1,7 +1,7 @@
 import { CSSProperties, useMemo } from 'react';
 import { TrendChartProps } from './Analytics.types';
-import { Text } from '../../primitives';
-import { Box, Stack, Card, CardHeader, CardBody } from '../../layout';
+import { Text } from '../../catalyst/primitives';
+import { Box, Stack, Card, CardHeader, CardBody } from '../../catalyst/layout';
 
 /**
  * TrendChart displays a simple line chart for trend data.

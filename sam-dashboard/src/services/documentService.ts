@@ -26,8 +26,8 @@ interface Page<T> {
 const DOCUMENTS_BASE = '/api/documents';
 
 /**
- * Helper to make API calls to /api/documents endpoints (not /api/v1/documents)
- * DocumentController uses /api/documents, not /api/v1/documents
+ * Helper to make API calls to /api/documents endpoints
+ * DocumentController uses /api/documents
  */
 async function documentApiGet<T>(path: string): Promise<ApiResult<T>> {
   try {

@@ -1,5 +1,5 @@
 import { OpportunityType, TypeBadgeProps } from './Opportunity.types';
-import { Box } from '../../layout';
+import { Box } from '../../catalyst/layout';
 
 const typeClasses: Record<OpportunityType, string> = {
   'sources-sought': 'text-blue-600 bg-blue-50 ring-blue-500/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20',

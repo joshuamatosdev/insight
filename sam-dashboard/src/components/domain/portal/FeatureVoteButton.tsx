@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { FeatureVoteButtonProps } from './Portal.types';
-import { Text } from '../../primitives';
-import { Flex, Box } from '../../layout';
+import { Text } from '../../catalyst/primitives';
+import { Flex, Box } from '../../catalyst/layout';
 
 /**
  * Vote button for feature requests with count display.

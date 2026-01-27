@@ -1,7 +1,7 @@
 import { OpportunityListProps } from './Opportunity.types';
 import { OpportunityCard } from './OpportunityCard';
-import { Text } from '../../primitives';
-import { Stack, Box } from '../../layout';
+import { Text } from '../../catalyst/primitives';
+import { Stack, Box } from '../../catalyst/layout';
 
 export function OpportunityList({
   opportunities,

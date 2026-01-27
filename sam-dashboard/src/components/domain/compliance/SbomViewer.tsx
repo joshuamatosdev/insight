@@ -12,7 +12,7 @@ import {
   SearchIcon,
   ChevronRightIcon,
   ChevronDownIcon,
-} from '../../primitives';
+} from '../../catalyst/primitives';
 import {
   Card,
   CardHeader,
@@ -25,7 +25,7 @@ import {
   Flex,
   Grid,
   GridItem,
-} from '../../layout';
+} from '../../catalyst/layout';
 import type { SbomViewerProps, SbomComponent, CycloneDxBom } from './Compliance.types';
 
 /**

@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableCell,
 } from '../../catalyst'
-import { Box } from '../../layout'
+import { Box } from '../../catalyst/layout'
 import { OpportunityTableProps } from './Opportunity.types'
 
 export function OpportunityTableCatalyst({ opportunities, maxRows }: OpportunityTableProps) {

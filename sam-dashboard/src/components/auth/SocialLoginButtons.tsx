@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Flex, Stack, Box } from '../../components/layout';
-import { Button, Text } from '../../components/primitives';
+import { Flex, Stack, Box } from '../../components/catalyst/layout';
+import { Button, Text } from '../../components/catalyst/primitives';
 import { fetchOAuthProviders, getProviderInfo, initiateOAuthLogin } from '../../services/oauthService';
 
 /**

@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { InboxListProps } from './Portal.types';
 import type { MessageThread } from '../../../types/portal';
-import { Text, Badge } from '../../primitives';
-import { Stack, Box, Flex, HStack } from '../../layout';
+import { Text, Badge } from '../../catalyst/primitives';
+import { Stack, Box, Flex, HStack } from '../../catalyst/layout';
 
 /**
  * Inbox list showing message threads.

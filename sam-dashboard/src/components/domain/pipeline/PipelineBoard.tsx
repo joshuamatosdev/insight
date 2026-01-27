@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { Box } from '../../layout/Box';
-import { HStack } from '../../layout/Stack';
-import { Text } from '../../primitives/Text';
+import { Box } from '../../catalyst/layout/Box';
+import { HStack } from '../../catalyst/layout/Stack';
+import { Text } from '../../catalyst/primitives/Text';
 import { PipelineStageColumn } from './PipelineStageColumn';
 import type { PipelineBoardProps } from './PipelineBoard.types';
 import type { PipelineOpportunity } from '../../../types/pipeline';

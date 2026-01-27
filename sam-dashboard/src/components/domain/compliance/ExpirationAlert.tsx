@@ -2,8 +2,8 @@
  * ExpirationAlert - Shows expiring certifications and clearances
  */
 
-import { Text, BellIcon, CalendarIcon } from '../../primitives';
-import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../layout';
+import { Text, BellIcon, CalendarIcon } from '../../catalyst/primitives';
+import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
 import type { ExpirationAlertProps, Certification, SecurityClearance } from './Compliance.types';
 
 /**

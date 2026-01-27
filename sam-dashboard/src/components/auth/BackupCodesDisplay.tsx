@@ -1,5 +1,5 @@
-import { Stack, Box, Card, CardBody, Grid } from '../../components/layout';
-import { Text, Button } from '../../components/primitives';
+import { Stack, Box, Card, CardBody, Grid } from '../../components/catalyst/layout';
+import { Text, Button } from '../../components/catalyst/primitives';
 
 interface BackupCodesDisplayProps {
   codes: string[];

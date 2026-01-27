@@ -1,6 +1,6 @@
 import { useMemo, CSSProperties } from 'react';
-import { Text, Badge } from '../../primitives';
-import { Box, Stack, HStack, Grid, Card, CardBody } from '../../layout';
+import { Text, Badge } from '../../catalyst/primitives';
+import { Box, Stack, HStack, Grid, Card, CardBody } from '../../catalyst/layout';
 import { DeliverableCard } from './DeliverableCard';
 import type { DeliverableTrackerProps, ContractDeliverable } from './Contract.types';
 

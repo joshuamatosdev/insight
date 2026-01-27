@@ -1,6 +1,6 @@
 import { useMemo, CSSProperties } from 'react';
-import { Text, Badge } from '../../primitives';
-import { Box, Stack, HStack, Grid, Card, CardHeader, CardBody } from '../../layout';
+import { Text, Badge } from '../../catalyst/primitives';
+import { Box, Stack, HStack, Grid, Card, CardHeader, CardBody } from '../../catalyst/layout';
 import type { ContractValueChartProps } from './Contract.types';
 import { formatCurrency, formatDate, getContractStatusLabel } from './Contract.types';
 import { ContractStatusBadge } from './ContractStatusBadge';

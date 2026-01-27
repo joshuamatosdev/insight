@@ -1,8 +1,8 @@
-import { Card, CardHeader, CardBody } from '../../layout/Card';
-import { HStack, Stack } from '../../layout/Stack';
-import { Text } from '../../primitives/Text';
-import { Badge } from '../../primitives/Badge';
-import { Button } from '../../primitives/Button';
+import { Card, CardHeader, CardBody } from '../../catalyst/layout/Card';
+import { HStack, Stack } from '../../catalyst/layout/Stack';
+import { Text } from '../../catalyst/primitives/Text';
+import { Badge } from '../../catalyst/primitives/Badge';
+import { Button } from '../../catalyst/primitives/Button';
 import type { PipelineCardProps } from './PipelineCard.types';
 import type { BidDecision } from '../../../types/pipeline';
 

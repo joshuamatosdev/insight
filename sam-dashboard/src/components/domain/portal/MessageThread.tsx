@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import type { CSSProperties } from 'react';
 import type { MessageThreadProps, MessageBubbleProps } from './Portal.types';
 import type { Message } from '../../../types/portal';
-import { Text, Button, Input } from '../../primitives';
-import { Flex, Stack, Box } from '../../layout';
+import { Text, Button, Input } from '../../catalyst/primitives';
+import { Flex, Stack, Box } from '../../catalyst/layout';
 
 /**
  * Individual message bubble.

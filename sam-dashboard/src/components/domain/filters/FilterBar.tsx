@@ -1,5 +1,5 @@
 import { FilterBarProps } from './Filters.types';
-import { HStack } from '../../layout';
+import { HStack } from '../../catalyst/layout';
 import { SearchInput } from './SearchInput';
 import { SortSelect } from './SortSelect';
 

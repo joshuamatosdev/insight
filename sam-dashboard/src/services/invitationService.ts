@@ -35,7 +35,7 @@ export interface InvitationDetails {
   isValid: boolean;
 }
 
-const INVITATION_BASE = '/api/invitations';
+const INVITATION_BASE = '/invitations';
 
 export async function fetchInvitations(): Promise<Invitation[]> {
   const response = await apiClient.get(INVITATION_BASE);

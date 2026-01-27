@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Section, SectionHeader } from '../../components/layout/Section';
-import { Stack, HStack } from '../../components/layout/Stack';
+import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
+import { Stack, HStack } from '../../components/catalyst/layout/Stack';
 import { Select } from '../../components/catalyst/primitives/Input';
 import { Button } from '../../components/catalyst/primitives/Button';
 import { Text } from '../../components/catalyst/primitives/Text';
