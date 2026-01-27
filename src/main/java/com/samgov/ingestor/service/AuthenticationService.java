@@ -125,7 +125,7 @@ public class AuthenticationService {
             }
 
             // Verify MFA code
-            if (!mfaService.verifyCode(user.getId(), mfaCode)) {
+            if (!mfaService.verifyCode(user.getId(), mfaCode, false)) {
                 log.warn("Invalid MFA code for user: {}", user.getId());
                 throw new IllegalArgumentException("Invalid MFA code");
             }

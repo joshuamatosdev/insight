@@ -40,3 +40,7 @@ export { BillingPage } from './BillingPage';
 export { UsagePage } from './UsagePage';
 export type { UsagePageProps } from './UsagePage.types';
 export { RolesPage as AdminRolesPage, PermissionsPage, UserRolesPage } from './admin';
+export { ReportBuilderPage } from './ReportBuilderPage';
+export type { ReportBuilderPageProps } from './ReportBuilderPage';
+export { ReportsListPage } from './ReportsListPage';
+export type { ReportsListPageProps } from './ReportsListPage';

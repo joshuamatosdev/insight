@@ -47,7 +47,7 @@ class OAuth2UserServiceTest extends BaseServiceTest {
     private OAuth2UserService oauth2UserService;
 
     @BeforeEach
-    void setUp() {
+    protected void setUp() {
         oauth2UserService = new OAuth2UserService(
             userRepository,
             oauthConnectionRepository,

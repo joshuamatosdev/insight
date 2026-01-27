@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type {
   FilterCondition,
   FilterOperator,
@@ -10,7 +10,7 @@ import { Box, Stack, Flex, Card, CardBody } from '../../layout';
 /**
  * Filter operator options
  */
-const FILTER_OPERATORS: Array<{ value: FilterOperator; label: string }> = [
+const FILTER_OPERATORS: Array<{ value: string; label: string }> = [
   { value: 'EQUALS', label: 'Equals' },
   { value: 'NOT_EQUALS', label: 'Not Equals' },
   { value: 'CONTAINS', label: 'Contains' },
@@ -47,6 +47,13 @@ export function FilterBuilder({
     operator: 'EQUALS',
     value: '',
   });
+
+  const columnOptions = useMemo(() => {
+    return availableColumns.map((col) => ({
+      value: col.field,
+      label: col.label,
+    }));
+  }, [availableColumns]);
 
   const handleAddFilter = (): void => {
     if (newFilter.field !== undefined && newFilter.field !== '' && newFilter.operator !== undefined) {
@@ -99,14 +106,9 @@ export function FilterBuilder({
                       value={filter.field}
                       onChange={(e) => handleUpdateFilter(index, 'field', e.target.value)}
                       size="sm"
-                    >
-                      <option value="">Select field...</option>
-                      {availableColumns.map((col) => (
-                        <option key={col.field} value={col.field}>
-                          {col.label}
-                        </option>
-                      ))}
-                    </Select>
+                      placeholder="Select field..."
+                      options={columnOptions}
+                    />
                   </Box>
                   <Box style={{ flex: 1 }}>
                     <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
@@ -116,13 +118,8 @@ export function FilterBuilder({
                       value={filter.operator}
                       onChange={(e) => handleUpdateFilter(index, 'operator', e.target.value)}
                       size="sm"
-                    >
-                      {FILTER_OPERATORS.map((op) => (
-                        <option key={op.value} value={op.value}>
-                          {op.label}
-                        </option>
-                      ))}
-                    </Select>
+                      options={FILTER_OPERATORS}
+                    />
                   </Box>
                   {requiresValue(filter.operator) && (
                     <Box style={{ flex: 1 }}>
@@ -163,14 +160,9 @@ export function FilterBuilder({
                 value={newFilter.field ?? ''}
                 onChange={(e) => setNewFilter({ ...newFilter, field: e.target.value })}
                 size="sm"
-              >
-                <option value="">Select field...</option>
-                {availableColumns.map((col) => (
-                  <option key={col.field} value={col.field}>
-                    {col.label}
-                  </option>
-                ))}
-              </Select>
+                placeholder="Select field..."
+                options={columnOptions}
+              />
             </Box>
             <Box style={{ flex: 1 }}>
               <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
@@ -180,13 +172,8 @@ export function FilterBuilder({
                 value={newFilter.operator ?? 'EQUALS'}
                 onChange={(e) => setNewFilter({ ...newFilter, operator: e.target.value as FilterOperator })}
                 size="sm"
-              >
-                {FILTER_OPERATORS.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.label}
-                  </option>
-                ))}
-              </Select>
+                options={FILTER_OPERATORS}
+              />
             </Box>
             {requiresValue(newFilter.operator ?? 'EQUALS') && (
               <Box style={{ flex: 1 }}>

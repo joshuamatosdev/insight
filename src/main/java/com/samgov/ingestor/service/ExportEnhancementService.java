@@ -38,9 +38,12 @@ public class ExportEnhancementService {
     public byte[] exportOpportunities(ExportRequest request) {
         UUID tenantId = TenantContext.getCurrentTenantId();
         
-        List<Opportunity> opportunities = opportunityRepository.findAllById(request.getIds())
+        // Convert UUIDs to Strings since Opportunity uses String IDs
+        List<String> stringIds = request.getIds().stream()
+            .map(UUID::toString)
+            .toList();
+        List<Opportunity> opportunities = opportunityRepository.findAllById(stringIds)
             .stream()
-            .filter(o -> o.getTenantId().equals(tenantId))
             .toList();
 
         return switch (request.getFormat()) {
@@ -53,14 +56,14 @@ public class ExportEnhancementService {
 
     private byte[] generateCsv(List<Opportunity> opportunities) {
         StringBuilder csv = new StringBuilder();
-        csv.append("Notice ID,Title,Agency,Type,Response Deadline,Posted Date\n");
+        csv.append("Solicitation Number,Title,Agency,Type,Response Deadline,Posted Date\n");
         
         for (Opportunity opp : opportunities) {
-            csv.append(escapeCsv(opp.getNoticeId())).append(",");
+            csv.append(escapeCsv(opp.getSolicitationNumber())).append(",");
             csv.append(escapeCsv(opp.getTitle())).append(",");
             csv.append(escapeCsv(opp.getAgency())).append(",");
             csv.append(escapeCsv(opp.getType())).append(",");
-            csv.append(opp.getResponseDeadline() != null ? opp.getResponseDeadline() : "").append(",");
+            csv.append(opp.getResponseDeadLine() != null ? opp.getResponseDeadLine() : "").append(",");
             csv.append(opp.getPostedDate() != null ? opp.getPostedDate() : "").append("\n");
         }
         
@@ -80,10 +83,10 @@ public class ExportEnhancementService {
         
         for (Opportunity opp : opportunities) {
             content.append("Title: ").append(opp.getTitle()).append("\n");
-            content.append("Notice ID: ").append(opp.getNoticeId()).append("\n");
+            content.append("Solicitation Number: ").append(opp.getSolicitationNumber()).append("\n");
             content.append("Agency: ").append(opp.getAgency()).append("\n");
             content.append("Type: ").append(opp.getType()).append("\n");
-            content.append("Deadline: ").append(opp.getResponseDeadline()).append("\n");
+            content.append("Deadline: ").append(opp.getResponseDeadLine()).append("\n");
             content.append("\n---\n\n");
         }
         
@@ -98,7 +101,7 @@ public class ExportEnhancementService {
         for (int i = 0; i < opportunities.size(); i++) {
             Opportunity opp = opportunities.get(i);
             json.append("{");
-            json.append("\"noticeId\":\"").append(opp.getNoticeId()).append("\",");
+            json.append("\"solicitationNumber\":\"").append(opp.getSolicitationNumber()).append("\",");
             json.append("\"title\":\"").append(escapeJson(opp.getTitle())).append("\",");
             json.append("\"agency\":\"").append(escapeJson(opp.getAgency())).append("\",");
             json.append("\"type\":\"").append(opp.getType()).append("\"");

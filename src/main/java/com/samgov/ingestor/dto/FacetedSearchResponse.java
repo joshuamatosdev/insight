@@ -18,7 +18,7 @@ import java.util.Map;
 @Builder
 public class FacetedSearchResponse {
 
-    private Page<OpportunityDTO> opportunities;
+    private Page<OpportunityDto> opportunities;
     private Map<String, List<FacetBucket>> facets;
     private long totalCount;
     private long queryTimeMs;
