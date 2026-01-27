@@ -88,7 +88,7 @@ export function FilterBuilder({
 
   return (
     <Stack spacing="var(--spacing-4)">
-      <Text variant="heading6" weight="semibold">
+      <Text variant="heading5" weight="semibold">
         Filters
       </Text>
 
