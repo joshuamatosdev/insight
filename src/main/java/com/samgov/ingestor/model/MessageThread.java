@@ -27,6 +27,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "message_threads", indexes = {
     @Index(name = "idx_message_thread_tenant", columnList = "tenant_id"),
+    @Index(name = "idx_message_thread_creator", columnList = "creator_id"),
     @Index(name = "idx_message_thread_last_message_at", columnList = "last_message_at"),
     @Index(name = "idx_message_thread_created_at", columnList = "created_at")
 })
@@ -41,8 +42,19 @@ public class MessageThread {
     @JoinColumn(name = "tenant_id", nullable = false)
     private Tenant tenant;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
+
     @Column(name = "subject")
     private String subject;
+
+    @Column(name = "deleted", nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+
+    @Column(name = "deleted_at")
+    private Instant deletedAt;
 
     @Column(name = "last_message_at")
     private Instant lastMessageAt;
@@ -50,11 +62,25 @@ public class MessageThread {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
+
     @PrePersist
     protected void onCreate() {
         Instant now = Instant.now();
         createdAt = now;
+        updatedAt = now;
         lastMessageAt = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = Instant.now();
+    }
+
+    public void markDeleted() {
+        this.deleted = true;
+        this.deletedAt = Instant.now();
     }
 
     public void updateLastMessageAt() {

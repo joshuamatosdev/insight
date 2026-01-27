@@ -33,9 +33,9 @@ public interface FeatureRequestRepository extends JpaRepository<FeatureRequest, 
     Page<FeatureRequest> findByTenantIdAndStatus(UUID tenantId, FeatureRequestStatus status, Pageable pageable);
 
     /**
-     * Find feature requests created by a specific user.
+     * Find feature requests submitted by a specific user.
      */
-    Page<FeatureRequest> findByTenantIdAndCreatedById(UUID tenantId, UUID createdById, Pageable pageable);
+    Page<FeatureRequest> findByTenantIdAndSubmittedById(UUID tenantId, UUID submittedById, Pageable pageable);
 
     /**
      * Find top voted feature requests for a tenant.
