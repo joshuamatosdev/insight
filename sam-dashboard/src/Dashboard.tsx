@@ -17,6 +17,8 @@ import {
   ShieldIcon,
   KeyIcon,
   UsersIcon,
+  UserIcon,
+  CalendarIcon,
 } from './components/primitives';
 import {
   AppLayout,
@@ -46,6 +48,17 @@ import {
   AdminRolesPage,
   PermissionsPage,
   UserRolesPage,
+  ContactsPage,
+  OrganizationsPage,
+  InteractionsPage,
+  AnalyticsDashboardPage,
+  ReportsListPage,
+  ReportBuilderPage,
+  ContractorDashboard,
+  SettingsPage,
+  AuditLogPage,
+  BillingPage,
+  DocumentsPage,
 } from './pages';
 import { useOpportunities } from './hooks';
 import { exportToCSV } from './services';
@@ -64,6 +77,17 @@ type ViewSection =
   | 'admin-roles'
   | 'admin-permissions'
   | 'admin-user-roles'
+  | 'crm-contacts'
+  | 'crm-organizations'
+  | 'crm-interactions'
+  | 'analytics'
+  | 'reports-list'
+  | 'reports-builder'
+  | 'portal'
+  | 'settings'
+  | 'audit-log'
+  | 'billing'
+  | 'documents'
   | `naics-${string}`;
 
 export function Dashboard() {
@@ -181,6 +205,28 @@ export function Dashboard() {
         return <PermissionsPage />;
       case 'admin-user-roles':
         return <UserRolesPage />;
+      case 'crm-contacts':
+        return <ContactsPage />;
+      case 'crm-organizations':
+        return <OrganizationsPage />;
+      case 'crm-interactions':
+        return <InteractionsPage />;
+      case 'analytics':
+        return <AnalyticsDashboardPage />;
+      case 'reports-list':
+        return <ReportsListPage />;
+      case 'reports-builder':
+        return <ReportBuilderPage />;
+      case 'portal':
+        return <ContractorDashboard />;
+      case 'settings':
+        return <SettingsPage />;
+      case 'audit-log':
+        return <AuditLogPage />;
+      case 'billing':
+        return <BillingPage />;
+      case 'documents':
+        return <DocumentsPage />;
       default:
         if (currentSection.startsWith('naics-')) {
           const naicsCode = currentSection.replace('naics-', '');
@@ -289,6 +335,74 @@ export function Dashboard() {
         </SidebarNav>
       </SidebarSection>
 
+      <SidebarSection title="CRM">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<UsersIcon size="sm" />}
+            label="Contacts"
+            isActive={currentSection === 'crm-contacts'}
+            onClick={() => setCurrentSection('crm-contacts')}
+          />
+          <SidebarNavItem
+            icon={<BuildingCheckIcon size="sm" />}
+            label="Organizations"
+            isActive={currentSection === 'crm-organizations'}
+            onClick={() => setCurrentSection('crm-organizations')}
+          />
+          <SidebarNavItem
+            icon={<CalendarIcon size="sm" />}
+            label="Interactions"
+            isActive={currentSection === 'crm-interactions'}
+            onClick={() => setCurrentSection('crm-interactions')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Document Management">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<FileTextIcon size="sm" />}
+            label="Documents"
+            isActive={currentSection === 'documents'}
+            onClick={() => setCurrentSection('documents')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Insights">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<SpeedometerIcon size="sm" />}
+            label="Analytics"
+            isActive={currentSection === 'analytics'}
+            onClick={() => setCurrentSection('analytics')}
+          />
+          <SidebarNavItem
+            icon={<FileTextIcon size="sm" />}
+            label="Reports"
+            isActive={currentSection === 'reports-list'}
+            onClick={() => setCurrentSection('reports-list')}
+          />
+          <SidebarNavItem
+            icon={<FileCheckIcon size="sm" />}
+            label="Report Builder"
+            isActive={currentSection === 'reports-builder'}
+            onClick={() => setCurrentSection('reports-builder')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
+      <SidebarSection title="Portal">
+        <SidebarNav>
+          <SidebarNavItem
+            icon={<ListUlIcon size="sm" />}
+            label="Contractor Dashboard"
+            isActive={currentSection === 'portal'}
+            onClick={() => setCurrentSection('portal')}
+          />
+        </SidebarNav>
+      </SidebarSection>
+
       <SidebarSection title="Administration">
         <SidebarNav>
           <SidebarNavItem
@@ -312,13 +426,31 @@ export function Dashboard() {
         </SidebarNav>
       </SidebarSection>
 
-      <SidebarSection title="Billing">
+      <SidebarSection title="Settings & Billing">
         <SidebarNav>
+          <SidebarNavItem
+            icon={<UserIcon size="sm" />}
+            label="Settings"
+            isActive={currentSection === 'settings'}
+            onClick={() => setCurrentSection('settings')}
+          />
           <SidebarNavItem
             icon={<SpeedometerIcon size="sm" />}
             label="Usage & Limits"
             isActive={currentSection === 'usage'}
             onClick={() => setCurrentSection('usage')}
+          />
+          <SidebarNavItem
+            icon={<TagIcon size="sm" />}
+            label="Billing"
+            isActive={currentSection === 'billing'}
+            onClick={() => setCurrentSection('billing')}
+          />
+          <SidebarNavItem
+            icon={<FileTextIcon size="sm" />}
+            label="Audit Log"
+            isActive={currentSection === 'audit-log'}
+            onClick={() => setCurrentSection('audit-log')}
           />
         </SidebarNav>
       </SidebarSection>

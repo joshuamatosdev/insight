@@ -44,3 +44,25 @@ export { ReportBuilderPage } from './ReportBuilderPage';
 export type { ReportBuilderPageProps } from './ReportBuilderPage';
 export { ReportsListPage } from './ReportsListPage';
 export type { ReportsListPageProps } from './ReportsListPage';
+export { AnalyticsDashboardPage } from './AnalyticsDashboardPage';
+export { RegisterPage } from './RegisterPage';
+export { ForgotPasswordPage } from './ForgotPasswordPage';
+export { ResetPasswordPage } from './ResetPasswordPage';
+export { VerifyEmailPage } from './VerifyEmailPage';
+export { MfaSetupPage } from './MfaSetupPage';
+export { OAuthCallbackPage } from './OAuthCallbackPage';
+export { ErrorPage } from './ErrorPage';
+export {
+  ContactsPage,
+  ContactDetailPage,
+  OrganizationsPage,
+  OrganizationDetailPage,
+  InteractionsPage,
+} from './crm';
+export { ContractorDashboard } from './portal';
+export { OnboardingWizard } from './onboarding/OnboardingWizard';
+export {
+  DocumentsPage,
+  DocumentDetailPage,
+  DocumentUploadPage,
+} from './documents';
