@@ -807,6 +807,7 @@ public class FinancialService {
         return lineItemRepository.findByInvoiceIdOrderByLineNumber(invoiceId);
     }
 
+    @Transactional
     public java.util.Optional<InvoiceLineItem> addLineItem(UUID tenantId, UUID invoiceId, CreateLineItemRequest request) {
         return invoiceRepository.findByTenantIdAndId(tenantId, invoiceId).map(invoice -> {
             InvoiceLineItem item = InvoiceLineItem.builder()
@@ -827,10 +828,12 @@ public class FinancialService {
                 .fee(request.fee())
                 .notes(request.notes())
                 .build();
-            invoice.addLineItem(item);
+            // Save the line item directly to ensure it gets an ID
+            InvoiceLineItem savedItem = lineItemRepository.save(item);
+            invoice.addLineItem(savedItem);
             recalculateInvoiceTotals(invoice);
             invoiceRepository.save(invoice);
-            return item;
+            return savedItem;
         });
     }
 

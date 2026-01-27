@@ -26,7 +26,7 @@ public interface PipelineRepository extends JpaRepository<Pipeline, UUID> {
     @Query("""
         SELECT p FROM Pipeline p
         LEFT JOIN FETCH p.stages
-        WHERE p.tenantId = :tenantId AND p.id = :id
+        WHERE p.tenant.id = :tenantId AND p.id = :id
         """)
     Optional<Pipeline> findByTenantIdAndIdWithStages(
         @Param("tenantId") UUID tenantId,

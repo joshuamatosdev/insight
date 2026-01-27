@@ -23,7 +23,7 @@ public interface InvoiceLineItemRepository extends JpaRepository<InvoiceLineItem
 
     List<InvoiceLineItem> findByInvoiceIdAndLineType(UUID invoiceId, LineType lineType);
 
-    List<InvoiceLineItem> findByCliId(UUID clinId);
+    List<InvoiceLineItem> findByClinId(UUID clinId);
 
     @Query("SELECT SUM(li.amount) FROM InvoiceLineItem li WHERE li.invoice.id = :invoiceId")
     Optional<BigDecimal> sumAmountByInvoiceId(@Param("invoiceId") UUID invoiceId);
@@ -34,8 +34,8 @@ public interface InvoiceLineItemRepository extends JpaRepository<InvoiceLineItem
         @Param("lineType") LineType lineType
     );
 
-    @Query("SELECT SUM(li.hours) FROM InvoiceLineItem li WHERE li.invoice.id = :invoiceId AND li.lineType = 'DIRECT_LABOR'")
-    Optional<BigDecimal> sumLaborHoursByInvoiceId(@Param("invoiceId") UUID invoiceId);
+    @Query("SELECT SUM(li.hours) FROM InvoiceLineItem li WHERE li.invoice.id = :invoiceId AND li.lineType = :lineType")
+    Optional<BigDecimal> sumLaborHoursByInvoiceId(@Param("invoiceId") UUID invoiceId, @Param("lineType") LineType lineType);
 
     void deleteByInvoiceId(UUID invoiceId);
 }

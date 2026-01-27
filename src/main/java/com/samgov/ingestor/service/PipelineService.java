@@ -2,6 +2,7 @@ package com.samgov.ingestor.service;
 
 import com.samgov.ingestor.config.TenantContext;
 import com.samgov.ingestor.exception.ResourceNotFoundException;
+import jakarta.persistence.EntityManager;
 import com.samgov.ingestor.model.AuditLog.AuditAction;
 import com.samgov.ingestor.model.Opportunity;
 import com.samgov.ingestor.model.Pipeline;
@@ -45,6 +46,7 @@ public class PipelineService {
     private final UserRepository userRepository;
     private final OpportunityRepository opportunityRepository;
     private final AuditService auditService;
+    private final EntityManager entityManager;
 
     // Pipeline CRUD
 
@@ -308,7 +310,8 @@ public class PipelineService {
         }
 
         int deletedPosition = stage.getPosition();
-        stageRepository.delete(stage);
+        UUID stageIdToDelete = stage.getId();
+        stageRepository.deleteStageById(stageIdToDelete);
         stageRepository.decrementPositionsAfter(pipelineId, deletedPosition);
     }
 
@@ -608,9 +611,12 @@ public class PipelineService {
     }
 
     private PipelineDto toDto(Pipeline pipeline) {
-        List<StageDto> stages = pipeline.getStages() != null
-            ? pipeline.getStages().stream().map(this::toStageDto).toList()
-            : List.of();
+        // Query stages directly from repository to ensure fresh data
+        // This avoids stale JPA collection caching issues in transactional contexts
+        List<StageDto> stages = stageRepository.findByPipelineIdOrderByPositionAsc(pipeline.getId())
+            .stream()
+            .map(this::toStageDto)
+            .toList();
 
         return new PipelineDto(
             pipeline.getId(),

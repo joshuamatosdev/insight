@@ -1,0 +1,99 @@
+# Test configuration - uses dev PostgreSQL server
+# No Testcontainers required - connects to localhost:5433
+
+spring:
+  application:
+    name: sam-gov-ingestor-test
+
+  # Use dev PostgreSQL server
+  datasource:
+    url: jdbc:postgresql://localhost:5433/sam_test
+    username: dev_user
+    password: dev_pass
+    driver-class-name: org.postgresql.Driver
+
+  # JPA/Hibernate configuration for tests
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Disable virtual threads in tests for predictable behavior
+  threads:
+    virtual:
+      enabled: false
+
+# Disable scheduled tasks during tests
+sam:
+  gov:
+    api-key: test-api-key
+    base-url: https://api.sam.gov/opportunities/v2/search
+    naics-codes:
+      - "541511"
+    limit: 10
+    posted-within-days: 7
+    ptype: "k,o"
+    set-aside: ""
+    rate-limit-ms: 0
+    sbir-enabled: false
+    sbir-keywords: []
+
+sbir:
+  gov:
+    enabled: false
+    base-url: https://api.www.sbir.gov/public/api
+    agencies: []
+    rows-per-request: 10
+    max-results: 100
+    rate-limit-ms: 0
+    it-keywords: []
+
+# Actuator configuration for tests
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+# JWT Configuration for tests
+# Base64-encoded 256-bit (32-byte) secret for HS256
+jwt:
+  secret: dGVzdC1qd3Qtc2VjcmV0LWtleS10aGF0LWlzLWF0LWxlYXN0LTMyLWNoYXJzLWxvbmctZm9yLXRlc3Rpbmc=
+  expiration: 3600000
+  refresh-expiration: 86400000
+
+# Application Configuration for tests
+app:
+  name: SAM.gov Test
+  base-url: http://localhost:8080
+  email:
+    provider: console
+  password-reset:
+    expiration-hours: 1
+  invitation:
+    expiration-days: 1
+  session:
+    max-per-user: 5
+
+# Disable rate limiting for tests (set very high limit)
+rate:
+  limit:
+    requests-per-minute: 100000
+    window-seconds: 1
+    cleanup-interval-seconds: 3600
+
+# Reduce logging noise in tests
+logging:
+  level:
+    root: WARN
+    com.samgov.ingestor: INFO
+    org.hibernate.SQL: WARN
+    org.springframework.test: WARN

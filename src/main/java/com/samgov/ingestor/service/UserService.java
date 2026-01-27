@@ -118,8 +118,8 @@ public class UserService {
         Tenant tenant = tenantRepository.findById(tenantId)
             .orElseThrow(() -> new IllegalArgumentException("Tenant not found: " + tenantId));
 
-        Role role = roleRepository.findByName(roleName)
-            .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
+        Role role = roleRepository.findByTenantIdAndName(tenantId, roleName)
+            .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName + " in tenant " + tenantId));
 
         if (membershipRepository.existsByUserIdAndTenantId(userId, tenantId)) {
             throw new IllegalArgumentException("User is already a member of this tenant");
@@ -210,8 +210,8 @@ public class UserService {
         TenantMembership membership = membershipRepository.findByUserIdAndTenantId(userId, tenantId)
             .orElseThrow(() -> new IllegalArgumentException("User is not a member of this tenant"));
 
-        Role role = roleRepository.findByName(newRole)
-            .orElseThrow(() -> new IllegalArgumentException("Role not found: " + newRole));
+        Role role = roleRepository.findByTenantIdAndName(tenantId, newRole)
+            .orElseThrow(() -> new IllegalArgumentException("Role not found: " + newRole + " in tenant " + tenantId));
 
         membership.setRole(role);
         membershipRepository.save(membership);

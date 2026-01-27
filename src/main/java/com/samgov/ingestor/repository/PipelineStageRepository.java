@@ -28,15 +28,19 @@ public interface PipelineStageRepository extends JpaRepository<PipelineStage, UU
     @Query("SELECT MAX(s.position) FROM PipelineStage s WHERE s.pipeline.id = :pipelineId")
     Optional<Integer> findMaxPositionByPipelineId(@Param("pipelineId") UUID pipelineId);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("UPDATE PipelineStage s SET s.position = s.position + 1 WHERE s.pipeline.id = :pipelineId AND s.position >= :position")
     void incrementPositionsFrom(@Param("pipelineId") UUID pipelineId, @Param("position") int position);
 
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE PipelineStage s SET s.position = s.position - 1 WHERE s.pipeline.id = :pipelineId AND s.position > :position")
     void decrementPositionsAfter(@Param("pipelineId") UUID pipelineId, @Param("position") int position);
 
     long countByPipelineId(UUID pipelineId);
 
     boolean existsByPipelineIdAndName(UUID pipelineId, String name);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("DELETE FROM PipelineStage s WHERE s.id = :stageId")
+    void deleteStageById(@Param("stageId") UUID stageId);
 }

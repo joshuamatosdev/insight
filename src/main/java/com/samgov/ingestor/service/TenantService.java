@@ -3,9 +3,11 @@ package com.samgov.ingestor.service;
 import com.samgov.ingestor.dto.CreateTenantRequest;
 import com.samgov.ingestor.dto.TenantDto;
 import com.samgov.ingestor.dto.TenantMembershipDto;
+import com.samgov.ingestor.model.Role;
 import com.samgov.ingestor.model.Tenant;
 import com.samgov.ingestor.model.Tenant.SubscriptionTier;
 import com.samgov.ingestor.model.Tenant.TenantStatus;
+import com.samgov.ingestor.repository.RoleRepository;
 import com.samgov.ingestor.repository.TenantMembershipRepository;
 import com.samgov.ingestor.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class TenantService {
 
     private final TenantRepository tenantRepository;
     private final TenantMembershipRepository membershipRepository;
+    private final RoleRepository roleRepository;
 
     @Transactional
     public TenantDto createTenant(CreateTenantRequest request) {
@@ -59,7 +62,32 @@ public class TenantService {
         tenant = tenantRepository.save(tenant);
         log.info("Created tenant with id: {}", tenant.getId());
 
+        // Create default roles for the tenant
+        createDefaultRoles(tenant);
+
         return TenantDto.fromEntity(tenant);
+    }
+
+    private void createDefaultRoles(Tenant tenant) {
+        // Create TENANT_ADMIN role
+        Role adminRole = Role.builder()
+            .tenant(tenant)
+            .name(Role.TENANT_ADMIN)
+            .description("Tenant Administrator")
+            .isSystemRole(true)
+            .build();
+        roleRepository.save(adminRole);
+
+        // Create USER role
+        Role userRole = Role.builder()
+            .tenant(tenant)
+            .name(Role.USER)
+            .description("Standard User")
+            .isSystemRole(true)
+            .build();
+        roleRepository.save(userRole);
+
+        log.info("Created default roles for tenant {}", tenant.getId());
     }
 
     @Transactional(readOnly = true)

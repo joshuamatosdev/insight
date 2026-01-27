@@ -20,54 +20,57 @@ interface ApiResponse<T> {
 }
 
 /**
- * Raw user from API (snake_case)
+ * Raw user from API (camelCase - Spring Boot default)
  */
 interface ApiUser {
   id: string;
   email: string;
-  display_name: string;
-  email_verified: boolean;
-  first_name?: string;
-  last_name?: string;
+  firstName: string;
+  lastName: string;
+  fullName?: string;
+  avatarUrl?: string;
+  status: string;
+  emailVerified: boolean;
+  mfaEnabled: boolean;
+  lastLoginAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /**
- * Raw auth response from API (snake_case)
+ * Raw auth response from API (camelCase - Spring Boot default)
  */
 interface ApiAuthResponse {
-  access_token: string;
-  refresh_token: string;
+  accessToken: string;
+  refreshToken: string;
+  tokenType: string;
+  expiresIn: number;
   user: ApiUser;
-  mfa_required?: boolean;
+  mfaRequired: boolean;
 }
 
 /**
  * Transforms API user to frontend User type
  */
 function transformUser(apiUser: ApiUser): User {
-  // Parse display_name to get first/last name if not provided
-  const nameParts = apiUser.display_name.split(' ');
-  const firstName = apiUser.first_name ?? nameParts[0] ?? '';
-  const lastName = apiUser.last_name ?? nameParts.slice(1).join(' ') ?? '';
-
   return {
     id: apiUser.id,
     email: apiUser.email,
-    firstName,
-    lastName,
+    firstName: apiUser.firstName,
+    lastName: apiUser.lastName,
   };
 }
 
 /**
  * Transforms API auth response to frontend LoginResponse type
+ * Note: Backend returns response directly (not wrapped in ApiResponse)
  */
-function transformAuthResponse(apiResponse: ApiResponse<ApiAuthResponse>): LoginResponse {
-  const data = apiResponse.data;
+function transformAuthResponse(apiResponse: ApiAuthResponse): LoginResponse {
   return {
-    token: data.access_token,
-    refreshToken: data.refresh_token,
-    user: transformUser(data.user),
-    mfaRequired: data.mfa_required,
+    token: apiResponse.accessToken,
+    refreshToken: apiResponse.refreshToken,
+    user: transformUser(apiResponse.user),
+    mfaRequired: apiResponse.mfaRequired,
   };
 }
 
@@ -107,7 +110,7 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
     throw error;
   }
 
-  const apiResponse: ApiResponse<ApiAuthResponse> = await response.json();
+  const apiResponse: ApiAuthResponse = await response.json();
   return transformAuthResponse(apiResponse);
 }
 
@@ -134,7 +137,7 @@ export async function register(data: RegisterData): Promise<LoginResponse> {
     throw error;
   }
 
-  const apiResponse: ApiResponse<ApiAuthResponse> = await response.json();
+  const apiResponse: ApiAuthResponse = await response.json();
   return transformAuthResponse(apiResponse);
 }
 
@@ -155,7 +158,7 @@ export async function refreshToken(currentRefreshToken: string): Promise<LoginRe
     throw error;
   }
 
-  const apiResponse: ApiResponse<ApiAuthResponse> = await response.json();
+  const apiResponse: ApiAuthResponse = await response.json();
   return transformAuthResponse(apiResponse);
 }
 

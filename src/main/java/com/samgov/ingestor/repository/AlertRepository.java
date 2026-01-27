@@ -31,13 +31,13 @@ public interface AlertRepository extends JpaRepository<Alert, UUID> {
     long countByUserIdAndStatus(UUID userId, AlertStatus status);
 
     @Modifying
-    @Query("UPDATE Alert a SET a.status = :status, a.readAt = :now WHERE a.userId = :userId AND a.status = 'UNREAD'")
-    int markAllAsRead(@Param("userId") UUID userId, @Param("status") AlertStatus status, @Param("now") Instant now);
+    @Query("UPDATE Alert a SET a.status = :newStatus, a.readAt = :now WHERE a.user.id = :userId AND a.status = :currentStatus")
+    int markAllAsRead(@Param("userId") UUID userId, @Param("newStatus") AlertStatus newStatus, @Param("currentStatus") AlertStatus currentStatus, @Param("now") Instant now);
 
     @Modifying
     @Query("DELETE FROM Alert a WHERE a.createdAt < :cutoff")
     int deleteOldAlerts(@Param("cutoff") Instant cutoff);
 
-    @Query("SELECT COUNT(a) FROM Alert a WHERE a.userId = :userId AND a.status = 'UNREAD'")
-    long countUnreadByUserId(@Param("userId") UUID userId);
+    @Query("SELECT COUNT(a) FROM Alert a WHERE a.user.id = :userId AND a.status = :status")
+    long countUnreadByUserId(@Param("userId") UUID userId, @Param("status") AlertStatus status);
 }

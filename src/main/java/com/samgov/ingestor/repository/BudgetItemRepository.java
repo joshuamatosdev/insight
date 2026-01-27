@@ -27,7 +27,7 @@ public interface BudgetItemRepository extends JpaRepository<BudgetItem, UUID> {
 
     List<BudgetItem> findByContractIdAndFiscalYear(UUID contractId, Integer fiscalYear);
 
-    List<BudgetItem> findByCliId(UUID clinId);
+    List<BudgetItem> findByClinId(UUID clinId);
 
     // Sum budgeted amount
     @Query("SELECT SUM(b.budgetedAmount) FROM BudgetItem b WHERE b.contract.id = :contractId")

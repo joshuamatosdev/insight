@@ -79,7 +79,6 @@ public class InvoiceService {
         if (request.lineItems() != null) {
             for (LineItemRequest itemReq : request.lineItems()) {
                 InvoiceLineItem item = new InvoiceLineItem();
-                item.setInvoice(invoice);
                 item.setDescription(itemReq.description());
                 item.setLineType(itemReq.lineType() != null ? itemReq.lineType() : LineType.OTHER);
 
@@ -93,7 +92,8 @@ public class InvoiceService {
                 item.setUnitOfMeasure(itemReq.unitOfMeasure());
                 item.setUnitPrice(itemReq.unitPrice());
                 item.setAmount(itemReq.amount());
-                lineItemRepository.save(item);
+                // Add to invoice's collection (which sets the invoice reference via addLineItem)
+                invoice.addLineItem(item);
                 total = total.add(itemReq.amount());
             }
         }

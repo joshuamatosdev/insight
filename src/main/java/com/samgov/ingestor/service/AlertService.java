@@ -108,7 +108,7 @@ public class AlertService {
             return 0;
         }
 
-        return alertRepository.countUnreadByUserId(userId);
+        return alertRepository.countUnreadByUserId(userId, AlertStatus.UNREAD);
     }
 
     /**
@@ -141,7 +141,7 @@ public class AlertService {
             throw new IllegalStateException("No authenticated user");
         }
 
-        return alertRepository.markAllAsRead(userId, AlertStatus.READ, Instant.now());
+        return alertRepository.markAllAsRead(userId, AlertStatus.READ, AlertStatus.UNREAD, Instant.now());
     }
 
     /**
