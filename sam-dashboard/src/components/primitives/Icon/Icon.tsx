@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { IconComponentProps, IconSize, IconColor } from './Icon.types';
 
 const sizeMap: Record<IconSize, string> = {
@@ -21,6 +21,11 @@ const colorMap: Record<IconColor, string> = {
   white: 'var(--color-white)',
 };
 
+interface IconPropsWithChildren extends Omit<IconComponentProps, 'paths'> {
+  paths?: string[];
+  children?: ReactNode;
+}
+
 export function Icon({
   size = 'md',
   color = 'inherit',
@@ -29,8 +34,9 @@ export function Icon({
   viewBox = '0 0 16 16',
   paths,
   fillRule = 'nonzero',
+  children,
   ...rest
-}: IconComponentProps) {
+}: IconPropsWithChildren) {
   const iconStyles: CSSProperties = {
     width: sizeMap[size],
     height: sizeMap[size],
@@ -48,9 +54,13 @@ export function Icon({
       aria-hidden="true"
       {...rest}
     >
-      {paths.map((d, i) => (
-        <path key={i} d={d} fillRule={fillRule} />
-      ))}
+      {children !== undefined
+        ? children
+        : paths !== undefined
+          ? paths.map((d, i) => (
+              <path key={i} d={d} fillRule={fillRule} />
+            ))
+          : null}
     </svg>
   );
 }
