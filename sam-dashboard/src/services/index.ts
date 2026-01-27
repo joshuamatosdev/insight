@@ -34,3 +34,19 @@ export {
   fetchTenantAuditLogsByDateRange,
   fetchEntityAuditLogs,
 } from './audit';
+export {
+  // Roles API
+  fetchRoles,
+  fetchRole,
+  createRole,
+  updateRole,
+  deleteRole,
+  // Permissions API
+  fetchPermissions,
+  fetchPermissionCodes,
+  fetchMyPermissions,
+  // User-Role Management API
+  fetchUsersWithRoles,
+  updateUserRole,
+  removeUserRole,
+} from './rbac';
