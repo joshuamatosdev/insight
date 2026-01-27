@@ -36,6 +36,16 @@ export {
   ClockIcon,
   LogoutIcon,
   BoxArrowRightIcon,
+  BellIcon,
+  BellFillIcon,
+  BellSlashIcon,
+  PlusIcon,
+  PlusCircleIcon,
+  PlusLgIcon,
+  TrashIcon,
+  TrashFillIcon,
+  PencilIcon,
+  PencilSquareIcon,
 } from './Icon';
 export type { IconProps, IconSize, IconColor, IconComponentProps } from './Icon';
 

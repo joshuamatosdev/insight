@@ -16,6 +16,14 @@ export type {
   SettingsPageProps,
 } from './SettingsPage.types';
 export type { AuditLogPageProps } from './AuditLogPage.types';
+export type {
+  OpportunityAlert,
+  AlertFormState,
+  AlertFormErrors,
+  CreateAlertRequest,
+  UpdateAlertRequest,
+  PaginatedResponse,
+} from './AlertsPage.types';
 export { DashboardPage } from './DashboardPage';
 export { AllOpportunitiesPage } from './AllOpportunitiesPage';
 export { SourcesSoughtPage } from './SourcesSoughtPage';
@@ -27,3 +35,4 @@ export { SBIRAwardsPage } from './SBIRAwardsPage';
 export { LoginPage } from './LoginPage';
 export { SettingsPage } from './SettingsPage';
 export { AuditLogPage } from './AuditLogPage';
+export { AlertsPage } from './AlertsPage';

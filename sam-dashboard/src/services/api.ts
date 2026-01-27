@@ -143,3 +143,91 @@ export async function fetchSbirAgencies(): Promise<Record<string, number>> {
   }
   return response.json();
 }
+
+// ==================== Opportunity Alerts API ====================
+
+import type {
+  OpportunityAlert,
+  CreateAlertRequest,
+  UpdateAlertRequest,
+  PaginatedResponse,
+} from '../pages/AlertsPage.types';
+
+export async function fetchOpportunityAlerts(
+  page: number = 0,
+  size: number = 20
+): Promise<PaginatedResponse<OpportunityAlert>> {
+  const response = await authFetch(
+    `${API_BASE}/v1/opportunity-alerts?page=${page}&size=${size}`
+  );
+  if (response.ok === false) {
+    throw new Error(`Failed to fetch opportunity alerts: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function fetchOpportunityAlert(id: string): Promise<OpportunityAlert> {
+  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}`);
+  if (response.ok === false) {
+    throw new Error(`Failed to fetch opportunity alert: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function createOpportunityAlert(
+  request: CreateAlertRequest
+): Promise<OpportunityAlert> {
+  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+  if (response.ok === false) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.message ?? `Failed to create opportunity alert: ${response.statusText}`
+    );
+  }
+  return response.json();
+}
+
+export async function updateOpportunityAlert(
+  id: string,
+  request: UpdateAlertRequest
+): Promise<OpportunityAlert> {
+  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+  if (response.ok === false) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.message ?? `Failed to update opportunity alert: ${response.statusText}`
+    );
+  }
+  return response.json();
+}
+
+export async function deleteOpportunityAlert(id: string): Promise<void> {
+  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}`, {
+    method: 'DELETE',
+  });
+  if (response.ok === false) {
+    throw new Error(`Failed to delete opportunity alert: ${response.statusText}`);
+  }
+}
+
+export async function toggleOpportunityAlert(id: string): Promise<OpportunityAlert> {
+  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}/toggle`, {
+    method: 'POST',
+  });
+  if (response.ok === false) {
+    throw new Error(`Failed to toggle opportunity alert: ${response.statusText}`);
+  }
+  return response.json();
+}

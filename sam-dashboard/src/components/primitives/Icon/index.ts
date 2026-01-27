@@ -16,4 +16,7 @@ export { ChevronRightIcon, ChevronLeftIcon, ChevronDownIcon, ChevronUpIcon } fro
 export { BuildingIcon, BuildingCheckIcon } from './icons/BuildingIcon';
 export { CalendarIcon, ClockIcon } from './icons/CalendarIcon';
 export { LogoutIcon, BoxArrowRightIcon } from './icons/LogoutIcon';
-export { BellIcon } from './icons/BellIcon';
+export { BellIcon, BellFillIcon, BellSlashIcon } from './icons/BellIcon';
+export { PlusIcon, PlusCircleIcon, PlusLgIcon } from './icons/PlusIcon';
+export { TrashIcon, TrashFillIcon } from './icons/TrashIcon';
+export { PencilIcon, PencilSquareIcon } from './icons/PencilIcon';
