@@ -13,14 +13,14 @@ import {
 } from '../../../services/financialService';
 
 // Map status colors to Catalyst badge colors
-function getBadgeColor(status: string): 'green' | 'yellow' | 'red' | 'zinc' | 'cyan' {
-  const colorMap: Record<string, 'green' | 'yellow' | 'red' | 'zinc' | 'cyan'> = {
+function getBadgeColor(status: string): 'green' | 'yellow' | 'red' | 'zinc' {
+  const colorMap: Record<string, 'green' | 'yellow' | 'red' | 'zinc'> = {
     success: 'green',
     warning: 'yellow',
     danger: 'red',
     secondary: 'zinc',
-    info: 'cyan',
-    primary: 'cyan',
+    info: 'zinc',
+    primary: 'zinc',
   };
   const color = getStatusColor(status);
   return colorMap[color] ?? 'zinc';
@@ -166,7 +166,7 @@ export function InvoiceCard({
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-border px-6 py-3 dark:border-white/10">
         {canSubmit && onSubmit !== undefined ? (
-          <Button color="cyan" onClick={() => onSubmit(invoice.id)}>
+          <Button color="dark/zinc" onClick={() => onSubmit(invoice.id)}>
             Submit
           </Button>
         ) : (

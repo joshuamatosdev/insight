@@ -234,7 +234,7 @@ export function BudgetForm({
           Cancel
         </Button>
         <Button
-          color="cyan"
+          color="dark/zinc"
           type="submit"
           disabled={isSubmitting}
         >

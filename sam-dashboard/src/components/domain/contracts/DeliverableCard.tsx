@@ -77,13 +77,13 @@ export function DeliverableCard({
   style,
 }: DeliverableCardProps) {
   const cardStyles: CSSProperties = {
-    marginBottom: 'var(--spacing-3)',
+    marginBottom: '0.75rem',
     ...(deliverable.isOverdue === true && {
-      borderLeft: '4px solid var(--color-danger)',
+      borderLeft: '4px solid #ef4444',
     }),
     ...(deliverable.isDueSoon === true &&
       deliverable.isOverdue === false && {
-        borderLeft: '4px solid var(--color-warning)',
+        borderLeft: '4px solid #f59e0b',
       }),
     ...style,
   };
@@ -99,7 +99,7 @@ export function DeliverableCard({
       <CardHeader>
         <HStack justify="between" align="start">
           <Box style={{ flex: 1, minWidth: 0 }}>
-            <HStack spacing="var(--spacing-2)" align="center">
+            <HStack spacing="sm" align="center">
               {deliverable.cdrlNumber !== null && (
                 <Text variant="bodySmall" color="muted">
                   {deliverable.cdrlNumber}
@@ -108,7 +108,7 @@ export function DeliverableCard({
               <Text variant="heading5">{deliverable.title}</Text>
             </HStack>
           </Box>
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <Badge variant="info" size="sm">
               {getDeliverableTypeLabel(deliverable.deliverableType)}
             </Badge>
@@ -129,8 +129,8 @@ export function DeliverableCard({
         </HStack>
       </CardHeader>
       <CardBody>
-        <Grid columns={4} gap="var(--spacing-4)">
-          <Stack spacing="var(--spacing-1)">
+        <Grid columns={4} gap="md">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">
               Due Date
             </Text>
@@ -148,19 +148,19 @@ export function DeliverableCard({
               {formatDate(deliverable.dueDate)}
             </Text>
           </Stack>
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">
               Frequency
             </Text>
             <Text variant="body">{getFrequencyLabel(deliverable.frequency)}</Text>
           </Stack>
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">
               CLIN
             </Text>
             <Text variant="body">{deliverable.clinNumber ?? 'N/A'}</Text>
           </Stack>
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">
               Owner
             </Text>
@@ -179,14 +179,14 @@ export function DeliverableCard({
         {(deliverable.submittedDate !== null || deliverable.acceptedDate !== null) && (
           <Box
             style={{
-              marginTop: 'var(--spacing-3)',
-              paddingTop: 'var(--spacing-3)',
-              borderTop: '1px solid var(--color-gray-200)',
+              marginTop: '0.75rem',
+              paddingTop: '0.75rem',
+              borderTop: '1px solid #e4e4e7',
             }}
           >
-            <Grid columns={2} gap="var(--spacing-4)">
+            <Grid columns={2} gap="md">
               {deliverable.submittedDate !== null && (
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Submitted
                   </Text>
@@ -196,7 +196,7 @@ export function DeliverableCard({
                 </Stack>
               )}
               {deliverable.acceptedDate !== null && (
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Accepted
                   </Text>
@@ -212,12 +212,12 @@ export function DeliverableCard({
         {onStatusChange !== undefined && (
           <Box
             style={{
-              marginTop: 'var(--spacing-3)',
-              paddingTop: 'var(--spacing-3)',
-              borderTop: '1px solid var(--color-gray-200)',
+              marginTop: '0.75rem',
+              paddingTop: '0.75rem',
+              borderTop: '1px solid #e4e4e7',
             }}
           >
-            <HStack spacing="var(--spacing-3)" align="center">
+            <HStack spacing="md" align="center">
               <Text variant="bodySmall" weight="semibold">
                 Update Status:
               </Text>

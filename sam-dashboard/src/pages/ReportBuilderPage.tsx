@@ -9,8 +9,8 @@ import {
   Box,
   Grid,
   GridItem,
-} from '../components/layout';
-import { Text, Button, Input, Select, Badge } from '../components/primitives';
+} from '../components/catalyst/layout';
+import { Text, Button, Input, Select, Badge } from '../components/catalyst/primitives';
 import { DraggableColumn, DropZone, FilterBuilder } from '../components/domain/reports';
 import type {
   EntityType,
@@ -459,7 +459,7 @@ export function ReportBuilderPage({
   if (pageState === 'error' && errors.general !== undefined) {
     return (
       <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+        <Stack spacing="md" style={{ textAlign: 'center' }}>
           <Text variant="body" color="danger">
             {errors.general}
           </Text>
@@ -472,10 +472,10 @@ export function ReportBuilderPage({
   }
 
   return (
-    <Stack spacing="var(--spacing-6)">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
-        <Stack spacing="var(--spacing-1)">
+        <Stack spacing="xs">
           <Text variant="heading3">{isEditMode ? 'Edit Report' : 'Create Report'}</Text>
           <Text variant="bodySmall" color="muted">
             Build a custom report by selecting columns and filters
@@ -504,9 +504,9 @@ export function ReportBuilderPage({
       {errors.general !== undefined && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            backgroundColor: 'var(--color-error-light)',
-            borderRadius: 'var(--radius-md)',
+            padding: '0.75rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -550,7 +550,7 @@ export function ReportBuilderPage({
                 </Flex>
               </CardHeader>
               <CardBody>
-                <Stack spacing="var(--spacing-2)" onDragOver={handleDragOverAvailable}>
+                <Stack spacing="sm" onDragOver={handleDragOverAvailable}>
                   {getUnselectedColumns().map((column, index) => (
                     <Box
                       key={column.field}
@@ -688,11 +688,11 @@ export function ReportBuilderPage({
                         <th
                           key={col.field}
                           style={{
-                            padding: 'var(--spacing-3)',
+                            padding: '0.75rem',
                             textAlign: 'left',
                             fontWeight: 600,
                             fontSize: '0.875rem',
-                            borderBottom: '1px solid var(--color-outline-variant)',
+                            borderBottom: '1px solid #e4e4e7',
                           }}
                         >
                           {col.label}
@@ -705,7 +705,7 @@ export function ReportBuilderPage({
                     <tr
                       key={`row-${rowIndex}`}
                       style={{
-                        borderBottom: '1px solid var(--color-outline-variant)',
+                        borderBottom: '1px solid #e4e4e7',
                       }}
                     >
                       {previewData.columns
@@ -714,7 +714,7 @@ export function ReportBuilderPage({
                           <td
                             key={`${rowIndex}-${col.field}`}
                             style={{
-                              padding: 'var(--spacing-3)',
+                              padding: '0.75rem',
                               fontSize: '0.875rem',
                             }}
                           >
@@ -762,7 +762,7 @@ export function ReportBuilderPage({
               <Text variant="heading5">Save Report</Text>
             </CardHeader>
             <CardBody>
-              <Stack spacing="var(--spacing-4)">
+              <Stack spacing="md">
                 <Box>
                   <Text variant="caption" color="muted" className="mb-1">
                     Report Name *

@@ -11,7 +11,7 @@ import {
   ShieldLockIcon,
   BellIcon,
   PlusIcon,
-} from '../../components/primitives';
+} from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -23,7 +23,7 @@ import {
   Flex,
   Grid,
   GridItem,
-} from '../../components/layout';
+} from '../../components/catalyst/layout';
 import {
   CertificationList,
   ExpirationAlert,
@@ -60,13 +60,13 @@ function StatCard({
       style={onClick !== undefined ? { cursor: 'pointer' } : undefined}
     >
       <CardBody>
-        <HStack spacing="var(--spacing-3)" align="center">
+        <HStack spacing="md" align="center">
           {icon}
           <Stack spacing="0">
             <Text variant="caption" color="muted">
               {label}
             </Text>
-            <HStack spacing="var(--spacing-2)" align="baseline">
+            <HStack spacing="sm" align="baseline">
               <Text variant="heading4" color={variant} weight="semibold">
                 {value}
               </Text>
@@ -182,7 +182,7 @@ export function CompliancePage({
         title="Compliance Management"
         icon={<FileCheckIcon size="lg" />}
         actions={
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <Button
               variant="outline"
               size="sm"
@@ -201,9 +201,9 @@ export function CompliancePage({
         }
       />
 
-      <Stack spacing="var(--spacing-6)">
+      <Stack spacing="lg">
         {/* Stats Overview */}
-        <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="var(--spacing-4)">
+        <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="md">
           <GridItem>
             <StatCard
               icon={<FileCheckIcon size="md" color="success" />}
@@ -247,7 +247,7 @@ export function CompliancePage({
         )}
 
         {/* Quick Actions */}
-        <Grid columns="1fr 1fr 1fr" gap="var(--spacing-4)">
+        <Grid columns={3} gap="md">
           <GridItem>
             <Card
               variant="outlined"
@@ -314,7 +314,7 @@ export function CompliancePage({
           <Card variant="outlined">
             <CardHeader>
               <HStack justify="between" align="center">
-                <HStack spacing="var(--spacing-2)" align="center">
+                <HStack spacing="sm" align="center">
                   <FileCheckIcon size="sm" color="primary" />
                   <Text variant="heading6" weight="semibold">
                     Recent Certifications
@@ -352,9 +352,9 @@ export function CompliancePage({
                 <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
                   No compliance items configured yet.
                 </Text>
-                <HStack spacing="var(--spacing-2)">
+                <HStack spacing="sm">
                   <Button variant="primary" onClick={handleViewCertifications}>
-                    <HStack spacing="var(--spacing-1)" align="center">
+                    <HStack spacing="xs" align="center">
                       <PlusIcon size="sm" />
                       <Text as="span" variant="bodySmall" color="white">
                         Add Certification
@@ -362,7 +362,7 @@ export function CompliancePage({
                     </HStack>
                   </Button>
                   <Button variant="outline" onClick={handleViewClearances}>
-                    <HStack spacing="var(--spacing-1)" align="center">
+                    <HStack spacing="xs" align="center">
                       <PlusIcon size="sm" />
                       <Text as="span" variant="bodySmall">
                         Add Clearance

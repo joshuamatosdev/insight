@@ -11,7 +11,7 @@ import {
   FileCheckIcon,
   PlusIcon,
   RefreshIcon,
-} from '../../components/primitives';
+} from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -21,7 +21,7 @@ import {
   Stack,
   HStack,
   Flex,
-} from '../../components/layout';
+} from '../../components/catalyst/layout';
 import {
   CertificationList,
   CertificationForm,
@@ -230,9 +230,9 @@ export function CertificationsPage({
         icon={<FileCheckIcon size="lg" />}
         actions={
           showForm === false && (
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Button variant="outline" size="sm" onClick={refresh}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <RefreshIcon size="sm" />
                   <Text as="span" variant="bodySmall">
                     Refresh
@@ -240,7 +240,7 @@ export function CertificationsPage({
                 </HStack>
               </Button>
               <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <PlusIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     Add Certification
@@ -252,10 +252,10 @@ export function CertificationsPage({
         }
       />
 
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {/* Error Display */}
         {(error !== null || loadError !== null) && (
-          <Card variant="outlined" style={{ borderColor: 'var(--color-danger)' }}>
+          <Card variant="outlined" style={{ borderColor: '#ef4444' }}>
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
                 {error ?? loadError?.message}
@@ -290,7 +290,7 @@ export function CertificationsPage({
           <Card variant="outlined">
             <CardBody padding="sm">
               <HStack justify="between" align="center">
-                <HStack spacing="var(--spacing-3)" align="center">
+                <HStack spacing="md" align="center">
                   <Text variant="bodySmall" color="muted">
                     Filter by Type:
                   </Text>
@@ -302,7 +302,7 @@ export function CertificationsPage({
                   />
                 </HStack>
 
-                <HStack spacing="var(--spacing-2)" align="center">
+                <HStack spacing="sm" align="center">
                   <Text variant="caption" color="muted">
                     {totalElements} certification{totalElements !== 1 ? 's' : ''}
                   </Text>
@@ -331,7 +331,7 @@ export function CertificationsPage({
 
         {/* Pagination */}
         {showForm === false && totalPages > 1 && (
-          <HStack justify="center" spacing="var(--spacing-2)">
+          <HStack justify="center" spacing="sm">
             <Button
               variant="outline"
               size="sm"

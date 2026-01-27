@@ -59,7 +59,7 @@ function ModificationItem({
     modification.status === 'APPROVED' && onExecute !== undefined;
 
   return (
-    <Box style={{ position: 'relative', paddingLeft: 'var(--spacing-8)' }}>
+    <Box style={{ position: 'relative', paddingLeft: '2rem' }}>
       <Box
         style={{
           position: 'absolute',
@@ -67,7 +67,7 @@ function ModificationItem({
           top: '0',
           bottom: isLast ? '50%' : '0',
           width: '2px',
-          backgroundColor: 'var(--color-gray-300)',
+          backgroundColor: '#d4d4d8',
         }}
       />
       {isFirst === false && (
@@ -78,7 +78,7 @@ function ModificationItem({
             top: '0',
             height: '50%',
             width: '2px',
-            backgroundColor: 'var(--color-gray-300)',
+            backgroundColor: '#d4d4d8',
           }}
         />
       )}
@@ -93,11 +93,11 @@ function ModificationItem({
           borderRadius: '50%',
           backgroundColor:
             modification.status === 'EXECUTED'
-              ? 'var(--color-success)'
+              ? '#10b981'
               : modification.status === 'APPROVED'
-                ? 'var(--color-primary)'
-                : 'var(--color-gray-400)',
-          border: '2px solid var(--color-white)',
+                ? '#2563eb'
+                : '#a1a1aa',
+          border: '2px solid #ffffff',
           zIndex: 1,
         }}
       />
@@ -106,7 +106,7 @@ function ModificationItem({
         <CardBody>
           <HStack justify="between" align="start" className="mb-3">
             <Box>
-              <HStack spacing="var(--spacing-2)" align="center">
+              <HStack spacing="sm" align="center">
                 <Text variant="heading5">{modification.modificationNumber}</Text>
                 <Badge variant="info" size="sm">
                   {getModificationTypeLabel(modification.modificationType)}
@@ -132,8 +132,8 @@ function ModificationItem({
             )}
           </HStack>
 
-          <Grid columns={3} gap="var(--spacing-4)">
-            <Stack spacing="var(--spacing-1)">
+          <Grid columns={3} gap="md">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Effective Date
               </Text>
@@ -142,7 +142,7 @@ function ModificationItem({
               </Text>
             </Stack>
             {modification.executedDate !== null && (
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Executed Date
                 </Text>
@@ -152,7 +152,7 @@ function ModificationItem({
               </Stack>
             )}
             {modification.contractingOfficerName !== null && (
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Contracting Officer
                 </Text>
@@ -166,9 +166,9 @@ function ModificationItem({
           {(hasValueChange || hasFundingChange || hasPopChange) && (
             <Box
               style={{
-                marginTop: 'var(--spacing-3)',
-                paddingTop: 'var(--spacing-3)',
-                borderTop: '1px solid var(--color-gray-200)',
+                marginTop: '0.75rem',
+                paddingTop: '0.75rem',
+                borderTop: '1px solid #e4e4e7',
               }}
             >
               <Text
@@ -178,9 +178,9 @@ function ModificationItem({
               >
                 Changes
               </Text>
-              <Grid columns={3} gap="var(--spacing-4)">
+              <Grid columns={3} gap="md">
                 {hasValueChange && (
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="caption" color="muted">
                       Value Change
                     </Text>
@@ -201,7 +201,7 @@ function ModificationItem({
                   </Stack>
                 )}
                 {hasFundingChange && (
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="caption" color="muted">
                       Funding Change
                     </Text>
@@ -223,7 +223,7 @@ function ModificationItem({
                   </Stack>
                 )}
                 {modification.newTotalValue !== null && (
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="caption" color="muted">
                       New Total Value
                     </Text>
@@ -233,7 +233,7 @@ function ModificationItem({
                   </Stack>
                 )}
                 {modification.popExtensionDays !== null && (
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="caption" color="muted">
                       PoP Extension
                     </Text>
@@ -243,7 +243,7 @@ function ModificationItem({
                   </Stack>
                 )}
                 {modification.newPopEndDate !== null && (
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="caption" color="muted">
                       New PoP End Date
                     </Text>
@@ -259,9 +259,9 @@ function ModificationItem({
           {modification.scopeChangeSummary !== null && (
             <Box
               style={{
-                marginTop: 'var(--spacing-3)',
-                paddingTop: 'var(--spacing-3)',
-                borderTop: '1px solid var(--color-gray-200)',
+                marginTop: '0.75rem',
+                paddingTop: '0.75rem',
+                borderTop: '1px solid #e4e4e7',
               }}
             >
               <Text
@@ -308,10 +308,10 @@ export function ModificationTimeline({
       <Box
         className={className}
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-gray-50)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fafafa',
+          borderRadius: '0.5rem',
           ...timelineStyles,
         }}
       >
@@ -323,7 +323,7 @@ export function ModificationTimeline({
   }
 
   return (
-    <Stack spacing="var(--spacing-0)" className={className} style={timelineStyles}>
+    <Stack spacing="0" className={className} style={timelineStyles}>
       {modifications.map((modification, index) => (
         <ModificationItem
           key={modification.id}

@@ -23,15 +23,15 @@ function formatCurrency(value: number | null | undefined): string {
 function getStageTypeColor(stageType: string): string {
   switch (stageType) {
     case 'INITIAL':
-      return 'var(--color-gray-500)';
+      return '#71717a';
     case 'IN_PROGRESS':
-      return 'var(--color-primary)';
+      return '#2563eb';
     case 'WON':
-      return 'var(--color-success)';
+      return '#10b981';
     case 'LOST':
-      return 'var(--color-danger)';
+      return '#ef4444';
     default:
-      return 'var(--color-border)';
+      return '#e4e4e7';
   }
 }
 
@@ -96,11 +96,11 @@ export function PipelineStageColumn({
       style={{
         minWidth: '300px',
         maxWidth: '350px',
-        backgroundColor: isDragOver === true ? 'var(--color-primary-light)' : 'var(--color-bg-secondary)',
-        borderRadius: 'var(--radius-lg)',
+        backgroundColor: isDragOver === true ? '#dbeafe' : '#f4f4f5',
+        borderRadius: '0.5rem',
         border: isDragOver === true
-          ? '2px dashed var(--color-primary)'
-          : '1px solid var(--color-border)',
+          ? '2px dashed #2563eb'
+          : '1px solid #e4e4e7',
         display: 'flex',
         flexDirection: 'column',
         maxHeight: 'calc(100vh - 200px)',
@@ -109,11 +109,11 @@ export function PipelineStageColumn({
       {/* Column Header */}
       <Box
         style={{
-          padding: 'var(--spacing-4)',
-          borderBottom: '1px solid var(--color-border)',
-          backgroundColor: 'var(--color-bg)',
-          borderTopLeftRadius: 'var(--radius-lg)',
-          borderTopRightRadius: 'var(--radius-lg)',
+          padding: '1rem',
+          borderBottom: '1px solid #e4e4e7',
+          backgroundColor: '#ffffff',
+          borderTopLeftRadius: '0.5rem',
+          borderTopRightRadius: '0.5rem',
         }}
       >
         <HStack justify="between" align="center">
@@ -168,7 +168,7 @@ export function PipelineStageColumn({
       {/* Opportunity Cards */}
       <Box
         style={{
-          padding: 'var(--spacing-3)',
+          padding: '0.75rem',
           overflowY: 'auto',
           flex: 1,
         }}
@@ -194,10 +194,10 @@ export function PipelineStageColumn({
           {opportunities.length === 0 && (
             <Box
               style={{
-                padding: 'var(--spacing-6)',
+                padding: '1.5rem',
                 textAlign: 'center',
-                borderRadius: 'var(--radius-md)',
-                border: '1px dashed var(--color-border)',
+                borderRadius: '0.375rem',
+                border: '1px dashed #e4e4e7',
               }}
             >
               <Text variant="bodySmall" color="secondary">

@@ -50,14 +50,14 @@ export function MessageComposer({
         </Text>
       </CardHeader>
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           {/* Subject (only for new threads) */}
           {isNewThread && (
             <Box>
               <Text
                 variant="caption"
                 weight="medium"
-                style={{ marginBottom: 'var(--spacing-1)', display: 'block' }}
+                style={{ marginBottom: '0.25rem', display: 'block' }}
               >
                 Subject
               </Text>
@@ -76,7 +76,7 @@ export function MessageComposer({
             <Text
               variant="caption"
               weight="medium"
-              style={{ marginBottom: 'var(--spacing-1)', display: 'block' }}
+              style={{ marginBottom: '0.25rem', display: 'block' }}
             >
               Message
             </Text>
@@ -91,10 +91,10 @@ export function MessageComposer({
               style={{
                 width: '100%',
                 minHeight: '150px',
-                padding: 'var(--spacing-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--color-gray-300)',
-                fontSize: 'var(--font-size-body)',
+                padding: '0.75rem',
+                borderRadius: '0.375rem',
+                border: '1px solid #d4d4d8',
+                fontSize: '1rem',
                 fontFamily: 'inherit',
                 resize: 'vertical',
                 outline: 'none',

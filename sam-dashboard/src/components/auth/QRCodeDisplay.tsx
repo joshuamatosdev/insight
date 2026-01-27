@@ -39,17 +39,17 @@ export function QRCodeDisplay({
   const formattedSecret = secret.match(/.{1,4}/g)?.join(' ') ?? secret;
 
   return (
-    <Stack spacing="var(--spacing-4)">
+    <Stack spacing="md">
       {/* QR Code */}
       <Card variant="bordered">
         <CardBody padding="md">
-          <Stack spacing="var(--spacing-3)" style={{ alignItems: 'center' }}>
+          <Stack spacing="md" style={{ alignItems: 'center' }}>
             <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
               Scan this QR code with your authenticator app
             </Text>
             <Box
               style={{
-                padding: 'var(--spacing-3)',
+                padding: '0.75rem',
                 backgroundColor: 'white',
                 borderRadius: '8px',
               }}
@@ -71,7 +71,7 @@ export function QRCodeDisplay({
       {/* Manual Entry */}
       <Card variant="bordered">
         <CardBody padding="md">
-          <Stack spacing="var(--spacing-2)">
+          <Stack spacing="sm">
             <Text variant="caption" color="muted">
               Or enter this code manually:
             </Text>
@@ -79,8 +79,8 @@ export function QRCodeDisplay({
               style={{
                 fontFamily: 'monospace',
                 fontSize: '14px',
-                padding: 'var(--spacing-3)',
-                backgroundColor: 'var(--color-gray-100)',
+                padding: '0.75rem',
+                backgroundColor: '#f4f4f5',
                 borderRadius: '4px',
                 wordBreak: 'break-all',
                 textAlign: 'center',

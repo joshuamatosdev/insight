@@ -180,7 +180,7 @@ export function ClinForm({
           <Text variant="heading4">{isEditing ? 'Edit CLIN' : 'Add CLIN'}</Text>
         </CardHeader>
         <CardBody>
-          <Grid columns={2} gap="var(--spacing-4)">
+          <Grid columns={2} gap="md">
             <Box>
               <label htmlFor="clinNumber">
                 <Text
@@ -380,7 +380,7 @@ export function ClinForm({
           </Grid>
         </CardBody>
         <CardFooter>
-          <HStack justify="end" spacing="var(--spacing-3)">
+          <HStack justify="end" spacing="md">
             <Button
               type="button"
               variant="secondary"

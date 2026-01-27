@@ -1,5 +1,3 @@
-import { Text, Badge } from '../../primitives';
-import { HStack, Stack, Box } from '../../layout';
 import { NAICSDistributionProps } from './NAICS.types';
 
 export function NAICSDistribution({
@@ -15,47 +13,34 @@ export function NAICSDistribution({
 
   if (sorted.length === 0) {
     return (
-      <Text variant="body" color="muted">
+      <p className="text-sm text-zinc-500">
         No NAICS data available
-      </Text>
+      </p>
     );
   }
 
   return (
-    <Stack spacing="var(--spacing-3)" className={className} style={style}>
-      {sorted.map(([naics, count]) => {
-        const percentage = total > 0 ? (count / total) * 100 : 0;
-        return (
-          <HStack key={naics} justify="between" align="center">
-            <Text variant="bodySmall">{naics}</Text>
-            <HStack spacing="var(--spacing-2)" align="center">
-              <Box
-                style={{
-                  width: '100px',
-                  height: '8px',
-                  backgroundColor: 'var(--color-gray-200)',
-                  borderRadius: 'var(--radius-full)',
-                  overflow: 'hidden',
-                }}
-              >
-                <Box
-                  style={{
-                    width: `${percentage}%`,
-                    height: '100%',
-                    background: 'var(--gradient-primary)',
-                    borderRadius: 'var(--radius-full)',
-                    transition: 'width var(--transition-normal)',
-                  }}
-                />
-              </Box>
-              <Badge variant="secondary" size="sm">
-                {count}
-              </Badge>
-            </HStack>
-          </HStack>
-        );
-      })}
-    </Stack>
+    <div className={className} style={style}>
+      <div className="space-y-3">
+        {sorted.map(([naics, count]) => {
+          const percentage = total > 0 ? (count / total) * 100 : 0;
+          return (
+            <div key={naics} className="flex items-center justify-between gap-4">
+              <span className="text-sm text-zinc-600 min-w-[80px]">{naics}</span>
+              <div className="flex items-center gap-3 flex-1">
+                <div className="flex-1 max-w-[120px] bg-zinc-100 rounded-full h-1.5">
+                  <div
+                    className="bg-accent rounded-full h-1.5 transition-all duration-200"
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
+                <span className="text-sm text-zinc-400 w-8 text-right tabular-nums">{count}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

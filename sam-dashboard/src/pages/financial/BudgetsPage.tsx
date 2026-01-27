@@ -2,7 +2,7 @@
  * BudgetsPage - Budget management list page
  */
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon } from '../../components/primitives';
+import { Text, Button, Badge, PlusIcon, RefreshIcon } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,10 +15,10 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../../components/layout';
-import { BudgetCard, BudgetForm } from '../../components/domain/financial';
-import { useBudgets } from '../../hooks/useFinancial';
-import type { BudgetItem, BudgetFormState, BudgetCategory } from '../../types/financial.types';
+} from '@/components/catalyst/layout';
+import { BudgetCard, BudgetForm } from '@/components/domain/financial';
+import { useBudgets } from '@/hooks/useFinancial';
+import type { BudgetItem, BudgetFormState, BudgetCategory } from '@/types/financial.types';
 
 const INITIAL_FORM_STATE: BudgetFormState = {
   contractId: '',
@@ -196,12 +196,12 @@ export function BudgetsPage() {
         }
         actions={
           showForm === false && (
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Button variant="outline" size="sm" onClick={refresh}>
                 <RefreshIcon size="sm" />
               </Button>
               <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <PlusIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     Add Budget Item
@@ -216,11 +216,11 @@ export function BudgetsPage() {
       {error !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -233,14 +233,14 @@ export function BudgetsPage() {
       {overBudgetItems.length > 0 && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-warning-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-warning)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fffbeb',
+            borderRadius: '0.375rem',
+            border: '1px solid #f59e0b',
           }}
         >
-          <HStack spacing="var(--spacing-2)" align="center">
+          <HStack spacing="sm" align="center">
             <Badge variant="danger" size="sm">
               {overBudgetItems.length}
             </Badge>
@@ -272,96 +272,94 @@ export function BudgetsPage() {
       )}
 
       {/* Filter */}
-      <HStack spacing="var(--spacing-2)" className="mb-4">
-        <Button
-          variant={filterCategory === '' ? 'primary' : 'outline'}
-          size="sm"
-          onClick={() => handleFilterChange('')}
-        >
-          All
-        </Button>
-        {BUDGET_CATEGORIES.slice(0, 5).map((cat) => (
+      <Stack spacing="md">
+        <HStack spacing="sm">
           <Button
-            key={cat}
-            variant={filterCategory === cat ? 'primary' : 'outline'}
+            variant={filterCategory === '' ? 'primary' : 'outline'}
             size="sm"
-            onClick={() => handleFilterChange(cat)}
+            onClick={() => handleFilterChange('')}
           >
-            {cat.replace('_', ' ')}
+            All
           </Button>
-        ))}
-      </HStack>
-
-      {/* Budget Grid */}
-      {budgets.length === 0 ? (
-        <Card variant="outlined">
-          <CardBody>
-            <Flex
-              direction="column"
-              align="center"
-              gap="md"
-              className="p-8"
+          {BUDGET_CATEGORIES.slice(0, 5).map((cat) => (
+            <Button
+              key={cat}
+              variant={filterCategory === cat ? 'primary' : 'outline'}
+              size="sm"
+              onClick={() => handleFilterChange(cat)}
             >
-              <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
-                No budget items found.
-                <br />
-                Create a budget item to start tracking your contract finances.
-              </Text>
-              <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
-                  <PlusIcon size="sm" />
-                  <Text as="span" variant="bodySmall" color="white">
-                    Add First Budget Item
-                  </Text>
-                </HStack>
-              </Button>
-            </Flex>
-          </CardBody>
-        </Card>
-      ) : (
-        <>
-          <Grid columns="repeat(auto-fill, minmax(350px, 1fr))" gap="var(--spacing-4)">
-            {budgets.map((budget) => (
-              <GridItem key={budget.id}>
-                <BudgetCard
-                  budget={budget}
-                  onEdit={handleEditClick}
-                  onDelete={handleDeleteBudget}
-                />
-              </GridItem>
-            ))}
-          </Grid>
+              {cat.replace('_', ' ')}
+            </Button>
+          ))}
+        </HStack>
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <HStack
-              justify="center"
-              spacing="var(--spacing-2)"
-              className="mt-6"
-            >
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage - 1)}
-                isDisabled={currentPage === 0}
+        {/* Budget Grid */}
+        {budgets.length === 0 ? (
+          <Card variant="outlined">
+            <CardBody>
+              <Flex
+                direction="column"
+                align="center"
+                gap="md"
+                className="p-8"
               >
-                Previous
-              </Button>
-              <Text variant="bodySmall" color="muted">
-                Page {currentPage + 1} of {totalPages} ({totalElements} items)
-              </Text>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage + 1)}
-                isDisabled={currentPage >= totalPages - 1}
-              >
-                Next
-              </Button>
-            </HStack>
-          )}
-        </>
-      )}
+                <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
+                  No budget items found.
+                  <br />
+                  Create a budget item to start tracking your contract finances.
+                </Text>
+                <Button variant="primary" onClick={handleCreateClick}>
+                  <HStack spacing="xs" align="center">
+                    <PlusIcon size="sm" />
+                    <Text as="span" variant="bodySmall" color="white">
+                      Add First Budget Item
+                    </Text>
+                  </HStack>
+                </Button>
+              </Flex>
+            </CardBody>
+          </Card>
+        ) : (
+          <Stack spacing="lg">
+            <Grid columns="repeat(auto-fill, minmax(350px, 1fr))" gap="md">
+              {budgets.map((budget) => (
+                <GridItem key={budget.id}>
+                  <BudgetCard
+                    budget={budget}
+                    onEdit={handleEditClick}
+                    onDelete={handleDeleteBudget}
+                  />
+                </GridItem>
+              ))}
+            </Grid>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <HStack justify="center" spacing="sm">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  isDisabled={currentPage === 0}
+                >
+                  Previous
+                </Button>
+                <Text variant="bodySmall" color="muted">
+                  Page {currentPage + 1} of {totalPages} ({totalElements} items)
+                </Text>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  isDisabled={currentPage >= totalPages - 1}
+                >
+                  Next
+                </Button>
+              </HStack>
+            )}
+          </Stack>
+        )}
+      </Stack>
     </Section>
   );
 }

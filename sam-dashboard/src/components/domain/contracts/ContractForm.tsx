@@ -206,12 +206,12 @@ export function ContractForm({
           </Text>
         </CardHeader>
         <CardBody>
-          <Stack spacing="var(--spacing-6)">
+          <Stack spacing="lg">
             <Box>
               <Text variant="heading5" className="mb-4">
                 Basic Information
               </Text>
-              <Grid columns={2} gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="contractNumber">
                     <Text variant="bodySmall" weight="semibold" className="mb-1">
@@ -325,7 +325,7 @@ export function ContractForm({
               <Text variant="heading5" className="mb-4">
                 Period of Performance
               </Text>
-              <Grid columns={2} gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="popStartDate">
                     <Text variant="bodySmall" weight="semibold" className="mb-1">
@@ -361,7 +361,7 @@ export function ContractForm({
               <Text variant="heading5" className="mb-4">
                 Contract Value
               </Text>
-              <Grid columns={2} gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="totalValue">
                     <Text variant="bodySmall" weight="semibold" className="mb-1">
@@ -409,7 +409,7 @@ export function ContractForm({
               <Text variant="heading5" className="mb-4">
                 Key Contacts
               </Text>
-              <Grid columns={2} gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="contractingOfficerName">
                     <Text variant="bodySmall" weight="semibold" className="mb-1">
@@ -473,7 +473,7 @@ export function ContractForm({
           </Stack>
         </CardBody>
         <CardFooter>
-          <HStack justify="end" spacing="var(--spacing-3)">
+          <HStack justify="end" spacing="md">
             <Button
               type="button"
               variant="secondary"

@@ -6,13 +6,15 @@ import {
   Stack,
   Box,
   Grid,
+} from '../components/catalyst/layout';
+import {
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeaderCell,
+  TableHeader,
   TableCell,
-} from '../components/layout';
+} from '../components/catalyst';
 import {
   Text,
   Button,
@@ -23,7 +25,7 @@ import {
   PencilIcon,
   IconButton,
   DownloadIcon,
-} from '../components/primitives';
+} from '../components/catalyst/primitives';
 import type {
   ReportDefinition,
   EntityType,
@@ -352,7 +354,7 @@ export function ReportsListPage({
   if (pageState === 'error' && error !== null) {
     return (
       <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+        <Stack spacing="md" style={{ textAlign: 'center' }}>
           <Text variant="body" color="danger">
             {error}
           </Text>
@@ -365,10 +367,10 @@ export function ReportsListPage({
   }
 
   return (
-    <Stack spacing="var(--spacing-6)">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
-        <Stack spacing="var(--spacing-1)">
+        <Stack spacing="xs">
           <Text variant="heading3">Reports</Text>
           <Text variant="bodySmall" color="muted">
             Manage your custom reports
@@ -423,7 +425,7 @@ export function ReportsListPage({
         <CardBody padding="none">
           {reports.length === 0 ? (
             <Box className="p-8 text-center">
-              <Stack spacing="var(--spacing-4)" style={{ alignItems: 'center' }}>
+              <Stack spacing="md" style={{ alignItems: 'center' }}>
                 <Text variant="body" color="muted">
                   No reports found
                 </Text>
@@ -435,23 +437,23 @@ export function ReportsListPage({
               </Stack>
             </Box>
           ) : (
-            <Table>
+            <Table striped>
               <TableHead>
                 <TableRow>
-                  <TableHeaderCell>Name</TableHeaderCell>
-                  <TableHeaderCell>Data Source</TableHeaderCell>
-                  <TableHeaderCell>Columns</TableHeaderCell>
-                  <TableHeaderCell>Runs</TableHeaderCell>
-                  <TableHeaderCell>Last Run</TableHeaderCell>
-                  <TableHeaderCell>Shared</TableHeaderCell>
-                  <TableHeaderCell>Actions</TableHeaderCell>
+                  <TableHeader>Name</TableHeader>
+                  <TableHeader>Data Source</TableHeader>
+                  <TableHeader>Columns</TableHeader>
+                  <TableHeader>Runs</TableHeader>
+                  <TableHeader>Last Run</TableHeader>
+                  <TableHeader>Shared</TableHeader>
+                  <TableHeader>Actions</TableHeader>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {reports.map((report) => (
                   <TableRow key={report.id}>
                     <TableCell>
-                      <Stack spacing="var(--spacing-1)">
+                      <Stack spacing="xs">
                         <Text variant="bodySmall" weight="medium">
                           {report.name}
                         </Text>

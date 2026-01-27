@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Text, Button, Badge } from '../../components/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody } from '../../components/layout';
+import { Text, Button, Badge } from '../../components/catalyst/primitives';
+import { Flex, Stack, Grid, Box, Card, CardBody } from '../../components/catalyst/layout';
 import { SprintBoard, SprintCard } from '../../components/domain/portal';
 import { useSprints, useSprint } from '../../hooks';
 import type { Sprint, SprintTaskStatus, CreateSprintRequest } from '../../types/portal';
@@ -79,10 +79,10 @@ export function SprintTrackingPage(): React.ReactElement {
     return (
       <Box
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-danger-light)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fef2f2',
+          borderRadius: '0.5rem',
         }}
       >
         <Text variant="body" color="danger">
@@ -96,7 +96,7 @@ export function SprintTrackingPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" className="p-6">
+    <Stack spacing="lg" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -119,7 +119,7 @@ export function SprintTrackingPage(): React.ReactElement {
       <Grid columns={4} gap="lg">
         {/* Sprint List Sidebar */}
         <Box>
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             {/* Active Sprints */}
             <Box>
               <Flex align="center" gap="sm" className="mb-2">
@@ -130,7 +130,7 @@ export function SprintTrackingPage(): React.ReactElement {
                   {activeSprints.length}
                 </Badge>
               </Flex>
-              <Stack spacing="var(--spacing-2)">
+              <Stack spacing="sm">
                 {activeSprints.map((sprint) => (
                   <SprintCard
                     key={sprint.id}
@@ -157,7 +157,7 @@ export function SprintTrackingPage(): React.ReactElement {
                   {planningSprints.length}
                 </Badge>
               </Flex>
-              <Stack spacing="var(--spacing-2)">
+              <Stack spacing="sm">
                 {planningSprints.map((sprint) => (
                   <SprintCard
                     key={sprint.id}
@@ -184,7 +184,7 @@ export function SprintTrackingPage(): React.ReactElement {
                   {completedSprints.length}
                 </Badge>
               </Flex>
-              <Stack spacing="var(--spacing-2)">
+              <Stack spacing="sm">
                 {completedSprints.slice(0, 3).map((sprint) => (
                   <SprintCard
                     key={sprint.id}
@@ -222,8 +222,8 @@ export function SprintTrackingPage(): React.ReactElement {
               direction="column"
               style={{
                 minHeight: '400px',
-                backgroundColor: 'var(--color-gray-50)',
-                borderRadius: 'var(--radius-lg)',
+                backgroundColor: '#fafafa',
+                borderRadius: '0.5rem',
               }}
             >
               <Text variant="heading4" color="muted">

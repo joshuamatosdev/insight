@@ -6,9 +6,9 @@ import {
   TableHead,
   TableBody,
   TableRow,
-  TableHeaderCell,
+  TableHeader,
   TableCell,
-} from '../../layout/Table';
+} from '../../catalyst';
 import type { ClinTableProps, ClinType, PricingType } from './Contract.types';
 import { formatCurrency } from './Contract.types';
 
@@ -64,10 +64,10 @@ export function ClinTable({
       <Box
         className={className}
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-gray-50)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fafafa',
+          borderRadius: '0.5rem',
           ...tableStyles,
         }}
       >
@@ -102,15 +102,15 @@ export function ClinTable({
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeaderCell>CLIN</TableHeaderCell>
-              <TableHeaderCell>Description</TableHeaderCell>
-              <TableHeaderCell>Type</TableHeaderCell>
-              <TableHeaderCell>Pricing</TableHeaderCell>
-              <TableHeaderCell style={{ textAlign: 'right' }}>Total Value</TableHeaderCell>
-              <TableHeaderCell style={{ textAlign: 'right' }}>Funded</TableHeaderCell>
-              <TableHeaderCell style={{ textAlign: 'right' }}>Invoiced</TableHeaderCell>
-              <TableHeaderCell style={{ textAlign: 'right' }}>Remaining</TableHeaderCell>
-              {onEditClin !== undefined && <TableHeaderCell>Actions</TableHeaderCell>}
+              <TableHeader>CLIN</TableHeader>
+              <TableHeader>Description</TableHeader>
+              <TableHeader>Type</TableHeader>
+              <TableHeader>Pricing</TableHeader>
+              <TableHeader className="text-right">Total Value</TableHeader>
+              <TableHeader className="text-right">Funded</TableHeader>
+              <TableHeader className="text-right">Invoiced</TableHeader>
+              <TableHeader className="text-right">Remaining</TableHeader>
+              {onEditClin !== undefined && <TableHeader>Actions</TableHeader>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -148,22 +148,22 @@ export function ClinTable({
                     {getPricingTypeLabel(clin.pricingType)}
                   </Text>
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>
+                <TableCell className="text-right">
                   <Text variant="body" weight="semibold">
                     {formatCurrency(clin.totalValue)}
                   </Text>
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>
+                <TableCell className="text-right">
                   <Text variant="body">
                     {formatCurrency(clin.fundedAmount)}
                   </Text>
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>
+                <TableCell className="text-right">
                   <Text variant="body">
                     {formatCurrency(clin.invoicedAmount)}
                   </Text>
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>
+                <TableCell className="text-right">
                   <Text
                     variant="body"
                     weight="semibold"
@@ -192,7 +192,7 @@ export function ClinTable({
             ))}
             <TableRow
               style={{
-                backgroundColor: 'var(--color-gray-50)',
+                backgroundColor: '#fafafa',
                 fontWeight: 'bold',
               }}
             >
@@ -201,22 +201,22 @@ export function ClinTable({
                   Totals
                 </Text>
               </TableCell>
-              <TableCell style={{ textAlign: 'right' }}>
+              <TableCell className="text-right">
                 <Text variant="body" weight="semibold">
                   {formatCurrency(totalValue)}
                 </Text>
               </TableCell>
-              <TableCell style={{ textAlign: 'right' }}>
+              <TableCell className="text-right">
                 <Text variant="body" weight="semibold">
                   {formatCurrency(totalFunded)}
                 </Text>
               </TableCell>
-              <TableCell style={{ textAlign: 'right' }}>
+              <TableCell className="text-right">
                 <Text variant="body" weight="semibold">
                   {formatCurrency(totalInvoiced)}
                 </Text>
               </TableCell>
-              <TableCell style={{ textAlign: 'right' }}>
+              <TableCell className="text-right">
                 <Text
                   variant="body"
                   weight="semibold"

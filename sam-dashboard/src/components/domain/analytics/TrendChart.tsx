@@ -10,7 +10,7 @@ import { Box, Stack, Card, CardHeader, CardBody } from '../../layout';
 export function TrendChart({
   title,
   data,
-  color = 'var(--color-primary)',
+  color = '#2563eb',
   height = 200,
   showLegend = false,
   loading = false,
@@ -63,8 +63,8 @@ export function TrendChart({
           <Box
             style={{
               height: `${height}px`,
-              background: 'var(--color-surface-container)',
-              borderRadius: 'var(--radius-md)',
+              background: '#f4f4f5',
+              borderRadius: '0.375rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -110,7 +110,7 @@ export function TrendChart({
   return (
     <Card className={className} style={containerStyles}>
       <CardHeader>
-        <Stack spacing="var(--spacing-1)">
+        <Stack spacing="xs">
           <Text variant="heading5">{title}</Text>
           {showLegend && (
             <Text variant="caption" color="secondary">
@@ -135,7 +135,7 @@ export function TrendChart({
               y1="25"
               x2="90"
               y2="25"
-              stroke="var(--color-outline-variant)"
+              stroke="#d4d4d8"
               strokeWidth="0.5"
               strokeDasharray="2,2"
             />
@@ -144,7 +144,7 @@ export function TrendChart({
               y1="50"
               x2="90"
               y2="50"
-              stroke="var(--color-outline-variant)"
+              stroke="#d4d4d8"
               strokeWidth="0.5"
               strokeDasharray="2,2"
             />
@@ -153,7 +153,7 @@ export function TrendChart({
               y1="75"
               x2="90"
               y2="75"
-              stroke="var(--color-outline-variant)"
+              stroke="#d4d4d8"
               strokeWidth="0.5"
               strokeDasharray="2,2"
             />
@@ -202,7 +202,7 @@ export function TrendChart({
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              padding: 'var(--spacing-1)',
+              padding: '0.25rem',
             }}
           >
             <Text variant="caption" color="secondary" style={{ fontSize: '10px' }}>
@@ -219,9 +219,9 @@ export function TrendChart({
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            marginTop: 'var(--spacing-2)',
-            paddingLeft: 'var(--spacing-4)',
-            paddingRight: 'var(--spacing-4)',
+            marginTop: '0.5rem',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
           }}
         >
           {data.length > 0 && (

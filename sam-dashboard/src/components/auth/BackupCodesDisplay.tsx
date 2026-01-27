@@ -55,12 +55,12 @@ export function BackupCodesDisplay({
   };
 
   return (
-    <Stack spacing="var(--spacing-4)">
+    <Stack spacing="md">
       {/* Warning */}
-      <Card variant="bordered" style={{ backgroundColor: 'var(--color-warning-50)' }}>
+      <Card variant="bordered" style={{ backgroundColor: '#fffbeb' }}>
         <CardBody padding="md">
-          <Stack spacing="var(--spacing-2)">
-            <Text variant="body" style={{ fontWeight: 600, color: 'var(--color-warning-700)' }}>
+          <Stack spacing="sm">
+            <Text variant="body" style={{ fontWeight: 600, color: '#b45309' }}>
               Important: Save these backup codes
             </Text>
             <Text variant="caption" color="muted">
@@ -81,8 +81,8 @@ export function BackupCodesDisplay({
                 style={{
                   fontFamily: 'monospace',
                   fontSize: '14px',
-                  padding: 'var(--spacing-2)',
-                  backgroundColor: 'var(--color-gray-50)',
+                  padding: '0.5rem',
+                  backgroundColor: '#fafafa',
                   borderRadius: '4px',
                   textAlign: 'center',
                 }}

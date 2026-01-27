@@ -1,6 +1,4 @@
-import { CSSProperties } from 'react';
-import { Text } from '../../primitives';
-import { Box, Stack } from '../../layout';
+import clsx from 'clsx';
 import { ContractCard } from './ContractCard';
 import type { ContractListProps } from './Contract.types';
 
@@ -9,33 +7,24 @@ export function ContractList({
   onContractClick,
   emptyMessage = 'No contracts found',
   className,
-  style,
 }: ContractListProps) {
-  const listStyles: CSSProperties = {
-    ...style,
-  };
-
   if (contracts.length === 0) {
     return (
-      <Box
-        className={className}
-        style={{
-          padding: 'var(--spacing-8)',
-          textAlign: 'center',
-          backgroundColor: 'var(--color-gray-50)',
-          borderRadius: 'var(--radius-lg)',
-          ...listStyles,
-        }}
+      <div
+        className={clsx(
+          'rounded-lg bg-zinc-50 dark:bg-zinc-900/50 p-8 text-center',
+          className
+        )}
       >
-        <Text variant="body" color="muted">
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">
           {emptyMessage}
-        </Text>
-      </Box>
+        </p>
+      </div>
     );
   }
 
   return (
-    <Stack spacing="var(--spacing-0)" className={className} style={listStyles}>
+    <div className={clsx('space-y-0', className)}>
       {contracts.map((contract) => (
         <ContractCard
           key={contract.id}
@@ -47,7 +36,7 @@ export function ContractList({
           }
         />
       ))}
-    </Stack>
+    </div>
   );
 }
 

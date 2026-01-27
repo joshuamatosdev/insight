@@ -83,10 +83,10 @@ export function TeamingPartnerList({
               <Box
                 key={partner.id}
                 style={{
-                  padding: 'var(--spacing-3)',
-                  backgroundColor: 'var(--color-bg-secondary)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
+                  padding: '0.75rem',
+                  backgroundColor: '#f4f4f5',
+                  borderRadius: '0.375rem',
+                  border: '1px solid #e4e4e7',
                 }}
               >
                 <HStack justify="between" align="center">

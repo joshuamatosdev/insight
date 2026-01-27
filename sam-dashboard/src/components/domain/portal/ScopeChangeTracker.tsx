@@ -123,12 +123,12 @@ function ScopeChangeCard({
       aria-label={`Scope change: ${scopeChange.title}`}
     >
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           {/* Header */}
           <Flex justify="space-between" align="flex-start">
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="heading5">{scopeChange.title}</Text>
-              <HStack spacing="var(--spacing-2)">
+              <HStack spacing="sm">
                 <Badge variant={getStatusVariant(scopeChange.status)} size="sm">
                   {scopeChange.status.replace('_', ' ')}
                 </Badge>
@@ -152,15 +152,15 @@ function ScopeChangeCard({
             scopeChange.estimatedScheduleImpact !== null) && (
             <Box
               style={{
-                padding: 'var(--spacing-2) var(--spacing-3)',
-                backgroundColor: 'var(--color-gray-50)',
-                borderRadius: 'var(--radius-md)',
+                padding: '0.5rem 0.75rem',
+                backgroundColor: '#fafafa',
+                borderRadius: '0.375rem',
               }}
             >
               <Text variant="caption" weight="semibold" className="mb-1">
                 Impact Assessment
               </Text>
-              <HStack spacing="var(--spacing-4)">
+              <HStack spacing="md">
                 {scopeChange.estimatedCostImpact !== null && (
                   <Stack spacing="0">
                     <Text variant="caption" color="muted">
@@ -215,7 +215,7 @@ function ScopeChangeCard({
 
             {/* Actions */}
             {isPending && (onApprove !== undefined || onReject !== undefined) && (
-              <HStack spacing="var(--spacing-2)">
+              <HStack spacing="sm">
                 {onReject !== undefined && (
                   <Button size="sm" variant="danger" onClick={handleReject}>
                     Reject
@@ -288,7 +288,7 @@ export function ScopeChangeTracker({
 
   return (
     <Box className={className} style={containerStyles}>
-      <Stack spacing="var(--spacing-6)">
+      <Stack spacing="lg">
         {/* Pending Changes */}
         {pendingChanges.length > 0 && (
           <Box>
@@ -298,7 +298,7 @@ export function ScopeChangeTracker({
                 {pendingChanges.length}
               </Badge>
             </Flex>
-            <Stack spacing="var(--spacing-3)">
+            <Stack spacing="md">
               {pendingChanges.map((change) => (
                 <ScopeChangeCard
                   key={change.id}
@@ -321,7 +321,7 @@ export function ScopeChangeTracker({
                 {approvedChanges.length}
               </Badge>
             </Flex>
-            <Stack spacing="var(--spacing-3)">
+            <Stack spacing="md">
               {approvedChanges.map((change) => (
                 <ScopeChangeCard
                   key={change.id}
@@ -342,7 +342,7 @@ export function ScopeChangeTracker({
                 {rejectedChanges.length}
               </Badge>
             </Flex>
-            <Stack spacing="var(--spacing-3)">
+            <Stack spacing="md">
               {rejectedChanges.map((change) => (
                 <ScopeChangeCard
                   key={change.id}

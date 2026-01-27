@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, CardHeader, Stack, Grid } from '../../components/layout';
-import { Text, Button, Input, Select } from '../../components/primitives';
+import { Card, CardBody, CardHeader, Stack, Grid } from '../../components/catalyst/layout';
+import { Text, Button, Input, Select } from '../../components/catalyst/primitives';
 import {
   fetchTenantSettings,
   updateTenantSettings,
@@ -92,11 +92,11 @@ export function TenantSettingsPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-4)">
+    <Stack spacing="md">
       <Text variant="heading3">Tenant Settings</Text>
 
       {error !== null && (
-        <Card variant="bordered" style={{ backgroundColor: 'var(--color-danger-50)' }}>
+        <Card variant="bordered" style={{ backgroundColor: '#fef2f2' }}>
           <CardBody>
             <Text color="danger">{error}</Text>
           </CardBody>
@@ -104,7 +104,7 @@ export function TenantSettingsPage(): React.ReactElement {
       )}
 
       {success !== null && (
-        <Card variant="bordered" style={{ backgroundColor: 'var(--color-success-50)' }}>
+        <Card variant="bordered" style={{ backgroundColor: '#ecfdf5' }}>
           <CardBody>
             <Text color="success">{success}</Text>
           </CardBody>
@@ -164,7 +164,7 @@ export function TenantSettingsPage(): React.ReactElement {
               max={365}
               helpText="Set to 0 to disable password expiry"
             />
-            <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <input
                 type="checkbox"
                 checked={settings.mfaRequired}
@@ -182,8 +182,8 @@ export function TenantSettingsPage(): React.ReactElement {
           <Text variant="heading5">Single Sign-On (SSO)</Text>
         </CardHeader>
         <CardBody>
-          <Stack spacing="var(--spacing-3)">
-            <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+          <Stack spacing="md">
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <input
                 type="checkbox"
                 checked={settings.ssoEnabled}

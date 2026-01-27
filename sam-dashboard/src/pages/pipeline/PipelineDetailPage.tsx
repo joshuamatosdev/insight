@@ -3,9 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Section, SectionHeader } from '../../components/layout/Section';
 import { Stack, HStack } from '../../components/layout/Stack';
 import { Box } from '../../components/layout/Box';
-import { Text } from '../../components/primitives/Text';
-import { Button } from '../../components/primitives/Button';
-import { Badge } from '../../components/primitives/Badge';
+import { Text } from '../../components/catalyst/primitives/Text';
+import { Button } from '../../components/catalyst/primitives/Button';
+import { Badge } from '../../components/catalyst/primitives/Badge';
 import {
   CaptureManagement,
   TeamingPartnerList,
@@ -194,10 +194,10 @@ export function PipelineDetailPage() {
         {/* Overview Card */}
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-bg-secondary)',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-border)',
+            padding: '1rem',
+            backgroundColor: '#f4f4f5',
+            borderRadius: '0.5rem',
+            border: '1px solid #e4e4e7',
           }}
         >
           <Stack gap="md">

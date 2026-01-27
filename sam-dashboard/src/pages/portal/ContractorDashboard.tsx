@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Flex, Stack, Grid, Box, Card, CardBody } from '../../components/layout';
-import { Text, Button } from '../../components/primitives';
+import { Flex, Stack, Grid, Box, Card, CardBody } from '../../components/catalyst/layout';
+import { Text, Button } from '../../components/catalyst/primitives';
 import { ContractStatusCards } from './widgets/ContractStatusCards';
 import { InvoiceSummary } from './widgets/InvoiceSummary';
 import { DeliverableTracker } from './widgets/DeliverableTracker';
@@ -52,7 +52,7 @@ export function ContractorDashboard(): React.ReactElement {
   };
 
   return (
-    <Stack spacing="var(--spacing-6)" className="p-6">
+    <Stack spacing="lg" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -73,28 +73,28 @@ export function ContractorDashboard(): React.ReactElement {
           title="Active Contracts"
           value={metrics.activeContracts.toString()}
           icon="📋"
-          color="var(--color-primary)"
+          className="text-blue-600 dark:text-blue-400"
           loading={loading}
         />
         <QuickStat
           title="Pending Invoices"
           value={metrics.pendingInvoices.toString()}
           icon="💰"
-          color="var(--color-warning)"
+          color="#f59e0b"
           loading={loading}
         />
         <QuickStat
           title="Upcoming Deadlines"
           value={metrics.upcomingDeadlines.toString()}
           icon="📅"
-          color="var(--color-danger)"
+          color="#ef4444"
           loading={loading}
         />
         <QuickStat
           title="Total Contract Value"
           value={formatCurrency(metrics.totalContractValue)}
           icon="💵"
-          color="var(--color-success)"
+          color="#10b981"
           loading={loading}
         />
       </Grid>
@@ -102,13 +102,13 @@ export function ContractorDashboard(): React.ReactElement {
       {/* Main Content Grid */}
       <Grid columns={2} gap="lg">
         {/* Left Column */}
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <ContractStatusCards />
           <DeliverableTracker />
         </Stack>
 
         {/* Right Column */}
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <InvoiceSummary />
           <UpcomingDeadlines />
         </Stack>
@@ -130,14 +130,14 @@ function QuickStat({ title, value, icon, color, loading }: QuickStatProps): Reac
     <Card variant="elevated">
       <CardBody padding="md">
         <Flex align="flex-start" justify="space-between">
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">{title}</Text>
             {loading === true ? (
               <Box
                 style={{
                   width: '80px',
                   height: '32px',
-                  backgroundColor: 'var(--color-gray-200)',
+                  backgroundColor: '#e4e4e7',
                   borderRadius: '4px',
                 }}
               />

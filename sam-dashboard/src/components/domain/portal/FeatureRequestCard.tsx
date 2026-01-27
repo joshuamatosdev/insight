@@ -133,12 +133,12 @@ export function FeatureRequestCard({
           />
 
           {/* Content */}
-          <Stack spacing="var(--spacing-2)" style={{ flex: 1 }}>
+          <Stack spacing="sm" style={{ flex: 1 }}>
             {/* Header */}
             <Flex justify="space-between" align="flex-start">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="heading5">{featureRequest.title}</Text>
-                <HStack spacing="var(--spacing-2)">
+                <HStack spacing="sm">
                   <Badge variant={getStatusVariant(featureRequest.status)} size="sm">
                     {featureRequest.status.replace('_', ' ')}
                   </Badge>
@@ -174,14 +174,14 @@ export function FeatureRequestCard({
 
             {/* Tags */}
             {featureRequest.tags.length > 0 && (
-              <HStack spacing="var(--spacing-1)">
+              <HStack spacing="xs">
                 {featureRequest.tags.map((tag) => (
                   <Box
                     key={tag}
                     style={{
-                      padding: 'var(--spacing-1) var(--spacing-2)',
-                      backgroundColor: 'var(--color-gray-100)',
-                      borderRadius: 'var(--radius-full)',
+                      padding: '0.25rem 0.5rem',
+                      backgroundColor: '#f4f4f5',
+                      borderRadius: '9999px',
                     }}
                   >
                     <Text variant="caption" color="muted">
@@ -194,7 +194,7 @@ export function FeatureRequestCard({
 
             {/* Footer */}
             <Flex justify="space-between" align="center">
-              <HStack spacing="var(--spacing-3)">
+              <HStack spacing="md">
                 <Text variant="caption" color="muted">
                   by {featureRequest.submitterName}
                 </Text>
@@ -212,7 +212,7 @@ export function FeatureRequestCard({
 
             {/* Assignee & Target Release */}
             {(featureRequest.assigneeName !== null || featureRequest.targetRelease !== null) && (
-              <HStack spacing="var(--spacing-3)">
+              <HStack spacing="md">
                 {featureRequest.assigneeName !== null && (
                   <Text variant="caption">
                     Assigned to: {featureRequest.assigneeName}

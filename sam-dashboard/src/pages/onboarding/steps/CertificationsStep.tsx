@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/layout';
-import { Text } from '../../../components/primitives';
+import { Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface CertificationsStepProps {
@@ -43,7 +43,7 @@ export function CertificationsStep({
       onSkip={onSkip}
       canSkip={true}
     >
-      <Stack spacing="var(--spacing-3)">
+      <Stack spacing="md">
         {CERTIFICATIONS.map((cert) => {
           const isSelected = selected.includes(cert.id);
           return (
@@ -51,10 +51,10 @@ export function CertificationsStep({
               key={cert.id}
               onClick={() => toggleCertification(cert.id)}
               style={{
-                padding: 'var(--spacing-4)',
+                padding: '1rem',
                 borderRadius: '8px',
-                border: `2px solid ${isSelected ? 'var(--color-primary)' : 'var(--color-gray-200)'}`,
-                backgroundColor: isSelected ? 'var(--color-primary-50)' : 'white',
+                border: `2px solid ${isSelected ? '#2563eb' : '#e4e4e7'}`,
+                backgroundColor: isSelected ? '#eff6ff' : 'white',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
               }}
@@ -65,8 +65,8 @@ export function CertificationsStep({
                     width: '24px',
                     height: '24px',
                     borderRadius: '4px',
-                    border: `2px solid ${isSelected ? 'var(--color-primary)' : 'var(--color-gray-300)'}`,
-                    backgroundColor: isSelected ? 'var(--color-primary)' : 'white',
+                    border: `2px solid ${isSelected ? '#2563eb' : '#d4d4d8'}`,
+                    backgroundColor: isSelected ? '#2563eb' : 'white',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

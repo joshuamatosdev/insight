@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Text, Button, Badge, Input } from '../../components/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/layout';
+import { Text, Button, Badge, Input } from '../../components/catalyst/primitives';
+import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
 import { FeatureRequestCard } from '../../components/domain/portal';
 import { useFeatureRequests } from '../../hooks';
 import type {
@@ -151,10 +151,10 @@ export function FeatureRequestsPage(): React.ReactElement {
     return (
       <Box
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-danger-light)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fef2f2',
+          borderRadius: '0.5rem',
         }}
       >
         <Text variant="body" color="danger">
@@ -168,7 +168,7 @@ export function FeatureRequestsPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" className="p-6">
+    <Stack spacing="lg" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -227,10 +227,10 @@ export function FeatureRequestsPage(): React.ReactElement {
                   setStatusFilter(e.target.value as FeatureRequestStatus | 'ALL')
                 }
                 style={{
-                  padding: 'var(--spacing-2) var(--spacing-3)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-gray-300)',
-                  fontSize: 'var(--font-size-body-small)',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: '0.375rem',
+                  border: '1px solid #d4d4d8',
+                  fontSize: '0.875rem',
                 }}
               >
                 <option value="ALL">All Statuses</option>
@@ -302,9 +302,9 @@ export function FeatureRequestsPage(): React.ReactElement {
           align="center"
           direction="column"
           style={{
-            padding: 'var(--spacing-8)',
-            backgroundColor: 'var(--color-gray-50)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '2rem',
+            backgroundColor: '#fafafa',
+            borderRadius: '0.5rem',
           }}
         >
           <Text variant="heading4" color="muted">
@@ -317,7 +317,7 @@ export function FeatureRequestsPage(): React.ReactElement {
           </Text>
         </Flex>
       ) : (
-        <Stack spacing="var(--spacing-6)">
+        <Stack spacing="lg">
           {orderedKeys.map((key) => {
             const requests = groups[key] ?? [];
             if (requests.length === 0) {
@@ -332,7 +332,7 @@ export function FeatureRequestsPage(): React.ReactElement {
                     {requests.length}
                   </Badge>
                 </Flex>
-                <Stack spacing="var(--spacing-3)">
+                <Stack spacing="md">
                   {requests
                     .sort((a, b) => b.voteCount - a.voteCount)
                     .map((fr) => (

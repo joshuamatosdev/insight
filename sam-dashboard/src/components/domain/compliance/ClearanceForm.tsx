@@ -145,14 +145,14 @@ export function ClearanceForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {errors.general !== undefined && (
           <Box
             style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
+              padding: '0.75rem',
+              backgroundColor: '#fef2f2',
+              borderRadius: '0.375rem',
+              border: '1px solid #ef4444',
             }}
           >
             <Text variant="bodySmall" color="danger">
@@ -169,8 +169,8 @@ export function ClearanceForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+            <Stack spacing="md">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -270,7 +270,7 @@ export function ClearanceForm({
                 </Box>
               )}
 
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -323,7 +323,7 @@ export function ClearanceForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+            <Grid columns="1fr 1fr" gap="md">
               <GridItem>
                 <Box>
                   <Text
@@ -412,7 +412,7 @@ export function ClearanceForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+            <Grid columns="1fr 1fr" gap="md">
               <GridItem>
                 <Box>
                   <Text
@@ -462,10 +462,10 @@ export function ClearanceForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <HStack spacing="var(--spacing-6)">
+            <Stack spacing="md">
+              <HStack spacing="lg">
                 <Box>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
                     <input
                       type="checkbox"
                       checked={form.sciAccess}
@@ -476,7 +476,7 @@ export function ClearanceForm({
                 </Box>
 
                 <Box>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
                     <input
                       type="checkbox"
                       checked={form.sapAccess}
@@ -519,8 +519,8 @@ export function ClearanceForm({
               </Text>
             </CardHeader>
             <CardBody>
-              <Stack spacing="var(--spacing-4)">
-                <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Stack spacing="md">
+                <Grid columns="1fr 1fr" gap="md">
                   <GridItem>
                     <Box>
                       <Text
@@ -580,7 +580,7 @@ export function ClearanceForm({
                   />
                 </Box>
 
-                <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+                <Grid columns="1fr 1fr" gap="md">
                   <GridItem>
                     <Box>
                       <Text
@@ -647,7 +647,7 @@ export function ClearanceForm({
         </Card>
 
         {/* Submit buttons */}
-        <HStack justify="end" spacing="var(--spacing-2)">
+        <HStack justify="end" spacing="sm">
           <Button variant="outline" type="button" onClick={onCancel}>
             Cancel
           </Button>

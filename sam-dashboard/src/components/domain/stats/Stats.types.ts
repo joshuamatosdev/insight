@@ -1,17 +1,20 @@
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-export type StatVariant = 'primary' | 'success' | 'warning' | 'info' | 'secondary' | 'danger';
+export type StatChangeType = 'positive' | 'negative' | 'neutral';
 
 export interface StatCardProps {
-  variant?: StatVariant;
   value: string | number;
   label: string;
   icon?: ReactNode;
+  change?: {
+    value: string;
+    type: StatChangeType;
+  };
   className?: string;
-  style?: CSSProperties;
 }
 
 export interface StatsGridProps {
   children: ReactNode;
-  columns?: number;
+  columns?: 1 | 2 | 3 | 4 | 5 | 6;
+  className?: string;
 }

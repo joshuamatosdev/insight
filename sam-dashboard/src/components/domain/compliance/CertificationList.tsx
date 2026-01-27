@@ -46,7 +46,7 @@ export function CertificationList({
   }
 
   return (
-    <Grid columns="repeat(auto-fill, minmax(380px, 1fr))" gap="var(--spacing-4)">
+    <Grid columns="repeat(auto-fill, minmax(380px, 1fr))" gap="md">
       {certifications.map((certification) => (
         <GridItem key={certification.id}>
           <CertificationCard

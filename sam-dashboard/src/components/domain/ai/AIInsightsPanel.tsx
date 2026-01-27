@@ -119,7 +119,7 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
           <div
             className={clsx(
               'flex h-20 w-20 items-center justify-center rounded-full text-2xl font-bold text-white',
-              fitScore.overallScore >= 70 ? 'bg-emerald-500' : 'bg-amber-500'
+              fitScore.overallScore >= 70 ? 'bg-success' : 'bg-warning'
             )}
           >
             {fitScore.overallScore}
@@ -170,10 +170,10 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
         case 'LOW':
           return 'lime';
         case 'MEDIUM':
-          return 'amber';
+          return 'yellow';
         case 'HIGH':
         case 'CRITICAL':
-          return 'rose';
+          return 'red';
       }
     };
 
@@ -182,10 +182,10 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
         case 'LOW':
           return 'border-l-lime-500';
         case 'MEDIUM':
-          return 'border-l-amber-500';
+          return 'border-l-warning';
         case 'HIGH':
         case 'CRITICAL':
-          return 'border-l-rose-500';
+          return 'border-l-danger';
       }
     };
 

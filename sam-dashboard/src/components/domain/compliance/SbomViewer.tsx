@@ -43,7 +43,7 @@ function SbomStatCard({
   return (
     <Card variant="outlined">
       <CardBody padding="sm">
-        <Stack spacing="var(--spacing-1)">
+        <Stack spacing="xs">
           <Text variant="caption" color="muted">
             {label}
           </Text>
@@ -77,14 +77,14 @@ function ComponentCard({
     <Box
       style={{
         marginLeft: `${level * 20}px`,
-        borderLeft: level > 0 ? '2px solid var(--color-border)' : undefined,
-        paddingLeft: level > 0 ? 'var(--spacing-3)' : undefined,
+        borderLeft: level > 0 ? '2px solid #e4e4e7' : undefined,
+        paddingLeft: level > 0 ? '0.75rem' : undefined,
       }}
     >
       <Card variant="outlined">
         <CardBody padding="sm">
           <HStack justify="between" align="start">
-            <HStack spacing="var(--spacing-2)" align="center">
+            <HStack spacing="sm" align="center">
               {hasDependencies && (
                 <Button
                   variant="ghost"
@@ -108,7 +108,7 @@ function ComponentCard({
                 <Text variant="bodySmall" weight="medium">
                   {component.name}
                 </Text>
-                <HStack spacing="var(--spacing-2)" align="center">
+                <HStack spacing="sm" align="center">
                   <Text variant="caption" color="muted">
                     v{component.version}
                   </Text>
@@ -263,7 +263,7 @@ export function SbomViewer({
               </Text>
               {onRefresh !== undefined && (
                 <Button variant="outline" onClick={onRefresh}>
-                  <HStack spacing="var(--spacing-1)" align="center">
+                  <HStack spacing="xs" align="center">
                     <RefreshIcon size="sm" />
                     <Text as="span" variant="bodySmall">
                       Refresh
@@ -285,7 +285,7 @@ export function SbomViewer({
         actions={
           onRefresh !== undefined && (
             <Button variant="outline" size="sm" onClick={onRefresh}>
-              <HStack spacing="var(--spacing-1)" align="center">
+              <HStack spacing="xs" align="center">
                 <RefreshIcon size="sm" />
                 <Text as="span" variant="bodySmall">
                   Refresh
@@ -296,9 +296,9 @@ export function SbomViewer({
         }
       />
 
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {/* Stats Overview */}
-        <Grid columns="repeat(auto-fit, minmax(150px, 1fr))" gap="var(--spacing-4)">
+        <Grid columns="repeat(auto-fit, minmax(150px, 1fr))" gap="md">
           <GridItem>
             <SbomStatCard label="Total Components" value={stats.total} variant="primary" />
           </GridItem>
@@ -326,7 +326,7 @@ export function SbomViewer({
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr" gap="var(--spacing-3)">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Text variant="caption" color="muted">
                     Format
@@ -392,7 +392,7 @@ export function SbomViewer({
               </HStack>
             </CardHeader>
             <CardBody>
-              <Stack spacing="var(--spacing-2)">
+              <Stack spacing="sm">
                 {components.slice(0, 20).map((component) => (
                   <ComponentCard
                     key={`${component.name}-${component.version}`}

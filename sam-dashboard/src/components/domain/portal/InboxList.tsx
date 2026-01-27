@@ -96,13 +96,13 @@ export function InboxList({
           const hasUnread = thread.unreadCount > 0;
 
           const threadStyles: CSSProperties = {
-            padding: 'var(--spacing-3) var(--spacing-4)',
-            borderBottom: '1px solid var(--color-gray-100)',
+            padding: '0.75rem 1rem',
+            borderBottom: '1px solid #f4f4f5',
             cursor: 'pointer',
             backgroundColor: isSelected
-              ? 'var(--color-primary-light)'
+              ? '#dbeafe'
               : hasUnread
-              ? 'var(--color-gray-50)'
+              ? '#fafafa'
               : 'transparent',
             transition: 'background-color 0.2s ease',
           };
@@ -123,7 +123,7 @@ export function InboxList({
               }}
             >
               <Flex justify="space-between" align="flex-start">
-                <Stack spacing="var(--spacing-1)" style={{ flex: 1, minWidth: 0 }}>
+                <Stack spacing="xs" style={{ flex: 1, minWidth: 0 }}>
                   {/* Participants & Date */}
                   <Flex justify="space-between" align="center">
                     <Text

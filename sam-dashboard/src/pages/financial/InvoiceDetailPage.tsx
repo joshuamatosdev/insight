@@ -6,11 +6,10 @@ import {
   Text,
   Button,
   Badge,
-  PencilIcon,
   TrashIcon,
   ChevronLeftIcon,
   CheckIcon,
-} from '../../components/primitives';
+} from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -23,9 +22,9 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../../components/layout';
-import { InvoiceLineItems } from '../../components/domain/financial';
-import { useInvoice } from '../../hooks/useFinancial';
+} from '@/components/catalyst/layout';
+import { InvoiceLineItems } from '@/components/domain/financial';
+import { useInvoice } from '@/hooks/useFinancial';
 import {
   submitInvoice,
   approveInvoice,
@@ -35,8 +34,8 @@ import {
   formatDate,
   getStatusColor,
   getStatusLabel,
-} from '../../services/financialService';
-import type { InvoiceLineItem } from '../../types/financial.types';
+} from '@/services/financialService';
+import type { InvoiceLineItem } from '@/types/financial.types';
 
 export interface InvoiceDetailPageProps {
   invoiceId: string;
@@ -121,10 +120,10 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
       <Section id="invoice-detail">
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="body" color="danger">
@@ -151,10 +150,10 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
           ) : undefined
         }
         actions={
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             {canSubmit && (
               <Button variant="primary" size="sm" onClick={handleSubmit}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <CheckIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     Submit
@@ -164,7 +163,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
             )}
             {canApprove && (
               <Button variant="primary" size="sm" onClick={handleApprove}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <CheckIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     Approve
@@ -184,11 +183,11 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
       {actionError !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -197,9 +196,9 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
         </Box>
       )}
 
-      <Stack spacing="var(--spacing-6)">
+      <Stack spacing="lg">
         {/* Status & Contract Info */}
-        <HStack spacing="var(--spacing-3)">
+        <HStack spacing="md">
           <Badge variant={getStatusColor(invoice.status)} size="lg">
             {getStatusLabel(invoice.status)}
           </Badge>
@@ -214,7 +213,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
         </HStack>
 
         {/* Main Info Cards */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+        <Grid columns={2} gap="md">
           {/* Invoice Details */}
           <GridItem>
             <Card variant="outlined">
@@ -224,7 +223,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
                 </Text>
               </CardHeader>
               <CardBody>
-                <Stack spacing="var(--spacing-3)">
+                <Stack spacing="md">
                   <HStack justify="between">
                     <Text variant="bodySmall" color="muted">
                       Contract
@@ -307,7 +306,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
                 </Text>
               </CardHeader>
               <CardBody>
-                <Stack spacing="var(--spacing-3)">
+                <Stack spacing="md">
                   <HStack justify="between">
                     <Text variant="bodySmall" color="muted">
                       Subtotal
@@ -339,8 +338,8 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
                   <HStack
                     justify="between"
                     style={{
-                      paddingTop: 'var(--spacing-2)',
-                      borderTop: '1px solid var(--color-gray-200)',
+                      paddingTop: '0.5rem',
+                      borderTop: '1px solid #e4e4e7',
                     }}
                   >
                     <Text variant="body" weight="semibold">
@@ -391,7 +390,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns={3} gap="md">
                 {invoice.paymentMethod !== null && (
                   <GridItem>
                     <Text variant="caption" color="muted" weight="medium">

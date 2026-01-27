@@ -12,7 +12,7 @@ import {
   UsersIcon,
   ChevronUpIcon,
   ChevronDownIcon,
-} from '../components/primitives';
+} from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -25,7 +25,7 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../components/layout';
+} from '../components/catalyst/layout';
 import {
   fetchCurrentUsage,
   fetchUsageLimits,
@@ -105,11 +105,11 @@ function UsageProgressBar({
   warning: boolean;
   exceeded: boolean;
 }): React.ReactElement {
-  let bgColor = 'var(--color-success)';
+  let bgColor = '#10b981'; // success green
   if (exceeded) {
-    bgColor = 'var(--color-danger)';
+    bgColor = '#ef4444'; // danger red
   } else if (warning) {
-    bgColor = 'var(--color-warning)';
+    bgColor = '#f59e0b'; // warning amber
   }
 
   return (
@@ -117,8 +117,8 @@ function UsageProgressBar({
       style={{
         width: '100%',
         height: '8px',
-        backgroundColor: 'var(--color-gray-200)',
-        borderRadius: 'var(--radius-full)',
+        backgroundColor: '#e4e4e7',
+        borderRadius: '9999px',
         overflow: 'hidden',
       }}
     >
@@ -127,7 +127,7 @@ function UsageProgressBar({
           width: `${Math.min(percentage, 100)}%`,
           height: '100%',
           backgroundColor: bgColor,
-          borderRadius: 'var(--radius-full)',
+          borderRadius: '9999px',
           transition: 'width 0.3s ease',
         }}
       />
@@ -165,13 +165,13 @@ function UsageMetricCard({
       variant={isSelected === true ? 'elevated' : 'default'}
       style={{
         cursor: onClick !== undefined ? 'pointer' : 'default',
-        border: isSelected === true ? '2px solid var(--color-primary)' : undefined,
+        border: isSelected === true ? '2px solid #2563eb' : undefined,
         transition: 'all 0.2s ease',
       }}
       onClick={onClick}
     >
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           <HStack justify="between" align="center">
             <Text variant="bodySmall" color="muted" weight="medium">
               {METRIC_DISPLAY_LABELS[metricType]}
@@ -253,8 +253,8 @@ function TrendChart({
             style={{
               flex: 1,
               height: `${Math.max(height, 2)}%`,
-              backgroundColor: 'var(--color-primary)',
-              borderRadius: 'var(--radius-sm) var(--radius-sm) 0 0',
+              backgroundColor: '#2563eb',
+              borderRadius: '0.25rem 0.25rem 0 0',
               minWidth: '8px',
               position: 'relative',
             }}
@@ -284,17 +284,16 @@ function LimitWarningBanner({
   return (
     <Box
       style={{
-        padding: 'var(--spacing-4)',
-        backgroundColor:
-          exceededCount > 0 ? 'var(--color-danger-light)' : 'var(--color-warning-light)',
-        borderRadius: 'var(--radius-md)',
-        border: `1px solid ${exceededCount > 0 ? 'var(--color-danger)' : 'var(--color-warning)'}`,
-        marginBottom: 'var(--spacing-4)',
+        padding: '1rem',
+        backgroundColor: exceededCount > 0 ? '#fef2f2' : '#fffbeb',
+        borderRadius: '0.375rem',
+        border: `1px solid ${exceededCount > 0 ? '#ef4444' : '#f59e0b'}`,
+        marginBottom: '1rem',
       }}
     >
-      <HStack spacing="var(--spacing-3)" align="start">
+      <HStack spacing="md" align="start">
         <BellIcon size="md" color={exceededCount > 0 ? 'danger' : 'warning'} />
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           <Text
             variant="body"
             weight="semibold"
@@ -423,7 +422,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       <Section id="usage">
         <Card>
           <CardBody>
-            <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" style={{ textAlign: 'center' }}>
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -443,7 +442,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
         title="Usage & Billing"
         icon={<DashboardIcon size="lg" />}
         actions={
-          <HStack spacing="var(--spacing-3)">
+          <HStack spacing="md">
             {usageSummary !== null && (
               <Badge
                 variant={TIER_CONFIG[usageSummary.subscriptionTier].variant}
@@ -453,7 +452,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
               </Badge>
             )}
             <Button variant="outline" size="sm" onClick={handleRefresh}>
-              <HStack spacing="var(--spacing-1)" align="center">
+              <HStack spacing="xs" align="center">
                 <RefreshIcon size="sm" />
                 <Text as="span" variant="caption">
                   Refresh
@@ -472,7 +471,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
         <Card className="mb-4">
           <CardBody>
             <HStack justify="between" align="center">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Current Billing Period
                 </Text>
@@ -497,7 +496,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
 
       {/* Usage Metrics Grid */}
       {usageLimits !== null && (
-        <Grid columns="repeat(auto-fill, minmax(250px, 1fr))" gap="var(--spacing-4)">
+        <Grid columns="repeat(auto-fill, minmax(250px, 1fr))" gap="md">
           {METRIC_TYPES.map((metricType) => {
             const status = usageLimits.limits[metricType];
             if (status === undefined) {
@@ -557,26 +556,26 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
           <Text variant="heading5">Tips to Optimize Usage</Text>
         </CardHeader>
         <CardBody>
-          <Stack spacing="var(--spacing-3)">
-            <HStack spacing="var(--spacing-3)">
+          <Stack spacing="md">
+            <HStack spacing="md">
               <SearchIcon size="sm" color="primary" />
               <Text variant="bodySmall">
                 Use saved searches to reduce API calls and search queries.
               </Text>
             </HStack>
-            <HStack spacing="var(--spacing-3)">
+            <HStack spacing="md">
               <FileIcon size="sm" color="primary" />
               <Text variant="bodySmall">
                 Compress documents before uploading to save storage space.
               </Text>
             </HStack>
-            <HStack spacing="var(--spacing-3)">
+            <HStack spacing="md">
               <BellIcon size="sm" color="primary" />
               <Text variant="bodySmall">
                 Set up alerts instead of manually checking for new opportunities.
               </Text>
             </HStack>
-            <HStack spacing="var(--spacing-3)">
+            <HStack spacing="md">
               <UsersIcon size="sm" color="primary" />
               <Text variant="bodySmall">
                 Review team member access regularly to optimize user count.

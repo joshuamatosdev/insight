@@ -8,7 +8,7 @@ import {
   PlusIcon,
   TrashIcon,
   PencilIcon,
-} from '../components/primitives';
+} from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -22,7 +22,7 @@ import {
   Box,
   Grid,
   GridItem,
-} from '../components/layout';
+} from '../components/catalyst/layout';
 import {
   fetchOpportunityAlerts,
   createOpportunityAlert,

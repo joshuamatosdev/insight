@@ -611,6 +611,157 @@ const plugin = {
         };
       },
     },
+
+    /**
+     * no-hardcoded-test-strings
+     *
+     * Enforces that test files don't use hardcoded string literals for UI text.
+     * Instead, strings should be imported from a shared constants file.
+     *
+     * Why: When UI text changes, tests break even though functionality is fine.
+     * Fix: Import strings from a shared source (constants, i18n) so changes
+     * only need to happen in one place.
+     *
+     * Examples of violations:
+     *   - screen.getByText('Submit')
+     *   - expect(element).toHaveTextContent('Dashboard')
+     *
+     * Allowed:
+     *   - screen.getByText(LABELS.SUBMIT)
+     *   - screen.getByRole('button')
+     *   - screen.getByTestId('submit-btn')
+     */
+    'no-hardcoded-test-strings': {
+      meta: {
+        type: 'suggestion',
+        docs: {
+          description: 'Disallow hardcoded strings in test assertions - use constants instead',
+          category: 'Testing',
+          recommended: true,
+        },
+        messages: {
+          hardcodedString:
+            'Hardcoded string "{{ value }}" in test. Import from a shared constants file (e.g., LABELS.{{ suggested }}) or use getByRole/getByTestId instead.',
+        },
+        schema: [],
+      },
+
+      create(context) {
+        const fileName = context.filename ?? context.getFilename();
+
+        // Only apply to test files
+        if (!fileName.includes('.test.') && !fileName.includes('.spec.') && !fileName.includes('__tests__')) {
+          return {};
+        }
+
+        // Testing library methods that accept text strings
+        const textMatchingMethods = [
+          'getByText',
+          'queryByText',
+          'findByText',
+          'getAllByText',
+          'queryAllByText',
+          'findAllByText',
+          'getByLabelText',
+          'queryByLabelText',
+          'findByLabelText',
+          'getByPlaceholderText',
+          'queryByPlaceholderText',
+          'findByPlaceholderText',
+          'getByAltText',
+          'queryByAltText',
+          'findByAltText',
+          'getByTitle',
+          'queryByTitle',
+          'findByTitle',
+          'getByDisplayValue',
+          'queryByDisplayValue',
+          'findByDisplayValue',
+        ];
+
+        // Jest matchers that check text content
+        const textMatchers = [
+          'toHaveTextContent',
+          'toHaveValue',
+          'toHaveDisplayValue',
+          'toHaveAccessibleName',
+          'toHaveAccessibleDescription',
+        ];
+
+        function suggestConstantName(str) {
+          return str
+            .toUpperCase()
+            .replace(/[^A-Z0-9]+/g, '_')
+            .replace(/^_|_$/g, '')
+            .substring(0, 30);
+        }
+
+        return {
+          CallExpression(node) {
+            const callee = node.callee;
+
+            // Check for screen.getByText('...') or similar
+            if (callee.type === 'MemberExpression' && callee.property.type === 'Identifier') {
+              const methodName = callee.property.name;
+
+              if (textMatchingMethods.includes(methodName)) {
+                const firstArg = node.arguments[0];
+
+                // Check if first argument is a string literal
+                if (firstArg && firstArg.type === 'Literal' && typeof firstArg.value === 'string') {
+                  const value = firstArg.value;
+                  // Skip very short strings (likely technical), regex patterns, or single characters
+                  if (value.length > 2 && !/^[\/^$.*+?()[\]{}|\\]/.test(value)) {
+                    context.report({
+                      node: firstArg,
+                      messageId: 'hardcodedString',
+                      data: {
+                        value: value.substring(0, 30) + (value.length > 30 ? '...' : ''),
+                        suggested: suggestConstantName(value),
+                      },
+                    });
+                  }
+                }
+
+                // Check template literals too
+                if (firstArg && firstArg.type === 'TemplateLiteral' && firstArg.expressions.length === 0) {
+                  const value = firstArg.quasis[0].value.raw;
+                  if (value.length > 2) {
+                    context.report({
+                      node: firstArg,
+                      messageId: 'hardcodedString',
+                      data: {
+                        value: value.substring(0, 30) + (value.length > 30 ? '...' : ''),
+                        suggested: suggestConstantName(value),
+                      },
+                    });
+                  }
+                }
+              }
+
+              // Check for expect(...).toHaveTextContent('...')
+              if (textMatchers.includes(methodName)) {
+                const firstArg = node.arguments[0];
+
+                if (firstArg && firstArg.type === 'Literal' && typeof firstArg.value === 'string') {
+                  const value = firstArg.value;
+                  if (value.length > 2) {
+                    context.report({
+                      node: firstArg,
+                      messageId: 'hardcodedString',
+                      data: {
+                        value: value.substring(0, 30) + (value.length > 30 ? '...' : ''),
+                        suggested: suggestConstantName(value),
+                      },
+                    });
+                  }
+                }
+              }
+            }
+          },
+        };
+      },
+    },
   },
 };
 

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, Input, PlusIcon } from '../../components/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/layout';
+import { Text, Button, Input, PlusIcon } from '../../components/catalyst/primitives';
+import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/catalyst/layout';
 import { ContractList, ContractForm } from '../../components/domain/contracts';
 import { useContracts, useCreateContract } from '../../hooks/useContracts';
 import type { Contract, CreateContractRequest } from '../../components/domain/contracts';
@@ -95,7 +95,7 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
 
       <Box className="mb-4">
         <form onSubmit={handleSearchSubmit}>
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <Input
               placeholder="Search contracts..."
               value={searchTerm}
@@ -120,9 +120,9 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
       {error !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.5rem',
           }}
         >
           <Text variant="body" color="danger">
@@ -132,7 +132,7 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
       )}
 
       {isLoading === false && error === null && (
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <ContractList
             contracts={contracts}
             onContractClick={handleContractClick}
@@ -140,7 +140,7 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
           />
 
           {pagination.totalPages > 1 && (
-            <HStack justify="center" spacing="var(--spacing-2)">
+            <HStack justify="center" spacing="sm">
               <Button
                 variant="secondary"
                 size="sm"

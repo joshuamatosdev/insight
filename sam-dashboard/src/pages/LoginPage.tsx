@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth';
-import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/layout';
-import { Text, Button, Input, BuildingCheckIcon } from '../components/primitives';
+import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
+import { Text, Button, Input, BuildingCheckIcon } from '../components/catalyst/primitives';
 import type { LoginFormState, LoginFormErrors } from './LoginPage.types';
 
 /**
@@ -106,23 +106,23 @@ export function LoginPage(): React.ReactElement {
       align="center"
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-gray-100)',
-        padding: 'var(--spacing-4)',
+        backgroundColor: '#f4f4f5',
+        padding: '1rem',
       }}
     >
       <Box style={{ width: '100%', maxWidth: '400px' }}>
         <Card variant="elevated">
           <CardHeader
             style={{
-              backgroundColor: 'var(--color-primary)',
+              backgroundColor: '#2563eb',
               borderBottom: 'none',
               textAlign: 'center',
-              padding: 'var(--spacing-6)',
+              padding: '1.5rem',
             }}
           >
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
-              <Stack spacing="var(--spacing-1)" style={{ alignItems: 'center' }}>
+              <Stack spacing="xs" style={{ alignItems: 'center' }}>
                 <Text variant="heading3" color="white" weight="semibold">
                   SAM.gov Dashboard
                 </Text>
@@ -135,15 +135,15 @@ export function LoginPage(): React.ReactElement {
 
           <CardBody padding="lg">
             <form onSubmit={handleSubmit}>
-              <Stack spacing="var(--spacing-4)">
+              <Stack spacing="md">
                 {/* Error message from authentication */}
                 {error !== null && (
                   <Box
                     style={{
-                      padding: 'var(--spacing-3)',
-                      backgroundColor: 'var(--color-danger-light)',
-                      borderRadius: 'var(--radius-md)',
-                      border: '1px solid var(--color-danger)',
+                      padding: '0.75rem',
+                      backgroundColor: '#fef2f2',
+                      borderRadius: '0.375rem',
+                      border: '1px solid #ef4444',
                     }}
                   >
                     <Text variant="bodySmall" color="danger">
@@ -160,7 +160,7 @@ export function LoginPage(): React.ReactElement {
                     weight="medium"
                     style={{
                       display: 'block',
-                      marginBottom: 'var(--spacing-1)',
+                      marginBottom: '0.25rem',
                     }}
                   >
                     Email Address
@@ -194,7 +194,7 @@ export function LoginPage(): React.ReactElement {
                     weight="medium"
                     style={{
                       display: 'block',
-                      marginBottom: 'var(--spacing-1)',
+                      marginBottom: '0.25rem',
                     }}
                   >
                     Password
@@ -241,7 +241,7 @@ export function LoginPage(): React.ReactElement {
           color="muted"
           style={{
             textAlign: 'center',
-            marginTop: 'var(--spacing-4)',
+            marginTop: '1rem',
             display: 'block',
           }}
         >

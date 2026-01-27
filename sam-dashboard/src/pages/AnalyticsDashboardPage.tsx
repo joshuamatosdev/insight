@@ -4,7 +4,7 @@ import {
   Button,
   SpeedometerIcon,
   RefreshIcon,
-} from '../components/primitives';
+} from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,7 +15,7 @@ import {
   Stack,
   Grid,
   GridItem,
-} from '../components/layout';
+} from '../components/catalyst/layout';
 import {
   MetricCard,
   TrendChart,
@@ -225,7 +225,7 @@ export function AnalyticsDashboardPage() {
         />
         <Card>
           <CardBody>
-            <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" style={{ textAlign: 'center' }}>
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -292,7 +292,7 @@ export function AnalyticsDashboardPage() {
       <Card className="mt-6">
         <CardBody>
           <HStack justify="between" align="center">
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="secondary">
                 Win Rate (Last 12 Months)
               </Text>
@@ -305,7 +305,7 @@ export function AnalyticsDashboardPage() {
                   : '--'}
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)" style={{ textAlign: 'right' }}>
+            <Stack spacing="xs" style={{ textAlign: 'right' }}>
               <Text variant="caption" color="secondary">
                 Recent Activity
               </Text>
@@ -318,12 +318,12 @@ export function AnalyticsDashboardPage() {
       </Card>
 
       {/* Charts and Tables */}
-      <Grid columns="2fr 1fr" gap="var(--spacing-6)" className="mt-6">
+      <Grid columns="2fr 1fr" gap="lg" className="mt-6">
         <GridItem>
           <TrendChart
             title="Opportunity Views Trend"
             data={trendData}
-            color="var(--color-primary)"
+            className="text-blue-600 dark:text-blue-400"
             height={250}
             showLegend
             loading={isLoading}
@@ -339,7 +339,7 @@ export function AnalyticsDashboardPage() {
       </Grid>
 
       {/* Activity Feed */}
-      <Grid columns="1fr" gap="var(--spacing-6)" className="mt-6">
+      <Grid columns="1fr" gap="lg" className="mt-6">
         <GridItem>
           <ActivityFeed
             activities={activities}
@@ -362,10 +362,10 @@ export function AnalyticsDashboardPage() {
               Loading...
             </Text>
           ) : (
-            <Grid columns="repeat(5, 1fr)" gap="var(--spacing-4)">
+            <Grid columns="repeat(5, 1fr)" gap="md">
               {Object.entries(stats?.eventCounts ?? {}).map(([eventType, count]) => (
                 <GridItem key={eventType}>
-                  <Stack spacing="var(--spacing-1)" style={{ textAlign: 'center' }}>
+                  <Stack spacing="xs" style={{ textAlign: 'center' }}>
                     <Text variant="heading4">{count.toLocaleString()}</Text>
                     <Text variant="caption" color="secondary">
                       {eventType

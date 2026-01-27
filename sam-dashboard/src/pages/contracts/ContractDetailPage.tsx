@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, ChevronLeftIcon, PencilIcon } from '../../components/primitives';
-import { Box, Stack, HStack, Flex, Grid, Section, SectionHeader, Card, CardBody } from '../../components/layout';
+import { Text, Button, Badge, ChevronLeftIcon, PencilIcon } from '../../components/catalyst/primitives';
+import { Box, Stack, HStack, Flex, Grid, Section, SectionHeader, Card, CardBody } from '../../components/catalyst/layout';
 import {
   ContractForm,
   ContractStatusBadge,
@@ -99,9 +99,9 @@ export function ContractDetailPage({
       <Section>
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.5rem',
           }}
         >
           <Text variant="body" color="danger">
@@ -155,11 +155,11 @@ export function ContractDetailPage({
                 Back to Contracts
               </Button>
             )}
-            <HStack spacing="var(--spacing-3)" align="center">
+            <HStack spacing="md" align="center">
               <Text variant="heading3">{contract.title}</Text>
               <ContractStatusBadge status={contract.status} />
             </HStack>
-            <HStack spacing="var(--spacing-3)" className="mt-1">
+            <HStack spacing="md" className="mt-1">
               <Text variant="body" color="muted">
                 {contract.contractNumber}
               </Text>
@@ -179,7 +179,7 @@ export function ContractDetailPage({
       </SectionHeader>
 
       <Box className="mb-4">
-        <HStack spacing="var(--spacing-0)">
+        <HStack spacing="0">
           {tabs.map((tab) => (
             <Button
               key={tab.key}
@@ -188,9 +188,9 @@ export function ContractDetailPage({
               style={{
                 borderRadius:
                   tab.key === 'overview'
-                    ? 'var(--radius-md) 0 0 var(--radius-md)'
+                    ? '0.375rem 0 0 0.375rem'
                     : tab.key === 'modifications'
-                      ? '0 var(--radius-md) var(--radius-md) 0'
+                      ? '0 0.375rem 0.375rem 0'
                       : '0',
               }}
             >
@@ -210,7 +210,7 @@ export function ContractDetailPage({
       </Box>
 
       {activeTab === 'overview' && (
-        <Stack spacing="var(--spacing-6)">
+        <Stack spacing="lg">
           {summary !== null && <ContractValueChart summary={summary} />}
 
           <Card>
@@ -218,38 +218,38 @@ export function ContractDetailPage({
               <Text variant="heading5" className="mb-4">
                 Contract Details
               </Text>
-              <Grid columns={3} gap="var(--spacing-4)">
-                <Stack spacing="var(--spacing-1)">
+              <Grid columns={3} gap="md">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Agency
                   </Text>
                   <Text variant="body">{contract.agency ?? 'N/A'}</Text>
                 </Stack>
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Award Date
                   </Text>
                   <Text variant="body">{formatDate(contract.awardDate)}</Text>
                 </Stack>
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     NAICS Code
                   </Text>
                   <Text variant="body">{contract.naicsCode ?? 'N/A'}</Text>
                 </Stack>
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Contract Vehicle
                   </Text>
                   <Text variant="body">{contract.contractVehicle ?? 'N/A'}</Text>
                 </Stack>
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Set-Aside Type
                   </Text>
                   <Text variant="body">{contract.setAsideType ?? 'N/A'}</Text>
                 </Stack>
-                <Stack spacing="var(--spacing-1)">
+                <Stack spacing="xs">
                   <Text variant="caption" color="muted">
                     Security Clearance
                   </Text>
@@ -279,12 +279,12 @@ export function ContractDetailPage({
               <Text variant="heading5" className="mb-4">
                 Key Contacts
               </Text>
-              <Grid columns={2} gap="var(--spacing-6)">
+              <Grid columns={2} gap="lg">
                 <Box>
                   <Text variant="bodySmall" weight="semibold" className="mb-2">
                     Contracting Officer
                   </Text>
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="body">
                       {contract.contractingOfficerName ?? 'Not specified'}
                     </Text>
@@ -299,7 +299,7 @@ export function ContractDetailPage({
                   <Text variant="bodySmall" weight="semibold" className="mb-2">
                     COR (Contracting Officer Representative)
                   </Text>
-                  <Stack spacing="var(--spacing-1)">
+                  <Stack spacing="xs">
                     <Text variant="body">{contract.corName ?? 'Not specified'}</Text>
                     {contract.corEmail !== null && (
                       <Text variant="bodySmall" color="muted">

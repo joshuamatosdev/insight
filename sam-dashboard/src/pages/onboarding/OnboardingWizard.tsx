@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Flex, Stack, Box } from '../../components/layout';
-import { Text, Button } from '../../components/primitives';
+import { Flex, Stack, Box } from '../../components/catalyst/layout';
+import { Text, Button } from '../../components/catalyst/primitives';
 import { StepProgress } from '../../components/domain/onboarding';
 import { useOnboarding } from '../../hooks/useOnboarding';
 import { CompanyProfileStep } from './steps/CompanyProfileStep';
@@ -53,7 +53,7 @@ export function OnboardingWizard(): React.ReactElement {
   if (error !== null) {
     return (
       <Flex justify="center" align="center" style={{ minHeight: '100vh' }}>
-        <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+        <Stack spacing="md" style={{ textAlign: 'center' }}>
           <Text variant="heading4">Failed to load onboarding</Text>
           <Text color="muted">{error}</Text>
           <Button variant="primary" onClick={() => window.location.reload()}>
@@ -72,11 +72,11 @@ export function OnboardingWizard(): React.ReactElement {
         direction="column"
         style={{
           minHeight: '100vh',
-          backgroundColor: 'var(--color-gray-50)',
-          padding: 'var(--spacing-6)',
+          backgroundColor: '#fafafa',
+          padding: '1.5rem',
         }}
       >
-        <Stack spacing="var(--spacing-6)" style={{ textAlign: 'center', maxWidth: '500px' }}>
+        <Stack spacing="lg" style={{ textAlign: 'center', maxWidth: '500px' }}>
           <Box style={{ fontSize: '64px' }}>🎉</Box>
           <Text variant="heading2">Setup Complete!</Text>
           <Text variant="body" color="muted">
@@ -143,15 +143,15 @@ export function OnboardingWizard(): React.ReactElement {
       align="center"
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-gray-50)',
-        padding: 'var(--spacing-6)',
+        backgroundColor: '#fafafa',
+        padding: '1.5rem',
       }}
     >
       {/* Header */}
       <Flex
         justify="space-between"
         align="center"
-        style={{ width: '100%', maxWidth: '700px', marginBottom: 'var(--spacing-6)' }}
+        style={{ width: '100%', maxWidth: '700px', marginBottom: '1.5rem' }}
       >
         <Text variant="heading4">Welcome to SAMGov</Text>
         <Button variant="ghost" onClick={handleDismiss}>

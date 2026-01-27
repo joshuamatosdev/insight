@@ -9,7 +9,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   SearchIcon,
-} from '../components/primitives';
+} from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -18,15 +18,17 @@ import {
   CardBody,
   HStack,
   Stack,
+  Grid,
+  GridItem,
+} from '../components/catalyst/layout';
+import {
   Table,
   TableHead,
   TableBody,
   TableRow,
+  TableHeader,
   TableCell,
-  TableHeaderCell,
-  Grid,
-  GridItem,
-} from '../components/layout';
+} from '../components/catalyst';
 import {
   AuditLog,
   AuditLogFilterState,
@@ -246,9 +248,9 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
 
       <Card>
         <CardHeader>
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             <Text variant="heading5">Filters</Text>
-            <Grid columns="1fr 1fr 1fr 1fr" gap="var(--spacing-4)">
+            <Grid columns="1fr 1fr 1fr 1fr" gap="md">
               <GridItem>
                 <Input
                   placeholder="Search..."
@@ -278,7 +280,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                 />
               </GridItem>
               <GridItem>
-                <HStack spacing="var(--spacing-2)" align="center">
+                <HStack spacing="sm" align="center">
                   <Input
                     type="date"
                     value={filters.dateFrom}
@@ -306,7 +308,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
         </CardHeader>
         <CardBody padding="none">
           {isLoading && (
-            <Stack spacing="var(--spacing-4)" className="p-6 text-center">
+            <Stack spacing="md" className="p-6 text-center">
               <Text variant="body" color="muted">
                 Loading audit logs...
               </Text>
@@ -314,7 +316,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {error !== null && isLoading === false && (
-            <Stack spacing="var(--spacing-4)" className="p-6 text-center">
+            <Stack spacing="md" className="p-6 text-center">
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -325,7 +327,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {isLoading === false && error === null && filteredLogs.length === 0 && (
-            <Stack spacing="var(--spacing-4)" className="p-6 text-center">
+            <Stack spacing="md" className="p-6 text-center">
               <Text variant="body" color="muted">
                 No audit logs found.
               </Text>
@@ -333,15 +335,15 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {isLoading === false && error === null && filteredLogs.length > 0 && (
-            <Table>
+            <Table striped>
               <TableHead>
-                <TableRow isHoverable={false}>
-                  <TableHeaderCell>Timestamp</TableHeaderCell>
-                  <TableHeaderCell>Action</TableHeaderCell>
-                  <TableHeaderCell>Entity</TableHeaderCell>
-                  <TableHeaderCell>Description</TableHeaderCell>
-                  <TableHeaderCell>IP Address</TableHeaderCell>
-                  <TableHeaderCell align="center">Details</TableHeaderCell>
+                <TableRow>
+                  <TableHeader>Timestamp</TableHeader>
+                  <TableHeader>Action</TableHeader>
+                  <TableHeader>Entity</TableHeader>
+                  <TableHeader>Description</TableHeader>
+                  <TableHeader>IP Address</TableHeader>
+                  <TableHeader className="text-center">Details</TableHeader>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -365,7 +367,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                         </TableCell>
                         <TableCell>
                           {log.entityType !== null ? (
-                            <Stack spacing="var(--spacing-1)">
+                            <Stack spacing="xs">
                               <Text variant="caption" weight="medium">
                                 {log.entityType}
                               </Text>
@@ -391,7 +393,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                             {log.ipAddress ?? '-'}
                           </Text>
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell className="text-center">
                           {hasDetails ? (
                             <Button
                               variant="ghost"
@@ -414,29 +416,13 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                         </TableCell>
                       </TableRow>
                       {isExpanded && parsedDetails !== null && (
-                        <TableRow key={`${log.id}-details`} isHoverable={false}>
-                          <TableCell
-                            style={{
-                              backgroundColor: 'var(--color-gray-50)',
-                              padding: 'var(--spacing-4)',
-                            }}
-                          >
-                            <pre
-                              style={{
-                                margin: 0,
-                                padding: 'var(--spacing-4)',
-                                backgroundColor: 'var(--color-gray-100)',
-                                borderRadius: 'var(--radius-md)',
-                                fontSize: 'var(--font-size-sm)',
-                                fontFamily: 'monospace',
-                                overflow: 'auto',
-                                maxHeight: '300px',
-                              }}
-                            >
+                        <tr key={`${log.id}-details`}>
+                          <td colSpan={6} className="bg-zinc-50 dark:bg-zinc-800 p-4">
+                            <pre className="m-0 p-4 bg-zinc-100 dark:bg-zinc-900 rounded-md text-sm font-mono overflow-auto max-h-[300px]">
                               {formatDetailsForDisplay(parsedDetails)}
                             </pre>
-                          </TableCell>
-                        </TableRow>
+                          </td>
+                        </tr>
                       )}
                     </>
                   );

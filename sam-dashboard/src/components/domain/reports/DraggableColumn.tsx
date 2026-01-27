@@ -51,14 +51,14 @@ export function DraggableColumn({
       onDragStart={handleDragStart}
       onDragEnd={onDragEnd}
       style={{
-        padding: 'var(--spacing-2) var(--spacing-3)',
+        padding: '0.5rem 0.75rem',
         backgroundColor: isDragging
-          ? 'var(--color-primary-light)'
+          ? '#dbeafe'
           : isSelected
-            ? 'var(--color-surface-container-high)'
-            : 'var(--color-surface)',
-        border: '1px solid var(--color-outline-variant)',
-        borderRadius: 'var(--radius-sm)',
+            ? '#f4f4f5'
+            : '#ffffff',
+        border: '1px solid #e4e4e7',
+        borderRadius: '0.25rem',
         cursor: 'grab',
         opacity: isDragging ? 0.5 : 1,
         transition: 'background-color 150ms ease',
@@ -70,9 +70,9 @@ export function DraggableColumn({
             style={{
               width: '6px',
               height: '16px',
-              backgroundColor: 'var(--color-outline)',
+              backgroundColor: '#e4e4e7',
               borderRadius: '2px',
-              marginRight: 'var(--spacing-1)',
+              marginRight: '0.25rem',
             }}
           />
           <Text variant="bodySmall" weight="medium">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/layout';
-import { Text, Button } from '../../../components/primitives';
+import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Button } from '../../../components/catalyst/primitives';
 
 interface Deliverable {
   id: string;
@@ -64,15 +64,15 @@ export function DeliverableTracker(): React.ReactElement {
   const getStatusColor = (status: Deliverable['status']): string => {
     switch (status) {
       case 'not-started':
-        return 'var(--color-gray-500)';
+        return '#71717a';
       case 'in-progress':
-        return 'var(--color-primary)';
+        return '#2563eb';
       case 'review':
-        return 'var(--color-warning)';
+        return '#f59e0b';
       case 'submitted':
-        return 'var(--color-success)';
+        return '#10b981';
       case 'accepted':
-        return 'var(--color-success)';
+        return '#10b981';
     }
   };
 
@@ -101,7 +101,7 @@ export function DeliverableTracker(): React.ReactElement {
   return (
     <Card variant="bordered">
       <CardBody padding="md">
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <Flex justify="space-between" align="center">
             <Text variant="heading5">Deliverable Tracker</Text>
             <Button variant="ghost" size="sm">View All</Button>
@@ -110,7 +110,7 @@ export function DeliverableTracker(): React.ReactElement {
           {loading === true ? (
             <Text variant="caption" color="muted">Loading deliverables...</Text>
           ) : (
-            <Stack spacing="var(--spacing-3)">
+            <Stack spacing="md">
               {deliverables.map((deliverable) => {
                 const daysUntil = getDaysUntilDue(deliverable.dueDate);
                 const isUrgent = daysUntil <= 7 && deliverable.status !== 'submitted' && deliverable.status !== 'accepted';
@@ -119,13 +119,13 @@ export function DeliverableTracker(): React.ReactElement {
                   <Box
                     key={deliverable.id}
                     style={{
-                      padding: 'var(--spacing-3)',
-                      backgroundColor: isUrgent ? 'var(--color-danger-50)' : 'var(--color-gray-50)',
+                      padding: '0.75rem',
+                      backgroundColor: isUrgent ? '#fef2f2' : '#fafafa',
                       borderRadius: '8px',
                     }}
                   >
                     <Flex justify="space-between" align="flex-start">
-                      <Stack spacing="var(--spacing-1)" style={{ flex: 1 }}>
+                      <Stack spacing="xs" style={{ flex: 1 }}>
                         <Text variant="body" style={{ fontWeight: 600 }}>{deliverable.title}</Text>
                         <Text variant="caption" color="muted">{deliverable.contractNumber}</Text>
                       </Stack>
@@ -133,7 +133,7 @@ export function DeliverableTracker(): React.ReactElement {
                         <Text
                           variant="caption"
                           style={{
-                            color: isUrgent ? 'var(--color-danger)' : 'var(--color-gray-600)',
+                            color: isUrgent ? '#ef4444' : '#52525b',
                             fontWeight: isUrgent ? 600 : 400,
                           }}
                         >
@@ -149,7 +149,7 @@ export function DeliverableTracker(): React.ReactElement {
                         style={{
                           flex: 1,
                           height: '6px',
-                          backgroundColor: 'var(--color-gray-200)',
+                          backgroundColor: '#e4e4e7',
                           borderRadius: '3px',
                           overflow: 'hidden',
                         }}

@@ -149,14 +149,14 @@ export function CertificationForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {errors.general !== undefined && (
           <Box
             style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
+              padding: '0.75rem',
+              backgroundColor: '#fef2f2',
+              borderRadius: '0.375rem',
+              border: '1px solid #ef4444',
             }}
           >
             <Text variant="bodySmall" color="danger">
@@ -173,8 +173,8 @@ export function CertificationForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+            <Stack spacing="md">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -253,7 +253,7 @@ export function CertificationForm({
                 />
               </Box>
 
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -306,7 +306,7 @@ export function CertificationForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Grid columns="1fr 1fr 1fr" gap="var(--spacing-4)">
+            <Grid columns="1fr 1fr 1fr" gap="md">
               <GridItem>
                 <Box>
                   <Text
@@ -378,7 +378,7 @@ export function CertificationForm({
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -470,7 +470,7 @@ export function CertificationForm({
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -550,8 +550,8 @@ export function CertificationForm({
             </Text>
           </CardHeader>
           <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+            <Stack spacing="md">
+              <Grid columns="1fr 1fr" gap="md">
                 <GridItem>
                   <Box>
                     <Text
@@ -633,7 +633,7 @@ export function CertificationForm({
         </Card>
 
         {/* Submit buttons */}
-        <HStack justify="end" spacing="var(--spacing-2)">
+        <HStack justify="end" spacing="sm">
           <Button variant="outline" type="button" onClick={onCancel}>
             Cancel
           </Button>

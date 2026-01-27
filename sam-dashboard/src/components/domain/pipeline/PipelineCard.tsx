@@ -105,10 +105,10 @@ export function PipelineCard({
         cursor: onClick !== undefined ? 'pointer' : 'default',
         borderLeft: `4px solid ${
           opportunity.decision === 'BID'
-            ? 'var(--color-success)'
+            ? '#10b981'
             : opportunity.decision === 'NO_BID'
-            ? 'var(--color-danger)'
-            : 'var(--color-border)'
+            ? '#ef4444'
+            : '#e4e4e7'
         }`,
       }}
     >

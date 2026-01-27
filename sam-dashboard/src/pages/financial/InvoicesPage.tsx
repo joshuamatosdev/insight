@@ -2,7 +2,7 @@
  * InvoicesPage - Invoice management list page
  */
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, FileTextIcon } from '../../components/primitives';
+import { Text, Button, Badge, PlusIcon, RefreshIcon, FileTextIcon } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,10 +15,10 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../../components/layout';
-import { InvoiceCard, InvoiceForm } from '../../components/domain/financial';
-import { useInvoices } from '../../hooks/useFinancial';
-import type { Invoice, InvoiceFormState, InvoiceStatus, InvoiceType } from '../../types/financial.types';
+} from '@/components/catalyst/layout';
+import { InvoiceCard, InvoiceForm } from '@/components/domain/financial';
+import { useInvoices } from '@/hooks/useFinancial';
+import type { Invoice, InvoiceFormState, InvoiceStatus, InvoiceType } from '@/types/financial.types';
 
 const INITIAL_FORM_STATE: InvoiceFormState = {
   contractId: '',
@@ -188,7 +188,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
         icon={<FileTextIcon size="lg" />}
         actions={
           showForm === false && (
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Button variant="ghost" size="sm" onClick={handleShowOverdue}>
                 <Badge variant="danger" size="sm">
                   Overdue
@@ -198,7 +198,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
                 <RefreshIcon size="sm" />
               </Button>
               <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <PlusIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     New Invoice
@@ -213,11 +213,11 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
       {error !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -245,94 +245,89 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
       )}
 
       {/* Status Filter */}
-      <HStack
-        spacing="var(--spacing-2)"
-        style={{ marginBottom: 'var(--spacing-4)', flexWrap: 'wrap' }}
-      >
-        {STATUS_FILTERS.map((filter) => (
-          <Button
-            key={filter.value}
-            variant={statusFilter === filter.value ? 'primary' : 'outline'}
-            size="sm"
-            onClick={() => handleFilterChange(filter.value)}
-          >
-            {filter.label}
-          </Button>
-        ))}
-      </HStack>
-
-      {/* Invoice Grid */}
-      {invoices.length === 0 ? (
-        <Card variant="outlined">
-          <CardBody>
-            <Flex
-              direction="column"
-              align="center"
-              gap="md"
-              className="p-8"
+      <Stack spacing="md">
+        <HStack spacing="sm" style={{ flexWrap: 'wrap' }}>
+          {STATUS_FILTERS.map((filter) => (
+            <Button
+              key={filter.value}
+              variant={statusFilter === filter.value ? 'primary' : 'outline'}
+              size="sm"
+              onClick={() => handleFilterChange(filter.value)}
             >
-              <FileTextIcon size="xl" color="muted" />
-              <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
-                No invoices found.
-                <br />
-                Create an invoice to start billing your contracts.
-              </Text>
-              <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
-                  <PlusIcon size="sm" />
-                  <Text as="span" variant="bodySmall" color="white">
-                    Create First Invoice
-                  </Text>
-                </HStack>
-              </Button>
-            </Flex>
-          </CardBody>
-        </Card>
-      ) : (
-        <>
-          <Grid columns="repeat(auto-fill, minmax(380px, 1fr))" gap="var(--spacing-4)">
-            {invoices.map((invoice) => (
-              <GridItem key={invoice.id}>
-                <InvoiceCard
-                  invoice={invoice}
-                  onView={handleViewInvoice}
-                  onSubmit={handleSubmitInvoice}
-                  onDelete={handleDeleteInvoice}
-                />
-              </GridItem>
-            ))}
-          </Grid>
+              {filter.label}
+            </Button>
+          ))}
+        </HStack>
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <HStack
-              justify="center"
-              spacing="var(--spacing-2)"
-              className="mt-6"
-            >
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage - 1)}
-                isDisabled={currentPage === 0}
+        {/* Invoice Grid */}
+        {invoices.length === 0 ? (
+          <Card variant="outlined">
+            <CardBody>
+              <Flex
+                direction="column"
+                align="center"
+                gap="md"
+                className="p-8"
               >
-                Previous
-              </Button>
-              <Text variant="bodySmall" color="muted">
-                Page {currentPage + 1} of {totalPages} ({totalElements} invoices)
-              </Text>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage + 1)}
-                isDisabled={currentPage >= totalPages - 1}
-              >
-                Next
-              </Button>
-            </HStack>
-          )}
-        </>
-      )}
+                <FileTextIcon size="xl" color="muted" />
+                <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
+                  No invoices found.
+                  <br />
+                  Create an invoice to start billing your contracts.
+                </Text>
+                <Button variant="primary" onClick={handleCreateClick}>
+                  <HStack spacing="xs" align="center">
+                    <PlusIcon size="sm" />
+                    <Text as="span" variant="bodySmall" color="white">
+                      Create First Invoice
+                    </Text>
+                  </HStack>
+                </Button>
+              </Flex>
+            </CardBody>
+          </Card>
+        ) : (
+          <Stack spacing="lg">
+            <Grid columns="repeat(auto-fill, minmax(380px, 1fr))" gap="md">
+              {invoices.map((invoice) => (
+                <GridItem key={invoice.id}>
+                  <InvoiceCard
+                    invoice={invoice}
+                    onView={handleViewInvoice}
+                    onSubmit={handleSubmitInvoice}
+                    onDelete={handleDeleteInvoice}
+                  />
+                </GridItem>
+              ))}
+            </Grid>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <HStack justify="center" spacing="sm">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  isDisabled={currentPage === 0}
+                >
+                  Previous
+                </Button>
+                <Text variant="bodySmall" color="muted">
+                  Page {currentPage + 1} of {totalPages} ({totalElements} invoices)
+                </Text>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  isDisabled={currentPage >= totalPages - 1}
+                >
+                  Next
+                </Button>
+              </HStack>
+            )}
+          </Stack>
+        )}
+      </Stack>
     </Section>
   );
 }

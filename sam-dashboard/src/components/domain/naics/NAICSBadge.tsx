@@ -1,23 +1,11 @@
-import { CSSProperties } from 'react';
 import { Box } from '../../layout';
 import { NAICSBadgeProps } from './NAICS.types';
 
 export function NAICSBadge({ code, className, style }: NAICSBadgeProps) {
-  const badgeStyles: CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    background: 'var(--gradient-primary)',
-    color: 'var(--color-white)',
-    padding: '0.35rem 0.75rem',
-    borderRadius: 'var(--radius-full)',
-    fontSize: 'var(--font-size-xs)',
-    fontWeight: 'var(--font-weight-medium)' as unknown as number,
-    whiteSpace: 'nowrap',
-    ...style,
-  };
+  const badgeClasses = `inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset whitespace-nowrap text-zinc-600 bg-zinc-100 ring-zinc-500/10 dark:bg-zinc-400/10 dark:text-zinc-400 dark:ring-zinc-400/20 ${className || ''}`;
 
   return (
-    <Box as="span" className={className} style={badgeStyles}>
+    <Box as="span" className={badgeClasses} style={style}>
       {code || 'N/A'}
     </Box>
   );

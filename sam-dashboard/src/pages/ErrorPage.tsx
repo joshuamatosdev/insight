@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Card, CardBody, Flex, Stack, Box } from '../components/layout';
-import { Text, Button } from '../components/primitives';
+import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
+import { Text, Button } from '../components/catalyst/primitives';
 
 interface ErrorPageProps {
   code?: '404' | '403' | '500' | '503';
@@ -25,28 +25,28 @@ export function ErrorPage({
           icon: '🔍',
           title: title ?? 'Page Not Found',
           message: message ?? "The page you're looking for doesn't exist or has been moved.",
-          color: 'var(--color-warning)',
+          color: 'rgb(245 158 11)',
         };
       case '403':
         return {
           icon: '🔒',
           title: title ?? 'Access Denied',
           message: message ?? "You don't have permission to access this resource.",
-          color: 'var(--color-danger)',
+          color: 'rgb(239 68 68)',
         };
       case '503':
         return {
           icon: '🔧',
           title: title ?? 'Service Unavailable',
           message: message ?? "We're performing maintenance. Please try again later.",
-          color: 'var(--color-warning)',
+          color: 'rgb(245 158 11)',
         };
       default:
         return {
           icon: '⚠️',
           title: title ?? 'Something Went Wrong',
           message: message ?? 'An unexpected error occurred. Please try again.',
-          color: 'var(--color-danger)',
+          color: 'rgb(239 68 68)',
         };
     }
   };
@@ -59,13 +59,13 @@ export function ErrorPage({
       align="center"
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-gray-100)',
-        padding: 'var(--spacing-4)',
+        backgroundColor: '#f4f4f5',
+        padding: '1rem',
       }}
     >
       <Card variant="elevated" style={{ maxWidth: '500px', width: '100%' }}>
         <CardBody padding="xl">
-          <Stack spacing="var(--spacing-6)" style={{ textAlign: 'center' }}>
+          <Stack spacing="lg" style={{ textAlign: 'center' }}>
             {/* Error Code */}
             <Text
               variant="heading1"
@@ -89,7 +89,7 @@ export function ErrorPage({
             </Box>
 
             {/* Title and Message */}
-            <Stack spacing="var(--spacing-2)">
+            <Stack spacing="sm">
               <Text variant="heading4">{content.title}</Text>
               <Text variant="body" color="muted">
                 {content.message}

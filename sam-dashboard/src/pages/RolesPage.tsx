@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Card, CardBody, Flex, Stack, Box, Grid } from '../components/layout';
-import { Text, Button, Badge } from '../components/primitives';
+import { Card, CardBody, Flex, Stack, Box, Grid } from '../components/catalyst/layout';
+import { Text, Button, Badge } from '../components/catalyst/primitives';
 import type { Role, PermissionsByCategory, RolesPageState } from './types';
 
 const API_BASE = '/api/v1';
@@ -78,12 +78,12 @@ export function RolesPage(): React.ReactElement {
         variant={isSelected ? 'elevated' : 'default'}
         style={{
           cursor: 'pointer',
-          border: isSelected ? '2px solid var(--color-primary)' : undefined,
+          border: isSelected ? '2px solid #2563eb' : undefined,
         }}
         onClick={() => setSelectedRole(isSelected ? null : role)}
       >
         <CardBody padding="md">
-          <Stack spacing="var(--spacing-2)">
+          <Stack spacing="sm">
             <Flex justify="space-between" align="center">
               <Text variant="heading5" weight="semibold">
                 {role.name}
@@ -121,7 +121,7 @@ export function RolesPage(): React.ReactElement {
     const hasWildcard = rolePermissions.has('*');
 
     return (
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         <Text variant="heading5" weight="semibold">
           Permissions for {selectedRole.name}
         </Text>
@@ -129,9 +129,9 @@ export function RolesPage(): React.ReactElement {
         {hasWildcard === true && (
           <Box
             style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-warning-light)',
-              borderRadius: 'var(--radius-md)',
+              padding: '0.75rem',
+              backgroundColor: '#fffbeb',
+              borderRadius: '0.375rem',
             }}
           >
             <Text variant="bodySmall" weight="medium">
@@ -179,7 +179,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'error') {
     return (
       <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+        <Stack spacing="md" style={{ textAlign: 'center' }}>
           <Text variant="body" color="danger">
             {error}
           </Text>
@@ -192,9 +192,9 @@ export function RolesPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)">
+    <Stack spacing="lg">
       <Flex justify="space-between" align="center">
-        <Stack spacing="var(--spacing-1)">
+        <Stack spacing="xs">
           <Text variant="heading3">Roles & Permissions</Text>
           <Text variant="bodySmall" color="muted">
             Manage roles and their associated permissions
@@ -204,7 +204,7 @@ export function RolesPage(): React.ReactElement {
 
       <Grid columns={3} gap="lg">
         {/* Roles List */}
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           <Text variant="bodySmall" weight="semibold" color="muted">
             ROLES ({roles.length})
           </Text>

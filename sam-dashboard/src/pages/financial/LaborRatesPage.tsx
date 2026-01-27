@@ -2,7 +2,7 @@
  * LaborRatesPage - Labor rate management page
  */
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, Input, Select } from '../../components/primitives';
+import { Text, Button, Badge, PlusIcon, RefreshIcon, Input, Select } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,10 +15,10 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../../components/layout';
-import { LaborRateTable } from '../../components/domain/financial';
-import { useLaborRates } from '../../hooks/useFinancial';
-import type { LaborRate, LaborRateFormState, LaborRateFormErrors } from '../../types/financial.types';
+} from '@/components/catalyst/layout';
+import { LaborRateTable } from '@/components/domain/financial';
+import { useLaborRates } from '@/hooks/useFinancial';
+import type { LaborRate, LaborRateFormState, LaborRateFormErrors } from '@/types/financial.types';
 
 const INITIAL_FORM_STATE: LaborRateFormState = {
   contractId: '',
@@ -258,7 +258,7 @@ export function LaborRatesPage() {
         icon={<Badge variant="info" size="lg">$</Badge>}
         actions={
           showForm === false && (
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Button
                 variant={showActiveOnly ? 'primary' : 'outline'}
                 size="sm"
@@ -270,7 +270,7 @@ export function LaborRatesPage() {
                 <RefreshIcon size="sm" />
               </Button>
               <Button variant="primary" onClick={handleCreateClick}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <PlusIcon size="sm" />
                   <Text as="span" variant="bodySmall" color="white">
                     Add Rate
@@ -285,11 +285,11 @@ export function LaborRatesPage() {
       {error !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -308,14 +308,14 @@ export function LaborRatesPage() {
           </CardHeader>
           <CardBody>
             <form onSubmit={handleSubmitForm}>
-              <Stack spacing="var(--spacing-4)">
+              <Stack spacing="md">
                 {formErrors.general !== undefined && (
                   <Box
                     style={{
-                      padding: 'var(--spacing-3)',
-                      backgroundColor: 'var(--color-danger-light)',
-                      borderRadius: 'var(--radius-md)',
-                      border: '1px solid var(--color-danger)',
+                      padding: '0.75rem',
+                      backgroundColor: '#fef2f2',
+                      borderRadius: '0.375rem',
+                      border: '1px solid #ef4444',
                     }}
                   >
                     <Text variant="bodySmall" color="danger">
@@ -325,7 +325,7 @@ export function LaborRatesPage() {
                 )}
 
                 {/* Category Info */}
-                <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+                <Grid columns={2} gap="md">
                   <GridItem>
                     <Text
                       as="label"
@@ -374,7 +374,7 @@ export function LaborRatesPage() {
                 </Grid>
 
                 {/* Experience & Education */}
-                <Grid columns="1fr 1fr 1fr" gap="var(--spacing-4)">
+                <Grid columns={3} gap="md">
                   <GridItem>
                     <Text
                       as="label"
@@ -431,7 +431,7 @@ export function LaborRatesPage() {
                 </Grid>
 
                 {/* Rates */}
-                <Grid columns="repeat(3, 1fr)" gap="var(--spacing-4)">
+                <Grid columns={3} gap="md">
                   <GridItem>
                     <Text
                       as="label"
@@ -502,7 +502,7 @@ export function LaborRatesPage() {
                 </Grid>
 
                 {/* Burden Rates */}
-                <Grid columns="repeat(4, 1fr)" gap="var(--spacing-4)">
+                <Grid columns={4} gap="md">
                   <GridItem>
                     <Text
                       as="label"
@@ -577,7 +577,7 @@ export function LaborRatesPage() {
                 </Grid>
 
                 {/* Effective Period */}
-                <Grid columns="1fr 1fr 1fr" gap="var(--spacing-4)">
+                <Grid columns={3} gap="md">
                   <GridItem>
                     <Text
                       as="label"
@@ -651,7 +651,7 @@ export function LaborRatesPage() {
                 </Box>
 
                 {/* Submit buttons */}
-                <HStack justify="end" spacing="var(--spacing-2)">
+                <HStack justify="end" spacing="sm">
                   <Button variant="outline" type="button" onClick={handleCancelForm}>
                     Cancel
                   </Button>
@@ -680,11 +680,7 @@ export function LaborRatesPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <HStack
-          justify="center"
-          spacing="var(--spacing-2)"
-          className="mt-6"
-        >
+        <HStack justify="center" spacing="sm" className="mt-6">
           <Button
             variant="outline"
             size="sm"

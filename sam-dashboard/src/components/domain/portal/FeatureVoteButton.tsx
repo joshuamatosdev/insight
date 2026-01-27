@@ -31,12 +31,12 @@ export function FeatureVoteButton({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 'var(--spacing-2) var(--spacing-3)',
-    borderRadius: 'var(--radius-md)',
+    padding: '0.5rem 0.75rem',
+    borderRadius: '0.375rem',
     border: hasVoted
-      ? '2px solid var(--color-primary)'
-      : '2px solid var(--color-gray-200)',
-    backgroundColor: hasVoted ? 'var(--color-primary-light)' : 'var(--color-white)',
+      ? '2px solid #2563eb'
+      : '2px solid #e4e4e7',
+    backgroundColor: hasVoted ? '#dbeafe' : 'white',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.5 : 1,
     transition: 'all 0.2s ease',
@@ -50,9 +50,9 @@ export function FeatureVoteButton({
     borderLeft: '8px solid transparent',
     borderRight: '8px solid transparent',
     borderBottom: hasVoted
-      ? '10px solid var(--color-primary)'
-      : '10px solid var(--color-gray-400)',
-    marginBottom: 'var(--spacing-1)',
+      ? '10px solid #2563eb'
+      : '10px solid #a1a1aa',
+    marginBottom: '0.25rem',
   };
 
   return (
@@ -75,7 +75,7 @@ export function FeatureVoteButton({
       <Text
         variant="bodySmall"
         weight="semibold"
-        style={{ color: hasVoted ? 'var(--color-primary)' : 'var(--color-gray-600)' }}
+        style={{ color: hasVoted ? '#2563eb' : '#52525b' }}
       >
         {voteCount}
       </Text>

@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Section, SectionHeader } from '../../components/layout/Section';
 import { Stack, HStack } from '../../components/layout/Stack';
 import { Box } from '../../components/layout/Box';
-import { Text } from '../../components/primitives/Text';
-import { Button } from '../../components/primitives/Button';
-import { Select } from '../../components/primitives/Input';
-import { Badge } from '../../components/primitives/Badge';
+import { Text } from '../../components/catalyst/primitives/Text';
+import { Button } from '../../components/catalyst/primitives/Button';
+import { Select } from '../../components/catalyst/primitives/Input';
+import { Badge } from '../../components/catalyst/primitives/Badge';
 import { PipelineBoard } from '../../components/domain/pipeline';
 import {
   usePipelines,
@@ -211,11 +211,11 @@ export function PipelinePage() {
       {approachingDeadlines.length > 0 && (
         <Box
           style={{
-            padding: 'var(--spacing-3) var(--spacing-4)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-warning-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-warning)',
+            padding: '0.75rem 1rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fffbeb',
+            borderRadius: '0.375rem',
+            border: '1px solid #f59e0b',
           }}
         >
           <HStack justify="between" align="center">

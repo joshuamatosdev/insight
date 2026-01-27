@@ -2,7 +2,7 @@
  * FinancialDashboardPage - Financial overview and key metrics
  */
 import { useState, useEffect, useCallback } from 'react';
-import { Text, Badge, Button, SpeedometerIcon, RefreshIcon } from '../../components/primitives';
+import { Text, Badge, Button, SpeedometerIcon, RefreshIcon } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,16 +15,16 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../../components/layout';
+} from '@/components/catalyst/layout';
 import {
   FinancialSummaryCard,
   BudgetChart,
   CostBreakdownChart,
   InvoiceCard,
-} from '../../components/domain/financial';
-import { StatCard } from '../../components/domain/stats';
-import { useFinancialSummary, useInvoices, useBudgets } from '../../hooks/useFinancial';
-import { formatCurrency, formatCurrencyCompact } from '../../services/financialService';
+} from '@/components/domain/financial';
+import { StatCard } from '@/components/domain/stats';
+import { useFinancialSummary, useInvoices, useBudgets } from '@/hooks/useFinancial';
+import { formatCurrency, formatCurrencyCompact } from '@/services/financialService';
 
 export interface FinancialDashboardPageProps {
   onNavigate?: (section: string) => void;
@@ -81,10 +81,10 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
       <Section id="financial-dashboard">
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="body" color="danger">
@@ -97,11 +97,11 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
 
   // Sample cost breakdown data (would come from API in real implementation)
   const costBreakdownData = [
-    { category: 'Direct Labor', amount: 450000, color: 'var(--color-primary)' },
-    { category: 'Subcontractor', amount: 280000, color: 'var(--color-info)' },
-    { category: 'Materials', amount: 85000, color: 'var(--color-success)' },
-    { category: 'Travel', amount: 35000, color: 'var(--color-warning)' },
-    { category: 'ODC', amount: 25000, color: 'var(--color-secondary)' },
+    { category: 'Direct Labor', amount: 450000, color: 'rgb(37 99 235)' },
+    { category: 'Subcontractor', amount: 280000, color: '#3b82f6' },
+    { category: 'Materials', amount: 85000, color: 'rgb(16 185 129)' },
+    { category: 'Travel', amount: 35000, color: 'rgb(245 158 11)' },
+    { category: 'ODC', amount: 25000, color: '#71717a' },
     { category: 'Indirect', amount: 125000, color: '#9333ea' },
   ];
 
@@ -119,7 +119,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
             onClick={handleRefresh}
             isLoading={isRefreshing}
           >
-            <HStack spacing="var(--spacing-1)" align="center">
+            <HStack spacing="xs" align="center">
               <RefreshIcon size="sm" />
               <Text as="span" variant="bodySmall">
                 Refresh
@@ -129,34 +129,30 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
         }
       />
 
-      <Stack spacing="var(--spacing-6)">
+      <Stack spacing="lg">
         {/* Key Metrics */}
         {summary !== null && (
-          <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="var(--spacing-4)">
+          <Grid columns={4} gap="md">
             <GridItem>
               <StatCard
-                variant="primary"
                 value={formatCurrencyCompact(summary.totalInvoiced)}
                 label="Total Invoiced"
               />
             </GridItem>
             <GridItem>
               <StatCard
-                variant={summary.totalOutstanding > 0 ? 'warning' : 'success'}
                 value={formatCurrencyCompact(summary.totalOutstanding)}
                 label="Outstanding"
               />
             </GridItem>
             <GridItem>
               <StatCard
-                variant="info"
                 value={String(summary.draftInvoices)}
                 label="Draft Invoices"
               />
             </GridItem>
             <GridItem>
               <StatCard
-                variant={summary.overdueInvoices > 0 ? 'danger' : 'success'}
                 value={String(summary.overdueInvoices)}
                 label="Overdue Invoices"
               />
@@ -168,7 +164,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
         {summary !== null && <FinancialSummaryCard summary={summary} />}
 
         {/* Charts Row */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+        <Grid columns={2} gap="md">
           <GridItem>
             <BudgetChart
               budgeted={1500000}
@@ -187,13 +183,13 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
         </Grid>
 
         {/* Alerts Section */}
-        <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+        <Grid columns={2} gap="md">
           {/* Overdue Invoices */}
           <GridItem>
             <Card variant="outlined">
               <CardHeader>
                 <HStack justify="between" align="center">
-                  <HStack spacing="var(--spacing-2)" align="center">
+                  <HStack spacing="sm" align="center">
                     <Text variant="heading6" weight="semibold">
                       Overdue Invoices
                     </Text>
@@ -221,7 +217,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                     </Text>
                   </Flex>
                 ) : (
-                  <Stack spacing="var(--spacing-3)">
+                  <Stack spacing="md">
                     {invoices.slice(0, 3).map((invoice) => (
                       <InvoiceCard
                         key={invoice.id}
@@ -245,7 +241,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
             <Card variant="outlined">
               <CardHeader>
                 <HStack justify="between" align="center">
-                  <HStack spacing="var(--spacing-2)" align="center">
+                  <HStack spacing="sm" align="center">
                     <Text variant="heading6" weight="semibold">
                       Over Budget Items
                     </Text>
@@ -273,7 +269,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                     </Text>
                   </Flex>
                 ) : (
-                  <Stack spacing="var(--spacing-3)">
+                  <Stack spacing="md">
                     {overBudgetItems.slice(0, 5).map((item) => (
                       <HStack key={item.id} justify="between" align="center">
                         <Stack spacing="0">

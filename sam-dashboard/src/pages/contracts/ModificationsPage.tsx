@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select } from '../../components/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid } from '../../components/layout';
+import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select } from '../../components/catalyst/primitives';
+import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid, GridItem } from '../../components/catalyst/layout';
 import { ModificationTimeline } from '../../components/domain/contracts';
 import { useContract } from '../../hooks/useContracts';
 import type { CreateModificationRequest, ModificationType } from '../../components/domain/contracts';
@@ -157,9 +157,9 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
       <Section>
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.5rem',
           }}
         >
           <Text variant="body" color="danger">
@@ -215,12 +215,12 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
               <Text variant="heading4">Create Modification</Text>
             </CardHeader>
             <CardBody>
-              <Stack spacing="var(--spacing-6)">
+              <Stack spacing="lg">
                 <Box>
                   <Text variant="heading5" className="mb-4">
                     Basic Information
                   </Text>
-                  <Grid columns={2} gap="var(--spacing-4)">
+                  <Grid columns={2} gap="md">
                     <Box>
                       <label htmlFor="modificationNumber">
                         <Text
@@ -263,42 +263,46 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         ))}
                       </Select>
                     </Box>
-                    <Box style={{ gridColumn: 'span 2' }}>
-                      <label htmlFor="title">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Title
-                        </Text>
-                      </label>
-                      <Input
-                        id="title"
-                        value={formState.title}
-                        onChange={handleChange('title')}
-                        disabled={isSaving}
-                        placeholder="Modification title"
-                      />
-                    </Box>
-                    <Box style={{ gridColumn: 'span 2' }}>
-                      <label htmlFor="description">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Description
-                        </Text>
-                      </label>
-                      <Input
-                        id="description"
-                        value={formState.description}
-                        onChange={handleChange('description')}
-                        disabled={isSaving}
-                        placeholder="Detailed description of the modification"
-                      />
-                    </Box>
+                    <GridItem colSpan={2}>
+                      <Box>
+                        <label htmlFor="title">
+                          <Text
+                            variant="bodySmall"
+                            weight="semibold"
+                            className="mb-1"
+                          >
+                            Title
+                          </Text>
+                        </label>
+                        <Input
+                          id="title"
+                          value={formState.title}
+                          onChange={handleChange('title')}
+                          disabled={isSaving}
+                          placeholder="Modification title"
+                        />
+                      </Box>
+                    </GridItem>
+                    <GridItem colSpan={2}>
+                      <Box>
+                        <label htmlFor="description">
+                          <Text
+                            variant="bodySmall"
+                            weight="semibold"
+                            className="mb-1"
+                          >
+                            Description
+                          </Text>
+                        </label>
+                        <Input
+                          id="description"
+                          value={formState.description}
+                          onChange={handleChange('description')}
+                          disabled={isSaving}
+                          placeholder="Detailed description of the modification"
+                        />
+                      </Box>
+                    </GridItem>
                     <Box>
                       <label htmlFor="effectiveDate">
                         <Text
@@ -324,7 +328,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                   <Text variant="heading5" className="mb-4">
                     Value Changes
                   </Text>
-                  <Grid columns={2} gap="var(--spacing-4)">
+                  <Grid columns={2} gap="md">
                     <Box>
                       <label htmlFor="valueChange">
                         <Text
@@ -370,7 +374,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                   <Text variant="heading5" className="mb-4">
                     Period of Performance Changes
                   </Text>
-                  <Grid columns={2} gap="var(--spacing-4)">
+                  <Grid columns={2} gap="md">
                     <Box>
                       <label htmlFor="popExtensionDays">
                         <Text
@@ -451,7 +455,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
               </Stack>
             </CardBody>
             <CardFooter>
-              <HStack justify="end" spacing="var(--spacing-3)">
+              <HStack justify="end" spacing="md">
                 <Button
                   type="button"
                   variant="secondary"

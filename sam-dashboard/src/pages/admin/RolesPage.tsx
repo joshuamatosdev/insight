@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, PencilIcon, TrashIcon } from '../../components/primitives';
+import { Text, Button, Badge, PlusIcon, PencilIcon, TrashIcon } from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -13,14 +13,16 @@ import {
   Stack,
   Flex,
   Box,
+  HStack,
+} from '../../components/catalyst/layout';
+import {
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeaderCell,
+  TableHeader,
   TableCell,
-  HStack,
-} from '../../components/layout';
+} from '../../components/catalyst';
 import { RoleFormModal } from '../../components/domain/rbac';
 import { fetchRoles, fetchPermissions, createRole, updateRole, deleteRole } from '../../services';
 import type {
@@ -169,7 +171,7 @@ export function RolesPage(): React.ReactElement {
     return (
       <Section id="roles-admin">
         <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
-          <Stack spacing="var(--spacing-4)" align="center">
+          <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load roles'}
             </Text>
@@ -188,7 +190,7 @@ export function RolesPage(): React.ReactElement {
         title="Role Management"
         actions={
           <Button variant="primary" onClick={handleCreateClick}>
-            <HStack spacing="var(--spacing-1)" align="center">
+            <HStack spacing="xs" align="center">
               <PlusIcon size="sm" />
               <Text as="span" variant="bodySmall" color="white">
                 Create Role
@@ -201,11 +203,11 @@ export function RolesPage(): React.ReactElement {
       {error !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -216,21 +218,21 @@ export function RolesPage(): React.ReactElement {
 
       <Card variant="default">
         <CardBody padding="none">
-          <Table>
+          <Table striped>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Role Name</TableHeaderCell>
-                <TableHeaderCell>Description</TableHeaderCell>
-                <TableHeaderCell align="center">Permissions</TableHeaderCell>
-                <TableHeaderCell>Created</TableHeaderCell>
-                <TableHeaderCell align="center">Actions</TableHeaderCell>
+                <TableHeader>Role Name</TableHeader>
+                <TableHeader>Description</TableHeader>
+                <TableHeader className="text-center">Permissions</TableHeader>
+                <TableHeader>Created</TableHeader>
+                <TableHeader className="text-center">Actions</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
               {roles.map((role) => (
-                <TableRow key={role.id} isHoverable>
+                <TableRow key={role.id}>
                   <TableCell>
-                    <HStack spacing="var(--spacing-2)" align="center">
+                    <HStack spacing="sm" align="center">
                       <Text variant="bodySmall" weight="medium">
                         {role.name}
                       </Text>
@@ -246,7 +248,7 @@ export function RolesPage(): React.ReactElement {
                       {role.description ?? '-'}
                     </Text>
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell className="text-center">
                     <Badge variant="info" size="sm">
                       {role.permissions.length}
                     </Badge>
@@ -256,8 +258,8 @@ export function RolesPage(): React.ReactElement {
                       {formatDate(role.createdAt)}
                     </Text>
                   </TableCell>
-                  <TableCell align="center">
-                    <HStack spacing="var(--spacing-1)" justify="center">
+                  <TableCell className="text-center">
+                    <HStack spacing="xs" justify="center">
                       <Button
                         variant="ghost"
                         size="sm"

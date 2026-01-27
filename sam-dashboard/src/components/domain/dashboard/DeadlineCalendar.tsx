@@ -66,11 +66,11 @@ export function DeadlineCalendar({
   const getPriorityColor = (priority: Deadline['priority']): string => {
     switch (priority) {
       case 'high':
-        return 'var(--color-danger)';
+        return '#ef4444';
       case 'medium':
-        return 'var(--color-warning)';
+        return '#f59e0b';
       case 'low':
-        return 'var(--color-success)';
+        return '#10b981';
     }
   };
 
@@ -88,10 +88,10 @@ export function DeadlineCalendar({
             No upcoming deadlines
           </Text>
         ) : (
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             {Array.from(groupedDeadlines.entries()).map(([dateKey, items]) => (
-              <Stack key={dateKey} spacing="var(--spacing-2)">
-                <Text variant="caption" style={{ fontWeight: 600, color: 'var(--color-gray-600)' }}>
+              <Stack key={dateKey} spacing="sm">
+                <Text variant="caption" style={{ fontWeight: 600, color: '#52525b' }}>
                   {formatDisplayDate(dateKey)}
                 </Text>
                 {items.map((item) => (
@@ -100,8 +100,8 @@ export function DeadlineCalendar({
                     align="center"
                     gap="sm"
                     style={{
-                      padding: 'var(--spacing-2)',
-                      backgroundColor: 'var(--color-gray-50)',
+                      padding: '0.5rem',
+                      backgroundColor: '#fafafa',
                       borderRadius: '4px',
                       borderLeft: `3px solid ${getPriorityColor(item.priority)}`,
                     }}

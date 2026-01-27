@@ -10,8 +10,8 @@ import { getContractStatusLabel } from './Contract.types';
  * Pocket-style status colors (muted, not bright)
  */
 const statusColors: Record<ContractStatus, string> = {
-  ACTIVE: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
-  COMPLETED: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  ACTIVE: 'text-success-text bg-success-bg ring-success/20',
+  COMPLETED: 'text-success-text bg-success-bg ring-success/20',
   AWARDED: 'text-blue-700 bg-blue-50 ring-blue-600/20 dark:bg-blue-500/10 dark:text-blue-400 dark:ring-blue-500/20',
   PENDING_SIGNATURE: 'text-warning-text bg-warning-bg ring-warning/20',
   ON_HOLD: 'text-warning-text bg-warning-bg ring-warning/20',

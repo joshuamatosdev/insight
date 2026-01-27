@@ -40,11 +40,11 @@ function FolderNode({ folder, isSelected, onSelect, depth }: FolderNodeProps) {
         align="center"
         style={{
           paddingLeft: `${depth * 16}px`,
-          paddingTop: 'var(--spacing-1)',
-          paddingBottom: 'var(--spacing-1)',
-          paddingRight: 'var(--spacing-2)',
-          backgroundColor: isSelected ? 'var(--color-primary-light)' : 'transparent',
-          borderRadius: 'var(--radius-sm)',
+          paddingTop: '0.25rem',
+          paddingBottom: '0.25rem',
+          paddingRight: '0.5rem',
+          backgroundColor: isSelected ? '#dbeafe' : 'transparent',
+          borderRadius: '0.25rem',
           cursor: 'pointer',
         }}
         onClick={handleClick}
@@ -115,14 +115,14 @@ export function FolderTree({
         gap="xs"
         align="center"
         style={{
-          paddingTop: 'var(--spacing-1)',
-          paddingBottom: 'var(--spacing-1)',
-          paddingLeft: 'var(--spacing-2)',
-          paddingRight: 'var(--spacing-2)',
+          paddingTop: '0.25rem',
+          paddingBottom: '0.25rem',
+          paddingLeft: '0.5rem',
+          paddingRight: '0.5rem',
           backgroundColor: selectedFolderId === null || selectedFolderId === undefined
-            ? 'var(--color-primary-light)'
+            ? '#dbeafe'
             : 'transparent',
-          borderRadius: 'var(--radius-sm)',
+          borderRadius: '0.25rem',
           cursor: 'pointer',
         }}
         onClick={handleRootClick}

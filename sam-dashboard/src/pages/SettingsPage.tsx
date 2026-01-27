@@ -1,6 +1,19 @@
-import { useState, useCallback, useEffect, ChangeEvent } from 'react';
-import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/layout';
-import { Text, Button, Select } from '../components/primitives';
+import { useState, useCallback, useEffect } from 'react';
+import {
+  Field,
+  Label,
+  Description,
+  FieldGroup,
+  Select,
+  Switch,
+  SwitchField,
+  Button,
+  InlineAlert,
+  Heading,
+  Text,
+  Divider,
+} from '../components/catalyst';
+import { Grid, GridItem, Flex, Box } from '../components/catalyst/layout';
 import { useAuth } from '../auth';
 import type {
   Theme,
@@ -74,6 +87,31 @@ async function updatePreferences(
 }
 
 /**
+ * Settings section component with two-column layout
+ */
+function SettingsSection({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Grid columns={3} columnGap="xl" rowGap="lg" className="max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <GridItem>
+        <Heading level={2}>{title}</Heading>
+        <Text className="mt-1">{description}</Text>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <FieldGroup>{children}</FieldGroup>
+      </GridItem>
+    </Grid>
+  );
+}
+
+/**
  * Settings page component for user preferences
  */
 export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactElement {
@@ -110,7 +148,7 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
         };
         setForm(formState);
         setOriginalForm(formState);
-      } catch (err) {
+      } catch {
         setError('Failed to load preferences. Please try again.');
       } finally {
         setIsLoading(false);
@@ -135,20 +173,20 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
     setHasChanges(changed);
   }, [form, originalForm]);
 
-  const handleThemeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+  const handleThemeChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value as Theme;
     setForm((prev) => ({ ...prev, theme: value }));
     setSuccessMessage(null);
   }, []);
 
-  const handleTimezoneChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+  const handleTimezoneChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setForm((prev) => ({ ...prev, timezone: value }));
     setSuccessMessage(null);
   }, []);
 
-  const handleEmailNotificationsToggle = useCallback(() => {
-    setForm((prev) => ({ ...prev, emailNotifications: prev.emailNotifications === false }));
+  const handleEmailNotificationsToggle = useCallback((checked: boolean) => {
+    setForm((prev) => ({ ...prev, emailNotifications: checked }));
     setSuccessMessage(null);
   }, []);
 
@@ -182,7 +220,7 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
       if (onSaveSuccess !== undefined) {
         onSaveSuccess();
       }
-    } catch (err) {
+    } catch {
       setError('Failed to save preferences. Please try again.');
     } finally {
       setIsSaving(false);
@@ -191,164 +229,110 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="p-8">
-        <Text variant="body">Loading preferences...</Text>
+      <Flex justify="center" align="center" className="min-h-[300px]">
+        <Text>Loading preferences...</Text>
       </Flex>
     );
   }
 
   return (
-    <Box className="p-6 max-w-xl mx-auto">
-      <Stack spacing="var(--spacing-6)">
-        <Text variant="heading3">Settings</Text>
+    <Box className="mx-auto max-w-4xl">
+      <Box className="px-4 py-6 sm:px-6 lg:px-8">
+        <Heading>Settings</Heading>
+        <Text className="mt-1">
+          Manage your account settings and preferences.
+        </Text>
+      </Box>
 
-        {/* Error message */}
-        {error !== null && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
-            }}
-          >
-            <Text variant="bodySmall" color="danger">
-              {error}
-            </Text>
-          </Box>
-        )}
+      {/* Error message */}
+      {error !== null && (
+        <Box className="mx-4 mb-4 sm:mx-6 lg:mx-8">
+          <InlineAlert color="error" onDismiss={() => setError(null)}>
+            {error}
+          </InlineAlert>
+        </Box>
+      )}
 
-        {/* Success message */}
-        {successMessage !== null && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-success-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-success)',
-            }}
-          >
-            <Text variant="bodySmall" color="success">
-              {successMessage}
-            </Text>
-          </Box>
-        )}
+      {/* Success message */}
+      {successMessage !== null && (
+        <Box className="mx-4 mb-4 sm:mx-6 lg:mx-8">
+          <InlineAlert color="success" onDismiss={() => setSuccessMessage(null)}>
+            {successMessage}
+          </InlineAlert>
+        </Box>
+      )}
 
+      <Box className="divide-y divide-border">
         {/* Appearance Settings */}
-        <Card>
-          <CardHeader>
-            <Text variant="heading5">Appearance</Text>
-          </CardHeader>
-          <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <Box>
-                <Text
-                  as="label"
-                  variant="bodySmall"
-                  weight="medium"
-                  style={{
-                    display: 'block',
-                    marginBottom: 'var(--spacing-2)',
-                  }}
-                >
-                  Theme
-                </Text>
-                <Select
-                  value={form.theme}
-                  onChange={handleThemeChange}
-                  options={THEME_OPTIONS}
-                  fullWidth
-                />
-                <Text
-                  variant="caption"
-                  color="muted"
-                  className="mt-1"
-                >
-                  Choose your preferred color scheme
-                </Text>
-              </Box>
-            </Stack>
-          </CardBody>
-        </Card>
+        <SettingsSection
+          title="Appearance"
+          description="Customize how the application looks."
+        >
+          <Field>
+            <Label>Theme</Label>
+            <Description>Choose your preferred color scheme.</Description>
+            <Select value={form.theme} onChange={handleThemeChange}>
+              {THEME_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        </SettingsSection>
+
+        <Divider />
 
         {/* Notification Settings */}
-        <Card>
-          <CardHeader>
-            <Text variant="heading5">Notifications</Text>
-          </CardHeader>
-          <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <Flex justify="between" align="center">
-                <Box>
-                  <Text variant="body" weight="medium">
-                    Email Notifications
-                  </Text>
-                  <Text variant="caption" color="muted">
-                    Receive email alerts for new opportunities and deadlines
-                  </Text>
-                </Box>
-                <Button
-                  variant={form.emailNotifications ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={handleEmailNotificationsToggle}
-                  aria-pressed={form.emailNotifications}
-                >
-                  {form.emailNotifications ? 'Enabled' : 'Disabled'}
-                </Button>
-              </Flex>
-            </Stack>
-          </CardBody>
-        </Card>
+        <SettingsSection
+          title="Notifications"
+          description="Configure how you receive alerts and updates."
+        >
+          <SwitchField>
+            <Label>Email Notifications</Label>
+            <Description>
+              Receive email alerts for new opportunities and upcoming deadlines.
+            </Description>
+            <Switch
+              checked={form.emailNotifications}
+              onChange={handleEmailNotificationsToggle}
+              color="cyan"
+            />
+          </SwitchField>
+        </SettingsSection>
+
+        <Divider />
 
         {/* Regional Settings */}
-        <Card>
-          <CardHeader>
-            <Text variant="heading5">Regional</Text>
-          </CardHeader>
-          <CardBody>
-            <Stack spacing="var(--spacing-4)">
-              <Box>
-                <Text
-                  as="label"
-                  variant="bodySmall"
-                  weight="medium"
-                  style={{
-                    display: 'block',
-                    marginBottom: 'var(--spacing-2)',
-                  }}
-                >
-                  Timezone
-                </Text>
-                <Select
-                  value={form.timezone}
-                  onChange={handleTimezoneChange}
-                  options={TIMEZONE_OPTIONS}
-                  fullWidth
-                />
-                <Text
-                  variant="caption"
-                  color="muted"
-                  className="mt-1"
-                >
-                  Used for displaying deadlines and scheduling alerts
-                </Text>
-              </Box>
-            </Stack>
-          </CardBody>
-        </Card>
+        <SettingsSection
+          title="Regional"
+          description="Set your timezone for accurate deadline display."
+        >
+          <Field>
+            <Label>Timezone</Label>
+            <Description>
+              Used for displaying deadlines and scheduling alerts.
+            </Description>
+            <Select value={form.timezone} onChange={handleTimezoneChange}>
+              {TIMEZONE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        </SettingsSection>
+      </Box>
 
-        {/* Save Button */}
-        <Flex justify="end">
-          <Button
-            variant="primary"
-            onClick={handleSave}
-            isLoading={isSaving}
-            isDisabled={isSaving || hasChanges === false}
-          >
-            Save Changes
-          </Button>
-        </Flex>
-      </Stack>
+      {/* Save Button */}
+      <Flex justify="end" gap="md" className="border-t border-border px-4 py-6 sm:px-6 lg:px-8">
+        <Button
+          onClick={handleSave}
+          disabled={isSaving || hasChanges === false}
+        >
+          {isSaving ? 'Saving...' : 'Save Changes'}
+        </Button>
+      </Flex>
     </Box>
   );
 }

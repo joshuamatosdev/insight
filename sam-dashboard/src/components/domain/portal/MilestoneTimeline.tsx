@@ -18,19 +18,19 @@ export function MilestoneTimeline({
   const getStatusColor = (status: string): string => {
     switch (status) {
       case 'NOT_STARTED':
-        return 'var(--color-gray-400)';
+        return '#a1a1aa';
       case 'IN_PROGRESS':
-        return 'var(--color-primary)';
+        return '#2563eb';
       case 'COMPLETED':
-        return 'var(--color-success)';
+        return '#10b981';
       case 'DELAYED':
-        return 'var(--color-danger)';
+        return '#ef4444';
       case 'AT_RISK':
-        return 'var(--color-warning)';
+        return '#f59e0b';
       case 'CANCELLED':
-        return 'var(--color-gray-300)';
+        return '#d4d4d8';
       default:
-        return 'var(--color-gray-400)';
+        return '#a1a1aa';
     }
   };
 
@@ -78,7 +78,7 @@ export function MilestoneTimeline({
 
   const containerStyles: CSSProperties = {
     position: 'relative',
-    padding: 'var(--spacing-4)',
+    padding: '1rem',
     ...style,
   };
 
@@ -101,15 +101,15 @@ export function MilestoneTimeline({
         style={{
           position: 'absolute',
           left: '20px',
-          top: 'var(--spacing-6)',
-          bottom: 'var(--spacing-6)',
+          top: '1.5rem',
+          bottom: '1.5rem',
           width: '2px',
-          backgroundColor: 'var(--color-gray-200)',
+          backgroundColor: '#e4e4e7',
         }}
       />
 
       {/* Milestones */}
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {sortedMilestones.map((milestone, index) => {
           const color = getStatusColor(milestone.status);
           const isCritical = isOnCriticalPath(milestone.id);
@@ -117,12 +117,12 @@ export function MilestoneTimeline({
           const nodeStyles: CSSProperties = {
             position: 'relative',
             marginLeft: '40px',
-            padding: 'var(--spacing-3)',
-            backgroundColor: 'var(--color-white)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '0.75rem',
+            backgroundColor: 'white',
+            borderRadius: '0.5rem',
             border: isCritical
-              ? '2px solid var(--color-danger)'
-              : '1px solid var(--color-gray-200)',
+              ? '2px solid #ef4444'
+              : '1px solid #e4e4e7',
             cursor: onMilestoneClick !== undefined ? 'pointer' : 'default',
             transition: 'all 0.2s ease',
           };
@@ -136,8 +136,8 @@ export function MilestoneTimeline({
             height: '16px',
             borderRadius: '50%',
             backgroundColor: color,
-            border: '3px solid var(--color-white)',
-            boxShadow: '0 0 0 2px var(--color-gray-200)',
+            border: '3px solid #ffffff',
+            boxShadow: '0 0 0 2px #e4e4e7',
           };
 
           return (
@@ -162,7 +162,7 @@ export function MilestoneTimeline({
 
               {/* Content */}
               <Flex justify="space-between" align="flex-start">
-                <Stack spacing="var(--spacing-1)" style={{ flex: 1 }}>
+                <Stack spacing="xs" style={{ flex: 1 }}>
                   <Flex align="center" gap="sm">
                     <Text variant="bodySmall" weight="semibold">
                       {milestone.name}
@@ -215,8 +215,8 @@ export function MilestoneTimeline({
                   <Box
                     style={{
                       height: '4px',
-                      backgroundColor: 'var(--color-gray-200)',
-                      borderRadius: 'var(--radius-full)',
+                      backgroundColor: '#e4e4e7',
+                      borderRadius: '9999px',
                       overflow: 'hidden',
                     }}
                   >
@@ -224,8 +224,8 @@ export function MilestoneTimeline({
                       style={{
                         height: '100%',
                         width: `${milestone.percentComplete}%`,
-                        backgroundColor: 'var(--color-primary)',
-                        borderRadius: 'var(--radius-full)',
+                        backgroundColor: '#2563eb',
+                        borderRadius: '9999px',
                       }}
                     />
                   </Box>

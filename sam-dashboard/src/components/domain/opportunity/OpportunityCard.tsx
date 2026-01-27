@@ -31,7 +31,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
   };
 
   const cardStyles: CSSProperties = {
-    marginBottom: 'var(--spacing-4)',
+    marginBottom: '1rem',
     ...style,
   };
 
@@ -46,7 +46,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
               rel="noopener noreferrer"
               style={{
                 display: 'block',
-                marginBottom: 'var(--spacing-1)',
+                marginBottom: '0.25rem',
                 textDecoration: 'none',
               }}
             >
@@ -58,7 +58,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
               {opportunity.solicitationNumber || 'N/A'}
             </Text>
           </Box>
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <NAICSBadge code={opportunity.naicsCode} />
             <TypeBadge type={getOpportunityType(opportunity.type)} label={opportunity.type} />
             {extraBadge}
@@ -66,8 +66,8 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
         </HStack>
       </CardHeader>
       <CardBody>
-        <Grid columns={3} gap="var(--spacing-4)">
-          <Stack spacing="var(--spacing-1)">
+        <Grid columns={3} gap="md">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">
               Posted Date
             </Text>
@@ -75,7 +75,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
               {formatDate(opportunity.postedDate)}
             </Text>
           </Stack>
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="caption" color="muted">
               Response Deadline
             </Text>

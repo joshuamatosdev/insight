@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, CardBody, Flex, Stack, Box } from '../components/layout';
-import { Text, Button, BuildingCheckIcon } from '../components/primitives';
+import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
+import { Text, Button, BuildingCheckIcon } from '../components/catalyst/primitives';
 import { processOAuthCallback } from '../services/oauthService';
 import { useAuth } from '../auth';
 
@@ -84,7 +84,7 @@ export function OAuthCallbackPage(): React.ReactElement {
     switch (status) {
       case 'processing':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4">Completing sign in...</Text>
             <Text variant="body" color="muted">
               Please wait while we authenticate your account.
@@ -94,7 +94,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
       case 'success':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4" color="success">
               Sign in successful!
             </Text>
@@ -106,7 +106,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
       case 'error':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4" color="danger">
               Sign in failed
             </Text>
@@ -131,15 +131,15 @@ export function OAuthCallbackPage(): React.ReactElement {
       align="center"
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-gray-100)',
-        padding: 'var(--spacing-4)',
+        backgroundColor: '#f4f4f5',
+        padding: '1rem',
       }}
     >
       <Box style={{ width: '100%', maxWidth: '400px' }}>
         <Card variant="elevated">
           <CardBody padding="lg">
             <Flex justify="center" className="mb-4">
-              <BuildingCheckIcon size="xl" color="var(--color-primary)" />
+              <BuildingCheckIcon size="xl" className="text-blue-600 dark:text-blue-400" />
             </Flex>
             {renderContent()}
           </CardBody>

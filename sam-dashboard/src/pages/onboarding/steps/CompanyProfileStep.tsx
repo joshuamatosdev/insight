@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack } from '../../../components/layout';
-import { Input } from '../../../components/primitives';
+import { Stack } from '../../../components/catalyst/layout';
+import { Input } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface CompanyProfileStepProps {
@@ -32,7 +32,7 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
       onBack={onBack}
       isFirst={true}
     >
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         <Input
           label="Company Name"
           value={companyName}

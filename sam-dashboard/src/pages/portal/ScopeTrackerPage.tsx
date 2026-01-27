@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Text, Button, Badge } from '../../components/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/layout';
+import { Text, Button, Badge } from '../../components/catalyst/primitives';
+import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
 import { ScopeItemList, ScopeChangeTracker } from '../../components/domain/portal';
 import { useScope } from '../../hooks';
 import type { ScopeItem, ScopeChange, ScopeItemStatus } from '../../types/portal';
@@ -98,10 +98,10 @@ export function ScopeTrackerPage(): React.ReactElement {
     return (
       <Box
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-danger-light)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fef2f2',
+          borderRadius: '0.5rem',
         }}
       >
         <Text variant="body" color="danger">
@@ -115,7 +115,7 @@ export function ScopeTrackerPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" className="p-6">
+    <Stack spacing="lg" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -269,10 +269,10 @@ export function ScopeTrackerPage(): React.ReactElement {
                       setStatusFilter(e.target.value as ScopeItemStatus | 'ALL')
                     }
                     style={{
-                      padding: 'var(--spacing-2) var(--spacing-3)',
-                      borderRadius: 'var(--radius-md)',
-                      border: '1px solid var(--color-gray-300)',
-                      fontSize: 'var(--font-size-body-small)',
+                      padding: '0.5rem 0.75rem',
+                      borderRadius: '0.375rem',
+                      border: '1px solid #d4d4d8',
+                      fontSize: '0.875rem',
                     }}
                   >
                     <option value="ALL">All Statuses</option>
@@ -293,9 +293,9 @@ export function ScopeTrackerPage(): React.ReactElement {
               align="center"
               direction="column"
               style={{
-                padding: 'var(--spacing-8)',
-                backgroundColor: 'var(--color-gray-50)',
-                borderRadius: 'var(--radius-lg)',
+                padding: '2rem',
+                backgroundColor: '#fafafa',
+                borderRadius: '0.5rem',
               }}
             >
               <Text variant="heading4" color="muted">
@@ -326,9 +326,9 @@ export function ScopeTrackerPage(): React.ReactElement {
               align="center"
               direction="column"
               style={{
-                padding: 'var(--spacing-8)',
-                backgroundColor: 'var(--color-gray-50)',
-                borderRadius: 'var(--radius-lg)',
+                padding: '2rem',
+                backgroundColor: '#fafafa',
+                borderRadius: '0.5rem',
               }}
             >
               <Text variant="heading4" color="muted">

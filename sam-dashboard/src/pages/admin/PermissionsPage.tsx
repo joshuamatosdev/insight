@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Text, Button, Badge } from '../../components/primitives';
+import { Text, Button, Badge } from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -17,7 +17,7 @@ import {
   Grid,
   GridItem,
   HStack,
-} from '../../components/layout';
+} from '../../components/catalyst/layout';
 import { fetchRoles, fetchPermissions } from '../../services';
 import type { Role, PermissionsByCategory, Permission, AdminPageState } from '../../types';
 
@@ -68,9 +68,9 @@ function PermissionCard({
   return (
     <Card variant="outlined">
       <CardBody padding="md">
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           <HStack justify="between" align="start">
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="bodySmall" weight="medium">
                 {permission.displayName}
               </Text>
@@ -90,7 +90,7 @@ function PermissionCard({
           )}
 
           {rolesWithPermission.length > 0 && (
-            <Flex gap="var(--spacing-1)" style={{ flexWrap: 'wrap', marginTop: 'var(--spacing-1)' }}>
+            <Flex gap="0.25rem" style={{ flexWrap: 'wrap', marginTop: '0.25rem' }}>
               {rolesWithPermission.map((role) => (
                 <Badge
                   key={role.id}
@@ -130,7 +130,7 @@ function CategorySection({
     <Card variant="default">
       <CardHeader>
         <Flex justify="between" align="center">
-          <HStack spacing="var(--spacing-2)" align="center">
+          <HStack spacing="sm" align="center">
             <Text variant="heading6" weight="semibold">
               {formatCategoryName(category)}
             </Text>
@@ -146,7 +146,7 @@ function CategorySection({
 
       {isExpanded && (
         <CardBody>
-          <Grid columns="repeat(auto-fill, minmax(300px, 1fr))" gap="var(--spacing-3)">
+          <Grid columns="repeat(auto-fill, minmax(300px, 1fr))" gap="md">
             {permissions.map((permission) => (
               <GridItem key={permission.id}>
                 <PermissionCard permission={permission} roles={roles} />
@@ -218,7 +218,7 @@ export function PermissionsPage(): React.ReactElement {
     return (
       <Section id="permissions-admin">
         <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
-          <Stack spacing="var(--spacing-4)" align="center">
+          <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load permissions'}
             </Text>
@@ -236,11 +236,11 @@ export function PermissionsPage(): React.ReactElement {
       <SectionHeader title="Permissions" />
 
       {/* Stats Summary */}
-      <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="var(--spacing-4)" className="mb-6">
+      <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="md" className="mb-6">
         <GridItem>
           <Card variant="filled">
             <CardBody padding="md">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="heading3" weight="bold">
                   {stats.categories}
                 </Text>
@@ -254,7 +254,7 @@ export function PermissionsPage(): React.ReactElement {
         <GridItem>
           <Card variant="filled">
             <CardBody padding="md">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="heading3" weight="bold">
                   {stats.totalPermissions}
                 </Text>
@@ -268,7 +268,7 @@ export function PermissionsPage(): React.ReactElement {
         <GridItem>
           <Card variant="filled">
             <CardBody padding="md">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="heading3" weight="bold">
                   {roles.length}
                 </Text>
@@ -282,7 +282,7 @@ export function PermissionsPage(): React.ReactElement {
       </Grid>
 
       {/* Permissions by Category */}
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {Object.entries(permissions).map(([category, categoryPermissions]) => (
           <CategorySection
             key={category}

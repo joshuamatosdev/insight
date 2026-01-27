@@ -95,27 +95,39 @@ If a function feels long, **stop** and split it into 2+ sub-functions.
 
 ## FILE ORGANIZATION RULES
 
+### Standard Rules (Domain, Pages, Services, Hooks)
+
 | Rule | Requirement |
 |------|-------------|
-| **Functions > 3 lines** | MUST be in their own file |
 | **Interfaces** | MUST be in their own file (e.g., `Opportunity.types.ts`) |
 | **Types/Enums** | MUST be in their own file |
 | **Exports** | MUST be in barrel `index.ts` files only |
 | **Folders > 5 files** | MUST be reorganized into subdirectories |
+
+### Catalyst Component Rules (`components/catalyst/`, `components/ui/`)
+
+| Rule | Requirement |
+|------|-------------|
+| **Compound components** | Related components in ONE file (e.g., Dialog + DialogTitle + DialogBody) |
+| **Colocated types** | TypeScript types defined inline in component file |
+| **Class composition** | Use `clsx()` for conditional Tailwind classes |
+| **Direct imports** | Import directly from component file (e.g., `from '@/components/catalyst/dialog'`) |
 
 ### Frontend Folder Structure
 
 ```
 sam-dashboard/src/
 ├── components/
-│   ├── domain/          # Business logic components
+│   ├── catalyst/        # PRIMARY - Catalyst UI Kit (Tailwind UI)
+│   ├── ui/              # Additional headless UI components
+│   ├── domain/          # Business logic components (consume Catalyst)
 │   │   ├── opportunity/
 │   │   ├── filters/
 │   │   └── stats/
-│   ├── layout/          # Layout components
-│   └── primitives/      # UI primitives (Button, Input, etc.)
+│   ├── layout/          # Layout wrappers (consume Catalyst)
+│   └── primitives/      # LEGACY - migrate to Catalyst
 ├── hooks/               # Custom hooks
-├── pages/               # Route pages
+├── pages/               # Route pages (consume Catalyst + domain)
 ├── services/            # API calls
 ├── types/               # Shared types
 └── styles/              # CSS files
@@ -123,58 +135,177 @@ sam-dashboard/src/
 
 ---
 
-## COMPONENT ARCHITECTURE (COMPONENT-DRIVEN DEVELOPMENT)
+## COMPONENT ARCHITECTURE (CATALYST-FIRST)
 
-### NO NAKED HTML - Everything is a Component
+### Catalyst UI Kit is the Primary Component Library
+
+We use [Catalyst UI Kit](https://tailwindui.com/templates/catalyst) (Tailwind UI) as our **primary component library**. All new components should follow Catalyst patterns.
+
+### Catalyst Design Patterns
+
+| Pattern | Description |
+|---------|-------------|
+| **Compound components** | Related components in one file (e.g., `Dialog`, `DialogTitle`, `DialogBody`) |
+| **Colocated types** | TypeScript types defined inline in component files |
+| **clsx for classes** | Use `clsx()` for conditional Tailwind class composition |
+| **Headless UI** | Built on `@headlessui/react` for accessibility |
+
+```tsx
+// ✅ Catalyst pattern - compound components in one file
+// src/components/catalyst/dialog.tsx
+export function Dialog({ size, className, children, ...props }) { ... }
+export function DialogTitle({ className, ...props }) { ... }
+export function DialogBody({ className, ...props }) { ... }
+export function DialogActions({ className, ...props }) { ... }
+```
+
+### Key Dependencies
+
+- `@headlessui/react` - Accessible headless UI primitives
+- `clsx` - Conditional class composition
+- `framer-motion` - Animations (optional)
+
+### NO NAKED HTML Outside Component Definitions
 
 **NEVER** use raw HTML elements (div, span, main, section, etc.) outside of component definitions.
-**NEVER** use Tailwind classes in isolation - they should only exist inside component definitions.
 
 This is enforced by ESLint rule `strict-architecture/no-naked-html`.
 
 ```tsx
-// ❌ FORBIDDEN - Naked HTML elements
+// ❌ FORBIDDEN in pages/domain components
 <div className="flex items-center gap-4">
 <main className="p-8">
-<section className="bg-gray-100">
-<span className="text-sm">
 
-// ✅ REQUIRED - Use component wrappers
-<Flex align="center" gap="md">
-<AppLayout>
-<Section variant="default">
-<Text size="sm">
+// ✅ REQUIRED - Use Catalyst or layout components
+<Dialog>
+<Sidebar>
+<Card>
 ```
 
 ### Where Raw HTML IS Allowed
 
-Raw HTML elements and Tailwind classes are **ONLY** allowed inside:
-- `src/components/primitives/` - Base UI primitives
+Raw HTML and Tailwind classes are **ONLY** allowed inside component definitions:
+- `src/components/catalyst/` - **Primary UI library (Catalyst)**
+- `src/components/ui/` - Additional UI components
 - `src/components/layout/` - Layout components
-- `src/components/ui/` - UI library components
+- `src/components/primitives/` - Legacy primitives (migrate to Catalyst)
 
-These directories define the component library. Everything else uses these components.
-
-### Available UI Components
+### Available Catalyst Components
 
 | Category | Components |
 |----------|------------|
-| **Layout** | `AppLayout`, `Card`, `Grid`, `Flex`, `Stack`, `Section`, `Sidebar`, `Table` |
-| **Typography** | `Text`, `Badge` |
-| **Form** | `Input`, `Select`, `Button` |
-| **Data** | `Table`, `OpportunityCard`, `OpportunityList`, `StatCard` |
-| **Domain** | `FilterBar`, `NAICSBadge`, `TypeBadge` |
+| **Overlays** | `Dialog`, `DialogTitle`, `DialogBody`, `DialogActions`, `Drawer` |
+| **Forms** | `Input`, `Select`, `Combobox`, `Checkbox`, `Radio`, `Switch`, `Textarea`, `Fieldset` |
+| **Data** | `Table`, `DescriptionList`, `Badge` |
+| **Navigation** | `Dropdown`, `Navbar`, `Sidebar`, `Pagination`, `Link` |
+| **Feedback** | `Alert` |
+| **Layout** | `SidebarLayout`, `StackedLayout`, `Divider` |
+| **Typography** | `Heading`, `Text` |
+| **Media** | `Avatar` |
 
-### Component Creation Rules
+### Creating New Components
 
-When creating new components:
-1. Components go in appropriate `src/components/` subdirectory
-2. Each component gets its own folder with:
-   - `ComponentName.tsx` - Main component
-   - `ComponentName.types.ts` - Types/interfaces
-   - `index.ts` - Barrel export
-3. Raw HTML/Tailwind is allowed ONLY inside the component definition
-4. Export from barrel file, never import component file directly
+New components should be added to `src/components/catalyst/`:
+
+1. Follow compound component pattern (related components in one file)
+2. Use `clsx` for class composition
+3. Build on `@headlessui/react` for accessibility
+4. Colocate TypeScript types in the same file
+5. Export from the barrel file (`index.ts`)
+
+### Component Migration Path
+
+We are migrating to Catalyst as the primary component library:
+
+| Current | Migrate To |
+|---------|------------|
+| `primitives/Button` | `catalyst/button` |
+| `primitives/Input` | `catalyst/input` |
+| `primitives/Select` | `catalyst/select` |
+| `layout/Sidebar` | `catalyst/sidebar` |
+| `layout/Table` | `catalyst/table` |
+
+Domain components (`components/domain/`) should consume Catalyst components.
+
+---
+
+## TAILWIND COMPONENT DESIGN PATTERN
+
+### The Problem
+Raw Tailwind classes in page code creates inconsistency:
+```tsx
+// ❌ BAD - Raw Tailwind in pages
+<div className="grid grid-cols-3 gap-6 p-4">
+```
+
+### The Solution: Type-Safe Component Abstraction
+
+#### 1. Define Types (types.ts)
+```typescript
+export type Size = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+export interface BaseStyleProps {
+  margin?: Size;
+  padding?: Size;
+  gap?: Size;
+  fullWidth?: boolean;
+}
+
+export interface GridProps extends HTMLAttributes<HTMLDivElement>, BaseStyleProps {
+  columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | string;
+}
+```
+
+#### 2. Create Mappings (mappings.ts)
+```typescript
+export const GAP_MAP: Record<string, string> = {
+  none: 'gap-0',
+  xs: 'gap-1',
+  sm: 'gap-2',
+  md: 'gap-4',
+  lg: 'gap-6',
+  xl: 'gap-8',
+  '2xl': 'gap-12',
+};
+
+export const COL_MAP: Record<number, string> = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-2',
+  // ... up to 12
+};
+```
+
+#### 3. Build Component with clsx
+```typescript
+export const Grid = ({ columns = 12, gap = 'none', className, ...props }: GridProps) => {
+  const gapClass = typeof gap === 'string' ? GAP_MAP[gap] : '';
+  const colClass = typeof columns === 'number' ? COL_MAP[columns] : '';
+
+  const classes = clsx('grid', colClass, gapClass, className);
+
+  // Escape hatch: arbitrary values via inline styles
+  const dynamicStyles = {
+    gridTemplateColumns: typeof columns === 'string' ? columns : undefined,
+    gap: typeof gap === 'string' && !GAP_MAP[gap] ? gap : undefined,
+  };
+
+  return <div className={classes} style={dynamicStyles} {...props} />;
+};
+```
+
+#### 4. Usage in Pages
+```tsx
+// ✅ GOOD - Declarative, type-safe
+<Grid columns={3} gap="lg" padding="md" fullWidth>
+  <GridItem colSpan={2}>Content</GridItem>
+  <GridItem colSpan={1}>Sidebar</GridItem>
+</Grid>
+```
+
+### Key Rules
+- **Layout components** (Grid, Stack) encapsulate Tailwind classes
+- **Pages** ONLY use typed props, never raw Tailwind for layout
+- **Use `tailwind-merge`** to resolve class conflicts when `className` overrides base classes
 
 ---
 
@@ -274,6 +405,48 @@ Before finalizing a test, ask:
 | `spyOn(instance, '_privateMethod')` | `expect(publicAPI.result).toBe(x)` |
 | `expect(div).toHaveClass('bg-red')` | `expect(screen.getByRole('alert'))` |
 | Implementation details | Behavior and outcomes |
+
+### No Hardcoded Strings in Tests
+
+**Problem:** Duplicate string literals in tests and components break when UI text changes.
+
+```tsx
+// ❌ BAD - Hardcoded strings in test
+screen.getByText('Submit');
+expect(element).toHaveTextContent('Dashboard');
+```
+
+**Solution:** Single source of truth for UI strings.
+
+```typescript
+// src/constants/labels.ts
+export const LABELS = {
+  SUBMIT_BUTTON: 'Submit',
+  DASHBOARD_TITLE: 'Dashboard',
+} as const;
+```
+
+```tsx
+// Component
+import { LABELS } from '@/constants/labels';
+<Button>{LABELS.SUBMIT_BUTTON}</Button>
+
+// Test - now immune to text changes
+import { LABELS } from '@/constants/labels';
+screen.getByText(LABELS.SUBMIT_BUTTON);
+```
+
+**Even better:** Use semantic selectors that don't depend on text at all:
+```tsx
+// Component
+<Button data-testid="submit-btn">{LABELS.SUBMIT_BUTTON}</Button>
+
+// Test - completely immune to text changes
+screen.getByTestId('submit-btn');
+screen.getByRole('button', { name: /submit/i });
+```
+
+**ESLint enforced:** `strict-architecture/no-hardcoded-test-strings`
 
 ### Test File Location
 

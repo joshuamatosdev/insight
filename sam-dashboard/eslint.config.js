@@ -30,6 +30,7 @@ export default defineConfig([
       'strict-architecture/max-function-body-statements': ['warn', { max: 15 }],
       'strict-architecture/require-barrel-import': 'warn',
       'strict-architecture/no-redundant-dark-overrides': 'warn',
+      'strict-architecture/no-hardcoded-test-strings': 'warn',
     },
   },
 ])

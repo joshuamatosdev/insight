@@ -122,18 +122,18 @@ export function OtpInput({
       textAlign: 'center',
       border: `2px solid ${
         error === true
-          ? 'var(--color-danger)'
+          ? '#ef4444'
           : isFocused === true
-          ? 'var(--color-primary)'
+          ? '#2563eb'
           : hasValue === true
-          ? 'var(--color-gray-400)'
-          : 'var(--color-gray-300)'
+          ? '#a1a1aa'
+          : '#d4d4d8'
       }`,
       borderRadius: '8px',
       outline: 'none',
-      backgroundColor: disabled === true ? 'var(--color-gray-100)' : 'white',
+      backgroundColor: disabled === true ? '#f4f4f5' : 'white',
       transition: 'border-color 0.2s, box-shadow 0.2s',
-      boxShadow: isFocused === true ? '0 0 0 3px var(--color-primary-100)' : 'none',
+      boxShadow: isFocused === true ? '0 0 0 3px #dbeafe' : 'none',
     };
   };
 

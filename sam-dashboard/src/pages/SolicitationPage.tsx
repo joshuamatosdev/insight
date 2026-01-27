@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { FileCheckIcon } from '../components/primitives';
-import { Section, SectionHeader } from '../components/layout';
+import { FileCheckIcon } from '../components/catalyst/primitives';
+import { Section, SectionHeader } from '../components/catalyst/layout';
 import { getOpportunityType, OpportunityList } from '../components/domain';
 import { SolicitationPageProps } from './Pages.types';
 

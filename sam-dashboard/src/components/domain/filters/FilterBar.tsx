@@ -5,7 +5,7 @@ import { SortSelect } from './SortSelect';
 
 export function FilterBar({ filters, onFilterChange, className, style }: FilterBarProps) {
   return (
-    <HStack spacing="var(--spacing-2)" className={className} style={style}>
+    <HStack spacing="sm" className={className} style={style}>
       <SearchInput
         value={filters.search}
         onChange={(search) => onFilterChange({ ...filters, search })}

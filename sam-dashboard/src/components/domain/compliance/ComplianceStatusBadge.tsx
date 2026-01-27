@@ -9,7 +9,7 @@ import type { ComplianceStatusBadgeProps, CertificationStatus, ClearanceStatus }
  * Pocket-style status colors (muted, not bright)
  */
 const certificationStatusColors: Record<CertificationStatus, string> = {
-  ACTIVE: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  ACTIVE: 'text-success-text bg-success-bg ring-success/20',
   PENDING: 'text-warning-text bg-warning-bg ring-warning/20',
   RENEWAL_IN_PROGRESS: 'text-warning-text bg-warning-bg ring-warning/20',
   EXPIRING_SOON: 'text-warning-text bg-warning-bg ring-warning/20',
@@ -20,7 +20,7 @@ const certificationStatusColors: Record<CertificationStatus, string> = {
 };
 
 const clearanceStatusColors: Record<ClearanceStatus, string> = {
-  ACTIVE: 'text-green-700 bg-green-50 ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20',
+  ACTIVE: 'text-success-text bg-success-bg ring-success/20',
   PENDING: 'text-warning-text bg-warning-bg ring-warning/20',
   INTERIM: 'text-warning-text bg-warning-bg ring-warning/20',
   EXPIRED: 'text-danger-text bg-danger-bg ring-danger/10',

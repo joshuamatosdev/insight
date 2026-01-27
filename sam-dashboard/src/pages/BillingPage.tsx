@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Card, CardHeader, CardBody, Flex, Stack, Box, Grid, GridItem } from '../components/layout';
-import { Text, Button, Badge } from '../components/primitives';
+import { Card, CardHeader, CardBody, Flex, Stack, Box, Grid, GridItem } from '../components/catalyst/layout';
+import { Text, Button, Badge } from '../components/catalyst/primitives';
 import { useAuth } from '../auth';
 import type {
   Subscription,
@@ -85,13 +85,10 @@ function PlanCard({
   return (
     <Card
       variant={isCurrent ? 'outlined' : 'elevated'}
-      style={{
-        border: isCurrent ? '2px solid var(--color-primary)' : undefined,
-        height: '100%',
-      }}
+      className={`h-full ${isCurrent ? 'border-2 border-blue-500' : ''}`}
     >
       <CardHeader>
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           <Flex justify="between" align="center">
             <Text variant="heading5">{plan.name}</Text>
             {isCurrent && (
@@ -106,7 +103,7 @@ function PlanCard({
         </Stack>
       </CardHeader>
       <CardBody>
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           {/* Price */}
           <Box>
             <Text variant="heading3" weight="bold">
@@ -115,9 +112,9 @@ function PlanCard({
           </Box>
 
           {/* Features */}
-          <Stack spacing="var(--spacing-2)">
+          <Stack spacing="sm">
             {plan.features.map((feature, index) => (
-              <Flex key={index} align="start" gap="var(--spacing-2)">
+              <Flex key={index} align="start" gap="sm">
                 <Text variant="body" color="success" style={{ flexShrink: 0 }}>
                   &#10003;
                 </Text>
@@ -260,7 +257,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
       <Box className="p-6 max-w-xl mx-auto">
         <Card>
           <CardBody>
-            <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" style={{ textAlign: 'center' }}>
               <Text variant="heading4">Billing Not Configured</Text>
               <Text variant="body" color="muted">
                 Payment processing is not currently configured for this instance.
@@ -278,19 +275,12 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
   return (
     <Box className="p-6 max-w-6xl mx-auto">
-      <Stack spacing="var(--spacing-6)">
+      <Stack spacing="lg">
         <Text variant="heading3">Billing & Subscription</Text>
 
         {/* Error message */}
         {error !== null && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-danger-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-danger)',
-            }}
-          >
+          <Box className="p-3 bg-danger-bg rounded-md border border-danger">
             <Text variant="bodySmall" color="danger">
               {error}
             </Text>
@@ -299,14 +289,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
         {/* Success message */}
         {successMessage !== null && (
-          <Box
-            style={{
-              padding: 'var(--spacing-3)',
-              backgroundColor: 'var(--color-success-light)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-success)',
-            }}
-          >
+          <Box className="p-3 bg-success-bg rounded-md border border-success">
             <Text variant="bodySmall" color="success">
               {successMessage}
             </Text>
@@ -319,9 +302,9 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
             <Text variant="heading5">Current Subscription</Text>
           </CardHeader>
           <CardBody>
-            <Flex justify="between" align="center" wrap="wrap" gap="var(--spacing-4)">
-              <Stack spacing="var(--spacing-2)">
-                <Flex align="center" gap="var(--spacing-2)">
+            <Flex justify="between" align="center" wrap="wrap" gap="md">
+              <Stack spacing="sm">
+                <Flex align="center" gap="sm">
                   <Badge variant={getPlanBadgeVariant(currentPlan)} size="md">
                     {currentPlan}
                   </Badge>
@@ -359,7 +342,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
         {showCancelConfirm && (
           <Card variant="outlined">
             <CardBody>
-              <Stack spacing="var(--spacing-4)">
+              <Stack spacing="md">
                 <Text variant="body" weight="medium">
                   Are you sure you want to cancel your subscription?
                 </Text>
@@ -367,7 +350,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
                   Your subscription will remain active until the end of the current billing period.
                   After that, you will be moved to the Free plan.
                 </Text>
-                <Flex gap="var(--spacing-3)">
+                <Flex gap="md">
                   <Button
                     variant="outline"
                     size="sm"
@@ -393,9 +376,9 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
         )}
 
         {/* Plan Comparison */}
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <Text variant="heading5">Available Plans</Text>
-          <Grid cols={4} gap="var(--spacing-4)">
+          <Grid columns={4} gap="md">
             {PLAN_ORDER.map((planId) => {
               const planDetails = plans.find((p) => p.id === planId);
               if (planDetails === undefined) {
@@ -419,7 +402,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
         <Card>
           <CardBody>
             <Flex justify="between" align="center">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="body" weight="medium">
                   Billing History
                 </Text>
@@ -440,7 +423,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
             <Text variant="heading5">Frequently Asked Questions</Text>
           </CardHeader>
           <CardBody>
-            <Stack spacing="var(--spacing-4)">
+            <Stack spacing="md">
               <Box>
                 <Text variant="body" weight="medium">
                   What happens when I upgrade?

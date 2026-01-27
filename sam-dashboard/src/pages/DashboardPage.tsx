@@ -1,27 +1,26 @@
 import { useMemo } from 'react';
 import {
-  Text,
-  SpeedometerIcon,
   Button,
-} from '../components/primitives';
-import {
-  Section,
-  SectionHeader,
+  StatGroup,
+  Stat,
+  StatLabel,
+  StatValue,
   Card,
   CardHeader,
+  CardTitle,
   CardBody,
-  Grid,
-  GridItem,
-  HStack,
-} from '../components/layout';
+  PageHeading,
+  PageHeadingSection,
+  PageHeadingTitle,
+  PageHeadingDescription,
+} from '../components/catalyst';
 import {
   getOpportunityType,
   OpportunityTable,
-  StatCard,
-  StatsGrid,
   NAICSDistribution,
 } from '../components/domain';
 import { DashboardPageProps } from './Pages.types';
+import { Grid, GridItem } from '@/components';
 
 export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps) {
   const stats = useMemo(() => {
@@ -31,14 +30,16 @@ export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps)
     ).length;
 
     const urgent = opportunities.filter((o) => {
-      if (!o.responseDeadLine) return false;
+      if (o.responseDeadLine === undefined || o.responseDeadLine === null) return false;
       const deadline = new Date(o.responseDeadLine);
       const daysUntil = (deadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
       return daysUntil >= 0 && daysUntil <= 7;
     }).length;
 
     const uniqueNaics = new Set(
-      opportunities.map((o) => o.naicsCode).filter(Boolean)
+      opportunities
+        .map((o) => o.naicsCode)
+        .filter((code): code is string => code !== undefined && code !== null)
     ).size;
 
     return {
@@ -52,8 +53,8 @@ export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps)
   const naicsDistribution = useMemo(() => {
     const dist: Record<string, number> = {};
     opportunities.forEach((o) => {
-      if (o.naicsCode) {
-        dist[o.naicsCode] = (dist[o.naicsCode] || 0) + 1;
+      if (o.naicsCode !== undefined && o.naicsCode !== null) {
+        dist[o.naicsCode] = (dist[o.naicsCode] ?? 0) + 1;
       }
     });
     return dist;
@@ -66,53 +67,77 @@ export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps)
   }, [opportunities]);
 
   return (
-    <Section id="dashboard">
-      <SectionHeader title="Dashboard Overview" icon={<SpeedometerIcon size="lg" />} />
+    <Grid columns={1} gap="lg" rowGap="lg">
+      {/* Page Header - Full Width */}
+      <GridItem>
+        <PageHeading>
+          <PageHeadingSection>
+            <PageHeadingTitle>Dashboard</PageHeadingTitle>
+            <PageHeadingDescription>
+              Overview of your contract opportunities
+            </PageHeadingDescription>
+          </PageHeadingSection>
+        </PageHeading>
+      </GridItem>
 
-      <StatsGrid columns={4}>
-        <StatCard variant="primary" value={stats.total} label="Total Opportunities" />
-        <StatCard variant="success" value={stats.sourcesSought} label="Sources Sought" />
-        <StatCard variant="warning" value={stats.urgent} label="Deadline < 7 Days" />
-        <StatCard variant="info" value={stats.naicsCount} label="NAICS Codes" />
-      </StatsGrid>
+      {/* Stats Section - Full Width, responsive 4 columns */}
+      <GridItem>
+        <StatGroup columns={4}>
+          <Stat>
+            <StatLabel>Total Opportunities</StatLabel>
+            <StatValue>{stats.total}</StatValue>
+          </Stat>
+          <Stat>
+            <StatLabel>Sources Sought</StatLabel>
+            <StatValue>{stats.sourcesSought}</StatValue>
+          </Stat>
+          <Stat>
+            <StatLabel>Due This Week</StatLabel>
+            <StatValue>{stats.urgent}</StatValue>
+          </Stat>
+          <Stat>
+            <StatLabel>NAICS Codes</StatLabel>
+            <StatValue>{stats.naicsCount}</StatValue>
+          </Stat>
+        </StatGroup>
+      </GridItem>
 
-      <Grid columns="2fr 1fr" gap="var(--spacing-6)">
-        <GridItem>
-          <Card>
-            <CardHeader>
-              <HStack justify="between" align="center">
-                <Text variant="heading5">Recent Opportunities</Text>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onNavigate('all-opportunities')}
-                >
+      {/* Cards Section - 2 columns on lg, 1 column on mobile */}
+      <GridItem>
+        <Grid columns={1} gap="lg" className="lg:grid-cols-2">
+          {/* Recent Opportunities */}
+          <GridItem>
+            <Card padding="none">
+              <CardHeader divider className="flex items-center justify-between">
+                <CardTitle>Recent Opportunities</CardTitle>
+                <Button outline onClick={() => onNavigate('all-opportunities')}>
                   View All
                 </Button>
-              </HStack>
-            </CardHeader>
-            <CardBody padding="none">
-              <OpportunityTable opportunities={recentOpportunities} maxRows={10} />
-            </CardBody>
-          </Card>
-        </GridItem>
+              </CardHeader>
+              <CardBody className="p-0">
+                <OpportunityTable opportunities={recentOpportunities} maxRows={10} />
+              </CardBody>
+            </Card>
+          </GridItem>
 
-        <GridItem>
-          <Card>
-            <CardHeader>
-              <Text variant="heading5">NAICS Distribution</Text>
-            </CardHeader>
-            <CardBody>
-              <NAICSDistribution
-                distribution={naicsDistribution}
-                total={opportunities.length}
-                maxItems={8}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </Grid>
-    </Section>
+          {/* NAICS Distribution */}
+          <GridItem>
+            <Card padding="none">
+              <CardHeader divider>
+                <CardTitle>NAICS Distribution</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <NAICSDistribution
+                  distribution={naicsDistribution}
+                  total={opportunities.length}
+                  maxItems={8}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </Grid>
+      </GridItem>
+    </Grid>
   );
 }
 

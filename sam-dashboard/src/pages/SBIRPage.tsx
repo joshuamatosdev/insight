@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Text, Badge, CheckCircleIcon, Button } from '../components/primitives';
+import { Text, Badge, CheckCircleIcon, Button } from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardBody,
   HStack,
-} from '../components/layout';
+} from '../components/catalyst/layout';
 import {
   isSbirOpportunity,
   getSbirPhaseLabel,
@@ -46,19 +46,19 @@ export function SBIRPage({ opportunities }: SBIRPageProps) {
       <SectionHeader title="SBIR / STTR Opportunities" icon={<CheckCircleIcon size="lg" />} />
 
       <StatsGrid columns={6}>
-        <StatCard variant="primary" value={stats.total} label="Total SBIR/STTR" />
-        <StatCard variant="info" value={stats.sbir} label="SBIR" />
-        <StatCard variant="success" value={stats.sttr} label="STTR" />
-        <StatCard variant="warning" value={stats.phaseI} label="Phase I" />
-        <StatCard variant="secondary" value={stats.phaseII} label="Phase II" />
-        <StatCard variant="danger" value={stats.phaseIII} label="Phase III" />
+        <StatCard value={stats.total} label="Total SBIR/STTR" />
+        <StatCard value={stats.sbir} label="SBIR" />
+        <StatCard value={stats.sttr} label="STTR" />
+        <StatCard value={stats.phaseI} label="Phase I" />
+        <StatCard value={stats.phaseII} label="Phase II" />
+        <StatCard value={stats.phaseIII} label="Phase III" />
       </StatsGrid>
 
       <Card>
         <CardHeader>
           <HStack justify="between" align="center">
             <Text variant="heading5">Filter by Phase</Text>
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Button
                 variant={phaseFilter === 'all' ? 'primary' : 'outline'}
                 size="sm"
@@ -95,7 +95,7 @@ export function SBIRPage({ opportunities }: SBIRPageProps) {
             opportunities={filteredOpportunities}
             emptyMessage="No SBIR/STTR opportunities found."
             renderBadge={(opp) => (
-              <HStack spacing="var(--spacing-2)">
+              <HStack spacing="sm">
                 {opp.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
                 {opp.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
                 {opp.sbirPhase !== null && opp.sbirPhase !== undefined && (

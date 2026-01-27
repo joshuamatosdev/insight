@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import { ProtectedRoute } from './ProtectedRoute';
-import { Box } from '../components/layout';
+import { Box } from '../components/catalyst/layout';
 import type { AuthContextType, User } from './Auth.types';
 
 // Test user data

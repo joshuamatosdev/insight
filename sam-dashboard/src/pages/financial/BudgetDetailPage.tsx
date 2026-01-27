@@ -2,7 +2,14 @@
  * BudgetDetailPage - Single budget item detail view
  */
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PencilIcon, TrashIcon, ChevronLeftIcon } from '../../components/primitives';
+import {
+  Text,
+  Button,
+  Badge,
+  PencilIcon,
+  TrashIcon,
+  ChevronLeftIcon,
+} from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,11 +22,11 @@ import {
   GridItem,
   Flex,
   Box,
-} from '../../components/layout';
-import { BudgetChart, BudgetForm } from '../../components/domain/financial';
-import { useBudget } from '../../hooks/useFinancial';
-import { updateBudget, deleteBudget, formatCurrency, formatDate, getCategoryLabel } from '../../services/financialService';
-import type { BudgetFormState, BudgetCategory } from '../../types/financial.types';
+} from '@/components/catalyst/layout';
+import { BudgetChart, BudgetForm } from '@/components/domain/financial';
+import { useBudget } from '@/hooks/useFinancial';
+import { updateBudget, deleteBudget, formatCurrency, formatDate, getCategoryLabel } from '@/services/financialService';
+import type { BudgetFormState, BudgetCategory } from '@/types/financial.types';
 
 export interface BudgetDetailPageProps {
   budgetId: string;
@@ -104,10 +111,10 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
       <Section id="budget-detail">
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="body" color="danger">
@@ -146,9 +153,9 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
         }
         actions={
           isEditing === false && (
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Button variant="outline" size="sm" onClick={handleEdit}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <PencilIcon size="sm" />
                   <Text as="span" variant="bodySmall">
                     Edit
@@ -163,9 +170,9 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
         }
       />
 
-      <Stack spacing="var(--spacing-6)">
+      <Stack spacing="lg">
         {/* Status Badges */}
-        <HStack spacing="var(--spacing-2)">
+        <HStack spacing="sm">
           <Badge variant="secondary" size="md">
             {getCategoryLabel(budget.category)}
           </Badge>
@@ -211,7 +218,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
 
         {/* Details Cards */}
         {isEditing === false && (
-          <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+          <Grid columns={2} gap="md">
             {/* Financial Details */}
             <GridItem>
               <Card variant="outlined">
@@ -221,7 +228,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
                   </Text>
                 </CardHeader>
                 <CardBody>
-                  <Stack spacing="var(--spacing-3)">
+                  <Stack spacing="md">
                     <HStack justify="between">
                       <Text variant="bodySmall" color="muted">
                         Budgeted Amount
@@ -259,8 +266,8 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
                     <HStack
                       justify="between"
                       style={{
-                        paddingTop: 'var(--spacing-2)',
-                        borderTop: '1px solid var(--color-gray-200)',
+                        paddingTop: '0.5rem',
+                        borderTop: '1px solid #e4e4e7',
                       }}
                     >
                       <Text variant="bodySmall" weight="medium">
@@ -300,7 +307,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
                   </Text>
                 </CardHeader>
                 <CardBody>
-                  <Stack spacing="var(--spacing-3)">
+                  <Stack spacing="md">
                     <HStack justify="between">
                       <Text variant="bodySmall" color="muted">
                         Period Start
@@ -362,7 +369,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
         {isEditing === false && (budget.description !== null || budget.notes !== null) && (
           <Card variant="outlined">
             <CardBody>
-              <Stack spacing="var(--spacing-3)">
+              <Stack spacing="md">
                 {budget.description !== null && budget.description.length > 0 && (
                   <Box>
                     <Text variant="caption" color="muted" weight="medium">

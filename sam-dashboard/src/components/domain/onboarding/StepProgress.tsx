@@ -32,7 +32,7 @@ export function StepProgress({ steps, currentStep }: StepProgressProps): React.R
               <div
                 className={clsx(
                   'flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold',
-                  isComplete && 'bg-green-500 text-white dark:bg-green-600',
+                  isComplete && 'bg-success text-white',
                   isCurrent && !isComplete && 'bg-blue-600 text-white dark:bg-blue-500',
                   !isCurrent && !isComplete && 'bg-zinc-200 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400'
                 )}
@@ -45,7 +45,7 @@ export function StepProgress({ steps, currentStep }: StepProgressProps): React.R
                 <div
                   className={clsx(
                     'mx-2 h-0.5 flex-1',
-                    (isPast || isComplete) ? 'bg-green-500 dark:bg-green-600' : 'bg-zinc-200 dark:bg-zinc-700'
+                    (isPast || isComplete) ? 'bg-success' : 'bg-zinc-200 dark:bg-zinc-700'
                   )}
                 />
               )}

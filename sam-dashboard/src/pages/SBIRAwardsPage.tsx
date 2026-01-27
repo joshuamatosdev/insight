@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Text, Badge, Button, CheckCircleIcon, RefreshIcon, SearchIcon, Input } from '../components/primitives';
+import { Text, Badge, Button, CheckCircleIcon, RefreshIcon, SearchIcon, Input } from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -8,7 +8,15 @@ import {
   CardBody,
   HStack,
   Box,
-} from '../components/layout';
+} from '../components/catalyst/layout';
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableHeader,
+  TableCell,
+} from '../components/catalyst';
 import {
   SbirAward,
   SbirStats,
@@ -122,26 +130,26 @@ export function SBIRAwardsPage() {
 
       {stats !== null && (
         <StatsGrid columns={5}>
-          <StatCard variant="primary" value={stats.totalAwards} label="Total Awards" />
-          <StatCard variant="info" value={stats.sbirCount} label="SBIR" />
-          <StatCard variant="success" value={stats.sttrCount} label="STTR" />
-          <StatCard variant="warning" value={stats.agencies.length} label="Agencies" />
-          <StatCard variant="secondary" value={stats.phases.length} label="Phases" />
+          <StatCard value={stats.totalAwards} label="Total Awards" />
+          <StatCard value={stats.sbirCount} label="SBIR" />
+          <StatCard value={stats.sttrCount} label="STTR" />
+          <StatCard value={stats.agencies.length} label="Agencies" />
+          <StatCard value={stats.phases.length} label="Phases" />
         </StatsGrid>
       )}
 
       <Card>
         <CardHeader>
           <HStack justify="between" align="center" className="flex-wrap gap-4">
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <select
                 value={agencyFilter}
                 onChange={(e) => setAgencyFilter(e.target.value)}
                 aria-label="Filter by agency"
                 style={{
-                  padding: 'var(--spacing-2) var(--spacing-3)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: '0.375rem',
+                  border: '1px solid #e4e4e7',
                 }}
               >
                 <option value="">All Agencies</option>
@@ -154,9 +162,9 @@ export function SBIRAwardsPage() {
                 onChange={(e) => setPhaseFilter(e.target.value)}
                 aria-label="Filter by phase"
                 style={{
-                  padding: 'var(--spacing-2) var(--spacing-3)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: '0.375rem',
+                  border: '1px solid #e4e4e7',
                 }}
               >
                 <option value="">All Phases</option>
@@ -166,7 +174,7 @@ export function SBIRAwardsPage() {
               </select>
             </HStack>
 
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Input
                 placeholder="Search keywords..."
                 value={searchQuery}
@@ -209,33 +217,21 @@ export function SBIRAwardsPage() {
             </Box>
           ) : (
             <Box style={{ maxHeight: '600px', overflowY: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr className="bg-surface-secondary sticky top-0">
-                    <th className="p-3 text-left border-b border-border">
-                      <Text variant="caption" weight="semibold">Award</Text>
-                    </th>
-                    <th className="p-3 text-left border-b border-border">
-                      <Text variant="caption" weight="semibold">Firm</Text>
-                    </th>
-                    <th className="p-3 text-center border-b border-border">
-                      <Text variant="caption" weight="semibold">Phase</Text>
-                    </th>
-                    <th className="p-3 text-center border-b border-border">
-                      <Text variant="caption" weight="semibold">Agency</Text>
-                    </th>
-                    <th className="p-3 text-right border-b border-border">
-                      <Text variant="caption" weight="semibold">Amount</Text>
-                    </th>
-                    <th className="p-3 text-center border-b border-border">
-                      <Text variant="caption" weight="semibold">Year</Text>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+              <Table striped>
+                <TableHead>
+                  <TableRow>
+                    <TableHeader>Award</TableHeader>
+                    <TableHeader>Firm</TableHeader>
+                    <TableHeader className="text-center">Phase</TableHeader>
+                    <TableHeader className="text-center">Agency</TableHeader>
+                    <TableHeader className="text-right">Amount</TableHeader>
+                    <TableHeader className="text-center">Year</TableHeader>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
                   {filteredAwards.map((award) => (
-                    <tr key={award.id} className="border-b border-border-light">
-                      <td className="p-3 max-w-xs">
+                    <TableRow key={award.id}>
+                      <TableCell className="max-w-xs">
                         <a
                           href={award.awardLink || '#'}
                           target="_blank"
@@ -252,35 +248,35 @@ export function SBIRAwardsPage() {
                             {award.awardTitle || 'Untitled'}
                           </Text>
                         </a>
-                        <HStack spacing="var(--spacing-1)" className="mt-1">
+                        <HStack spacing="xs" className="mt-1">
                           {award.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
                           {award.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
                         </HStack>
-                      </td>
-                      <td className="p-3">
+                      </TableCell>
+                      <TableCell>
                         <Text variant="bodySmall">{award.firm || 'N/A'}</Text>
                         <Text variant="caption" color="muted">
                           {award.city}, {award.state}
                         </Text>
-                      </td>
-                      <td className="p-3 text-center">
+                      </TableCell>
+                      <TableCell className="text-center">
                         <Badge variant="warning" size="sm">Phase {award.phase}</Badge>
-                      </td>
-                      <td className="p-3 text-center">
+                      </TableCell>
+                      <TableCell className="text-center">
                         <Badge variant="secondary" size="sm">{award.agency}</Badge>
-                      </td>
-                      <td className="p-3 text-right">
+                      </TableCell>
+                      <TableCell className="text-right">
                         <Text variant="bodySmall" weight="semibold">
                           {formatAwardAmount(award.awardAmount)}
                         </Text>
-                      </td>
-                      <td className="p-3 text-center">
+                      </TableCell>
+                      <TableCell className="text-center">
                         <Text variant="bodySmall">{award.awardYear || 'N/A'}</Text>
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             </Box>
           )}
         </CardBody>

@@ -1,0 +1,74 @@
+# Cursor Rules - Insight Contract Intelligence Platform
+
+## TAILWIND COMPONENT DESIGN PATTERN
+
+### Never Use Raw Tailwind in Pages
+```tsx
+// ❌ BAD
+<div className="grid grid-cols-3 gap-6 p-4">
+
+// ✅ GOOD
+<Grid columns={3} gap="lg" padding="md">
+```
+
+### Layout Components
+- Use `Grid`, `GridItem` from `@/components` for grid layouts
+- Use `Stack`, `HStack`, `VStack` for flex layouts
+- Use Catalyst components: `Card`, `CardHeader`, `CardBody`, `PageHeading`
+
+### Size Tokens
+Use semantic sizes, not raw Tailwind:
+- `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+
+### Color Tokens
+Never use raw colors in pages/domain components:
+| BANNED | USE INSTEAD |
+|--------|-------------|
+| `text-emerald-*` | `text-success` |
+| `text-rose-*` | `text-danger` |
+| `text-amber-*` | `text-warning` |
+| `text-cyan-*` | `text-accent` |
+
+## STRICT TYPESCRIPT
+
+### No Any
+Never use `any`. Use `unknown` with type guards.
+
+### Strict Boolean Checks
+```tsx
+// ❌ BAD
+if (data) { }
+if (!isLoading) { }
+
+// ✅ GOOD
+if (data !== undefined && data !== null) { }
+if (isLoading === false) { }
+```
+
+### No Unchecked Indexing
+```tsx
+// ❌ BAD
+items[0].id
+
+// ✅ GOOD
+items.at(0)?.id
+```
+
+## COMPONENT ARCHITECTURE
+
+### Catalyst First
+Use Catalyst UI Kit components from `src/components/catalyst/`
+
+### No Naked HTML
+Raw HTML only allowed in:
+- `src/components/catalyst/`
+- `src/components/layout/`
+- `src/components/ui/`
+
+Pages and domain components must use layout/Catalyst components.
+
+## FILE ORGANIZATION
+
+- Types in separate `.types.ts` files
+- Exports only through barrel `index.ts`
+- Cognitive complexity limit: 15

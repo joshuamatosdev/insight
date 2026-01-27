@@ -87,13 +87,13 @@ export function FilterBuilder({
   };
 
   return (
-    <Stack spacing="var(--spacing-4)">
+    <Stack spacing="md">
       <Text variant="heading5" weight="semibold">
         Filters
       </Text>
 
       {filters.length > 0 && (
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           {filters.map((filter, index) => (
             <Card key={`filter-${index}-${filter.field}`} variant="default">
               <CardBody padding="sm">

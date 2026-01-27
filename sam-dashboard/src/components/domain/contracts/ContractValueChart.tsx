@@ -26,8 +26,8 @@ function ProgressBar({ value, max, color, label }: ProgressBarProps) {
       <Box
         style={{
           height: '8px',
-          backgroundColor: 'var(--color-gray-200)',
-          borderRadius: 'var(--radius-full)',
+          backgroundColor: '#e4e4e7',
+          borderRadius: '9999px',
           overflow: 'hidden',
         }}
       >
@@ -36,7 +36,7 @@ function ProgressBar({ value, max, color, label }: ProgressBarProps) {
             height: '100%',
             width: `${percentage}%`,
             backgroundColor: color,
-            borderRadius: 'var(--radius-full)',
+            borderRadius: '9999px',
             transition: 'width 0.3s ease',
           }}
         />
@@ -75,7 +75,7 @@ export function ContractValueChart({
   };
 
   return (
-    <Stack spacing="var(--spacing-4)" className={className} style={chartStyles}>
+    <Stack spacing="md" className={className} style={chartStyles}>
       <Card>
         <CardHeader>
           <HStack justify="between" align="center">
@@ -84,8 +84,8 @@ export function ContractValueChart({
           </HStack>
         </CardHeader>
         <CardBody>
-          <Grid columns={3} gap="var(--spacing-6)">
-            <Stack spacing="var(--spacing-1)">
+          <Grid columns={3} gap="lg">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Total Value
               </Text>
@@ -93,7 +93,7 @@ export function ContractValueChart({
                 {formatCurrency(totalValue)}
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Funded Value
               </Text>
@@ -104,7 +104,7 @@ export function ContractValueChart({
                 {fundingPercentage.toFixed(1)}% of total
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Period of Performance
               </Text>
@@ -121,8 +121,8 @@ export function ContractValueChart({
           <Text variant="heading5">Financial Status</Text>
         </CardHeader>
         <CardBody>
-          <Grid columns={4} gap="var(--spacing-4)">
-            <Stack spacing="var(--spacing-1)">
+          <Grid columns={4} gap="md">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 CLIN Total Value
               </Text>
@@ -130,7 +130,7 @@ export function ContractValueChart({
                 {formatCurrency(summary.clinTotalValue)}
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 CLIN Funded
               </Text>
@@ -138,7 +138,7 @@ export function ContractValueChart({
                 {formatCurrency(clinFundedAmount)}
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 CLIN Invoiced
               </Text>
@@ -146,7 +146,7 @@ export function ContractValueChart({
                 {formatCurrency(clinInvoicedAmount)}
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Remaining Funds
               </Text>
@@ -161,17 +161,17 @@ export function ContractValueChart({
           </Grid>
 
           <Box className="mt-6">
-            <Stack spacing="var(--spacing-4)">
+            <Stack spacing="md">
               <ProgressBar
                 value={fundedValue}
                 max={totalValue}
-                color="var(--color-primary)"
+                color="#2563eb"
                 label="Funding Progress"
               />
               <ProgressBar
                 value={clinInvoicedAmount}
                 max={clinFundedAmount}
-                color={burnRate > 90 ? 'var(--color-danger)' : 'var(--color-success)'}
+                color={burnRate > 90 ? '#ef4444' : '#10b981'}
                 label="Burn Rate"
               />
             </Stack>
@@ -179,14 +179,14 @@ export function ContractValueChart({
         </CardBody>
       </Card>
 
-      <Grid columns={2} gap="var(--spacing-4)">
+      <Grid columns={2} gap="md">
         <Card>
           <CardHeader>
             <Text variant="heading5">Modifications</Text>
           </CardHeader>
           <CardBody>
-            <Grid columns={2} gap="var(--spacing-4)">
-              <Stack spacing="var(--spacing-1)">
+            <Grid columns={2} gap="md">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Total Modifications
                 </Text>
@@ -194,11 +194,11 @@ export function ContractValueChart({
                   {summary.modificationCount}
                 </Text>
               </Stack>
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Pending
                 </Text>
-                <HStack spacing="var(--spacing-2)" align="center">
+                <HStack spacing="sm" align="center">
                   <Text variant="heading4" weight="semibold">
                     {summary.pendingModifications}
                   </Text>
@@ -218,8 +218,8 @@ export function ContractValueChart({
             <Text variant="heading5">Options</Text>
           </CardHeader>
           <CardBody>
-            <Grid columns={2} gap="var(--spacing-4)">
-              <Stack spacing="var(--spacing-1)">
+            <Grid columns={2} gap="md">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Pending Options
                 </Text>
@@ -227,7 +227,7 @@ export function ContractValueChart({
                   {summary.pendingOptions}
                 </Text>
               </Stack>
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Potential Value
                 </Text>
@@ -245,8 +245,8 @@ export function ContractValueChart({
           <Text variant="heading5">Deliverables</Text>
         </CardHeader>
         <CardBody>
-          <Grid columns={2} gap="var(--spacing-4)">
-            <Stack spacing="var(--spacing-1)">
+          <Grid columns={2} gap="md">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Pending Deliverables
               </Text>
@@ -254,11 +254,11 @@ export function ContractValueChart({
                 {summary.pendingDeliverables}
               </Text>
             </Stack>
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted">
                 Overdue
               </Text>
-              <HStack spacing="var(--spacing-2)" align="center">
+              <HStack spacing="sm" align="center">
                 <Text
                   variant="heading4"
                   weight="semibold"

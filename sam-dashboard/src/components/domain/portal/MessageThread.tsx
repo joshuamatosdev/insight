@@ -28,10 +28,10 @@ function MessageBubble({
 
   const bubbleStyles: CSSProperties = {
     maxWidth: '70%',
-    padding: 'var(--spacing-3)',
-    borderRadius: 'var(--radius-lg)',
-    backgroundColor: isOwn ? 'var(--color-primary)' : 'var(--color-gray-100)',
-    color: isOwn ? 'var(--color-white)' : 'inherit',
+    padding: '0.75rem',
+    borderRadius: '0.5rem',
+    backgroundColor: isOwn ? '#2563eb' : '#f4f4f5',
+    color: isOwn ? 'white' : 'inherit',
     ...style,
   };
 
@@ -52,16 +52,16 @@ function MessageBubble({
         )}
         <Text
           variant="body"
-          style={{ color: isOwn ? 'var(--color-white)' : 'inherit', whiteSpace: 'pre-wrap' }}
+          style={{ color: isOwn ? 'white' : 'inherit', whiteSpace: 'pre-wrap' }}
         >
           {message.body}
         </Text>
         <Text
           variant="caption"
           style={{
-            marginTop: 'var(--spacing-1)',
+            marginTop: '0.25rem',
             opacity: 0.7,
-            color: isOwn ? 'var(--color-white)' : 'var(--color-gray-500)',
+            color: isOwn ? 'white' : '#71717a',
             textAlign: 'right',
           }}
         >
@@ -161,8 +161,8 @@ export function MessageThread({
       {/* Header */}
       <Box
         style={{
-          padding: 'var(--spacing-3) var(--spacing-4)',
-          borderBottom: '1px solid var(--color-gray-200)',
+          padding: '0.75rem 1rem',
+          borderBottom: '1px solid #e4e4e7',
         }}
       >
         <Text variant="heading5">{thread.subject}</Text>
@@ -176,7 +176,7 @@ export function MessageThread({
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: 'var(--spacing-4)',
+          padding: '1rem',
         }}
       >
         {messageGroups.map((group) => (
@@ -184,13 +184,13 @@ export function MessageThread({
             {/* Date Separator */}
             <Flex
               justify="center"
-              style={{ margin: 'var(--spacing-4) 0' }}
+              style={{ margin: '1rem 0' }}
             >
               <Box
                 style={{
-                  padding: 'var(--spacing-1) var(--spacing-3)',
-                  backgroundColor: 'var(--color-gray-100)',
-                  borderRadius: 'var(--radius-full)',
+                  padding: '0.25rem 0.75rem',
+                  backgroundColor: '#f4f4f5',
+                  borderRadius: '9999px',
                 }}
               >
                 <Text variant="caption" color="muted">
@@ -224,8 +224,8 @@ export function MessageThread({
       {onSendMessage !== undefined && (
         <Box
           style={{
-            padding: 'var(--spacing-3) var(--spacing-4)',
-            borderTop: '1px solid var(--color-gray-200)',
+            padding: '0.75rem 1rem',
+            borderTop: '1px solid #e4e4e7',
           }}
         >
           <Flex gap="sm">

@@ -5,10 +5,10 @@ import { Text, Badge, Button } from '../../primitives';
 import { Card, CardBody, Flex, Stack, Box, Grid } from '../../layout';
 
 const COLUMN_CONFIG: Array<{ status: SprintTaskStatus; label: string; color: string }> = [
-  { status: 'TODO', label: 'To Do', color: 'var(--color-gray-400)' },
-  { status: 'IN_PROGRESS', label: 'In Progress', color: 'var(--color-info)' },
-  { status: 'IN_REVIEW', label: 'In Review', color: 'var(--color-warning)' },
-  { status: 'DONE', label: 'Done', color: 'var(--color-success)' },
+  { status: 'TODO', label: 'To Do', color: '#a1a1aa' },
+  { status: 'IN_PROGRESS', label: 'In Progress', color: '#0ea5e9' },
+  { status: 'IN_REVIEW', label: 'In Review', color: '#f59e0b' },
+  { status: 'DONE', label: 'Done', color: '#10b981' },
 ];
 
 /**
@@ -24,15 +24,15 @@ function SprintTaskCard({
   const getPriorityColor = (priority: string): string => {
     switch (priority) {
       case 'CRITICAL':
-        return 'var(--color-danger)';
+        return '#ef4444';
       case 'HIGH':
-        return 'var(--color-warning)';
+        return '#f59e0b';
       case 'MEDIUM':
-        return 'var(--color-info)';
+        return '#0ea5e9';
       case 'LOW':
-        return 'var(--color-gray-400)';
+        return '#a1a1aa';
       default:
-        return 'var(--color-gray-400)';
+        return '#a1a1aa';
     }
   };
 
@@ -74,7 +74,7 @@ function SprintTaskCard({
       aria-label={`Task: ${task.title}`}
     >
       <CardBody padding="sm">
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           <Text variant="bodySmall" weight="medium">
             {task.title}
           </Text>
@@ -99,7 +99,7 @@ function SprintTaskCard({
                   width: '24px',
                   height: '24px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--color-primary-light)',
+                  backgroundColor: '#dbeafe',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -202,9 +202,9 @@ export function SprintBoard({
             <Box
               key={column.status}
               style={{
-                backgroundColor: 'var(--color-gray-50)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'var(--spacing-3)',
+                backgroundColor: '#fafafa',
+                borderRadius: '0.5rem',
+                padding: '0.75rem',
                 minHeight: '300px',
               }}
               onDragOver={handleDragOver}
@@ -235,7 +235,7 @@ export function SprintBoard({
               </Flex>
 
               {/* Tasks */}
-              <Stack spacing="var(--spacing-2)">
+              <Stack spacing="sm">
                 {tasks.map((task) => (
                   <Box
                     key={task.id}

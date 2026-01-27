@@ -63,12 +63,12 @@ export function DropZone({
       onDrop={handleDrop}
       style={{
         minHeight: '200px',
-        padding: 'var(--spacing-3)',
+        padding: '0.75rem',
         backgroundColor: isDropTarget
-          ? 'var(--color-primary-light)'
-          : 'var(--color-surface-container)',
-        border: `2px dashed ${isDropTarget ? 'var(--color-primary)' : 'var(--color-outline-variant)'}`,
-        borderRadius: 'var(--radius-md)',
+          ? '#dbeafe'
+          : '#f4f4f5',
+        border: `2px dashed ${isDropTarget ? '#2563eb' : '#d4d4d8'}`,
+        borderRadius: '0.375rem',
         transition: 'all 150ms ease',
       }}
     >
@@ -86,7 +86,7 @@ export function DropZone({
           </Text>
         </Box>
       ) : (
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           {columns.map((column, index) => (
             <Box
               key={column.field}

@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
-import { Text, Button, Input, Badge, SearchIcon } from '../../components/primitives';
+import { Text, Button, Input, Badge, SearchIcon } from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -13,14 +13,16 @@ import {
   Stack,
   Flex,
   Box,
+  HStack,
+} from '../../components/catalyst/layout';
+import {
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeaderCell,
+  TableHeader,
   TableCell,
-  HStack,
-} from '../../components/layout';
+} from '../../components/catalyst';
 import { fetchUsersWithRoles, fetchRoles, updateUserRole } from '../../services';
 import type { Role, UserWithRoles, AdminPageState, PaginatedResponse } from '../../types';
 
@@ -78,11 +80,11 @@ function RoleSelect({
       onChange={handleChange}
       disabled={isLoading}
       style={{
-        padding: 'var(--spacing-1) var(--spacing-2)',
-        fontSize: 'var(--font-size-sm)',
-        borderRadius: 'var(--radius-md)',
-        border: '1px solid var(--color-gray-300)',
-        backgroundColor: 'var(--color-white)',
+        padding: '0.25rem 0.5rem',
+        fontSize: '0.875rem',
+        borderRadius: '0.375rem',
+        border: '1px solid #d4d4d8',
+        backgroundColor: '#ffffff',
         cursor: isLoading ? 'wait' : 'pointer',
         minWidth: '150px',
       }}
@@ -212,7 +214,7 @@ export function UserRolesPage(): React.ReactElement {
     return (
       <Section id="user-roles-admin">
         <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
-          <Stack spacing="var(--spacing-4)" align="center">
+          <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load users'}
             </Text>
@@ -232,7 +234,7 @@ export function UserRolesPage(): React.ReactElement {
       {/* Search Bar */}
       <Card variant="filled" className="mb-4">
         <CardBody padding="md">
-          <Flex gap="var(--spacing-2)" align="center">
+          <Flex gap="sm" align="center">
             <Box style={{ flex: 1 }}>
               <Input
                 type="text"
@@ -265,11 +267,11 @@ export function UserRolesPage(): React.ReactElement {
       {error !== null && (
         <Box
           style={{
-            padding: 'var(--spacing-3)',
-            marginBottom: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-danger)',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.375rem',
+            border: '1px solid #ef4444',
           }}
         >
           <Text variant="bodySmall" color="danger">
@@ -280,15 +282,15 @@ export function UserRolesPage(): React.ReactElement {
 
       <Card variant="default">
         <CardBody padding="none">
-          <Table>
+          <Table striped>
             <TableHead>
               <TableRow>
-                <TableHeaderCell>User</TableHeaderCell>
-                <TableHeaderCell>Email</TableHeaderCell>
-                <TableHeaderCell>Current Role</TableHeaderCell>
-                <TableHeaderCell>Status</TableHeaderCell>
-                <TableHeaderCell>Joined</TableHeaderCell>
-                <TableHeaderCell>Change Role</TableHeaderCell>
+                <TableHeader>User</TableHeader>
+                <TableHeader>Email</TableHeader>
+                <TableHeader>Current Role</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader>Joined</TableHeader>
+                <TableHeader>Change Role</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -297,7 +299,7 @@ export function UserRolesPage(): React.ReactElement {
                 const isUpdating = updatingUserId === user.id;
 
                 return (
-                  <TableRow key={user.id} isHoverable>
+                  <TableRow key={user.id}>
                     <TableCell>
                       <Text variant="bodySmall" weight="medium">
                         {getUserDisplayName(user)}
@@ -370,7 +372,7 @@ export function UserRolesPage(): React.ReactElement {
             Showing {currentPage * PAGE_SIZE + 1} -{' '}
             {Math.min((currentPage + 1) * PAGE_SIZE, totalUsers)} of {totalUsers} users
           </Text>
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <Button
               variant="outline"
               size="sm"

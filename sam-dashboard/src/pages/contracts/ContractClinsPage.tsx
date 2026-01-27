@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon } from '../../components/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/layout';
+import { Text, Button, ChevronLeftIcon, PlusIcon } from '../../components/catalyst/primitives';
+import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/catalyst/layout';
 import { ClinTable, ClinForm } from '../../components/domain/contracts';
 import { useContract } from '../../hooks/useContracts';
 import type {
@@ -77,9 +77,9 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
       <Section>
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.5rem',
           }}
         >
           <Text variant="body" color="danger">

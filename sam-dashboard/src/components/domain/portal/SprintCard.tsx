@@ -55,7 +55,7 @@ export function SprintCard({
 
   const cardStyles: CSSProperties = {
     cursor: onClick !== undefined ? 'pointer' : 'default',
-    border: isSelected ? '2px solid var(--color-primary)' : undefined,
+    border: isSelected ? '2px solid #2563eb' : undefined,
     ...style,
   };
 
@@ -88,7 +88,7 @@ export function SprintCard({
     >
       <CardHeader>
         <Flex justify="space-between" align="flex-start">
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="heading5">{sprint.name}</Text>
             <Text variant="caption" color="muted">
               {formatDate(sprint.startDate)} - {formatDate(sprint.endDate)}
@@ -121,8 +121,8 @@ export function SprintCard({
           <Box
             style={{
               height: '6px',
-              backgroundColor: 'var(--color-gray-200)',
-              borderRadius: 'var(--radius-full)',
+              backgroundColor: '#e4e4e7',
+              borderRadius: '9999px',
               overflow: 'hidden',
             }}
           >
@@ -130,8 +130,8 @@ export function SprintCard({
               style={{
                 height: '100%',
                 width: `${completedPercentage}%`,
-                backgroundColor: 'var(--color-success)',
-                borderRadius: 'var(--radius-full)',
+                backgroundColor: '#10b981',
+                borderRadius: '9999px',
                 transition: 'width 0.3s ease',
               }}
             />
@@ -139,39 +139,39 @@ export function SprintCard({
         </Box>
 
         {/* Task Summary */}
-        <HStack spacing="var(--spacing-2)">
+        <HStack spacing="sm">
           <Box
             style={{
-              padding: 'var(--spacing-1) var(--spacing-2)',
-              backgroundColor: 'var(--color-gray-100)',
-              borderRadius: 'var(--radius-sm)',
+              padding: '0.25rem 0.5rem',
+              backgroundColor: '#f4f4f5',
+              borderRadius: '0.25rem',
             }}
           >
             <Text variant="caption">{tasksByStatus.todo} Todo</Text>
           </Box>
           <Box
             style={{
-              padding: 'var(--spacing-1) var(--spacing-2)',
-              backgroundColor: 'var(--color-info-light)',
-              borderRadius: 'var(--radius-sm)',
+              padding: '0.25rem 0.5rem',
+              backgroundColor: '#f0f9ff',
+              borderRadius: '0.25rem',
             }}
           >
             <Text variant="caption">{tasksByStatus.inProgress} In Progress</Text>
           </Box>
           <Box
             style={{
-              padding: 'var(--spacing-1) var(--spacing-2)',
-              backgroundColor: 'var(--color-warning-light)',
-              borderRadius: 'var(--radius-sm)',
+              padding: '0.25rem 0.5rem',
+              backgroundColor: '#fffbeb',
+              borderRadius: '0.25rem',
             }}
           >
             <Text variant="caption">{tasksByStatus.inReview} Review</Text>
           </Box>
           <Box
             style={{
-              padding: 'var(--spacing-1) var(--spacing-2)',
-              backgroundColor: 'var(--color-success-light)',
-              borderRadius: 'var(--radius-sm)',
+              padding: '0.25rem 0.5rem',
+              backgroundColor: '#d1fae5',
+              borderRadius: '0.25rem',
             }}
           >
             <Text variant="caption">{tasksByStatus.done} Done</Text>
@@ -180,7 +180,7 @@ export function SprintCard({
       </CardBody>
       {(onEdit !== undefined || onDelete !== undefined) && (
         <CardFooter>
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             {onEdit !== undefined && (
               <Button size="sm" variant="secondary" onClick={handleEdit}>
                 Edit

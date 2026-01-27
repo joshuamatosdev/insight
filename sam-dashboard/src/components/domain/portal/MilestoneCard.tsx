@@ -101,12 +101,12 @@ export function MilestoneCard({
     cursor: onClick !== undefined ? 'pointer' : 'default',
     borderLeft: `4px solid ${
       milestone.status === 'COMPLETED'
-        ? 'var(--color-success)'
+        ? '#10b981'
         : milestone.status === 'DELAYED' || isOverdue()
-        ? 'var(--color-danger)'
+        ? '#ef4444'
         : milestone.status === 'AT_RISK'
-        ? 'var(--color-warning)'
-        : 'var(--color-gray-300)'
+        ? '#f59e0b'
+        : '#d4d4d8'
     }`,
     ...style,
   };
@@ -120,9 +120,9 @@ export function MilestoneCard({
     >
       <CardHeader>
         <Flex justify="space-between" align="flex-start">
-          <Stack spacing="var(--spacing-1)">
+          <Stack spacing="xs">
             <Text variant="heading5">{milestone.name}</Text>
-            <HStack spacing="var(--spacing-2)">
+            <HStack spacing="sm">
               <Badge variant={getStatusVariant(milestone.status)} size="sm">
                 {milestone.status.replace('_', ' ')}
               </Badge>
@@ -143,7 +143,7 @@ export function MilestoneCard({
         )}
 
         {/* Dates */}
-        <HStack spacing="var(--spacing-4)" className="mb-3">
+        <HStack spacing="md" className="mb-3">
           <Stack spacing="0">
             <Text variant="caption" color="muted">
               Planned Date
@@ -191,8 +191,8 @@ export function MilestoneCard({
           <Box
             style={{
               height: '6px',
-              backgroundColor: 'var(--color-gray-200)',
-              borderRadius: 'var(--radius-full)',
+              backgroundColor: '#e4e4e7',
+              borderRadius: '9999px',
               overflow: 'hidden',
             }}
           >
@@ -202,9 +202,9 @@ export function MilestoneCard({
                 width: `${milestone.percentComplete}%`,
                 backgroundColor:
                   milestone.percentComplete === 100
-                    ? 'var(--color-success)'
-                    : 'var(--color-primary)',
-                borderRadius: 'var(--radius-full)',
+                    ? '#10b981'
+                    : '#2563eb',
+                borderRadius: '9999px',
                 transition: 'width 0.3s ease',
               }}
             />
@@ -224,16 +224,16 @@ export function MilestoneCard({
             <Text variant="caption" weight="medium" className="mb-2">
               Deliverables ({milestone.deliverables.length})
             </Text>
-            <Stack spacing="var(--spacing-2)">
+            <Stack spacing="sm">
               {milestone.deliverables.map((deliverable) => (
                 <Flex
                   key={deliverable.id}
                   justify="space-between"
                   align="center"
                   style={{
-                    padding: 'var(--spacing-2)',
-                    backgroundColor: 'var(--color-gray-50)',
-                    borderRadius: 'var(--radius-sm)',
+                    padding: '0.5rem',
+                    backgroundColor: '#fafafa',
+                    borderRadius: '0.25rem',
                   }}
                 >
                   <Text variant="bodySmall">{deliverable.name}</Text>
@@ -259,7 +259,7 @@ export function MilestoneCard({
       </CardBody>
       {(onEdit !== undefined || onDelete !== undefined) && (
         <CardFooter>
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             {onEdit !== undefined && (
               <Button size="sm" variant="secondary" onClick={handleEdit}>
                 Edit

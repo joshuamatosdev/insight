@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { TagIcon } from '../components/primitives';
-import { Section, SectionHeader } from '../components/layout';
+import { TagIcon } from '../components/catalyst/primitives';
+import { Section, SectionHeader } from '../components/catalyst/layout';
 import { OpportunityList, getNAICSDescription } from '../components/domain';
 import { NAICSPageProps } from './Pages.types';
 

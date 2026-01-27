@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/layout';
-import { Text, Button } from '../../../components/primitives';
+import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Button } from '../../../components/catalyst/primitives';
 
 interface Invoice {
   id: string;
@@ -67,15 +67,15 @@ export function InvoiceSummary(): React.ReactElement {
   const getStatusColor = (status: Invoice['status']): string => {
     switch (status) {
       case 'draft':
-        return 'var(--color-gray-500)';
+        return '#71717a';
       case 'submitted':
-        return 'var(--color-primary)';
+        return '#2563eb';
       case 'approved':
-        return 'var(--color-success)';
+        return '#10b981';
       case 'paid':
-        return 'var(--color-success)';
+        return '#10b981';
       case 'rejected':
-        return 'var(--color-danger)';
+        return '#ef4444';
     }
   };
 
@@ -90,7 +90,7 @@ export function InvoiceSummary(): React.ReactElement {
   return (
     <Card variant="bordered">
       <CardBody padding="md">
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <Flex justify="space-between" align="center">
             <Text variant="heading5">Invoice Summary</Text>
             <Button variant="primary" size="sm">Create Invoice</Button>
@@ -101,33 +101,33 @@ export function InvoiceSummary(): React.ReactElement {
             <Box
               style={{
                 flex: 1,
-                padding: 'var(--spacing-3)',
-                backgroundColor: 'var(--color-warning-50)',
+                padding: '0.75rem',
+                backgroundColor: '#fffbeb',
                 borderRadius: '8px',
               }}
             >
               <Text variant="caption" color="muted">Pending</Text>
-              <Text variant="heading4" style={{ color: 'var(--color-warning)' }}>
+              <Text variant="heading4" style={{ color: 'rgb(245 158 11)' }}>
                 {loading ? '...' : formatCurrency(totals.pending)}
               </Text>
             </Box>
             <Box
               style={{
                 flex: 1,
-                padding: 'var(--spacing-3)',
-                backgroundColor: 'var(--color-success-50)',
+                padding: '0.75rem',
+                backgroundColor: '#ecfdf5',
                 borderRadius: '8px',
               }}
             >
               <Text variant="caption" color="muted">Paid (This Month)</Text>
-              <Text variant="heading4" style={{ color: 'var(--color-success)' }}>
+              <Text variant="heading4" style={{ color: 'rgb(16 185 129)' }}>
                 {loading ? '...' : formatCurrency(totals.paid)}
               </Text>
             </Box>
           </Flex>
 
           {/* Recent Invoices */}
-          <Stack spacing="var(--spacing-2)">
+          <Stack spacing="sm">
             <Text variant="caption" color="muted" style={{ fontWeight: 600 }}>
               Recent Invoices
             </Text>
@@ -140,8 +140,8 @@ export function InvoiceSummary(): React.ReactElement {
                   justify="space-between"
                   align="center"
                   style={{
-                    padding: 'var(--spacing-2)',
-                    backgroundColor: 'var(--color-gray-50)',
+                    padding: '0.5rem',
+                    backgroundColor: '#fafafa',
                     borderRadius: '6px',
                   }}
                 >

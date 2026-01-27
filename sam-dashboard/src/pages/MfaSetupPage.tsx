@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardBody, Flex, Stack, Box } from '../components/layout';
-import { Text, Button, BuildingCheckIcon } from '../components/primitives';
+import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
+import { Text, Button, BuildingCheckIcon } from '../components/catalyst/primitives';
 import { OtpInput } from '../components/auth/OtpInput';
 import { QRCodeDisplay } from '../components/auth/QRCodeDisplay';
 import { BackupCodesDisplay } from '../components/auth/BackupCodesDisplay';
@@ -86,7 +86,7 @@ export function MfaSetupPage(): React.ReactElement {
     switch (step) {
       case 'intro':
         return (
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             <Text variant="heading4" style={{ textAlign: 'center' }}>
               Set Up Two-Factor Authentication
             </Text>
@@ -96,11 +96,11 @@ export function MfaSetupPage(): React.ReactElement {
             </Text>
             <Card variant="bordered">
               <CardBody padding="md">
-                <Stack spacing="var(--spacing-3)">
+                <Stack spacing="md">
                   <Text variant="body" style={{ fontWeight: 600 }}>
                     What you&apos;ll need:
                   </Text>
-                  <Stack spacing="var(--spacing-2)">
+                  <Stack spacing="sm">
                     <Text variant="body">• An authenticator app on your phone</Text>
                     <Text variant="body">• A few minutes to complete setup</Text>
                   </Stack>
@@ -120,7 +120,7 @@ export function MfaSetupPage(): React.ReactElement {
 
       case 'scan':
         return (
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             <Text variant="heading4" style={{ textAlign: 'center' }}>
               Scan QR Code
             </Text>
@@ -146,7 +146,7 @@ export function MfaSetupPage(): React.ReactElement {
 
       case 'verify':
         return (
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             <Text variant="heading4" style={{ textAlign: 'center' }}>
               Verify Setup
             </Text>
@@ -187,7 +187,7 @@ export function MfaSetupPage(): React.ReactElement {
 
       case 'backup':
         return (
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             <Text variant="heading4" style={{ textAlign: 'center' }}>
               Save Backup Codes
             </Text>
@@ -209,13 +209,13 @@ export function MfaSetupPage(): React.ReactElement {
 
       case 'complete':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Box
               style={{
                 width: '64px',
                 height: '64px',
                 borderRadius: '50%',
-                backgroundColor: 'var(--color-success-100)',
+                backgroundColor: '#d1fae5',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -245,15 +245,15 @@ export function MfaSetupPage(): React.ReactElement {
       align="center"
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-gray-100)',
-        padding: 'var(--spacing-4)',
+        backgroundColor: '#f4f4f5',
+        padding: '1rem',
       }}
     >
       <Box style={{ width: '100%', maxWidth: '400px' }}>
         <Card variant="elevated">
           <CardBody padding="lg">
             <Flex justify="center" className="mb-4">
-              <BuildingCheckIcon size="xl" color="var(--color-primary)" />
+              <BuildingCheckIcon size="xl" className="text-blue-600 dark:text-blue-400" />
             </Flex>
             {renderStep()}
           </CardBody>

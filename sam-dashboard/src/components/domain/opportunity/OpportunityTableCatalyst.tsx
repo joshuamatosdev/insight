@@ -1,8 +1,12 @@
 /**
- * OpportunityTable using Catalyst components
- * 
- * This demonstrates how to incrementally adopt Catalyst UI Kit
- * while keeping your existing business logic and domain types.
+ * OpportunityTable using Catalyst components with Pocket-style aesthetics
+ *
+ * Features:
+ * - Light, minimal design with thin gray borders
+ * - NO colored badges in cells
+ * - Plain text with semantic color classes
+ * - Subtle hover states
+ * - Dense spacing for cleaner look
  */
 
 import {
@@ -12,11 +16,9 @@ import {
   TableRow,
   TableHeader,
   TableCell,
-  Badge,
-  Text,
 } from '../../catalyst'
 import { Box } from '../../layout'
-import { OpportunityTableProps, getOpportunityType } from './Opportunity.types'
+import { OpportunityTableProps } from './Opportunity.types'
 
 export function OpportunityTableCatalyst({ opportunities, maxRows }: OpportunityTableProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -32,35 +34,15 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
     }
   }
 
-  const getDeadlineBadgeColor = (
-    deadline: string | undefined
-  ): 'red' | 'yellow' | 'green' | 'zinc' => {
-    if (deadline === undefined || deadline === null) return 'zinc'
+  const getDeadlineColorClass = (deadline: string | undefined): string => {
+    if (deadline === undefined || deadline === null) return 'text-zinc-400'
     const now = new Date()
     const dl = new Date(deadline)
     const daysUntil = (dl.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
-    if (daysUntil < 0) return 'zinc'
-    if (daysUntil <= 3) return 'red'
-    if (daysUntil <= 7) return 'yellow'
-    return 'green'
-  }
-
-  const getTypeBadgeColor = (
-    type: string
-  ): 'blue' | 'purple' | 'amber' | 'emerald' | 'zinc' => {
-    const oppType = getOpportunityType(type)
-    switch (oppType) {
-      case 'solicitation':
-        return 'blue'
-      case 'sources-sought':
-        return 'purple'
-      case 'presolicitation':
-        return 'amber'
-      case 'award':
-        return 'emerald'
-      default:
-        return 'zinc'
-    }
+    if (daysUntil < 0) return 'text-zinc-400'
+    if (daysUntil <= 3) return 'text-danger'
+    if (daysUntil <= 7) return 'text-warning'
+    return 'text-zinc-600'
   }
 
   const truncate = (str: string | undefined, len: number): string => {
@@ -74,13 +56,13 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
   if (opportunities.length === 0) {
     return (
       <Box className="p-8 text-center">
-        <Text className="text-zinc-500">No opportunities to display.</Text>
+        <span className="text-sm text-zinc-500">No opportunities to display.</span>
       </Box>
     )
   }
 
   return (
-    <Table>
+    <Table dense>
       <TableHead>
         <TableRow>
           <TableHeader>Title</TableHeader>
@@ -93,22 +75,24 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
         {displayOpportunities.map((opp) => (
           <TableRow key={opp.id} href={opp.url ?? '#'} title={opp.title}>
             <TableCell>
-              <Text className="font-medium">{truncate(opp.title, 50)}</Text>
+              <span className="text-sm font-medium text-zinc-900">
+                {truncate(opp.title, 50)}
+              </span>
             </TableCell>
             <TableCell>
-              <Badge color={getTypeBadgeColor(opp.type)}>{opp.type}</Badge>
+              <span className="text-sm text-zinc-500">
+                {opp.type !== undefined && opp.type !== null ? opp.type : 'N/A'}
+              </span>
             </TableCell>
             <TableCell>
-              {opp.naicsCode !== undefined && opp.naicsCode !== null ? (
-                <Badge color="zinc">{opp.naicsCode}</Badge>
-              ) : (
-                <Text className="text-zinc-400">—</Text>
-              )}
+              <span className="text-sm text-zinc-600">
+                {opp.naicsCode !== undefined && opp.naicsCode !== null ? opp.naicsCode : '—'}
+              </span>
             </TableCell>
             <TableCell>
-              <Badge color={getDeadlineBadgeColor(opp.responseDeadLine)}>
+              <span className={`text-sm ${getDeadlineColorClass(opp.responseDeadLine)}`}>
                 {formatDate(opp.responseDeadLine)}
-              </Badge>
+              </span>
             </TableCell>
           </TableRow>
         ))}

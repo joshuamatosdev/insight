@@ -125,7 +125,7 @@ export function ClearanceCard({
     <Card variant="outlined">
       <CardHeader>
         <HStack justify="between" align="center">
-          <HStack spacing="var(--spacing-2)" align="center">
+          <HStack spacing="sm" align="center">
             <ShieldLockIcon size="sm" color={levelColor} />
             <Stack spacing="0">
               <Text variant="heading6" weight="semibold">
@@ -141,8 +141,8 @@ export function ClearanceCard({
       </CardHeader>
 
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
-          <HStack spacing="var(--spacing-2)" align="center">
+        <Stack spacing="md">
+          <HStack spacing="sm" align="center">
             <Text variant="bodySmall" weight="medium" color={levelColor}>
               {formatClearanceLevel(clearance.clearanceLevel)}
             </Text>
@@ -158,7 +158,7 @@ export function ClearanceCard({
             )}
           </HStack>
 
-          <Grid columns="1fr 1fr" gap="var(--spacing-3)">
+          <Grid columns="1fr 1fr" gap="md">
             <GridItem>
               <Text variant="caption" color="muted" weight="medium">
                 Sponsoring Agency
@@ -226,7 +226,7 @@ export function ClearanceCard({
           </Grid>
 
           {clearance.clearanceType === 'FACILITY' && clearance.fsoName !== null && (
-            <Stack spacing="var(--spacing-1)">
+            <Stack spacing="xs">
               <Text variant="caption" color="muted" weight="medium">
                 Facility Security Officer (FSO)
               </Text>
@@ -249,7 +249,7 @@ export function ClearanceCard({
 
       {(onEdit !== undefined || onDelete !== undefined) && (
         <CardFooter>
-          <HStack justify="end" spacing="var(--spacing-2)">
+          <HStack justify="end" spacing="sm">
             {onEdit !== undefined && (
               <Button
                 variant="ghost"

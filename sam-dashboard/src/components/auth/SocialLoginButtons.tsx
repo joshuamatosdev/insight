@@ -42,16 +42,16 @@ export function SocialLoginButtons(): React.ReactElement | null {
   };
 
   return (
-    <Stack spacing="var(--spacing-3)">
+    <Stack spacing="md">
       <Flex align="center" gap="md">
-        <Box style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-gray-300)' }} />
+        <Box style={{ flex: 1, height: '1px', backgroundColor: '#d4d4d8' }} />
         <Text variant="caption" color="muted">
           or continue with
         </Text>
-        <Box style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-gray-300)' }} />
+        <Box style={{ flex: 1, height: '1px', backgroundColor: '#d4d4d8' }} />
       </Flex>
 
-      <Stack spacing="var(--spacing-2)">
+      <Stack spacing="sm">
         {providers.map((providerId) => {
           const provider = getProviderInfo(providerId);
           return (
@@ -82,8 +82,8 @@ function SocialButton({ provider, onClick }: SocialButtonProps): React.ReactElem
       case 'google':
         return {
           backgroundColor: 'white',
-          border: '1px solid var(--color-gray-300)',
-          color: 'var(--color-gray-700)',
+          border: '1px solid #d4d4d8',
+          color: '#3f3f46',
         };
       case 'microsoft':
         return {
@@ -93,9 +93,9 @@ function SocialButton({ provider, onClick }: SocialButtonProps): React.ReactElem
         };
       default:
         return {
-          backgroundColor: 'var(--color-gray-100)',
-          border: '1px solid var(--color-gray-300)',
-          color: 'var(--color-gray-700)',
+          backgroundColor: '#f4f4f5',
+          border: '1px solid #d4d4d8',
+          color: '#3f3f46',
         };
     }
   };
@@ -110,7 +110,7 @@ function SocialButton({ provider, onClick }: SocialButtonProps): React.ReactElem
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 'var(--spacing-2)',
+        gap: '0.5rem',
       }}
     >
       <ProviderIcon provider={provider.id} />

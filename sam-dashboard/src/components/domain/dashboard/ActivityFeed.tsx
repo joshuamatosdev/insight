@@ -72,14 +72,14 @@ export function ActivityFeed({
             No recent activity
           </Text>
         ) : (
-          <Stack spacing="var(--spacing-3)">
+          <Stack spacing="md">
             {displayActivities.map((activity) => (
               <Flex
                 key={activity.id}
                 gap="sm"
                 style={{
-                  paddingBottom: 'var(--spacing-3)',
-                  borderBottom: '1px solid var(--color-gray-200)',
+                  paddingBottom: '0.75rem',
+                  borderBottom: '1px solid #e4e4e7',
                 }}
               >
                 <Box
@@ -87,7 +87,7 @@ export function ActivityFeed({
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    backgroundColor: 'var(--color-gray-100)',
+                    backgroundColor: '#f4f4f5',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

@@ -2,7 +2,7 @@
  * SbomDashboardPage - SBOM visualization dashboard
  */
 
-import { Text, Button, FileCheckIcon, DownloadIcon, RefreshIcon } from '../../components/primitives';
+import { Text, Button, FileCheckIcon, DownloadIcon, RefreshIcon } from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -15,7 +15,7 @@ import {
   Grid,
   GridItem,
   Box,
-} from '../../components/layout';
+} from '../../components/catalyst/layout';
 import { SbomViewer } from '../../components/domain/compliance';
 import { useSbom } from '../../hooks';
 
@@ -61,7 +61,7 @@ export function SbomDashboardPage(): React.ReactElement {
                 Error loading SBOM data: {error.message}
               </Text>
               <Button variant="outline" onClick={refresh}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <RefreshIcon size="sm" />
                   <Text as="span" variant="bodySmall">
                     Try Again
@@ -81,9 +81,9 @@ export function SbomDashboardPage(): React.ReactElement {
         title="Software Bill of Materials (SBOM)"
         icon={<FileCheckIcon size="lg" />}
         actions={
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <Button variant="outline" size="sm" onClick={refresh}>
-              <HStack spacing="var(--spacing-1)" align="center">
+              <HStack spacing="xs" align="center">
                 <RefreshIcon size="sm" />
                 <Text as="span" variant="bodySmall">
                   Refresh
@@ -92,7 +92,7 @@ export function SbomDashboardPage(): React.ReactElement {
             </Button>
             {info?.cyclonedxAvailable && (
               <Button variant="outline" size="sm" onClick={handleDownloadCycloneDx}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <DownloadIcon size="sm" />
                   <Text as="span" variant="bodySmall">
                     CycloneDX
@@ -102,7 +102,7 @@ export function SbomDashboardPage(): React.ReactElement {
             )}
             {info?.spdxAvailable && (
               <Button variant="outline" size="sm" onClick={handleDownloadSpdx}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <DownloadIcon size="sm" />
                   <Text as="span" variant="bodySmall">
                     SPDX
@@ -114,7 +114,7 @@ export function SbomDashboardPage(): React.ReactElement {
         }
       />
 
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {/* Info Card */}
         {info !== null && (
           <Card variant="outlined">
@@ -124,7 +124,7 @@ export function SbomDashboardPage(): React.ReactElement {
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns={3} gap="md">
                 <GridItem>
                   <Box>
                     <Text variant="caption" color="muted">
@@ -155,7 +155,7 @@ export function SbomDashboardPage(): React.ReactElement {
                 <Text variant="caption" color="muted">
                   Available Formats
                 </Text>
-                <HStack spacing="var(--spacing-2)" className="mt-1">
+                <HStack spacing="sm" className="mt-1">
                   <Text
                     variant="bodySmall"
                     color={info.cyclonedxAvailable ? 'success' : 'muted'}
@@ -177,10 +177,10 @@ export function SbomDashboardPage(): React.ReactElement {
               {info.cyclonedxAvailable === false && info.spdxAvailable === false && (
                 <Box
                   style={{
-                    marginTop: 'var(--spacing-4)',
-                    padding: 'var(--spacing-3)',
-                    backgroundColor: 'var(--color-warning-light)',
-                    borderRadius: 'var(--radius-md)',
+                    marginTop: '1rem',
+                    padding: '0.75rem',
+                    backgroundColor: '#fffbeb',
+                    borderRadius: '0.375rem',
                   }}
                 >
                   <Text variant="bodySmall" color="warning">
@@ -190,7 +190,7 @@ export function SbomDashboardPage(): React.ReactElement {
                     variant="caption"
                     style={{
                       fontFamily: 'monospace',
-                      marginTop: 'var(--spacing-1)',
+                      marginTop: '0.25rem',
                       display: 'block',
                     }}
                   >
@@ -211,8 +211,8 @@ export function SbomDashboardPage(): React.ReactElement {
               </Text>
             </CardHeader>
             <CardBody>
-              <Stack spacing="var(--spacing-3)">
-                <HStack spacing="var(--spacing-2)" align="center">
+              <Stack spacing="md">
+                <HStack spacing="sm" align="center">
                   <Text variant="caption" color="muted">
                     Status:
                   </Text>
@@ -235,9 +235,9 @@ export function SbomDashboardPage(): React.ReactElement {
                 {vulnerabilities.recommendation.length > 0 && (
                   <Box
                     style={{
-                      padding: 'var(--spacing-3)',
-                      backgroundColor: 'var(--color-info-light)',
-                      borderRadius: 'var(--radius-md)',
+                      padding: '0.75rem',
+                      backgroundColor: '#f0f9ff',
+                      borderRadius: '0.375rem',
                     }}
                   >
                     <Text variant="caption" color="info" weight="medium">
@@ -247,7 +247,7 @@ export function SbomDashboardPage(): React.ReactElement {
                       variant="caption"
                       style={{
                         fontFamily: 'monospace',
-                        marginTop: 'var(--spacing-1)',
+                        marginTop: '0.25rem',
                         display: 'block',
                       }}
                     >

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/layout';
-import { Text, Input } from '../../../components/primitives';
+import { Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Input } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface NAICSStepProps {
@@ -50,7 +50,7 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
       onNext={onNext}
       onBack={onBack}
     >
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         <Input
           label="Search NAICS Codes"
           value={searchTerm}
@@ -58,7 +58,7 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
           placeholder="Search by code or description..."
         />
 
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           {filteredCodes.map((naics) => {
             const isSelected = selectedCodes.includes(naics.code);
             const isPrimary = primaryCode === naics.code;
@@ -68,10 +68,10 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
                 align="center"
                 justify="space-between"
                 style={{
-                  padding: 'var(--spacing-3)',
+                  padding: '0.75rem',
                   borderRadius: '6px',
-                  border: `2px solid ${isSelected ? 'var(--color-primary)' : 'var(--color-gray-200)'}`,
-                  backgroundColor: isSelected ? 'var(--color-primary-50)' : 'white',
+                  border: `2px solid ${isSelected ? '#2563eb' : '#e4e4e7'}`,
+                  backgroundColor: isSelected ? '#eff6ff' : 'white',
                   cursor: 'pointer',
                 }}
                 onClick={() => toggleCode(naics.code)}
@@ -82,8 +82,8 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
                       width: '20px',
                       height: '20px',
                       borderRadius: '4px',
-                      border: `2px solid ${isSelected ? 'var(--color-primary)' : 'var(--color-gray-300)'}`,
-                      backgroundColor: isSelected ? 'var(--color-primary)' : 'white',
+                      border: `2px solid ${isSelected ? '#2563eb' : '#d4d4d8'}`,
+                      backgroundColor: isSelected ? '#2563eb' : 'white',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -103,7 +103,7 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
                   </Stack>
                 </Flex>
                 {isPrimary && (
-                  <Text variant="caption" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>
+                  <Text variant="caption" style={{ color: 'rgb(37 99 235)', fontWeight: 600 }}>
                     Primary
                   </Text>
                 )}

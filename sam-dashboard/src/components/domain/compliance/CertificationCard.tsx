@@ -106,7 +106,7 @@ export function CertificationCard({
     >
       <CardHeader>
         <HStack justify="between" align="center">
-          <HStack spacing="var(--spacing-2)" align="center">
+          <HStack spacing="sm" align="center">
             <FileCheckIcon size="sm" color="primary" />
             <Stack spacing="0">
               <Text variant="heading6" weight="semibold">
@@ -122,14 +122,14 @@ export function CertificationCard({
       </CardHeader>
 
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           {certification.description !== null && certification.description.length > 0 && (
             <Text variant="bodySmall" color="muted">
               {certification.description}
             </Text>
           )}
 
-          <Grid columns="1fr 1fr" gap="var(--spacing-3)">
+          <Grid columns="1fr 1fr" gap="md">
             <GridItem>
               <Text variant="caption" color="muted" weight="medium">
                 Certificate Number
@@ -177,7 +177,7 @@ export function CertificationCard({
 
       {(onEdit !== undefined || onDelete !== undefined) && (
         <CardFooter>
-          <HStack justify="end" spacing="var(--spacing-2)">
+          <HStack justify="end" spacing="sm">
             {onEdit !== undefined && (
               <Button
                 variant="ghost"

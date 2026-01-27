@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/layout';
-import { Text, Button } from '../../../components/primitives';
+import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Button } from '../../../components/catalyst/primitives';
 
 interface Deadline {
   id: string;
@@ -87,11 +87,11 @@ export function UpcomingDeadlines(): React.ReactElement {
   const getPriorityColor = (priority: Deadline['priority']): string => {
     switch (priority) {
       case 'low':
-        return 'var(--color-gray-500)';
+        return '#71717a';
       case 'medium':
-        return 'var(--color-warning)';
+        return '#f59e0b';
       case 'high':
-        return 'var(--color-danger)';
+        return '#ef4444';
     }
   };
 
@@ -114,7 +114,7 @@ export function UpcomingDeadlines(): React.ReactElement {
   return (
     <Card variant="bordered">
       <CardBody padding="md">
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <Flex justify="space-between" align="center">
             <Text variant="heading5">Upcoming Deadlines</Text>
             <Button variant="ghost" size="sm">View Calendar</Button>
@@ -123,7 +123,7 @@ export function UpcomingDeadlines(): React.ReactElement {
           {loading === true ? (
             <Text variant="caption" color="muted">Loading deadlines...</Text>
           ) : (
-            <Stack spacing="var(--spacing-2)">
+            <Stack spacing="sm">
               {deadlines.map((deadline) => {
                 const daysUntil = getDaysUntil(deadline.dueDate);
                 
@@ -133,8 +133,8 @@ export function UpcomingDeadlines(): React.ReactElement {
                     align="center"
                     gap="sm"
                     style={{
-                      padding: 'var(--spacing-2)',
-                      backgroundColor: 'var(--color-gray-50)',
+                      padding: '0.5rem',
+                      backgroundColor: '#fafafa',
                       borderRadius: '6px',
                     }}
                   >
@@ -144,7 +144,7 @@ export function UpcomingDeadlines(): React.ReactElement {
                         width: '36px',
                         height: '36px',
                         borderRadius: '6px',
-                        backgroundColor: 'var(--color-gray-100)',
+                        backgroundColor: '#f4f4f5',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -176,7 +176,7 @@ export function UpcomingDeadlines(): React.ReactElement {
                         variant="caption"
                         style={{
                           fontWeight: 600,
-                          color: daysUntil <= 3 ? 'var(--color-danger)' : 'var(--color-gray-700)',
+                          color: daysUntil <= 3 ? '#ef4444' : '#3f3f46',
                         }}
                       >
                         {daysUntil <= 0 ? 'Today!' : daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}

@@ -12,10 +12,10 @@ export function OpportunityList({
     return (
       <Box
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-info-light)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#f0f9ff',
+          borderRadius: '0.5rem',
         }}
       >
         <Text variant="body" color="info">
@@ -26,7 +26,7 @@ export function OpportunityList({
   }
 
   return (
-    <Stack spacing="var(--spacing-4)">
+    <Stack spacing="md">
       {opportunities.map((opportunity) => (
         <OpportunityCard
           key={opportunity.id}

@@ -65,11 +65,11 @@ function ScopeItemRow({
   };
 
   const rowStyles: CSSProperties = {
-    padding: 'var(--spacing-3) var(--spacing-4)',
-    paddingLeft: `calc(var(--spacing-4) + ${level * 24}px)`,
-    borderBottom: '1px solid var(--color-gray-100)',
+    padding: '0.75rem 1rem',
+    paddingLeft: `calc(1rem + ${level * 24}px)`,
+    borderBottom: '1px solid #f4f4f5',
     cursor: onClick !== undefined ? 'pointer' : 'default',
-    backgroundColor: level % 2 === 0 ? 'var(--color-white)' : 'var(--color-gray-50)',
+    backgroundColor: level % 2 === 0 ? 'white' : '#fafafa',
     transition: 'background-color 0.2s ease',
     ...style,
   };
@@ -99,7 +99,7 @@ function ScopeItemRow({
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                padding: 'var(--spacing-1)',
+                padding: '0.25rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -116,9 +116,9 @@ function ScopeItemRow({
           {/* WBS Code */}
           <Box
             style={{
-              padding: 'var(--spacing-1) var(--spacing-2)',
-              backgroundColor: 'var(--color-gray-100)',
-              borderRadius: 'var(--radius-sm)',
+              padding: '0.25rem 0.5rem',
+              backgroundColor: '#f4f4f5',
+              borderRadius: '0.25rem',
               minWidth: '80px',
             }}
           >
@@ -150,8 +150,8 @@ function ScopeItemRow({
             <Box
               style={{
                 height: '4px',
-                backgroundColor: 'var(--color-gray-200)',
-                borderRadius: 'var(--radius-full)',
+                backgroundColor: '#e4e4e7',
+                borderRadius: '9999px',
                 overflow: 'hidden',
               }}
             >
@@ -161,8 +161,8 @@ function ScopeItemRow({
                   width: `${item.percentComplete}%`,
                   backgroundColor:
                     item.percentComplete === 100
-                      ? 'var(--color-success)'
-                      : 'var(--color-primary)',
+                      ? '#10b981'
+                      : '#2563eb',
                 }}
               />
             </Box>
@@ -182,7 +182,7 @@ function ScopeItemRow({
                 width: '28px',
                 height: '28px',
                 borderRadius: '50%',
-                backgroundColor: 'var(--color-primary-light)',
+                backgroundColor: '#dbeafe',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -197,7 +197,7 @@ function ScopeItemRow({
 
           {/* Actions */}
           {(onEdit !== undefined || onDelete !== undefined) && (
-            <HStack spacing="var(--spacing-1)">
+            <HStack spacing="xs">
               {onEdit !== undefined && (
                 <Button size="sm" variant="ghost" onClick={handleEdit}>
                   Edit
@@ -283,8 +283,8 @@ export function ScopeItemList({
     : scopeItems;
 
   const containerStyles: CSSProperties = {
-    border: '1px solid var(--color-gray-200)',
-    borderRadius: 'var(--radius-lg)',
+    border: '1px solid #e4e4e7',
+    borderRadius: '0.5rem',
     overflow: 'hidden',
     ...style,
   };
@@ -310,16 +310,16 @@ export function ScopeItemList({
       {/* Header */}
       <Box
         style={{
-          padding: 'var(--spacing-3) var(--spacing-4)',
-          backgroundColor: 'var(--color-gray-100)',
-          borderBottom: '1px solid var(--color-gray-200)',
+          padding: '0.75rem 1rem',
+          backgroundColor: '#f4f4f5',
+          borderBottom: '1px solid #e4e4e7',
         }}
       >
         <Flex justify="space-between" align="center">
           <Text variant="bodySmall" weight="semibold">
             Work Breakdown Structure
           </Text>
-          <HStack spacing="var(--spacing-4)">
+          <HStack spacing="md">
             <Text variant="caption" color="muted">
               Progress
             </Text>

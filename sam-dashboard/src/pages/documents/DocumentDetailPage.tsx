@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Section, SectionHeader } from '../../components/layout/Section';
 import { Stack, HStack } from '../../components/layout/Stack';
-import { Button } from '../../components/primitives/Button';
-import { Text } from '../../components/primitives/Text';
+import { Button } from '../../components/catalyst/primitives/Button';
+import { Text } from '../../components/catalyst/primitives/Text';
 import { DocumentViewer } from '../../components/domain/documents';
 import { useDocument } from '../../hooks';
 import { fetchDocumentVersions } from '../../services/documentService';
@@ -128,9 +128,9 @@ export function DocumentDetailPage() {
                     justify="between"
                     align="center"
                     style={{
-                      padding: 'var(--spacing-3)',
-                      backgroundColor: 'var(--color-gray-50)',
-                      borderRadius: 'var(--radius-md)',
+                      padding: '0.75rem',
+                      backgroundColor: '#fafafa',
+                      borderRadius: '0.375rem',
                     }}
                   >
                     <Stack gap="xs">

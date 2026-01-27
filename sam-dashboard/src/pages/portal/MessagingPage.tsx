@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Text, Button, Badge, Input } from '../../components/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/layout';
+import { Text, Button, Badge, Input } from '../../components/catalyst/primitives';
+import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
 import { InboxList, MessageThread, MessageComposer } from '../../components/domain/portal';
 import { useMessaging } from '../../hooks';
 import { useAuth } from '../../auth';
@@ -104,10 +104,10 @@ export function MessagingPage(): React.ReactElement {
     return (
       <Box
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-danger-light)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fef2f2',
+          borderRadius: '0.5rem',
         }}
       >
         <Text variant="body" color="danger">
@@ -121,7 +121,7 @@ export function MessagingPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" className="p-6">
+    <Stack spacing="lg" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -207,7 +207,7 @@ export function MessagingPage(): React.ReactElement {
           {/* Inbox Sidebar */}
           <Box
             style={{
-              borderRight: '1px solid var(--color-gray-200)',
+              borderRight: '1px solid #e4e4e7',
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -215,8 +215,8 @@ export function MessagingPage(): React.ReactElement {
             {/* Search */}
             <Box
               style={{
-                padding: 'var(--spacing-3)',
-                borderBottom: '1px solid var(--color-gray-200)',
+                padding: '0.75rem',
+                borderBottom: '1px solid #e4e4e7',
               }}
             >
               <Input

@@ -79,10 +79,10 @@ export function DeliverableTracker({
       <Box
         className={className}
         style={{
-          padding: 'var(--spacing-8)',
+          padding: '2rem',
           textAlign: 'center',
-          backgroundColor: 'var(--color-gray-50)',
-          borderRadius: 'var(--radius-lg)',
+          backgroundColor: '#fafafa',
+          borderRadius: '0.5rem',
           ...trackerStyles,
         }}
       >
@@ -94,10 +94,10 @@ export function DeliverableTracker({
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" className={className} style={trackerStyles}>
+    <Stack spacing="lg" className={className} style={trackerStyles}>
       <Card>
         <CardBody>
-          <Grid columns={6} gap="var(--spacing-4)">
+          <Grid columns={6} gap="md">
             <Box style={{ textAlign: 'center' }}>
               <Text variant="heading3" weight="semibold">
                 {stats.total}
@@ -152,13 +152,13 @@ export function DeliverableTracker({
 
       {overdueDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="var(--spacing-2)" align="center" className="mb-3">
+          <HStack spacing="sm" align="center" className="mb-3">
             <Text variant="heading5">Overdue</Text>
             <Badge variant="danger" size="sm">
               {overdueDeliverables.length}
             </Badge>
           </HStack>
-          <Stack spacing="var(--spacing-0)">
+          <Stack spacing="0">
             {overdueDeliverables.map((deliverable) => (
               <DeliverableCard
                 key={deliverable.id}
@@ -172,13 +172,13 @@ export function DeliverableTracker({
 
       {upcomingDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="var(--spacing-2)" align="center" className="mb-3">
+          <HStack spacing="sm" align="center" className="mb-3">
             <Text variant="heading5">Upcoming</Text>
             <Badge variant="info" size="sm">
               {upcomingDeliverables.length}
             </Badge>
           </HStack>
-          <Stack spacing="var(--spacing-0)">
+          <Stack spacing="0">
             {upcomingDeliverables.map((deliverable) => (
               <DeliverableCard
                 key={deliverable.id}
@@ -192,13 +192,13 @@ export function DeliverableTracker({
 
       {completedDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="var(--spacing-2)" align="center" className="mb-3">
+          <HStack spacing="sm" align="center" className="mb-3">
             <Text variant="heading5">Completed</Text>
             <Badge variant="success" size="sm">
               {completedDeliverables.length}
             </Badge>
           </HStack>
-          <Stack spacing="var(--spacing-0)">
+          <Stack spacing="0">
             {completedDeliverables.map((deliverable) => (
               <DeliverableCard
                 key={deliverable.id}

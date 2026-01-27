@@ -43,13 +43,13 @@ function getStageStatus(
 function getStatusColor(status: 'completed' | 'current' | 'pending'): string {
   switch (status) {
     case 'completed':
-      return 'var(--color-success)';
+      return '#10b981';
     case 'current':
-      return 'var(--color-primary)';
+      return '#2563eb';
     case 'pending':
-      return 'var(--color-gray-300)';
+      return '#d4d4d8';
     default:
-      return 'var(--color-gray-300)';
+      return '#d4d4d8';
   }
 }
 
@@ -122,8 +122,8 @@ export function ProposalTracker({
             <Box
               style={{
                 height: '8px',
-                backgroundColor: 'var(--color-gray-200)',
-                borderRadius: 'var(--radius-full)',
+                backgroundColor: '#e4e4e7',
+                borderRadius: '9999px',
                 overflow: 'hidden',
               }}
             >
@@ -131,7 +131,7 @@ export function ProposalTracker({
                 style={{
                   height: '100%',
                   width: `${progressPercentage}%`,
-                  backgroundColor: 'var(--color-primary)',
+                  backgroundColor: '#2563eb',
                   transition: 'width 0.3s ease',
                 }}
               />
@@ -154,7 +154,7 @@ export function ProposalTracker({
                         height: '16px',
                         borderRadius: '50%',
                         backgroundColor: getStatusColor(status),
-                        border: status === 'current' ? '3px solid var(--color-primary-light)' : 'none',
+                        border: status === 'current' ? '3px solid #dbeafe' : 'none',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -173,8 +173,8 @@ export function ProposalTracker({
                           height: '32px',
                           backgroundColor:
                             status === 'completed'
-                              ? 'var(--color-success)'
-                              : 'var(--color-gray-300)',
+                              ? '#10b981'
+                              : '#d4d4d8',
                         }}
                       />
                     )}
@@ -189,12 +189,12 @@ export function ProposalTracker({
                     }
                     style={{
                       flex: 1,
-                      padding: 'var(--spacing-2) var(--spacing-3)',
+                      padding: '0.5rem 0.75rem',
                       backgroundColor:
                         status === 'current'
-                          ? 'var(--color-primary-light)'
+                          ? '#dbeafe'
                           : 'transparent',
-                      borderRadius: 'var(--radius-md)',
+                      borderRadius: '0.375rem',
                       cursor: onStageChange !== undefined ? 'pointer' : 'default',
                     }}
                   >

@@ -13,7 +13,7 @@ import {
   ChevronLeftIcon,
   ExternalLinkIcon,
   CalendarIcon,
-} from '../../components/primitives';
+} from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -26,7 +26,7 @@ import {
   Grid,
   GridItem,
   Box,
-} from '../../components/layout';
+} from '../../components/catalyst/layout';
 import {
   CertificationForm,
   ComplianceStatusBadge,
@@ -165,12 +165,12 @@ function DetailRow({
         {label}
       </Text>
       {isLink ? (
-        <HStack spacing="var(--spacing-1)" align="center">
+        <HStack spacing="xs" align="center">
           <a
             href={value}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'var(--color-primary)', textDecoration: 'none' }}
+            style={{ color: 'rgb(37 99 235)', textDecoration: 'none' }}
           >
             <Text variant="body" color="primary">
               View Document
@@ -277,7 +277,7 @@ export function CertificationDetailPage({
               </Text>
               {onBack !== undefined && (
                 <Button variant="outline" onClick={onBack}>
-                  <HStack spacing="var(--spacing-1)" align="center">
+                  <HStack spacing="xs" align="center">
                     <ChevronLeftIcon size="sm" />
                     <Text as="span" variant="bodySmall">
                       Back to Certifications
@@ -308,7 +308,7 @@ export function CertificationDetailPage({
         {submitError !== null && (
           <Card
             variant="outlined"
-            style={{ marginBottom: 'var(--spacing-4)', borderColor: 'var(--color-danger)' }}
+            style={{ marginBottom: '1rem', borderColor: '#ef4444' }}
           >
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
@@ -338,10 +338,10 @@ export function CertificationDetailPage({
         title={certification.name}
         icon={<FileCheckIcon size="lg" />}
         actions={
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             {onBack !== undefined && (
               <Button variant="ghost" onClick={onBack}>
-                <HStack spacing="var(--spacing-1)" align="center">
+                <HStack spacing="xs" align="center">
                   <ChevronLeftIcon size="sm" />
                   <Text as="span" variant="bodySmall">
                     Back
@@ -350,7 +350,7 @@ export function CertificationDetailPage({
               </Button>
             )}
             <Button variant="outline" onClick={handleEditClick}>
-              <HStack spacing="var(--spacing-1)" align="center">
+              <HStack spacing="xs" align="center">
                 <PencilIcon size="sm" />
                 <Text as="span" variant="bodySmall">
                   Edit
@@ -358,7 +358,7 @@ export function CertificationDetailPage({
               </HStack>
             </Button>
             <Button variant="danger" onClick={handleDelete}>
-              <HStack spacing="var(--spacing-1)" align="center">
+              <HStack spacing="xs" align="center">
                 <TrashIcon size="sm" />
                 <Text as="span" variant="bodySmall" color="white">
                   Delete
@@ -369,12 +369,12 @@ export function CertificationDetailPage({
         }
       />
 
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {/* Status and Type */}
         <Card variant="outlined">
           <CardBody>
             <HStack justify="between" align="center">
-              <Stack spacing="var(--spacing-1)">
+              <Stack spacing="xs">
                 <Text variant="caption" color="muted">
                   Certification Type
                 </Text>
@@ -399,12 +399,12 @@ export function CertificationDetailPage({
               style={{
                 borderColor:
                   certification.daysUntilExpiration <= 30
-                    ? 'var(--color-danger)'
-                    : 'var(--color-warning)',
+                    ? '#ef4444'
+                    : '#f59e0b',
               }}
             >
               <CardBody>
-                <HStack spacing="var(--spacing-2)" align="center">
+                <HStack spacing="sm" align="center">
                   <CalendarIcon
                     size="sm"
                     color={
@@ -437,7 +437,7 @@ export function CertificationDetailPage({
             </Text>
           </CardHeader>
           <CardBody>
-            <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+            <Grid columns={2} gap="md">
               <GridItem>
                 <DetailRow label="Certificate Number" value={certification.certificateNumber} />
               </GridItem>
@@ -477,7 +477,7 @@ export function CertificationDetailPage({
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <GridItem>
                   <DetailRow label="UEI (Unique Entity Identifier)" value={certification.uei} />
                 </GridItem>
@@ -510,7 +510,7 @@ export function CertificationDetailPage({
               </Text>
             </CardHeader>
             <CardBody>
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <GridItem>
                   <DetailRow
                     label="8(a) Entry Date"
@@ -536,11 +536,11 @@ export function CertificationDetailPage({
             </Text>
           </CardHeader>
           <CardBody>
-            <Stack spacing="var(--spacing-4)">
+            <Stack spacing="md">
               {certification.description !== null && certification.description.length > 0 && (
                 <DetailRow label="Description" value={certification.description} />
               )}
-              <Grid columns="1fr 1fr" gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <GridItem>
                   <DetailRow label="NAICS Code" value={certification.naicsCode} />
                 </GridItem>

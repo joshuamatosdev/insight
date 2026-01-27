@@ -87,7 +87,7 @@ export function PipelineBoard({
     <Box
       style={{
         overflowX: 'auto',
-        padding: 'var(--spacing-4)',
+        padding: '1rem',
       }}
     >
       <HStack gap="md" align="stretch" style={{ minWidth: 'fit-content' }}>

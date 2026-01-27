@@ -3,8 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthProvider } from './AuthProvider';
 import { useAuth } from './AuthContext';
-import { Stack } from '../components/layout';
-import { Text, Button } from '../components/primitives';
+import { Stack } from '../components/catalyst/layout';
+import { Text, Button } from '../components/catalyst/primitives';
 import type { LoginResponse, User, StoredAuthState } from './Auth.types';
 
 // Mock the auth service

@@ -1,7 +1,8 @@
 import { CSSProperties } from 'react';
 import { TopPerformersTableProps } from './Analytics.types';
 import { Text, Badge, UserIcon } from '../../primitives';
-import { Box, Stack, HStack, Card, CardHeader, CardBody, Table, TableHead, TableBody, TableRow, TableCell, TableHeaderCell } from '../../layout';
+import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../layout';
+import { Table, TableHead, TableBody, TableRow, TableCell, TableHeader } from '../../catalyst';
 
 /**
  * TopPerformersTable displays top performers ranked by action count.
@@ -24,23 +25,23 @@ export function TopPerformersTable({
           <Text variant="heading5">{title}</Text>
         </CardHeader>
         <CardBody>
-          <Stack spacing="var(--spacing-3)">
+          <Stack spacing="md">
             {[1, 2, 3, 4, 5].map((i) => (
-              <HStack key={i} spacing="var(--spacing-3)" align="center">
+              <HStack key={i} spacing="md" align="center">
                 <Box
                   style={{
                     width: '24px',
                     height: '24px',
                     borderRadius: '50%',
-                    background: 'var(--color-surface-container)',
+                    background: '#f4f4f5',
                   }}
                 />
                 <Box
                   style={{
                     width: '100px',
                     height: '14px',
-                    background: 'var(--color-surface-container)',
-                    borderRadius: 'var(--radius-sm)',
+                    background: '#f4f4f5',
+                    borderRadius: '0.25rem',
                   }}
                 />
                 <Box style={{ flex: 1 }} />
@@ -48,8 +49,8 @@ export function TopPerformersTable({
                   style={{
                     width: '40px',
                     height: '14px',
-                    background: 'var(--color-surface-container)',
-                    borderRadius: 'var(--radius-sm)',
+                    background: '#f4f4f5',
+                    borderRadius: '0.25rem',
                   }}
                 />
               </HStack>
@@ -70,7 +71,7 @@ export function TopPerformersTable({
           <Box
             style={{
               textAlign: 'center',
-              padding: 'var(--spacing-8)',
+              padding: '2rem',
             }}
           >
             <Text variant="body" color="secondary">
@@ -101,9 +102,9 @@ export function TopPerformersTable({
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeaderCell style={{ width: '50px' }}>Rank</TableHeaderCell>
-              <TableHeaderCell>User</TableHeaderCell>
-              <TableHeaderCell style={{ textAlign: 'right' }}>Actions</TableHeaderCell>
+              <TableHeader className="w-[50px]">Rank</TableHeader>
+              <TableHeader>User</TableHeader>
+              <TableHeader className="text-right">Actions</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -118,13 +119,13 @@ export function TopPerformersTable({
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <HStack spacing="var(--spacing-2)" align="center">
+                  <HStack spacing="sm" align="center">
                     <Box
                       style={{
                         width: '28px',
                         height: '28px',
                         borderRadius: '50%',
-                        background: 'var(--color-primary)',
+                        background: '#2563eb',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -137,7 +138,7 @@ export function TopPerformersTable({
                     </Text>
                   </HStack>
                 </TableCell>
-                <TableCell style={{ textAlign: 'right' }}>
+                <TableCell className="text-right">
                   <Text variant="body" style={{ fontWeight: 600 }}>
                     {performer.actionCount.toLocaleString()}
                   </Text>

@@ -179,9 +179,9 @@ export function BidDecisionForm({
           {scores.size > 0 && (
             <Box
               style={{
-                padding: 'var(--spacing-4)',
-                backgroundColor: 'var(--color-bg-secondary)',
-                borderRadius: 'var(--radius-md)',
+                padding: '1rem',
+                backgroundColor: '#f4f4f5',
+                borderRadius: '0.375rem',
               }}
             >
               <HStack justify="between" align="center">

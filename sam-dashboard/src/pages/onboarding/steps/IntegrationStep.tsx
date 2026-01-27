@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/layout';
-import { Text, Button } from '../../../components/primitives';
+import { Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Button } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface IntegrationStepProps {
@@ -76,17 +76,17 @@ export function IntegrationStep({
       canSkip={true}
       isLast={true}
     >
-      <Stack spacing="var(--spacing-3)">
+      <Stack spacing="md">
         {integrations.map((integration) => (
           <Flex
             key={integration.id}
             align="center"
             justify="space-between"
             style={{
-              padding: 'var(--spacing-4)',
+              padding: '1rem',
               borderRadius: '8px',
-              border: `2px solid ${integration.connected ? 'var(--color-success)' : 'var(--color-gray-200)'}`,
-              backgroundColor: integration.connected ? 'var(--color-success-50)' : 'white',
+              border: `2px solid ${integration.connected ? '#10b981' : '#e4e4e7'}`,
+              backgroundColor: integration.connected ? '#ecfdf5' : 'white',
             }}
           >
             <Flex align="center" gap="md">
@@ -95,7 +95,7 @@ export function IntegrationStep({
                   width: '48px',
                   height: '48px',
                   borderRadius: '8px',
-                  backgroundColor: 'var(--color-gray-100)',
+                  backgroundColor: '#f4f4f5',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -124,7 +124,7 @@ export function IntegrationStep({
         ))}
 
         {connectedCount > 0 && (
-          <Text variant="caption" style={{ color: 'var(--color-success)', textAlign: 'center' }}>
+          <Text variant="caption" style={{ color: 'rgb(16 185 129)', textAlign: 'center' }}>
             {connectedCount} integration(s) connected
           </Text>
         )}

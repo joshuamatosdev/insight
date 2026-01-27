@@ -46,9 +46,9 @@ export function PipelineValueChart({
         </Flex>
       </CardHeader>
       <CardBody>
-        <Stack spacing="var(--spacing-3)">
+        <Stack spacing="md">
           {data.map((stage) => (
-            <Stack key={stage.name} spacing="var(--spacing-1)">
+            <Stack key={stage.name} spacing="xs">
               <Flex justify="space-between">
                 <Text variant="body">{stage.name}</Text>
                 <Text variant="body" style={{ fontWeight: 600 }}>
@@ -58,7 +58,7 @@ export function PipelineValueChart({
               <Box
                 style={{
                   height: '8px',
-                  backgroundColor: 'var(--color-gray-200)',
+                  backgroundColor: '#e4e4e7',
                   borderRadius: '4px',
                   overflow: 'hidden',
                 }}

@@ -4,10 +4,10 @@ import { Section, SectionHeader } from '../../components/layout/Section';
 import { Stack, HStack } from '../../components/layout/Stack';
 import { Box } from '../../components/layout/Box';
 import { Card, CardHeader, CardBody } from '../../components/layout/Card';
-import { Text } from '../../components/primitives/Text';
-import { Button } from '../../components/primitives/Button';
-import { Badge } from '../../components/primitives/Badge';
-import { TextArea } from '../../components/primitives/Input';
+import { Text } from '../../components/catalyst/primitives/Text';
+import { Button } from '../../components/catalyst/primitives/Button';
+import { Badge } from '../../components/catalyst/primitives/Badge';
+import { TextArea } from '../../components/catalyst/primitives/Input';
 import { ProposalTracker } from '../../components/domain/pipeline';
 import { usePipeline, usePipelineOpportunity } from '../../hooks/usePipeline';
 
@@ -165,8 +165,8 @@ export function ProposalPage() {
                   style={{
                     width: '200px',
                     height: '8px',
-                    backgroundColor: 'var(--color-gray-200)',
-                    borderRadius: 'var(--radius-full)',
+                    backgroundColor: '#e4e4e7',
+                    borderRadius: '9999px',
                     overflow: 'hidden',
                   }}
                 >
@@ -174,7 +174,7 @@ export function ProposalPage() {
                     style={{
                       height: '100%',
                       width: `${progressPercentage}%`,
-                      backgroundColor: 'var(--color-success)',
+                      backgroundColor: '#10b981',
                     }}
                   />
                 </Box>
@@ -202,16 +202,16 @@ export function ProposalPage() {
                       setSectionContent('');
                     }}
                     style={{
-                      padding: 'var(--spacing-3)',
+                      padding: '0.75rem',
                       backgroundColor:
                         selectedSection === section.id
-                          ? 'var(--color-primary-light)'
-                          : 'var(--color-bg)',
-                      borderRadius: 'var(--radius-md)',
+                          ? '#dbeafe'
+                          : '#ffffff',
+                      borderRadius: '0.375rem',
                       border: `1px solid ${
                         selectedSection === section.id
-                          ? 'var(--color-primary)'
-                          : 'var(--color-border)'
+                          ? '#2563eb'
+                          : '#e4e4e7'
                       }`,
                       cursor: 'pointer',
                     }}

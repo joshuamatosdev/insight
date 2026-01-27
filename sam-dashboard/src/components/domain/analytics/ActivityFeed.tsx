@@ -30,11 +30,11 @@ function formatTimestamp(timestamp: string): string {
  * Get icon color based on event type
  */
 function getEventColor(eventType: string): string {
-  if (eventType.includes('VIEWED')) return 'var(--color-info)';
-  if (eventType.includes('SAVED') || eventType.includes('CREATED')) return 'var(--color-success)';
-  if (eventType.includes('REMOVED') || eventType.includes('DELETED')) return 'var(--color-error)';
-  if (eventType.includes('MOVED') || eventType.includes('UPDATED')) return 'var(--color-warning)';
-  return 'var(--color-primary)';
+  if (eventType.includes('VIEWED')) return '#0ea5e9';
+  if (eventType.includes('SAVED') || eventType.includes('CREATED')) return '#10b981';
+  if (eventType.includes('REMOVED') || eventType.includes('DELETED')) return '#ef4444';
+  if (eventType.includes('MOVED') || eventType.includes('UPDATED')) return '#f59e0b';
+  return '#2563eb';
 }
 
 /**
@@ -62,32 +62,32 @@ export function ActivityFeed({
           <Text variant="heading5">Recent Activity</Text>
         </CardHeader>
         <CardBody>
-          <Stack spacing="var(--spacing-4)">
+          <Stack spacing="md">
             {[1, 2, 3, 4, 5].map((i) => (
-              <HStack key={i} spacing="var(--spacing-3)" align="start">
+              <HStack key={i} spacing="md" align="start">
                 <Box
                   style={{
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    background: 'var(--color-surface-container)',
+                    background: '#f4f4f5',
                   }}
                 />
-                <Stack spacing="var(--spacing-1)" style={{ flex: 1 }}>
+                <Stack spacing="xs" style={{ flex: 1 }}>
                   <Box
                     style={{
                       width: '60%',
                       height: '14px',
-                      background: 'var(--color-surface-container)',
-                      borderRadius: 'var(--radius-sm)',
+                      background: '#f4f4f5',
+                      borderRadius: '0.25rem',
                     }}
                   />
                   <Box
                     style={{
                       width: '40%',
                       height: '12px',
-                      background: 'var(--color-surface-container)',
-                      borderRadius: 'var(--radius-sm)',
+                      background: '#f4f4f5',
+                      borderRadius: '0.25rem',
                     }}
                   />
                 </Stack>
@@ -109,7 +109,7 @@ export function ActivityFeed({
           <Box
             style={{
               textAlign: 'center',
-              padding: 'var(--spacing-8)',
+              padding: '2rem',
             }}
           >
             <Text variant="body" color="secondary">
@@ -131,13 +131,13 @@ export function ActivityFeed({
           {displayedActivities.map((activity, index) => (
             <HStack
               key={activity.id}
-              spacing="var(--spacing-3)"
+              spacing="md"
               align="start"
               style={{
-                padding: 'var(--spacing-4)',
+                padding: '1rem',
                 borderBottom:
                   index < displayedActivities.length - 1
-                    ? '1px solid var(--color-outline-variant)'
+                    ? '1px solid #e4e4e7'
                     : undefined,
               }}
             >
@@ -155,7 +155,7 @@ export function ActivityFeed({
               >
                 <UserIcon size="sm" color="white" />
               </Box>
-              <Stack spacing="var(--spacing-1)" style={{ flex: 1, minWidth: 0 }}>
+              <Stack spacing="xs" style={{ flex: 1, minWidth: 0 }}>
                 <HStack justify="between" align="start">
                   <Text
                     variant="body"
@@ -185,7 +185,7 @@ export function ActivityFeed({
                   <Text
                     variant="caption"
                     style={{
-                      color: 'var(--color-primary)',
+                      color: '#2563eb',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
@@ -201,9 +201,9 @@ export function ActivityFeed({
         {hasMore && onLoadMore !== undefined && (
           <Box
             style={{
-              padding: 'var(--spacing-4)',
+              padding: '1rem',
               textAlign: 'center',
-              borderTop: '1px solid var(--color-outline-variant)',
+              borderTop: '1px solid #e4e4e7',
             }}
           >
             <Button variant="ghost" size="sm" onClick={onLoadMore}>

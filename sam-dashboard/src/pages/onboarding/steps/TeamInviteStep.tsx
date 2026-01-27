@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/layout';
-import { Text, Input, Button, Select } from '../../../components/primitives';
+import { Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Input, Button, Select } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface TeamInviteStepProps {
@@ -54,7 +54,7 @@ export function TeamInviteStep({
       onSkip={onSkip}
       canSkip={true}
     >
-      <Stack spacing="var(--spacing-4)">
+      <Stack spacing="md">
         {/* Add Member Form */}
         <Flex gap="sm" align="flex-end">
           <Box style={{ flex: 2 }}>
@@ -81,7 +81,7 @@ export function TeamInviteStep({
 
         {/* Member List */}
         {members.length > 0 && (
-          <Stack spacing="var(--spacing-2)">
+          <Stack spacing="sm">
             <Text variant="caption" color="muted" style={{ fontWeight: 600 }}>
               Pending Invitations ({members.length})
             </Text>
@@ -91,8 +91,8 @@ export function TeamInviteStep({
                 align="center"
                 justify="space-between"
                 style={{
-                  padding: 'var(--spacing-3)',
-                  backgroundColor: 'var(--color-gray-50)',
+                  padding: '0.75rem',
+                  backgroundColor: '#fafafa',
                   borderRadius: '6px',
                 }}
               >
@@ -117,9 +117,9 @@ export function TeamInviteStep({
         {members.length === 0 && (
           <Box
             style={{
-              padding: 'var(--spacing-6)',
+              padding: '1.5rem',
               textAlign: 'center',
-              backgroundColor: 'var(--color-gray-50)',
+              backgroundColor: '#fafafa',
               borderRadius: '8px',
             }}
           >

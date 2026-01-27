@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ListUlIcon } from '../components/primitives';
-import { Section, SectionHeader, HStack } from '../components/layout';
+import { ListUlIcon } from '../components/catalyst/primitives';
+import { Section, SectionHeader, HStack } from '../components/catalyst/layout';
 import {
   Opportunity,
   OpportunityList,
@@ -51,7 +51,7 @@ export function AllOpportunitiesPage({ opportunities }: AllOpportunitiesPageProp
         title="All Opportunities"
         icon={<ListUlIcon size="lg" />}
         actions={
-          <HStack spacing="var(--spacing-2)">
+          <HStack spacing="sm">
             <FilterBar filters={filters} onFilterChange={setFilters} />
           </HStack>
         }

@@ -28,7 +28,7 @@ export function ContactList({
     );
   }
 
-  if (contacts.length === 0) {
+  if (contacts === undefined || contacts === null || contacts.length === 0) {
     return (
       <Stack gap="md">
         <Text variant="body" color="secondary">{emptyMessage}</Text>

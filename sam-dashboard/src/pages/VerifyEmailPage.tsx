@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { Card, CardBody, Flex, Stack, Box } from '../components/layout';
-import { Text, Button, BuildingCheckIcon } from '../components/primitives';
+import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
+import { Text, Button, BuildingCheckIcon } from '../components/catalyst/primitives';
 import type { VerificationStatus, VerifyEmailResult } from './types';
 
 const API_BASE = '/api/v1';
@@ -73,7 +73,7 @@ export function VerifyEmailPage(): React.ReactElement {
     switch (status) {
       case 'loading':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4">Verifying your email...</Text>
             <Text variant="body" color="muted">
               Please wait while we verify your email address.
@@ -83,7 +83,7 @@ export function VerifyEmailPage(): React.ReactElement {
 
       case 'success':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4" color="success">
               Email Verified!
             </Text>
@@ -102,14 +102,14 @@ export function VerifyEmailPage(): React.ReactElement {
 
       case 'error':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4" color="danger">
               Verification Failed
             </Text>
             <Text variant="body">
               {errorMessage}
             </Text>
-            <Stack spacing="var(--spacing-2)">
+            <Stack spacing="sm">
               <Button
                 variant="primary"
                 onClick={() => navigate('/login')}
@@ -129,7 +129,7 @@ export function VerifyEmailPage(): React.ReactElement {
 
       case 'no-token':
         return (
-          <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" style={{ textAlign: 'center' }}>
             <Text variant="heading4">No Verification Token</Text>
             <Text variant="body" color="muted">
               No verification token was provided. Please check your email and click the verification link.
@@ -152,15 +152,15 @@ export function VerifyEmailPage(): React.ReactElement {
       align="center"
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-gray-100)',
-        padding: 'var(--spacing-4)',
+        backgroundColor: '#f4f4f5',
+        padding: '1rem',
       }}
     >
       <Box style={{ width: '100%', maxWidth: '400px' }}>
         <Card variant="elevated">
           <CardBody padding="lg">
             <Flex justify="center" className="mb-4">
-              <BuildingCheckIcon size="xl" color="var(--color-primary)" />
+              <BuildingCheckIcon size="xl" className="text-blue-600 dark:text-blue-400" />
             </Flex>
             {renderContent()}
           </CardBody>

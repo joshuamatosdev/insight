@@ -43,18 +43,18 @@ function getUrgencyColor(days: number): 'danger' | 'warning' | 'info' {
  * Gets urgency background color
  */
 function getUrgencyBackground(days: number): string {
-  if (days <= 7) return 'var(--color-danger-light)';
-  if (days <= 30) return 'var(--color-warning-light)';
-  return 'var(--color-info-light)';
+  if (days <= 7) return '#fef2f2';
+  if (days <= 30) return '#fffbeb';
+  return '#f0f9ff';
 }
 
 /**
  * Gets urgency border color
  */
 function getUrgencyBorder(days: number): string {
-  if (days <= 7) return 'var(--color-danger)';
-  if (days <= 30) return 'var(--color-warning)';
-  return 'var(--color-info)';
+  if (days <= 7) return '#ef4444';
+  if (days <= 30) return '#f59e0b';
+  return '#0ea5e9';
 }
 
 interface ExpirationItemProps {
@@ -96,9 +96,9 @@ function ExpirationItem({
       role={onClick !== undefined ? 'button' : undefined}
       tabIndex={onClick !== undefined ? 0 : undefined}
       style={{
-        padding: 'var(--spacing-3)',
+        padding: '0.75rem',
         backgroundColor,
-        borderRadius: 'var(--radius-md)',
+        borderRadius: '0.375rem',
         border: `1px solid ${borderColor}`,
         cursor: onClick !== undefined ? 'pointer' : 'default',
         transition: 'opacity 0.2s ease',
@@ -115,7 +115,7 @@ function ExpirationItem({
         </Stack>
 
         <Stack spacing="0" style={{ textAlign: 'right' }}>
-          <HStack spacing="var(--spacing-1)" align="center">
+          <HStack spacing="xs" align="center">
             <CalendarIcon size="xs" color={color} />
             <Text variant="caption" color={color} weight="medium">
               {formatDate(expirationDate)}
@@ -188,11 +188,11 @@ export function ExpirationAlert({
     <Card
       variant="outlined"
       style={{
-        borderColor: urgentCount > 0 ? 'var(--color-warning)' : 'var(--color-info)',
+        borderColor: urgentCount > 0 ? '#f59e0b' : '#0ea5e9',
       }}
     >
       <CardHeader>
-        <HStack spacing="var(--spacing-2)" align="center">
+        <HStack spacing="sm" align="center">
           <BellIcon
             size="sm"
             color={urgentCount > 0 ? 'warning' : 'info'}
@@ -204,7 +204,7 @@ export function ExpirationAlert({
       </CardHeader>
 
       <CardBody>
-        <Stack spacing="var(--spacing-2)">
+        <Stack spacing="sm">
           {allItems.slice(0, 5).map((item, index) => (
             <ExpirationItem
               key={`${item.type}-${index}`}

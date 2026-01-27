@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select } from '../../components/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid } from '../../components/layout';
+import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select } from '../../components/catalyst/primitives';
+import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid, GridItem } from '../../components/catalyst/layout';
 import { DeliverableTracker } from '../../components/domain/contracts';
 import { useContract } from '../../hooks/useContracts';
 import type {
@@ -152,9 +152,9 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
       <Section>
         <Box
           style={{
-            padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-danger-light)',
-            borderRadius: 'var(--radius-lg)',
+            padding: '1rem',
+            backgroundColor: '#fef2f2',
+            borderRadius: '0.5rem',
           }}
         >
           <Text variant="body" color="danger">
@@ -210,7 +210,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
               <Text variant="heading4">Add Deliverable</Text>
             </CardHeader>
             <CardBody>
-              <Grid columns={2} gap="var(--spacing-4)">
+              <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="cdrlNumber">
                     <Text
@@ -252,43 +252,47 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     ))}
                   </Select>
                 </Box>
-                <Box style={{ gridColumn: 'span 2' }}>
-                  <label htmlFor="title">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Title *
-                    </Text>
-                  </label>
-                  <Input
-                    id="title"
-                    value={formState.title}
-                    onChange={handleChange('title')}
-                    disabled={isSaving}
-                    placeholder="Deliverable title"
-                    required
-                  />
-                </Box>
-                <Box style={{ gridColumn: 'span 2' }}>
-                  <label htmlFor="description">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Description
-                    </Text>
-                  </label>
-                  <Input
-                    id="description"
-                    value={formState.description}
-                    onChange={handleChange('description')}
-                    disabled={isSaving}
-                    placeholder="Deliverable description"
-                  />
-                </Box>
+                <GridItem colSpan={2}>
+                  <Box>
+                    <label htmlFor="title">
+                      <Text
+                        variant="bodySmall"
+                        weight="semibold"
+                        className="mb-1"
+                      >
+                        Title *
+                      </Text>
+                    </label>
+                    <Input
+                      id="title"
+                      value={formState.title}
+                      onChange={handleChange('title')}
+                      disabled={isSaving}
+                      placeholder="Deliverable title"
+                      required
+                    />
+                  </Box>
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <Box>
+                    <label htmlFor="description">
+                      <Text
+                        variant="bodySmall"
+                        weight="semibold"
+                        className="mb-1"
+                      >
+                        Description
+                      </Text>
+                    </label>
+                    <Input
+                      id="description"
+                      value={formState.description}
+                      onChange={handleChange('description')}
+                      disabled={isSaving}
+                      placeholder="Deliverable description"
+                    />
+                  </Box>
+                </GridItem>
                 <Box>
                   <label htmlFor="dueDate">
                     <Text
@@ -331,28 +335,30 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     ))}
                   </Select>
                 </Box>
-                <Box style={{ gridColumn: 'span 2' }}>
-                  <label htmlFor="notes">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Notes
-                    </Text>
-                  </label>
-                  <Input
-                    id="notes"
-                    value={formState.notes}
-                    onChange={handleChange('notes')}
-                    disabled={isSaving}
-                    placeholder="Additional notes"
-                  />
-                </Box>
+                <GridItem colSpan={2}>
+                  <Box>
+                    <label htmlFor="notes">
+                      <Text
+                        variant="bodySmall"
+                        weight="semibold"
+                        className="mb-1"
+                      >
+                        Notes
+                      </Text>
+                    </label>
+                    <Input
+                      id="notes"
+                      value={formState.notes}
+                      onChange={handleChange('notes')}
+                      disabled={isSaving}
+                      placeholder="Additional notes"
+                    />
+                  </Box>
+                </GridItem>
               </Grid>
             </CardBody>
             <CardFooter>
-              <HStack justify="end" spacing="var(--spacing-3)">
+              <HStack justify="end" spacing="md">
                 <Button
                   type="button"
                   variant="secondary"

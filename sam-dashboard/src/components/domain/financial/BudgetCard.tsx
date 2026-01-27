@@ -18,9 +18,9 @@ export function BudgetCard({
       ? ((budget.actualAmount + budget.committedAmount) / budget.budgetedAmount) * 100
       : 0;
 
-  const getProgressColor = (): 'green' | 'amber' | 'red' => {
+  const getProgressColor = (): 'green' | 'yellow' | 'red' => {
     if (utilizationPercent >= 100) return 'red';
-    if (utilizationPercent >= 80) return 'amber';
+    if (utilizationPercent >= 80) return 'yellow';
     return 'green';
   };
 

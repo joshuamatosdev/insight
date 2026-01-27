@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import { Flex } from '../components/layout';
-import { Text } from '../components/primitives';
+import { Flex } from '../components/catalyst/layout';
+import { Text } from '../components/catalyst/primitives';
 
 export interface ProtectedRouteProps {
   children: React.ReactNode;

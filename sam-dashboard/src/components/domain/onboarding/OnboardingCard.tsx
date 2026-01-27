@@ -1,5 +1,5 @@
-import { Card, CardBody, Flex, Stack } from '../../layout';
-import { Text, Button } from '../../primitives';
+import clsx from 'clsx';
+import { Button } from '../../catalyst';
 
 interface OnboardingCardProps {
   title: string;
@@ -30,41 +30,56 @@ export function OnboardingCard({
   loading = false,
 }: OnboardingCardProps): React.ReactElement {
   return (
-    <Card variant="elevated" style={{ maxWidth: '700px', width: '100%' }}>
-      <CardBody padding="xl">
-        <Stack spacing="var(--spacing-6)">
-          {/* Header */}
-          <Stack spacing="var(--spacing-2)">
-            <Text variant="heading3">{title}</Text>
-            <Text variant="body" color="muted">
-              {description}
-            </Text>
-          </Stack>
+    <div className="w-full max-w-[700px]">
+      <div className="rounded-lg bg-white shadow-sm ring-1 ring-zinc-950/5 dark:bg-zinc-800/50 dark:ring-white/10">
+        <div className="p-8">
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-zinc-950 dark:text-white">
+                {title}
+              </h3>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                {description}
+              </p>
+            </div>
 
-          {/* Content */}
-          <Stack spacing="var(--spacing-4)">{children}</Stack>
+            {/* Content */}
+            <div className="space-y-4">{children}</div>
 
-          {/* Actions */}
-          <Flex justify="space-between" align="center" className="mt-4">
-            <Flex gap="sm">
-              {isFirst === false && onBack !== undefined && (
-                <Button variant="secondary" onClick={onBack} disabled={loading}>
-                  Back
-                </Button>
-              )}
-              {canSkip && onSkip !== undefined && (
-                <Button variant="ghost" onClick={onSkip} disabled={loading}>
-                  Skip for now
-                </Button>
-              )}
-            </Flex>
-            <Button variant="primary" onClick={onNext} disabled={loading}>
-              {loading ? 'Saving...' : isLast ? 'Complete Setup' : 'Continue'}
-            </Button>
-          </Flex>
-        </Stack>
-      </CardBody>
-    </Card>
+            {/* Actions */}
+            <div className="flex items-center justify-between pt-4">
+              <div className="flex gap-2">
+                {isFirst === false && onBack !== undefined && (
+                  <Button
+                    outline
+                    onClick={onBack}
+                    disabled={loading}
+                  >
+                    Back
+                  </Button>
+                )}
+                {canSkip && onSkip !== undefined && (
+                  <Button
+                    plain
+                    onClick={onSkip}
+                    disabled={loading}
+                  >
+                    Skip for now
+                  </Button>
+                )}
+              </div>
+              <Button
+                onClick={onNext}
+                disabled={loading}
+              >
+                {loading ? 'Saving...' : isLast ? 'Complete Setup' : 'Continue'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

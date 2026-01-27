@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/layout';
-import { Text, Button } from '../../../components/primitives';
+import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Text, Button } from '../../../components/catalyst/primitives';
 
 interface Contract {
   id: string;
@@ -61,13 +61,13 @@ export function ContractStatusCards(): React.ReactElement {
   const getStatusColor = (status: Contract['status']): string => {
     switch (status) {
       case 'active':
-        return 'var(--color-success)';
+        return '#10b981';
       case 'pending':
-        return 'var(--color-warning)';
+        return '#f59e0b';
       case 'completed':
-        return 'var(--color-primary)';
+        return '#2563eb';
       case 'at-risk':
-        return 'var(--color-danger)';
+        return '#ef4444';
     }
   };
 
@@ -82,7 +82,7 @@ export function ContractStatusCards(): React.ReactElement {
   return (
     <Card variant="bordered">
       <CardBody padding="md">
-        <Stack spacing="var(--spacing-4)">
+        <Stack spacing="md">
           <Flex justify="space-between" align="center">
             <Text variant="heading5">Active Contracts</Text>
             <Button variant="ghost" size="sm">View All</Button>
@@ -91,19 +91,19 @@ export function ContractStatusCards(): React.ReactElement {
           {loading === true ? (
             <Text variant="caption" color="muted">Loading contracts...</Text>
           ) : (
-            <Stack spacing="var(--spacing-3)">
+            <Stack spacing="md">
               {contracts.map((contract) => (
                 <Box
                   key={contract.id}
                   style={{
-                    padding: 'var(--spacing-3)',
-                    backgroundColor: 'var(--color-gray-50)',
+                    padding: '0.75rem',
+                    backgroundColor: '#fafafa',
                     borderRadius: '8px',
                     borderLeft: `4px solid ${getStatusColor(contract.status)}`,
                   }}
                 >
                   <Flex justify="space-between" align="flex-start">
-                    <Stack spacing="var(--spacing-1)">
+                    <Stack spacing="xs">
                       <Text variant="caption" color="muted">{contract.contractNumber}</Text>
                       <Text variant="body" style={{ fontWeight: 600 }}>{contract.title}</Text>
                       <Flex gap="md" align="center">
@@ -114,7 +114,7 @@ export function ContractStatusCards(): React.ReactElement {
                     </Stack>
                     <Box
                       style={{
-                        padding: 'var(--spacing-1) var(--spacing-2)',
+                        padding: '0.25rem 0.5rem',
                         backgroundColor: `${getStatusColor(contract.status)}20`,
                         borderRadius: '4px',
                       }}
@@ -141,7 +141,7 @@ export function ContractStatusCards(): React.ReactElement {
                     <Box
                       style={{
                         height: '6px',
-                        backgroundColor: 'var(--color-gray-200)',
+                        backgroundColor: '#e4e4e7',
                         borderRadius: '3px',
                         overflow: 'hidden',
                       }}
