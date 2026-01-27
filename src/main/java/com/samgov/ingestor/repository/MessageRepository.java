@@ -59,9 +59,9 @@ public interface MessageRepository extends JpaRepository<Message, UUID> {
 
     /**
      * Get the latest message in a thread.
+     * Uses Spring Data derived query with automatic LIMIT 1 from findFirstBy prefix.
      */
-    @Query("SELECT m FROM Message m WHERE m.thread.id = :threadId ORDER BY m.createdAt DESC")
-    Optional<Message> findFirstByThreadIdOrderByCreatedAtDesc(@Param("threadId") UUID threadId);
+    Optional<Message> findFirstByThreadIdOrderByCreatedAtDesc(UUID threadId);
 
     /**
      * Mark a message as read.

@@ -89,7 +89,8 @@ public class OpportunityTestBuilder {
             .withTitle("SBIR Topic: Advanced Cybersecurity Solutions")
             .withDataSource(DataSource.SBIR_GOV)
             .withSetAsideType(null)
-            .withSetAsideDescription(null);
+            .withSetAsideDescription(null)
+            .withNaicsCode("541713");  // R&D in Nanotechnology
     }
 
     public static OpportunityTestBuilder anSttrOpportunity() {
@@ -99,7 +100,8 @@ public class OpportunityTestBuilder {
             .withTitle("STTR Topic: Machine Learning for Defense Applications")
             .withDataSource(DataSource.SBIR_GOV)
             .withSetAsideType(null)
-            .withSetAsideDescription(null);
+            .withSetAsideDescription(null)
+            .withNaicsCode("541715");  // R&D in Physical Sciences
     }
 
     public static OpportunityTestBuilder aDodOpportunity() {
@@ -110,7 +112,10 @@ public class OpportunityTestBuilder {
             .withIsDod(true)
             .withClearanceRequired("Secret")
             .withItarControlled(true)
-            .withCuiRequired(true);
+            .withCuiRequired(true)
+            .withSetAsideType(null)
+            .withSetAsideDescription(null)
+            .withNaicsCode("541519");  // Different NAICS for DoD
     }
 
     public static OpportunityTestBuilder aStateOpportunity() {

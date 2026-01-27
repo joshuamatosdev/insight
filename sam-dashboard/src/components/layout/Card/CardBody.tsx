@@ -1,21 +1,28 @@
-import { CSSProperties } from 'react';
-import { CardBodyProps } from './Card.types';
+import clsx from 'clsx';
+import { CardBodyProps, CardPadding } from './Card.types';
 
-const paddingStyles: Record<string, CSSProperties> = {
-  none: { padding: 0 },
-  sm: { padding: 'var(--spacing-3)' },
-  md: { padding: 'var(--spacing-5)' },
-  lg: { padding: 'var(--spacing-6)' },
+/**
+ * CardBody - Main content section of a Card
+ *
+ * Follows Catalyst styling pattern
+ */
+
+const paddingClasses: Record<CardPadding, string> = {
+  none: 'p-0',
+  sm: 'p-3',
+  md: 'p-5',
+  lg: 'p-6',
 };
 
-export function CardBody({ padding = 'md', className, style, children, ...rest }: CardBodyProps) {
-  const bodyStyles: CSSProperties = {
-    ...paddingStyles[padding],
-    ...style,
-  };
-
+export function CardBody({ padding = 'md', className, children, ...rest }: CardBodyProps) {
   return (
-    <div className={className} style={bodyStyles} {...rest}>
+    <div
+      className={clsx(
+        paddingClasses[padding],
+        className
+      )}
+      {...rest}
+    >
       {children}
     </div>
   );

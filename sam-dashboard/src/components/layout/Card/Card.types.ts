@@ -1,12 +1,13 @@
-import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 
 export type CardRole = 'article' | 'region' | 'group' | 'listitem' | 'none';
+export type CardVariant = 'elevated' | 'outlined' | 'filled';
+export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 
 export interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
-  variant?: 'elevated' | 'outlined' | 'filled';
-  padding?: 'none' | 'sm' | 'md' | 'lg';
+  variant?: CardVariant;
+  padding?: CardPadding;
   className?: string;
-  style?: CSSProperties;
   children: ReactNode;
   /** Semantic role for the card (default: 'article' for standalone content) */
   as?: CardRole;
@@ -18,19 +19,16 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'>
 
 export interface CardHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   className?: string;
-  style?: CSSProperties;
   children: ReactNode;
 }
 
 export interface CardBodyProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
-  padding?: 'none' | 'sm' | 'md' | 'lg';
+  padding?: CardPadding;
   className?: string;
-  style?: CSSProperties;
   children: ReactNode;
 }
 
 export interface CardFooterProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   className?: string;
-  style?: CSSProperties;
   children: ReactNode;
 }

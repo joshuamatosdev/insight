@@ -38,7 +38,7 @@ public class OpportunityService {
     @Cacheable(
         value = CacheConfig.OPPORTUNITIES_CACHE,
         key = "'tenant:' + T(com.samgov.ingestor.config.TenantContext).getCurrentTenantId() + ':opportunity:' + #id",
-        unless = "#result == null || !#result.isPresent()"
+        unless = "#result == null"
     )
     public Optional<OpportunityDto> getById(String id) {
         log.debug("Cache miss for opportunity ID: {}", id);

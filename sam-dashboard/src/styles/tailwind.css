@@ -1,13 +1,80 @@
 /* Tailwind CSS v4 */
 @import 'tailwindcss';
 
-/* Inter Font */
+/* Inter Font (Catalyst default) */
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/inter/700.css';
 
-/* Configure Inter as the default sans font */
+/*
+ * SAMGov Theme - Catalyst-style with semantic aliases
+ * 
+ * Usage: bg-accent, text-accent, border-accent, etc.
+ * Change colors here once → applies everywhere
+ */
 @theme {
+  /* Font Family */
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* 
+   * Semantic Color Aliases (Light Mode)
+   * Change these to rebrand the entire app
+   */
+  --color-accent: #2563eb;        /* blue-600 - primary actions */
+  --color-accent-hover: #1d4ed8;  /* blue-700 */
+  --color-accent-light: #dbeafe;  /* blue-100 - backgrounds */
+  
+  --color-destructive: #dc2626;   /* red-600 */
+  --color-destructive-hover: #b91c1c; /* red-700 */
+  
+  --color-success: #16a34a;       /* green-600 */
+  --color-success-hover: #15803d; /* green-700 */
+  
+  --color-warning: #d97706;       /* amber-600 */
+  --color-warning-hover: #b45309; /* amber-700 */
+
+  --color-muted: #71717a;         /* zinc-500 - secondary text */
+  --color-muted-foreground: #a1a1aa; /* zinc-400 */
+
+  /* Border Radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Layout */
+  --sidebar-width: 16rem;
+  --header-height: 4rem;
+}
+
+/*
+ * Dark Mode Overrides
+ * Lighter shades for dark backgrounds (Catalyst pattern)
+ */
+.dark {
+  --color-accent: #3b82f6;        /* blue-500 */
+  --color-accent-hover: #60a5fa;  /* blue-400 */
+  --color-accent-light: #1e3a8a;  /* blue-900 */
+  
+  --color-destructive: #ef4444;   /* red-500 */
+  --color-destructive-hover: #f87171; /* red-400 */
+  
+  --color-success: #22c55e;       /* green-500 */
+  --color-success-hover: #4ade80; /* green-400 */
+  
+  --color-warning: #f59e0b;       /* amber-500 */
+  --color-warning-hover: #fbbf24; /* amber-400 */
+
+  --color-muted: #a1a1aa;         /* zinc-400 */
+  --color-muted-foreground: #d4d4d8; /* zinc-300 */
 }

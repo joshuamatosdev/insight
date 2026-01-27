@@ -8,10 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
- * Request for batch export
+ * Request for batch export.
+ * Uses String IDs since Opportunity entities use String IDs.
  */
 @Data
 @NoArgsConstructor
@@ -23,7 +23,7 @@ public class ExportRequest {
     private ExportFormat format;
 
     @NotEmpty
-    private List<UUID> ids;
+    private List<String> ids;
 
     private String templateId;
     private boolean includeAttachments;

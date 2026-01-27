@@ -37,12 +37,9 @@ public class ExportEnhancementService {
     @Transactional(readOnly = true)
     public byte[] exportOpportunities(ExportRequest request) {
         UUID tenantId = TenantContext.getCurrentTenantId();
-        
-        // Convert UUIDs to Strings since Opportunity uses String IDs
-        List<String> stringIds = request.getIds().stream()
-            .map(UUID::toString)
-            .toList();
-        List<Opportunity> opportunities = opportunityRepository.findAllById(stringIds)
+
+        // Opportunity uses String IDs directly
+        List<Opportunity> opportunities = opportunityRepository.findAllById(request.getIds())
             .stream()
             .toList();
 

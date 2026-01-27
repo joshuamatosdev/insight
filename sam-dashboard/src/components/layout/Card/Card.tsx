@@ -1,49 +1,52 @@
-import { CSSProperties } from 'react';
-import { CardProps } from './Card.types';
+import clsx from 'clsx';
+import { CardProps, CardVariant } from './Card.types';
 
-const variantStyles: Record<string, CSSProperties> = {
-  elevated: {
-    backgroundColor: 'var(--color-white)',
-    boxShadow: 'var(--shadow-md)',
-    border: 'none',
-  },
-  outlined: {
-    backgroundColor: 'var(--color-white)',
-    boxShadow: 'none',
-    border: '1px solid var(--color-gray-200)',
-  },
-  filled: {
-    backgroundColor: 'var(--color-gray-50)',
-    boxShadow: 'none',
-    border: 'none',
-  },
+/**
+ * Card - A container component with variants
+ *
+ * Follows Catalyst styling pattern:
+ * - Uses Tailwind classes for all styling
+ * - Uses clsx for class composition
+ * - Supports dark mode via dark: prefix
+ */
+
+const variantClasses: Record<CardVariant, string> = {
+  elevated: clsx(
+    'bg-white shadow-md',
+    'dark:bg-zinc-900 dark:shadow-lg dark:shadow-black/20'
+  ),
+  outlined: clsx(
+    'bg-white border border-zinc-950/10',
+    'dark:bg-zinc-900 dark:border-white/10'
+  ),
+  filled: clsx(
+    'bg-zinc-50',
+    'dark:bg-zinc-800'
+  ),
 };
 
 export function Card({
   variant = 'elevated',
   className,
-  style,
   children,
   as = 'article',
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   ...rest
 }: CardProps) {
-  const cardStyles: CSSProperties = {
-    borderRadius: 'var(--radius-xl)',
-    overflow: 'hidden',
-    transition: 'var(--transition-normal)',
-    ...variantStyles[variant],
-    ...style,
-  };
-
   // Only apply role if not 'none' (allows opting out)
   const role = as !== 'none' ? as : undefined;
 
   return (
     <div
-      className={className}
-      style={cardStyles}
+      className={clsx(
+        // Base styles
+        'rounded-xl overflow-hidden transition-all duration-200',
+        // Variant styles
+        variantClasses[variant],
+        // Custom classes
+        className
+      )}
       role={role}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}

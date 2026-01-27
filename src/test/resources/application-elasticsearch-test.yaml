@@ -1,0 +1,134 @@
+# Test configuration for Elasticsearch integration tests
+# Uses external Elasticsearch from docker-compose
+
+spring:
+  application:
+    name: sam-gov-ingestor-elasticsearch-test
+
+  # Disable Redis autoconfiguration for tests
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.data.redis.RedisHealthContributorAutoConfiguration
+
+  # Use dev PostgreSQL server
+  datasource:
+    url: jdbc:postgresql://localhost:5433/sam_test
+    username: dev_user
+    password: dev_pass
+    driver-class-name: org.postgresql.Driver
+
+  # JPA/Hibernate configuration for tests
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Disable virtual threads in tests for predictable behavior
+  threads:
+    virtual:
+      enabled: false
+
+  # Elasticsearch configuration - use docker-compose instance
+  elasticsearch:
+    uris: http://localhost:9200
+
+  # Enable Elasticsearch repository scanning for these tests
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
+  cache:
+    type: simple
+
+# Enable Elasticsearch for these tests
+elasticsearch:
+  enabled: true
+
+# Disable scheduled tasks during tests
+sam:
+  gov:
+    api-key: test-api-key
+    base-url: https://api.sam.gov/opportunities/v2/search
+    naics-codes:
+      - "541511"
+    limit: 10
+    posted-within-days: 7
+    ptype: "k,o"
+    set-aside: ""
+    rate-limit-ms: 0
+    sbir-enabled: false
+    sbir-keywords: []
+
+sbir:
+  gov:
+    enabled: false
+    base-url: https://api.www.sbir.gov/public/api
+    agencies: []
+    rows-per-request: 10
+    max-results: 100
+    rate-limit-ms: 0
+    it-keywords: []
+
+# Actuator configuration for tests
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+# JWT Configuration for tests
+jwt:
+  secret: dGVzdC1qd3Qtc2VjcmV0LWtleS10aGF0LWlzLWF0LWxlYXN0LTMyLWNoYXJzLWxvbmctZm9yLXRlc3Rpbmc=
+  expiration: 3600000
+  refresh-expiration: 86400000
+
+# Application Configuration for tests
+app:
+  name: SAM.gov Elasticsearch Test
+  base-url: http://localhost:8080
+  email:
+    provider: console
+  password-reset:
+    expiration-hours: 1
+  invitation:
+    expiration-days: 1
+  session:
+    max-per-user: 5
+
+# Disable rate limiting for tests
+rate:
+  limit:
+    requests-per-minute: 100000
+    window-seconds: 1
+    cleanup-interval-seconds: 3600
+
+# AWS S3 Configuration for tests (mocked)
+aws:
+  s3:
+    enabled: false
+    bucket: test-bucket
+    region: us-east-1
+    endpoint: ""
+    presigned-url-expiration-minutes: 15
+  credentials:
+    access-key: test-access-key
+    secret-key: test-secret-key
+
+# Reduce logging noise in tests
+logging:
+  level:
+    root: WARN
+    com.samgov.ingestor: INFO
+    org.elasticsearch: INFO
+    org.springframework.data.elasticsearch: INFO

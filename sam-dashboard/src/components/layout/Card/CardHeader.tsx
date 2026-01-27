@@ -1,16 +1,22 @@
-import { CSSProperties } from 'react';
+import clsx from 'clsx';
 import { CardHeaderProps } from './Card.types';
 
-export function CardHeader({ className, style, children, ...rest }: CardHeaderProps) {
-  const headerStyles: CSSProperties = {
-    padding: 'var(--spacing-4) var(--spacing-5)',
-    backgroundColor: 'var(--color-white)',
-    borderBottom: '1px solid var(--color-gray-200)',
-    ...style,
-  };
-
+/**
+ * CardHeader - Header section of a Card
+ *
+ * Follows Catalyst styling pattern
+ */
+export function CardHeader({ className, children, ...rest }: CardHeaderProps) {
   return (
-    <div className={className} style={headerStyles} {...rest}>
+    <div
+      className={clsx(
+        'px-5 py-4',
+        'bg-white border-b border-zinc-950/10',
+        'dark:bg-zinc-900 dark:border-white/10',
+        className
+      )}
+      {...rest}
+    >
       {children}
     </div>
   );

@@ -111,7 +111,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             // Given
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.CSV)
-                .ids(List.of(UUID.fromString(padUuid(opportunity1.getId()))))
+                .ids(List.of(opportunity1.getId()))
                 .build();
 
             // When
@@ -133,9 +133,9 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.CSV)
                 .ids(List.of(
-                    UUID.fromString(padUuid(opportunity1.getId())),
-                    UUID.fromString(padUuid(opportunity2.getId())),
-                    UUID.fromString(padUuid(opportunity3.getId()))
+                    opportunity1.getId(),
+                    opportunity2.getId(),
+                    opportunity3.getId()
                 ))
                 .build();
 
@@ -169,7 +169,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
 
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.CSV)
-                .ids(List.of(UUID.fromString(padUuid(oppWithSpecialChars.getId()))))
+                .ids(List.of(oppWithSpecialChars.getId()))
                 .build();
 
             // When
@@ -187,7 +187,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             // Given
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.CSV)
-                .ids(List.of(UUID.randomUUID())) // Non-existent ID
+                .ids(List.of("non-existent-id")) // Non-existent ID
                 .build();
 
             // When
@@ -213,7 +213,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             // Given
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.PDF)
-                .ids(List.of(UUID.fromString(padUuid(opportunity1.getId()))))
+                .ids(List.of(opportunity1.getId()))
                 .build();
 
             // When
@@ -235,8 +235,8 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.PDF)
                 .ids(List.of(
-                    UUID.fromString(padUuid(opportunity1.getId())),
-                    UUID.fromString(padUuid(opportunity2.getId()))
+                    opportunity1.getId(),
+                    opportunity2.getId()
                 ))
                 .build();
 
@@ -265,7 +265,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
 
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.PDF)
-                .ids(List.of(UUID.fromString(padUuid(opportunity1.getId()))))
+                .ids(List.of(opportunity1.getId()))
                 .templateId(template.getId().toString())
                 .build();
 
@@ -287,7 +287,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             // Given
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.JSON)
-                .ids(List.of(UUID.fromString(padUuid(opportunity1.getId()))))
+                .ids(List.of(opportunity1.getId()))
                 .build();
 
             // When
@@ -309,8 +309,8 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.JSON)
                 .ids(List.of(
-                    UUID.fromString(padUuid(opportunity1.getId())),
-                    UUID.fromString(padUuid(opportunity2.getId()))
+                    opportunity1.getId(),
+                    opportunity2.getId()
                 ))
                 .build();
 
@@ -339,7 +339,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
 
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.JSON)
-                .ids(List.of(UUID.fromString(padUuid(oppWithQuotes.getId()))))
+                .ids(List.of(oppWithQuotes.getId()))
                 .build();
 
             // When
@@ -363,7 +363,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             // Given
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.EXCEL)
-                .ids(List.of(UUID.fromString(padUuid(opportunity1.getId()))))
+                .ids(List.of(opportunity1.getId()))
                 .build();
 
             // When
@@ -645,8 +645,8 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
             }
 
             List<Opportunity> allOpps = opportunityRepository.findAll();
-            List<UUID> allIds = allOpps.stream()
-                .map(o -> UUID.fromString(padUuid(o.getId())))
+            List<String> allIds = allOpps.stream()
+                .map(Opportunity::getId)
                 .toList();
 
             ExportRequest request = ExportRequest.builder()
@@ -668,14 +668,14 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
         @DisplayName("should handle partial batch when some IDs do not exist")
         void handlePartialBatchWhenSomeIdsDoNotExist() {
             // Given
-            UUID nonExistentId = UUID.randomUUID();
+            String nonExistentId = "non-existent-id-12345";
 
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.CSV)
                 .ids(List.of(
-                    UUID.fromString(padUuid(opportunity1.getId())),
+                    opportunity1.getId(),
                     nonExistentId,
-                    UUID.fromString(padUuid(opportunity2.getId()))
+                    opportunity2.getId()
                 ))
                 .build();
 
@@ -714,7 +714,7 @@ class ExportEnhancementServiceTest extends BaseServiceTest {
 
             ExportRequest request = ExportRequest.builder()
                 .format(ExportFormat.CSV)
-                .ids(List.of(UUID.fromString(padUuid(oppWithNulls.getId()))))
+                .ids(List.of(oppWithNulls.getId()))
                 .build();
 
             // When
