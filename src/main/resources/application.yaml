@@ -196,6 +196,18 @@ stripe:
     professional: ${STRIPE_PRICE_PROFESSIONAL:}
     enterprise: ${STRIPE_PRICE_ENTERPRISE:}
 
+# Spring AI / OpenAI Configuration
+# SECURITY: OPENAI_API_KEY must be set via environment variables
+spring.ai:
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    enabled: ${OPENAI_ENABLED:true}
+    chat:
+      options:
+        model: ${OPENAI_MODEL:gpt-4o}
+        temperature: 0.3
+        max-tokens: 2000
+
 # Logging
 logging:
   level:

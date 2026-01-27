@@ -5,45 +5,48 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuration for OpenAI API integration.
+ * Configuration for OpenAI API integration via Spring AI.
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "openai")
+@ConfigurationProperties(prefix = "spring.ai.openai")
 public class OpenAIConfig {
 
     /**
-     * OpenAI API key.
+     * OpenAI API key (maps to spring.ai.openai.api-key).
      */
     private String apiKey;
-
-    /**
-     * Model to use for completions (e.g., gpt-4, gpt-3.5-turbo).
-     */
-    private String model = "gpt-4";
-
-    /**
-     * Maximum tokens for responses.
-     */
-    private int maxTokens = 2000;
-
-    /**
-     * Temperature for response creativity (0.0-2.0).
-     */
-    private double temperature = 0.3;
-
-    /**
-     * Base URL for OpenAI API.
-     */
-    private String baseUrl = "https://api.openai.com/v1";
-
-    /**
-     * Timeout for API calls in seconds.
-     */
-    private int timeout = 60;
 
     /**
      * Whether AI features are enabled.
      */
     private boolean enabled = true;
+
+    /**
+     * Chat options configuration.
+     */
+    private ChatOptions chat = new ChatOptions();
+
+    @Data
+    public static class ChatOptions {
+        private Options options = new Options();
+
+        @Data
+        public static class Options {
+            /**
+             * Model to use (e.g., gpt-4, gpt-4o, gpt-3.5-turbo).
+             */
+            private String model = "gpt-4o";
+
+            /**
+             * Temperature for response creativity (0.0-2.0).
+             */
+            private double temperature = 0.3;
+
+            /**
+             * Maximum tokens for responses.
+             */
+            private int maxTokens = 2000;
+        }
+    }
 }
