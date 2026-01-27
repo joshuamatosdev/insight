@@ -228,6 +228,12 @@ public class AuditLog {
         REPORT_RAN,
 
         // Match management
-        MATCH_UPDATED
+        MATCH_UPDATED,
+
+        // Feature request management
+        FEATURE_REQUEST_CREATED,
+        FEATURE_REQUEST_UPDATED,
+        FEATURE_REQUEST_DELETED,
+        FEATURE_REQUEST_STATUS_CHANGED
     }
 }
