@@ -1,0 +1,197 @@
+import { useState, useEffect } from 'react';
+import { Card, CardBody, Stack, Flex, Box } from '../../../components/layout';
+import { Text, Button } from '../../../components/primitives';
+
+interface Deadline {
+  id: string;
+  title: string;
+  type: 'deliverable' | 'invoice' | 'report' | 'meeting' | 'review';
+  contractNumber: string;
+  dueDate: string;
+  priority: 'low' | 'medium' | 'high';
+}
+
+/**
+ * Widget showing upcoming deadlines across all contracts.
+ */
+export function UpcomingDeadlines(): React.ReactElement {
+  const [deadlines, setDeadlines] = useState<Deadline[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadDeadlines = async () => {
+      setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      setDeadlines([
+        {
+          id: '1',
+          title: 'Monthly Status Report',
+          type: 'report',
+          contractNumber: 'FA8773-24-C-0001',
+          dueDate: '2024-02-05',
+          priority: 'high',
+        },
+        {
+          id: '2',
+          title: 'Invoice Submission',
+          type: 'invoice',
+          contractNumber: 'GS-35F-0123X',
+          dueDate: '2024-02-10',
+          priority: 'medium',
+        },
+        {
+          id: '3',
+          title: 'Quarterly Program Review',
+          type: 'meeting',
+          contractNumber: 'W912DQ-23-D-0045',
+          dueDate: '2024-02-12',
+          priority: 'high',
+        },
+        {
+          id: '4',
+          title: 'Technical Documentation Update',
+          type: 'deliverable',
+          contractNumber: 'FA8773-24-C-0001',
+          dueDate: '2024-02-15',
+          priority: 'low',
+        },
+        {
+          id: '5',
+          title: 'Security Review Meeting',
+          type: 'review',
+          contractNumber: 'GS-35F-0123X',
+          dueDate: '2024-02-18',
+          priority: 'medium',
+        },
+      ]);
+      setLoading(false);
+    };
+    loadDeadlines();
+  }, []);
+
+  const getTypeIcon = (type: Deadline['type']): string => {
+    switch (type) {
+      case 'deliverable':
+        return '📦';
+      case 'invoice':
+        return '💰';
+      case 'report':
+        return '📊';
+      case 'meeting':
+        return '👥';
+      case 'review':
+        return '🔍';
+    }
+  };
+
+  const getPriorityColor = (priority: Deadline['priority']): string => {
+    switch (priority) {
+      case 'low':
+        return 'var(--color-gray-500)';
+      case 'medium':
+        return 'var(--color-warning)';
+      case 'high':
+        return 'var(--color-danger)';
+    }
+  };
+
+  const formatDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+  const getDaysUntil = (dateStr: string): number => {
+    const due = new Date(dateStr);
+    const now = new Date();
+    const diff = due.getTime() - now.getTime();
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  };
+
+  return (
+    <Card variant="bordered">
+      <CardBody padding="md">
+        <Stack spacing="var(--spacing-4)">
+          <Flex justify="space-between" align="center">
+            <Text variant="heading5">Upcoming Deadlines</Text>
+            <Button variant="ghost" size="sm">View Calendar</Button>
+          </Flex>
+
+          {loading === true ? (
+            <Text variant="caption" color="muted">Loading deadlines...</Text>
+          ) : (
+            <Stack spacing="var(--spacing-2)">
+              {deadlines.map((deadline) => {
+                const daysUntil = getDaysUntil(deadline.dueDate);
+                
+                return (
+                  <Flex
+                    key={deadline.id}
+                    align="center"
+                    gap="sm"
+                    style={{
+                      padding: 'var(--spacing-2)',
+                      backgroundColor: 'var(--color-gray-50)',
+                      borderRadius: '6px',
+                    }}
+                  >
+                    {/* Icon */}
+                    <Box
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '6px',
+                        backgroundColor: 'var(--color-gray-100)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '18px',
+                      }}
+                    >
+                      {getTypeIcon(deadline.type)}
+                    </Box>
+
+                    {/* Details */}
+                    <Stack spacing="0" style={{ flex: 1 }}>
+                      <Flex align="center" gap="sm">
+                        <Text variant="body" style={{ fontWeight: 500 }}>{deadline.title}</Text>
+                        <Box
+                          style={{
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            backgroundColor: getPriorityColor(deadline.priority),
+                          }}
+                        />
+                      </Flex>
+                      <Text variant="caption" color="muted">{deadline.contractNumber}</Text>
+                    </Stack>
+
+                    {/* Date */}
+                    <Stack spacing="0" style={{ textAlign: 'right' }}>
+                      <Text
+                        variant="caption"
+                        style={{
+                          fontWeight: 600,
+                          color: daysUntil <= 3 ? 'var(--color-danger)' : 'var(--color-gray-700)',
+                        }}
+                      >
+                        {daysUntil <= 0 ? 'Today!' : daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}
+                      </Text>
+                      <Text variant="caption" color="muted">{formatDate(deadline.dueDate)}</Text>
+                    </Stack>
+                  </Flex>
+                );
+              })}
+            </Stack>
+          )}
+        </Stack>
+      </CardBody>
+    </Card>
+  );
+}
+
+export default UpcomingDeadlines;
