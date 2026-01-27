@@ -45,7 +45,7 @@ export function OnboardingCard({
           <Stack spacing="var(--spacing-4)">{children}</Stack>
 
           {/* Actions */}
-          <Flex justify="space-between" align="center" style={{ marginTop: 'var(--spacing-4)' }}>
+          <Flex justify="space-between" align="center" className="mt-4">
             <Flex gap="sm">
               {isFirst === false && onBack !== undefined && (
                 <Button variant="secondary" onClick={onBack} disabled={loading}>

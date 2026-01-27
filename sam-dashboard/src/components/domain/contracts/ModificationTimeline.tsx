@@ -102,9 +102,9 @@ function ModificationItem({
         }}
       />
 
-      <Card style={{ marginBottom: 'var(--spacing-4)' }}>
+      <Card className="mb-4">
         <CardBody>
-          <HStack justify="between" align="start" style={{ marginBottom: 'var(--spacing-3)' }}>
+          <HStack justify="between" align="start" className="mb-3">
             <Box>
               <HStack spacing="var(--spacing-2)" align="center">
                 <Text variant="heading5">{modification.modificationNumber}</Text>
@@ -116,7 +116,7 @@ function ModificationItem({
                 </Badge>
               </HStack>
               {modification.title !== null && (
-                <Text variant="body" style={{ marginTop: 'var(--spacing-1)' }}>
+                <Text variant="body" className="mt-1">
                   {modification.title}
                 </Text>
               )}
@@ -174,7 +174,7 @@ function ModificationItem({
               <Text
                 variant="caption"
                 color="muted"
-                style={{ marginBottom: 'var(--spacing-2)' }}
+                className="mb-2"
               >
                 Changes
               </Text>
@@ -267,7 +267,7 @@ function ModificationItem({
               <Text
                 variant="caption"
                 color="muted"
-                style={{ marginBottom: 'var(--spacing-1)' }}
+                className="mb-1"
               >
                 Scope Change Summary
               </Text>
@@ -276,11 +276,11 @@ function ModificationItem({
           )}
 
           {modification.reason !== null && (
-            <Box style={{ marginTop: 'var(--spacing-2)' }}>
+            <Box className="mt-2">
               <Text
                 variant="caption"
                 color="muted"
-                style={{ marginBottom: 'var(--spacing-1)' }}
+                className="mb-1"
               >
                 Reason
               </Text>

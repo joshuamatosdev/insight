@@ -529,7 +529,7 @@ export function ReportBuilderPage({
               options={ENTITY_TYPE_OPTIONS}
             />
             {errors.entityType !== undefined && (
-              <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+              <Text variant="caption" color="danger" className="mt-1">
                 {errors.entityType}
               </Text>
             )}
@@ -568,7 +568,7 @@ export function ReportBuilderPage({
                     </Box>
                   ))}
                   {getUnselectedColumns().length === 0 && (
-                    <Text variant="bodySmall" color="muted" style={{ textAlign: 'center', padding: 'var(--spacing-4)' }}>
+                    <Text variant="bodySmall" color="muted" className="text-center p-4">
                       All columns have been added to the report
                     </Text>
                   )}
@@ -603,7 +603,7 @@ export function ReportBuilderPage({
                   isDropTarget={isDropTarget}
                 />
                 {errors.columns !== undefined && (
-                  <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-2)' }}>
+                  <Text variant="caption" color="danger" className="mt-2">
                     {errors.columns}
                   </Text>
                 )}
@@ -635,7 +635,7 @@ export function ReportBuilderPage({
           <CardBody>
             <Flex gap="md">
               <Box style={{ flex: 1 }}>
-                <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                <Text variant="caption" color="muted" className="mb-1">
                   Sort By
                 </Text>
                 <Select
@@ -649,7 +649,7 @@ export function ReportBuilderPage({
                 />
               </Box>
               <Box style={{ flex: 1 }}>
-                <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                <Text variant="caption" color="muted" className="mb-1">
                   Direction
                 </Text>
                 <Select
@@ -681,7 +681,7 @@ export function ReportBuilderPage({
             <Box style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ backgroundColor: 'var(--color-surface-container)' }}>
+                  <tr className="bg-surface-container">
                     {previewData.columns
                       .filter((col) => col.visible)
                       .map((col) => (
@@ -727,7 +727,7 @@ export function ReportBuilderPage({
               </table>
             </Box>
             {previewData.totalRecords > 10 && (
-              <Box style={{ padding: 'var(--spacing-3)', textAlign: 'center' }}>
+              <Box className="p-3 text-center">
                 <Text variant="bodySmall" color="muted">
                   Showing 10 of {previewData.totalRecords} records
                 </Text>
@@ -764,7 +764,7 @@ export function ReportBuilderPage({
             <CardBody>
               <Stack spacing="var(--spacing-4)">
                 <Box>
-                  <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                  <Text variant="caption" color="muted" className="mb-1">
                     Report Name *
                   </Text>
                   <Input
@@ -773,13 +773,13 @@ export function ReportBuilderPage({
                     placeholder="Enter report name..."
                   />
                   {errors.name !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {errors.name}
                     </Text>
                   )}
                 </Box>
                 <Box>
-                  <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                  <Text variant="caption" color="muted" className="mb-1">
                     Description
                   </Text>
                   <Input

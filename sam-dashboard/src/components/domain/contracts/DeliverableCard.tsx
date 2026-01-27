@@ -169,7 +169,7 @@ export function DeliverableCard({
         </Grid>
 
         {deliverable.description !== null && (
-          <Box style={{ marginTop: 'var(--spacing-3)' }}>
+          <Box className="mt-3">
             <Text variant="bodySmall" color="muted">
               {deliverable.description}
             </Text>

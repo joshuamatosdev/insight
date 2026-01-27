@@ -133,7 +133,7 @@ export function ContractStatusCards(): React.ReactElement {
                   </Flex>
 
                   {/* Progress Bar */}
-                  <Box style={{ marginTop: 'var(--spacing-2)' }}>
+                  <Box className="mt-2">
                     <Flex justify="space-between" style={{ marginBottom: '4px' }}>
                       <Text variant="caption" color="muted">Progress</Text>
                       <Text variant="caption" style={{ fontWeight: 600 }}>{contract.progressPercent}%</Text>

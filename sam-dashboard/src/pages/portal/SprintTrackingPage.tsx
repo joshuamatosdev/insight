@@ -88,7 +88,7 @@ export function SprintTrackingPage(): React.ReactElement {
         <Text variant="body" color="danger">
           Error loading sprints: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} style={{ marginTop: 'var(--spacing-3)' }}>
+        <Button variant="secondary" onClick={refresh} className="mt-3">
           Retry
         </Button>
       </Box>
@@ -96,7 +96,7 @@ export function SprintTrackingPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" style={{ padding: 'var(--spacing-6)' }}>
+    <Stack spacing="var(--spacing-6)" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -122,7 +122,7 @@ export function SprintTrackingPage(): React.ReactElement {
           <Stack spacing="var(--spacing-4)">
             {/* Active Sprints */}
             <Box>
-              <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-2)' }}>
+              <Flex align="center" gap="sm" className="mb-2">
                 <Text variant="bodySmall" weight="semibold">
                   Active
                 </Text>
@@ -149,7 +149,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
             {/* Planning Sprints */}
             <Box>
-              <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-2)' }}>
+              <Flex align="center" gap="sm" className="mb-2">
                 <Text variant="bodySmall" weight="semibold">
                   Planning
                 </Text>
@@ -176,7 +176,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
             {/* Completed Sprints */}
             <Box>
-              <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-2)' }}>
+              <Flex align="center" gap="sm" className="mb-2">
                 <Text variant="bodySmall" weight="semibold">
                   Completed
                 </Text>

@@ -111,7 +111,7 @@ export function ErrorPage({
               Need help?{' '}
               <a
                 href="mailto:support@example.com"
-                style={{ color: 'var(--color-primary)' }}
+                className="text-primary"
               >
                 Contact Support
               </a>

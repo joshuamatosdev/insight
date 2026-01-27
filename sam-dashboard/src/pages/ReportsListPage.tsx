@@ -386,7 +386,7 @@ export function ReportsListPage({
         <CardBody>
           <Grid columns={3} gap="md">
             <Box>
-              <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+              <Text variant="caption" color="muted" className="mb-1">
                 Search
               </Text>
               <Input
@@ -396,7 +396,7 @@ export function ReportsListPage({
               />
             </Box>
             <Box>
-              <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+              <Text variant="caption" color="muted" className="mb-1">
                 Data Source
               </Text>
               <Select
@@ -422,7 +422,7 @@ export function ReportsListPage({
       <Card>
         <CardBody padding="none">
           {reports.length === 0 ? (
-            <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+            <Box className="p-8 text-center">
               <Stack spacing="var(--spacing-4)" style={{ alignItems: 'center' }}>
                 <Text variant="body" color="muted">
                   No reports found

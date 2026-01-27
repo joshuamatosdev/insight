@@ -87,7 +87,7 @@ export function BackupCodesDisplay({
                   textAlign: 'center',
                 }}
               >
-                <Text variant="caption" color="muted" style={{ marginRight: 'var(--spacing-2)' }}>
+                <Text variant="caption" color="muted" className="mr-2">
                   {index + 1}.
                 </Text>
                 {code}

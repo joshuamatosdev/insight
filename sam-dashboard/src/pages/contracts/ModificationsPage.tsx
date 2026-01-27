@@ -167,7 +167,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
           </Text>
         </Box>
         {onBack !== undefined && (
-          <Box style={{ marginTop: 'var(--spacing-4)' }}>
+          <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
               Back
             </Button>
@@ -188,7 +188,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                style={{ marginBottom: 'var(--spacing-2)' }}
+                className="mb-2"
               >
                 Back to Contract
               </Button>
@@ -209,7 +209,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
       </SectionHeader>
 
       {showAddForm && (
-        <Card style={{ marginBottom: 'var(--spacing-6)' }}>
+        <Card className="mb-6">
           <form onSubmit={handleSubmit}>
             <CardHeader>
               <Text variant="heading4">Create Modification</Text>
@@ -217,7 +217,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
             <CardBody>
               <Stack spacing="var(--spacing-6)">
                 <Box>
-                  <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+                  <Text variant="heading5" className="mb-4">
                     Basic Information
                   </Text>
                   <Grid columns={2} gap="var(--spacing-4)">
@@ -226,7 +226,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Modification Number *
                         </Text>
@@ -245,7 +245,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Type *
                         </Text>
@@ -268,7 +268,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Title
                         </Text>
@@ -286,7 +286,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Description
                         </Text>
@@ -304,7 +304,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Effective Date
                         </Text>
@@ -321,7 +321,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 </Box>
 
                 <Box>
-                  <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+                  <Text variant="heading5" className="mb-4">
                     Value Changes
                   </Text>
                   <Grid columns={2} gap="var(--spacing-4)">
@@ -330,7 +330,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Value Change ($)
                         </Text>
@@ -349,7 +349,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           Funding Change ($)
                         </Text>
@@ -367,7 +367,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 </Box>
 
                 <Box>
-                  <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+                  <Text variant="heading5" className="mb-4">
                     Period of Performance Changes
                   </Text>
                   <Grid columns={2} gap="var(--spacing-4)">
@@ -376,7 +376,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           PoP Extension (days)
                         </Text>
@@ -395,7 +395,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                         <Text
                           variant="bodySmall"
                           weight="semibold"
-                          style={{ marginBottom: 'var(--spacing-1)' }}
+                          className="mb-1"
                         >
                           New PoP End Date
                         </Text>
@@ -416,7 +416,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Scope Change Summary
                     </Text>
@@ -435,7 +435,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Reason
                     </Text>

@@ -177,7 +177,7 @@ export function ClearanceForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Clearance Type *
                     </Text>
@@ -192,7 +192,7 @@ export function ClearanceForm({
                       <Text
                         variant="caption"
                         color="danger"
-                        style={{ marginTop: 'var(--spacing-1)' }}
+                        className="mt-1"
                       >
                         {errors.clearanceType}
                       </Text>
@@ -206,7 +206,7 @@ export function ClearanceForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Clearance Level *
                     </Text>
@@ -221,7 +221,7 @@ export function ClearanceForm({
                       <Text
                         variant="caption"
                         color="danger"
-                        style={{ marginTop: 'var(--spacing-1)' }}
+                        className="mt-1"
                       >
                         {errors.clearanceLevel}
                       </Text>
@@ -236,7 +236,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     User ID
                   </Text>
@@ -256,7 +256,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Entity/Facility Name
                   </Text>
@@ -277,7 +277,7 @@ export function ClearanceForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Sponsoring Agency
                     </Text>
@@ -297,7 +297,7 @@ export function ClearanceForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Case Number
                     </Text>
@@ -330,7 +330,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Investigation Date
                   </Text>
@@ -349,7 +349,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Grant Date
                   </Text>
@@ -368,7 +368,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Expiration Date
                   </Text>
@@ -388,7 +388,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Reinvestigation Date
                   </Text>
@@ -419,7 +419,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Polygraph Type
                   </Text>
@@ -438,7 +438,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Polygraph Date
                   </Text>
@@ -493,7 +493,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     SCI Programs
                   </Text>
@@ -527,7 +527,7 @@ export function ClearanceForm({
                         as="label"
                         variant="bodySmall"
                         weight="medium"
-                        style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                        className="block mb-1"
                       >
                         CAGE Code
                       </Text>
@@ -547,7 +547,7 @@ export function ClearanceForm({
                         as="label"
                         variant="bodySmall"
                         weight="medium"
-                        style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                        className="block mb-1"
                       >
                         FSO Name
                       </Text>
@@ -567,7 +567,7 @@ export function ClearanceForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Facility Address
                   </Text>
@@ -587,7 +587,7 @@ export function ClearanceForm({
                         as="label"
                         variant="bodySmall"
                         weight="medium"
-                        style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                        className="block mb-1"
                       >
                         FSO Email
                       </Text>
@@ -607,7 +607,7 @@ export function ClearanceForm({
                         as="label"
                         variant="bodySmall"
                         weight="medium"
-                        style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                        className="block mb-1"
                       >
                         FSO Phone
                       </Text>

@@ -186,7 +186,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   CLIN Number *
                 </Text>
@@ -202,7 +202,7 @@ export function ClinForm({
                 <Text
                   variant="caption"
                   color="danger"
-                  style={{ marginTop: 'var(--spacing-1)' }}
+                  className="mt-1"
                 >
                   {errors.clinNumber}
                 </Text>
@@ -213,7 +213,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   CLIN Type
                 </Text>
@@ -236,7 +236,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   Description
                 </Text>
@@ -254,7 +254,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   Pricing Type
                 </Text>
@@ -278,7 +278,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   Total Value ($)
                 </Text>
@@ -295,7 +295,7 @@ export function ClinForm({
                 <Text
                   variant="caption"
                   color="danger"
-                  style={{ marginTop: 'var(--spacing-1)' }}
+                  className="mt-1"
                 >
                   {errors.totalValue}
                 </Text>
@@ -306,7 +306,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   Funded Amount ($)
                 </Text>
@@ -323,7 +323,7 @@ export function ClinForm({
                 <Text
                   variant="caption"
                   color="danger"
-                  style={{ marginTop: 'var(--spacing-1)' }}
+                  className="mt-1"
                 >
                   {errors.fundedAmount}
                 </Text>
@@ -335,7 +335,7 @@ export function ClinForm({
                   <Text
                     variant="bodySmall"
                     weight="semibold"
-                    style={{ marginBottom: 'var(--spacing-1)' }}
+                    className="mb-1"
                   >
                     Invoiced Amount ($)
                   </Text>
@@ -352,7 +352,7 @@ export function ClinForm({
                   <Text
                     variant="caption"
                     color="danger"
-                    style={{ marginTop: 'var(--spacing-1)' }}
+                    className="mt-1"
                   >
                     {errors.invoicedAmount}
                   </Text>
@@ -364,7 +364,7 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  style={{ marginBottom: 'var(--spacing-1)' }}
+                  className="mb-1"
                 >
                   Notes
                 </Text>

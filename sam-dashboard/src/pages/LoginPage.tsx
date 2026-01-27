@@ -179,7 +179,7 @@ export function LoginPage(): React.ReactElement {
                     <Text
                       variant="caption"
                       color="danger"
-                      style={{ marginTop: 'var(--spacing-1)' }}
+                      className="mt-1"
                     >
                       {validationErrors.email}
                     </Text>
@@ -212,7 +212,7 @@ export function LoginPage(): React.ReactElement {
                     <Text
                       variant="caption"
                       color="danger"
-                      style={{ marginTop: 'var(--spacing-1)' }}
+                      className="mt-1"
                     >
                       {validationErrors.password}
                     </Text>
@@ -226,7 +226,7 @@ export function LoginPage(): React.ReactElement {
                   fullWidth
                   isLoading={isLoading}
                   isDisabled={isLoading}
-                  style={{ marginTop: 'var(--spacing-2)' }}
+                  className="mt-2"
                 >
                   Sign In
                 </Button>

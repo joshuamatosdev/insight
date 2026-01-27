@@ -228,7 +228,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
 
       {/* Form */}
       {showForm && (
-        <Card variant="elevated" style={{ marginBottom: 'var(--spacing-6)' }}>
+        <Card variant="elevated" className="mb-6">
           <CardHeader>
             <Text variant="heading5">Create New Invoice</Text>
           </CardHeader>
@@ -269,7 +269,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
               direction="column"
               align="center"
               gap="md"
-              style={{ padding: 'var(--spacing-8)' }}
+              className="p-8"
             >
               <FileTextIcon size="xl" color="muted" />
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
@@ -308,7 +308,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
             <HStack
               justify="center"
               spacing="var(--spacing-2)"
-              style={{ marginTop: 'var(--spacing-6)' }}
+              className="mt-6"
             >
               <Button
                 variant="outline"

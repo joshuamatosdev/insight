@@ -267,7 +267,7 @@ export function RoleFormModal({
                   as="label"
                   variant="bodySmall"
                   weight="medium"
-                  style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                  className="block mb-1"
                 >
                   Role Name *
                 </Text>
@@ -283,7 +283,7 @@ export function RoleFormModal({
                 <Text
                   variant="caption"
                   color={errors.name !== undefined ? 'danger' : 'muted'}
-                  style={{ marginTop: 'var(--spacing-1)' }}
+                  className="mt-1"
                 >
                   {errors.name ?? 'Uppercase letters and underscores only'}
                 </Text>
@@ -295,7 +295,7 @@ export function RoleFormModal({
                   as="label"
                   variant="bodySmall"
                   weight="medium"
-                  style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                  className="block mb-1"
                 >
                   Description
                 </Text>
@@ -311,7 +311,7 @@ export function RoleFormModal({
                   <Text
                     variant="caption"
                     color="danger"
-                    style={{ marginTop: 'var(--spacing-1)' }}
+                    className="mt-1"
                   >
                     {errors.description}
                   </Text>
@@ -347,7 +347,7 @@ export function RoleFormModal({
                           borderRadius: 'var(--radius-md)',
                         }}
                       >
-                        <HStack justify="between" align="center" style={{ marginBottom: 'var(--spacing-2)' }}>
+                        <HStack justify="between" align="center" className="mb-2">
                           <Text variant="bodySmall" weight="semibold">
                             {formatCategoryName(category)}
                           </Text>
@@ -399,7 +399,7 @@ export function RoleFormModal({
                 <Text
                   variant="caption"
                   color="muted"
-                  style={{ marginTop: 'var(--spacing-2)' }}
+                  className="mt-2"
                 >
                   {form.permissions.length} permission
                   {form.permissions.length !== 1 ? 's' : ''} selected

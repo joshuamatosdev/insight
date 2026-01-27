@@ -252,7 +252,7 @@ export function AnalyticsDashboardPage() {
           disabled={isLoading}
         >
           <RefreshIcon size="sm" />
-          <span style={{ marginLeft: 'var(--spacing-2)' }}>Refresh</span>
+          <span className="ml-2">Refresh</span>
         </Button>
       </SectionHeader>
 
@@ -289,7 +289,7 @@ export function AnalyticsDashboardPage() {
       </StatsGrid>
 
       {/* Win Rate Card */}
-      <Card style={{ marginTop: 'var(--spacing-6)' }}>
+      <Card className="mt-6">
         <CardBody>
           <HStack justify="between" align="center">
             <Stack spacing="var(--spacing-1)">
@@ -298,7 +298,7 @@ export function AnalyticsDashboardPage() {
               </Text>
               <Text
                 variant="heading1"
-                style={{ fontSize: 'var(--font-size-4xl)', fontWeight: 700 }}
+                className="text-4xl font-bold"
               >
                 {stats?.winRate !== null && stats?.winRate !== undefined
                   ? `${stats.winRate.toFixed(1)}%`
@@ -318,7 +318,7 @@ export function AnalyticsDashboardPage() {
       </Card>
 
       {/* Charts and Tables */}
-      <Grid columns="2fr 1fr" gap="var(--spacing-6)" style={{ marginTop: 'var(--spacing-6)' }}>
+      <Grid columns="2fr 1fr" gap="var(--spacing-6)" className="mt-6">
         <GridItem>
           <TrendChart
             title="Opportunity Views Trend"
@@ -339,7 +339,7 @@ export function AnalyticsDashboardPage() {
       </Grid>
 
       {/* Activity Feed */}
-      <Grid columns="1fr" gap="var(--spacing-6)" style={{ marginTop: 'var(--spacing-6)' }}>
+      <Grid columns="1fr" gap="var(--spacing-6)" className="mt-6">
         <GridItem>
           <ActivityFeed
             activities={activities}
@@ -352,7 +352,7 @@ export function AnalyticsDashboardPage() {
       </Grid>
 
       {/* Event Breakdown */}
-      <Card style={{ marginTop: 'var(--spacing-6)' }}>
+      <Card className="mt-6">
         <CardHeader>
           <Text variant="heading5">Event Breakdown (Last 30 Days)</Text>
         </CardHeader>

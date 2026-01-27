@@ -325,7 +325,7 @@ export function ClearancesPage(): React.ReactElement {
                 direction="column"
                 align="center"
                 gap="md"
-                style={{ padding: 'var(--spacing-8)' }}
+                className="p-8"
               >
                 <ShieldLockIcon size="xl" color="muted" />
                 <Text variant="body" color="muted" style={{ textAlign: 'center' }}>

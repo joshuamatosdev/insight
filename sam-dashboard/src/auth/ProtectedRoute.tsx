@@ -20,7 +20,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps): React.ReactEl
       <Flex
         justify="center"
         align="center"
-        style={{ minHeight: '100vh', backgroundColor: 'var(--color-gray-50)' }}
+        className="min-h-screen bg-zinc-50 dark:bg-zinc-900"
       >
         <Text variant="body" color="muted">
           Loading...

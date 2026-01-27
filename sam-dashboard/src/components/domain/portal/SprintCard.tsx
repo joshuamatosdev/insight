@@ -101,7 +101,7 @@ export function SprintCard({
       </CardHeader>
       <CardBody>
         {sprint.goal !== null && sprint.goal !== '' && (
-          <Box style={{ marginBottom: 'var(--spacing-3)' }}>
+          <Box className="mb-3">
             <Text variant="bodySmall" color="muted">
               {sprint.goal}
             </Text>
@@ -109,8 +109,8 @@ export function SprintCard({
         )}
 
         {/* Progress Bar */}
-        <Box style={{ marginBottom: 'var(--spacing-3)' }}>
-          <Flex justify="space-between" align="center" style={{ marginBottom: 'var(--spacing-1)' }}>
+        <Box className="mb-3">
+          <Flex justify="space-between" align="center" className="mb-1">
             <Text variant="caption" color="muted">
               Progress
             </Text>

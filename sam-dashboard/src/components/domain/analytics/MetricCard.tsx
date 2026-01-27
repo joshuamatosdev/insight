@@ -77,7 +77,7 @@ export function MetricCard({
           <Text
             variant="heading1"
             color="white"
-            style={{ fontSize: 'var(--font-size-4xl)', fontWeight: 700 }}
+            className="text-4xl font-bold"
           >
             {typeof value === 'number' ? value.toLocaleString() : value}
           </Text>

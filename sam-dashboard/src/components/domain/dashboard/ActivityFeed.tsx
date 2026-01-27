@@ -102,7 +102,7 @@ export function ActivityFeed({
                       {activity.actor}
                     </Text>{' '}
                     {activity.action}{' '}
-                    <Text as="span" style={{ color: 'var(--color-primary)' }}>
+                    <Text as="span" className="text-primary">
                       {activity.subject}
                     </Text>
                   </Text>

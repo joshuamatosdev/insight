@@ -135,7 +135,7 @@ export function PipelineStageColumn({
           </Badge>
         </HStack>
 
-        <HStack justify="between" gap="md" style={{ marginTop: 'var(--spacing-2)' }}>
+        <HStack justify="between" gap="md" className="mt-2">
           <Stack gap="0">
             <Text variant="caption" color="secondary">
               Total Value

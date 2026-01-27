@@ -111,7 +111,7 @@ export function PipelinePage() {
   if (error !== null) {
     return (
       <Section id="pipeline">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="danger">
             Error: {error.message}
           </Text>
@@ -123,7 +123,7 @@ export function PipelinePage() {
   if (loadingPipelines === true) {
     return (
       <Section id="pipeline">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="secondary">
             Loading pipelines...
           </Text>
@@ -135,7 +135,7 @@ export function PipelinePage() {
   if (pipelines.length === 0) {
     return (
       <Section id="pipeline">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Stack gap="md" align="center">
             <Text variant="heading4">No Pipelines Found</Text>
             <Text variant="body" color="secondary">
@@ -174,7 +174,7 @@ export function PipelinePage() {
 
       {/* Summary Stats */}
       {summary !== null && (
-        <HStack gap="lg" wrap="wrap" style={{ marginBottom: 'var(--spacing-4)' }}>
+        <HStack gap="lg" wrap="wrap" className="mb-4">
           <Stack gap="xs">
             <Text variant="caption" color="secondary">
               Total Pipeline Value

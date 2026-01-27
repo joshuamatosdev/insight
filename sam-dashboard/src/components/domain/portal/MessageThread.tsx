@@ -37,16 +37,15 @@ function MessageBubble({
 
   return (
     <Flex
-      className={className}
+      className={`${className} mb-2`}
       justify={isOwn ? 'flex-end' : 'flex-start'}
-      style={{ marginBottom: 'var(--spacing-2)' }}
     >
       <Box style={bubbleStyles}>
         {showSender && isOwn === false && (
           <Text
             variant="caption"
             weight="semibold"
-            style={{ marginBottom: 'var(--spacing-1)' }}
+            className="mb-1"
           >
             {message.senderName}
           </Text>

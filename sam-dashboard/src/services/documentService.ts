@@ -1,4 +1,4 @@
-import { apiClient } from './apiClient';
+import type { ApiResult } from './apiClient';
 import type {
   Document,
   DocumentFilters,
@@ -25,6 +25,169 @@ interface Page<T> {
 
 const DOCUMENTS_BASE = '/api/documents';
 
+/**
+ * Helper to make API calls to /api/documents endpoints (not /api/v1/documents)
+ * DocumentController uses /api/documents, not /api/v1/documents
+ */
+async function documentApiGet<T>(path: string): Promise<ApiResult<T>> {
+  try {
+    const response = await fetch(path, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(localStorage.getItem('auth') !== null
+          ? {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('auth') ?? '{}').accessToken ?? ''}`,
+            }
+          : {}),
+      },
+    });
+
+    if (response.ok === false) {
+      const error = await response.json().catch(() => ({ message: response.statusText }));
+      return {
+        success: false,
+        error: {
+          message: error.message ?? 'An error occurred',
+          status: response.status,
+        },
+      };
+    }
+
+    const data = (await response.json()) as T;
+    return { success: true, data };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Network error',
+        status: 0,
+      },
+    };
+  }
+}
+
+async function documentApiPost<T, B = unknown>(path: string, body: B): Promise<ApiResult<T>> {
+  try {
+    const response = await fetch(path, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(localStorage.getItem('auth') !== null
+          ? {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('auth') ?? '{}').accessToken ?? ''}`,
+            }
+          : {}),
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok === false) {
+      const error = await response.json().catch(() => ({ message: response.statusText }));
+      return {
+        success: false,
+        error: {
+          message: error.message ?? 'An error occurred',
+          status: response.status,
+        },
+      };
+    }
+
+    const data = (await response.json()) as T;
+    return { success: true, data };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Network error',
+        status: 0,
+      },
+    };
+  }
+}
+
+async function documentApiPut<T, B = unknown>(path: string, body: B): Promise<ApiResult<T>> {
+  try {
+    const response = await fetch(path, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(localStorage.getItem('auth') !== null
+          ? {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('auth') ?? '{}').accessToken ?? ''}`,
+            }
+          : {}),
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok === false) {
+      const error = await response.json().catch(() => ({ message: response.statusText }));
+      return {
+        success: false,
+        error: {
+          message: error.message ?? 'An error occurred',
+          status: response.status,
+        },
+      };
+    }
+
+    const data = (await response.json()) as T;
+    return { success: true, data };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Network error',
+        status: 0,
+      },
+    };
+  }
+}
+
+async function documentApiDelete<T = void>(path: string): Promise<ApiResult<T>> {
+  try {
+    const response = await fetch(path, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(localStorage.getItem('auth') !== null
+          ? {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('auth') ?? '{}').accessToken ?? ''}`,
+            }
+          : {}),
+      },
+    });
+
+    if (response.ok === false) {
+      const error = await response.json().catch(() => ({ message: response.statusText }));
+      return {
+        success: false,
+        error: {
+          message: error.message ?? 'An error occurred',
+          status: response.status,
+        },
+      };
+    }
+
+    const text = await response.text();
+    if (text.length === 0) {
+      return { success: true, data: undefined as T };
+    }
+
+    const data = JSON.parse(text) as T;
+    return { success: true, data };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Network error',
+        status: 0,
+      },
+    };
+  }
+}
+
 // ============ Documents ============
 
 export async function fetchDocuments(
@@ -49,7 +212,7 @@ export async function fetchDocuments(
     params.set('folderId', filters.folderId);
   }
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}?${params.toString()}`);
+  const response = await documentApiGet<Page<Document>>(`${DOCUMENTS_BASE}?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -57,7 +220,7 @@ export async function fetchDocuments(
 }
 
 export async function fetchDocument(id: string): Promise<Document> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/${id}`);
+  const response = await documentApiGet<Document>(`${DOCUMENTS_BASE}/${id}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -65,7 +228,7 @@ export async function fetchDocument(id: string): Promise<Document> {
 }
 
 export async function createDocument(request: CreateDocumentRequest): Promise<Document> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}`, request);
+  const response = await documentApiPost<Document, CreateDocumentRequest>(`${DOCUMENTS_BASE}`, request);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -73,7 +236,7 @@ export async function createDocument(request: CreateDocumentRequest): Promise<Do
 }
 
 export async function updateDocument(id: string, request: UpdateDocumentRequest): Promise<Document> {
-  const response = await apiClient.put(`${DOCUMENTS_BASE}/${id}`, request);
+  const response = await documentApiPut<Document, UpdateDocumentRequest>(`${DOCUMENTS_BASE}/${id}`, request);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -81,7 +244,7 @@ export async function updateDocument(id: string, request: UpdateDocumentRequest)
 }
 
 export async function deleteDocument(id: string): Promise<void> {
-  const response = await apiClient.delete(`${DOCUMENTS_BASE}/${id}`);
+  const response = await documentApiDelete<void>(`${DOCUMENTS_BASE}/${id}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -97,7 +260,7 @@ export async function searchDocuments(
   params.set('page', page.toString());
   params.set('size', size.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/search?${params.toString()}`);
+  const response = await documentApiGet<Page<Document>>(`${DOCUMENTS_BASE}/search?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -113,7 +276,7 @@ export async function fetchDocumentsByFolder(
   params.set('page', page.toString());
   params.set('size', size.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/folder/${folderId}?${params.toString()}`);
+  const response = await documentApiGet<Page<Document>>(`${DOCUMENTS_BASE}/folder/${folderId}?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -129,7 +292,7 @@ export async function fetchDocumentsByOpportunity(
   params.set('page', page.toString());
   params.set('size', size.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/opportunity/${opportunityId}?${params.toString()}`);
+  const response = await documentApiGet<Page<Document>>(`${DOCUMENTS_BASE}/opportunity/${opportunityId}?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -145,7 +308,7 @@ export async function fetchDocumentsByContract(
   params.set('page', page.toString());
   params.set('size', size.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/contract/${contractId}?${params.toString()}`);
+  const response = await documentApiGet<Page<Document>>(`${DOCUMENTS_BASE}/contract/${contractId}?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -153,7 +316,7 @@ export async function fetchDocumentsByContract(
 }
 
 export async function fetchDocumentVersions(documentId: string): Promise<Document[]> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/${documentId}/versions`);
+  const response = await documentApiGet<Document[]>(`${DOCUMENTS_BASE}/${documentId}/versions`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -161,7 +324,7 @@ export async function fetchDocumentVersions(documentId: string): Promise<Documen
 }
 
 export async function checkoutDocument(id: string): Promise<Document> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/${id}/checkout`, {});
+  const response = await documentApiPost<Document>(`${DOCUMENTS_BASE}/${id}/checkout`, {});
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -177,7 +340,7 @@ export async function checkinDocument(
   params.set('newFilePath', newFilePath);
   params.set('newFileSize', newFileSize.toString());
 
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/${id}/checkin?${params.toString()}`, {});
+  const response = await documentApiPost<Document>(`${DOCUMENTS_BASE}/${id}/checkin?${params.toString()}`, {});
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -195,7 +358,7 @@ export async function updateDocumentStatus(
     params.set('notes', notes);
   }
 
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/${id}/status?${params.toString()}`, {});
+  const response = await documentApiPost<Document>(`${DOCUMENTS_BASE}/${id}/status?${params.toString()}`, {});
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -206,7 +369,7 @@ export async function fetchExpiringDocuments(daysAhead: number = 30): Promise<Do
   const params = new URLSearchParams();
   params.set('daysAhead', daysAhead.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/expiring?${params.toString()}`);
+  const response = await documentApiGet<Document[]>(`${DOCUMENTS_BASE}/expiring?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -214,7 +377,7 @@ export async function fetchExpiringDocuments(daysAhead: number = 30): Promise<Do
 }
 
 export async function fetchStorageSummary(): Promise<DocumentStorageSummary> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/storage-summary`);
+  const response = await documentApiGet<DocumentStorageSummary>(`${DOCUMENTS_BASE}/storage-summary`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -224,7 +387,7 @@ export async function fetchStorageSummary(): Promise<DocumentStorageSummary> {
 // ============ Folders ============
 
 export async function fetchFolders(): Promise<DocumentFolder[]> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/folders`);
+  const response = await documentApiGet<DocumentFolder[]>(`${DOCUMENTS_BASE}/folders`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -232,7 +395,7 @@ export async function fetchFolders(): Promise<DocumentFolder[]> {
 }
 
 export async function fetchFolder(id: string): Promise<DocumentFolder> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/folders/${id}`);
+  const response = await documentApiGet<DocumentFolder>(`${DOCUMENTS_BASE}/folders/${id}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -240,7 +403,7 @@ export async function fetchFolder(id: string): Promise<DocumentFolder> {
 }
 
 export async function fetchChildFolders(parentId: string): Promise<DocumentFolder[]> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/folders/${parentId}/children`);
+  const response = await documentApiGet<DocumentFolder[]>(`${DOCUMENTS_BASE}/folders/${parentId}/children`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -248,7 +411,7 @@ export async function fetchChildFolders(parentId: string): Promise<DocumentFolde
 }
 
 export async function createFolder(request: CreateFolderRequest): Promise<DocumentFolder> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/folders`, request);
+  const response = await documentApiPost<DocumentFolder, CreateFolderRequest>(`${DOCUMENTS_BASE}/folders`, request);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -256,7 +419,7 @@ export async function createFolder(request: CreateFolderRequest): Promise<Docume
 }
 
 export async function updateFolder(id: string, request: UpdateFolderRequest): Promise<DocumentFolder> {
-  const response = await apiClient.put(`${DOCUMENTS_BASE}/folders/${id}`, request);
+  const response = await documentApiPut<DocumentFolder, UpdateFolderRequest>(`${DOCUMENTS_BASE}/folders/${id}`, request);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -264,7 +427,7 @@ export async function updateFolder(id: string, request: UpdateFolderRequest): Pr
 }
 
 export async function deleteFolder(id: string): Promise<void> {
-  const response = await apiClient.delete(`${DOCUMENTS_BASE}/folders/${id}`);
+  const response = await documentApiDelete<void>(`${DOCUMENTS_BASE}/folders/${id}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -274,7 +437,7 @@ export async function searchFolders(keyword: string): Promise<DocumentFolder[]> 
   const params = new URLSearchParams();
   params.set('keyword', keyword);
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/folders/search?${params.toString()}`);
+  const response = await documentApiGet<DocumentFolder[]>(`${DOCUMENTS_BASE}/folders/search?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -282,7 +445,7 @@ export async function searchFolders(keyword: string): Promise<DocumentFolder[]> 
 }
 
 export async function fetchFolderBreadcrumb(folderId: string): Promise<DocumentFolder[]> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/folders/${folderId}/breadcrumb`);
+  const response = await documentApiGet<DocumentFolder[]>(`${DOCUMENTS_BASE}/folders/${folderId}/breadcrumb`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -296,7 +459,7 @@ export async function fetchTemplates(page: number = 0, size: number = 20): Promi
   params.set('page', page.toString());
   params.set('size', size.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/templates?${params.toString()}`);
+  const response = await documentApiGet<Page<DocumentTemplate>>(`${DOCUMENTS_BASE}/templates?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -304,7 +467,7 @@ export async function fetchTemplates(page: number = 0, size: number = 20): Promi
 }
 
 export async function fetchTemplate(id: string): Promise<DocumentTemplate> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/templates/${id}`);
+  const response = await documentApiGet<DocumentTemplate>(`${DOCUMENTS_BASE}/templates/${id}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -312,7 +475,7 @@ export async function fetchTemplate(id: string): Promise<DocumentTemplate> {
 }
 
 export async function createTemplate(request: CreateTemplateRequest): Promise<DocumentTemplate> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/templates`, request);
+  const response = await documentApiPost<DocumentTemplate, CreateTemplateRequest>(`${DOCUMENTS_BASE}/templates`, request);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -320,7 +483,7 @@ export async function createTemplate(request: CreateTemplateRequest): Promise<Do
 }
 
 export async function updateTemplate(id: string, request: UpdateTemplateRequest): Promise<DocumentTemplate> {
-  const response = await apiClient.put(`${DOCUMENTS_BASE}/templates/${id}`, request);
+  const response = await documentApiPut<DocumentTemplate, UpdateTemplateRequest>(`${DOCUMENTS_BASE}/templates/${id}`, request);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -328,14 +491,14 @@ export async function updateTemplate(id: string, request: UpdateTemplateRequest)
 }
 
 export async function deleteTemplate(id: string): Promise<void> {
-  const response = await apiClient.delete(`${DOCUMENTS_BASE}/templates/${id}`);
+  const response = await documentApiDelete<void>(`${DOCUMENTS_BASE}/templates/${id}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
 }
 
 export async function approveTemplate(id: string): Promise<DocumentTemplate> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/templates/${id}/approve`, {});
+  const response = await documentApiPost<DocumentTemplate>(`${DOCUMENTS_BASE}/templates/${id}/approve`, {});
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -343,7 +506,7 @@ export async function approveTemplate(id: string): Promise<DocumentTemplate> {
 }
 
 export async function setDefaultTemplate(id: string): Promise<DocumentTemplate> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/templates/${id}/set-default`, {});
+  const response = await documentApiPost<DocumentTemplate>(`${DOCUMENTS_BASE}/templates/${id}/set-default`, {});
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -351,7 +514,7 @@ export async function setDefaultTemplate(id: string): Promise<DocumentTemplate> 
 }
 
 export async function recordTemplateUsage(id: string): Promise<void> {
-  const response = await apiClient.post(`${DOCUMENTS_BASE}/templates/${id}/use`, {});
+  const response = await documentApiPost<void>(`${DOCUMENTS_BASE}/templates/${id}/use`, {});
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -367,7 +530,7 @@ export async function searchTemplates(
   params.set('page', page.toString());
   params.set('size', size.toString());
 
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/templates/search?${params.toString()}`);
+  const response = await documentApiGet<Page<DocumentTemplate>>(`${DOCUMENTS_BASE}/templates/search?${params.toString()}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -375,7 +538,7 @@ export async function searchTemplates(
 }
 
 export async function fetchTemplatesByType(type: TemplateType): Promise<DocumentTemplate[]> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/templates/type/${type}`);
+  const response = await documentApiGet<DocumentTemplate[]>(`${DOCUMENTS_BASE}/templates/type/${type}`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }
@@ -383,7 +546,7 @@ export async function fetchTemplatesByType(type: TemplateType): Promise<Document
 }
 
 export async function fetchTemplateCategories(): Promise<string[]> {
-  const response = await apiClient.get(`${DOCUMENTS_BASE}/templates/categories`);
+  const response = await documentApiGet<string[]>(`${DOCUMENTS_BASE}/templates/categories`);
   if (response.success === false) {
     throw new Error(response.error.message);
   }

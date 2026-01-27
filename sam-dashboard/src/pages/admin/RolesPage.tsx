@@ -282,7 +282,7 @@ export function RolesPage(): React.ReactElement {
               {roles.length === 0 && (
                 <TableRow>
                   <TableCell>
-                    <Text variant="body" color="muted" style={{ padding: 'var(--spacing-8)' }}>
+                    <Text variant="body" color="muted" className="p-8">
                       No roles found. Create your first role to get started.
                     </Text>
                   </TableCell>

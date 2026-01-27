@@ -59,7 +59,7 @@ export function InboxList({
   if (isLoading) {
     return (
       <Box className={className} style={containerStyles}>
-        <Flex justify="center" align="center" style={{ padding: 'var(--spacing-8)' }}>
+        <Flex justify="center" align="center" className="p-8">
           <Text variant="body" color="muted">
             Loading messages...
           </Text>
@@ -75,7 +75,7 @@ export function InboxList({
           justify="center"
           align="center"
           direction="column"
-          style={{ padding: 'var(--spacing-8)' }}
+          className="p-8"
         >
           <Text variant="heading5" color="muted">
             No messages
@@ -171,7 +171,7 @@ export function InboxList({
 
                 {/* Unread Badge */}
                 {hasUnread && (
-                  <Box style={{ marginLeft: 'var(--spacing-2)' }}>
+                  <Box className="ml-2">
                     <Badge variant="primary" size="sm">
                       {thread.unreadCount}
                     </Badge>

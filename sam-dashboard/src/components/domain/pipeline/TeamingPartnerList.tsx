@@ -62,7 +62,7 @@ export function TeamingPartnerList({
       </CardHeader>
       <CardBody>
         {isLoading === true && (
-          <Box style={{ padding: 'var(--spacing-4)', textAlign: 'center' }}>
+          <Box className="p-4 text-center">
             <Text variant="bodySmall" color="secondary">
               Loading partners...
             </Text>
@@ -70,7 +70,7 @@ export function TeamingPartnerList({
         )}
 
         {isLoading === false && displayPartners.length === 0 && (
-          <Box style={{ padding: 'var(--spacing-4)', textAlign: 'center' }}>
+          <Box className="p-4 text-center">
             <Text variant="bodySmall" color="secondary">
               No teaming partners added yet
             </Text>

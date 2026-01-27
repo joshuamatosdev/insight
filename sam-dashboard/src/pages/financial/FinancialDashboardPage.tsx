@@ -214,7 +214,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                     direction="column"
                     align="center"
                     justify="center"
-                    style={{ padding: 'var(--spacing-4)' }}
+                    className="p-4"
                   >
                     <Text variant="body" color="success">
                       No overdue invoices
@@ -266,7 +266,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                     direction="column"
                     align="center"
                     justify="center"
-                    style={{ padding: 'var(--spacing-4)' }}
+                    className="p-4"
                   >
                     <Text variant="body" color="success">
                       All budgets on track

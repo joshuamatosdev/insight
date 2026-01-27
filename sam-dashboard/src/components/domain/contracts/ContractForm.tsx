@@ -208,13 +208,13 @@ export function ContractForm({
         <CardBody>
           <Stack spacing="var(--spacing-6)">
             <Box>
-              <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+              <Text variant="heading5" className="mb-4">
                 Basic Information
               </Text>
               <Grid columns={2} gap="var(--spacing-4)">
                 <Box>
                   <label htmlFor="contractNumber">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Contract Number *
                     </Text>
                   </label>
@@ -226,14 +226,14 @@ export function ContractForm({
                     placeholder="e.g., GS-35F-0123X"
                   />
                   {errors.contractNumber !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {errors.contractNumber}
                     </Text>
                   )}
                 </Box>
                 <Box>
                   <label htmlFor="contractType">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Contract Type *
                     </Text>
                   </label>
@@ -252,7 +252,7 @@ export function ContractForm({
                 </Box>
                 <Box style={{ gridColumn: 'span 2' }}>
                   <label htmlFor="title">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Title *
                     </Text>
                   </label>
@@ -264,14 +264,14 @@ export function ContractForm({
                     placeholder="Contract title"
                   />
                   {errors.title !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {errors.title}
                     </Text>
                   )}
                 </Box>
                 <Box style={{ gridColumn: 'span 2' }}>
                   <label htmlFor="description">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Description
                     </Text>
                   </label>
@@ -286,7 +286,7 @@ export function ContractForm({
                 {isEditing && (
                   <Box>
                     <label htmlFor="status">
-                      <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                      <Text variant="bodySmall" weight="semibold" className="mb-1">
                         Status
                       </Text>
                     </label>
@@ -306,7 +306,7 @@ export function ContractForm({
                 )}
                 <Box>
                   <label htmlFor="agency">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Agency
                     </Text>
                   </label>
@@ -322,13 +322,13 @@ export function ContractForm({
             </Box>
 
             <Box>
-              <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+              <Text variant="heading5" className="mb-4">
                 Period of Performance
               </Text>
               <Grid columns={2} gap="var(--spacing-4)">
                 <Box>
                   <label htmlFor="popStartDate">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Start Date
                     </Text>
                   </label>
@@ -342,7 +342,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="popEndDate">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       End Date
                     </Text>
                   </label>
@@ -358,13 +358,13 @@ export function ContractForm({
             </Box>
 
             <Box>
-              <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+              <Text variant="heading5" className="mb-4">
                 Contract Value
               </Text>
               <Grid columns={2} gap="var(--spacing-4)">
                 <Box>
                   <label htmlFor="totalValue">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Total Value ($)
                     </Text>
                   </label>
@@ -377,14 +377,14 @@ export function ContractForm({
                     placeholder="0"
                   />
                   {errors.totalValue !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {errors.totalValue}
                     </Text>
                   )}
                 </Box>
                 <Box>
                   <label htmlFor="fundedValue">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Funded Value ($)
                     </Text>
                   </label>
@@ -397,7 +397,7 @@ export function ContractForm({
                     placeholder="0"
                   />
                   {errors.fundedValue !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {errors.fundedValue}
                     </Text>
                   )}
@@ -406,13 +406,13 @@ export function ContractForm({
             </Box>
 
             <Box>
-              <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+              <Text variant="heading5" className="mb-4">
                 Key Contacts
               </Text>
               <Grid columns={2} gap="var(--spacing-4)">
                 <Box>
                   <label htmlFor="contractingOfficerName">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Contracting Officer Name
                     </Text>
                   </label>
@@ -426,7 +426,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="contractingOfficerEmail">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       Contracting Officer Email
                     </Text>
                   </label>
@@ -441,7 +441,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="corName">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       COR Name
                     </Text>
                   </label>
@@ -455,7 +455,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="corEmail">
-                    <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="bodySmall" weight="semibold" className="mb-1">
                       COR Email
                     </Text>
                   </label>

@@ -189,7 +189,7 @@ function ScopeItemRow({
               }}
               title={item.assigneeName}
             >
-              <Text variant="caption" weight="semibold" style={{ color: 'var(--color-primary)' }}>
+              <Text variant="caption" weight="semibold" className="text-primary">
                 {item.assigneeName.charAt(0).toUpperCase()}
               </Text>
             </Box>
@@ -295,7 +295,7 @@ export function ScopeItemList({
         <Flex
           justify="center"
           align="center"
-          style={{ padding: 'var(--spacing-8)' }}
+          className="p-8"
         >
           <Text variant="body" color="muted">
             No scope items defined

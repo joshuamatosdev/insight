@@ -109,7 +109,7 @@ export function RolesPage(): React.ReactElement {
   const renderPermissions = (): React.ReactElement => {
     if (selectedRole === null) {
       return (
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="muted">
             Select a role to view its permissions
           </Text>
@@ -143,7 +143,7 @@ export function RolesPage(): React.ReactElement {
         {Object.entries(permissions).map(([category, perms]) => (
           <Card key={category} variant="default">
             <CardBody padding="md">
-              <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-2)' }}>
+              <Text variant="bodySmall" weight="semibold" className="mb-2">
                 {category.replace(/_/g, ' ')}
               </Text>
               <Flex gap="sm" style={{ flexWrap: 'wrap' }}>

@@ -113,7 +113,7 @@ export function MessagingPage(): React.ReactElement {
         <Text variant="body" color="danger">
           Error loading messages: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} style={{ marginTop: 'var(--spacing-3)' }}>
+        <Button variant="secondary" onClick={refresh} className="mt-3">
           Retry
         </Button>
       </Box>
@@ -121,7 +121,7 @@ export function MessagingPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" style={{ padding: 'var(--spacing-6)' }}>
+    <Stack spacing="var(--spacing-6)" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -239,7 +239,7 @@ export function MessagingPage(): React.ReactElement {
           {/* Message Content (2 columns) */}
           <Box style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column' }}>
             {showComposer ? (
-              <Box style={{ padding: 'var(--spacing-4)' }}>
+              <Box className="p-4">
                 <MessageComposer
                   onSend={handleSendNewMessage}
                   onCancel={() => setShowComposer(false)}

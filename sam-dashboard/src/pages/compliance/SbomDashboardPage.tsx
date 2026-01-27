@@ -55,7 +55,7 @@ export function SbomDashboardPage(): React.ReactElement {
               direction="column"
               align="center"
               gap="md"
-              style={{ padding: 'var(--spacing-8)' }}
+              className="p-8"
             >
               <Text variant="body" color="danger">
                 Error loading SBOM data: {error.message}
@@ -151,11 +151,11 @@ export function SbomDashboardPage(): React.ReactElement {
                 </GridItem>
               </Grid>
 
-              <Box style={{ marginTop: 'var(--spacing-4)' }}>
+              <Box className="mt-4">
                 <Text variant="caption" color="muted">
                   Available Formats
                 </Text>
-                <HStack spacing="var(--spacing-2)" style={{ marginTop: 'var(--spacing-1)' }}>
+                <HStack spacing="var(--spacing-2)" className="mt-1">
                   <Text
                     variant="bodySmall"
                     color={info.cyclonedxAvailable ? 'success' : 'muted'}

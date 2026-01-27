@@ -119,7 +119,7 @@ export function VerifyEmailPage(): React.ReactElement {
               </Button>
               <Text variant="bodySmall" color="muted">
                 Need a new verification link?{' '}
-                <Link to="/resend-verification" style={{ color: 'var(--color-primary)' }}>
+                <Link to="/resend-verification" className="text-primary">
                   Resend verification email
                 </Link>
               </Text>
@@ -159,7 +159,7 @@ export function VerifyEmailPage(): React.ReactElement {
       <Box style={{ width: '100%', maxWidth: '400px' }}>
         <Card variant="elevated">
           <CardBody padding="lg">
-            <Flex justify="center" style={{ marginBottom: 'var(--spacing-4)' }}>
+            <Flex justify="center" className="mb-4">
               <BuildingCheckIcon size="xl" color="var(--color-primary)" />
             </Flex>
             {renderContent()}

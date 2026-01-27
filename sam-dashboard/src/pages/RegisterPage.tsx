@@ -244,7 +244,7 @@ export function RegisterPage(): React.ReactElement {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       First Name *
                     </Text>
@@ -259,7 +259,7 @@ export function RegisterPage(): React.ReactElement {
                       autoFocus
                     />
                     {validationErrors.firstName !== undefined && (
-                      <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                      <Text variant="caption" color="danger" className="mt-1">
                         {validationErrors.firstName}
                       </Text>
                     )}
@@ -269,7 +269,7 @@ export function RegisterPage(): React.ReactElement {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Last Name *
                     </Text>
@@ -283,7 +283,7 @@ export function RegisterPage(): React.ReactElement {
                       autoComplete="family-name"
                     />
                     {validationErrors.lastName !== undefined && (
-                      <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                      <Text variant="caption" color="danger" className="mt-1">
                         {validationErrors.lastName}
                       </Text>
                     )}
@@ -296,7 +296,7 @@ export function RegisterPage(): React.ReactElement {
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Email Address *
                   </Text>
@@ -310,7 +310,7 @@ export function RegisterPage(): React.ReactElement {
                     autoComplete="email"
                   />
                   {validationErrors.email !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {validationErrors.email}
                     </Text>
                   )}
@@ -322,7 +322,7 @@ export function RegisterPage(): React.ReactElement {
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Organization Name
                   </Text>
@@ -334,7 +334,7 @@ export function RegisterPage(): React.ReactElement {
                     fullWidth
                     autoComplete="organization"
                   />
-                  <Text variant="caption" color="muted" style={{ marginTop: 'var(--spacing-1)' }}>
+                  <Text variant="caption" color="muted" className="mt-1">
                     Optional. Creates a new organization with you as admin.
                   </Text>
                 </Box>
@@ -345,7 +345,7 @@ export function RegisterPage(): React.ReactElement {
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Password *
                   </Text>
@@ -359,7 +359,7 @@ export function RegisterPage(): React.ReactElement {
                     autoComplete="new-password"
                   />
                   {validationErrors.password !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {validationErrors.password}
                     </Text>
                   )}
@@ -371,7 +371,7 @@ export function RegisterPage(): React.ReactElement {
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Confirm Password *
                   </Text>
@@ -385,7 +385,7 @@ export function RegisterPage(): React.ReactElement {
                     autoComplete="new-password"
                   />
                   {validationErrors.confirmPassword !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {validationErrors.confirmPassword}
                     </Text>
                   )}
@@ -406,7 +406,7 @@ export function RegisterPage(): React.ReactElement {
                     </Text>
                   </Flex>
                   {validationErrors.acceptTerms !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {validationErrors.acceptTerms}
                     </Text>
                   )}
@@ -419,7 +419,7 @@ export function RegisterPage(): React.ReactElement {
                   fullWidth
                   isLoading={isLoading}
                   isDisabled={isLoading}
-                  style={{ marginTop: 'var(--spacing-2)' }}
+                  className="mt-2"
                 >
                   Create Account
                 </Button>
@@ -427,7 +427,7 @@ export function RegisterPage(): React.ReactElement {
                 {/* Login link */}
                 <Text variant="bodySmall" style={{ textAlign: 'center' }}>
                   Already have an account?{' '}
-                  <Link to="/login" style={{ color: 'var(--color-primary)' }}>
+                  <Link to="/login" className="text-primary">
                     Sign in
                   </Link>
                 </Text>

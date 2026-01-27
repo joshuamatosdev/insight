@@ -116,7 +116,7 @@ export function ForgotPasswordPage(): React.ReactElement {
                 <Text variant="bodySmall" color="muted">
                   Please check your inbox and spam folder.
                 </Text>
-                <Link to="/login" style={{ color: 'var(--color-primary)' }}>
+                <Link to="/login" className="text-primary">
                   Return to login
                 </Link>
               </Stack>
@@ -183,7 +183,7 @@ export function ForgotPasswordPage(): React.ReactElement {
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Email Address
                   </Text>
@@ -198,7 +198,7 @@ export function ForgotPasswordPage(): React.ReactElement {
                     autoFocus
                   />
                   {validationErrors.email !== undefined && (
-                    <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="danger" className="mt-1">
                       {validationErrors.email}
                     </Text>
                   )}
@@ -210,14 +210,14 @@ export function ForgotPasswordPage(): React.ReactElement {
                   fullWidth
                   isLoading={isLoading}
                   isDisabled={isLoading}
-                  style={{ marginTop: 'var(--spacing-2)' }}
+                  className="mt-2"
                 >
                   Send Reset Link
                 </Button>
 
                 <Text variant="bodySmall" style={{ textAlign: 'center' }}>
                   Remember your password?{' '}
-                  <Link to="/login" style={{ color: 'var(--color-primary)' }}>
+                  <Link to="/login" className="text-primary">
                     Sign in
                   </Link>
                 </Text>

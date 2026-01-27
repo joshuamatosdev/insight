@@ -300,7 +300,7 @@ export function LaborRatesPage() {
 
       {/* Form */}
       {showForm && (
-        <Card variant="elevated" style={{ marginBottom: 'var(--spacing-6)' }}>
+        <Card variant="elevated" className="mb-6">
           <CardHeader>
             <Text variant="heading5">
               {editingRate !== null ? 'Edit Labor Rate' : 'Add Labor Rate'}
@@ -331,7 +331,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Labor Category *
                     </Text>
@@ -347,7 +347,7 @@ export function LaborRatesPage() {
                       <Text
                         variant="caption"
                         color="danger"
-                        style={{ marginTop: 'var(--spacing-1)' }}
+                        className="mt-1"
                       >
                         {formErrors.laborCategory}
                       </Text>
@@ -359,7 +359,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Description
                     </Text>
@@ -380,7 +380,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Min Years Experience
                     </Text>
@@ -398,7 +398,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Max Years Experience
                     </Text>
@@ -416,7 +416,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Education Requirement
                     </Text>
@@ -437,7 +437,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Base Rate ($) *
                     </Text>
@@ -453,7 +453,7 @@ export function LaborRatesPage() {
                       <Text
                         variant="caption"
                         color="danger"
-                        style={{ marginTop: 'var(--spacing-1)' }}
+                        className="mt-1"
                       >
                         {formErrors.baseRate}
                       </Text>
@@ -465,7 +465,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Billing Rate ($)
                     </Text>
@@ -483,7 +483,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Rate Type
                     </Text>
@@ -508,7 +508,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Fringe Rate
                     </Text>
@@ -526,7 +526,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Overhead Rate
                     </Text>
@@ -544,7 +544,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       G&A Rate
                     </Text>
@@ -562,7 +562,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Fee Rate
                     </Text>
@@ -583,7 +583,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Effective Date
                     </Text>
@@ -600,7 +600,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       End Date
                     </Text>
@@ -617,7 +617,7 @@ export function LaborRatesPage() {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Fiscal Year
                     </Text>
@@ -637,7 +637,7 @@ export function LaborRatesPage() {
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                    className="block mb-1"
                   >
                     Notes
                   </Text>
@@ -683,7 +683,7 @@ export function LaborRatesPage() {
         <HStack
           justify="center"
           spacing="var(--spacing-2)"
-          style={{ marginTop: 'var(--spacing-6)' }}
+          className="mt-6"
         >
           <Button
             variant="outline"

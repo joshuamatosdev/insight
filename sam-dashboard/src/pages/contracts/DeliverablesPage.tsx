@@ -162,7 +162,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
           </Text>
         </Box>
         {onBack !== undefined && (
-          <Box style={{ marginTop: 'var(--spacing-4)' }}>
+          <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
               Back
             </Button>
@@ -183,7 +183,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                style={{ marginBottom: 'var(--spacing-2)' }}
+                className="mb-2"
               >
                 Back to Contract
               </Button>
@@ -204,7 +204,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
       </SectionHeader>
 
       {showAddForm && (
-        <Card style={{ marginBottom: 'var(--spacing-6)' }}>
+        <Card className="mb-6">
           <form onSubmit={handleSubmit}>
             <CardHeader>
               <Text variant="heading4">Add Deliverable</Text>
@@ -216,7 +216,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       CDRL Number
                     </Text>
@@ -234,7 +234,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Type *
                     </Text>
@@ -257,7 +257,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Title *
                     </Text>
@@ -276,7 +276,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Description
                     </Text>
@@ -294,7 +294,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Due Date
                     </Text>
@@ -312,7 +312,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Frequency
                     </Text>
@@ -336,7 +336,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                     <Text
                       variant="bodySmall"
                       weight="semibold"
-                      style={{ marginBottom: 'var(--spacing-1)' }}
+                      className="mb-1"
                     >
                       Notes
                     </Text>

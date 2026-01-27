@@ -249,7 +249,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ padding: 'var(--spacing-8)' }}>
+      <Flex justify="center" align="center" className="p-8">
         <Text variant="body">Loading billing information...</Text>
       </Flex>
     );
@@ -257,7 +257,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
   if (config !== null && config.configured === false) {
     return (
-      <Box style={{ padding: 'var(--spacing-6)', maxWidth: '600px', margin: '0 auto' }}>
+      <Box className="p-6 max-w-xl mx-auto">
         <Card>
           <CardBody>
             <Stack spacing="var(--spacing-4)" style={{ textAlign: 'center' }}>
@@ -277,7 +277,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
   const statusDisplay = subscription !== null ? STATUS_DISPLAY[subscription.status] : null;
 
   return (
-    <Box style={{ padding: 'var(--spacing-6)', maxWidth: '1200px', margin: '0 auto' }}>
+    <Box className="p-6 max-w-6xl mx-auto">
       <Stack spacing="var(--spacing-6)">
         <Text variant="heading3">Billing & Subscription</Text>
 
@@ -382,7 +382,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
                     onClick={handleCancelSubscription}
                     isLoading={isProcessing}
                     isDisabled={isProcessing}
-                    style={{ backgroundColor: 'var(--color-danger)' }}
+                    className="bg-danger"
                   >
                     Confirm Cancellation
                   </Button>

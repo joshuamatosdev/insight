@@ -138,7 +138,7 @@ export function OAuthCallbackPage(): React.ReactElement {
       <Box style={{ width: '100%', maxWidth: '400px' }}>
         <Card variant="elevated">
           <CardBody padding="lg">
-            <Flex justify="center" style={{ marginBottom: 'var(--spacing-4)' }}>
+            <Flex justify="center" className="mb-4">
               <BuildingCheckIcon size="xl" color="var(--color-primary)" />
             </Flex>
             {renderContent()}

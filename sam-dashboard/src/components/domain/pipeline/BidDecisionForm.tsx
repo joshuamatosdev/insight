@@ -150,7 +150,7 @@ export function BidDecisionForm({
 
             {Array.from(groupedScorecard.entries()).map(([category, items]) => (
               <Box key={category}>
-                <Text variant="caption" weight="semibold" color="secondary" style={{ marginBottom: 'var(--spacing-2)' }}>
+                <Text variant="caption" weight="semibold" color="secondary" className="mb-2">
                   {category}
                 </Text>
                 <Stack gap="sm">

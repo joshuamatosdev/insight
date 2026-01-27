@@ -104,7 +104,7 @@ export function DocumentViewer({
           </HStack>
         </CardHeader>
         <CardBody>
-          <HStack gap="sm" style={{ marginBottom: 'var(--spacing-4)' }}>
+          <HStack gap="sm" className="mb-4">
             <Badge color={getDocumentStatusVariant(document.status)}>
               {document.status}
             </Badge>
@@ -125,7 +125,7 @@ export function DocumentViewer({
           </HStack>
 
           {document.description !== null && (
-            <Text variant="body" style={{ marginBottom: 'var(--spacing-4)' }}>
+            <Text variant="body" className="mb-4">
               {document.description}
             </Text>
           )}

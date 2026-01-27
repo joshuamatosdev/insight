@@ -191,14 +191,14 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ padding: 'var(--spacing-8)' }}>
+      <Flex justify="center" align="center" className="p-8">
         <Text variant="body">Loading preferences...</Text>
       </Flex>
     );
   }
 
   return (
-    <Box style={{ padding: 'var(--spacing-6)', maxWidth: '600px', margin: '0 auto' }}>
+    <Box className="p-6 max-w-xl mx-auto">
       <Stack spacing="var(--spacing-6)">
         <Text variant="heading3">Settings</Text>
 
@@ -262,7 +262,7 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
                 <Text
                   variant="caption"
                   color="muted"
-                  style={{ marginTop: 'var(--spacing-1)' }}
+                  className="mt-1"
                 >
                   Choose your preferred color scheme
                 </Text>
@@ -328,7 +328,7 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
                 <Text
                   variant="caption"
                   color="muted"
-                  style={{ marginTop: 'var(--spacing-1)' }}
+                  className="mt-1"
                 >
                   Used for displaying deadlines and scheduling alerts
                 </Text>

@@ -135,7 +135,7 @@ export function MilestoneCard({
       </CardHeader>
       <CardBody>
         {milestone.description !== null && milestone.description !== '' && (
-          <Box style={{ marginBottom: 'var(--spacing-3)' }}>
+          <Box className="mb-3">
             <Text variant="body" color="muted">
               {milestone.description}
             </Text>
@@ -143,7 +143,7 @@ export function MilestoneCard({
         )}
 
         {/* Dates */}
-        <HStack spacing="var(--spacing-4)" style={{ marginBottom: 'var(--spacing-3)' }}>
+        <HStack spacing="var(--spacing-4)" className="mb-3">
           <Stack spacing="0">
             <Text variant="caption" color="muted">
               Planned Date
@@ -179,8 +179,8 @@ export function MilestoneCard({
         </HStack>
 
         {/* Progress Bar */}
-        <Box style={{ marginBottom: 'var(--spacing-2)' }}>
-          <Flex justify="space-between" align="center" style={{ marginBottom: 'var(--spacing-1)' }}>
+        <Box className="mb-2">
+          <Flex justify="space-between" align="center" className="mb-1">
             <Text variant="caption" color="muted">
               Progress
             </Text>
@@ -220,8 +220,8 @@ export function MilestoneCard({
 
         {/* Deliverables */}
         {showDeliverables && milestone.deliverables.length > 0 && (
-          <Box style={{ marginTop: 'var(--spacing-3)' }}>
-            <Text variant="caption" weight="medium" style={{ marginBottom: 'var(--spacing-2)' }}>
+          <Box className="mt-3">
+            <Text variant="caption" weight="medium" className="mb-2">
               Deliverables ({milestone.deliverables.length})
             </Text>
             <Stack spacing="var(--spacing-2)">

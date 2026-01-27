@@ -118,7 +118,7 @@ export function PipelineDetailPage() {
   if (isLoading === true) {
     return (
       <Section id="pipeline-detail">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="secondary">
             Loading...
           </Text>
@@ -130,7 +130,7 @@ export function PipelineDetailPage() {
   if (error !== null) {
     return (
       <Section id="pipeline-detail">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="danger">
             Error: {error.message}
           </Text>
@@ -142,7 +142,7 @@ export function PipelineDetailPage() {
   if (opportunity === null || pipeline === null) {
     return (
       <Section id="pipeline-detail">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="secondary">
             Opportunity not found
           </Text>
@@ -156,7 +156,7 @@ export function PipelineDetailPage() {
   if (showBidDecisionForm === true) {
     return (
       <Section id="pipeline-detail">
-        <Box style={{ marginBottom: 'var(--spacing-4)' }}>
+        <Box className="mb-4">
           <Button variant="ghost" onClick={() => setShowBidDecisionForm(false)}>
             ← Back to Details
           </Button>

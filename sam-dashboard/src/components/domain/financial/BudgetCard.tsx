@@ -69,7 +69,7 @@ export function BudgetCard({
         <Stack spacing="var(--spacing-4)">
           {/* Progress Bar */}
           <Box>
-            <HStack justify="between" style={{ marginBottom: 'var(--spacing-2)' }}>
+            <HStack justify="between" className="mb-2">
               <Text variant="caption" color="muted">
                 Utilization
               </Text>

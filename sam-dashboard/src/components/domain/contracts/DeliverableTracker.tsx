@@ -152,7 +152,7 @@ export function DeliverableTracker({
 
       {overdueDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="var(--spacing-2)" align="center" style={{ marginBottom: 'var(--spacing-3)' }}>
+          <HStack spacing="var(--spacing-2)" align="center" className="mb-3">
             <Text variant="heading5">Overdue</Text>
             <Badge variant="danger" size="sm">
               {overdueDeliverables.length}
@@ -172,7 +172,7 @@ export function DeliverableTracker({
 
       {upcomingDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="var(--spacing-2)" align="center" style={{ marginBottom: 'var(--spacing-3)' }}>
+          <HStack spacing="var(--spacing-2)" align="center" className="mb-3">
             <Text variant="heading5">Upcoming</Text>
             <Badge variant="info" size="sm">
               {upcomingDeliverables.length}
@@ -192,7 +192,7 @@ export function DeliverableTracker({
 
       {completedDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="var(--spacing-2)" align="center" style={{ marginBottom: 'var(--spacing-3)' }}>
+          <HStack spacing="var(--spacing-2)" align="center" className="mb-3">
             <Text variant="heading5">Completed</Text>
             <Badge variant="success" size="sm">
               {completedDeliverables.length}

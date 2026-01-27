@@ -134,7 +134,7 @@ function ComponentCard({
               <Text
                 variant="caption"
                 color="muted"
-                style={{ marginTop: 'var(--spacing-2)', marginLeft: '28px' }}
+                className="mt-2 ml-7"
               >
                 {component.description}
               </Text>
@@ -253,7 +253,7 @@ export function SbomViewer({
               direction="column"
               align="center"
               gap="md"
-              style={{ padding: 'var(--spacing-8)' }}
+              className="p-8"
             >
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
                 SBOM data is not available.
@@ -405,7 +405,7 @@ export function SbomViewer({
                   <Text
                     variant="caption"
                     color="muted"
-                    style={{ textAlign: 'center', marginTop: 'var(--spacing-2)' }}
+                    className="text-center mt-2"
                   >
                     +{components.length - 20} more {type}s
                   </Text>
@@ -418,7 +418,7 @@ export function SbomViewer({
         {filteredComponents.length === 0 && searchQuery.length > 0 && (
           <Card variant="outlined">
             <CardBody>
-              <Flex justify="center" align="center" style={{ padding: 'var(--spacing-6)' }}>
+              <Flex justify="center" align="center" className="p-6">
                 <Text variant="body" color="muted">
                   No components found matching "{searchQuery}"
                 </Text>

@@ -226,7 +226,7 @@ export function ExpirationAlert({
             <Text
               variant="caption"
               color="muted"
-              style={{ textAlign: 'center', marginTop: 'var(--spacing-2)' }}
+              className="text-center mt-2"
             >
               +{allItems.length - 5} more items expiring soon
             </Text>

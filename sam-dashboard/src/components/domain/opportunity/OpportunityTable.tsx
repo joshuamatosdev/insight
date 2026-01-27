@@ -38,7 +38,7 @@ export function OpportunityTable({ opportunities, maxRows }: OpportunityTablePro
 
   if (opportunities.length === 0) {
     return (
-      <Box style={{ padding: 'var(--spacing-4)', textAlign: 'center' }}>
+      <Box className="p-4 text-center">
         <Text variant="body" color="muted">
           No opportunities to display.
         </Text>

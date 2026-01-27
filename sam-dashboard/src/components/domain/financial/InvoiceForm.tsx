@@ -106,7 +106,7 @@ export function InvoiceForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Contract *
           </Text>
@@ -126,7 +126,7 @@ export function InvoiceForm({
             <Text
               variant="caption"
               color="danger"
-              style={{ marginTop: 'var(--spacing-1)' }}
+              className="mt-1"
             >
               {errors.contractId}
             </Text>
@@ -140,7 +140,7 @@ export function InvoiceForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Invoice Number *
             </Text>
@@ -156,7 +156,7 @@ export function InvoiceForm({
               <Text
                 variant="caption"
                 color="danger"
-                style={{ marginTop: 'var(--spacing-1)' }}
+                className="mt-1"
               >
                 {errors.invoiceNumber}
               </Text>
@@ -168,7 +168,7 @@ export function InvoiceForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Invoice Type *
             </Text>
@@ -193,7 +193,7 @@ export function InvoiceForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Invoice Date *
             </Text>
@@ -208,7 +208,7 @@ export function InvoiceForm({
               <Text
                 variant="caption"
                 color="danger"
-                style={{ marginTop: 'var(--spacing-1)' }}
+                className="mt-1"
               >
                 {errors.invoiceDate}
               </Text>
@@ -220,7 +220,7 @@ export function InvoiceForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Due Date
             </Text>
@@ -240,7 +240,7 @@ export function InvoiceForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Period Start
             </Text>
@@ -257,7 +257,7 @@ export function InvoiceForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Period End
             </Text>
@@ -276,7 +276,7 @@ export function InvoiceForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Notes
           </Text>

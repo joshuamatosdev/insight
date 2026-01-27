@@ -180,7 +180,7 @@ export function PipelineCard({
           )}
 
           {showActions === true && (onEdit !== undefined || onDelete !== undefined) && (
-            <HStack justify="end" gap="sm" style={{ marginTop: 'var(--spacing-2)' }}>
+            <HStack justify="end" gap="sm" className="mt-2">
               {onEdit !== undefined && (
                 <Button variant="ghost" size="sm" onClick={handleEdit}>
                   Edit

@@ -270,7 +270,7 @@ export function CertificationDetailPage({
               direction="column"
               align="center"
               gap="md"
-              style={{ padding: 'var(--spacing-8)' }}
+              className="p-8"
             >
               <Text variant="body" color="danger">
                 {error?.message ?? 'Certification not found'}

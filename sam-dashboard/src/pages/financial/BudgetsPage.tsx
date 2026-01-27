@@ -253,7 +253,7 @@ export function BudgetsPage() {
 
       {/* Form */}
       {showForm && (
-        <Card variant="elevated" style={{ marginBottom: 'var(--spacing-6)' }}>
+        <Card variant="elevated" className="mb-6">
           <CardHeader>
             <Text variant="heading5">
               {editingBudget !== null ? 'Edit Budget Item' : 'Add Budget Item'}
@@ -272,7 +272,7 @@ export function BudgetsPage() {
       )}
 
       {/* Filter */}
-      <HStack spacing="var(--spacing-2)" style={{ marginBottom: 'var(--spacing-4)' }}>
+      <HStack spacing="var(--spacing-2)" className="mb-4">
         <Button
           variant={filterCategory === '' ? 'primary' : 'outline'}
           size="sm"
@@ -300,7 +300,7 @@ export function BudgetsPage() {
               direction="column"
               align="center"
               gap="md"
-              style={{ padding: 'var(--spacing-8)' }}
+              className="p-8"
             >
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
                 No budget items found.
@@ -337,7 +337,7 @@ export function BudgetsPage() {
             <HStack
               justify="center"
               spacing="var(--spacing-2)"
-              style={{ marginTop: 'var(--spacing-6)' }}
+              className="mt-6"
             >
               <Button
                 variant="outline"

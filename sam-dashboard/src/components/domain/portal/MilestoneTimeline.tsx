@@ -85,7 +85,7 @@ export function MilestoneTimeline({
   if (milestones.length === 0) {
     return (
       <Box className={className} style={containerStyles}>
-        <Flex justify="center" align="center" style={{ padding: 'var(--spacing-8)' }}>
+        <Flex justify="center" align="center" className="p-8">
           <Text variant="body" color="muted">
             No milestones to display
           </Text>
@@ -211,7 +211,7 @@ export function MilestoneTimeline({
 
               {/* Progress bar for in-progress milestones */}
               {milestone.status === 'IN_PROGRESS' && (
-                <Box style={{ marginTop: 'var(--spacing-2)' }}>
+                <Box className="mt-2">
                   <Box
                     style={{
                       height: '4px',

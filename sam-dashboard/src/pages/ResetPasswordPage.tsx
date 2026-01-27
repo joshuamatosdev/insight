@@ -174,7 +174,7 @@ export function ResetPasswordPage(): React.ReactElement {
                 >
                   Request New Link
                 </Button>
-                <Link to="/login" style={{ color: 'var(--color-primary)', textAlign: 'center' }}>
+                <Link to="/login" className="text-primary text-center">
                   Return to login
                 </Link>
               </Stack>
@@ -250,7 +250,7 @@ export function ResetPasswordPage(): React.ReactElement {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       New Password
                     </Text>
@@ -265,7 +265,7 @@ export function ResetPasswordPage(): React.ReactElement {
                       autoFocus
                     />
                     {validationErrors.password !== undefined && (
-                      <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                      <Text variant="caption" color="danger" className="mt-1">
                         {validationErrors.password}
                       </Text>
                     )}
@@ -276,7 +276,7 @@ export function ResetPasswordPage(): React.ReactElement {
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+                      className="block mb-1"
                     >
                       Confirm Password
                     </Text>
@@ -290,7 +290,7 @@ export function ResetPasswordPage(): React.ReactElement {
                       autoComplete="new-password"
                     />
                     {validationErrors.confirmPassword !== undefined && (
-                      <Text variant="caption" color="danger" style={{ marginTop: 'var(--spacing-1)' }}>
+                      <Text variant="caption" color="danger" className="mt-1">
                         {validationErrors.confirmPassword}
                       </Text>
                     )}
@@ -302,7 +302,7 @@ export function ResetPasswordPage(): React.ReactElement {
                     fullWidth
                     isLoading={isLoading}
                     isDisabled={isLoading}
-                    style={{ marginTop: 'var(--spacing-2)' }}
+                    className="mt-2"
                   >
                     Reset Password
                   </Button>

@@ -236,7 +236,7 @@ export function PermissionsPage(): React.ReactElement {
       <SectionHeader title="Permissions" />
 
       {/* Stats Summary */}
-      <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="var(--spacing-4)" style={{ marginBottom: 'var(--spacing-6)' }}>
+      <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="var(--spacing-4)" className="mb-6">
         <GridItem>
           <Card variant="filled">
             <CardBody padding="md">
@@ -296,7 +296,7 @@ export function PermissionsPage(): React.ReactElement {
       {Object.keys(permissions).length === 0 && (
         <Card variant="default">
           <CardBody>
-            <Flex direction="column" align="center" gap="md" style={{ padding: 'var(--spacing-8)' }}>
+            <Flex direction="column" align="center" gap="md" className="p-8">
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
                 No permissions found. Permissions are typically seeded automatically.
               </Text>

@@ -109,7 +109,7 @@ export function ContractDetailPage({
           </Text>
         </Box>
         {onBack !== undefined && (
-          <Box style={{ marginTop: 'var(--spacing-4)' }}>
+          <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
               Back to Contracts
             </Button>
@@ -150,7 +150,7 @@ export function ContractDetailPage({
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                style={{ marginBottom: 'var(--spacing-2)' }}
+                className="mb-2"
               >
                 Back to Contracts
               </Button>
@@ -159,7 +159,7 @@ export function ContractDetailPage({
               <Text variant="heading3">{contract.title}</Text>
               <ContractStatusBadge status={contract.status} />
             </HStack>
-            <HStack spacing="var(--spacing-3)" style={{ marginTop: 'var(--spacing-1)' }}>
+            <HStack spacing="var(--spacing-3)" className="mt-1">
               <Text variant="body" color="muted">
                 {contract.contractNumber}
               </Text>
@@ -178,7 +178,7 @@ export function ContractDetailPage({
         </HStack>
       </SectionHeader>
 
-      <Box style={{ marginBottom: 'var(--spacing-4)' }}>
+      <Box className="mb-4">
         <HStack spacing="var(--spacing-0)">
           {tabs.map((tab) => (
             <Button
@@ -199,7 +199,7 @@ export function ContractDetailPage({
                 <Badge
                   variant={activeTab === tab.key ? 'secondary' : 'primary'}
                   size="sm"
-                  style={{ marginLeft: 'var(--spacing-2)' }}
+                  className="ml-2"
                 >
                   {tab.count}
                 </Badge>
@@ -215,7 +215,7 @@ export function ContractDetailPage({
 
           <Card>
             <CardBody>
-              <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+              <Text variant="heading5" className="mb-4">
                 Contract Details
               </Text>
               <Grid columns={3} gap="var(--spacing-4)">
@@ -262,11 +262,11 @@ export function ContractDetailPage({
               </Grid>
 
               {contract.description !== null && (
-                <Box style={{ marginTop: 'var(--spacing-4)' }}>
+                <Box className="mt-4">
                   <Text variant="caption" color="muted">
                     Description
                   </Text>
-                  <Text variant="body" style={{ marginTop: 'var(--spacing-1)' }}>
+                  <Text variant="body" className="mt-1">
                     {contract.description}
                   </Text>
                 </Box>
@@ -276,12 +276,12 @@ export function ContractDetailPage({
 
           <Card>
             <CardBody>
-              <Text variant="heading5" style={{ marginBottom: 'var(--spacing-4)' }}>
+              <Text variant="heading5" className="mb-4">
                 Key Contacts
               </Text>
               <Grid columns={2} gap="var(--spacing-6)">
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-2)' }}>
+                  <Text variant="bodySmall" weight="semibold" className="mb-2">
                     Contracting Officer
                   </Text>
                   <Stack spacing="var(--spacing-1)">
@@ -296,7 +296,7 @@ export function ContractDetailPage({
                   </Stack>
                 </Box>
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-2)' }}>
+                  <Text variant="bodySmall" weight="semibold" className="mb-2">
                     COR (Contracting Officer Representative)
                   </Text>
                   <Stack spacing="var(--spacing-1)">
@@ -309,7 +309,7 @@ export function ContractDetailPage({
                   </Stack>
                 </Box>
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-2)' }}>
+                  <Text variant="bodySmall" weight="semibold" className="mb-2">
                     Program Manager
                   </Text>
                   <Text variant="body">
@@ -317,7 +317,7 @@ export function ContractDetailPage({
                   </Text>
                 </Box>
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" style={{ marginBottom: 'var(--spacing-2)' }}>
+                  <Text variant="bodySmall" weight="semibold" className="mb-2">
                     Contract Manager
                   </Text>
                   <Text variant="body">

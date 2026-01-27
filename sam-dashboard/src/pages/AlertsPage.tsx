@@ -346,7 +346,7 @@ function AlertForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Alert Name *
           </Text>
@@ -362,7 +362,7 @@ function AlertForm({
             <Text
               variant="caption"
               color="danger"
-              style={{ marginTop: 'var(--spacing-1)' }}
+              className="mt-1"
             >
               {errors.name}
             </Text>
@@ -375,7 +375,7 @@ function AlertForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Description
           </Text>
@@ -394,7 +394,7 @@ function AlertForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             NAICS Codes
           </Text>
@@ -409,7 +409,7 @@ function AlertForm({
           <Text
             variant="caption"
             color="muted"
-            style={{ marginTop: 'var(--spacing-1)' }}
+            className="mt-1"
           >
             Comma-separated NAICS codes to monitor
           </Text>
@@ -421,7 +421,7 @@ function AlertForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Keywords
           </Text>
@@ -436,7 +436,7 @@ function AlertForm({
           <Text
             variant="caption"
             color="muted"
-            style={{ marginTop: 'var(--spacing-1)' }}
+            className="mt-1"
           >
             Comma-separated keywords to match in title or description
           </Text>
@@ -449,7 +449,7 @@ function AlertForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Minimum Value ($)
             </Text>
@@ -465,7 +465,7 @@ function AlertForm({
               <Text
                 variant="caption"
                 color="danger"
-                style={{ marginTop: 'var(--spacing-1)' }}
+                className="mt-1"
               >
                 {errors.minValue}
               </Text>
@@ -477,7 +477,7 @@ function AlertForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Maximum Value ($)
             </Text>
@@ -493,7 +493,7 @@ function AlertForm({
               <Text
                 variant="caption"
                 color="danger"
-                style={{ marginTop: 'var(--spacing-1)' }}
+                className="mt-1"
               >
                 {errors.maxValue}
               </Text>
@@ -700,7 +700,7 @@ export function AlertsPage(): React.ReactElement {
       )}
 
       {showForm && (
-        <Card variant="elevated" style={{ marginBottom: 'var(--spacing-6)' }}>
+        <Card variant="elevated" className="mb-6">
           <CardHeader>
             <Text variant="heading5">
               {editingAlert !== null ? 'Edit Alert' : 'Create New Alert'}
@@ -720,7 +720,7 @@ export function AlertsPage(): React.ReactElement {
       {alerts.length === 0 && showForm === false ? (
         <Card variant="default">
           <CardBody>
-            <Flex direction="column" align="center" gap="md" style={{ padding: 'var(--spacing-8)' }}>
+            <Flex direction="column" align="center" gap="md" className="p-8">
               <BellIcon size="xl" color="muted" />
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
                 No alerts configured yet.

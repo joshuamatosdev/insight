@@ -157,7 +157,7 @@ function ScopeChangeCard({
                 borderRadius: 'var(--radius-md)',
               }}
             >
-              <Text variant="caption" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+              <Text variant="caption" weight="semibold" className="mb-1">
                 Impact Assessment
               </Text>
               <HStack spacing="var(--spacing-4)">
@@ -198,7 +198,7 @@ function ScopeChangeCard({
           {/* Justification */}
           {scopeChange.justification !== null && scopeChange.justification !== '' && (
             <Box>
-              <Text variant="caption" weight="semibold" style={{ marginBottom: 'var(--spacing-1)' }}>
+              <Text variant="caption" weight="semibold" className="mb-1">
                 Justification
               </Text>
               <Text variant="bodySmall" color="muted">
@@ -273,7 +273,7 @@ export function ScopeChangeTracker({
           justify="center"
           align="center"
           direction="column"
-          style={{ padding: 'var(--spacing-8)' }}
+          className="p-8"
         >
           <Text variant="heading5" color="muted">
             No Scope Changes
@@ -292,7 +292,7 @@ export function ScopeChangeTracker({
         {/* Pending Changes */}
         {pendingChanges.length > 0 && (
           <Box>
-            <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-3)' }}>
+            <Flex align="center" gap="sm" className="mb-3">
               <Text variant="heading5">Pending Review</Text>
               <Badge variant="warning" size="sm">
                 {pendingChanges.length}
@@ -315,7 +315,7 @@ export function ScopeChangeTracker({
         {/* Approved Changes */}
         {approvedChanges.length > 0 && (
           <Box>
-            <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-3)' }}>
+            <Flex align="center" gap="sm" className="mb-3">
               <Text variant="heading5">Approved</Text>
               <Badge variant="success" size="sm">
                 {approvedChanges.length}
@@ -336,7 +336,7 @@ export function ScopeChangeTracker({
         {/* Rejected Changes */}
         {rejectedChanges.length > 0 && (
           <Box>
-            <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-3)' }}>
+            <Flex align="center" gap="sm" className="mb-3">
               <Text variant="heading5">Rejected</Text>
               <Badge variant="danger" size="sm">
                 {rejectedChanges.length}

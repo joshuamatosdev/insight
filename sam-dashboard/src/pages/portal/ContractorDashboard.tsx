@@ -52,7 +52,7 @@ export function ContractorDashboard(): React.ReactElement {
   };
 
   return (
-    <Stack spacing="var(--spacing-6)" style={{ padding: 'var(--spacing-6)' }}>
+    <Stack spacing="var(--spacing-6)" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">

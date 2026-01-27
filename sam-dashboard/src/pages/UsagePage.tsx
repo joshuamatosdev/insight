@@ -469,7 +469,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
 
       {/* Billing Period Info */}
       {usageSummary !== null && (
-        <Card style={{ marginBottom: 'var(--spacing-4)' }}>
+        <Card className="mb-4">
           <CardBody>
             <HStack justify="between" align="center">
               <Stack spacing="var(--spacing-1)">
@@ -522,7 +522,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       )}
 
       {/* Trend Chart */}
-      <Card style={{ marginTop: 'var(--spacing-6)' }}>
+      <Card className="mt-6">
         <CardHeader>
           <HStack justify="between" align="center">
             <Text variant="heading5">
@@ -539,7 +539,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
         <CardBody>
           <TrendChart data={trendData} isLoading={trendLoading} />
           {trendData.length > 0 && (
-            <HStack justify="between" style={{ marginTop: 'var(--spacing-3)' }}>
+            <HStack justify="between" className="mt-3">
               <Text variant="caption" color="muted">
                 {formatDate(trendData.at(0)?.date ?? '')}
               </Text>
@@ -552,7 +552,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       </Card>
 
       {/* Usage Tips */}
-      <Card style={{ marginTop: 'var(--spacing-6)' }}>
+      <Card className="mt-6">
         <CardHeader>
           <Text variant="heading5">Tips to Optimize Usage</Text>
         </CardHeader>

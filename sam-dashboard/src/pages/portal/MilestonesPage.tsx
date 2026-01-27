@@ -88,7 +88,7 @@ export function MilestonesPage(): React.ReactElement {
         <Text variant="body" color="danger">
           Error loading milestones: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} style={{ marginTop: 'var(--spacing-3)' }}>
+        <Button variant="secondary" onClick={refresh} className="mt-3">
           Retry
         </Button>
       </Box>
@@ -96,7 +96,7 @@ export function MilestonesPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" style={{ padding: 'var(--spacing-6)' }}>
+    <Stack spacing="var(--spacing-6)" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -145,7 +145,7 @@ export function MilestonesPage(): React.ReactElement {
               <Text variant="caption" color="muted">
                 In Progress
               </Text>
-              <Text variant="heading3" style={{ color: 'var(--color-primary)' }}>
+              <Text variant="heading3" className="text-primary">
                 {stats.inProgress}
               </Text>
             </Stack>

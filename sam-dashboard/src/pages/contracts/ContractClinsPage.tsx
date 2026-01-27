@@ -87,7 +87,7 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
           </Text>
         </Box>
         {onBack !== undefined && (
-          <Box style={{ marginTop: 'var(--spacing-4)' }}>
+          <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
               Back
             </Button>
@@ -149,7 +149,7 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                style={{ marginBottom: 'var(--spacing-2)' }}
+                className="mb-2"
               >
                 Back to Contract
               </Button>

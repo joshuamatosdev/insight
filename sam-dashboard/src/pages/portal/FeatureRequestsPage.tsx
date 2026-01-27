@@ -160,7 +160,7 @@ export function FeatureRequestsPage(): React.ReactElement {
         <Text variant="body" color="danger">
           Error loading feature requests: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} style={{ marginTop: 'var(--spacing-3)' }}>
+        <Button variant="secondary" onClick={refresh} className="mt-3">
           Retry
         </Button>
       </Box>
@@ -168,7 +168,7 @@ export function FeatureRequestsPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" style={{ padding: 'var(--spacing-6)' }}>
+    <Stack spacing="var(--spacing-6)" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -326,7 +326,7 @@ export function FeatureRequestsPage(): React.ReactElement {
 
             return (
               <Box key={key}>
-                <Flex align="center" gap="sm" style={{ marginBottom: 'var(--spacing-3)' }}>
+                <Flex align="center" gap="sm" className="mb-3">
                   <Text variant="heading4">{getGroupLabel(key)}</Text>
                   <Badge variant="secondary" size="sm">
                     {requests.length}

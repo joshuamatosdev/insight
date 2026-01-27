@@ -92,7 +92,7 @@ export function ProposalPage() {
   if (isLoading === true) {
     return (
       <Section id="proposal">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="secondary">
             Loading...
           </Text>
@@ -104,7 +104,7 @@ export function ProposalPage() {
   if (error !== null) {
     return (
       <Section id="proposal">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="danger">
             Error: {error.message}
           </Text>
@@ -116,7 +116,7 @@ export function ProposalPage() {
   if (opportunity === null || pipeline === null) {
     return (
       <Section id="proposal">
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="secondary">
             Opportunity not found
           </Text>
@@ -263,7 +263,7 @@ export function ProposalPage() {
             </CardHeader>
             <CardBody>
               {selectedSection === null ? (
-                <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+                <Box className="p-8 text-center">
                   <Text variant="body" color="secondary">
                     Select a section to view or edit its content
                   </Text>
@@ -305,7 +305,7 @@ export function ProposalPage() {
             </HStack>
           </CardHeader>
           <CardBody>
-            <Box style={{ padding: 'var(--spacing-4)', textAlign: 'center' }}>
+            <Box className="p-4 text-center">
               <Text variant="body" color="secondary">
                 Compliance matrix will track RFP requirements against proposal sections.
               </Text>

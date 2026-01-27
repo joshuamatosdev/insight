@@ -144,7 +144,7 @@ export function DeliverableTracker(): React.ReactElement {
                     </Flex>
 
                     {/* Progress Bar */}
-                    <Flex align="center" gap="sm" style={{ marginTop: 'var(--spacing-2)' }}>
+                    <Flex align="center" gap="sm" className="mt-2">
                       <Box
                         style={{
                           flex: 1,

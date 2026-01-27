@@ -17,7 +17,7 @@ function ProgressBar({ value, max, color, label }: ProgressBarProps) {
 
   return (
     <Box>
-      <HStack justify="between" style={{ marginBottom: 'var(--spacing-1)' }}>
+      <HStack justify="between" className="mb-1">
         <Text variant="bodySmall">{label}</Text>
         <Text variant="bodySmall" weight="semibold">
           {percentage.toFixed(1)}%
@@ -160,7 +160,7 @@ export function ContractValueChart({
             </Stack>
           </Grid>
 
-          <Box style={{ marginTop: 'var(--spacing-6)' }}>
+          <Box className="mt-6">
             <Stack spacing="var(--spacing-4)">
               <ProgressBar
                 value={fundedValue}

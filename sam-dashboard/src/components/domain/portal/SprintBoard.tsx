@@ -106,7 +106,7 @@ function SprintTaskCard({
                 }}
                 title={task.assigneeName}
               >
-                <Text variant="caption" weight="semibold" style={{ color: 'var(--color-primary)' }}>
+                <Text variant="caption" weight="semibold" className="text-primary">
                   {task.assigneeName.charAt(0).toUpperCase()}
                 </Text>
               </Box>
@@ -177,7 +177,7 @@ export function SprintBoard({
   return (
     <Box className={className} style={boardStyles}>
       {/* Sprint Header */}
-      <Flex justify="space-between" align="center" style={{ marginBottom: 'var(--spacing-4)' }}>
+      <Flex justify="space-between" align="center" className="mb-4">
         <Stack spacing="0">
           <Text variant="heading4">{sprint.name}</Text>
           {sprint.goal !== null && (
@@ -214,7 +214,7 @@ export function SprintBoard({
               <Flex
                 justify="space-between"
                 align="center"
-                style={{ marginBottom: 'var(--spacing-3)' }}
+                className="mb-3"
               >
                 <Flex align="center" gap="sm">
                   <Box

@@ -93,7 +93,7 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
         </HStack>
       </SectionHeader>
 
-      <Box style={{ marginBottom: 'var(--spacing-4)' }}>
+      <Box className="mb-4">
         <form onSubmit={handleSearchSubmit}>
           <HStack spacing="var(--spacing-2)">
             <Input

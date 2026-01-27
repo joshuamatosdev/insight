@@ -230,7 +230,7 @@ export function UserRolesPage(): React.ReactElement {
       <SectionHeader title="User Role Management" />
 
       {/* Search Bar */}
-      <Card variant="filled" style={{ marginBottom: 'var(--spacing-4)' }}>
+      <Card variant="filled" className="mb-4">
         <CardBody padding="md">
           <Flex gap="var(--spacing-2)" align="center">
             <Box style={{ flex: 1 }}>
@@ -254,7 +254,7 @@ export function UserRolesPage(): React.ReactElement {
             )}
           </Flex>
           {searchQuery.length > 0 && (
-            <Text variant="caption" color="muted" style={{ marginTop: 'var(--spacing-2)' }}>
+            <Text variant="caption" color="muted" className="mt-2">
               Showing results for &quot;{searchQuery}&quot; ({totalUsers} user
               {totalUsers !== 1 ? 's' : ''} found)
             </Text>
@@ -349,7 +349,7 @@ export function UserRolesPage(): React.ReactElement {
                     <Text
                       variant="body"
                       color="muted"
-                      style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}
+                      className="p-8 text-center"
                     >
                       {searchQuery.length > 0
                         ? 'No users found matching your search.'
@@ -365,7 +365,7 @@ export function UserRolesPage(): React.ReactElement {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <Flex justify="between" align="center" style={{ marginTop: 'var(--spacing-4)' }}>
+        <Flex justify="between" align="center" className="mt-4">
           <Text variant="bodySmall" color="muted">
             Showing {currentPage * PAGE_SIZE + 1} -{' '}
             {Math.min((currentPage + 1) * PAGE_SIZE, totalUsers)} of {totalUsers} users

@@ -100,7 +100,7 @@ export function MessageComposer({
                 outline: 'none',
               }}
             />
-            <Text variant="caption" color="muted" style={{ marginTop: 'var(--spacing-1)' }}>
+            <Text variant="caption" color="muted" className="mt-1">
               Press Ctrl+Enter to send
             </Text>
           </Box>

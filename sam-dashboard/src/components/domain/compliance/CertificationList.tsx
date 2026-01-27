@@ -33,7 +33,7 @@ export function CertificationList({
             direction="column"
             align="center"
             gap="md"
-            style={{ padding: 'var(--spacing-8)' }}
+            className="p-8"
           >
             <FileCheckIcon size="xl" color="muted" />
             <Text variant="body" color="muted" style={{ textAlign: 'center' }}>

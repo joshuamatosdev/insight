@@ -33,7 +33,7 @@ export function LaborRateTable({
             direction="column"
             align="center"
             justify="center"
-            style={{ padding: 'var(--spacing-8)' }}
+            className="p-8"
           >
             <Text variant="body" color="muted">
               No labor rates configured yet.

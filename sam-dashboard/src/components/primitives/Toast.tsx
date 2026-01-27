@@ -122,7 +122,7 @@ function Toast({ toast, onDismiss }: ToastProps): React.ReactElement {
           variant="ghost"
           size="sm"
           onClick={() => onDismiss(toast.id)}
-          style={{ padding: 'var(--spacing-1)' }}
+          className="p-1"
           aria-label="Dismiss"
         >
           ✕

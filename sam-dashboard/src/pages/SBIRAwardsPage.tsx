@@ -93,7 +93,7 @@ export function SBIRAwardsPage() {
     return (
       <Section id="sbir-awards">
         <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg" />} />
-        <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+        <Box className="p-8 text-center">
           <Text variant="body" color="muted">Loading SBIR.gov awards...</Text>
         </Box>
       </Section>
@@ -107,7 +107,7 @@ export function SBIRAwardsPage() {
         <Card>
           <CardBody>
             <Text variant="body" color="danger">Error: {error.message}</Text>
-            <Button onClick={handleIngest} style={{ marginTop: 'var(--spacing-4)' }}>
+            <Button onClick={handleIngest} className="mt-4">
               Fetch from SBIR.gov
             </Button>
           </CardBody>
@@ -132,7 +132,7 @@ export function SBIRAwardsPage() {
 
       <Card>
         <CardHeader>
-          <HStack justify="between" align="center" style={{ flexWrap: 'wrap', gap: 'var(--spacing-4)' }}>
+          <HStack justify="between" align="center" className="flex-wrap gap-4">
             <HStack spacing="var(--spacing-2)">
               <select
                 value={agencyFilter}
@@ -191,18 +191,18 @@ export function SBIRAwardsPage() {
           </HStack>
         </CardHeader>
         {successMessage !== null && (
-          <Box style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-success-bg)', borderBottom: '1px solid var(--color-success)' }}>
+          <Box className="p-3 bg-success-bg border-b border-success">
             <Text variant="bodySmall" color="success">{successMessage}</Text>
           </Box>
         )}
         {ingestError !== null && (
-          <Box style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-danger-bg)', borderBottom: '1px solid var(--color-danger)' }}>
+          <Box className="p-3 bg-danger-bg border-b border-danger">
             <Text variant="bodySmall" color="danger">{ingestError}</Text>
           </Box>
         )}
         <CardBody padding="none">
           {filteredAwards.length === 0 ? (
-            <Box style={{ padding: 'var(--spacing-8)', textAlign: 'center' }}>
+            <Box className="p-8 text-center">
               <Text variant="body" color="muted">
                 No SBIR awards found. Click "Fetch from SBIR.gov" to load data.
               </Text>
@@ -211,31 +211,31 @@ export function SBIRAwardsPage() {
             <Box style={{ maxHeight: '600px', overflowY: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ backgroundColor: 'var(--color-bg-secondary)', position: 'sticky', top: 0 }}>
-                    <th style={{ padding: 'var(--spacing-3)', textAlign: 'left', borderBottom: '1px solid var(--color-border)' }}>
+                  <tr className="bg-surface-secondary sticky top-0">
+                    <th className="p-3 text-left border-b border-border">
                       <Text variant="caption" weight="semibold">Award</Text>
                     </th>
-                    <th style={{ padding: 'var(--spacing-3)', textAlign: 'left', borderBottom: '1px solid var(--color-border)' }}>
+                    <th className="p-3 text-left border-b border-border">
                       <Text variant="caption" weight="semibold">Firm</Text>
                     </th>
-                    <th style={{ padding: 'var(--spacing-3)', textAlign: 'center', borderBottom: '1px solid var(--color-border)' }}>
+                    <th className="p-3 text-center border-b border-border">
                       <Text variant="caption" weight="semibold">Phase</Text>
                     </th>
-                    <th style={{ padding: 'var(--spacing-3)', textAlign: 'center', borderBottom: '1px solid var(--color-border)' }}>
+                    <th className="p-3 text-center border-b border-border">
                       <Text variant="caption" weight="semibold">Agency</Text>
                     </th>
-                    <th style={{ padding: 'var(--spacing-3)', textAlign: 'right', borderBottom: '1px solid var(--color-border)' }}>
+                    <th className="p-3 text-right border-b border-border">
                       <Text variant="caption" weight="semibold">Amount</Text>
                     </th>
-                    <th style={{ padding: 'var(--spacing-3)', textAlign: 'center', borderBottom: '1px solid var(--color-border)' }}>
+                    <th className="p-3 text-center border-b border-border">
                       <Text variant="caption" weight="semibold">Year</Text>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredAwards.map((award) => (
-                    <tr key={award.id} style={{ borderBottom: '1px solid var(--color-border-light)' }}>
-                      <td style={{ padding: 'var(--spacing-3)', maxWidth: '300px' }}>
+                    <tr key={award.id} className="border-b border-border-light">
+                      <td className="p-3 max-w-xs">
                         <a
                           href={award.awardLink || '#'}
                           target="_blank"
@@ -252,29 +252,29 @@ export function SBIRAwardsPage() {
                             {award.awardTitle || 'Untitled'}
                           </Text>
                         </a>
-                        <HStack spacing="var(--spacing-1)" style={{ marginTop: 'var(--spacing-1)' }}>
+                        <HStack spacing="var(--spacing-1)" className="mt-1">
                           {award.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
                           {award.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
                         </HStack>
                       </td>
-                      <td style={{ padding: 'var(--spacing-3)' }}>
+                      <td className="p-3">
                         <Text variant="bodySmall">{award.firm || 'N/A'}</Text>
                         <Text variant="caption" color="muted">
                           {award.city}, {award.state}
                         </Text>
                       </td>
-                      <td style={{ padding: 'var(--spacing-3)', textAlign: 'center' }}>
+                      <td className="p-3 text-center">
                         <Badge variant="warning" size="sm">Phase {award.phase}</Badge>
                       </td>
-                      <td style={{ padding: 'var(--spacing-3)', textAlign: 'center' }}>
+                      <td className="p-3 text-center">
                         <Badge variant="secondary" size="sm">{award.agency}</Badge>
                       </td>
-                      <td style={{ padding: 'var(--spacing-3)', textAlign: 'right' }}>
+                      <td className="p-3 text-right">
                         <Text variant="bodySmall" weight="semibold">
                           {formatAwardAmount(award.awardAmount)}
                         </Text>
                       </td>
-                      <td style={{ padding: 'var(--spacing-3)', textAlign: 'center' }}>
+                      <td className="p-3 text-center">
                         <Text variant="bodySmall">{award.awardYear || 'N/A'}</Text>
                       </td>
                     </tr>
@@ -286,7 +286,7 @@ export function SBIRAwardsPage() {
         </CardBody>
       </Card>
 
-      <Text variant="caption" color="muted" style={{ marginTop: 'var(--spacing-4)', textAlign: 'center', display: 'block' }}>
+      <Text variant="caption" color="muted" className="mt-4 text-center block">
         Data source: <a href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</a> -
         Small Business Innovation Research / Small Business Technology Transfer
       </Text>

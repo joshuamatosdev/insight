@@ -107,7 +107,7 @@ export function ScopeTrackerPage(): React.ReactElement {
         <Text variant="body" color="danger">
           Error loading scope data: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} style={{ marginTop: 'var(--spacing-3)' }}>
+        <Button variant="secondary" onClick={refresh} className="mt-3">
           Retry
         </Button>
       </Box>
@@ -115,7 +115,7 @@ export function ScopeTrackerPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="var(--spacing-6)" style={{ padding: 'var(--spacing-6)' }}>
+    <Stack spacing="var(--spacing-6)" className="p-6">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -232,7 +232,7 @@ export function ScopeTrackerPage(): React.ReactElement {
             <Badge
               variant="warning"
               size="sm"
-              style={{ marginLeft: 'var(--spacing-2)' }}
+              className="ml-2"
             >
               {pendingChanges}
             </Badge>
@@ -244,7 +244,7 @@ export function ScopeTrackerPage(): React.ReactElement {
       {activeTab === 'wbs' ? (
         <Box>
           {/* WBS Controls */}
-          <Card style={{ marginBottom: 'var(--spacing-4)' }}>
+          <Card className="mb-4">
             <CardBody>
               <Flex justify="space-between" align="center">
                 {/* Expand/Collapse */}

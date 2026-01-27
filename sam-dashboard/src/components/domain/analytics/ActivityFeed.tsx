@@ -171,7 +171,7 @@ export function ActivityFeed({
                   <Text
                     variant="caption"
                     color="secondary"
-                    style={{ flexShrink: 0, marginLeft: 'var(--spacing-2)' }}
+                    className="shrink-0 ml-2"
                   >
                     {formatTimestamp(activity.timestamp)}
                   </Text>

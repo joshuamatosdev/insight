@@ -99,7 +99,7 @@ export function FilterBuilder({
               <CardBody padding="sm">
                 <Flex gap="sm" align="end">
                   <Box style={{ flex: 1 }}>
-                    <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="muted" className="mb-1">
                       Field
                     </Text>
                     <Select
@@ -111,7 +111,7 @@ export function FilterBuilder({
                     />
                   </Box>
                   <Box style={{ flex: 1 }}>
-                    <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                    <Text variant="caption" color="muted" className="mb-1">
                       Operator
                     </Text>
                     <Select
@@ -123,7 +123,7 @@ export function FilterBuilder({
                   </Box>
                   {requiresValue(filter.operator) && (
                     <Box style={{ flex: 1 }}>
-                      <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                      <Text variant="caption" color="muted" className="mb-1">
                         Value
                       </Text>
                       <Input
@@ -153,7 +153,7 @@ export function FilterBuilder({
         <CardBody padding="sm">
           <Flex gap="sm" align="end">
             <Box style={{ flex: 1 }}>
-              <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+              <Text variant="caption" color="muted" className="mb-1">
                 Field
               </Text>
               <Select
@@ -165,7 +165,7 @@ export function FilterBuilder({
               />
             </Box>
             <Box style={{ flex: 1 }}>
-              <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+              <Text variant="caption" color="muted" className="mb-1">
                 Operator
               </Text>
               <Select
@@ -177,7 +177,7 @@ export function FilterBuilder({
             </Box>
             {requiresValue(newFilter.operator ?? 'EQUALS') && (
               <Box style={{ flex: 1 }}>
-                <Text variant="caption" color="muted" style={{ marginBottom: 'var(--spacing-1)' }}>
+                <Text variant="caption" color="muted" className="mb-1">
                   Value
                 </Text>
                 <Input

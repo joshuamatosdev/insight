@@ -306,7 +306,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
         </CardHeader>
         <CardBody padding="none">
           {isLoading && (
-            <Stack spacing="var(--spacing-4)" style={{ padding: 'var(--spacing-6)', textAlign: 'center' }}>
+            <Stack spacing="var(--spacing-4)" className="p-6 text-center">
               <Text variant="body" color="muted">
                 Loading audit logs...
               </Text>
@@ -314,7 +314,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {error !== null && isLoading === false && (
-            <Stack spacing="var(--spacing-4)" style={{ padding: 'var(--spacing-6)', textAlign: 'center' }}>
+            <Stack spacing="var(--spacing-4)" className="p-6 text-center">
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -325,7 +325,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {isLoading === false && error === null && filteredLogs.length === 0 && (
-            <Stack spacing="var(--spacing-4)" style={{ padding: 'var(--spacing-6)', textAlign: 'center' }}>
+            <Stack spacing="var(--spacing-4)" className="p-6 text-center">
               <Text variant="body" color="muted">
                 No audit logs found.
               </Text>
@@ -447,7 +447,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
         </CardBody>
       </Card>
 
-      <HStack justify="between" style={{ marginTop: 'var(--spacing-4)' }}>
+      <HStack justify="between" className="mt-4">
         <Text variant="caption" color="muted">
           Showing {filteredLogs.length} of {logs.length} entries
         </Text>

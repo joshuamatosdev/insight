@@ -104,7 +104,7 @@ export function BudgetForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Budget Name *
           </Text>
@@ -120,7 +120,7 @@ export function BudgetForm({
             <Text
               variant="caption"
               color="danger"
-              style={{ marginTop: 'var(--spacing-1)' }}
+              className="mt-1"
             >
               {errors.name}
             </Text>
@@ -133,7 +133,7 @@ export function BudgetForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Category *
           </Text>
@@ -157,7 +157,7 @@ export function BudgetForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Budgeted Amount ($) *
             </Text>
@@ -173,7 +173,7 @@ export function BudgetForm({
               <Text
                 variant="caption"
                 color="danger"
-                style={{ marginTop: 'var(--spacing-1)' }}
+                className="mt-1"
               >
                 {errors.budgetedAmount}
               </Text>
@@ -185,7 +185,7 @@ export function BudgetForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Forecast Amount ($)
             </Text>
@@ -206,7 +206,7 @@ export function BudgetForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Period Start
             </Text>
@@ -223,7 +223,7 @@ export function BudgetForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Period End
             </Text>
@@ -243,7 +243,7 @@ export function BudgetForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Fiscal Year
             </Text>
@@ -261,7 +261,7 @@ export function BudgetForm({
               as="label"
               variant="bodySmall"
               weight="medium"
-              style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+              className="block mb-1"
             >
               Fiscal Period
             </Text>
@@ -281,7 +281,7 @@ export function BudgetForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Description
           </Text>
@@ -300,7 +300,7 @@ export function BudgetForm({
             as="label"
             variant="bodySmall"
             weight="medium"
-            style={{ display: 'block', marginBottom: 'var(--spacing-1)' }}
+            className="block mb-1"
           >
             Notes
           </Text>
