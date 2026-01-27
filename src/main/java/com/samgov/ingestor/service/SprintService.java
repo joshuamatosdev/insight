@@ -1,6 +1,13 @@
 package com.samgov.ingestor.service;
 
 import com.samgov.ingestor.config.TenantContext;
+import com.samgov.ingestor.dto.CreateSprintRequest;
+import com.samgov.ingestor.dto.CreateTaskRequest;
+import com.samgov.ingestor.dto.SprintDto;
+import com.samgov.ingestor.dto.SprintSummaryDto;
+import com.samgov.ingestor.dto.SprintTaskDto;
+import com.samgov.ingestor.dto.UpdateSprintRequest;
+import com.samgov.ingestor.dto.UpdateTaskRequest;
 import com.samgov.ingestor.exception.ResourceNotFoundException;
 import com.samgov.ingestor.model.Sprint;
 import com.samgov.ingestor.model.Sprint.SprintStatus;
@@ -20,7 +27,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -174,19 +180,19 @@ public class SprintService {
 
     // Task management
 
-    public List<TaskDto> getSprintTasks(UUID sprintId) {
+    public List<SprintTaskDto> getSprintTasks(UUID sprintId) {
         UUID tenantId = TenantContext.getCurrentTenantId();
         sprintRepository.findByTenantIdAndId(tenantId, sprintId)
             .orElseThrow(() -> new ResourceNotFoundException("Sprint not found"));
 
         return taskRepository.findBySprintIdOrderByPositionAsc(sprintId)
             .stream()
-            .map(this::toTaskDto)
+            .map(SprintTaskDto::fromEntity)
             .toList();
     }
 
     @Transactional
-    public TaskDto addTask(UUID sprintId, CreateTaskRequest request) {
+    public SprintTaskDto addTask(UUID sprintId, CreateTaskRequest request) {
         UUID tenantId = TenantContext.getCurrentTenantId();
         Sprint sprint = sprintRepository.findByTenantIdAndId(tenantId, sprintId)
             .orElseThrow(() -> new ResourceNotFoundException("Sprint not found"));
@@ -213,11 +219,11 @@ public class SprintService {
 
         SprintTask saved = taskRepository.save(task);
         log.info("Added task: {} to sprint: {}", saved.getId(), sprintId);
-        return toTaskDto(saved);
+        return SprintTaskDto.fromEntity(saved);
     }
 
     @Transactional
-    public TaskDto updateTask(UUID sprintId, UUID taskId, UpdateTaskRequest request) {
+    public SprintTaskDto updateTask(UUID sprintId, UUID taskId, UpdateTaskRequest request) {
         UUID tenantId = TenantContext.getCurrentTenantId();
         sprintRepository.findByTenantIdAndId(tenantId, sprintId)
             .orElseThrow(() -> new ResourceNotFoundException("Sprint not found"));
@@ -253,11 +259,11 @@ public class SprintService {
 
         SprintTask saved = taskRepository.save(task);
         log.info("Updated task: {} in sprint: {}", taskId, sprintId);
-        return toTaskDto(saved);
+        return SprintTaskDto.fromEntity(saved);
     }
 
     @Transactional
-    public TaskDto moveTask(UUID sprintId, UUID taskId, TaskStatus newStatus) {
+    public SprintTaskDto moveTask(UUID sprintId, UUID taskId, TaskStatus newStatus) {
         UUID tenantId = TenantContext.getCurrentTenantId();
         sprintRepository.findByTenantIdAndId(tenantId, sprintId)
             .orElseThrow(() -> new ResourceNotFoundException("Sprint not found"));
@@ -268,7 +274,7 @@ public class SprintService {
         task.setStatus(newStatus);
         SprintTask saved = taskRepository.save(task);
         log.info("Moved task: {} to status: {}", taskId, newStatus);
-        return toTaskDto(saved);
+        return SprintTaskDto.fromEntity(saved);
     }
 
     @Transactional
@@ -303,147 +309,31 @@ public class SprintService {
         Integer totalPoints = taskRepository.sumStoryPointsBySprintId(sprintId);
         Integer completedPoints = taskRepository.sumStoryPointsBySprintIdAndStatus(sprintId, TaskStatus.DONE);
 
-        return new SprintSummaryDto(
-            sprint.getId(),
-            sprint.getName(),
-            sprint.getStatus(),
-            totalTasks,
-            todoCount,
-            inProgressCount,
-            inReviewCount,
-            doneCount,
-            blockedCount,
-            totalPoints != null ? totalPoints : 0,
-            completedPoints != null ? completedPoints : 0,
-            sprint.getStartDate(),
-            sprint.getEndDate()
-        );
+        return SprintSummaryDto.builder()
+            .sprintId(sprint.getId())
+            .sprintName(sprint.getName())
+            .status(sprint.getStatus())
+            .totalTasks(totalTasks)
+            .todoCount(todoCount)
+            .inProgressCount(inProgressCount)
+            .inReviewCount(inReviewCount)
+            .doneCount(doneCount)
+            .blockedCount(blockedCount)
+            .totalStoryPoints(totalPoints != null ? totalPoints : 0)
+            .completedStoryPoints(completedPoints != null ? completedPoints : 0)
+            .startDate(sprint.getStartDate())
+            .endDate(sprint.getEndDate())
+            .build();
     }
 
     // Helper methods
 
     private SprintDto toDto(Sprint sprint) {
-        List<TaskDto> tasks = taskRepository.findBySprintIdOrderByPositionAsc(sprint.getId())
+        List<SprintTaskDto> tasks = taskRepository.findBySprintIdOrderByPositionAsc(sprint.getId())
             .stream()
-            .map(this::toTaskDto)
+            .map(SprintTaskDto::fromEntity)
             .toList();
 
-        return new SprintDto(
-            sprint.getId(),
-            sprint.getName(),
-            sprint.getDescription(),
-            sprint.getGoal(),
-            sprint.getStatus(),
-            sprint.getStartDate(),
-            sprint.getEndDate(),
-            tasks,
-            sprint.getCreatedAt(),
-            sprint.getUpdatedAt()
-        );
+        return SprintDto.fromEntity(sprint, tasks);
     }
-
-    private TaskDto toTaskDto(SprintTask task) {
-        return new TaskDto(
-            task.getId(),
-            task.getSprint().getId(),
-            task.getTitle(),
-            task.getDescription(),
-            task.getStatus(),
-            task.getPriority(),
-            task.getStoryPoints(),
-            task.getPosition(),
-            task.getAssignee() != null ? task.getAssignee().getId() : null,
-            task.getAssignee() != null ? task.getAssignee().getFirstName() + " " + task.getAssignee().getLastName() : null,
-            task.getDueDate(),
-            task.getLabels(),
-            task.getCreatedAt(),
-            task.getUpdatedAt()
-        );
-    }
-
-    // DTOs
-
-    public record CreateSprintRequest(
-        String name,
-        String description,
-        String goal,
-        LocalDate startDate,
-        LocalDate endDate
-    ) {}
-
-    public record UpdateSprintRequest(
-        String name,
-        String description,
-        String goal,
-        LocalDate startDate,
-        LocalDate endDate
-    ) {}
-
-    public record CreateTaskRequest(
-        String title,
-        String description,
-        TaskStatus status,
-        TaskPriority priority,
-        Integer storyPoints,
-        UUID assigneeId,
-        Instant dueDate,
-        String labels
-    ) {}
-
-    public record UpdateTaskRequest(
-        String title,
-        String description,
-        TaskStatus status,
-        TaskPriority priority,
-        Integer storyPoints,
-        UUID assigneeId,
-        Instant dueDate,
-        String labels
-    ) {}
-
-    public record SprintDto(
-        UUID id,
-        String name,
-        String description,
-        String goal,
-        SprintStatus status,
-        LocalDate startDate,
-        LocalDate endDate,
-        List<TaskDto> tasks,
-        Instant createdAt,
-        Instant updatedAt
-    ) {}
-
-    public record TaskDto(
-        UUID id,
-        UUID sprintId,
-        String title,
-        String description,
-        TaskStatus status,
-        TaskPriority priority,
-        Integer storyPoints,
-        Integer position,
-        UUID assigneeId,
-        String assigneeName,
-        Instant dueDate,
-        String labels,
-        Instant createdAt,
-        Instant updatedAt
-    ) {}
-
-    public record SprintSummaryDto(
-        UUID sprintId,
-        String sprintName,
-        SprintStatus status,
-        long totalTasks,
-        long todoCount,
-        long inProgressCount,
-        long inReviewCount,
-        long doneCount,
-        long blockedCount,
-        int totalStoryPoints,
-        int completedStoryPoints,
-        LocalDate startDate,
-        LocalDate endDate
-    ) {}
 }

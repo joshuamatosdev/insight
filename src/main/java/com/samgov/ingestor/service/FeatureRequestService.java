@@ -230,7 +230,7 @@ public class FeatureRequestService {
         featureRequestRepository.delete(featureRequest);
 
         auditService.logAction(
-                AuditAction.OTHER,
+                AuditAction.FEATURE_REQUEST_DELETED,
                 "FeatureRequest",
                 id.toString(),
                 "Deleted feature request: " + title
