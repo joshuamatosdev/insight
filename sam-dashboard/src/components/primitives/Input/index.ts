@@ -1,3 +1,4 @@
 export { Input, default } from './Input';
 export { Select } from './Select';
-export type { InputProps, SelectProps, InputSize } from './Input.types';
+export { TextArea } from './TextArea';
+export type { InputProps, SelectProps, TextAreaProps, InputSize } from './Input.types';
