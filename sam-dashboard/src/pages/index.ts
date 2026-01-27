@@ -15,6 +15,7 @@ export type {
   SettingsFormState,
   SettingsPageProps,
 } from './SettingsPage.types';
+export type { AuditLogPageProps } from './AuditLogPage.types';
 export { DashboardPage } from './DashboardPage';
 export { AllOpportunitiesPage } from './AllOpportunitiesPage';
 export { SourcesSoughtPage } from './SourcesSoughtPage';
@@ -25,3 +26,4 @@ export { SBIRPage } from './SBIRPage';
 export { SBIRAwardsPage } from './SBIRAwardsPage';
 export { LoginPage } from './LoginPage';
 export { SettingsPage } from './SettingsPage';
+export { AuditLogPage } from './AuditLogPage';

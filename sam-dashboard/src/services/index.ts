@@ -20,3 +20,10 @@ export {
   createAuthenticatedFetch,
   getAuthHeader,
 } from './auth';
+export {
+  fetchMyAuditLogs,
+  fetchUserAuditLogs,
+  fetchTenantAuditLogs,
+  fetchTenantAuditLogsByDateRange,
+  fetchEntityAuditLogs,
+} from './audit';
