@@ -289,8 +289,8 @@ src/
 
 ## PROJECT DOCUMENTATION
 
-- **Master Todo List**: `docs/MASTER_TODO_LIST.md`
-- **Detailed Backlog**: `docs/BACKLOG_DETAILED.md`
+- **TODO**: `docs/TODO.md` (unified task list and roadmap)
+- **Setup Summary**: `docs/SETUP_SUMMARY.md`
 - **README**: `README.md`
 
 ---

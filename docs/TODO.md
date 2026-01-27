@@ -1,22 +1,229 @@
-# Government & Commercial Contract Intelligence Platform - Master Todo List
+# SAMGov Contract Intelligence Platform - Unified TODO
 
-## Target Market
-- **Primary**: IT/Professional Services + Research & Development (SBIR/STTR)
-- **Agencies**: DoD, Civilian Federal, State/Local Government
-- **Secondary**: B2B Commercial
-- **Platform**: Multi-Tenant SaaS
-
-## Current State Summary
-The SAMGov application currently provides:
-- SAM.gov opportunity ingestion and viewing
-- SBIR.gov award tracking
-- Basic filtering by type, NAICS, phase
-- Dashboard with stats and recent opportunities
-- CSV export capability
+> Government & Commercial Contract Intelligence Platform
+> **Backend**: Java Spring Boot | **Frontend**: React + TypeScript + Vite | **Database**: PostgreSQL
+> **Target**: Multi-Tenant SaaS for federal, state/local, and B2B contracting
 
 ---
 
-## Core Workflow to Support
+## Current State
+
+The platform currently provides:
+- [x] SAM.gov opportunity ingestion and viewing
+- [x] SBIR.gov award tracking
+- [x] Basic filtering by type, NAICS, phase
+- [x] Dashboard with stats and recent opportunities
+- [x] CSV export capability
+- [x] Login page and authentication infrastructure
+- [x] API proxy configuration (port 8080)
+- [x] Authenticated API requests
+
+---
+
+## Immediate Tasks (Do Next)
+
+### 1. Create Account / Registration Page
+**Priority: High | Estimate: 1-2 hours**
+
+Create `src/pages/RegisterPage.tsx` at `/register`:
+
+#### Form Fields
+- [ ] **Email** - Required, valid email format
+- [ ] **Password** - Required, min 8 characters
+- [ ] **Confirm Password** - Must match password
+- [ ] **First Name** - Required
+- [ ] **Last Name** - Required
+- [ ] **Organization Name** - Optional (creates tenant if provided)
+
+#### Features
+- [ ] Email format validation
+- [ ] Password strength indicator
+- [ ] Password match validation
+- [ ] Show/hide password toggle
+- [ ] Loading state on submit
+- [ ] Error message display (from API)
+- [ ] Success → redirect to dashboard
+- [ ] Link back to login page
+
+#### Files
+| File | Action |
+|------|--------|
+| `src/pages/RegisterPage.tsx` | Create |
+| `src/pages/RegisterPage.types.ts` | Create |
+| `src/pages/index.ts` | Export RegisterPage |
+| `src/App.tsx` | Add `/register` route |
+| `src/pages/LoginPage.tsx` | Add "Create Account" link |
+
+#### API
+Already implemented in `src/services/auth.ts`:
+```typescript
+export async function register(data: RegisterData): Promise<LoginResponse>
+// POST /api/v1/auth/register
+```
+
+#### Acceptance Criteria
+- [ ] User can navigate to `/register` from login page
+- [ ] Form validates all fields before submission
+- [ ] Successful registration logs user in automatically
+- [ ] Failed registration shows clear error message
+- [ ] User is redirected to dashboard after registration
+- [ ] "Already have an account?" links back to login
+
+---
+
+### 2. OpenAPI Type Generation
+**Priority: Medium | Estimate: 2-4 hours**
+
+Replace manually-written TypeScript types with auto-generated types from backend's OpenAPI spec.
+
+#### Problem
+- Frontend types manually written in `src/auth/Auth.types.ts`, `src/services/auth.ts`
+- API response format (snake_case, wrapped in `{success, data}`) differs from frontend
+- Risk of types drifting out of sync
+
+#### Implementation Steps
+1. [ ] Add Springdoc OpenAPI to backend (`build.gradle`)
+2. [ ] Configure OpenAPI annotations on controllers/DTOs
+3. [ ] Verify spec generation at `/v3/api-docs`
+4. [ ] Add `openapi-typescript` to frontend
+5. [ ] Add npm script: `"generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/types/api.d.ts"`
+6. [ ] Replace manual types with generated types
+7. [ ] Add to CI/CD pipeline
+
+#### Backend Changes
+```xml
+<!-- build.gradle -->
+implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+```
+
+#### Frontend Changes
+```json
+// package.json
+{
+  "scripts": {
+    "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/types/api.d.ts",
+    "prebuild": "npm run generate:types"
+  }
+}
+```
+
+---
+
+## Contractor Portal Vision
+
+Transform the dashboard into a full contractor command center that guides users from discovery through contract execution.
+
+### User Journey
+
+```
+Discovery → Signup → Onboarding → Contract Setup → Portal Access
+```
+
+### Phase 1: Discovery & Signup
+1. Contractor arrives at site
+2. Sees value proposition
+3. Creates account, begins onboarding
+
+### Phase 2: Onboarding & Contract Setup
+
+#### Option A: AI-Assisted Contract Analysis (Recommended)
+- [ ] User pastes existing contract/RFP
+- [ ] AI (OpenAI) analyzes document and determines:
+  - Contract type (SBIR, Federal, State, City/Local)
+  - Required compliance frameworks
+  - Key deliverables and milestones
+  - Data requirements
+- [ ] Auto-generate input fields based on detected requirements
+- [ ] Pre-fill known information from analysis
+
+#### Option B: Manual Entry
+- [ ] User selects contract type manually
+- [ ] Step-by-step guided form for specific contract type
+- [ ] Contextual help and examples
+
+### Phase 3: Requirements Gathering
+- [ ] Contract Type Selection: SBIR / Federal / State / City-Local
+- [ ] Scope of work documentation
+- [ ] Technical requirements
+- [ ] Compliance requirements (NIST 800-53, FedRAMP, etc.)
+- [ ] Data handling requirements
+- [ ] Timeline and milestones
+
+### Phase 4: Engagement Options
+- [ ] Schedule a meeting (calendar integration)
+- [ ] Reach out based on preference (email, phone, video)
+- [ ] Communication preferences stored
+
+### Phase 5: Portal Access (Post-Contract)
+
+#### Tracking & Visibility
+- [ ] **SBOM Tracking** - Software Bill of Materials dashboard
+- [ ] **Progress Dashboard** - Overall contract health
+- [ ] **Sprint Tracking** - Current and upcoming sprints
+- [ ] **Feature Tracking** - Requested features and status
+- [ ] **Milestone Timeline** - Visual timeline of deliverables
+
+#### Communication Hub
+- [ ] **Chatbot** - AI-powered assistant for quick questions
+- [ ] **Inbox/Messages** - Direct communication with team
+- [ ] **Status Updates** - Automated notifications
+- [ ] **Feature Adjustment Requests** - Submit and track changes
+
+#### AI-Powered Scope Management
+- [ ] Automatic scope analysis via OpenAI
+- [ ] Flag potential scope creep
+- [ ] Suggest clarifications needed
+- [ ] Track requirements vs. delivered
+
+### Common Integration Patterns
+
+#### Data Integration
+- [ ] Data pipeline requirements
+- [ ] ETL processes
+- [ ] Data format specifications
+- [ ] API integrations
+
+#### Platform Integrations
+- [ ] Palantir Integration (Foundry, Gotham)
+- [ ] Machine Learning / AI (model deployment, MLOps)
+- [ ] Cloud Platforms (AWS GovCloud, Azure Government)
+- [ ] Legacy System Integration
+
+#### Compliance & Security
+- [ ] NIST 800-53 controls
+- [ ] FedRAMP requirements
+- [ ] CMMC levels
+- [ ] Section 508 accessibility
+- [ ] Data residency requirements
+
+### Reporting Features
+
+#### Audit-Ready Contract Report
+- [ ] Print/export contract report against requirements
+- [ ] Compliance checklist with evidence
+- [ ] Deliverables tracking
+- [ ] Change log / audit trail
+
+#### Executive Briefing Generator
+- [ ] Slide-ready report auto-generation
+- [ ] Summary briefing for leadership
+- [ ] Key metrics and status
+- [ ] Risk summary
+- [ ] Next steps and action items
+- [ ] Export to PowerPoint/PDF
+
+### New Entities Required
+- `ContractorProfile` - Company info, preferences, history
+- `Contract` - Contract details, type, requirements
+- `Onboarding` - Onboarding workflow state
+- `Sprint` - Sprint planning and tracking
+- `Feature` - Feature requests and status
+- `Message` - Communication inbox
+- `Report` - Generated reports and briefings
+
+---
+
+## Core Workflow
 
 The platform must support the end-to-end contracting workflow:
 
@@ -27,8 +234,6 @@ Find → Qualify → Pursue → Propose → Award → Execute → Invoice/Close
 ---
 
 ## Core Entity Model (Data Spine)
-
-These are the fundamental entities the entire system revolves around:
 
 | Entity | Description |
 |--------|-------------|
@@ -44,7 +249,29 @@ These are the fundamental entities the entire system revolves around:
 
 ---
 
-## PHASE 1: Multi-Tenant Foundation (Build First)
+## Practical Build Order
+
+### MVP (Get Value Fast)
+- [ ] Opportunity + document intake
+- [ ] Requirement extraction + checklist + task creation
+- [ ] Proposal workspace with assignments + reviews
+- [ ] Contract record + deliverables tracker
+- [ ] Basic budget vs actual + burn alerts
+- [ ] Search + audit trail + exports
+
+### V1
+- [ ] Clause obligation tracking
+- [ ] Traceability matrix + compliance scoring
+- [ ] Content library (past performance/resumes) + reuse
+- [ ] Invoice workflow + funding tracking
+- [ ] Dashboards
+
+### V2
+- [ ] Deep integrations + multi-user collaboration + advanced analytics
+
+---
+
+## PHASE 1: Multi-Tenant Foundation
 
 ### 1.1 Tenant Architecture
 - [ ] Tenant/Organization model
@@ -594,7 +821,7 @@ These are the fundamental entities the entire system revolves around:
 
 ---
 
-## AI/Assistant Capabilities (Contract Intelligence)
+## AI/Assistant Capabilities
 
 | Feature | Description |
 |---------|-------------|
@@ -609,47 +836,7 @@ These are the fundamental entities the entire system revolves around:
 
 ---
 
-## Implementation Phases
-
-### Foundation (Weeks 1-8)
-1. Multi-tenant architecture
-2. User authentication & authorization
-3. Basic subscription management
-4. Enhanced opportunity search & filtering
-5. Email alert system
-
-### Core Features (Weeks 9-20)
-1. Pipeline management (Kanban, stages)
-2. Bid/no-bid decision support
-3. Contract repository
-4. Basic financial tracking
-5. Document management foundation
-
-### Advanced Features (Weeks 21-36)
-1. Full proposal management
-2. Teaming partner management
-3. Comprehensive compliance tracking
-4. SBOM/CycloneDX integration
-5. State/local opportunity sources
-6. Advanced analytics
-
-### Intelligence & AI (Weeks 37-52)
-1. AI document parsing
-2. Predictive analytics
-3. Recommendation engine
-4. Market intelligence
-5. Advanced integrations
-
-### Scale & Polish (Ongoing)
-1. Mobile apps
-2. Third-party integrations
-3. Performance optimization
-4. Additional data sources
-5. Customer-driven features
-
----
-
-## Technology Stack Recommendations
+## Technology Stack
 
 ### Backend
 - **Current**: Java Spring Boot (keep and extend)
@@ -660,9 +847,9 @@ These are the fundamental entities the entire system revolves around:
 - **File Storage**: S3-compatible (AWS S3, MinIO)
 
 ### Frontend
-- **Current**: React + TypeScript (keep and extend)
+- **Current**: React + TypeScript + Vite (keep and extend)
 - **State**: React Query + Zustand
-- **UI**: Keep existing component library, add more
+- **UI**: Existing component library
 - **Charts**: Recharts or Chart.js
 
 ### Infrastructure
@@ -673,25 +860,12 @@ These are the fundamental entities the entire system revolves around:
 
 ---
 
-## Practical Build Order (MVP → V1 → V2)
+## Contract Type Focus Notes
 
-### MVP (Get Value Fast)
-- [ ] Opportunity + document intake
-- [ ] Requirement extraction + checklist + task creation
-- [ ] Proposal workspace with assignments + reviews
-- [ ] Contract record + deliverables tracker
-- [ ] Basic budget vs actual + burn alerts
-- [ ] Search + audit trail + exports
-
-### V1
-- [ ] Clause obligation tracking
-- [ ] Traceability matrix + compliance scoring
-- [ ] Content library (past performance/resumes) + reuse
-- [ ] Invoice workflow + funding tracking
-- [ ] Dashboards
-
-### V2
-- [ ] Deep integrations + multi-user collaboration + advanced analytics
+When prioritizing, consider primary contract type focus:
+- **Services vs Product** - Services need more labor/rate tracking; products need inventory/BOM
+- **Prime vs Sub** - Primes need full proposal management; subs need teaming/flow-down tracking
+- **IDIQ vs Standalone** - IDIQ needs task order pipeline management; standalone is simpler workflow
 
 ---
 
@@ -708,6 +882,4 @@ These are the fundamental entities the entire system revolves around:
 
 ---
 
-## Related Documents
-
-- **Detailed Backlog**: `docs/BACKLOG_DETAILED.md` (workflow-oriented build order with MVP priorities)
+*Last Updated: 2026-01-26*

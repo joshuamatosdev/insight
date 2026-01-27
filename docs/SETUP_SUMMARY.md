@@ -12,8 +12,7 @@ This document summarizes the complete setup of strict linting, accessibility, co
 
 | File | Description |
 |------|-------------|
-| `docs/MASTER_TODO_LIST.md` | 300+ features across 11 phases |
-| `docs/BACKLOG_DETAILED.md` | Workflow-oriented build order |
+| `docs/TODO.md` | Unified TODO - 300+ features, roadmap, immediate tasks |
 | `CLAUDE.md` | Project instructions with TDD workflow |
 | `docs/SETUP_SUMMARY.md` | This file |
 
