@@ -92,7 +92,7 @@ public class FeatureRequestService {
                 .description(request.description())
                 .category(request.category())
                 .status(FeatureRequestStatus.SUBMITTED)
-                .createdBy(user)
+                .submittedBy(user)
                 .build();
 
         FeatureRequest saved = featureRequestRepository.save(featureRequest);
@@ -121,7 +121,7 @@ public class FeatureRequestService {
                 .orElseThrow(() -> new ResourceNotFoundException("FeatureRequest", id));
 
         // Only the creator can update their own request (unless admin)
-        if (!featureRequest.getCreatedBy().getId().equals(userId)) {
+        if (!featureRequest.getSubmittedBy().getId().equals(userId)) {
             throw new IllegalStateException("Only the creator can update this feature request");
         }
 
@@ -222,7 +222,7 @@ public class FeatureRequestService {
                 .orElseThrow(() -> new ResourceNotFoundException("FeatureRequest", id));
 
         // Only the creator can delete their own request (unless admin)
-        if (!featureRequest.getCreatedBy().getId().equals(userId)) {
+        if (!featureRequest.getSubmittedBy().getId().equals(userId)) {
             throw new IllegalStateException("Only the creator can delete this feature request");
         }
 
