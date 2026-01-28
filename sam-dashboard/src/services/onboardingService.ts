@@ -2,7 +2,7 @@
  * Onboarding service for wizard API calls.
  */
 
-const API_BASE = '/onboarding';
+const API_BASE = '/api/onboarding';
 
 export interface OnboardingProgress {
     id: string;

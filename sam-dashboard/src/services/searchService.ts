@@ -2,7 +2,7 @@
  * Enhanced search service with autocomplete and faceted search
  */
 
-const API_BASE = '/search';
+const API_BASE = '/api/search';
 
 export interface SearchSuggestion {
     text: string;

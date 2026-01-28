@@ -2,7 +2,7 @@
  * OAuth service for social login integration
  */
 
-const API_BASE = '/oauth';
+const API_BASE = '/api/oauth';
 
 export interface OAuthProvider {
     id: string;

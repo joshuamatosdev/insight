@@ -7,7 +7,7 @@ import type {
     UpdatePlanRequest,
 } from '../types/billing.types';
 
-const API_BASE = '/billing';
+const API_BASE = '/api/billing';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**

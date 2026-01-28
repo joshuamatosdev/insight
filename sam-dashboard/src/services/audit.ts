@@ -54,7 +54,7 @@ export async function fetchMyAuditLogs(
     page: number = 0,
     size: number = 50
 ): Promise<AuditLogPage> {
-    const response = await authFetch(`${API_BASE}/v1/audit/me?page=${page}&size=${size}`);
+    const response = await authFetch(`${API_BASE}/audit/me?page=${page}&size=${size}`);
     if (response.ok === false) {
         throw new Error(`Failed to fetch audit logs: ${response.statusText}`);
     }
@@ -70,7 +70,7 @@ export async function fetchUserAuditLogs(
     size: number = 50
 ): Promise<AuditLogPage> {
     const response = await authFetch(
-        `${API_BASE}/v1/audit/user/${userId}?page=${page}&size=${size}`
+        `${API_BASE}/audit/user/${userId}?page=${page}&size=${size}`
     );
     if (response.ok === false) {
         throw new Error(`Failed to fetch user audit logs: ${response.statusText}`);
@@ -87,7 +87,7 @@ export async function fetchTenantAuditLogs(
     size: number = 50
 ): Promise<AuditLogPage> {
     const response = await authFetch(
-        `${API_BASE}/v1/audit/tenant/${tenantId}?page=${page}&size=${size}`
+        `${API_BASE}/audit/tenant/${tenantId}?page=${page}&size=${size}`
     );
     if (response.ok === false) {
         throw new Error(`Failed to fetch tenant audit logs: ${response.statusText}`);
@@ -104,7 +104,7 @@ export async function fetchTenantAuditLogsByDateRange(
     endDate: string
 ): Promise<AuditLog[]> {
     const response = await authFetch(
-        `${API_BASE}/v1/audit/tenant/${tenantId}/range?startDate=${startDate}&endDate=${endDate}`
+        `${API_BASE}/audit/tenant/${tenantId}/range?startDate=${startDate}&endDate=${endDate}`
     );
     if (response.ok === false) {
         throw new Error(`Failed to fetch tenant audit logs: ${response.statusText}`);
@@ -120,7 +120,7 @@ export async function fetchEntityAuditLogs(
     entityId: string
 ): Promise<AuditLog[]> {
     const response = await authFetch(
-        `${API_BASE}/v1/audit/entity/${entityType}/${entityId}`
+        `${API_BASE}/audit/entity/${entityType}/${entityId}`
     );
     if (response.ok === false) {
         throw new Error(`Failed to fetch entity audit logs: ${response.statusText}`);

@@ -2,7 +2,7 @@
  * Export service for batch and scheduled exports
  */
 
-const API_BASE = '/export';
+const API_BASE = '/api/export';
 
 export type ExportFormat = 'PDF' | 'EXCEL' | 'CSV' | 'JSON';
 

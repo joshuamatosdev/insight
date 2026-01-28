@@ -2,7 +2,7 @@
  * Tenant Admin service for settings and branding
  */
 
-const API_BASE = '/admin/tenant';
+const API_BASE = '/api/admin/tenant';
 
 export interface TenantSettings {
     id: string;

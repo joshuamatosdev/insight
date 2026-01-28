@@ -2,7 +2,7 @@
  * MFA service for multi-factor authentication
  */
 
-const API_BASE = '/mfa';
+const API_BASE = '/api/mfa';
 
 export interface MfaStatus {
     enabled: boolean;

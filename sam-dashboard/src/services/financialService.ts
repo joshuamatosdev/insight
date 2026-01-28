@@ -88,13 +88,13 @@ export async function fetchInvoices(
     size: number = 20
 ): Promise<PaginatedResponse<Invoice>> {
     const response = await authFetch(
-        `${API_BASE}/v1/invoices?page=${page}&size=${size}`
+        `${API_BASE}/invoices?page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<Invoice>>(response);
 }
 
 export async function fetchInvoice(id: string): Promise<Invoice> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/${id}`);
+    const response = await authFetch(`${API_BASE}/invoices/${id}`);
     return handleResponse<Invoice>(response);
 }
 
@@ -104,7 +104,7 @@ export async function fetchInvoicesByContract(
     size: number = 20
 ): Promise<PaginatedResponse<Invoice>> {
     const response = await authFetch(
-        `${API_BASE}/v1/invoices/contract/${contractId}?page=${page}&size=${size}`
+        `${API_BASE}/invoices/contract/${contractId}?page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<Invoice>>(response);
 }
@@ -115,18 +115,18 @@ export async function fetchInvoicesByStatus(
     size: number = 20
 ): Promise<PaginatedResponse<Invoice>> {
     const response = await authFetch(
-        `${API_BASE}/v1/invoices?status=${status}&page=${page}&size=${size}`
+        `${API_BASE}/invoices?status=${status}&page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<Invoice>>(response);
 }
 
 export async function fetchOverdueInvoices(): Promise<Invoice[]> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/overdue`);
+    const response = await authFetch(`${API_BASE}/invoices/overdue`);
     return handleResponse<Invoice[]>(response);
 }
 
 export async function createInvoice(request: CreateInvoiceRequest): Promise<Invoice> {
-    const response = await authFetch(`${API_BASE}/v1/invoices`, {
+    const response = await authFetch(`${API_BASE}/invoices`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -137,7 +137,7 @@ export async function updateInvoice(
     id: string,
     request: UpdateInvoiceRequest
 ): Promise<Invoice> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/${id}`, {
+    const response = await authFetch(`${API_BASE}/invoices/${id}`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });
@@ -145,7 +145,7 @@ export async function updateInvoice(
 }
 
 export async function deleteInvoice(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/${id}`, {
+    const response = await authFetch(`${API_BASE}/invoices/${id}`, {
         method: 'DELETE',
     });
     if (response.ok === false) {
@@ -154,7 +154,7 @@ export async function deleteInvoice(id: string): Promise<void> {
 }
 
 export async function submitInvoice(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/${id}/submit`, {
+    const response = await authFetch(`${API_BASE}/invoices/${id}/submit`, {
         method: 'POST',
     });
     if (response.ok === false) {
@@ -163,7 +163,7 @@ export async function submitInvoice(id: string): Promise<void> {
 }
 
 export async function approveInvoice(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/${id}/approve`, {
+    const response = await authFetch(`${API_BASE}/invoices/${id}/approve`, {
         method: 'POST',
     });
     if (response.ok === false) {
@@ -177,7 +177,7 @@ export async function markInvoicePaid(
     paidAmount: number
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/v1/invoices/${id}/pay?paidDate=${paidDate}&paidAmount=${paidAmount}`,
+        `${API_BASE}/invoices/${id}/pay?paidDate=${paidDate}&paidAmount=${paidAmount}`,
         {method: 'POST'}
     );
     if (response.ok === false) {
@@ -187,7 +187,7 @@ export async function markInvoicePaid(
 
 export async function rejectInvoice(id: string, reason: string): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/v1/invoices/${id}/reject?reason=${encodeURIComponent(reason)}`,
+        `${API_BASE}/invoices/${id}/reject?reason=${encodeURIComponent(reason)}`,
         {method: 'POST'}
     );
     if (response.ok === false) {
@@ -203,7 +203,7 @@ export async function fetchInvoiceSummary(): Promise<{
     totalAmount: number;
     outstandingAmount: number;
 }> {
-    const response = await authFetch(`${API_BASE}/v1/invoices/summary`);
+    const response = await authFetch(`${API_BASE}/invoices/summary`);
     return handleResponse(response);
 }
 
@@ -256,12 +256,12 @@ export async function fetchBudgets(
     if (category !== undefined) {
         params.append('category', category);
     }
-    const response = await authFetch(`${API_BASE}/v1/budgets?${params}`);
+    const response = await authFetch(`${API_BASE}/budgets?${params}`);
     return handleResponse<PaginatedResponse<BudgetItem>>(response);
 }
 
 export async function fetchBudget(id: string): Promise<BudgetItem> {
-    const response = await authFetch(`${API_BASE}/v1/budgets/${id}`);
+    const response = await authFetch(`${API_BASE}/budgets/${id}`);
     return handleResponse<BudgetItem>(response);
 }
 
@@ -271,7 +271,7 @@ export async function fetchBudgetsByContract(
     size: number = 20
 ): Promise<PaginatedResponse<BudgetItem>> {
     const response = await authFetch(
-        `${API_BASE}/v1/budgets/contract/${contractId}?page=${page}&size=${size}`
+        `${API_BASE}/budgets/contract/${contractId}?page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<BudgetItem>>(response);
 }
@@ -280,25 +280,25 @@ export async function fetchContractBudgetSummary(
     contractId: string
 ): Promise<BudgetSummary> {
     const response = await authFetch(
-        `${API_BASE}/v1/budgets/contract/${contractId}/summary`
+        `${API_BASE}/budgets/contract/${contractId}/summary`
     );
     return handleResponse<BudgetSummary>(response);
 }
 
 export async function fetchOverBudgetItems(): Promise<BudgetItem[]> {
-    const response = await authFetch(`${API_BASE}/v1/budgets/over-budget`);
+    const response = await authFetch(`${API_BASE}/budgets/over-budget`);
     return handleResponse<BudgetItem[]>(response);
 }
 
 export async function fetchBudgetCategories(): Promise<string[]> {
-    const response = await authFetch(`${API_BASE}/v1/budgets/categories`);
+    const response = await authFetch(`${API_BASE}/budgets/categories`);
     return handleResponse<string[]>(response);
 }
 
 export async function createBudget(
     request: CreateBudgetItemRequest
 ): Promise<BudgetItem> {
-    const response = await authFetch(`${API_BASE}/v1/budgets`, {
+    const response = await authFetch(`${API_BASE}/budgets`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -309,7 +309,7 @@ export async function updateBudget(
     id: string,
     request: UpdateBudgetItemRequest
 ): Promise<BudgetItem> {
-    const response = await authFetch(`${API_BASE}/v1/budgets/${id}`, {
+    const response = await authFetch(`${API_BASE}/budgets/${id}`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });
@@ -321,7 +321,7 @@ export async function recordExpense(
     amount: number
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/v1/budgets/${id}/expense?amount=${amount}`,
+        `${API_BASE}/budgets/${id}/expense?amount=${amount}`,
         {method: 'POST'}
     );
     if (response.ok === false) {
@@ -330,7 +330,7 @@ export async function recordExpense(
 }
 
 export async function deleteBudget(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/v1/budgets/${id}`, {
+    const response = await authFetch(`${API_BASE}/budgets/${id}`, {
         method: 'DELETE',
     });
     if (response.ok === false) {
@@ -346,13 +346,13 @@ export async function fetchLaborRates(
     activeOnly: boolean = false
 ): Promise<PaginatedResponse<LaborRate>> {
     const response = await authFetch(
-        `${API_BASE}/v1/labor-rates?page=${page}&size=${size}&activeOnly=${activeOnly}`
+        `${API_BASE}/labor-rates?page=${page}&size=${size}&activeOnly=${activeOnly}`
     );
     return handleResponse<PaginatedResponse<LaborRate>>(response);
 }
 
 export async function fetchLaborRate(id: string): Promise<LaborRate> {
-    const response = await authFetch(`${API_BASE}/v1/labor-rates/${id}`);
+    const response = await authFetch(`${API_BASE}/labor-rates/${id}`);
     return handleResponse<LaborRate>(response);
 }
 
@@ -360,25 +360,25 @@ export async function fetchLaborRatesByCategory(
     category: string
 ): Promise<LaborRate[]> {
     const response = await authFetch(
-        `${API_BASE}/v1/labor-rates/category/${encodeURIComponent(category)}`
+        `${API_BASE}/labor-rates/category/${encodeURIComponent(category)}`
     );
     return handleResponse<LaborRate[]>(response);
 }
 
 export async function fetchLaborCategories(): Promise<string[]> {
-    const response = await authFetch(`${API_BASE}/v1/labor-rates/categories`);
+    const response = await authFetch(`${API_BASE}/labor-rates/categories`);
     return handleResponse<string[]>(response);
 }
 
 export async function fetchContractVehicles(): Promise<string[]> {
-    const response = await authFetch(`${API_BASE}/v1/labor-rates/contract-vehicles`);
+    const response = await authFetch(`${API_BASE}/labor-rates/contract-vehicles`);
     return handleResponse<string[]>(response);
 }
 
 export async function createLaborRate(
     request: CreateLaborRateRequest
 ): Promise<LaborRate> {
-    const response = await authFetch(`${API_BASE}/v1/labor-rates`, {
+    const response = await authFetch(`${API_BASE}/labor-rates`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -389,7 +389,7 @@ export async function updateLaborRate(
     id: string,
     request: UpdateLaborRateRequest
 ): Promise<LaborRate> {
-    const response = await authFetch(`${API_BASE}/v1/labor-rates/${id}`, {
+    const response = await authFetch(`${API_BASE}/labor-rates/${id}`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });
@@ -401,7 +401,7 @@ export async function setLaborRateActive(
     active: boolean
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/v1/labor-rates/${id}/active?active=${active}`,
+        `${API_BASE}/labor-rates/${id}/active?active=${active}`,
         {method: 'PATCH'}
     );
     if (response.ok === false) {
@@ -410,7 +410,7 @@ export async function setLaborRateActive(
 }
 
 export async function deleteLaborRate(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/v1/labor-rates/${id}`, {
+    const response = await authFetch(`${API_BASE}/labor-rates/${id}`, {
         method: 'DELETE',
     });
     if (response.ok === false) {

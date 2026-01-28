@@ -2,7 +2,7 @@
  * AI Analysis service for contract and opportunity intelligence.
  */
 
-const API_BASE = '/ai';
+const API_BASE = '/api/ai';
 
 export interface AISummary {
     executiveSummary: string;

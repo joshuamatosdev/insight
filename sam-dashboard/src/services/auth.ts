@@ -1,6 +1,6 @@
 import type {AuthError, LoginCredentials, LoginResponse, RegisterData, User,} from '../auth/Auth.types';
 
-const API_BASE = '/auth';
+const API_BASE = '/api/auth';
 
 /**
  * API response wrapper format from backend

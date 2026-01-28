@@ -167,7 +167,7 @@ describe('API Service', () => {
 
             const result = await fetchOpportunities();
 
-            expect(fetchMock).toHaveBeenCalledWith('/api/opportunities', expect.any(Object));
+            expect(fetchMock).toHaveBeenCalledWith('/opportunities', expect.any(Object));
             expect(result).toEqual(mockOpportunities);
         });
 
@@ -178,7 +178,7 @@ describe('API Service', () => {
             await fetchOpportunities();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/opportunities',
+                '/opportunities',
                 expect.objectContaining({
                     headers: expect.objectContaining({
                         Authorization: 'Bearer test-auth-token',
@@ -233,7 +233,7 @@ describe('API Service', () => {
 
             const result = await fetchSbirOpportunities();
 
-            expect(fetchMock).toHaveBeenCalledWith('/api/opportunities/sbir', expect.any(Object));
+            expect(fetchMock).toHaveBeenCalledWith('/opportunities/sbir', expect.any(Object));
             expect(result).toEqual(mockOpportunities);
         });
 
@@ -244,7 +244,7 @@ describe('API Service', () => {
             const result = await fetchSbirOpportunities('I');
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/opportunities/sbir?phase=I',
+                '/opportunities/sbir?phase=I',
                 expect.any(Object)
             );
             expect(result).toEqual(mockOpportunities);
@@ -283,7 +283,7 @@ describe('API Service', () => {
             await triggerIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/ingest',
+                '/ingest',
                 expect.objectContaining({
                     method: 'POST',
                 })
@@ -296,7 +296,7 @@ describe('API Service', () => {
             await triggerIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/ingest',
+                '/ingest',
                 expect.objectContaining({
                     method: 'POST',
                     headers: expect.objectContaining({
@@ -322,7 +322,7 @@ describe('API Service', () => {
             await triggerFullIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/ingest/full',
+                '/ingest/full',
                 expect.objectContaining({
                     method: 'POST',
                 })
@@ -335,7 +335,7 @@ describe('API Service', () => {
             await triggerFullIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/ingest/full',
+                '/ingest/full',
                 expect.objectContaining({
                     headers: expect.objectContaining({
                         Authorization: 'Bearer full-ingest-token',
@@ -362,7 +362,7 @@ describe('API Service', () => {
             await triggerSbirIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/ingest/sbir',
+                '/ingest/sbir',
                 expect.objectContaining({
                     method: 'POST',
                 })
@@ -387,7 +387,7 @@ describe('API Service', () => {
 
             const result = await fetchSbirAwards();
 
-            expect(fetchMock).toHaveBeenCalledWith('/api/sbir/awards', expect.any(Object));
+            expect(fetchMock).toHaveBeenCalledWith('/sbir/awards', expect.any(Object));
             expect(result).toEqual(mockAwards);
         });
 
@@ -398,7 +398,7 @@ describe('API Service', () => {
             const result = await fetchSbirAwards('NASA');
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/awards?agency=NASA',
+                '/sbir/awards?agency=NASA',
                 expect.any(Object)
             );
             expect(result).toEqual(mockAwards);
@@ -411,7 +411,7 @@ describe('API Service', () => {
             const result = await fetchSbirAwards(undefined, 'II');
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/awards?phase=II',
+                '/sbir/awards?phase=II',
                 expect.any(Object)
             );
             expect(result).toEqual(mockAwards);
@@ -424,7 +424,7 @@ describe('API Service', () => {
             const result = await fetchSbirAwards('DOD', 'I');
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/awards?agency=DOD&phase=I',
+                '/sbir/awards?agency=DOD&phase=I',
                 expect.any(Object)
             );
             expect(result).toEqual(mockAwards);
@@ -463,7 +463,7 @@ describe('API Service', () => {
 
             const result = await fetchSbirStats();
 
-            expect(fetchMock).toHaveBeenCalledWith('/api/sbir/stats', expect.any(Object));
+            expect(fetchMock).toHaveBeenCalledWith('/sbir/stats', expect.any(Object));
             expect(result).toEqual(mockStats);
         });
 
@@ -473,7 +473,7 @@ describe('API Service', () => {
             await fetchSbirStats();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/stats',
+                '/sbir/stats',
                 expect.objectContaining({
                     headers: expect.objectContaining({
                         Authorization: 'Bearer stats-token',
@@ -501,7 +501,7 @@ describe('API Service', () => {
             const result = await searchSbirAwards('AI');
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/awards/search?q=AI',
+                '/sbir/awards/search?q=AI',
                 expect.any(Object)
             );
             expect(result).toEqual(mockAwards);
@@ -513,7 +513,7 @@ describe('API Service', () => {
             await searchSbirAwards('machine learning & AI');
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/awards/search?q=machine%20learning%20%26%20AI',
+                '/sbir/awards/search?q=machine%20learning%20%26%20AI',
                 expect.any(Object)
             );
         });
@@ -551,7 +551,7 @@ describe('API Service', () => {
             await triggerSbirGovIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/ingest',
+                '/sbir/ingest',
                 expect.objectContaining({
                     method: 'POST',
                 })
@@ -564,7 +564,7 @@ describe('API Service', () => {
             await triggerSbirGovIngest();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/ingest',
+                '/sbir/ingest',
                 expect.objectContaining({
                     headers: expect.objectContaining({
                         Authorization: 'Bearer sbir-gov-token',
@@ -591,7 +591,7 @@ describe('API Service', () => {
 
             const result = await fetchSbirAgencies();
 
-            expect(fetchMock).toHaveBeenCalledWith('/api/sbir/agencies', expect.any(Object));
+            expect(fetchMock).toHaveBeenCalledWith('/sbir/agencies', expect.any(Object));
             expect(result).toEqual(mockAgencies);
         });
 
@@ -601,7 +601,7 @@ describe('API Service', () => {
             await fetchSbirAgencies();
 
             expect(fetchMock).toHaveBeenCalledWith(
-                '/api/sbir/agencies',
+                '/sbir/agencies',
                 expect.objectContaining({
                     headers: expect.objectContaining({
                         Authorization: 'Bearer agencies-token',

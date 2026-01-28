@@ -1,7 +1,7 @@
 import { Opportunity } from '../components/domain/opportunity';
 import { SbirAward, SbirStats } from '../components/domain/sbir';
 
-const API_BASE = '/api/v1';
+const API_BASE = '/api';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**
