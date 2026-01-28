@@ -50,16 +50,16 @@ describe('Flex', () => {
     expect(element).toHaveStyle({ flexWrap: 'wrap' });
   });
 
-  it('applies gap with number value', () => {
-    render(<Flex gap={16} data-testid="flex">Content</Flex>);
+  it('applies gap with semantic size value', () => {
+    render(<Flex gap="md" data-testid="flex">Content</Flex>);
     const element = screen.getByTestId('flex');
-    expect(element).toHaveStyle({ gap: '16px' });
+    expect(element).toHaveClass('gap-4');
   });
 
-  it('applies gap with string value', () => {
-    render(<Flex gap="1rem" data-testid="flex">Content</Flex>);
+  it('applies gap with xl size value', () => {
+    render(<Flex gap="xl" data-testid="flex">Content</Flex>);
     const element = screen.getByTestId('flex');
-    expect(element).toHaveStyle({ gap: '1rem' });
+    expect(element).toHaveClass('gap-8');
   });
 
   it('applies className correctly', () => {

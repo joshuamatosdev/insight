@@ -22,23 +22,50 @@ export function InputGroup({ children }: React.ComponentPropsWithoutRef<'span'>)
 const dateTypes = ['date', 'datetime-local', 'month', 'time', 'week']
 type DateType = (typeof dateTypes)[number]
 
+export interface InputProps extends Omit<Headless.InputProps, 'as' | 'className'> {
+  className?: string
+  type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | DateType
+  /** @deprecated Use wrapper component for labels */
+  label?: string
+  /** Whether the input takes full width */
+  fullWidth?: boolean
+  /** Whether the input is in an invalid state */
+  invalid?: boolean
+  /** Icon to show on the left side */
+  leftIcon?: React.ReactNode
+  /** Helper text shown below the input */
+  helperText?: string
+  /** Min value for number inputs */
+  min?: number
+  /** Max value for number inputs */
+  max?: number
+  /** Error message - sets invalid state when present */
+  error?: string
+}
+
 export const Input = forwardRef(function Input(
   {
     className,
+    label: _label,
+    fullWidth,
+    invalid,
+    leftIcon: _leftIcon,
+    helperText: _helperText,
+    error,
     ...props
-  }: {
-    className?: string
-    type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | DateType
-  } & Omit<Headless.InputProps, 'as' | 'className'>,
+  }: InputProps,
   ref: React.ForwardedRef<HTMLInputElement>
 ) {
+  // Error prop sets invalid state when present
+  const isInvalid = invalid === true || (error !== undefined && error !== '');
   return (
     <span
       data-slot="control"
       className={clsx([
         className,
         // Basic layout
-        'relative block w-full',
+        'relative block',
+        fullWidth !== false && 'w-full',
         // Background color + shadow applied to inset pseudo element, so shadow blends with border in light mode
         'before:absolute before:inset-px before:rounded-[calc(var(--radius-lg)-1px)] before:bg-white before:shadow-sm',
         // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
@@ -79,8 +106,9 @@ export const Input = forwardRef(function Input(
           'bg-transparent dark:bg-white/5',
           // Hide default focus styles
           'focus:outline-hidden',
-          // Invalid state
+          // Invalid state (via data attribute or prop)
           'data-invalid:border-red-500 data-invalid:data-hover:border-red-500 dark:data-invalid:border-red-600 dark:data-invalid:data-hover:border-red-600',
+          isInvalid && 'border-red-500 hover:border-red-500 dark:border-red-600 dark:hover:border-red-600',
           // Disabled state
           'data-disabled:border-zinc-950/20 dark:data-disabled:border-white/15 dark:data-disabled:bg-white/2.5 dark:data-hover:data-disabled:border-white/15',
           // System icons

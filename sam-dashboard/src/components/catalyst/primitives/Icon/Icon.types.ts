@@ -11,7 +11,7 @@ export interface IconProps {
   children?: ReactNode;
 }
 
-export interface IconComponentProps extends Omit<SVGAttributes<SVGSVGElement>, 'style'>, IconProps {
+export interface IconComponentProps extends Omit<SVGAttributes<SVGSVGElement>, 'style' | 'color'>, IconProps {
   viewBox?: string;
   paths: string[];
   fillRule?: 'nonzero' | 'evenodd';

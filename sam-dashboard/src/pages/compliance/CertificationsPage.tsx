@@ -298,7 +298,6 @@ export function CertificationsPage({
                     value={typeFilter ?? ''}
                     onChange={handleTypeFilterChange}
                     options={TYPE_FILTER_OPTIONS}
-                    size="sm"
                   />
                 </HStack>
 

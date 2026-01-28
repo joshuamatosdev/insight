@@ -2,17 +2,37 @@ import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 
+export interface SelectProps extends Omit<Headless.SelectProps, 'as' | 'className'> {
+  className?: string
+  /** @deprecated Use wrapper component for labels */
+  label?: string
+  /** Whether the select takes full width */
+  fullWidth?: boolean
+  /** Options array for convenience (alternative to children) */
+  options?: Array<{ value: string; label: string }>
+  /** Placeholder text */
+  placeholder?: string
+}
+
 export const Select = forwardRef(function Select(
-  { className, multiple, ...props }: { className?: string } & Omit<Headless.SelectProps, 'as' | 'className'>,
+  { className, multiple, label: _label, fullWidth, options, placeholder: _placeholder, ...props }: SelectProps,
   ref: React.ForwardedRef<HTMLSelectElement>
 ) {
+  // If options are provided, render them as children
+  const selectChildren = options !== undefined && options.length > 0
+    ? options.map(opt => (
+        <option key={opt.value} value={opt.value}>{opt.label}</option>
+      ))
+    : props.children;
+
   return (
     <span
       data-slot="control"
       className={clsx([
         className,
         // Basic layout
-        'group relative block w-full',
+        'group relative block',
+        fullWidth !== false && 'w-full',
         // Background color + shadow applied to inset pseudo element, so shadow blends with border in light mode
         'before:absolute before:inset-px before:rounded-[calc(var(--radius-lg)-1px)] before:bg-white before:shadow-sm',
         // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
@@ -27,6 +47,7 @@ export const Select = forwardRef(function Select(
         ref={ref}
         multiple={multiple}
         {...props}
+        children={selectChildren}
         className={clsx([
           // Basic layout
           'relative block w-full appearance-none rounded-lg py-[calc(--spacing(2.5)-1px)] sm:py-[calc(--spacing(1.5)-1px)]',

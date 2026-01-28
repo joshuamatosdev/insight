@@ -206,7 +206,7 @@ export async function updatePipelineOpportunity(
   request: UpdatePipelineOpportunityRequest
 ): Promise<PipelineOpportunity> {
   // The backend uses PATCH for partial updates
-  const result = await patchRequest<PipelineOpportunity, UpdatePipelineOpportunityRequest>(
+  const result = await apiClient.patch<PipelineOpportunity, UpdatePipelineOpportunityRequest>(
     `${PIPELINE_BASE}/${pipelineId}/opportunities/${id}`,
     request
   );
@@ -315,74 +315,4 @@ export async function fetchTeamingPartners(pipelineOpportunityId: string): Promi
     return [];
   }
   return result.data;
-}
-
-// ============ Helper: PATCH Request ============
-
-interface ApiResult<T> {
-  success: boolean;
-  data: T;
-  error: { message: string; status: number };
-}
-
-async function patchRequest<T, B = unknown>(
-  path: string,
-  body: B
-): Promise<ApiResult<T>> {
-  const API_BASE = '/api/v1';
-  const AUTH_STORAGE_KEY = 'auth';
-
-  function getAuthToken(): string | null {
-    try {
-      const authData = localStorage.getItem(AUTH_STORAGE_KEY);
-      if (authData !== null) {
-        const parsed = JSON.parse(authData) as { accessToken?: string };
-        return parsed.accessToken ?? null;
-      }
-      return null;
-    } catch {
-      return null;
-    }
-  }
-
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
-
-  const token = getAuthToken();
-  if (token !== null) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE}${path}`, {
-      method: 'PATCH',
-      headers,
-      body: JSON.stringify(body),
-    });
-
-    if (response.ok === false) {
-      const errorData = await response.json().catch(() => ({}));
-      return {
-        success: false,
-        data: undefined as unknown as T,
-        error: {
-          message: errorData.message ?? response.statusText ?? 'An error occurred',
-          status: response.status,
-        },
-      };
-    }
-
-    const data = (await response.json()) as T;
-    return { success: true, data, error: { message: '', status: 0 } };
-  } catch (err) {
-    return {
-      success: false,
-      data: undefined as unknown as T,
-      error: {
-        message: err instanceof Error ? err.message : 'Network error',
-        status: 0,
-      },
-    };
-  }
 }

@@ -1,12 +1,18 @@
-import Link from 'next/link'
+import { Link, LinkProps } from 'react-router-dom'
 import clsx from 'clsx'
 
-type ButtonProps = {
+type ButtonAsLink = Omit<LinkProps, 'to'> & {
   invert?: boolean
-} & (
-  | React.ComponentPropsWithoutRef<typeof Link>
-  | (React.ComponentPropsWithoutRef<'button'> & { href?: undefined })
-)
+  href: string
+  className?: string
+}
+
+type ButtonAsButton = React.ComponentPropsWithoutRef<'button'> & {
+  invert?: boolean
+  href?: undefined
+}
+
+type ButtonProps = ButtonAsLink | ButtonAsButton
 
 export function Button({
   invert = false,
@@ -14,7 +20,7 @@ export function Button({
   children,
   ...props
 }: ButtonProps) {
-  className = clsx(
+  const buttonClassName = clsx(
     className,
     'inline-flex rounded-full px-4 py-1.5 text-sm font-semibold transition',
     invert
@@ -25,15 +31,17 @@ export function Button({
   let inner = <span className="relative top-px">{children}</span>
 
   if (typeof props.href === 'undefined') {
+    const { href: _, ...buttonProps } = props as ButtonAsButton
     return (
-      <button className={className} {...props}>
+      <button className={buttonClassName} {...buttonProps}>
         {inner}
       </button>
     )
   }
 
+  const { href, ...linkProps } = props as ButtonAsLink
   return (
-    <Link className={className} {...props}>
+    <Link className={buttonClassName} to={href} {...linkProps}>
       {inner}
     </Link>
   )

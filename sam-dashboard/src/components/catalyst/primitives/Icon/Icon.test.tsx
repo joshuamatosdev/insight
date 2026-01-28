@@ -47,7 +47,7 @@ describe('Icon', () => {
 
   it('applies className correctly', () => {
     render(<Icon paths={testPaths} className="custom-icon" data-testid="icon" />);
-    const svg = screen.getByTestId('icon');
+    const svg = screen.getByTestId('icon') as unknown as SVGSVGElement;
     expect(svg.className.baseVal).toBe('custom-icon');
   });
 

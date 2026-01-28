@@ -53,9 +53,9 @@ export type EventType =
   | 'CUSTOM';
 
 /**
- * Entity types that can be associated with events
+ * Entity types that can be associated with analytics events
  */
-export type EntityType =
+export type AnalyticsEntityType =
   | 'OPPORTUNITY'
   | 'CONTRACT'
   | 'PIPELINE'
@@ -77,7 +77,7 @@ export interface AnalyticsEvent {
   tenantId: string;
   userId: string | null;
   eventType: EventType;
-  entityType: EntityType | null;
+  entityType: AnalyticsEntityType | null;
   entityId: string | null;
   properties: string | null;
   timestamp: string;
@@ -210,7 +210,7 @@ export interface TopPerformer {
  */
 export interface TrackEventRequest {
   eventType: EventType;
-  entityType?: EntityType;
+  entityType?: AnalyticsEntityType;
   entityId?: string;
   properties?: string;
   sessionId?: string;

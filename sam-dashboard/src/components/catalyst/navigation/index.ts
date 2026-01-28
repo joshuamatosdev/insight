@@ -1,6 +1,17 @@
 // Catalyst Navigation - Navigation and Layout Components
 //
-// NOTE: Sidebar is exported from layout/ to avoid conflicts
+// NOTE: Base Sidebar is exported from layout/
+// Additional Sidebar components (Body, Footer, Item, etc.) exported here
+
+export {
+  SidebarBody,
+  SidebarFooter,
+  SidebarDivider,
+  SidebarSpacer,
+  SidebarHeading,
+  SidebarItem,
+  SidebarLabel,
+} from './sidebar'
 
 export * from './breadcrumbs'
 export * from './navbar'

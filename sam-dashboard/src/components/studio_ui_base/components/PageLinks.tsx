@@ -1,12 +1,20 @@
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 
-import { Border } from '@/components/Border'
-import { Container } from '@/components/Container'
-import { FadeIn, FadeInStagger } from '@/components/FadeIn'
-import { GridPattern } from '@/components/GridPattern'
-import { SectionIntro } from '@/components/SectionIntro'
-import { formatDate } from '@/lib/formatDate'
+import { Border } from './Border'
+import { Container } from './Container'
+import { FadeIn, FadeInStagger } from './FadeIn'
+import { GridPattern } from './GridPattern'
+import { SectionIntro } from './SectionIntro'
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 function ArrowIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -45,7 +53,7 @@ function PageLink({ page }: { page: Page }) {
         </time>
         <p className="mt-2.5 text-base text-neutral-600">{page.description}</p>
         <Link
-          href={page.href}
+          to={page.href}
           className="mt-6 flex gap-x-3 text-base font-semibold text-neutral-950 transition hover:text-neutral-700"
           aria-label={`Read more: ${page.title}`}
         >

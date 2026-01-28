@@ -22,6 +22,7 @@ function createMockAuthContext(overrides?: Partial<AuthContextType>): AuthContex
     login: vi.fn(),
     logout: vi.fn(),
     clearError: vi.fn(),
+    setAuthData: vi.fn(),
     ...overrides,
   };
 }

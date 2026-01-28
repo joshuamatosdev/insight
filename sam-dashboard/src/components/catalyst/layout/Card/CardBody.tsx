@@ -12,6 +12,7 @@ const paddingClasses: Record<CardPadding, string> = {
   sm: 'p-3',
   md: 'p-5',
   lg: 'p-6',
+  xl: 'p-8',
 };
 
 export function CardBody({ padding = 'md', className, children, ...rest }: CardBodyProps) {

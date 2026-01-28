@@ -63,18 +63,19 @@ export function ButtonGroup({
       {...props}
     >
       {Children.map(children, (child, index) => {
-        if (isValidElement(child) && child.type === ButtonGroupItem) {
+        if (isValidElement<ButtonGroupItemProps>(child) && child.type === ButtonGroupItem) {
           const isFirst = index === 0
           const isLast = index === childCount - 1
           const isOnly = childCount === 1
 
-          return cloneElement(child, {
-            ...child.props,
+          const additionalProps: Partial<ButtonGroupItemProps> = {
             'data-position': isFirst ? 'first' : isLast ? 'last' : 'middle',
             'data-is-only': isOnly,
             variant,
             size,
-          } as ButtonGroupItemProps)
+          }
+
+          return cloneElement(child, additionalProps)
         }
         return child
       })}

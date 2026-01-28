@@ -12,11 +12,14 @@ export interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, 'style'>
 }
 
 export interface SectionHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
-  title: string;
+  /** Section title - required unless using custom children */
+  title?: string;
   icon?: ReactNode;
   actions?: ReactNode;
   className?: string;
   style?: CSSProperties;
   /** ID for the header (used for aria-labelledby) */
   id?: string;
+  /** Custom content - when provided, replaces default header layout */
+  children?: ReactNode;
 }

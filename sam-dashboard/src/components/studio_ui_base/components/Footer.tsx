@@ -1,9 +1,19 @@
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
-import { Container } from '@/components/Container'
-import { FadeIn } from '@/components/FadeIn'
-import { Logo } from '@/components/Logo'
-import { socialMediaProfiles } from '@/components/SocialMedia'
+import { Container } from './Container'
+import { FadeIn } from './FadeIn'
+import { Logo } from './Logo'
+import { socialMediaProfiles } from './SocialMedia'
+
+interface NavigationLink {
+  title: string | React.ReactNode
+  href: string
+}
+
+interface NavigationSection {
+  title: string
+  links: NavigationLink[]
+}
 
 const navigation = [
   {
@@ -41,16 +51,16 @@ function Navigation() {
   return (
     <nav>
       <ul role="list" className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-        {navigation.map((section, sectionIndex) => (
+        {navigation.map((section: NavigationSection, sectionIndex: number) => (
           <li key={sectionIndex}>
             <div className="font-display text-sm font-semibold tracking-wider text-neutral-950">
               {section.title}
             </div>
             <ul role="list" className="mt-4 text-sm text-neutral-700">
-              {section.links.map((link, linkIndex) => (
+              {section.links.map((link: NavigationLink, linkIndex: number) => (
                 <li key={linkIndex} className="mt-4">
                   <Link
-                    href={link.href}
+                    to={link.href}
                     className="transition hover:text-neutral-950"
                   >
                     {link.title}
@@ -121,7 +131,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-24 mb-20 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-neutral-950/10 pt-12">
-          <Link href="/" aria-label="Home">
+          <Link to="/" aria-label="Home">
             <Logo className="h-8" fillOnHover />
           </Link>
           <p className="text-sm text-neutral-700">

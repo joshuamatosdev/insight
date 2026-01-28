@@ -3,7 +3,9 @@ import { StackProps, HStackProps, SpacingSize } from './Stack.types';
 
 const alignMap: Record<string, string> = {
   start: 'items-start',
+  'flex-start': 'items-start',
   end: 'items-end',
+  'flex-end': 'items-end',
   center: 'items-center',
   stretch: 'items-stretch',
   baseline: 'items-baseline',
@@ -14,11 +16,14 @@ const justifyMap: Record<string, string> = {
   end: 'justify-end',
   center: 'justify-center',
   between: 'justify-between',
+  'space-between': 'justify-between',
   around: 'justify-around',
+  evenly: 'justify-evenly',
 };
 
 const spacingMap: Record<string, string> = {
   none: 'gap-0',
+  '0': 'gap-0',
   xs: 'gap-1',
   sm: 'gap-2',
   md: 'gap-4',
@@ -72,12 +77,14 @@ export function HStack({
   spacing = 'md',
   justify = 'start',
   align = 'center',
+  wrap,
   className,
   children,
   style,
   ...rest
 }: HStackProps) {
   const gapResolved = resolveGap(gap, spacing);
+  const wrapClass = wrap === true || wrap === 'wrap' ? 'flex-wrap' : wrap === 'wrap-reverse' ? 'flex-wrap-reverse' : '';
 
   return (
     <div
@@ -86,6 +93,7 @@ export function HStack({
         alignMap[align],
         justifyMap[justify],
         gapResolved.className,
+        wrapClass,
         className
       )}
       style={{ ...style, ...gapResolved.style }}

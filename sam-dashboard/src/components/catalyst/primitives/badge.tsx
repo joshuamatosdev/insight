@@ -28,17 +28,32 @@ const colors = {
   pink: 'bg-pink-400/15 text-pink-700 group-data-hover:bg-pink-400/25 dark:bg-pink-400/10 dark:text-pink-400 dark:group-data-hover:bg-pink-400/20',
   rose: 'bg-rose-400/15 text-rose-700 group-data-hover:bg-rose-400/25 dark:bg-rose-400/10 dark:text-rose-400 dark:group-data-hover:bg-rose-400/20',
   zinc: 'bg-zinc-600/10 text-zinc-700 group-data-hover:bg-zinc-600/20 dark:bg-white/5 dark:text-zinc-400 dark:group-data-hover:bg-white/10',
+  // Legacy color names (gray is alias for zinc)
+  gray: 'bg-zinc-600/10 text-zinc-700 group-data-hover:bg-zinc-600/20 dark:bg-white/5 dark:text-zinc-400 dark:group-data-hover:bg-white/10',
 }
 
-type BadgeProps = { color?: keyof typeof colors }
+const sizes = {
+  sm: 'px-1 py-0.5 text-xs',
+  md: 'px-1.5 py-0.5 text-sm/5 sm:text-xs/5',
+  lg: 'px-2 py-1 text-sm',
+}
 
-export function Badge({ color = 'zinc', className, ...props }: BadgeProps & React.ComponentPropsWithoutRef<'span'>) {
+export type BadgeProps = {
+  color?: keyof typeof colors
+  /** Badge size */
+  size?: keyof typeof sizes
+  /** @deprecated Variant is ignored, use color instead */
+  variant?: string
+}
+
+export function Badge({ color = 'zinc', size = 'md', variant: _variant, className, ...props }: BadgeProps & React.ComponentPropsWithoutRef<'span'>) {
   return (
     <span
       {...props}
       className={clsx(
         className,
-        'inline-flex items-center gap-x-1.5 rounded-md px-1.5 py-0.5 text-sm/5 font-medium sm:text-xs/5 forced-colors:outline',
+        'inline-flex items-center gap-x-1.5 rounded-md font-medium forced-colors:outline',
+        sizes[size],
         colors[color]
       )}
     />

@@ -216,9 +216,9 @@ export function RolesPage(): React.ReactElement {
         </Box>
       )}
 
-      <Card variant="default">
+      <Card variant="elevated">
         <CardBody padding="none">
-          <Table striped>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableHeader>Role Name</TableHeader>
@@ -273,7 +273,7 @@ export function RolesPage(): React.ReactElement {
                         size="sm"
                         onClick={() => handleDeleteRole(role)}
                         aria-label={`Delete ${role.name}`}
-                        isDisabled={role.isSystemRole}
+                        disabled={role.isSystemRole}
                       >
                         <TrashIcon size="sm" color={role.isSystemRole ? 'muted' : 'danger'} />
                       </Button>

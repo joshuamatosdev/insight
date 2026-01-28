@@ -92,7 +92,7 @@ export function requestIdleCallbackPolyfill(
       didTimeout: false,
       timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
     });
-  }, 1);
+  }, 1) as unknown as number;
 }
 
 /**

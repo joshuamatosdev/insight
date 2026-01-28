@@ -121,11 +121,17 @@ interface QuickStatProps {
   title: string;
   value: string;
   icon: string;
-  color: string;
+  /** Color value for the icon background and text */
+  color?: string;
+  /** Optional className for text styling (alternative to color) */
+  className?: string;
   loading?: boolean;
 }
 
-function QuickStat({ title, value, icon, color, loading }: QuickStatProps): React.ReactElement {
+const DEFAULT_COLOR = '#3b82f6';
+
+function QuickStat({ title, value, icon, color, className, loading }: QuickStatProps): React.ReactElement {
+  const effectiveColor = color ?? DEFAULT_COLOR;
   return (
     <Card variant="elevated">
       <CardBody padding="md">
@@ -144,7 +150,8 @@ function QuickStat({ title, value, icon, color, loading }: QuickStatProps): Reac
             ) : (
               <Text
                 variant="heading3"
-                style={{ color, fontWeight: 700 }}
+                className={className}
+                style={{ color: className !== undefined ? undefined : effectiveColor, fontWeight: 700 }}
               >
                 {value}
               </Text>
@@ -155,7 +162,7 @@ function QuickStat({ title, value, icon, color, loading }: QuickStatProps): Reac
               width: '48px',
               height: '48px',
               borderRadius: '8px',
-              backgroundColor: `${color}15`,
+              backgroundColor: `${effectiveColor}15`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

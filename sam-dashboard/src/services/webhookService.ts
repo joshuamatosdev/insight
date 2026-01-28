@@ -69,56 +69,91 @@ export interface WebhookDelivery {
   deliveredAt: string | null;
 }
 
+interface WebhookDeliveryPage {
+  content: WebhookDelivery[];
+  totalElements: number;
+}
+
 const WEBHOOK_BASE = '/webhooks';
 
 export async function fetchWebhooks(): Promise<Webhook[]> {
-  const response = await apiClient.get(WEBHOOK_BASE);
-  return response as Webhook[];
+  const response = await apiClient.get<Webhook[]>(WEBHOOK_BASE);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function fetchWebhook(id: string): Promise<Webhook> {
-  const response = await apiClient.get(`${WEBHOOK_BASE}/${id}`);
-  return response as Webhook;
+  const response = await apiClient.get<Webhook>(`${WEBHOOK_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function createWebhook(data: CreateWebhookRequest): Promise<Webhook> {
-  const response = await apiClient.post(WEBHOOK_BASE, data);
-  return response as Webhook;
+  const response = await apiClient.post<Webhook, CreateWebhookRequest>(WEBHOOK_BASE, data);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function updateWebhook(id: string, data: UpdateWebhookRequest): Promise<Webhook> {
-  const response = await apiClient.put(`${WEBHOOK_BASE}/${id}`, data);
-  return response as Webhook;
+  const response = await apiClient.put<Webhook, UpdateWebhookRequest>(`${WEBHOOK_BASE}/${id}`, data);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function deleteWebhook(id: string): Promise<void> {
-  await apiClient.delete(`${WEBHOOK_BASE}/${id}`);
+  const response = await apiClient.delete<void>(`${WEBHOOK_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function testWebhook(id: string): Promise<WebhookTestResult> {
-  const response = await apiClient.post(`${WEBHOOK_BASE}/${id}/test`);
-  return response as WebhookTestResult;
+  const response = await apiClient.post<WebhookTestResult, Record<string, never>>(`${WEBHOOK_BASE}/${id}/test`, {});
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function fetchWebhookDeliveries(
   webhookId: string,
   page: number = 0,
   size: number = 20
-): Promise<{ content: WebhookDelivery[]; totalElements: number }> {
+): Promise<WebhookDeliveryPage> {
   const params = new URLSearchParams();
   params.set('page', page.toString());
   params.set('size', size.toString());
-  const response = await apiClient.get(
+  const response = await apiClient.get<WebhookDeliveryPage>(
     `${WEBHOOK_BASE}/${webhookId}/deliveries?${params.toString()}`
   );
-  return response as { content: WebhookDelivery[]; totalElements: number };
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function retryWebhookDelivery(webhookId: string, deliveryId: string): Promise<void> {
-  await apiClient.post(`${WEBHOOK_BASE}/${webhookId}/deliveries/${deliveryId}/retry`);
+  const response = await apiClient.post<void, Record<string, never>>(
+    `${WEBHOOK_BASE}/${webhookId}/deliveries/${deliveryId}/retry`,
+    {}
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function toggleWebhookStatus(id: string): Promise<Webhook> {
-  const response = await apiClient.patch(`${WEBHOOK_BASE}/${id}/toggle`);
-  return response as Webhook;
+  const response = await apiClient.patch<Webhook, Record<string, never>>(`${WEBHOOK_BASE}/${id}/toggle`, {});
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }

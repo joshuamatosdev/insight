@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { BoxProps } from './Box.types';
 
 /**
@@ -6,18 +7,15 @@ import { BoxProps } from './Box.types';
  * Use this component instead of raw <div>, <span>, or other container elements.
  * Tailwind classes and inline styles are encapsulated here.
  */
-export function Box({
-  children,
-  className,
-  style,
-  as: Element = 'div',
-  ...rest
-}: BoxProps) {
+export const Box = forwardRef<HTMLDivElement, BoxProps>(function Box(
+  { children, className, style, as: Element = 'div', ...rest },
+  ref
+) {
   return (
-    <Element className={className} style={style} {...rest}>
+    <Element ref={ref} className={className} style={style} {...rest}>
       {children}
     </Element>
   );
-}
+});
 
 export default Box;

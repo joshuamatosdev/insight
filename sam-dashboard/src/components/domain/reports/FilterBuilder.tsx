@@ -105,7 +105,6 @@ export function FilterBuilder({
                     <Select
                       value={filter.field}
                       onChange={(e) => handleUpdateFilter(index, 'field', e.target.value)}
-                      size="sm"
                       placeholder="Select field..."
                       options={columnOptions}
                     />
@@ -117,7 +116,6 @@ export function FilterBuilder({
                     <Select
                       value={filter.operator}
                       onChange={(e) => handleUpdateFilter(index, 'operator', e.target.value)}
-                      size="sm"
                       options={FILTER_OPERATORS}
                     />
                   </Box>
@@ -130,7 +128,6 @@ export function FilterBuilder({
                         value={filter.value}
                         onChange={(e) => handleUpdateFilter(index, 'value', e.target.value)}
                         placeholder="Enter value..."
-                        size="sm"
                       />
                     </Box>
                   )}
@@ -159,7 +156,6 @@ export function FilterBuilder({
               <Select
                 value={newFilter.field ?? ''}
                 onChange={(e) => setNewFilter({ ...newFilter, field: e.target.value })}
-                size="sm"
                 placeholder="Select field..."
                 options={columnOptions}
               />
@@ -171,7 +167,6 @@ export function FilterBuilder({
               <Select
                 value={newFilter.operator ?? 'EQUALS'}
                 onChange={(e) => setNewFilter({ ...newFilter, operator: e.target.value as FilterOperator })}
-                size="sm"
                 options={FILTER_OPERATORS}
               />
             </Box>
@@ -184,7 +179,6 @@ export function FilterBuilder({
                   value={newFilter.value ?? ''}
                   onChange={(e) => setNewFilter({ ...newFilter, value: e.target.value })}
                   placeholder="Enter value..."
-                  size="sm"
                 />
               </Box>
             )}

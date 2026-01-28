@@ -130,6 +130,17 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     setError(null);
   }, []);
 
+  const setAuthData = useCallback((data: { token: string; refreshToken: string; user: User }): void => {
+    const authState: StoredAuthState = {
+      token: data.token,
+      refreshToken: data.refreshToken,
+      user: data.user,
+    };
+    setStoredAuth(authState);
+    setUser(data.user);
+    setToken(data.token);
+  }, []);
+
   const isAuthenticated = user !== null && token !== null;
 
   const contextValue: AuthContextType = useMemo(
@@ -142,8 +153,9 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       login,
       logout,
       clearError,
+      setAuthData,
     }),
-    [user, token, isAuthenticated, isLoading, error, login, logout, clearError]
+    [user, token, isAuthenticated, isLoading, error, login, logout, clearError, setAuthData]
   );
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

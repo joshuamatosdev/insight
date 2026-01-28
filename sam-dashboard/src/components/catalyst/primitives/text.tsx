@@ -40,11 +40,13 @@ const weightClasses: Record<string, string> = {
 
 type TextElement = 'p' | 'span' | 'div' | 'label' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
-export interface TextProps extends Omit<React.ComponentPropsWithoutRef<'p'>, 'color'> {
+export interface TextProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
   as?: TextElement
   variant?: keyof typeof variantClasses
   color?: keyof typeof colorClasses
   weight?: keyof typeof weightClasses
+  /** For label elements - associates label with form element */
+  htmlFor?: string
 }
 
 export function Text({ as: Component = 'p', className, variant, color, weight, ...props }: TextProps) {

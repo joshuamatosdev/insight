@@ -37,10 +37,12 @@ export function Icon({
   children,
   ...rest
 }: IconPropsWithChildren) {
+  const sizeValue = sizeMap[size];
+  const colorValue = colorMap[color];
   const iconStyles: CSSProperties = {
-    width: sizeMap[size],
-    height: sizeMap[size],
-    fill: colorMap[color],
+    width: sizeValue,
+    height: sizeValue,
+    fill: colorValue,
     flexShrink: 0,
     ...style,
   };

@@ -24,19 +24,19 @@ describe('Stack', () => {
   it('applies default spacing', () => {
     render(<Stack data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
-    expect(element).toHaveStyle({ gap: 'var(--spacing-4)' });
+    expect(element).toHaveClass('gap-4');
   });
 
-  it('applies custom spacing with number', () => {
-    render(<Stack spacing={20} data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element).toHaveStyle({ gap: '20px' });
-  });
-
-  it('applies custom spacing with string', () => {
-    render(<Stack spacing="2rem" data-testid="stack">Content</Stack>);
+  it('applies custom gap with number', () => {
+    render(<Stack gap={8} data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
     expect(element).toHaveStyle({ gap: '2rem' });
+  });
+
+  it('applies custom spacing with semantic size', () => {
+    render(<Stack spacing="xl" data-testid="stack">Content</Stack>);
+    const element = screen.getByTestId('stack');
+    expect(element).toHaveClass('gap-8');
   });
 
   it('applies align correctly', () => {

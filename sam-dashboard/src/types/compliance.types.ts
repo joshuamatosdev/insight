@@ -236,15 +236,7 @@ export interface ComplianceOverview {
   expiringClearances: number;
 }
 
-// ==================== Paginated Response ====================
-
-export interface PaginatedResponse<T> {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  number: number;
-  size: number;
-}
+// Note: PaginatedResponse is defined in rbac.types.ts and exported from types/index.ts
 
 // ==================== Form State Types ====================
 

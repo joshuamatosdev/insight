@@ -16,7 +16,7 @@ function ToastTrigger() {
       <button onClick={() => toast.error('Error message')}>Show Error</button>
       <button onClick={() => toast.warning('Warning message')}>Show Warning</button>
       <button onClick={() => toast.info('Info message')}>Show Info</button>
-      <button onClick={() => toast.custom({ title: 'Custom', description: 'Custom toast' })}>
+      <button onClick={() => toast.custom({ type: 'info', title: 'Custom', description: 'Custom toast' })}>
         Show Custom
       </button>
     </div>

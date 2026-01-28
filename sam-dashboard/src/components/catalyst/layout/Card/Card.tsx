@@ -15,6 +15,11 @@ const variantClasses: Record<CardVariant, string> = {
     'bg-white shadow-md',
     'dark:bg-zinc-900 dark:shadow-lg dark:shadow-black/20'
   ),
+  // 'default' is an alias for 'elevated' for backwards compatibility
+  default: clsx(
+    'bg-white shadow-md',
+    'dark:bg-zinc-900 dark:shadow-lg dark:shadow-black/20'
+  ),
   outlined: clsx(
     'bg-white border border-zinc-950/10',
     'dark:bg-zinc-900 dark:border-white/10'

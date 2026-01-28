@@ -90,7 +90,7 @@ function PermissionCard({
           )}
 
           {rolesWithPermission.length > 0 && (
-            <Flex gap="0.25rem" style={{ flexWrap: 'wrap', marginTop: '0.25rem' }}>
+            <Flex gap="xs" style={{ flexWrap: 'wrap', marginTop: '0.25rem' }}>
               {rolesWithPermission.map((role) => (
                 <Badge
                   key={role.id}
@@ -126,7 +126,7 @@ function CategorySection({
   }, []);
 
   return (
-    <Card variant="default">
+    <Card variant="elevated">
       <CardHeader>
         <Flex justify="between" align="center">
           <HStack spacing="sm" align="center">
@@ -293,7 +293,7 @@ export function PermissionsPage(): React.ReactElement {
       </Stack>
 
       {Object.keys(permissions).length === 0 && (
-        <Card variant="default">
+        <Card variant="elevated">
           <CardBody>
             <Flex direction="column" align="center" gap="md" className="p-8">
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>

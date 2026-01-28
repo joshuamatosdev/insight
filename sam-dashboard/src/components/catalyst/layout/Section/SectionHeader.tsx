@@ -10,6 +10,7 @@ export function SectionHeader({
   className,
   style,
   id,
+  children,
   ...rest
 }: SectionHeaderProps) {
   const headerStyles: CSSProperties = {
@@ -19,14 +20,25 @@ export function SectionHeader({
     ...style,
   };
 
+  // If children are provided, render them directly instead of the default layout
+  if (children !== undefined) {
+    return (
+      <header className={className} style={headerStyles} {...rest}>
+        {children}
+      </header>
+    );
+  }
+
   return (
     <header className={className} style={headerStyles} {...rest}>
       <HStack justify="between" align="center">
         <HStack spacing="sm" align="center">
           {icon !== undefined && <span aria-hidden="true">{icon}</span>}
-          <Text id={id} variant="heading3" color="primary">
-            {title}
-          </Text>
+          {title !== undefined && (
+            <Text id={id} variant="heading3" color="primary">
+              {title}
+            </Text>
+          )}
         </HStack>
         {actions !== undefined && <div role="group" aria-label="Section actions">{actions}</div>}
       </HStack>

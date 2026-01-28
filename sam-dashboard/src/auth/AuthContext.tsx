@@ -19,6 +19,9 @@ const defaultContextValue: AuthContextType = {
   clearError: () => {
     throw new Error('AuthProvider not found');
   },
+  setAuthData: () => {
+    throw new Error('AuthProvider not found');
+  },
 };
 
 /**

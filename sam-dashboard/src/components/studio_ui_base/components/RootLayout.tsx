@@ -8,18 +8,17 @@ import {
   useRef,
   useState,
 } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 import { motion, MotionConfig, useReducedMotion } from 'framer-motion'
 
-import { Button } from '@/components/Button'
-import { Container } from '@/components/Container'
-import { Footer } from '@/components/Footer'
-import { GridPattern } from '@/components/GridPattern'
-import { Logo, Logomark } from '@/components/Logo'
-import { Offices } from '@/components/Offices'
-import { SocialMedia } from '@/components/SocialMedia'
+import { Button } from './Button'
+import { Container } from './Container'
+import { Footer } from './Footer'
+import { GridPattern } from './GridPattern'
+import { Logo, Logomark } from './Logo'
+import { Offices } from './Offices'
+import { SocialMedia } from './SocialMedia'
 
 const RootLayoutContext = createContext<{
   logoHovered: boolean
@@ -64,7 +63,7 @@ function Header({
     <Container>
       <div className="flex items-center justify-between">
         <Link
-          href="/"
+          to="/"
           aria-label="Home"
           onMouseEnter={() => setLogoHovered(true)}
           onMouseLeave={() => setLogoHovered(false)}
@@ -130,7 +129,7 @@ function NavigationItem({
 }) {
   return (
     <Link
-      href={href}
+      to={href}
       className="group relative isolate -mx-6 bg-neutral-950 px-6 py-10 even:mt-px sm:mx-0 sm:px-0 sm:py-16 sm:odd:pr-16 sm:even:mt-0 sm:even:border-l sm:even:border-neutral-800 sm:even:pl-16"
     >
       {children}
@@ -284,12 +283,12 @@ function RootLayoutInner({ children }: { children: React.ReactNode }) {
 }
 
 export function RootLayout({ children }: { children: React.ReactNode }) {
-  let pathname = usePathname()
+  const location = useLocation()
   let [logoHovered, setLogoHovered] = useState(false)
 
   return (
     <RootLayoutContext.Provider value={{ logoHovered, setLogoHovered }}>
-      <RootLayoutInner key={pathname}>{children}</RootLayoutInner>
+      <RootLayoutInner key={location.pathname}>{children}</RootLayoutInner>
     </RootLayoutContext.Provider>
   )
 }

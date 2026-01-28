@@ -289,7 +289,6 @@ export function ClearancesPage(): React.ReactElement {
                     value={levelFilter ?? ''}
                     onChange={handleLevelFilterChange}
                     options={LEVEL_FILTER_OPTIONS}
-                    size="sm"
                   />
                 </HStack>
 

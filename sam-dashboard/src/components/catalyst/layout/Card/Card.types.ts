@@ -1,8 +1,8 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
 export type CardRole = 'article' | 'region' | 'group' | 'listitem' | 'none';
-export type CardVariant = 'elevated' | 'outlined' | 'filled' | 'bordered';
-export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
+export type CardVariant = 'elevated' | 'outlined' | 'filled' | 'bordered' | 'default';
+export type CardPadding = 'none' | 'sm' | 'md' | 'lg' | 'xl';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: CardVariant;
@@ -17,9 +17,11 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   'aria-labelledby'?: string;
 }
 
-export interface CardHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
+export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   children: ReactNode;
+  /** Whether to show a divider below the header */
+  divider?: boolean;
 }
 
 export interface CardBodyProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {

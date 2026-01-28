@@ -48,7 +48,12 @@ const BUDGET_CATEGORIES: BudgetCategory[] = [
   'OTHER',
 ];
 
-export function BudgetsPage() {
+export interface BudgetsPageProps {
+  /** Optional callback when a budget is viewed */
+  onViewBudget?: (id: string) => void;
+}
+
+export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
   const {
     budgets,
     overBudgetItems,

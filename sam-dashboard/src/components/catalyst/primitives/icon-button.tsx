@@ -4,6 +4,8 @@ import { Button } from './button'
 
 type ButtonColor = 'dark/zinc' | 'light' | 'dark/white' | 'dark' | 'white' | 'zinc' | 'indigo' | 'cyan' | 'red' | 'orange' | 'amber' | 'yellow' | 'lime' | 'green' | 'emerald' | 'teal' | 'sky' | 'blue' | 'violet' | 'purple' | 'fuchsia' | 'pink' | 'rose'
 
+type LegacyVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'warning' | 'outline' | 'link'
+
 type IconButtonProps = {
   icon: React.ReactNode
   size?: 'sm' | 'md' | 'lg'
@@ -11,6 +13,8 @@ type IconButtonProps = {
   outline?: boolean
   plain?: boolean
   disabled?: boolean
+  /** @deprecated Use color/outline/plain instead */
+  variant?: LegacyVariant
   'aria-label': string
 } & Omit<React.ComponentPropsWithoutRef<'button'>, 'children' | 'color'>
 

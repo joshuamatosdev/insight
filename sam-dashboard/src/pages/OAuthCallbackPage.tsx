@@ -60,7 +60,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
         // Store auth data
         setAuthData({
-          accessToken: response.accessToken,
+          token: response.accessToken,
           refreshToken: response.refreshToken,
           user: response.user,
         });

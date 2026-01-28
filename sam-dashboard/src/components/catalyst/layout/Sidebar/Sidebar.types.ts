@@ -34,7 +34,8 @@ export interface SidebarNavItemProps {
 }
 
 export interface SidebarSectionProps {
-  title: string;
+  /** Section title. When omitted, no title header is rendered. */
+  title?: string;
   className?: string;
   style?: CSSProperties;
   children: ReactNode;

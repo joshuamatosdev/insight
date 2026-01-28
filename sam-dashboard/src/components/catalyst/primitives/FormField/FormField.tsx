@@ -108,16 +108,16 @@ export function FormField({
   }
 
   // Clone the child element with enhanced props
-  const enhancedChild = isValidElement(children)
+  const enhancedChild = isValidElement<Record<string, unknown>>(children)
     ? cloneElement(children, {
         id: fieldId,
         'aria-invalid': hasError,
         'aria-required': required,
         'aria-describedby': ariaDescribedBy.length > 0 ? ariaDescribedBy.join(' ') : undefined,
         'aria-errormessage': hasError ? errorId : undefined,
-        disabled: disabled || children.props.disabled,
-        invalid: hasError || children.props.invalid,
-        required: required || children.props.required,
+        disabled: disabled === true || children.props.disabled === true,
+        invalid: hasError || children.props.invalid === true,
+        required: required === true || children.props.required === true,
       } as Record<string, unknown>)
     : children;
 

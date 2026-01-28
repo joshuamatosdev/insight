@@ -21,7 +21,7 @@ function SprintTaskCard({
   className,
   style,
 }: SprintTaskCardProps): React.ReactElement {
-  const getPriorityColor = (priority: string): string => {
+  const getPriorityHexColor = (priority: string): string => {
     switch (priority) {
       case 'CRITICAL':
         return '#ef4444';
@@ -36,7 +36,7 @@ function SprintTaskCard({
     }
   };
 
-  const getPriorityColor = (
+  const getPriorityBadgeColor = (
     priority: string
   ): 'red' | 'amber' | 'cyan' | 'zinc' => {
     switch (priority) {
@@ -55,7 +55,7 @@ function SprintTaskCard({
     cursor: 'pointer',
     opacity: isDragging ? 0.7 : 1,
     transform: isDragging ? 'rotate(3deg)' : 'none',
-    borderLeft: `3px solid ${getPriorityColor(task.priority)}`,
+    borderLeft: `3px solid ${getPriorityHexColor(task.priority)}`,
     ...style,
   };
 
@@ -90,7 +90,7 @@ function SprintTaskCard({
             </Text>
           )}
           <Flex justify="space-between" align="center">
-            <Badge color={getPriorityColor(task.priority)}>
+            <Badge color={getPriorityBadgeColor(task.priority)}>
               {task.priority}
             </Badge>
             {task.assigneeName !== null && (

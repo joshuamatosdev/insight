@@ -72,53 +72,86 @@ export async function fetchUsers(
     params.set('role', filters.role);
   }
 
-  const response = await apiClient.get(`${USER_BASE}?${params.toString()}`);
-  return response as Page<User>;
+  const response = await apiClient.get<Page<User>>(`${USER_BASE}?${params.toString()}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function fetchUser(id: string): Promise<User> {
-  const response = await apiClient.get(`${USER_BASE}/${id}`);
-  return response as User;
+  const response = await apiClient.get<User>(`${USER_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function fetchCurrentUser(): Promise<User> {
-  const response = await apiClient.get(`${USER_BASE}/me`);
-  return response as User;
+  const response = await apiClient.get<User>(`${USER_BASE}/me`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function createUser(data: CreateUserRequest): Promise<User> {
-  const response = await apiClient.post(USER_BASE, data);
-  return response as User;
+  const response = await apiClient.post<User, CreateUserRequest>(USER_BASE, data);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function updateUser(id: string, data: UpdateUserRequest): Promise<User> {
-  const response = await apiClient.put(`${USER_BASE}/${id}`, data);
-  return response as User;
+  const response = await apiClient.put<User, UpdateUserRequest>(`${USER_BASE}/${id}`, data);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function updateCurrentUser(data: UpdateUserRequest): Promise<User> {
-  const response = await apiClient.put(`${USER_BASE}/me`, data);
-  return response as User;
+  const response = await apiClient.put<User, UpdateUserRequest>(`${USER_BASE}/me`, data);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function deleteUser(id: string): Promise<void> {
-  await apiClient.delete(`${USER_BASE}/${id}`);
+  const response = await apiClient.delete<void>(`${USER_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function updateUserStatus(id: string, status: UserStatus): Promise<User> {
-  const response = await apiClient.patch(`${USER_BASE}/${id}/status`, { status });
-  return response as User;
+  const response = await apiClient.patch<User, { status: UserStatus }>(`${USER_BASE}/${id}/status`, { status });
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function resetUserPassword(id: string): Promise<void> {
-  await apiClient.post(`${USER_BASE}/${id}/reset-password`);
+  const response = await apiClient.post<void, Record<string, never>>(`${USER_BASE}/${id}/reset-password`, {});
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function resendVerificationEmail(id: string): Promise<void> {
-  await apiClient.post(`${USER_BASE}/${id}/resend-verification`);
+  const response = await apiClient.post<void, Record<string, never>>(`${USER_BASE}/${id}/resend-verification`, {});
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function updateUserRoles(id: string, roles: string[]): Promise<User> {
-  const response = await apiClient.put(`${USER_BASE}/${id}/roles`, { roles });
-  return response as User;
+  const response = await apiClient.put<User, { roles: string[] }>(`${USER_BASE}/${id}/roles`, { roles });
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }

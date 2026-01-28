@@ -81,11 +81,12 @@ export function ResetPasswordPage(): React.ReactElement {
   }, [token]);
 
   const handleInputChange = useCallback(
-    (field: keyof FormState) => (event: ChangeEvent<HTMLInputElement>) => {
+    (field: keyof ResetPasswordFormState) => (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setForm((prev) => ({ ...prev, [field]: value }));
 
-      if (validationErrors[field] !== undefined) {
+      const fieldError = validationErrors[field];
+      if (fieldError !== undefined) {
         setValidationErrors((prev) => ({ ...prev, [field]: undefined }));
       }
 

@@ -21,7 +21,7 @@ describe('Progress', () => {
     const fill = progressBar?.querySelector('div')
 
     expect(fill).not.toBe(null)
-    if (fill !== null) {
+    if (fill !== null && fill !== undefined) {
       expect(fill.style.width).toBe('25%')
     }
   })
@@ -32,7 +32,7 @@ describe('Progress', () => {
     const fill = progressBar?.querySelector('div')
 
     expect(progressBar?.getAttribute('aria-valuenow')).toBe(null)
-    if (fill !== null) {
+    if (fill !== null && fill !== undefined) {
       expect(fill.style.width).toBe('100%')
     }
   })
@@ -42,7 +42,7 @@ describe('Progress', () => {
     const progressBarNegative = containerNegative.querySelector('[role="progressbar"]')
     const fillNegative = progressBarNegative?.querySelector('div')
 
-    if (fillNegative !== null) {
+    if (fillNegative !== null && fillNegative !== undefined) {
       expect(fillNegative.style.width).toBe('0%')
     }
 
@@ -50,7 +50,7 @@ describe('Progress', () => {
     const progressBarOver = containerOver.querySelector('[role="progressbar"]')
     const fillOver = progressBarOver?.querySelector('div')
 
-    if (fillOver !== null) {
+    if (fillOver !== null && fillOver !== undefined) {
       expect(fillOver.style.width).toBe('100%')
     }
   })

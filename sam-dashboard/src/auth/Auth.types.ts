@@ -48,6 +48,15 @@ export interface AuthError {
 }
 
 /**
+ * Auth data for setting authenticated state directly (e.g., from OAuth)
+ */
+export interface AuthData {
+  token: string;
+  refreshToken: string;
+  user: User;
+}
+
+/**
  * Auth state and actions provided by AuthContext
  */
 export interface AuthContextType {
@@ -59,6 +68,8 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   clearError: () => void;
+  /** Set auth data directly (e.g., from OAuth callback) */
+  setAuthData: (data: AuthData) => void;
 }
 
 /**

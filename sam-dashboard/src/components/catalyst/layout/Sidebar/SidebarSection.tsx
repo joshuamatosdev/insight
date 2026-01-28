@@ -1,9 +1,9 @@
 import { CSSProperties, useId } from 'react';
 import { SidebarSectionProps } from './Sidebar.types';
-import { Text } from '../../primitives';
 
 export function SidebarSection({ title, className, style, children }: SidebarSectionProps) {
   const titleId = useId();
+  const hasTitle = title !== undefined && title !== null && title.length > 0;
 
   const sectionStyles: CSSProperties = {
     padding: '1.5rem 0 0.5rem',
@@ -23,12 +23,14 @@ export function SidebarSection({ title, className, style, children }: SidebarSec
     <section
       className={className}
       style={sectionStyles}
-      aria-labelledby={titleId}
+      aria-labelledby={hasTitle ? titleId : undefined}
       role="group"
     >
-      <div id={titleId} style={titleStyles}>
-        {title}
-      </div>
+      {hasTitle && (
+        <div id={titleId} style={titleStyles}>
+          {title}
+        </div>
+      )}
       {children}
     </section>
   );

@@ -6,15 +6,17 @@ import { CardHeaderProps } from './Card.types';
  *
  * Follows Catalyst styling pattern
  */
-export function CardHeader({ className, children, ...rest }: CardHeaderProps) {
+export function CardHeader({ className, children, divider = true, style, ...rest }: CardHeaderProps) {
   return (
     <div
       className={clsx(
         'px-5 py-4',
-        'bg-white border-b border-zinc-950/10',
-        'dark:bg-zinc-900 dark:border-white/10',
+        'bg-white',
+        'dark:bg-zinc-900',
+        divider === true && 'border-b border-zinc-950/10 dark:border-white/10',
         className
       )}
+      style={style}
       {...rest}
     >
       {children}

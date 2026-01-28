@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 
 function FacebookIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -75,7 +75,7 @@ export function SocialMedia({
       {socialMediaProfiles.map((socialMediaProfile) => (
         <li key={socialMediaProfile.title}>
           <Link
-            href={socialMediaProfile.href}
+            to={socialMediaProfile.href}
             aria-label={socialMediaProfile.title}
             className={clsx(
               'transition',

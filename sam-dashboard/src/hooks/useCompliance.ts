@@ -15,8 +15,8 @@ import type {
   SbomInfo,
   CycloneDxBom,
   SbomVulnerabilityInfo,
-  PaginatedResponse,
 } from '../types/compliance.types';
+import type { PaginatedResponse } from '../types/rbac.types';
 import {
   fetchCertifications,
   fetchCertification,

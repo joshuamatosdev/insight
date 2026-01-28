@@ -81,7 +81,7 @@ function Toast({ toast, onDismiss }: ToastProps): React.ReactElement {
         animation: 'slideIn 0.3s ease-out',
       }}
     >
-      <Flex gap="sm" align="flex-start">
+      <Flex gap="sm" align="start">
         <Box
           style={{
             width: '24px',

@@ -17,7 +17,7 @@ export interface UseFocusTrapOptions {
 
 export interface UseFocusTrapReturn {
   /** Ref to attach to the container element */
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef: RefObject<HTMLDivElement | null>;
   /** Manually focus the first focusable element */
   focusFirst: () => void;
   /** Manually focus the last focusable element */

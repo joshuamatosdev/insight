@@ -85,30 +85,32 @@ export function EmptyStateActions({
   )
 }
 
-export function EmptyStateDashed({
-  className,
-  children,
-  as: Component = 'div',
-  ...props
-}: {
-  as?: 'div' | 'button'
-  className?: string
-  children: React.ReactNode
-} & (
-  | React.ComponentPropsWithoutRef<'div'>
-  | React.ComponentPropsWithoutRef<'button'>
-)) {
+type EmptyStateDashedDivProps = {
+  as?: 'div'
+} & React.ComponentPropsWithoutRef<'div'>
+
+type EmptyStateDashedButtonProps = {
+  as: 'button'
+} & React.ComponentPropsWithoutRef<'button'>
+
+type EmptyStateDashedProps = EmptyStateDashedDivProps | EmptyStateDashedButtonProps
+
+export function EmptyStateDashed(props: EmptyStateDashedProps) {
+  const { as: Component = 'div', className, children, ...rest } = props
+
   return (
-    <Component
-      {...props}
+    <div
+      {...(rest as React.ComponentPropsWithoutRef<'div'>)}
       className={clsx(
         className,
         'relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center',
         'dark:border-white/15',
         Component === 'button' && 'hover:border-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600 dark:hover:border-white/25 dark:focus:outline-indigo-500'
       )}
+      role={Component === 'button' ? 'button' : undefined}
+      tabIndex={Component === 'button' ? 0 : undefined}
     >
       {children}
-    </Component>
+    </div>
   )
 }
