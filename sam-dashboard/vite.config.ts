@@ -29,8 +29,7 @@ export default defineConfig({
     server: {
         port: 3000,
         proxy: {
-            // Proxy everything that does NOT start with typical frontend paths
-            '^/(?!node_modules|@vite|src|assets|index\\.html|favicon\\.ico).*': {
+            '/api': {
                 target: 'http://localhost:8080',
                 changeOrigin: true,
             },

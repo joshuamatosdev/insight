@@ -22,7 +22,7 @@ import type {ApiError, ApiResult} from './types';
 // Re-export types for convenience
 export type {ApiError, ApiResult} from './types';
 
-const API_BASE = '';
+const API_BASE = '/api';
 
 /**
  * Get the stored auth token

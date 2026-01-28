@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: /api
+
 spring:
   config:
     import: optional:file:.env[.properties]
@@ -180,7 +184,7 @@ sbir:
 # ============================================
 usa-spending:
   enabled: ${USA_SPENDING_ENABLED:true}
-  base-url: https://api.usaspending.gov/api/v2
+  base-url: https://api.usaspending.gov/v2
   rate-limit-ms: 500
   page-size: 100
   max-results: 5000
