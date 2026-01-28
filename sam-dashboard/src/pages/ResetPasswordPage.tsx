@@ -170,7 +170,7 @@ export function ResetPasswordPage(): React.ReactElement {
                 <Button
                   variant="primary"
                   onClick={() => navigate('/forgot-password')}
-                  fullWidth
+                  className="w-full"
                 >
                   Request New Link
                 </Button>
@@ -195,7 +195,7 @@ export function ResetPasswordPage(): React.ReactElement {
               <Button
                 variant="primary"
                 onClick={() => navigate('/login')}
-                fullWidth
+                className="w-full"
               >
                 Go to Login
               </Button>
@@ -259,8 +259,7 @@ export function ResetPasswordPage(): React.ReactElement {
                       value={form.password}
                       onChange={handleInputChange('password')}
                       placeholder="Enter new password"
-                      fullWidth
-                      isInvalid={validationErrors.password !== undefined}
+                      invalid={validationErrors.password !== undefined}
                       autoComplete="new-password"
                       autoFocus
                     />
@@ -285,8 +284,7 @@ export function ResetPasswordPage(): React.ReactElement {
                       value={form.confirmPassword}
                       onChange={handleInputChange('confirmPassword')}
                       placeholder="Confirm new password"
-                      fullWidth
-                      isInvalid={validationErrors.confirmPassword !== undefined}
+                      invalid={validationErrors.confirmPassword !== undefined}
                       autoComplete="new-password"
                     />
                     {validationErrors.confirmPassword !== undefined && (
@@ -299,10 +297,9 @@ export function ResetPasswordPage(): React.ReactElement {
                   <Button
                     type="submit"
                     variant="primary"
-                    fullWidth
+                    className="w-full mt-2"
                     isLoading={isLoading}
                     isDisabled={isLoading}
-                    className="mt-2"
                   >
                     Reset Password
                   </Button>

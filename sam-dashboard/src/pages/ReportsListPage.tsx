@@ -465,7 +465,7 @@ export function ReportsListPage({
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary" size="sm">
+                      <Badge color="zinc">
                         {ENTITY_TYPE_LABELS[report.entityType]}
                       </Badge>
                     </TableCell>
@@ -482,8 +482,7 @@ export function ReportsListPage({
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={report.isPublic ? 'success' : 'default'}
-                        size="sm"
+                        color={report.isPublic ? 'green' : 'zinc'}
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleTogglePublic(report)}
                       >

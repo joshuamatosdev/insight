@@ -65,6 +65,50 @@ ls:
   src/types:
     .ts: PascalCase | kebab-case
 
+  # ===========================================
+  # CATALYST UI KIT
+  # ===========================================
+  src/components/catalyst:
+    .dir: lowercase | kebab-case
+
+  # Catalyst primitives - flat kebab-case files + PascalCase folders
+  src/components/catalyst/primitives:
+    .tsx: kebab-case | PascalCase
+    .ts: kebab-case | PascalCase | camelCase
+    .dir: PascalCase | kebab-case
+
+  src/components/catalyst/primitives/*:
+    .tsx: PascalCase
+    .ts: PascalCase | camelCase
+
+  # Catalyst layout - PascalCase folders with components
+  src/components/catalyst/layout:
+    .tsx: kebab-case | PascalCase
+    .ts: kebab-case | PascalCase | camelCase
+    .dir: PascalCase
+
+  src/components/catalyst/layout/*:
+    .tsx: PascalCase
+    .ts: PascalCase | camelCase
+
+  # Catalyst blocks - compound components
+  src/components/catalyst/blocks:
+    .tsx: kebab-case | PascalCase
+    .ts: kebab-case | PascalCase | camelCase
+    .dir: PascalCase | kebab-case
+
+  # Catalyst navigation
+  src/components/catalyst/navigation:
+    .tsx: kebab-case | PascalCase
+    .ts: kebab-case | PascalCase | camelCase
+    .dir: PascalCase | kebab-case
+
+  # Catalyst forms
+  src/components/catalyst/forms:
+    .tsx: kebab-case | PascalCase
+    .ts: kebab-case | PascalCase | camelCase
+    .dir: PascalCase | kebab-case
+
 ignore:
   - node_modules
   - build

@@ -18,6 +18,7 @@ import {
   TableCell,
 } from '../../catalyst'
 import { Box } from '../../catalyst/layout'
+import { Text } from '../../catalyst/primitives'
 import { OpportunityTableProps } from './Opportunity.types'
 
 export function OpportunityTableCatalyst({ opportunities, maxRows }: OpportunityTableProps) {
@@ -56,7 +57,7 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
   if (opportunities.length === 0) {
     return (
       <Box className="p-8 text-center">
-        <span className="text-sm text-zinc-500">No opportunities to display.</span>
+        <Text as="span" variant="bodySmall">No opportunities to display.</Text>
       </Box>
     )
   }
@@ -75,24 +76,24 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
         {displayOpportunities.map((opp) => (
           <TableRow key={opp.id} href={opp.url ?? '#'} title={opp.title}>
             <TableCell>
-              <span className="text-sm font-medium text-zinc-900">
+              <Text as="span" variant="bodySmall" weight="medium" color="primary">
                 {truncate(opp.title, 50)}
-              </span>
+              </Text>
             </TableCell>
             <TableCell>
-              <span className="text-sm text-zinc-500">
+              <Text as="span" variant="bodySmall">
                 {opp.type !== undefined && opp.type !== null ? opp.type : 'N/A'}
-              </span>
+              </Text>
             </TableCell>
             <TableCell>
-              <span className="text-sm text-zinc-600">
+              <Text as="span" variant="bodySmall" className="text-zinc-600">
                 {opp.naicsCode !== undefined && opp.naicsCode !== null ? opp.naicsCode : '—'}
-              </span>
+              </Text>
             </TableCell>
             <TableCell>
-              <span className={`text-sm ${getDeadlineColorClass(opp.responseDeadLine)}`}>
+              <Text as="span" variant="bodySmall" className={getDeadlineColorClass(opp.responseDeadLine)}>
                 {formatDate(opp.responseDeadLine)}
-              </span>
+              </Text>
             </TableCell>
           </TableRow>
         ))}

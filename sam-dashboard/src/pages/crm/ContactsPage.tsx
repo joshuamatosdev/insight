@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Input } from '../../components/catalyst/primitives/Input';
-import { Select } from '../../components/catalyst/primitives/Input';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Text } from '../../components/catalyst/primitives/Text';
+import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
+import { Input, Select, Button, Text } from '../../components/catalyst/primitives';
 import { ContactList, ContactForm } from '../../components/domain/crm';
 import { useContacts } from '../../hooks';
 import type { Contact, ContactType, CreateContactRequest } from '../../types/crm';

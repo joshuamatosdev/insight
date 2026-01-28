@@ -170,8 +170,7 @@ export function LoginPage(): React.ReactElement {
                     value={form.email}
                     onChange={handleInputChange('email')}
                     placeholder="you@example.com"
-                    fullWidth
-                    isInvalid={validationErrors.email !== undefined}
+                    invalid={validationErrors.email !== undefined}
                     autoComplete="email"
                     autoFocus
                   />
@@ -204,8 +203,7 @@ export function LoginPage(): React.ReactElement {
                     value={form.password}
                     onChange={handleInputChange('password')}
                     placeholder="Enter your password"
-                    fullWidth
-                    isInvalid={validationErrors.password !== undefined}
+                    invalid={validationErrors.password !== undefined}
                     autoComplete="current-password"
                   />
                   {validationErrors.password !== undefined && (
@@ -223,10 +221,9 @@ export function LoginPage(): React.ReactElement {
                 <Button
                   type="submit"
                   variant="primary"
-                  fullWidth
+                  className="w-full mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
-                  className="mt-2"
                 >
                   Sign In
                 </Button>

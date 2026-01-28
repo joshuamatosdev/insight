@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Text } from '../../catalyst/primitives/Text';
-import { Button } from '../../catalyst/primitives/Button';
-import { ChevronRightIcon, ChevronDownIcon } from '../../catalyst/primitives/Icon';
+import { Stack, HStack } from '../../catalyst/layout';
+import { Text, Button, ChevronRightIcon, ChevronDownIcon } from '../../catalyst/primitives';
 import type { DocumentFolder } from '../../../types/documents';
 
 export interface FolderTreeProps {

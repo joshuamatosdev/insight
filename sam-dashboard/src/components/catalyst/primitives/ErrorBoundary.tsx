@@ -1,6 +1,7 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 import { Card, CardBody, Stack, Flex, Box } from '../layout';
-import { Text, Button } from '../primitives';
+import { Text } from './text';
+import { Button } from './button';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -31,7 +32,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.setState({ errorInfo });
     
     // Log to error tracking service
@@ -46,7 +47,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.setState({ hasError: false, error: null, errorInfo: null });
   };
 
-  render(): ReactNode {
+  override render(): ReactNode {
     if (this.state.hasError === true) {
       if (this.props.fallback !== undefined) {
         return this.props.fallback;
@@ -84,7 +85,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   We apologize for the inconvenience. Please try again or contact support
                   if the problem persists.
                 </Text>
-                {process.env.NODE_ENV === 'development' && this.state.error !== null && (
+                {process.env['NODE_ENV'] === 'development' && this.state.error !== null && (
                   <Box
                     style={{
                       padding: '0.75rem',

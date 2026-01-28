@@ -225,7 +225,7 @@ export function ClearancesPage(): React.ReactElement {
               <Button variant="outline" size="sm" onClick={refresh}>
                 <HStack spacing="xs" align="center">
                   <RefreshIcon size="sm" />
-                  <Text as="span" variant="bodySmall">
+                  <Text as="span" variant="bodySmall" color="muted">
                     Refresh
                   </Text>
                 </HStack>
@@ -298,7 +298,7 @@ export function ClearancesPage(): React.ReactElement {
                     {totalElements} clearance{totalElements !== 1 ? 's' : ''}
                   </Text>
                   {totalPages > 1 && (
-                    <Badge variant="secondary" size="sm">
+                    <Badge color="zinc">
                       Page {currentPage + 1} of {totalPages}
                     </Badge>
                   )}

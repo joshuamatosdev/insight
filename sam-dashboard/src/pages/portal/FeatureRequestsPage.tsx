@@ -328,7 +328,7 @@ export function FeatureRequestsPage(): React.ReactElement {
               <Box key={key}>
                 <Flex align="center" gap="sm" className="mb-3">
                   <Text variant="heading4">{getGroupLabel(key)}</Text>
-                  <Badge variant="secondary" size="sm">
+                  <Badge color="zinc">
                     {requests.length}
                   </Badge>
                 </Flex>

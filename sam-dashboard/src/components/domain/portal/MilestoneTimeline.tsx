@@ -34,20 +34,20 @@ export function MilestoneTimeline({
     }
   };
 
-  const getStatusVariant = (
+  const getStatusBadgeColor = (
     status: string
-  ): 'primary' | 'success' | 'warning' | 'secondary' | 'danger' => {
+  ): 'blue' | 'green' | 'amber' | 'zinc' | 'red' => {
     switch (status) {
       case 'IN_PROGRESS':
-        return 'primary';
+        return 'blue';
       case 'COMPLETED':
-        return 'success';
+        return 'green';
       case 'DELAYED':
-        return 'danger';
+        return 'red';
       case 'AT_RISK':
-        return 'warning';
+        return 'amber';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
@@ -168,7 +168,7 @@ export function MilestoneTimeline({
                       {milestone.name}
                     </Text>
                     {isCritical && (
-                      <Badge variant="danger" size="sm">
+                      <Badge color="red">
                         Critical Path
                       </Badge>
                     )}
@@ -179,7 +179,7 @@ export function MilestoneTimeline({
                     </Text>
                   )}
                   <Flex align="center" gap="md">
-                    <Badge variant={getStatusVariant(milestone.status)} size="sm">
+                    <Badge color={getStatusBadgeColor(milestone.status)}>
                       {milestone.status.replace('_', ' ')}
                     </Badge>
                     {milestone.percentComplete > 0 && milestone.status !== 'COMPLETED' && (

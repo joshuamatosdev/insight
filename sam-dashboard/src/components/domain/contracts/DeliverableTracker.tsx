@@ -154,7 +154,7 @@ export function DeliverableTracker({
         <Box>
           <HStack spacing="sm" align="center" className="mb-3">
             <Text variant="heading5">Overdue</Text>
-            <Badge variant="danger" size="sm">
+            <Badge color="red">
               {overdueDeliverables.length}
             </Badge>
           </HStack>
@@ -174,7 +174,7 @@ export function DeliverableTracker({
         <Box>
           <HStack spacing="sm" align="center" className="mb-3">
             <Text variant="heading5">Upcoming</Text>
-            <Badge variant="info" size="sm">
+            <Badge color="cyan">
               {upcomingDeliverables.length}
             </Badge>
           </HStack>
@@ -194,7 +194,7 @@ export function DeliverableTracker({
         <Box>
           <HStack spacing="sm" align="center" className="mb-3">
             <Text variant="heading5">Completed</Text>
-            <Badge variant="success" size="sm">
+            <Badge color="green">
               {completedDeliverables.length}
             </Badge>
           </HStack>

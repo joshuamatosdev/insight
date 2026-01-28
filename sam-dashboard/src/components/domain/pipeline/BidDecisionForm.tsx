@@ -1,11 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Card, CardHeader, CardBody } from '../../catalyst/layout/Card';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Box } from '../../catalyst/layout/Box';
-import { Text } from '../../catalyst/primitives/Text';
-import { Button } from '../../catalyst/primitives/Button';
-import { Input, Select, TextArea } from '../../catalyst/primitives/Input';
-import { Badge } from '../../catalyst/primitives/Badge';
+import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
+import { Text, Button, Input, Select, Textarea, Badge } from '../../catalyst/primitives';
 import type { BidDecisionFormProps, BidDecisionScoreItem } from './BidDecisionForm.types';
 import type { BidDecision } from '../../../types/pipeline';
 
@@ -229,7 +224,7 @@ export function BidDecisionForm({
             <Text variant="bodySmall" weight="semibold">
               Decision Notes
             </Text>
-            <TextArea
+            <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Enter rationale for this decision..."

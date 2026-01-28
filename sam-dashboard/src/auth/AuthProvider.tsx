@@ -104,11 +104,16 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       setToken(response.token);
     } catch (err) {
       const authError = err as AuthError;
-      setError({
+      const errorObj: AuthError = {
         message: authError.message ?? 'Login failed',
-        field: authError.field,
-        code: authError.code,
-      });
+      };
+      if (authError.field !== undefined) {
+        errorObj.field = authError.field;
+      }
+      if (authError.code !== undefined) {
+        errorObj.code = authError.code;
+      }
+      setError(errorObj);
     } finally {
       setIsLoading(false);
     }

@@ -194,7 +194,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                       Overdue Invoices
                     </Text>
                     {invoices.length > 0 && (
-                      <Badge variant="danger" size="sm">
+                      <Badge color="red">
                         {invoices.length}
                       </Badge>
                     )}
@@ -246,7 +246,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                       Over Budget Items
                     </Text>
                     {overBudgetItems.length > 0 && (
-                      <Badge variant="danger" size="sm">
+                      <Badge color="red">
                         {overBudgetItems.length}
                       </Badge>
                     )}

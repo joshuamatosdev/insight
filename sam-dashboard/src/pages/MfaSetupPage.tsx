@@ -111,7 +111,7 @@ export function MfaSetupPage(): React.ReactElement {
               variant="primary"
               onClick={handleStartSetup}
               disabled={isLoading}
-              fullWidth
+              className="w-full"
             >
               {isLoading === true ? 'Starting...' : 'Begin Setup'}
             </Button>
@@ -137,7 +137,7 @@ export function MfaSetupPage(): React.ReactElement {
             <Button
               variant="primary"
               onClick={() => setStep('verify')}
-              fullWidth
+              className="w-full"
             >
               Continue
             </Button>
@@ -169,7 +169,7 @@ export function MfaSetupPage(): React.ReactElement {
               <Button
                 variant="secondary"
                 onClick={() => setStep('scan')}
-                fullWidth
+                className="w-full"
               >
                 Back
               </Button>
@@ -177,7 +177,7 @@ export function MfaSetupPage(): React.ReactElement {
                 variant="primary"
                 onClick={handleVerify}
                 disabled={isLoading === true || verificationCode.length < 6}
-                fullWidth
+                className="w-full"
               >
                 {isLoading === true ? 'Verifying...' : 'Verify'}
               </Button>
@@ -200,7 +200,7 @@ export function MfaSetupPage(): React.ReactElement {
               variant="primary"
               onClick={() => setStep('complete')}
               disabled={backupCodesSaved === false}
-              fullWidth
+              className="w-full"
             >
               {backupCodesSaved === true ? 'Continue' : 'Save codes to continue'}
             </Button>
@@ -231,7 +231,7 @@ export function MfaSetupPage(): React.ReactElement {
               Your account is now protected with an additional layer of security.
               You&apos;ll need your authenticator app each time you sign in.
             </Text>
-            <Button variant="primary" onClick={handleComplete} fullWidth>
+            <Button variant="primary" onClick={handleComplete} className="w-full">
               Done
             </Button>
           </Stack>

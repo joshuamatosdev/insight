@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { Badge } from '../../catalyst/badge';
-import { Button } from '../../catalyst/button';
-import { Heading, Subheading } from '../../catalyst/heading';
-import { Text, Strong } from '../../catalyst/text';
+import { Badge } from '../../catalyst/primitives/badge';
+import { Button } from '../../catalyst/primitives/button';
+import { Heading, Subheading } from '../../catalyst/primitives/heading';
+import { Text, Strong } from '../../catalyst/primitives/text';
 import {
   AISummary,
   AIFitScore,

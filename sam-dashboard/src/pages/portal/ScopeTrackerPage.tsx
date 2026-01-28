@@ -204,7 +204,7 @@ export function ScopeTrackerPage(): React.ReactElement {
                 <Flex align="center" gap="sm">
                   <Text variant="heading3">{summary.pendingChanges}</Text>
                   {summary.pendingChanges > 0 && (
-                    <Badge variant="warning" size="sm">
+                    <Badge color="amber">
                       !
                     </Badge>
                   )}
@@ -230,8 +230,7 @@ export function ScopeTrackerPage(): React.ReactElement {
           Scope Changes
           {pendingChanges > 0 && (
             <Badge
-              variant="warning"
-              size="sm"
+              color="amber"
               className="ml-2"
             >
               {pendingChanges}

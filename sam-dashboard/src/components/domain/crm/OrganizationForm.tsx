@@ -1,10 +1,6 @@
 import { useState } from 'react';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout/Card';
-import { Text } from '../../catalyst/primitives/Text';
-import { Input } from '../../catalyst/primitives/Input';
-import { Select } from '../../catalyst/primitives/Input/Select';
-import { Button } from '../../catalyst/primitives/Button';
+import { Stack, HStack, Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout';
+import { Text, Input, Select, Button } from '../../catalyst/primitives';
 import type { OrganizationFormProps, OrganizationFormData, OrganizationFormErrors } from './OrganizationForm.types';
 import type { OrganizationType, OrganizationStatus, BusinessSize, CreateOrganizationRequest } from '../../../types/crm';
 

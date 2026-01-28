@@ -1,9 +1,6 @@
 import { useState, useRef } from 'react';
-import { Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout/Card';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Text } from '../../catalyst/primitives/Text';
-import { Input, Select } from '../../catalyst/primitives/Input';
-import { Button } from '../../catalyst/primitives/Button';
+import { Card, CardHeader, CardBody, CardFooter, Stack, HStack } from '../../catalyst/layout';
+import { Text, Input, Select, Button } from '../../catalyst/primitives';
 import type {
   CreateDocumentRequest,
   DocumentType,

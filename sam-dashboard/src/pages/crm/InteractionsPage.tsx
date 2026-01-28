@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Select } from '../../components/catalyst/primitives/Input';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Text } from '../../components/catalyst/primitives/Text';
+import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
+import { Select, Button, Text } from '../../components/catalyst/primitives';
 import { InteractionTimeline, InteractionForm, UpcomingFollowups } from '../../components/domain/crm';
 import { useInteractions, useUpcomingFollowups } from '../../hooks/useInteractions';
 import type { InteractionType, CreateInteractionRequest, UpcomingFollowup } from '../../types/crm';

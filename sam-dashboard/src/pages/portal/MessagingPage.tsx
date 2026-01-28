@@ -163,7 +163,7 @@ export function MessagingPage(): React.ReactElement {
                 <Flex align="center" gap="sm">
                   <Text variant="heading3">{summary.unreadMessages}</Text>
                   {summary.unreadMessages > 0 && (
-                    <Badge variant="primary" size="sm">
+                    <Badge color="blue">
                       New
                     </Badge>
                   )}
@@ -180,7 +180,7 @@ export function MessagingPage(): React.ReactElement {
                 <Flex align="center" gap="sm">
                   <Text variant="heading3">{summary.urgentMessages}</Text>
                   {summary.urgentMessages > 0 && (
-                    <Badge variant="danger" size="sm">
+                    <Badge color="red">
                       !
                     </Badge>
                   )}

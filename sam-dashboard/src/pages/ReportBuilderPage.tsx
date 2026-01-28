@@ -546,7 +546,7 @@ export function ReportBuilderPage({
               <CardHeader>
                 <Flex justify="space-between" align="center">
                   <Text variant="heading5">Available Columns</Text>
-                  <Badge variant="secondary">{getUnselectedColumns().length}</Badge>
+                  <Badge color="zinc">{getUnselectedColumns().length}</Badge>
                 </Flex>
               </CardHeader>
               <CardBody>
@@ -583,7 +583,7 @@ export function ReportBuilderPage({
               <CardHeader>
                 <Flex justify="space-between" align="center">
                   <Text variant="heading5">Selected Columns</Text>
-                  <Badge variant="primary">{formState.selectedColumns.length}</Badge>
+                  <Badge color="blue">{formState.selectedColumns.length}</Badge>
                 </Flex>
               </CardHeader>
               <CardBody
@@ -674,7 +674,7 @@ export function ReportBuilderPage({
           <CardHeader>
             <Flex justify="space-between" align="center">
               <Text variant="heading5">Preview Results</Text>
-              <Badge variant="info">{previewData.totalRecords} records</Badge>
+              <Badge color="cyan">{previewData.totalRecords} records</Badge>
             </Flex>
           </CardHeader>
           <CardBody padding="none">

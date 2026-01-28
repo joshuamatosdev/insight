@@ -78,15 +78,14 @@ export function DraggableColumn({
           <Text variant="bodySmall" weight="medium">
             {column.label}
           </Text>
-          <Badge variant="secondary" size="sm">
+          <Badge color="zinc">
             {column.field}
           </Badge>
         </Flex>
         <Flex align="center" gap="xs">
           {onToggleVisibility !== undefined && (
             <Badge
-              variant={column.visible ? 'success' : 'default'}
-              size="sm"
+              color={column.visible ? 'green' : 'zinc'}
               style={{ cursor: 'pointer' }}
               onClick={handleToggleVisibility}
             >

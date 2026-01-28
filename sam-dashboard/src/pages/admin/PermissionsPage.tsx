@@ -78,7 +78,7 @@ function PermissionCard({
                 {permission.code}
               </Text>
             </Stack>
-            <Badge variant="secondary" size="sm">
+            <Badge color="zinc">
               {rolesWithPermission.length} role{rolesWithPermission.length !== 1 ? 's' : ''}
             </Badge>
           </HStack>
@@ -94,8 +94,7 @@ function PermissionCard({
               {rolesWithPermission.map((role) => (
                 <Badge
                   key={role.id}
-                  variant={role.isSystemRole ? 'info' : 'success'}
-                  size="sm"
+                  color={role.isSystemRole ? 'cyan' : 'green'}
                 >
                   {role.name}
                 </Badge>
@@ -134,7 +133,7 @@ function CategorySection({
             <Text variant="heading6" weight="semibold">
               {formatCategoryName(category)}
             </Text>
-            <Badge variant="secondary" size="sm">
+            <Badge color="zinc">
               {permissions.length}
             </Badge>
           </HStack>

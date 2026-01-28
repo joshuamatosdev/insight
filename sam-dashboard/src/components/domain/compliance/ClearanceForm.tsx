@@ -186,7 +186,7 @@ export function ClearanceForm({
                       onChange={handleInputChange('clearanceType')}
                       options={CLEARANCE_TYPE_OPTIONS}
                       fullWidth
-                      isInvalid={errors.clearanceType !== undefined}
+                      invalid={errors.clearanceType !== undefined}
                     />
                     {errors.clearanceType !== undefined && (
                       <Text
@@ -215,7 +215,7 @@ export function ClearanceForm({
                       onChange={handleInputChange('clearanceLevel')}
                       options={CLEARANCE_LEVEL_OPTIONS}
                       fullWidth
-                      isInvalid={errors.clearanceLevel !== undefined}
+                      invalid={errors.clearanceLevel !== undefined}
                     />
                     {errors.clearanceLevel !== undefined && (
                       <Text
@@ -377,7 +377,7 @@ export function ClearanceForm({
                     value={form.expirationDate}
                     onChange={handleInputChange('expirationDate')}
                     fullWidth
-                    isInvalid={errors.expirationDate !== undefined}
+                    invalid={errors.expirationDate !== undefined}
                   />
                 </Box>
               </GridItem>

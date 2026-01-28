@@ -1,5 +1,7 @@
 /**
  * Barrel export for types
+ *
+ * Note: Using star exports. Import specific types if you need to disambiguate.
  */
 export * from './api.generated';
 export * from './analytics.types';

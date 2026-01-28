@@ -249,8 +249,8 @@ export function SBIRAwardsPage() {
                           </Text>
                         </a>
                         <HStack spacing="xs" className="mt-1">
-                          {award.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
-                          {award.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
+                          {award.isSbir === true && <Badge color="cyan">SBIR</Badge>}
+                          {award.isSttr === true && <Badge color="green">STTR</Badge>}
                         </HStack>
                       </TableCell>
                       <TableCell>
@@ -260,10 +260,10 @@ export function SBIRAwardsPage() {
                         </Text>
                       </TableCell>
                       <TableCell className="text-center">
-                        <Badge variant="warning" size="sm">Phase {award.phase}</Badge>
+                        <Badge color="amber">Phase {award.phase}</Badge>
                       </TableCell>
                       <TableCell className="text-center">
-                        <Badge variant="secondary" size="sm">{award.agency}</Badge>
+                        <Badge color="zinc">{award.agency}</Badge>
                       </TableCell>
                       <TableCell className="text-right">
                         <Text variant="bodySmall" weight="semibold">

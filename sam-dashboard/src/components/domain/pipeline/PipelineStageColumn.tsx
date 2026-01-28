@@ -1,8 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Box } from '../../catalyst/layout/Box';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Text } from '../../catalyst/primitives/Text';
-import { Badge } from '../../catalyst/primitives/Badge';
+import { Box, Stack, HStack } from '../../catalyst/layout';
+import { Text, Badge } from '../../catalyst/primitives';
 import { PipelineCard } from './PipelineCard';
 import type { PipelineStageColumnProps } from './PipelineStageColumn.types';
 import type { PipelineOpportunity } from '../../../types/pipeline';

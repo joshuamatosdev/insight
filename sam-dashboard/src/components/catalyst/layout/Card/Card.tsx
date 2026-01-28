@@ -23,6 +23,10 @@ const variantClasses: Record<CardVariant, string> = {
     'bg-zinc-50',
     'dark:bg-zinc-800'
   ),
+  bordered: clsx(
+    'bg-white border-2 border-zinc-200',
+    'dark:bg-zinc-900 dark:border-zinc-700'
+  ),
 };
 
 export function Card({
@@ -30,6 +34,7 @@ export function Card({
   className,
   children,
   as = 'article',
+  style,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   ...rest
@@ -47,6 +52,7 @@ export function Card({
         // Custom classes
         className
       )}
+      style={style}
       role={role}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}

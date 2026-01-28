@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Flex, Box, Stack } from '../layout';
-import { Text, Button } from '../primitives';
+import { Text } from './text';
+import { Button } from './button';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 

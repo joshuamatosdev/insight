@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { StackProps, HStackProps } from './Stack.types';
+import { StackProps, HStackProps, SpacingSize } from './Stack.types';
 
 const alignMap: Record<string, string> = {
   start: 'items-start',
@@ -27,21 +27,39 @@ const spacingMap: Record<string, string> = {
   '2xl': 'gap-12',
 };
 
+// Convert numeric gap to Tailwind class or style
+function resolveGap(gap: SpacingSize | number | undefined, spacing: SpacingSize | undefined): { className?: string; style?: React.CSSProperties } {
+  // gap takes priority over spacing
+  const value = gap ?? spacing ?? 'md';
+
+  if (typeof value === 'number') {
+    // For numeric values, use inline style
+    return { style: { gap: `${value * 0.25}rem` } };
+  }
+
+  return { className: spacingMap[value] };
+}
+
 export function Stack({
+  gap,
   spacing = 'md',
   align = 'stretch',
   className,
   children,
+  style,
   ...rest
 }: StackProps) {
+  const gapResolved = resolveGap(gap, spacing);
+
   return (
     <div
       className={clsx(
         'flex flex-col',
         alignMap[align],
-        spacingMap[spacing],
+        gapResolved.className,
         className
       )}
+      style={{ ...style, ...gapResolved.style }}
       {...rest}
     >
       {children}
@@ -50,22 +68,27 @@ export function Stack({
 }
 
 export function HStack({
+  gap,
   spacing = 'md',
   justify = 'start',
   align = 'center',
   className,
   children,
+  style,
   ...rest
 }: HStackProps) {
+  const gapResolved = resolveGap(gap, spacing);
+
   return (
     <div
       className={clsx(
         'flex flex-row',
         alignMap[align],
         justifyMap[justify],
-        spacingMap[spacing],
+        gapResolved.className,
         className
       )}
+      style={{ ...style, ...gapResolved.style }}
       {...rest}
     >
       {children}

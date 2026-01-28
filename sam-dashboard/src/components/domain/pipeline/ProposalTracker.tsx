@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
-import { Card, CardHeader, CardBody } from '../../catalyst/layout/Card';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Box } from '../../catalyst/layout/Box';
-import { Text } from '../../catalyst/primitives/Text';
-import { Badge } from '../../catalyst/primitives/Badge';
+import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
+import { Text, Badge } from '../../catalyst/primitives';
 import type { ProposalTrackerProps } from './ProposalTracker.types';
 import type { PipelineStage } from '../../../types/pipeline';
 

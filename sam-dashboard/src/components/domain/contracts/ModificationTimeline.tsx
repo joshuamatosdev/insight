@@ -7,19 +7,20 @@ import type {
   ModificationStatus,
 } from './Contract.types';
 import { getModificationTypeLabel, formatCurrency, formatDate } from './Contract.types';
-import type { BadgeVariant } from '../../catalyst/primitives';
 
-function getStatusVariant(status: ModificationStatus): BadgeVariant {
-  const variantMap: Record<ModificationStatus, BadgeVariant> = {
-    DRAFT: 'secondary',
-    PENDING: 'warning',
-    UNDER_REVIEW: 'info',
-    APPROVED: 'primary',
-    EXECUTED: 'success',
-    REJECTED: 'danger',
-    CANCELLED: 'secondary',
+type BadgeColor = 'zinc' | 'amber' | 'cyan' | 'blue' | 'green' | 'red';
+
+function getStatusColor(status: ModificationStatus): BadgeColor {
+  const colorMap: Record<ModificationStatus, BadgeColor> = {
+    DRAFT: 'zinc',
+    PENDING: 'amber',
+    UNDER_REVIEW: 'cyan',
+    APPROVED: 'blue',
+    EXECUTED: 'green',
+    REJECTED: 'red',
+    CANCELLED: 'zinc',
   };
-  return variantMap[status];
+  return colorMap[status];
 }
 
 function getStatusLabel(status: ModificationStatus): string {
@@ -108,10 +109,10 @@ function ModificationItem({
             <Box>
               <HStack spacing="sm" align="center">
                 <Text variant="heading5">{modification.modificationNumber}</Text>
-                <Badge variant="info" size="sm">
+                <Badge color="cyan">
                   {getModificationTypeLabel(modification.modificationType)}
                 </Badge>
-                <Badge variant={getStatusVariant(modification.status)} size="sm">
+                <Badge color={getStatusColor(modification.status)}>
                   {getStatusLabel(modification.status)}
                 </Badge>
               </HStack>

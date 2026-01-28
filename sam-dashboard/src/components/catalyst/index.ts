@@ -1,57 +1,9 @@
 // Catalyst UI Kit - Barrel Export
 // Modern application UI components built with Tailwind CSS and Headless UI
 
-// Layout and Primitives (migrated into catalyst)
-export * from './layout'
-export * from './primitives'
-
-export * from './alert'
-export * from './auth-layout'
-export * from './avatar'
-export * from './avatar-group'
-export * from './badge'
-export * from './breadcrumbs'
-export * from './button'
-export * from './button-group'
-export * from './card'
-export * from './checkbox'
-export * from './combobox'
-export * from './count'
-export * from './description-list'
-export * from './dialog'
-export * from './divider'
-export * from './drawer'
-export * from './dropdown'
-export * from './empty-state'
-export * from './fieldset'
-export * from './heading'
-export * from './inline-alert'
-export * from './input'
-export * from './input-group'
-export * from './link'
-export * from './listbox'
-export * from './navbar'
-export * from './notification'
-export * from './page-heading'
-export * from './pagination'
-export * from './progress'
-export * from './radio'
-export * from './select'
-export * from './sidebar-layout'
-export * from './sidebar'
-export * from './skeleton'
-export * from './spinner'
-export * from './stacked-layout'
-export * from './switch'
-export * from './table'
-export * from './text'
-export * from './textarea'
-export * from './toast'
-export * from './scroll-to-top'
-export * from './section-heading'
-export * from './stat'
-export * from './stepper'
-export * from './tabs'
-export * from './theme-toggle'
-export * from './timeline'
-export * from './tooltip'
+// Organized by category
+export * from './layout'        // Layout components (Box, Flex, Stack, Grid, etc.)
+export * from './primitives'   // Basic UI primitives (Button, Input, Badge, etc.)
+export * from './blocks'       // Composite components (Card, Dialog, Table, etc.)
+export * from './navigation'   // Navigation components (Navbar, Sidebar, Breadcrumbs, etc.)
+export * from './forms'        // Form composite components (ButtonGroup, InputGroup, etc.)

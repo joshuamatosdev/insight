@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { Card, CardHeader, CardBody } from '../../catalyst/layout/Card';
-import { Stack, HStack } from '../../catalyst/layout/Stack';
-import { Text } from '../../catalyst/primitives/Text';
-import { Button } from '../../catalyst/primitives/Button';
-import { Input, TextArea } from '../../catalyst/primitives/Input';
+import { Card, CardHeader, CardBody, Stack, HStack } from '../../catalyst/layout';
+import { Text, Button, Input, Textarea } from '../../catalyst/primitives';
 import type { CaptureManagementProps } from './CaptureManagement.types';
 import type { UpdatePipelineOpportunityRequest } from '../../../types/pipeline';
 
@@ -222,7 +219,7 @@ export function CaptureManagement({
 
           <Stack gap="xs">
             <Text variant="caption" weight="semibold">Win Themes</Text>
-            <TextArea
+            <Textarea
               value={formData.winThemes}
               onChange={(e) => handleChange('winThemes', e.target.value)}
               placeholder="Key themes that will help win this opportunity..."
@@ -232,7 +229,7 @@ export function CaptureManagement({
 
           <Stack gap="xs">
             <Text variant="caption" weight="semibold">Discriminators</Text>
-            <TextArea
+            <Textarea
               value={formData.discriminators}
               onChange={(e) => handleChange('discriminators', e.target.value)}
               placeholder="What sets us apart from competition..."
@@ -242,7 +239,7 @@ export function CaptureManagement({
 
           <Stack gap="xs">
             <Text variant="caption" weight="semibold">Notes</Text>
-            <TextArea
+            <Textarea
               value={formData.notes}
               onChange={(e) => handleChange('notes', e.target.value)}
               placeholder="Additional notes..."

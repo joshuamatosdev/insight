@@ -63,7 +63,7 @@ export function SbomDashboardPage(): React.ReactElement {
               <Button variant="outline" onClick={refresh}>
                 <HStack spacing="xs" align="center">
                   <RefreshIcon size="sm" />
-                  <Text as="span" variant="bodySmall">
+                  <Text as="span" variant="bodySmall" color="muted">
                     Try Again
                   </Text>
                 </HStack>
@@ -85,7 +85,7 @@ export function SbomDashboardPage(): React.ReactElement {
             <Button variant="outline" size="sm" onClick={refresh}>
               <HStack spacing="xs" align="center">
                 <RefreshIcon size="sm" />
-                <Text as="span" variant="bodySmall">
+                <Text as="span" variant="bodySmall" color="muted">
                   Refresh
                 </Text>
               </HStack>
@@ -94,7 +94,7 @@ export function SbomDashboardPage(): React.ReactElement {
               <Button variant="outline" size="sm" onClick={handleDownloadCycloneDx}>
                 <HStack spacing="xs" align="center">
                   <DownloadIcon size="sm" />
-                  <Text as="span" variant="bodySmall">
+                  <Text as="span" variant="bodySmall" color="muted">
                     CycloneDX
                   </Text>
                 </HStack>
@@ -104,7 +104,7 @@ export function SbomDashboardPage(): React.ReactElement {
               <Button variant="outline" size="sm" onClick={handleDownloadSpdx}>
                 <HStack spacing="xs" align="center">
                   <DownloadIcon size="sm" />
-                  <Text as="span" variant="bodySmall">
+                  <Text as="span" variant="bodySmall" color="muted">
                     SPDX
                   </Text>
                 </HStack>

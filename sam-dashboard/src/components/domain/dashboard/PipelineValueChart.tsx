@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../../components/layout';
-import { Text } from '../../../components/primitives';
+import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../catalyst/layout';
+import { Text } from '../../catalyst/primitives';
 
 interface PipelineStage {
   name: string;

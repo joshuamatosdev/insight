@@ -99,10 +99,10 @@ export function BackupCodesDisplay({
 
       {/* Actions */}
       <Grid columns={2} gap="sm">
-        <Button variant="secondary" onClick={handleCopy} fullWidth>
+        <Button variant="secondary" onClick={handleCopy} className="w-full">
           Copy All
         </Button>
-        <Button variant="secondary" onClick={handleDownload} fullWidth>
+        <Button variant="secondary" onClick={handleDownload} className="w-full">
           Download
         </Button>
       </Grid>

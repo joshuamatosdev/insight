@@ -203,7 +203,7 @@ export function ContractValueChart({
                     {summary.pendingModifications}
                   </Text>
                   {summary.pendingModifications > 0 && (
-                    <Badge variant="warning" size="sm">
+                    <Badge color="amber">
                       Action Needed
                     </Badge>
                   )}
@@ -267,7 +267,7 @@ export function ContractValueChart({
                   {summary.overdueDeliverables}
                 </Text>
                 {summary.overdueDeliverables > 0 && (
-                  <Badge variant="danger" size="sm">
+                  <Badge color="red">
                     Attention Required
                   </Badge>
                 )}

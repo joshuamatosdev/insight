@@ -85,9 +85,9 @@ export function requestIdleCallbackPolyfill(
   if ('requestIdleCallback' in window) {
     return (window as Window & typeof globalThis & { requestIdleCallback: typeof requestIdleCallback }).requestIdleCallback(callback, options);
   }
-  
+
   const start = Date.now();
-  return window.setTimeout(() => {
+  return globalThis.setTimeout(() => {
     callback({
       didTimeout: false,
       timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
@@ -123,7 +123,7 @@ export async function measureAsync<T>(
     return await fn();
   } finally {
     const duration = performance.now() - start;
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env['NODE_ENV'] === 'development') {
       console.log(`[Performance] ${name}: ${duration.toFixed(2)}ms`);
     }
   }

@@ -16,41 +16,41 @@ export function FeatureRequestCard({
   className,
   style,
 }: FeatureRequestCardProps): React.ReactElement {
-  const getStatusVariant = (
+  const getStatusColor = (
     status: string
-  ): 'primary' | 'success' | 'warning' | 'secondary' | 'danger' | 'info' => {
+  ): 'blue' | 'green' | 'amber' | 'zinc' | 'red' | 'cyan' => {
     switch (status) {
       case 'SUBMITTED':
-        return 'secondary';
+        return 'zinc';
       case 'UNDER_REVIEW':
-        return 'info';
+        return 'cyan';
       case 'APPROVED':
-        return 'primary';
+        return 'blue';
       case 'IN_DEVELOPMENT':
-        return 'warning';
+        return 'amber';
       case 'COMPLETED':
-        return 'success';
+        return 'green';
       case 'REJECTED':
-        return 'danger';
+        return 'red';
       case 'DEFERRED':
-        return 'secondary';
+        return 'zinc';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
-  const getPriorityVariant = (
+  const getPriorityColor = (
     priority: string
-  ): 'danger' | 'warning' | 'info' | 'secondary' => {
+  ): 'red' | 'amber' | 'cyan' | 'zinc' => {
     switch (priority) {
       case 'CRITICAL':
-        return 'danger';
+        return 'red';
       case 'HIGH':
-        return 'warning';
+        return 'amber';
       case 'MEDIUM':
-        return 'info';
+        return 'cyan';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
@@ -139,13 +139,13 @@ export function FeatureRequestCard({
               <Stack spacing="xs">
                 <Text variant="heading5">{featureRequest.title}</Text>
                 <HStack spacing="sm">
-                  <Badge variant={getStatusVariant(featureRequest.status)} size="sm">
+                  <Badge color={getStatusColor(featureRequest.status)}>
                     {featureRequest.status.replace('_', ' ')}
                   </Badge>
-                  <Badge variant={getPriorityVariant(featureRequest.priority)} size="sm">
+                  <Badge color={getPriorityColor(featureRequest.priority)}>
                     {featureRequest.priority}
                   </Badge>
-                  <Badge variant="secondary" size="sm">
+                  <Badge color="zinc">
                     {getCategoryLabel(featureRequest.category)}
                   </Badge>
                 </HStack>

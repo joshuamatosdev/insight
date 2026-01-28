@@ -20,20 +20,20 @@ function ScopeItemRow({
   className,
   style,
 }: ScopeItemRowProps): React.ReactElement {
-  const getStatusVariant = (
+  const getStatusColor = (
     status: string
-  ): 'primary' | 'success' | 'warning' | 'secondary' => {
+  ): 'blue' | 'green' | 'amber' | 'zinc' => {
     switch (status) {
       case 'ACTIVE':
-        return 'primary';
+        return 'blue';
       case 'COMPLETED':
-        return 'success';
+        return 'green';
       case 'ON_HOLD':
-        return 'warning';
+        return 'amber';
       case 'REMOVED':
-        return 'secondary';
+        return 'zinc';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
@@ -133,7 +133,7 @@ function ScopeItemRow({
           </Text>
 
           {/* Status Badge */}
-          <Badge variant={getStatusVariant(item.status)} size="sm">
+          <Badge color={getStatusColor(item.status)}>
             {item.status}
           </Badge>
         </Flex>

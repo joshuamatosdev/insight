@@ -36,18 +36,18 @@ function SprintTaskCard({
     }
   };
 
-  const getPriorityVariant = (
+  const getPriorityColor = (
     priority: string
-  ): 'danger' | 'warning' | 'info' | 'secondary' => {
+  ): 'red' | 'amber' | 'cyan' | 'zinc' => {
     switch (priority) {
       case 'CRITICAL':
-        return 'danger';
+        return 'red';
       case 'HIGH':
-        return 'warning';
+        return 'amber';
       case 'MEDIUM':
-        return 'info';
+        return 'cyan';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
@@ -90,7 +90,7 @@ function SprintTaskCard({
             </Text>
           )}
           <Flex justify="space-between" align="center">
-            <Badge variant={getPriorityVariant(task.priority)} size="sm">
+            <Badge color={getPriorityColor(task.priority)}>
               {task.priority}
             </Badge>
             {task.assigneeName !== null && (
@@ -187,8 +187,7 @@ export function SprintBoard({
           )}
         </Stack>
         <Badge
-          variant={sprint.status === 'ACTIVE' ? 'primary' : 'secondary'}
-          size="md"
+          color={sprint.status === 'ACTIVE' ? 'blue' : 'zinc'}
         >
           {sprint.status}
         </Badge>
@@ -229,7 +228,7 @@ export function SprintBoard({
                     {column.label}
                   </Text>
                 </Flex>
-                <Badge variant="secondary" size="sm">
+                <Badge color="zinc">
                   {tasks.length}
                 </Badge>
               </Flex>

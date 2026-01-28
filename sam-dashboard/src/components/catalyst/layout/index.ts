@@ -1,4 +1,5 @@
 // Layout Components
+
 export { Box } from './Box';
 export type { BoxProps } from './Box';
 
@@ -53,11 +54,13 @@ export { AppLayout, MainContent } from './AppLayout';
 export type { AppLayoutProps, MainContentProps } from './AppLayout';
 
 export { NotificationBell, NotificationDropdown } from './NotificationBell';
+// Note: Notification is exported from blocks/notification to avoid conflict
+// Use NotificationBellNotification for the NotificationBell-specific type
 export type {
   NotificationBellProps,
   NotificationDropdownProps,
-  Notification,
-  NotificationType,
+  Notification as NotificationBellNotification,
+  NotificationType as NotificationBellType,
 } from './NotificationBell';
 
 export { RootFrame } from './RootFrame';

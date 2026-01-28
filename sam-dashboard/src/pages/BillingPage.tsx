@@ -24,20 +24,20 @@ import {
 } from '../services/billing';
 
 /**
- * Get the badge variant based on plan
+ * Get the badge color based on plan
  */
-function getPlanBadgeVariant(plan: SubscriptionPlan): 'primary' | 'success' | 'warning' | 'info' {
+function getPlanBadgeColor(plan: SubscriptionPlan): 'blue' | 'green' | 'amber' | 'cyan' {
   switch (plan) {
     case 'FREE':
-      return 'info';
+      return 'cyan';
     case 'STARTER':
-      return 'primary';
+      return 'blue';
     case 'PROFESSIONAL':
-      return 'success';
+      return 'green';
     case 'ENTERPRISE':
-      return 'warning';
+      return 'amber';
     default:
-      return 'info';
+      return 'cyan';
   }
 }
 
@@ -92,7 +92,7 @@ function PlanCard({
           <Flex justify="between" align="center">
             <Text variant="heading5">{plan.name}</Text>
             {isCurrent && (
-              <Badge variant="primary" size="sm">
+              <Badge color="blue">
                 Current
               </Badge>
             )}
@@ -305,11 +305,11 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
             <Flex justify="between" align="center" wrap="wrap" gap="md">
               <Stack spacing="sm">
                 <Flex align="center" gap="sm">
-                  <Badge variant={getPlanBadgeVariant(currentPlan)} size="md">
+                  <Badge color={getPlanBadgeColor(currentPlan)}>
                     {currentPlan}
                   </Badge>
                   {statusDisplay !== null && (
-                    <Badge variant={statusDisplay.variant} size="sm">
+                    <Badge color={statusDisplay.variant === 'success' ? 'green' : statusDisplay.variant === 'warning' ? 'amber' : statusDisplay.variant === 'danger' ? 'red' : statusDisplay.variant === 'info' ? 'cyan' : 'zinc'}>
                       {statusDisplay.label}
                     </Badge>
                   )}

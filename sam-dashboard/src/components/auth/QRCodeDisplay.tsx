@@ -93,7 +93,7 @@ export function QRCodeDisplay({
               variant="secondary"
               size="sm"
               onClick={handleCopySecret}
-              fullWidth
+              className="w-full"
             >
               Copy Secret Key
             </Button>

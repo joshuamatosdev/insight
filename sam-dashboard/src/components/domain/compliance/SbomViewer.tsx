@@ -113,7 +113,7 @@ function ComponentCard({
                     v{component.version}
                   </Text>
                   {component.license !== undefined && (
-                    <Badge variant="secondary" size="sm">
+                    <Badge color="zinc">
                       {component.license}
                     </Badge>
                   )}
@@ -122,8 +122,7 @@ function ComponentCard({
             </HStack>
 
             <Badge
-              variant={component.type === 'library' ? 'info' : 'secondary'}
-              size="sm"
+              color={component.type === 'library' ? 'cyan' : 'zinc'}
             >
               {component.type}
             </Badge>
@@ -287,7 +286,7 @@ export function SbomViewer({
             <Button variant="outline" size="sm" onClick={onRefresh}>
               <HStack spacing="xs" align="center">
                 <RefreshIcon size="sm" />
-                <Text as="span" variant="bodySmall">
+                <Text as="span" variant="bodySmall" color="muted">
                   Refresh
                 </Text>
               </HStack>
@@ -386,7 +385,7 @@ export function SbomViewer({
                 <Text variant="heading6" weight="semibold" style={{ textTransform: 'capitalize' }}>
                   {type}s
                 </Text>
-                <Badge variant="secondary" size="sm">
+                <Badge color="zinc">
                   {components.length}
                 </Badge>
               </HStack>

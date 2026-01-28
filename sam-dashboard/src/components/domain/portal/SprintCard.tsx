@@ -26,20 +26,20 @@ export function SprintCard({
     }
   };
 
-  const getStatusVariant = (
+  const getStatusColor = (
     status: string
-  ): 'primary' | 'success' | 'warning' | 'secondary' | 'danger' => {
+  ): 'blue' | 'green' | 'amber' | 'zinc' | 'red' => {
     switch (status) {
       case 'ACTIVE':
-        return 'primary';
+        return 'blue';
       case 'COMPLETED':
-        return 'success';
+        return 'green';
       case 'PLANNING':
-        return 'warning';
+        return 'amber';
       case 'CANCELLED':
-        return 'danger';
+        return 'red';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
@@ -94,7 +94,7 @@ export function SprintCard({
               {formatDate(sprint.startDate)} - {formatDate(sprint.endDate)}
             </Text>
           </Stack>
-          <Badge variant={getStatusVariant(sprint.status)} size="sm">
+          <Badge color={getStatusColor(sprint.status)}>
             {sprint.status}
           </Badge>
         </Flex>

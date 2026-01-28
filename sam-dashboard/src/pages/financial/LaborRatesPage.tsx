@@ -255,7 +255,7 @@ export function LaborRatesPage() {
     <Section id="labor-rates">
       <SectionHeader
         title="Labor Rates"
-        icon={<Badge variant="info" size="lg">$</Badge>}
+        icon={<Badge color="cyan">$</Badge>}
         actions={
           showForm === false && (
             <HStack spacing="sm">
@@ -327,12 +327,7 @@ export function LaborRatesPage() {
                 {/* Category Info */}
                 <Grid columns={2} gap="md">
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Labor Category *
                     </Text>
                     <Input
@@ -341,7 +336,7 @@ export function LaborRatesPage() {
                       onChange={handleInputChange('laborCategory')}
                       placeholder="e.g., Senior Software Engineer"
                       fullWidth
-                      isInvalid={formErrors.laborCategory !== undefined}
+                      invalid={formErrors.laborCategory !== undefined}
                     />
                     {formErrors.laborCategory !== undefined && (
                       <Text
@@ -355,12 +350,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Description
                     </Text>
                     <Input
@@ -376,12 +366,7 @@ export function LaborRatesPage() {
                 {/* Experience & Education */}
                 <Grid columns={3} gap="md">
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Min Years Experience
                     </Text>
                     <Input
@@ -394,12 +379,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Max Years Experience
                     </Text>
                     <Input
@@ -412,12 +392,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Education Requirement
                     </Text>
                     <Input
@@ -433,12 +408,7 @@ export function LaborRatesPage() {
                 {/* Rates */}
                 <Grid columns={3} gap="md">
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Base Rate ($) *
                     </Text>
                     <Input
@@ -447,7 +417,7 @@ export function LaborRatesPage() {
                       onChange={handleInputChange('baseRate')}
                       placeholder="e.g., 75.00"
                       fullWidth
-                      isInvalid={formErrors.baseRate !== undefined}
+                      invalid={formErrors.baseRate !== undefined}
                     />
                     {formErrors.baseRate !== undefined && (
                       <Text
@@ -461,12 +431,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Billing Rate ($)
                     </Text>
                     <Input
@@ -479,12 +444,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Rate Type
                     </Text>
                     <Select
@@ -504,12 +464,7 @@ export function LaborRatesPage() {
                 {/* Burden Rates */}
                 <Grid columns={4} gap="md">
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Fringe Rate
                     </Text>
                     <Input
@@ -522,12 +477,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Overhead Rate
                     </Text>
                     <Input
@@ -540,12 +490,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       G&A Rate
                     </Text>
                     <Input
@@ -558,12 +503,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Fee Rate
                     </Text>
                     <Input
@@ -579,12 +519,7 @@ export function LaborRatesPage() {
                 {/* Effective Period */}
                 <Grid columns={3} gap="md">
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Effective Date
                     </Text>
                     <Input
@@ -596,12 +531,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       End Date
                     </Text>
                     <Input
@@ -613,12 +543,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Fiscal Year
                     </Text>
                     <Input
@@ -633,12 +558,7 @@ export function LaborRatesPage() {
 
                 {/* Notes */}
                 <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    className="block mb-1"
-                  >
+                  <Text as="label" variant="label" className="block mb-1">
                     Notes
                   </Text>
                   <Input

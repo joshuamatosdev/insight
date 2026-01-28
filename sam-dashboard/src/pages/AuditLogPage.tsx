@@ -65,22 +65,22 @@ function formatAction(action: AuditAction): string {
 }
 
 /**
- * Gets the badge variant for an action type
+ * Gets the badge color for an action type
  */
-function getActionVariant(action: AuditAction): 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'secondary' {
+function getActionColor(action: AuditAction): 'blue' | 'green' | 'amber' | 'red' | 'cyan' | 'zinc' {
   if (action.includes('CREATED') || action.includes('LOGIN')) {
-    return 'success';
+    return 'green';
   }
   if (action.includes('DELETED') || action.includes('FAILED') || action.includes('SUSPENDED')) {
-    return 'danger';
+    return 'red';
   }
   if (action.includes('UPDATED') || action.includes('CHANGED')) {
-    return 'warning';
+    return 'amber';
   }
   if (action.includes('VIEWED') || action.includes('DOWNLOADED')) {
-    return 'info';
+    return 'cyan';
   }
-  return 'secondary';
+  return 'zinc';
 }
 
 /**
@@ -361,7 +361,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                           </Text>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={getActionVariant(log.action)} size="sm" pill>
+                          <Badge color={getActionColor(log.action)}>
                             {formatAction(log.action)}
                           </Badge>
                         </TableCell>

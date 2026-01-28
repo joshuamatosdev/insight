@@ -1,13 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Box } from '../../components/catalyst/layout/Box';
-import { Card, CardHeader, CardBody } from '../../components/catalyst/layout/Card';
-import { Text } from '../../components/catalyst/primitives/Text';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Badge } from '../../components/catalyst/primitives/Badge';
-import { TextArea } from '../../components/catalyst/primitives/Input';
+import { Section, SectionHeader, Stack, HStack, Box, Card, CardHeader, CardBody } from '../../components/catalyst/layout';
+import { Text, Button, Badge, Textarea } from '../../components/catalyst/primitives';
 import { ProposalTracker } from '../../components/domain/pipeline';
 import { usePipeline, usePipelineOpportunity } from '../../hooks/usePipeline';
 
@@ -270,7 +264,7 @@ export function ProposalPage() {
                 </Box>
               ) : (
                 <Stack gap="md">
-                  <TextArea
+                  <Textarea
                     value={sectionContent}
                     onChange={(e) => setSectionContent(e.target.value)}
                     placeholder="Enter section content..."

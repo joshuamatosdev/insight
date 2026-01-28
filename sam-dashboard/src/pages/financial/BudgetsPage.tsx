@@ -190,7 +190,7 @@ export function BudgetsPage() {
       <SectionHeader
         title="Budget Management"
         icon={
-          <Badge variant="primary" size="lg">
+          <Badge color="blue">
             $
           </Badge>
         }
@@ -241,7 +241,7 @@ export function BudgetsPage() {
           }}
         >
           <HStack spacing="sm" align="center">
-            <Badge variant="danger" size="sm">
+            <Badge color="red">
               {overBudgetItems.length}
             </Badge>
             <Text variant="bodySmall" color="warning">

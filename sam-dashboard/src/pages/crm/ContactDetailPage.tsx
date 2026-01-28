@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Card, CardHeader, CardBody } from '../../components/catalyst/layout/Card';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Grid } from '../../components/catalyst/layout/Grid';
-import { Text } from '../../components/catalyst/primitives/Text';
-import { Badge } from '../../components/catalyst/primitives/Badge';
-import { Button } from '../../components/catalyst/primitives/Button';
+import { Section, SectionHeader, Card, CardHeader, CardBody, Stack, HStack, Grid } from '../../components/catalyst/layout';
+import { Text, Badge, Button } from '../../components/catalyst/primitives';
 import { InteractionTimeline, InteractionForm, ContactForm } from '../../components/domain/crm';
 import { useContact } from '../../hooks';
 import { useContactInteractions } from '../../hooks/useInteractions';

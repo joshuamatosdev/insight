@@ -1,5 +1,5 @@
-import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../../components/layout';
-import { Text } from '../../../components/primitives';
+import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../catalyst/layout';
+import { Text } from '../../catalyst/primitives';
 
 interface Activity {
   id: string;
@@ -98,11 +98,11 @@ export function ActivityFeed({
                 </Box>
                 <Stack spacing="0">
                   <Text variant="body">
-                    <Text as="span" style={{ fontWeight: 600 }}>
+                    <Text as="span" weight="semibold">
                       {activity.actor}
                     </Text>{' '}
                     {activity.action}{' '}
-                    <Text as="span" className="text-primary">
+                    <Text as="span" color="primary">
                       {activity.subject}
                     </Text>
                   </Text>

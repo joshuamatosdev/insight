@@ -39,14 +39,16 @@ function getPricingTypeLabel(type: PricingType | null): string {
   return labels[type];
 }
 
-function getClinTypeVariant(type: ClinType): 'primary' | 'info' | 'secondary' {
+type BadgeColor = 'blue' | 'cyan' | 'zinc';
+
+function getClinTypeColor(type: ClinType): BadgeColor {
   if (type === 'BASE') {
-    return 'primary';
+    return 'blue';
   }
   if (type === 'OPTION') {
-    return 'info';
+    return 'cyan';
   }
-  return 'secondary';
+  return 'zinc';
 }
 
 export function ClinTable({
@@ -139,7 +141,7 @@ export function ClinTable({
                   </Text>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={getClinTypeVariant(clin.clinType)} size="sm">
+                  <Badge color={getClinTypeColor(clin.clinType)}>
                     {getClinTypeLabel(clin.clinType)}
                   </Badge>
                 </TableCell>

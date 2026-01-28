@@ -96,10 +96,10 @@ export function SBIRPage({ opportunities }: SBIRPageProps) {
             emptyMessage="No SBIR/STTR opportunities found."
             renderBadge={(opp) => (
               <HStack spacing="sm">
-                {opp.isSbir === true && <Badge variant="info" size="sm">SBIR</Badge>}
-                {opp.isSttr === true && <Badge variant="success" size="sm">STTR</Badge>}
+                {opp.isSbir === true && <Badge color="cyan">SBIR</Badge>}
+                {opp.isSttr === true && <Badge color="green">STTR</Badge>}
                 {opp.sbirPhase !== null && opp.sbirPhase !== undefined && (
-                  <Badge variant="warning" size="sm">
+                  <Badge color="amber">
                     {getSbirPhaseLabel(opp.sbirPhase)}
                   </Badge>
                 )}

@@ -116,7 +116,7 @@ export function OAuthCallbackPage(): React.ReactElement {
             <Button
               variant="primary"
               onClick={() => navigate('/login')}
-              fullWidth
+              className="w-full"
             >
               Return to login
             </Button>

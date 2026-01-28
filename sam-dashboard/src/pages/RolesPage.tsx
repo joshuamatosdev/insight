@@ -89,7 +89,7 @@ export function RolesPage(): React.ReactElement {
                 {role.name}
               </Text>
               {role.isSystemRole === true && (
-                <Badge variant="secondary" size="sm">
+                <Badge color="zinc">
                   System
                 </Badge>
               )}
@@ -152,8 +152,7 @@ export function RolesPage(): React.ReactElement {
                   return (
                     <Badge
                       key={perm.id}
-                      variant={hasPermission ? 'success' : 'default'}
-                      size="sm"
+                      color={hasPermission ? 'green' : 'zinc'}
                       title={perm.description}
                     >
                       {perm.displayName}

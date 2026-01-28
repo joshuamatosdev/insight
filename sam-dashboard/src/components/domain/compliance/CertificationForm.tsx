@@ -190,7 +190,7 @@ export function CertificationForm({
                       onChange={handleTypeChange}
                       options={CERTIFICATION_TYPE_OPTIONS}
                       fullWidth
-                      isInvalid={errors.certificationType !== undefined}
+                      invalid={errors.certificationType !== undefined}
                     />
                     {errors.certificationType !== undefined && (
                       <Text
@@ -220,7 +220,7 @@ export function CertificationForm({
                       onChange={handleInputChange('name')}
                       placeholder="e.g., ISO 27001:2022 Certification"
                       fullWidth
-                      isInvalid={errors.name !== undefined}
+                      invalid={errors.name !== undefined}
                     />
                     {errors.name !== undefined && (
                       <Text
@@ -341,7 +341,7 @@ export function CertificationForm({
                     value={form.expirationDate}
                     onChange={handleInputChange('expirationDate')}
                     fullWidth
-                    isInvalid={errors.expirationDate !== undefined}
+                    invalid={errors.expirationDate !== undefined}
                   />
                 </Box>
               </GridItem>

@@ -173,7 +173,7 @@ export function RegisterPage(): React.ReactElement {
                 <Button
                   variant="primary"
                   onClick={() => navigate('/login')}
-                  fullWidth
+                  className="w-full"
                 >
                   Go to Login
                 </Button>
@@ -240,12 +240,7 @@ export function RegisterPage(): React.ReactElement {
                 {/* Name fields */}
                 <Flex gap="md">
                   <Box style={{ flex: 1 }}>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       First Name *
                     </Text>
                     <Input
@@ -253,8 +248,7 @@ export function RegisterPage(): React.ReactElement {
                       value={form.firstName}
                       onChange={handleInputChange('firstName')}
                       placeholder="John"
-                      fullWidth
-                      isInvalid={validationErrors.firstName !== undefined}
+                      invalid={validationErrors.firstName !== undefined}
                       autoComplete="given-name"
                       autoFocus
                     />
@@ -265,12 +259,7 @@ export function RegisterPage(): React.ReactElement {
                     )}
                   </Box>
                   <Box style={{ flex: 1 }}>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
+                    <Text as="label" variant="label" className="block mb-1">
                       Last Name *
                     </Text>
                     <Input
@@ -278,8 +267,7 @@ export function RegisterPage(): React.ReactElement {
                       value={form.lastName}
                       onChange={handleInputChange('lastName')}
                       placeholder="Doe"
-                      fullWidth
-                      isInvalid={validationErrors.lastName !== undefined}
+                      invalid={validationErrors.lastName !== undefined}
                       autoComplete="family-name"
                     />
                     {validationErrors.lastName !== undefined && (
@@ -292,12 +280,7 @@ export function RegisterPage(): React.ReactElement {
 
                 {/* Email field */}
                 <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    className="block mb-1"
-                  >
+                  <Text as="label" variant="label" className="block mb-1">
                     Email Address *
                   </Text>
                   <Input
@@ -305,8 +288,7 @@ export function RegisterPage(): React.ReactElement {
                     value={form.email}
                     onChange={handleInputChange('email')}
                     placeholder="you@company.com"
-                    fullWidth
-                    isInvalid={validationErrors.email !== undefined}
+                    invalid={validationErrors.email !== undefined}
                     autoComplete="email"
                   />
                   {validationErrors.email !== undefined && (
@@ -318,12 +300,7 @@ export function RegisterPage(): React.ReactElement {
 
                 {/* Organization field */}
                 <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    className="block mb-1"
-                  >
+                  <Text as="label" variant="label" className="block mb-1">
                     Organization Name
                   </Text>
                   <Input
@@ -331,7 +308,6 @@ export function RegisterPage(): React.ReactElement {
                     value={form.organizationName}
                     onChange={handleInputChange('organizationName')}
                     placeholder="Your Company LLC"
-                    fullWidth
                     autoComplete="organization"
                   />
                   <Text variant="caption" color="muted" className="mt-1">
@@ -341,12 +317,7 @@ export function RegisterPage(): React.ReactElement {
 
                 {/* Password field */}
                 <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    className="block mb-1"
-                  >
+                  <Text as="label" variant="label" className="block mb-1">
                     Password *
                   </Text>
                   <Input
@@ -354,8 +325,7 @@ export function RegisterPage(): React.ReactElement {
                     value={form.password}
                     onChange={handleInputChange('password')}
                     placeholder="Create a strong password"
-                    fullWidth
-                    isInvalid={validationErrors.password !== undefined}
+                    invalid={validationErrors.password !== undefined}
                     autoComplete="new-password"
                   />
                   {validationErrors.password !== undefined && (
@@ -367,12 +337,7 @@ export function RegisterPage(): React.ReactElement {
 
                 {/* Confirm Password field */}
                 <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    className="block mb-1"
-                  >
+                  <Text as="label" variant="label" className="block mb-1">
                     Confirm Password *
                   </Text>
                   <Input
@@ -380,8 +345,7 @@ export function RegisterPage(): React.ReactElement {
                     value={form.confirmPassword}
                     onChange={handleInputChange('confirmPassword')}
                     placeholder="Confirm your password"
-                    fullWidth
-                    isInvalid={validationErrors.confirmPassword !== undefined}
+                    invalid={validationErrors.confirmPassword !== undefined}
                     autoComplete="new-password"
                   />
                   {validationErrors.confirmPassword !== undefined && (
@@ -401,7 +365,7 @@ export function RegisterPage(): React.ReactElement {
                       onChange={handleInputChange('acceptTerms')}
                       style={{ marginTop: '4px' }}
                     />
-                    <Text as="label" variant="bodySmall" htmlFor="acceptTerms">
+                    <Text as="label" htmlFor="acceptTerms" variant="bodySmall">
                       I agree to the Terms of Service and Privacy Policy
                     </Text>
                   </Flex>
@@ -416,10 +380,9 @@ export function RegisterPage(): React.ReactElement {
                 <Button
                   type="submit"
                   variant="primary"
-                  fullWidth
+                  className="w-full mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
-                  className="mt-2"
                 >
                   Create Account
                 </Button>

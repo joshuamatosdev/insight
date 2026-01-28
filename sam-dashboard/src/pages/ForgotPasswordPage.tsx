@@ -192,8 +192,7 @@ export function ForgotPasswordPage(): React.ReactElement {
                     value={form.email}
                     onChange={handleInputChange}
                     placeholder="you@example.com"
-                    fullWidth
-                    isInvalid={validationErrors.email !== undefined}
+                    invalid={validationErrors.email !== undefined}
                     autoComplete="email"
                     autoFocus
                   />
@@ -207,10 +206,9 @@ export function ForgotPasswordPage(): React.ReactElement {
                 <Button
                   type="submit"
                   variant="primary"
-                  fullWidth
+                  className="w-full mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
-                  className="mt-2"
                 >
                   Send Reset Link
                 </Button>

@@ -364,7 +364,7 @@ export function CompliancePage({
                   <Button variant="outline" onClick={handleViewClearances}>
                     <HStack spacing="xs" align="center">
                       <PlusIcon size="sm" />
-                      <Text as="span" variant="bodySmall">
+                      <Text as="span" variant="bodySmall" color="muted">
                         Add Clearance
                       </Text>
                     </HStack>

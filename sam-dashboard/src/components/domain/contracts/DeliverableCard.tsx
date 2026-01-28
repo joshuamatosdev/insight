@@ -8,20 +8,21 @@ import type {
   DeliverableFrequency,
 } from './Contract.types';
 import { getDeliverableStatusLabel, formatDate } from './Contract.types';
-import type { BadgeVariant } from '../../catalyst/primitives';
 
-function getStatusVariant(status: DeliverableStatus): BadgeVariant {
-  const variantMap: Record<DeliverableStatus, BadgeVariant> = {
-    PENDING: 'secondary',
-    IN_PROGRESS: 'info',
-    SUBMITTED: 'primary',
-    UNDER_REVIEW: 'warning',
-    REVISION_REQUIRED: 'danger',
-    ACCEPTED: 'success',
-    REJECTED: 'danger',
-    WAIVED: 'secondary',
+type BadgeColor = 'zinc' | 'cyan' | 'blue' | 'amber' | 'red' | 'green';
+
+function getStatusColor(status: DeliverableStatus): BadgeColor {
+  const colorMap: Record<DeliverableStatus, BadgeColor> = {
+    PENDING: 'zinc',
+    IN_PROGRESS: 'cyan',
+    SUBMITTED: 'blue',
+    UNDER_REVIEW: 'amber',
+    REVISION_REQUIRED: 'red',
+    ACCEPTED: 'green',
+    REJECTED: 'red',
+    WAIVED: 'zinc',
   };
-  return variantMap[status];
+  return colorMap[status];
 }
 
 function getDeliverableTypeLabel(type: DeliverableType): string {
@@ -109,19 +110,19 @@ export function DeliverableCard({
             </HStack>
           </Box>
           <HStack spacing="sm">
-            <Badge variant="info" size="sm">
+            <Badge color="cyan">
               {getDeliverableTypeLabel(deliverable.deliverableType)}
             </Badge>
-            <Badge variant={getStatusVariant(deliverable.status)} size="sm">
+            <Badge color={getStatusColor(deliverable.status)}>
               {getDeliverableStatusLabel(deliverable.status)}
             </Badge>
             {deliverable.isOverdue === true && (
-              <Badge variant="danger" size="sm">
+              <Badge color="red">
                 Overdue
               </Badge>
             )}
             {deliverable.isDueSoon === true && deliverable.isOverdue === false && (
-              <Badge variant="warning" size="sm">
+              <Badge color="amber">
                 Due Soon
               </Badge>
             )}

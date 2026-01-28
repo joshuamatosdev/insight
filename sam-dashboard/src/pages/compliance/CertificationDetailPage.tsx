@@ -279,7 +279,7 @@ export function CertificationDetailPage({
                 <Button variant="outline" onClick={onBack}>
                   <HStack spacing="xs" align="center">
                     <ChevronLeftIcon size="sm" />
-                    <Text as="span" variant="bodySmall">
+                    <Text as="span" variant="bodySmall" color="muted">
                       Back to Certifications
                     </Text>
                   </HStack>
@@ -343,7 +343,7 @@ export function CertificationDetailPage({
               <Button variant="ghost" onClick={onBack}>
                 <HStack spacing="xs" align="center">
                   <ChevronLeftIcon size="sm" />
-                  <Text as="span" variant="bodySmall">
+                  <Text as="span" variant="bodySmall" color="muted">
                     Back
                   </Text>
                 </HStack>
@@ -352,7 +352,7 @@ export function CertificationDetailPage({
             <Button variant="outline" onClick={handleEditClick}>
               <HStack spacing="xs" align="center">
                 <PencilIcon size="sm" />
-                <Text as="span" variant="bodySmall">
+                <Text as="span" variant="bodySmall" color="muted">
                   Edit
                 </Text>
               </HStack>

@@ -312,19 +312,18 @@ export function UserRolesPage(): React.ReactElement {
                     </TableCell>
                     <TableCell>
                       {currentRole !== null ? (
-                        <Badge variant="info" size="sm">
+                        <Badge color="cyan">
                           {currentRole.name}
                         </Badge>
                       ) : (
-                        <Badge variant="secondary" size="sm">
+                        <Badge color="zinc">
                           No role
                         </Badge>
                       )}
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={user.isActive ? 'success' : 'warning'}
-                        size="sm"
+                        color={user.isActive ? 'green' : 'amber'}
                       >
                         {user.isActive ? 'Active' : 'Inactive'}
                       </Badge>

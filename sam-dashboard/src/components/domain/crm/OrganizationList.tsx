@@ -1,5 +1,5 @@
-import { Stack } from '../../catalyst/layout/Stack';
-import { Text } from '../../catalyst/primitives/Text';
+import { Stack } from '../../catalyst/layout';
+import { Text } from '../../catalyst/primitives';
 import { OrganizationCard } from './OrganizationCard';
 import type { Organization } from '../../../types/crm';
 

@@ -93,7 +93,7 @@ export function VerifyEmailPage(): React.ReactElement {
             <Button
               variant="primary"
               onClick={() => navigate('/login')}
-              fullWidth
+              className="w-full"
             >
               Go to Login
             </Button>
@@ -137,7 +137,7 @@ export function VerifyEmailPage(): React.ReactElement {
             <Button
               variant="primary"
               onClick={() => navigate('/login')}
-              fullWidth
+              className="w-full"
             >
               Go to Login
             </Button>

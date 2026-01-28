@@ -19,7 +19,8 @@
       "mcp__plugin_serena_serena__write_memory",
       "mcp__plugin_serena_serena__list_memories",
       "mcp__plugin_serena_serena__check_onboarding_performed",
-      "mcp__plugin_serena_serena__think_about_collected_information"
+      "mcp__plugin_serena_serena__think_about_collected_information",
+      "mcp__plugin_serena_serena__execute_shell_command"
     ],
     "deny": []
   }

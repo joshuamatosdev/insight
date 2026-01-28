@@ -15,39 +15,39 @@ function ScopeChangeCard({
   className,
   style,
 }: ScopeChangeCardProps): React.ReactElement {
-  const getStatusVariant = (
+  const getStatusColor = (
     status: string
-  ): 'primary' | 'success' | 'warning' | 'secondary' | 'danger' | 'info' => {
+  ): 'blue' | 'green' | 'amber' | 'zinc' | 'red' | 'cyan' => {
     switch (status) {
       case 'PROPOSED':
-        return 'secondary';
+        return 'zinc';
       case 'UNDER_REVIEW':
-        return 'info';
+        return 'cyan';
       case 'APPROVED':
-        return 'success';
+        return 'green';
       case 'REJECTED':
-        return 'danger';
+        return 'red';
       case 'IMPLEMENTED':
-        return 'primary';
+        return 'blue';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
-  const getChangeTypeVariant = (
+  const getChangeTypeColor = (
     type: string
-  ): 'success' | 'warning' | 'danger' | 'info' => {
+  ): 'green' | 'amber' | 'red' | 'cyan' => {
     switch (type) {
       case 'ADDITION':
-        return 'success';
+        return 'green';
       case 'MODIFICATION':
-        return 'warning';
+        return 'amber';
       case 'REMOVAL':
-        return 'danger';
+        return 'red';
       case 'CLARIFICATION':
-        return 'info';
+        return 'cyan';
       default:
-        return 'info';
+        return 'cyan';
     }
   };
 
@@ -129,10 +129,10 @@ function ScopeChangeCard({
             <Stack spacing="xs">
               <Text variant="heading5">{scopeChange.title}</Text>
               <HStack spacing="sm">
-                <Badge variant={getStatusVariant(scopeChange.status)} size="sm">
+                <Badge color={getStatusColor(scopeChange.status)}>
                   {scopeChange.status.replace('_', ' ')}
                 </Badge>
-                <Badge variant={getChangeTypeVariant(scopeChange.changeType)} size="sm">
+                <Badge color={getChangeTypeColor(scopeChange.changeType)}>
                   {getChangeTypeLabel(scopeChange.changeType)}
                 </Badge>
               </HStack>
@@ -294,7 +294,7 @@ export function ScopeChangeTracker({
           <Box>
             <Flex align="center" gap="sm" className="mb-3">
               <Text variant="heading5">Pending Review</Text>
-              <Badge variant="warning" size="sm">
+              <Badge color="amber">
                 {pendingChanges.length}
               </Badge>
             </Flex>
@@ -317,7 +317,7 @@ export function ScopeChangeTracker({
           <Box>
             <Flex align="center" gap="sm" className="mb-3">
               <Text variant="heading5">Approved</Text>
-              <Badge variant="success" size="sm">
+              <Badge color="green">
                 {approvedChanges.length}
               </Badge>
             </Flex>
@@ -338,7 +338,7 @@ export function ScopeChangeTracker({
           <Box>
             <Flex align="center" gap="sm" className="mb-3">
               <Text variant="heading5">Rejected</Text>
-              <Badge variant="danger" size="sm">
+              <Badge color="red">
                 {rejectedChanges.length}
               </Badge>
             </Flex>

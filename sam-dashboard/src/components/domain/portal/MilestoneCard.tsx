@@ -15,24 +15,24 @@ export function MilestoneCard({
   className,
   style,
 }: MilestoneCardProps): React.ReactElement {
-  const getStatusVariant = (
+  const getStatusColor = (
     status: string
-  ): 'primary' | 'success' | 'warning' | 'secondary' | 'danger' | 'info' => {
+  ): 'blue' | 'green' | 'amber' | 'zinc' | 'red' | 'cyan' => {
     switch (status) {
       case 'NOT_STARTED':
-        return 'secondary';
+        return 'zinc';
       case 'IN_PROGRESS':
-        return 'primary';
+        return 'blue';
       case 'COMPLETED':
-        return 'success';
+        return 'green';
       case 'DELAYED':
-        return 'danger';
+        return 'red';
       case 'AT_RISK':
-        return 'warning';
+        return 'amber';
       case 'CANCELLED':
-        return 'secondary';
+        return 'zinc';
       default:
-        return 'secondary';
+        return 'zinc';
     }
   };
 
@@ -123,10 +123,10 @@ export function MilestoneCard({
           <Stack spacing="xs">
             <Text variant="heading5">{milestone.name}</Text>
             <HStack spacing="sm">
-              <Badge variant={getStatusVariant(milestone.status)} size="sm">
+              <Badge color={getStatusColor(milestone.status)}>
                 {milestone.status.replace('_', ' ')}
               </Badge>
-              <Badge variant="secondary" size="sm">
+              <Badge color="zinc">
                 {getTypeLabel(milestone.type)}
               </Badge>
             </HStack>
@@ -238,16 +238,15 @@ export function MilestoneCard({
                 >
                   <Text variant="bodySmall">{deliverable.name}</Text>
                   <Badge
-                    variant={
+                    color={
                       deliverable.status === 'APPROVED'
-                        ? 'success'
+                        ? 'green'
                         : deliverable.status === 'REJECTED'
-                        ? 'danger'
+                        ? 'red'
                         : deliverable.status === 'SUBMITTED'
-                        ? 'warning'
-                        : 'secondary'
+                        ? 'amber'
+                        : 'zinc'
                     }
-                    size="sm"
                   >
                     {deliverable.status}
                   </Badge>

@@ -173,16 +173,16 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
       <Stack spacing="lg">
         {/* Status Badges */}
         <HStack spacing="sm">
-          <Badge variant="secondary" size="md">
+          <Badge color="zinc">
             {getCategoryLabel(budget.category)}
           </Badge>
           {budget.isOverBudget && (
-            <Badge variant="danger" size="md">
+            <Badge color="red">
               Over Budget
             </Badge>
           )}
           {budget.fiscalYear !== null && (
-            <Badge variant="info" size="md">
+            <Badge color="cyan">
               FY{budget.fiscalYear}
             </Badge>
           )}

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../../components/layout';
-import { Text, Badge } from '../../../components/primitives';
+import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../catalyst/layout';
+import { Text, Badge } from '../../catalyst/primitives';
 
 interface Deadline {
   id: string;
@@ -79,7 +79,7 @@ export function DeadlineCalendar({
       <CardHeader>
         <Flex justify="space-between" align="center">
           <Text variant="heading5">Upcoming Deadlines</Text>
-          <Badge variant="info">{deadlines.length}</Badge>
+          <Badge color="cyan">{deadlines.length}</Badge>
         </Flex>
       </CardHeader>
       <CardBody style={{ maxHeight: '400px', overflowY: 'auto' }}>
@@ -116,7 +116,7 @@ export function DeadlineCalendar({
                         {item.title}
                       </Text>
                     </Box>
-                    <Badge variant={item.type === 'opportunity' ? 'primary' : 'secondary'}>
+                    <Badge color={item.type === 'opportunity' ? 'blue' : 'zinc'}>
                       {item.type}
                     </Badge>
                   </Flex>

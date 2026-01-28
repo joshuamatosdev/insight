@@ -187,19 +187,59 @@ export async function put<T, B = unknown>(
 }
 
 /**
- * Make a DELETE request
+ * Make a PATCH request
  */
-export async function del<T = void>(
+export async function patch<T, B = unknown>(
   path: string,
+  body: B,
   options: { auth?: boolean } = {}
 ): Promise<ApiResult<T>> {
   const { auth = true } = options;
 
   try {
     const response = await fetch(`${API_BASE}${path}`, {
+      method: 'PATCH',
+      headers: buildHeaders(auth),
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok === false) {
+      const error = await parseError(response);
+      return { success: false, error };
+    }
+
+    const data = (await response.json()) as T;
+    return { success: true, data };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Network error',
+        status: 0,
+      },
+    };
+  }
+}
+
+/**
+ * Make a DELETE request
+ */
+export async function del<T = void>(
+  path: string,
+  body?: unknown,
+  options: { auth?: boolean } = {}
+): Promise<ApiResult<T>> {
+  const { auth = true } = options;
+
+  try {
+    const fetchOptions: RequestInit = {
       method: 'DELETE',
       headers: buildHeaders(auth),
-    });
+    };
+    if (body !== undefined) {
+      fetchOptions.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${API_BASE}${path}`, fetchOptions);
 
     if (response.ok === false) {
       const error = await parseError(response);
@@ -232,6 +272,7 @@ export const apiClient = {
   get,
   post,
   put,
+  patch,
   delete: del,
 };
 

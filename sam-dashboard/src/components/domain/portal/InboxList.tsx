@@ -172,7 +172,7 @@ export function InboxList({
                 {/* Unread Badge */}
                 {hasUnread && (
                   <Box className="ml-2">
-                    <Badge variant="primary" size="sm">
+                    <Badge color="blue">
                       {thread.unreadCount}
                     </Badge>
                   </Box>

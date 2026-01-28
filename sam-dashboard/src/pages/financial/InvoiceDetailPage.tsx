@@ -199,14 +199,14 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
       <Stack spacing="lg">
         {/* Status & Contract Info */}
         <HStack spacing="md">
-          <Badge variant={getStatusColor(invoice.status)} size="lg">
+          <Badge color={getStatusColor(invoice.status)}>
             {getStatusLabel(invoice.status)}
           </Badge>
-          <Badge variant="secondary" size="md">
+          <Badge color="zinc">
             {invoice.invoiceType}
           </Badge>
           {invoice.isOverdue && (
-            <Badge variant="danger" size="md">
+            <Badge color="red">
               Overdue
             </Badge>
           )}

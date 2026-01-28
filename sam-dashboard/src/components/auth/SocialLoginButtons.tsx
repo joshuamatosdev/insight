@@ -103,7 +103,7 @@ function SocialButton({ provider, onClick }: SocialButtonProps): React.ReactElem
   return (
     <Button
       variant="secondary"
-      fullWidth
+      className="w-full"
       onClick={onClick}
       style={{
         ...getProviderStyles(provider.id),

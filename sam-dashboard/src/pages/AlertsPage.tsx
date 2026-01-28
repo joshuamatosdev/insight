@@ -335,12 +335,7 @@ function AlertForm({
 
         {/* Alert Name */}
         <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
+          <Text as="label" variant="label" className="block mb-1">
             Alert Name *
           </Text>
           <Input
@@ -349,7 +344,7 @@ function AlertForm({
             onChange={handleInputChange('name')}
             placeholder="e.g., IT Services 541512"
             fullWidth
-            isInvalid={errors.name !== undefined}
+            invalid={errors.name !== undefined}
           />
           {errors.name !== undefined && (
             <Text
@@ -364,12 +359,7 @@ function AlertForm({
 
         {/* Description */}
         <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
+          <Text as="label" variant="label" className="block mb-1">
             Description
           </Text>
           <Input
@@ -383,12 +373,7 @@ function AlertForm({
 
         {/* NAICS Codes */}
         <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
+          <Text as="label" variant="label" className="block mb-1">
             NAICS Codes
           </Text>
           <Input
@@ -397,7 +382,7 @@ function AlertForm({
             onChange={handleNaicsChange}
             placeholder="e.g., 541512, 541511, 518210"
             fullWidth
-            isInvalid={errors.naicsCodes !== undefined}
+            invalid={errors.naicsCodes !== undefined}
           />
           <Text
             variant="caption"
@@ -410,12 +395,7 @@ function AlertForm({
 
         {/* Keywords */}
         <Box>
-          <Text
-            as="label"
-            variant="bodySmall"
-            weight="medium"
-            className="block mb-1"
-          >
+          <Text as="label" variant="label" className="block mb-1">
             Keywords
           </Text>
           <Input
@@ -424,7 +404,7 @@ function AlertForm({
             onChange={handleKeywordsChange}
             placeholder="e.g., cloud, security, data analytics"
             fullWidth
-            isInvalid={errors.keywords !== undefined}
+            invalid={errors.keywords !== undefined}
           />
           <Text
             variant="caption"
@@ -438,12 +418,7 @@ function AlertForm({
         {/* Value Range */}
         <Grid columns="1fr 1fr" gap="md">
           <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
+            <Text as="label" variant="label" className="block mb-1">
               Minimum Value ($)
             </Text>
             <Input
@@ -452,7 +427,7 @@ function AlertForm({
               onChange={handleInputChange('minValue')}
               placeholder="e.g., 100000"
               fullWidth
-              isInvalid={errors.minValue !== undefined}
+              invalid={errors.minValue !== undefined}
             />
             {errors.minValue !== undefined && (
               <Text
@@ -466,12 +441,7 @@ function AlertForm({
           </GridItem>
 
           <GridItem>
-            <Text
-              as="label"
-              variant="bodySmall"
-              weight="medium"
-              className="block mb-1"
-            >
+            <Text as="label" variant="label" className="block mb-1">
               Maximum Value ($)
             </Text>
             <Input
@@ -480,7 +450,7 @@ function AlertForm({
               onChange={handleInputChange('maxValue')}
               placeholder="e.g., 5000000"
               fullWidth
-              isInvalid={errors.maxValue !== undefined}
+              invalid={errors.maxValue !== undefined}
             />
             {errors.maxValue !== undefined && (
               <Text

@@ -126,7 +126,7 @@ export function SprintTrackingPage(): React.ReactElement {
                 <Text variant="bodySmall" weight="semibold">
                   Active
                 </Text>
-                <Badge variant="primary" size="sm">
+                <Badge color="blue">
                   {activeSprints.length}
                 </Badge>
               </Flex>
@@ -153,7 +153,7 @@ export function SprintTrackingPage(): React.ReactElement {
                 <Text variant="bodySmall" weight="semibold">
                   Planning
                 </Text>
-                <Badge variant="warning" size="sm">
+                <Badge color="amber">
                   {planningSprints.length}
                 </Badge>
               </Flex>
@@ -180,7 +180,7 @@ export function SprintTrackingPage(): React.ReactElement {
                 <Text variant="bodySmall" weight="semibold">
                   Completed
                 </Text>
-                <Badge variant="success" size="sm">
+                <Badge color="green">
                   {completedSprints.length}
                 </Badge>
               </Flex>

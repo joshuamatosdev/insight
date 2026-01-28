@@ -237,7 +237,7 @@ export function RolesPage(): React.ReactElement {
                         {role.name}
                       </Text>
                       {role.isSystemRole && (
-                        <Badge variant="secondary" size="sm">
+                        <Badge color="zinc">
                           System
                         </Badge>
                       )}
@@ -249,7 +249,7 @@ export function RolesPage(): React.ReactElement {
                     </Text>
                   </TableCell>
                   <TableCell className="text-center">
-                    <Badge variant="info" size="sm">
+                    <Badge color="cyan">
                       {role.permissions.length}
                     </Badge>
                   </TableCell>

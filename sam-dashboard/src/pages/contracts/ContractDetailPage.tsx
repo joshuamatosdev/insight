@@ -163,7 +163,7 @@ export function ContractDetailPage({
               <Text variant="body" color="muted">
                 {contract.contractNumber}
               </Text>
-              <Badge variant="info" size="sm">
+              <Badge color="cyan">
                 {getContractTypeLabel(contract.contractType)}
               </Badge>
             </HStack>
@@ -197,8 +197,7 @@ export function ContractDetailPage({
               {tab.label}
               {tab.count !== undefined && tab.count > 0 && (
                 <Badge
-                  variant={activeTab === tab.key ? 'secondary' : 'primary'}
-                  size="sm"
+                  color={activeTab === tab.key ? 'zinc' : 'blue'}
                   className="ml-2"
                 >
                   {tab.count}

@@ -491,27 +491,27 @@ export function formatPercentage(value: number | null | undefined): string {
 
 export function getStatusColor(
   status: InvoiceStatus
-): 'primary' | 'success' | 'warning' | 'danger' | 'secondary' | 'info' {
+): 'blue' | 'green' | 'amber' | 'red' | 'zinc' | 'cyan' {
   switch (status) {
     case 'DRAFT':
-      return 'secondary';
+      return 'zinc';
     case 'PENDING_APPROVAL':
     case 'SUBMITTED':
     case 'UNDER_REVIEW':
-      return 'info';
+      return 'cyan';
     case 'RECEIVED':
     case 'APPROVED':
-      return 'primary';
+      return 'blue';
     case 'PAID':
-      return 'success';
+      return 'green';
     case 'PARTIALLY_PAID':
-      return 'warning';
+      return 'amber';
     case 'DISPUTED':
     case 'REJECTED':
     case 'CANCELLED':
-      return 'danger';
+      return 'red';
     default:
-      return 'secondary';
+      return 'zinc';
   }
 }
 

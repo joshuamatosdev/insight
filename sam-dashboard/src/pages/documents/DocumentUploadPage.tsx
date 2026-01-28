@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack } from '../../components/catalyst/layout/Stack';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Text } from '../../components/catalyst/primitives/Text';
+import { Section, SectionHeader, Stack } from '../../components/catalyst/layout';
+import { Button, Text } from '../../components/catalyst/primitives';
 import { DocumentUploadForm } from '../../components/domain/documents';
 import { useDocuments } from '../../hooks';
 import type { CreateDocumentRequest } from '../../types/documents';

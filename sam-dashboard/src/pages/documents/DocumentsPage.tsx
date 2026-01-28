@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Grid } from '../../components/catalyst/layout/Grid';
-import { Input } from '../../components/catalyst/primitives/Input';
-import { Select } from '../../components/catalyst/primitives/Input';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Text } from '../../components/catalyst/primitives/Text';
+import { Section, SectionHeader, Stack, HStack, Grid } from '../../components/catalyst/layout';
+import { Input, Select, Button, Text } from '../../components/catalyst/primitives';
 import { DocumentList, FolderTree } from '../../components/domain/documents';
 import { useDocuments, useFolders } from '../../hooks';
 import type { Document, DocumentType, DocumentFolder } from '../../types/documents';

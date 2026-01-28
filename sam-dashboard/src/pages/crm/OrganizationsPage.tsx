@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Input } from '../../components/catalyst/primitives/Input';
-import { Select } from '../../components/catalyst/primitives/Input';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Text } from '../../components/catalyst/primitives/Text';
+import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
+import { Input, Select, Button, Text } from '../../components/catalyst/primitives';
 import { OrganizationList, OrganizationForm } from '../../components/domain/crm';
 import { useOrganizations } from '../../hooks';
 import type { Organization, OrganizationType, CreateOrganizationRequest } from '../../types/crm';

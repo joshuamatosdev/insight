@@ -1,11 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader } from '../../components/catalyst/layout/Section';
-import { Stack, HStack } from '../../components/catalyst/layout/Stack';
-import { Box } from '../../components/catalyst/layout/Box';
-import { Text } from '../../components/catalyst/primitives/Text';
-import { Button } from '../../components/catalyst/primitives/Button';
-import { Badge } from '../../components/catalyst/primitives/Badge';
+import { Section, SectionHeader, Stack, HStack, Box } from '../../components/catalyst/layout';
+import { Text, Button, Badge } from '../../components/catalyst/primitives';
 import {
   CaptureManagement,
   TeamingPartnerList,

@@ -76,10 +76,10 @@ const METRIC_TYPES: MetricType[] = [
 /**
  * Tier display configuration
  */
-const TIER_CONFIG: Record<SubscriptionTier, { label: string; variant: 'secondary' | 'primary' | 'success' }> = {
-  FREE: { label: 'Free', variant: 'secondary' },
-  PRO: { label: 'Pro', variant: 'primary' },
-  ENTERPRISE: { label: 'Enterprise', variant: 'success' },
+const TIER_CONFIG: Record<SubscriptionTier, { label: string; color: 'zinc' | 'blue' | 'green' }> = {
+  FREE: { label: 'Free', color: 'zinc' },
+  PRO: { label: 'Pro', color: 'blue' },
+  ENTERPRISE: { label: 'Enterprise', color: 'green' },
 };
 
 /**
@@ -177,7 +177,7 @@ function UsageMetricCard({
               {METRIC_DISPLAY_LABELS[metricType]}
             </Text>
             {(warning || exceeded) && (
-              <Badge variant={exceeded ? 'danger' : 'warning'} size="sm">
+              <Badge color={exceeded ? 'red' : 'amber'}>
                 {exceeded ? 'Exceeded' : 'Warning'}
               </Badge>
             )}
@@ -445,8 +445,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
           <HStack spacing="md">
             {usageSummary !== null && (
               <Badge
-                variant={TIER_CONFIG[usageSummary.subscriptionTier].variant}
-                size="md"
+                color={TIER_CONFIG[usageSummary.subscriptionTier].color}
               >
                 {TIER_CONFIG[usageSummary.subscriptionTier].label} Plan
               </Badge>

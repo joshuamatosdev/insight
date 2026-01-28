@@ -190,7 +190,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
           showForm === false && (
             <HStack spacing="sm">
               <Button variant="ghost" size="sm" onClick={handleShowOverdue}>
-                <Badge variant="danger" size="sm">
+                <Badge color="red">
                   Overdue
                 </Badge>
               </Button>

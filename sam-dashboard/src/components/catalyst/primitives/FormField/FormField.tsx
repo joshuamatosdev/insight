@@ -116,7 +116,7 @@ export function FormField({
         'aria-describedby': ariaDescribedBy.length > 0 ? ariaDescribedBy.join(' ') : undefined,
         'aria-errormessage': hasError ? errorId : undefined,
         disabled: disabled || children.props.disabled,
-        isInvalid: hasError || children.props.isInvalid,
+        invalid: hasError || children.props.invalid,
         required: required || children.props.required,
       } as Record<string, unknown>)
     : children;
