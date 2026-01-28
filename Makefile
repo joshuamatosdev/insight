@@ -67,7 +67,7 @@ setup: ## First-time setup: copy .env, install deps, start services
 	@echo "$(GREEN)Setting up Insight development environment...$(NC)"
 	@if [ ! -f .env ]; then cp .env.example .env && echo "Created .env from .env.example"; fi
 	@echo "$(CYAN)Installing dependencies...$(NC)"
-	@if command -v ./gradlew > /dev/null 2>&1; then ./gradlew dependencies --quiet; else echo "Skipping Gradle (no gradlew)"; fi
+	@if command -v ./backend/gradlew > /dev/null 2>&1; then cd backend && cd backend && ./gradlew dependencies --quiet; else echo "Skipping Gradle (no gradlew)"; fi
 	cd sam-dashboard && npm install
 	@echo "$(GREEN)Starting infrastructure services...$(NC)"
 	docker-compose up -d postgres redis elasticsearch localstack
@@ -116,12 +116,12 @@ infra: ## Start infrastructure only (Postgres, Redis, Elasticsearch, LocalStack/
 .PHONY: start-backend
 start-backend: ## Start backend (foreground, with logs)
 	@echo "$(GREEN)Starting Spring Boot backend on port $(BACKEND_PORT)...$(NC)"
-	REDIS_HOST=localhost SERVER_PORT=$(BACKEND_PORT) ./gradlew bootRun
+	REDIS_HOST=localhost SERVER_PORT=$(BACKEND_PORT) cd backend && ./gradlew bootRun
 
 .PHONY: start-backend-bg
 start-backend-bg: ## Start backend (background)
 	@echo "$(GREEN)Starting Spring Boot backend in background...$(NC)"
-	@nohup bash -c 'REDIS_HOST=localhost SERVER_PORT=$(BACKEND_PORT) ./gradlew bootRun --no-daemon > logs/backend.log 2>&1' &
+	@nohup bash -c 'REDIS_HOST=localhost SERVER_PORT=$(BACKEND_PORT) cd backend && ./gradlew bootRun --no-daemon > logs/backend.log 2>&1' &
 	@mkdir -p logs
 	@echo "$(GREEN)Backend starting... logs at logs/backend.log$(NC)"
 
@@ -260,7 +260,7 @@ test: test-backend test-frontend ## Run all tests
 .PHONY: test-backend
 test-backend: ## Run backend tests
 	@echo "$(CYAN)Running backend tests...$(NC)"
-	./gradlew test
+	cd backend && ./gradlew test
 
 .PHONY: test-frontend
 test-frontend: ## Run frontend tests
@@ -295,7 +295,7 @@ build: build-backend build-frontend ## Build both backend and frontend
 .PHONY: build-backend
 build-backend: ## Build backend (JAR)
 	@echo "$(GREEN)Building backend...$(NC)"
-	./gradlew build -x test
+	cd backend && ./gradlew build -x test
 
 .PHONY: build-frontend
 build-frontend: ## Build frontend (production)
@@ -363,7 +363,7 @@ clean-all: ## Remove everything (containers, volumes, node_modules)
 	docker-compose down -v --remove-orphans
 	rm -rf sam-dashboard/node_modules
 	rm -rf logs
-	./gradlew clean
+	cd backend && ./gradlew clean
 	@echo "$(GREEN)Full cleanup complete.$(NC)"
 
 .PHONY: prune
@@ -379,7 +379,7 @@ prune: ## Prune unused Docker resources
 .PHONY: install
 install: ## Install all dependencies
 	@echo "$(GREEN)Installing dependencies...$(NC)"
-	./gradlew dependencies --quiet || true
+	cd backend && ./gradlew dependencies --quiet || true
 	cd sam-dashboard && npm install
 	@echo "$(GREEN)Dependencies installed.$(NC)"
 
@@ -389,7 +389,7 @@ install-frontend: ## Install frontend dependencies only
 
 .PHONY: install-backend
 install-backend: ## Download backend dependencies
-	./gradlew dependencies
+	cd backend && ./gradlew dependencies
 
 # =============================================================================
 # UTILITIES

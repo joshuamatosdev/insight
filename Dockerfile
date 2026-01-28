@@ -28,10 +28,10 @@ RUN apk add --no-cache \
     curl \
     && rm -rf /var/cache/apk/*
 
-# Copy Gradle wrapper and configuration
-COPY gradlew ./
-COPY gradle gradle
-COPY build.gradle settings.gradle ./
+# Copy Gradle wrapper and configuration from backend/
+COPY backend/gradlew ./
+COPY backend/gradle gradle
+COPY backend/build.gradle backend/settings.gradle ./
 
 # Make gradlew executable
 RUN chmod +x ./gradlew
@@ -39,8 +39,8 @@ RUN chmod +x ./gradlew
 # Download dependencies (cached layer)
 RUN ./gradlew dependencies --no-daemon --refresh-dependencies || true
 
-# Copy source code
-COPY src src
+# Copy source code from backend/
+COPY backend/src src
 
 # Build application
 # - For production: full optimization
