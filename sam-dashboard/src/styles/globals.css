@@ -1,50 +1,82 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind v4 Entry */
+@import "tailwindcss";
+
+/* Plugins */
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms" { strategy: class; }
+
+/* Dark mode: class-based */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Studio Theme Tokens */
+@theme {
+  /* Core Colors */
+  --color-studio-black: #050505;
+  --color-studio-white: #ffffff;
+  --color-studio-gray: #71717a;
+  --color-studio-light: #f4f4f5;
+  --color-studio-border: #e4e4e7;
+
+  /* Interactive States */
+  --color-studio-hover: #27272a;
+  --color-studio-pressed: #52525b;
+
+  /* Semantic Colors */
+  --color-studio-error: #ef4444;
+  --color-studio-success: #22c55e;
+  --color-studio-warning: #f59e0b;
+
+  /* Typography */
+  --font-sans: "basic-sans", "unitext", system-ui, sans-serif;
+  --font-display: "gimlet-display-compressed", sans-serif;
+  --font-accent: "itc-avant-garde-gothic-pro", sans-serif;
+
+  /* Font Sizes */
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.04em;
+  --tracking-widest: 0.1em;
+
+  /* Border Radius */
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+  --radius-pill: 9999px;
+}
 
 @layer base {
-  /* =========================================
-     GLOBAL DEFAULTS (Merged from base.css)
-     ========================================= */
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    @apply bg-zinc-400 rounded-full hover:bg-zinc-500;
+    @apply bg-zinc-400 rounded-full;
+    &:hover { @apply bg-zinc-500; }
   }
 
-  /* =========================================
-     STUDIO THEME ROOT
-     ========================================= */
+  /* Studio Theme Root */
   [data-theme='studio'] {
     @apply font-sans text-studio-gray antialiased bg-studio-white;
     @apply transition-colors duration-300;
   }
-
-  :is(.dark [data-theme='studio']) {
+  .dark [data-theme='studio'] {
     @apply bg-studio-black text-zinc-400;
   }
 
-  /* =========================================
-     TYPOGRAPHY
-     ========================================= */
+  /* Typography */
   [data-theme='studio'] h1,
   [data-theme='studio'] h2,
   [data-theme='studio'] h3,
   [data-theme='studio'] h4 {
     @apply font-display font-bold text-studio-black tracking-tighter uppercase leading-none mb-6;
-    @apply dark:text-white;
+    @variant dark { @apply text-white; }
   }
-
   [data-theme='studio'] h1 { @apply text-6xl md:text-8xl lg:text-9xl; }
   [data-theme='studio'] h2 { @apply text-5xl md:text-7xl; }
   [data-theme='studio'] h3 { @apply text-3xl md:text-5xl; }
@@ -57,18 +89,15 @@
   [data-theme='studio'] a {
     @apply font-medium text-studio-black underline decoration-studio-border underline-offset-4 cursor-pointer;
     @apply hover:decoration-studio-black transition-all;
-    @apply dark:text-white dark:decoration-zinc-700 dark:hover:decoration-white;
+    @variant dark { @apply text-white decoration-zinc-700 hover:decoration-white; }
   }
 
-  /* =========================================
-     FORMS (The Pill Aesthetic)
-     ========================================= */
+  /* Forms (Pill Aesthetic) */
   [data-theme='studio'] label {
     @apply block font-accent text-xs font-bold uppercase tracking-widest text-studio-black mb-2 ml-4;
-    @apply dark:text-white;
+    @variant dark { @apply text-white; }
   }
 
-  /* We manually target inputs to ensure pills work even with forms plugin installed */
   [data-theme='studio'] input[type='text'],
   [data-theme='studio'] input[type='email'],
   [data-theme='studio'] input[type='password'],
@@ -78,51 +107,54 @@
     @apply w-full px-6 py-4 rounded-pill border border-studio-border bg-transparent
            text-studio-black placeholder-zinc-400 outline-none transition-all appearance-none;
     @apply focus:border-studio-black focus:ring-1 focus:ring-studio-black;
-    @apply dark:text-white dark:border-zinc-800 dark:focus:border-white dark:focus:ring-white;
+    @variant dark { @apply text-white border-zinc-800 focus:border-white focus:ring-white; }
   }
 
   [data-theme='studio'] textarea {
     @apply rounded-3xl resize-y min-h-[150px];
   }
 
-  /* =========================================
-     LAYOUT & TABLES
-     ========================================= */
-  [data-theme='studio'] table {
-    @apply w-full border-collapse text-left mb-10;
-  }
-
+  /* Tables */
+  [data-theme='studio'] table { @apply w-full border-collapse text-left mb-10; }
   [data-theme='studio'] th {
     @apply font-accent text-xs font-bold uppercase tracking-widest text-studio-black py-4 border-b border-studio-border;
-    @apply dark:text-white dark:border-zinc-800;
+    @variant dark { @apply text-white border-zinc-800; }
   }
-
   [data-theme='studio'] td {
     @apply py-4 border-b border-studio-border text-studio-black;
-    @apply dark:border-zinc-900 dark:text-zinc-200;
+    @variant dark { @apply border-zinc-900 text-zinc-200; }
+  }
+
+  /* Prose: Auto-invert in dark mode */
+  .dark .prose { @apply prose-invert; }
+
+  /* Prose: Studio tokens */
+  .prose {
+    --tw-prose-body: var(--color-studio-gray);
+    --tw-prose-headings: var(--color-studio-black);
+    --tw-prose-links: var(--color-studio-black);
+    --tw-prose-bold: var(--color-studio-black);
+    --tw-prose-hr: var(--color-studio-border);
   }
 }
 
 @layer components {
-  /* Primary Button */
   [data-theme='studio'] .btn-primary {
     @apply inline-flex items-center justify-center rounded-pill bg-studio-black px-10 py-4
            font-accent text-sm font-bold uppercase tracking-widest text-white
            transition-transform hover:-translate-y-1 active:translate-y-0 shadow-lg cursor-pointer;
-    @apply dark:bg-white dark:text-studio-black;
+    @variant dark { @apply bg-white text-studio-black; }
   }
 
-  /* Secondary Button */
   [data-theme='studio'] .btn-secondary {
     @apply inline-flex items-center justify-center rounded-pill border border-studio-border bg-transparent px-10 py-4
            font-accent text-sm font-bold uppercase tracking-widest text-studio-black
            hover:bg-studio-light transition-colors cursor-pointer;
-    @apply dark:text-white dark:border-zinc-800 dark:hover:bg-zinc-900;
+    @variant dark { @apply text-white border-zinc-800 hover:bg-zinc-900; }
   }
 
-  /* Card Container */
   [data-theme='studio'] .card {
     @apply bg-studio-light rounded-4xl p-8 md:p-12 border border-transparent;
-    @apply dark:bg-zinc-900 dark:border-zinc-800;
+    @variant dark { @apply bg-zinc-900 border-zinc-800; }
   }
 }

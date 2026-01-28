@@ -278,4 +278,76 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, String
         @Param("maxValue") java.math.BigDecimal maxValue,
         Pageable pageable
     );
+
+    // ============================================
+    // GEOGRAPHIC QUERIES (Census Geocoder)
+    // ============================================
+
+    /**
+     * Find opportunities that need geocoding (have address but no coordinates).
+     */
+    @Query("""
+        SELECT o FROM Opportunity o
+        WHERE o.latitude IS NULL
+        AND o.placeOfPerformanceCountry = 'USA'
+        AND (o.placeOfPerformanceCity IS NOT NULL OR o.placeOfPerformanceState IS NOT NULL OR o.placeOfPerformanceZip IS NOT NULL)
+        ORDER BY o.postedDate DESC
+        """)
+    List<Opportunity> findOpportunitiesNeedingGeocoding(Pageable pageable);
+
+    /**
+     * Find opportunities by FIPS state code.
+     */
+    Page<Opportunity> findByFipsStateCode(String fipsStateCode, Pageable pageable);
+
+    /**
+     * Find opportunities by FIPS county code.
+     */
+    Page<Opportunity> findByFipsCountyCode(String fipsCountyCode, Pageable pageable);
+
+    /**
+     * Find geocoded opportunities within a bounding box.
+     */
+    @Query("""
+        SELECT o FROM Opportunity o
+        WHERE o.latitude IS NOT NULL
+        AND o.longitude IS NOT NULL
+        AND o.latitude BETWEEN :minLat AND :maxLat
+        AND o.longitude BETWEEN :minLon AND :maxLon
+        AND o.status = 'ACTIVE'
+        """)
+    List<Opportunity> findWithinBoundingBox(
+        @Param("minLat") java.math.BigDecimal minLat,
+        @Param("maxLat") java.math.BigDecimal maxLat,
+        @Param("minLon") java.math.BigDecimal minLon,
+        @Param("maxLon") java.math.BigDecimal maxLon
+    );
+
+    /**
+     * Count geocoded opportunities.
+     */
+    @Query("SELECT COUNT(o) FROM Opportunity o WHERE o.latitude IS NOT NULL AND o.longitude IS NOT NULL")
+    long countGeocodedOpportunities();
+
+    /**
+     * Count opportunities by FIPS state.
+     */
+    @Query("""
+        SELECT o.fipsStateCode, COUNT(o)
+        FROM Opportunity o
+        WHERE o.fipsStateCode IS NOT NULL AND o.status = 'ACTIVE'
+        GROUP BY o.fipsStateCode
+        """)
+    List<Object[]> countByFipsState();
+
+    /**
+     * Get all geocoded opportunities for map display.
+     */
+    @Query("""
+        SELECT o FROM Opportunity o
+        WHERE o.latitude IS NOT NULL
+        AND o.longitude IS NOT NULL
+        AND o.status = 'ACTIVE'
+        """)
+    List<Opportunity> findAllGeocoded();
 }

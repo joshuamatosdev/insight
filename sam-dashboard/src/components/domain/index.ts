@@ -5,6 +5,7 @@ export * from './contracts';
 export * from './dashboard';
 export * from './documents';
 export * from './filters';
+export * from './map';
 export * from './naics';
 export * from './opportunity';
 export * from './portal';

@@ -113,3 +113,5 @@ export {
   ClearancesPage,
   SbomDashboardPage,
 } from './compliance';
+export { MapPage } from './MapPage';
+export type { MapPageProps } from './MapPage';

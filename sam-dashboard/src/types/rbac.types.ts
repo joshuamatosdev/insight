@@ -1,6 +1,16 @@
+import type {components} from '@/types/api.generated';
+
 /**
- * RBAC (Role-Based Access Control) Types
+ * RBAC (Role-Based Access Control) Types - uses OpenAPI-generated types
  */
+
+// ==================== Type Aliases from OpenAPI ====================
+
+export type Permission = components['schemas']['PermissionDto'];
+export type Role = components['schemas']['RoleResponse'];
+export type CreateRoleRequest = components['schemas']['CreateRoleRequest'];
+
+// ==================== Enum Types ====================
 
 /**
  * Permission category from backend
@@ -18,34 +28,13 @@ export type PermissionCategory =
   | 'AUDIT'
   | 'SYSTEM';
 
-/**
- * Permission item from API
- */
-export interface Permission {
-  id: string;
-  code: string;
-  displayName: string;
-  description: string;
-  category: PermissionCategory;
-}
+// ==================== Derived Types ====================
 
 /**
  * Permissions grouped by category
  */
 export interface PermissionsByCategory {
   [category: string]: Permission[];
-}
-
-/**
- * Role from API
- */
-export interface Role {
-  id: string;
-  name: string;
-  description: string | null;
-  permissions: string[];
-  isSystemRole: boolean;
-  createdAt: string;
 }
 
 /**
@@ -86,16 +75,6 @@ export interface RoleFormErrors {
   description?: string;
   permissions?: string;
   general?: string;
-}
-
-/**
- * Request to create a new role
- */
-export interface CreateRoleRequest {
-  name: string;
-  description?: string;
-  permissions: string[];
-  isSystemRole?: boolean;
 }
 
 /**

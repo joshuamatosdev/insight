@@ -1,26 +1,18 @@
 import {CSSProperties, ReactNode} from 'react';
 
-export interface Opportunity {
-  id: string;
-  title: string;
-  solicitationNumber: string;
-  type: string;
-  naicsCode: string;
-  postedDate: string;
-  responseDeadLine: string;
-  url: string;
-  sbirPhase?: string | null;
-  isSbir?: boolean | null;
-  isSttr?: boolean | null;
-  source?: string | null;
-}
+import type {components} from '@/types/api.generated';
+
+/**
+ * Opportunity type - uses the generated OpportunityDto from the backend API
+ */
+export type Opportunity = components['schemas']['OpportunityDto'];
 
 export type OpportunityType = 'sources-sought' | 'presolicitation' | 'solicitation' | 'sbir' | 'sttr' | 'other';
 
 export type SbirPhase = 'I' | 'II' | 'III' | null;
 
 export function getOpportunityType(type: string | undefined): OpportunityType {
-  if (!type) return 'other';
+  if (type === undefined || type === null || type === '') return 'other';
   const t = type.toLowerCase();
   if (t.includes('sources sought')) return 'sources-sought';
   if (t.includes('presol')) return 'presolicitation';
@@ -33,13 +25,13 @@ export function isSbirOpportunity(opportunity: Opportunity): boolean {
 }
 
 export function getSbirLabel(opportunity: Opportunity): string | null {
-  if (opportunity.isSttr) return 'STTR';
-  if (opportunity.isSbir) return 'SBIR';
+  if (opportunity.isSttr === true) return 'STTR';
+  if (opportunity.isSbir === true) return 'SBIR';
   return null;
 }
 
 export function getSbirPhaseLabel(phase: string | null | undefined): string {
-  if (!phase) return '';
+  if (phase === undefined || phase === null || phase === '') return '';
   return `Phase ${phase}`;
 }
 

@@ -23,7 +23,7 @@ interface Page<T> {
   number: number;
 }
 
-const DOCUMENTS_BASE = '/api/documents';
+const DOCUMENTS_BASE = '/api/v1/documents';
 
 /**
  * Helper to make API calls to /api/documents endpoints

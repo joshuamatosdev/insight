@@ -194,9 +194,14 @@ public class SbirIngestionService {
         } catch (DateTimeParseException e) {
             try {
                 return LocalDate.parse(dateStr);
-            } catch (DateTimeParseException ex) {
-                log.debug("Unable to parse date: {}", dateStr);
-                return null;
+            } catch (DateTimeParseException e2) {
+                try {
+                    // Handle ISO 8601 with timezone (e.g., "2026-01-22T12:00:00-05:00")
+                    return java.time.OffsetDateTime.parse(dateStr).toLocalDate();
+                } catch (DateTimeParseException e3) {
+                    log.debug("Unable to parse date: {}", dateStr);
+                    return null;
+                }
             }
         }
     }

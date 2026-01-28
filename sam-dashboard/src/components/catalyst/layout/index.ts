@@ -50,6 +50,10 @@ export type {
   TableHeaderCellProps,
 } from './Table';
 
+// Re-export TableHeader from blocks for convenience
+// (TableHeader uses th styling, TableHeaderCell is our custom version)
+export { TableHeader } from '../blocks/table';
+
 export { AppLayout, MainContent } from './AppLayout';
 export type { AppLayoutProps, MainContentProps } from './AppLayout';
 

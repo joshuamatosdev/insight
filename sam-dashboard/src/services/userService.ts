@@ -1,33 +1,18 @@
+import type {components} from '@/types/api.generated';
 import {apiClient} from './apiClient';
 
-export type UserStatus = 'ACTIVE' | 'INACTIVE' | 'PENDING' | 'SUSPENDED' | 'LOCKED';
+/**
+ * User Service - uses OpenAPI-generated types
+ */
 
-export interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  displayName: string;
-  avatarUrl: string | null;
-  status: UserStatus;
-  emailVerified: boolean;
-  mfaEnabled: boolean;
-  lastLoginAt: string | null;
-  roles: string[];
-  permissions: string[];
-  tenantId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// ==================== Type Aliases from OpenAPI ====================
 
-export interface CreateUserRequest {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password?: string;
-  roles?: string[];
-  sendInvitation?: boolean;
-}
+export type User = components['schemas']['UserDto'];
+export type UserStatus = NonNullable<User['status']>;
+export type CreateUserRequest = components['schemas']['CreateUserRequest'];
+export type InviteUserRequest = components['schemas']['InviteUserRequest'];
+
+// ==================== Derived Types ====================
 
 export interface UpdateUserRequest {
   firstName?: string;

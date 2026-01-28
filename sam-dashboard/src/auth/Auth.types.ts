@@ -1,13 +1,14 @@
+import type {components} from '@/types/api.generated';
+
 /**
- * User information returned from authentication
+ * User type - uses the generated UserDto from the backend API
  */
-export interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role?: string;
-}
+export type User = components['schemas']['UserDto'];
+
+/**
+ * User status enum extracted from UserDto
+ */
+export type UserStatus = NonNullable<User['status']>;
 
 /**
  * Login credentials for authentication

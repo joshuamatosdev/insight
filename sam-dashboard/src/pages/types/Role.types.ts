@@ -1,11 +1,6 @@
+import type {components} from '@/types/api.generated';
+
 /**
- * Role data from API
+ * Role type - uses the generated RoleResponse from the backend API
  */
-export interface Role {
-  id: string;
-  name: string;
-  description: string;
-  permissions: string[];
-  isSystemRole: boolean;
-  createdAt: string;
-}
+export type Role = components['schemas']['RoleResponse'];

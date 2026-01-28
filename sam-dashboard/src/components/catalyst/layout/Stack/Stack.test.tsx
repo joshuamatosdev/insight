@@ -15,19 +15,20 @@ describe('Stack', () => {
     expect(element.tagName).toBe('DIV');
   });
 
-  it('applies display flex with column direction', () => {
+  it('applies flex and flex-col classes', () => {
     render(<Stack data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
-    expect(element).toHaveStyle({ display: 'flex', flexDirection: 'column' });
+    expect(element.className).toContain('flex');
+    expect(element.className).toContain('flex-col');
   });
 
-  it('applies default spacing', () => {
+  it('applies default spacing class', () => {
     render(<Stack data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
-    expect(element).toHaveClass('gap-4');
+    expect(element.className).toContain('gap-4');
   });
 
-  it('applies custom gap with number', () => {
+  it('applies custom gap with number via inline style', () => {
     render(<Stack gap={8} data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
     expect(element).toHaveStyle({ gap: '2rem' });
@@ -36,19 +37,19 @@ describe('Stack', () => {
   it('applies custom spacing with semantic size', () => {
     render(<Stack spacing="xl" data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
-    expect(element).toHaveClass('gap-8');
+    expect(element.className).toContain('gap-8');
   });
 
-  it('applies align correctly', () => {
+  it('applies align class correctly', () => {
     render(<Stack align="center" data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
-    expect(element).toHaveStyle({ alignItems: 'center' });
+    expect(element.className).toContain('items-center');
   });
 
   it('applies className correctly', () => {
     render(<Stack className="custom-stack" data-testid="stack">Content</Stack>);
     const element = screen.getByTestId('stack');
-    expect(element.className).toBe('custom-stack');
+    expect(element.className).toContain('custom-stack');
   });
 
   it('passes through additional HTML attributes', () => {
@@ -70,22 +71,23 @@ describe('HStack', () => {
     expect(element.tagName).toBe('DIV');
   });
 
-  it('applies display flex with row direction', () => {
+  it('applies flex and flex-row classes', () => {
     render(<HStack data-testid="hstack">Content</HStack>);
     const element = screen.getByTestId('hstack');
-    expect(element).toHaveStyle({ display: 'flex', flexDirection: 'row' });
+    expect(element.className).toContain('flex');
+    expect(element.className).toContain('flex-row');
   });
 
-  it('applies justify correctly', () => {
+  it('applies justify class correctly', () => {
     render(<HStack justify="between" data-testid="hstack">Content</HStack>);
     const element = screen.getByTestId('hstack');
-    expect(element).toHaveStyle({ justifyContent: 'space-between' });
+    expect(element.className).toContain('justify-between');
   });
 
   it('applies center alignment by default', () => {
     render(<HStack data-testid="hstack">Content</HStack>);
     const element = screen.getByTestId('hstack');
-    expect(element).toHaveStyle({ alignItems: 'center' });
+    expect(element.className).toContain('items-center');
   });
 
   it('passes through additional HTML attributes', () => {

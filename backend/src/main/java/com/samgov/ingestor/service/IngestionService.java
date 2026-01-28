@@ -199,21 +199,29 @@ public class IngestionService {
     }
 
     /**
-     * Parses a date string to LocalDate, handling multiple formats.
+     * Parses a date string to LocalDate, handling multiple formats including ISO 8601 with timezone.
+     * Examples: "2024-01-15", "2024-01-15T10:00:00", "2024-01-15T10:00:00-05:00"
      */
     private LocalDate parseDate(String dateStr) {
         if (dateStr == null || dateStr.isBlank()) {
             return null;
         }
         try {
+            // Try standard format: yyyy-MM-dd
             return LocalDate.parse(dateStr, DATE_FORMATTER);
         } catch (DateTimeParseException e) {
-            // Try ISO format as fallback
             try {
+                // Try ISO format without timezone
                 return LocalDate.parse(dateStr);
-            } catch (DateTimeParseException ex) {
-                log.warn("Unable to parse date: {}", dateStr);
-                return null;
+            } catch (DateTimeParseException e2) {
+                try {
+                    // Try ISO 8601 with timezone (e.g., "2026-01-22T12:00:00-05:00")
+                    // Parse as OffsetDateTime, then extract date
+                    return java.time.OffsetDateTime.parse(dateStr).toLocalDate();
+                } catch (DateTimeParseException e3) {
+                    log.warn("Unable to parse date: {}", dateStr);
+                    return null;
+                }
             }
         }
     }

@@ -161,6 +161,7 @@ scripts/dist/
 .terraform/
 *.tfstate
 *.tfstate.*
+.archive/
 
 # Windows artifacts
 nul

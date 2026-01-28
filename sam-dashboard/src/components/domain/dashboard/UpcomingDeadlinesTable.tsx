@@ -81,9 +81,9 @@ export function UpcomingDeadlinesTable({
         </TableRow>
       </TableHead>
       <TableBody>
-        {displayDeadlines.map((deadline) => (
+        {displayDeadlines.map((deadline, index) => (
           <TableRow
-            key={deadline.id}
+            key={deadline.id ?? `row-${index}`}
             className={onRowClick !== undefined ? 'cursor-pointer hover:bg-surface-container' : ''}
             onClick={() => onRowClick?.(deadline.id)}
           >

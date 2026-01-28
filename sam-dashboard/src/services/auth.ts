@@ -14,24 +14,6 @@ interface ApiResponse<T> {
 }
 
 /**
- * Raw user from API (camelCase - Spring Boot default)
- */
-interface ApiUser {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  fullName?: string;
-  avatarUrl?: string;
-  status: string;
-  emailVerified: boolean;
-  mfaEnabled: boolean;
-  lastLoginAt?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-/**
  * Raw auth response from API (camelCase - Spring Boot default)
  */
 interface ApiAuthResponse {
@@ -39,20 +21,8 @@ interface ApiAuthResponse {
   refreshToken: string;
   tokenType: string;
   expiresIn: number;
-  user: ApiUser;
+  user: User;
   mfaRequired: boolean;
-}
-
-/**
- * Transforms API user to frontend User type
- */
-function transformUser(apiUser: ApiUser): User {
-  return {
-    id: apiUser.id,
-    email: apiUser.email,
-    firstName: apiUser.firstName,
-    lastName: apiUser.lastName,
-  };
 }
 
 /**
@@ -63,7 +33,7 @@ function transformAuthResponse(apiResponse: ApiAuthResponse): LoginResponse {
   return {
     token: apiResponse.accessToken,
     refreshToken: apiResponse.refreshToken,
-    user: transformUser(apiResponse.user),
+    user: apiResponse.user,
     mfaRequired: apiResponse.mfaRequired,
   };
 }

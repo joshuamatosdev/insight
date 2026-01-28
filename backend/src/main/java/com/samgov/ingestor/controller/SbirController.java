@@ -21,7 +21,7 @@ import java.util.Map;
  * REST controller for SBIR.gov data - awards, solicitations, and ingestion.
  */
 @RestController
-@RequestMapping("/api/sbir")
+@RequestMapping("/api/v1/sbir")
 @PreAuthorize("isAuthenticated()")
 public class SbirController {
 

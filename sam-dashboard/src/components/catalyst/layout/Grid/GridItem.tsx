@@ -11,6 +11,23 @@ export function GridItem({
   className,
   style,
   children,
+  // Destructure BaseStyleProps to prevent them from leaking to DOM
+  margin: _margin,
+  marginTop: _marginTop,
+  marginRight: _marginRight,
+  marginBottom: _marginBottom,
+  marginLeft: _marginLeft,
+  padding: _padding,
+  paddingTop: _paddingTop,
+  paddingRight: _paddingRight,
+  paddingBottom: _paddingBottom,
+  paddingLeft: _paddingLeft,
+  borderRadius: _borderRadius,
+  borderWidth: _borderWidth,
+  borderStyle: _borderStyle,
+  borderColor: _borderColor,
+  fullWidth: _fullWidth,
+  fullHeight: _fullHeight,
   ...rest
 }: GridItemProps) {
   const itemStyles: CSSProperties = {

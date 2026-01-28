@@ -21,7 +21,7 @@ import {
   ThemeToggleCompact,
 } from '@components/catalyst';
 import {SidebarIcon} from '@/app/RenderSidebar';
-import {AuthenticatedSidebar} from './components/AuthenticatedSidebar';
+import {AuthenticatedSidebar} from './components/-AuthenticatedSidebar';
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: ({context, location}) => {

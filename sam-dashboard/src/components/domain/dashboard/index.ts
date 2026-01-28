@@ -27,7 +27,7 @@ export type {
 // Existing components
 export {PipelineValueChart} from './PipelineValueChart';
 export {DeadlineCalendar} from './DeadlineCalendar';
-export {ActivityFeed} from './ActivityFeed';
+// Note: ActivityFeed is exported from analytics/index.ts to avoid conflict
 
 // New chart components
 export {PipelineFunnel} from './PipelineFunnel';

@@ -66,6 +66,14 @@ public class OpportunityTestBuilder {
     private Boolean itarControlled = false;
     private Boolean cuiRequired = false;
 
+    // Geographic fields (Census Geocoder)
+    private BigDecimal latitude = null;
+    private BigDecimal longitude = null;
+    private String fipsStateCode = null;
+    private String fipsCountyCode = null;
+    private String censusTract = null;
+    private java.time.Instant geocodedAt = null;
+
     public static OpportunityTestBuilder anOpportunity() {
         return new OpportunityTestBuilder();
     }
@@ -142,6 +150,23 @@ public class OpportunityTestBuilder {
         return new OpportunityTestBuilder()
             .withResponseDeadLine(LocalDate.now().plusDays(3))
             .withTitle("URGENT: IT Security Assessment - Deadline Approaching");
+    }
+
+    public static OpportunityTestBuilder aGeocodedOpportunity() {
+        return new OpportunityTestBuilder()
+            .withStatus(OpportunityStatus.ACTIVE)
+            .withDcLocation();
+    }
+
+    public static OpportunityTestBuilder anOpportunityNeedingGeocoding() {
+        return new OpportunityTestBuilder()
+            .withStatus(OpportunityStatus.ACTIVE)
+            .withPlaceOfPerformanceCity("Washington")
+            .withPlaceOfPerformanceState("DC")
+            .withPlaceOfPerformanceZip("20001")
+            .withPlaceOfPerformanceCountry("USA")
+            .withLatitude(null)
+            .withLongitude(null);
     }
 
     // Fluent setters
@@ -395,6 +420,75 @@ public class OpportunityTestBuilder {
         return this;
     }
 
+    public OpportunityTestBuilder withLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+
+    public OpportunityTestBuilder withLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+        return this;
+    }
+
+    public OpportunityTestBuilder withFipsStateCode(String fipsStateCode) {
+        this.fipsStateCode = fipsStateCode;
+        return this;
+    }
+
+    public OpportunityTestBuilder withFipsCountyCode(String fipsCountyCode) {
+        this.fipsCountyCode = fipsCountyCode;
+        return this;
+    }
+
+    public OpportunityTestBuilder withCensusTract(String censusTract) {
+        this.censusTract = censusTract;
+        return this;
+    }
+
+    public OpportunityTestBuilder withGeocodedAt(java.time.Instant geocodedAt) {
+        this.geocodedAt = geocodedAt;
+        return this;
+    }
+
+    /**
+     * Convenience method to set all geographic fields at once for a DC location.
+     */
+    public OpportunityTestBuilder withDcLocation() {
+        this.latitude = new BigDecimal("38.9072");
+        this.longitude = new BigDecimal("-77.0369");
+        this.fipsStateCode = "11";
+        this.fipsCountyCode = "11001";
+        this.censusTract = "000100";
+        this.geocodedAt = java.time.Instant.now();
+        return this;
+    }
+
+    /**
+     * Convenience method for a California location.
+     */
+    public OpportunityTestBuilder withCaliforniaLocation() {
+        this.latitude = new BigDecimal("34.0522");
+        this.longitude = new BigDecimal("-118.2437");
+        this.fipsStateCode = "06";
+        this.fipsCountyCode = "06037";
+        this.censusTract = "207101";
+        this.geocodedAt = java.time.Instant.now();
+        return this;
+    }
+
+    /**
+     * Convenience method for a Texas location.
+     */
+    public OpportunityTestBuilder withTexasLocation() {
+        this.latitude = new BigDecimal("29.7604");
+        this.longitude = new BigDecimal("-95.3698");
+        this.fipsStateCode = "48";
+        this.fipsCountyCode = "48201";
+        this.censusTract = "311100";
+        this.geocodedAt = java.time.Instant.now();
+        return this;
+    }
+
     public Opportunity build() {
         return Opportunity.builder()
             .id(id)
@@ -447,6 +541,12 @@ public class OpportunityTestBuilder {
             .clearanceRequired(clearanceRequired)
             .itarControlled(itarControlled)
             .cuiRequired(cuiRequired)
+            .latitude(latitude)
+            .longitude(longitude)
+            .fipsStateCode(fipsStateCode)
+            .fipsCountyCode(fipsCountyCode)
+            .censusTract(censusTract)
+            .geocodedAt(geocodedAt)
             .build();
     }
 }

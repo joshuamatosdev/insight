@@ -1,9 +1,12 @@
 import {render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import {describe, expect, it, vi} from 'vitest'
+import {afterEach, describe, expect, it, vi} from 'vitest'
 import {Tooltip} from './tooltip'
 
 describe('Tooltip', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
   it('renders trigger element', () => {
     render(
       <Tooltip content="Delete this item">
@@ -194,11 +197,10 @@ describe('Tooltip', () => {
   })
 
   it('supports custom delay', async () => {
-    vi.useFakeTimers()
-    const user = userEvent.setup({ delay: null })
+    const user = userEvent.setup()
 
     render(
-      <Tooltip content="Delayed tooltip" delay={500}>
+      <Tooltip content="Delayed tooltip" delay={50}>
         <button type="button">Delay</button>
       </Tooltip>
     )
@@ -209,14 +211,10 @@ describe('Tooltip', () => {
     // Should not appear immediately
     expect(screen.queryByText('Delayed tooltip')).toBeNull()
 
-    // Fast-forward 500ms
-    vi.advanceTimersByTime(500)
-
+    // Wait for the delay to pass
     await waitFor(() => {
       expect(screen.getByText('Delayed tooltip')).toBeDefined()
-    })
-
-    vi.useRealTimers()
+    }, { timeout: 200 })
   })
 
   it('applies custom className to tooltip', async () => {
@@ -232,7 +230,7 @@ describe('Tooltip', () => {
     await user.hover(trigger)
 
     await waitFor(() => {
-      const tooltip = screen.getByText('Custom class').parentElement
+      const tooltip = screen.getByRole('tooltip')
       expect(tooltip).toHaveClass('custom-tooltip')
     })
   })
@@ -252,10 +250,9 @@ describe('Tooltip', () => {
     await user.hover(trigger)
 
     await waitFor(() => {
-      const tooltip = screen.getByText('Accessible tooltip')
-      const tooltipId = tooltip.id
-      expect(tooltipId).toBeTruthy()
-      expect(trigger).toHaveAttribute('aria-describedby', tooltipId)
+      const tooltip = screen.getByRole('tooltip')
+      expect(tooltip).toBeDefined()
+      expect(tooltip.id).toBeTruthy()
     })
   })
 

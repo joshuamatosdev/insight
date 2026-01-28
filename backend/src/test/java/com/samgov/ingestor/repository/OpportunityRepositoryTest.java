@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -921,6 +922,269 @@ class OpportunityRepositoryTest {
             // Then
             assertThat(samResult.getContent()).hasSize(1);
             assertThat(sbirResult.getContent()).hasSize(1);
+        }
+    }
+
+    // ============================================
+    // GEOGRAPHIC QUERIES (Census Geocoder)
+    // ============================================
+
+    @Nested
+    @DisplayName("Geographic Queries")
+    class GeographicQueries {
+
+        @Test
+        @DisplayName("should find opportunities needing geocoding")
+        void shouldFindOpportunitiesNeedingGeocoding() {
+            // Given - opportunities with address but no coordinates (needs geocoding)
+            opportunityRepository.save(anOpportunityNeedingGeocoding()
+                .withTitle("Needs Geocoding 1").build());
+            opportunityRepository.save(anOpportunityNeedingGeocoding()
+                .withTitle("Needs Geocoding 2").build());
+
+            // Already geocoded (should not be returned)
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withTitle("Already Geocoded").build());
+
+            // No address data (should not be returned)
+            opportunityRepository.save(anActiveOpportunity()
+                .withPlaceOfPerformanceCity(null)
+                .withPlaceOfPerformanceState(null)
+                .withPlaceOfPerformanceZip(null)
+                .withTitle("No Address").build());
+
+            // Non-USA (should not be returned)
+            opportunityRepository.save(anActiveOpportunity()
+                .withPlaceOfPerformanceCountry("UK")
+                .withPlaceOfPerformanceCity("London")
+                .withLatitude(null)
+                .withTitle("Non-USA").build());
+
+            // When
+            List<Opportunity> result = opportunityRepository.findOpportunitiesNeedingGeocoding(
+                PageRequest.of(0, 10));
+
+            // Then
+            assertThat(result).hasSize(2);
+            assertThat(result).allMatch(o -> o.getLatitude() == null);
+            assertThat(result).allMatch(o -> "USA".equals(o.getPlaceOfPerformanceCountry()));
+        }
+
+        @Test
+        @DisplayName("should respect limit when finding opportunities needing geocoding")
+        void shouldRespectLimitWhenFindingNeedingGeocoding() {
+            // Given - 5 opportunities needing geocoding
+            for (int i = 1; i <= 5; i++) {
+                opportunityRepository.save(anOpportunityNeedingGeocoding()
+                    .withTitle("Needs Geocoding " + i).build());
+            }
+
+            // When - limit to 2
+            List<Opportunity> result = opportunityRepository.findOpportunitiesNeedingGeocoding(
+                PageRequest.of(0, 2));
+
+            // Then
+            assertThat(result).hasSize(2);
+        }
+
+        @Test
+        @DisplayName("should find opportunities by FIPS state code")
+        void shouldFindByFipsStateCode() {
+            // Given
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withFipsStateCode("11")  // DC
+                .withTitle("DC Opportunity").build());
+            opportunityRepository.save(anActiveOpportunity()
+                .withCaliforniaLocation()
+                .withFipsStateCode("06")  // California
+                .withTitle("CA Opportunity").build());
+
+            // When
+            Page<Opportunity> result = opportunityRepository.findByFipsStateCode(
+                "11", PageRequest.of(0, 10));
+
+            // Then
+            assertThat(result.getContent()).hasSize(1);
+            assertThat(result.getContent().get(0).getTitle()).isEqualTo("DC Opportunity");
+        }
+
+        @Test
+        @DisplayName("should find opportunities by FIPS county code")
+        void shouldFindByFipsCountyCode() {
+            // Given
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withFipsCountyCode("11001")  // DC
+                .withTitle("DC County").build());
+            opportunityRepository.save(anActiveOpportunity()
+                .withCaliforniaLocation()
+                .withFipsCountyCode("06037")  // LA County
+                .withTitle("LA County").build());
+
+            // When
+            Page<Opportunity> result = opportunityRepository.findByFipsCountyCode(
+                "11001", PageRequest.of(0, 10));
+
+            // Then
+            assertThat(result.getContent()).hasSize(1);
+            assertThat(result.getContent().get(0).getTitle()).isEqualTo("DC County");
+        }
+
+        @Test
+        @DisplayName("should find opportunities within bounding box")
+        void shouldFindWithinBoundingBox() {
+            // Given - DC area (approx 38.8-39.0 lat, -77.1 to -76.9 lon)
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withLatitude(new BigDecimal("38.9072"))
+                .withLongitude(new BigDecimal("-77.0369"))
+                .withTitle("DC Location").build());
+
+            // California (outside DC bounding box)
+            opportunityRepository.save(anActiveOpportunity()
+                .withCaliforniaLocation()
+                .withTitle("CA Location").build());
+
+            // Texas (outside DC bounding box)
+            opportunityRepository.save(anActiveOpportunity()
+                .withTexasLocation()
+                .withTitle("TX Location").build());
+
+            // Closed opportunity in DC (should be excluded - query requires ACTIVE)
+            opportunityRepository.save(aClosedOpportunity()
+                .withLatitude(new BigDecimal("38.9000"))
+                .withLongitude(new BigDecimal("-77.0000"))
+                .withTitle("Closed DC").build());
+
+            // When - DC bounding box
+            List<Opportunity> result = opportunityRepository.findWithinBoundingBox(
+                new BigDecimal("38.8"),  // minLat
+                new BigDecimal("39.0"),  // maxLat
+                new BigDecimal("-77.2"), // minLon
+                new BigDecimal("-76.8")  // maxLon
+            );
+
+            // Then
+            assertThat(result).hasSize(1);
+            assertThat(result.get(0).getTitle()).isEqualTo("DC Location");
+        }
+
+        @Test
+        @DisplayName("should return empty list when no opportunities in bounding box")
+        void shouldReturnEmptyWhenNoneInBoundingBox() {
+            // Given - only California opportunities
+            opportunityRepository.save(anActiveOpportunity()
+                .withCaliforniaLocation()
+                .withTitle("CA Location").build());
+
+            // When - DC bounding box (no matches)
+            List<Opportunity> result = opportunityRepository.findWithinBoundingBox(
+                new BigDecimal("38.8"),
+                new BigDecimal("39.0"),
+                new BigDecimal("-77.2"),
+                new BigDecimal("-76.8")
+            );
+
+            // Then
+            assertThat(result).isEmpty();
+        }
+
+        @Test
+        @DisplayName("should count geocoded opportunities")
+        void shouldCountGeocodedOpportunities() {
+            // Given
+            opportunityRepository.save(aGeocodedOpportunity().build());
+            opportunityRepository.save(aGeocodedOpportunity().build());
+            opportunityRepository.save(anOpportunityNeedingGeocoding().build());
+
+            // When
+            long count = opportunityRepository.countGeocodedOpportunities();
+
+            // Then
+            assertThat(count).isEqualTo(2);
+        }
+
+        @Test
+        @DisplayName("should count opportunities by FIPS state")
+        void shouldCountByFipsState() {
+            // Given
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withFipsStateCode("11").build());  // DC
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withFipsStateCode("11").build());  // DC
+            opportunityRepository.save(anActiveOpportunity()
+                .withCaliforniaLocation()
+                .withFipsStateCode("06").build()); // CA
+            opportunityRepository.save(anActiveOpportunity()
+                .withTexasLocation()
+                .withFipsStateCode("48").build()); // TX
+
+            // Closed opportunity - should be excluded
+            opportunityRepository.save(aClosedOpportunity()
+                .withFipsStateCode("11").build());
+
+            // When
+            List<Object[]> result = opportunityRepository.countByFipsState();
+
+            // Then
+            assertThat(result).hasSize(3);
+
+            // Find counts by state
+            long dcCount = result.stream()
+                .filter(r -> "11".equals(r[0]))
+                .mapToLong(r -> (Long) r[1])
+                .findFirst().orElse(0L);
+            long caCount = result.stream()
+                .filter(r -> "06".equals(r[0]))
+                .mapToLong(r -> (Long) r[1])
+                .findFirst().orElse(0L);
+            long txCount = result.stream()
+                .filter(r -> "48".equals(r[0]))
+                .mapToLong(r -> (Long) r[1])
+                .findFirst().orElse(0L);
+
+            assertThat(dcCount).isEqualTo(2);
+            assertThat(caCount).isEqualTo(1);
+            assertThat(txCount).isEqualTo(1);
+        }
+
+        @Test
+        @DisplayName("should find all geocoded opportunities")
+        void shouldFindAllGeocoded() {
+            // Given
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withTitle("Geocoded 1").build());
+            opportunityRepository.save(aGeocodedOpportunity()
+                .withTitle("Geocoded 2").build());
+            opportunityRepository.save(anOpportunityNeedingGeocoding()
+                .withTitle("Not Geocoded").build());
+            opportunityRepository.save(aClosedOpportunity()
+                .withDcLocation()
+                .withTitle("Closed Geocoded").build());
+
+            // When
+            List<Opportunity> result = opportunityRepository.findAllGeocoded();
+
+            // Then
+            assertThat(result).hasSize(2);
+            assertThat(result).allMatch(o ->
+                o.getLatitude() != null && o.getLongitude() != null);
+            assertThat(result).allMatch(o ->
+                o.getStatus() == OpportunityStatus.ACTIVE);
+        }
+
+        @Test
+        @DisplayName("should return empty when no geocoded opportunities exist")
+        void shouldReturnEmptyWhenNoGeocodedOpportunities() {
+            // Given - only non-geocoded opportunities
+            opportunityRepository.save(anOpportunityNeedingGeocoding().build());
+            opportunityRepository.save(anActiveOpportunity()
+                .withLatitude(null)
+                .withLongitude(null).build());
+
+            // When
+            List<Opportunity> result = opportunityRepository.findAllGeocoded();
+
+            // Then
+            assertThat(result).isEmpty();
         }
     }
 }

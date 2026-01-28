@@ -173,6 +173,48 @@ sbir:
       - DevOps
       - platform
 
+# ============================================
+# USAspending.gov API Configuration
+# https://api.usaspending.gov/
+# Free public API - no key required
+# ============================================
+usa-spending:
+  enabled: ${USA_SPENDING_ENABLED:true}
+  base-url: https://api.usaspending.gov/api/v2
+  rate-limit-ms: 500
+  page-size: 100
+  max-results: 5000
+  # Award types: A-D are contracts
+  # A = BPA Call, B = Purchase Order, C = Delivery Order, D = Definitive Contract
+  award-types:
+    - "A"
+    - "B"
+    - "C"
+    - "D"
+  # Agencies to filter (toptier names) - empty means all
+  agencies: []
+  # Days to look back for awards
+  award-lookback-days: 365
+  # NAICS codes to filter - empty means all
+  naics-codes: []
+
+# ============================================
+# US Census Bureau API Configuration
+# Geocoder: https://geocoding.geo.census.gov/geocoder/
+# Data API: https://api.census.gov/
+# Free API - optional key for higher limits
+# ============================================
+census:
+  enabled: ${CENSUS_ENABLED:true}
+  geocoder-url: https://geocoding.geo.census.gov/geocoder
+  api-url: https://api.census.gov/data
+  api-key: ${CENSUS_API_KEY:}
+  rate-limit-ms: 200
+  benchmark: Public_AR_Current
+  vintage: Current_Current
+  batch-size: 100
+  max-retries: 3
+
 # Actuator endpoints for health checks and monitoring
 management:
   endpoints:
@@ -224,6 +266,10 @@ app:
   api-url: ${APP_API_URL:http://localhost:8080}
   docs-url: ${APP_DOCS_URL:https://docs.insight.doctrineone.us}
   support-email: ${APP_SUPPORT_EMAIL:support@doctrineone.us}
+  scheduling:
+    enabled: ${SCHEDULING_ENABLED:false}  # Disabled by default for development
+  startup-ingestion:
+    enabled: ${STARTUP_INGESTION_ENABLED:false}  # Disabled by default to minimize API calls
   email:
     provider: ${EMAIL_PROVIDER:console}  # console, smtp, sendgrid, ses
   password-reset:

@@ -38,7 +38,10 @@ import java.time.LocalDate;
     @Index(name = "idx_opp_data_source", columnList = "data_source"),
     @Index(name = "idx_opp_is_dod", columnList = "is_dod"),
     @Index(name = "idx_opp_state_agency", columnList = "state_agency"),
-    @Index(name = "idx_opp_local_entity", columnList = "local_entity")
+    @Index(name = "idx_opp_local_entity", columnList = "local_entity"),
+    @Index(name = "idx_opp_fips_state", columnList = "fips_state_code"),
+    @Index(name = "idx_opp_fips_county", columnList = "fips_county_code"),
+    @Index(name = "idx_opp_lat_long", columnList = "latitude, longitude")
 })
 public class Opportunity {
 
@@ -114,6 +117,25 @@ public class Opportunity {
 
     @Column(name = "pop_zip")
     private String placeOfPerformanceZip;
+
+    // Geographic data (populated by Census Geocoder)
+    @Column(name = "latitude", precision = 10, scale = 7)
+    private BigDecimal latitude;
+
+    @Column(name = "longitude", precision = 10, scale = 7)
+    private BigDecimal longitude;
+
+    @Column(name = "fips_state_code", length = 2)
+    private String fipsStateCode;
+
+    @Column(name = "fips_county_code", length = 5)
+    private String fipsCountyCode;
+
+    @Column(name = "census_tract", length = 20)
+    private String censusTract;
+
+    @Column(name = "geocoded_at")
+    private Instant geocodedAt;
 
     // Award information
     @Column(name = "award_amount", precision = 15, scale = 2)

@@ -3,6 +3,7 @@ package com.samgov.ingestor.config;
 import com.samgov.ingestor.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,10 +11,14 @@ import org.springframework.stereotype.Component;
 /**
  * Scheduled tasks for maintenance and automation operations.
  * Handles opportunity ingestion, alerts, compliance monitoring, and cleanup.
+ *
+ * IMPORTANT: Scheduling is DISABLED by default for development to minimize API requests.
+ * Set app.scheduling.enabled=true in production to enable automated tasks.
  */
 @Slf4j
 @Component
 @EnableScheduling
+@ConditionalOnProperty(name = "app.scheduling.enabled", havingValue = "true")
 @RequiredArgsConstructor
 public class ScheduledTasks {
 
@@ -24,6 +29,8 @@ public class ScheduledTasks {
     private final AlertService alertService;
     private final CertificationService certificationService;
     private final ComplianceService complianceService;
+    private final UsaSpendingIngestionService usaSpendingIngestionService;
+    private final GeocodingService geocodingService;
 
     /**
      * Clean up expired password reset tokens daily at 2 AM.
@@ -70,9 +77,10 @@ public class ScheduledTasks {
     // ============================================
 
     /**
-     * Ingest new opportunities from SAM.gov every 4 hours.
+     * Ingest new opportunities from SAM.gov twice weekly: Monday and Thursday at 5 AM.
+     * Government data doesn't update frequently enough to warrant more than twice weekly.
      */
-    @Scheduled(cron = "0 0 */4 * * *")
+    @Scheduled(cron = "0 0 5 * * MON,THU")
     public void ingestSamGovOpportunities() {
         log.info("Starting SAM.gov opportunity ingestion");
         try {
@@ -84,9 +92,9 @@ public class ScheduledTasks {
     }
 
     /**
-     * Ingest SBIR/STTR opportunities daily at 6 AM.
+     * Ingest SBIR/STTR opportunities weekly on Sunday at 6 AM.
      */
-    @Scheduled(cron = "0 0 6 * * *")
+    @Scheduled(cron = "0 0 6 * * SUN")
     public void ingestSbirOpportunities() {
         log.info("Starting SBIR.gov opportunity ingestion");
         try {
@@ -94,6 +102,36 @@ public class ScheduledTasks {
             log.info("SBIR.gov ingestion complete. Ingested {} new opportunities", count);
         } catch (Exception e) {
             log.error("SBIR.gov ingestion failed", e);
+        }
+    }
+
+    /**
+     * Ingest USAspending.gov award data weekly on Tuesday at 2 AM.
+     */
+    @Scheduled(cron = "0 0 2 * * TUE")
+    public void ingestUsaSpendingData() {
+        log.info("Starting USAspending.gov data ingestion");
+        try {
+            var result = usaSpendingIngestionService.ingestRecentAwards();
+            log.info("USAspending.gov ingestion complete: {}", result.toMessage());
+        } catch (Exception e) {
+            log.error("USAspending.gov ingestion failed", e);
+        }
+    }
+
+    /**
+     * Geocode opportunities without coordinates weekly on Sunday at 3 AM.
+     * Processes up to 500 opportunities per run.
+     * Only needed when new opportunities with addresses are added.
+     */
+    @Scheduled(cron = "0 0 3 * * SUN")
+    public void geocodeOpportunities() {
+        log.info("Starting opportunity geocoding batch");
+        try {
+            int geocoded = geocodingService.batchGeocodeOpportunities(500);
+            log.info("Geocoding batch complete. Geocoded {} opportunities", geocoded);
+        } catch (Exception e) {
+            log.error("Opportunity geocoding failed", e);
         }
     }
 
@@ -194,9 +232,10 @@ public class ScheduledTasks {
     }
 
     /**
-     * Update opportunity statuses (mark expired) every hour.
+     * Update opportunity statuses (mark expired) once daily at 1 AM.
+     * Deadlines are dates, not hours - hourly checks are wasteful.
      */
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     public void updateOpportunityStatuses() {
         log.info("Updating opportunity statuses");
         try {

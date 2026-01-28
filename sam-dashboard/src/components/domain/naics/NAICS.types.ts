@@ -10,8 +10,6 @@ export interface NAICSDistributionProps {
   distribution: Record<string, number>;
   total: number;
   maxItems?: number;
-  className?: string;
-  style?: CSSProperties;
 }
 
 export const NAICS_DESCRIPTIONS: Record<string, string> = {

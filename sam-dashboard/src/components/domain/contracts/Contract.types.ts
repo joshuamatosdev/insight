@@ -1,372 +1,41 @@
 import {CSSProperties} from 'react';
+import type {components} from '@/types/api.generated';
 
-// ==================== Enums ====================
+/**
+ * Contract types - uses the generated DTOs from the backend API
+ */
 
-export type ContractType =
-  | 'FIRM_FIXED_PRICE'
-  | 'TIME_AND_MATERIALS'
-  | 'COST_PLUS_FIXED_FEE'
-  | 'COST_PLUS_INCENTIVE_FEE'
-  | 'COST_PLUS_AWARD_FEE'
-  | 'COST_REIMBURSEMENT'
-  | 'INDEFINITE_DELIVERY'
-  | 'BLANKET_PURCHASE_AGREEMENT'
-  | 'BASIC_ORDERING_AGREEMENT'
-  | 'TASK_ORDER'
-  | 'DELIVERY_ORDER'
-  | 'GRANT'
-  | 'COOPERATIVE_AGREEMENT'
-  | 'OTHER';
+// ==================== Type Aliases from OpenAPI ====================
 
-export type ContractStatus =
-  | 'DRAFT'
-  | 'AWARDED'
-  | 'PENDING_SIGNATURE'
-  | 'ACTIVE'
-  | 'ON_HOLD'
-  | 'COMPLETED'
-  | 'TERMINATED'
-  | 'CANCELLED'
-  | 'CLOSED';
+export type Contract = components['schemas']['ContractDto'];
+export type ContractSummary = components['schemas']['ContractSummaryDto'];
+export type ContractClin = components['schemas']['ClinDto'];
+export type ContractModification = components['schemas']['ModificationDto'];
+export type ContractDeliverable = components['schemas']['DeliverableDto'];
+export type ContractOption = components['schemas']['OptionDto'];
 
-export type ClinType = 'BASE' | 'OPTION' | 'DATA' | 'SERVICES' | 'SUPPLIES' | 'OTHER';
+// ==================== Request Types ====================
 
-export type PricingType =
-  | 'FIRM_FIXED_PRICE'
-  | 'TIME_AND_MATERIALS'
-  | 'LABOR_HOUR'
-  | 'COST_PLUS_FIXED_FEE'
-  | 'COST_PLUS_INCENTIVE_FEE'
-  | 'COST_REIMBURSEMENT';
+export type CreateContractRequest = components['schemas']['CreateContractRequest'];
+export type UpdateContractRequest = components['schemas']['UpdateContractRequest'];
+export type CreateClinRequest = components['schemas']['CreateClinRequest'];
+export type UpdateClinRequest = components['schemas']['UpdateClinRequest'];
+export type CreateModificationRequest = components['schemas']['CreateModificationRequest'];
+export type CreateDeliverableRequest = components['schemas']['CreateDeliverableRequest'];
+export type CreateOptionRequest = components['schemas']['CreateOptionRequest'];
 
-export type ModificationType =
-  | 'ADMINISTRATIVE'
-  | 'BILATERAL'
-  | 'UNILATERAL'
-  | 'SUPPLEMENTAL'
-  | 'INCREMENTAL_FUNDING'
-  | 'NO_COST_EXTENSION'
-  | 'OPTION_EXERCISE'
-  | 'TERMINATION'
-  | 'SCOPE_CHANGE'
-  | 'OTHER';
+// ==================== Enum Types ====================
 
-export type ModificationStatus =
-  | 'DRAFT'
-  | 'PENDING'
-  | 'UNDER_REVIEW'
-  | 'APPROVED'
-  | 'EXECUTED'
-  | 'REJECTED'
-  | 'CANCELLED';
-
-export type DeliverableType =
-  | 'REPORT'
-  | 'DATA'
-  | 'SOFTWARE'
-  | 'DOCUMENTATION'
-  | 'HARDWARE'
-  | 'SERVICES'
-  | 'MILESTONE'
-  | 'STATUS_REPORT'
-  | 'FINANCIAL_REPORT'
-  | 'TECHNICAL_REPORT'
-  | 'OTHER';
-
-export type DeliverableStatus =
-  | 'PENDING'
-  | 'IN_PROGRESS'
-  | 'SUBMITTED'
-  | 'UNDER_REVIEW'
-  | 'REVISION_REQUIRED'
-  | 'ACCEPTED'
-  | 'REJECTED'
-  | 'WAIVED';
-
-export type DeliverableFrequency =
-  | 'ONE_TIME'
-  | 'DAILY'
-  | 'WEEKLY'
-  | 'BI_WEEKLY'
-  | 'MONTHLY'
-  | 'QUARTERLY'
-  | 'SEMI_ANNUALLY'
-  | 'ANNUALLY'
-  | 'AS_REQUIRED';
-
-export type OptionStatus = 'PENDING' | 'EXERCISED' | 'DECLINED' | 'EXPIRED';
-
-// ==================== DTOs ====================
-
-export interface Contract {
-  id: string;
-  contractNumber: string;
-  title: string;
-  description: string | null;
-  contractType: ContractType;
-  status: ContractStatus;
-  parentContractId: string | null;
-  opportunityId: string | null;
-  agency: string | null;
-  agencyCode: string | null;
-  subAgency: string | null;
-  office: string | null;
-  popStartDate: string | null;
-  popEndDate: string | null;
-  basePeriodEndDate: string | null;
-  finalOptionEndDate: string | null;
-  baseValue: number | null;
-  totalValue: number | null;
-  ceilingValue: number | null;
-  fundedValue: number | null;
-  naicsCode: string | null;
-  pscCode: string | null;
-  placeOfPerformanceCity: string | null;
-  placeOfPerformanceState: string | null;
-  placeOfPerformanceCountry: string | null;
-  contractingOfficerName: string | null;
-  contractingOfficerEmail: string | null;
-  corName: string | null;
-  corEmail: string | null;
-  primeContractor: string | null;
-  isSubcontract: boolean;
-  contractVehicle: string | null;
-  setAsideType: string | null;
-  requiresClearance: boolean;
-  clearanceLevel: string | null;
-  programManagerId: string | null;
-  programManagerName: string | null;
-  contractManagerId: string | null;
-  contractManagerName: string | null;
-  awardDate: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface ContractClin {
-  id: string;
-  clinNumber: string;
-  description: string | null;
-  clinType: ClinType;
-  pricingType: PricingType | null;
-  unitOfIssue: string | null;
-  quantity: number | null;
-  unitPrice: number | null;
-  totalValue: number | null;
-  fundedAmount: number | null;
-  obligatedAmount: number | null;
-  invoicedAmount: number | null;
-  remainingFunds: number | null;
-  naicsCode: string | null;
-  pscCode: string | null;
-  isOption: boolean;
-  optionPeriod: number | null;
-  notes: string | null;
-}
-
-export interface ContractModification {
-  id: string;
-  modificationNumber: string;
-  title: string | null;
-  description: string | null;
-  modificationType: ModificationType;
-  status: ModificationStatus;
-  effectiveDate: string | null;
-  executedDate: string | null;
-  valueChange: number | null;
-  fundingChange: number | null;
-  newTotalValue: number | null;
-  popExtensionDays: number | null;
-  newPopEndDate: string | null;
-  scopeChangeSummary: string | null;
-  requestingOffice: string | null;
-  contractingOfficerName: string | null;
-  reason: string | null;
-  createdAt: string;
-}
-
-export interface ContractDeliverable {
-  id: string;
-  cdrlNumber: string | null;
-  title: string;
-  description: string | null;
-  deliverableType: DeliverableType;
-  status: DeliverableStatus;
-  dueDate: string | null;
-  submittedDate: string | null;
-  acceptedDate: string | null;
-  frequency: DeliverableFrequency | null;
-  nextDueDate: string | null;
-  clinId: string | null;
-  clinNumber: string | null;
-  ownerId: string | null;
-  ownerName: string | null;
-  reviewerName: string | null;
-  reviewComments: string | null;
-  formatRequirements: string | null;
-  notes: string | null;
-  isOverdue: boolean;
-  isDueSoon: boolean;
-}
-
-export interface ContractOption {
-  id: string;
-  optionNumber: number;
-  optionYear: number | null;
-  description: string | null;
-  status: OptionStatus;
-  startDate: string | null;
-  endDate: string | null;
-  exerciseDeadline: string | null;
-  exercisedDate: string | null;
-  optionValue: number | null;
-  durationMonths: number | null;
-  exerciseModificationNumber: string | null;
-  notes: string | null;
-  isDeadlineApproaching: boolean;
-}
-
-export interface ContractSummary {
-  contractId: string;
-  contractNumber: string;
-  title: string;
-  status: ContractStatus;
-  totalValue: number | null;
-  fundedValue: number | null;
-  clinTotalValue: number;
-  clinFundedAmount: number;
-  clinInvoicedAmount: number;
-  remainingFunds: number;
-  modificationCount: number;
-  pendingModifications: number;
-  pendingOptions: number;
-  pendingOptionValue: number;
-  pendingDeliverables: number;
-  overdueDeliverables: number;
-  popStartDate: string | null;
-  popEndDate: string | null;
-}
-
-// ==================== Request DTOs ====================
-
-export interface CreateContractRequest {
-  contractNumber: string;
-  title: string;
-  description?: string;
-  contractType: ContractType;
-  parentContractId?: string;
-  opportunityId?: string;
-  agency?: string;
-  agencyCode?: string;
-  subAgency?: string;
-  office?: string;
-  popStartDate?: string;
-  popEndDate?: string;
-  basePeriodEndDate?: string;
-  finalOptionEndDate?: string;
-  baseValue?: number;
-  totalValue?: number;
-  ceilingValue?: number;
-  fundedValue?: number;
-  naicsCode?: string;
-  pscCode?: string;
-  placeOfPerformanceCity?: string;
-  placeOfPerformanceState?: string;
-  placeOfPerformanceCountry?: string;
-  contractingOfficerName?: string;
-  contractingOfficerEmail?: string;
-  contractingOfficerPhone?: string;
-  corName?: string;
-  corEmail?: string;
-  corPhone?: string;
-  primeContractor?: string;
-  isSubcontract?: boolean;
-  contractVehicle?: string;
-  setAsideType?: string;
-  smallBusinessGoalPercentage?: number;
-  requiresClearance?: boolean;
-  clearanceLevel?: string;
-  programManagerId?: string;
-  contractManagerId?: string;
-  awardDate?: string;
-  internalNotes?: string;
-}
-
-export interface UpdateContractRequest {
-  title?: string;
-  description?: string;
-  status?: ContractStatus;
-  agency?: string;
-  popStartDate?: string;
-  popEndDate?: string;
-  totalValue?: number;
-  fundedValue?: number;
-  contractingOfficerName?: string;
-  contractingOfficerEmail?: string;
-  corName?: string;
-  corEmail?: string;
-  programManagerId?: string;
-  contractManagerId?: string;
-  internalNotes?: string;
-}
-
-export interface CreateClinRequest {
-  clinNumber: string;
-  description?: string;
-  clinType: ClinType;
-  pricingType?: PricingType;
-  unitOfIssue?: string;
-  quantity?: number;
-  unitPrice?: number;
-  totalValue?: number;
-  fundedAmount?: number;
-  naicsCode?: string;
-  pscCode?: string;
-  isOption?: boolean;
-  optionPeriod?: number;
-  notes?: string;
-}
-
-export interface UpdateClinRequest {
-  description?: string;
-  totalValue?: number;
-  fundedAmount?: number;
-  invoicedAmount?: number;
-  notes?: string;
-}
-
-export interface CreateModificationRequest {
-  modificationNumber: string;
-  title?: string;
-  description?: string;
-  modificationType: ModificationType;
-  effectiveDate?: string;
-  valueChange?: number;
-  fundingChange?: number;
-  newTotalValue?: number;
-  popExtensionDays?: number;
-  newPopEndDate?: string;
-  scopeChangeSummary?: string;
-  requestingOffice?: string;
-  contractingOfficerName?: string;
-  reason?: string;
-  internalNotes?: string;
-}
-
-export interface CreateDeliverableRequest {
-  cdrlNumber?: string;
-  title: string;
-  description?: string;
-  deliverableType: DeliverableType;
-  dueDate?: string;
-  frequency?: DeliverableFrequency;
-  clinId?: string;
-  ownerId?: string;
-  formatRequirements?: string;
-  distributionList?: string;
-  copiesRequired?: number;
-  notes?: string;
-}
+export type ContractType = NonNullable<Contract['contractType']>;
+export type ContractStatus = NonNullable<Contract['status']>;
+export type ClinType = NonNullable<ContractClin['clinType']>;
+export type PricingType = NonNullable<ContractClin['pricingType']>;
+export type ModificationType = NonNullable<ContractModification['modificationType']>;
+export type ModificationStatus = NonNullable<ContractModification['status']>;
+export type DeliverableType = NonNullable<ContractDeliverable['deliverableType']>;
+export type DeliverableStatus = NonNullable<ContractDeliverable['status']>;
+export type DeliverableFrequency = NonNullable<ContractDeliverable['frequency']>;
+export type OptionStatus = NonNullable<ContractOption['status']>;
 
 // ==================== Paginated Response ====================
 

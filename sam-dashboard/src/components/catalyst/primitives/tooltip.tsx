@@ -1,6 +1,5 @@
 import clsx from 'clsx'
-import type React from 'react'
-import {useEffect, useId, useRef, useState} from 'react'
+import React, {cloneElement, useEffect, useId, useRef, useState} from 'react'
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
 
@@ -84,25 +83,13 @@ export function Tooltip({
     }
   }, [])
 
-  const trigger = children as React.ReactElement<{
-    onMouseEnter?: () => void
-    onMouseLeave?: () => void
-    onFocus?: () => void
-    onBlur?: () => void
-    'aria-describedby'?: string
-  }>
-
-  const triggerWithHandlers = {
-    ...trigger,
-    props: {
-      ...trigger.props,
-      onMouseEnter: handleMouseEnter,
-      onMouseLeave: handleMouseLeave,
-      onFocus: handleFocus,
-      onBlur: handleBlur,
-      'aria-describedby': isVisible ? tooltipId : undefined,
-    },
-  }
+  const triggerWithHandlers = cloneElement(children, {
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    onFocus: handleFocus,
+    onBlur: handleBlur,
+    'aria-describedby': isVisible === true ? tooltipId : undefined,
+  })
 
   return (
     <span className="relative inline-block">

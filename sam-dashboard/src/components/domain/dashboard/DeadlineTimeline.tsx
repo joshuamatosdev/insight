@@ -85,13 +85,13 @@ export function DeadlineTimeline({
   return (
     <Box className={`h-[300px] w-full overflow-y-auto ${className ?? ''}`}>
       <Stack gap="xs">
-        {sortedDeadlines.map((deadline) => {
+        {sortedDeadlines.map((deadline, index) => {
           const barWidth = ((deadline.daysRemaining / maxDays) * 100).toFixed(1);
           const urgencyColor = getUrgencyColor(deadline.daysRemaining);
 
           return (
             <Flex
-              key={deadline.id}
+              key={deadline.id ?? `deadline-${index}`}
               align="center"
               gap="sm"
               className="py-2 px-1 hover:bg-surface-container rounded"

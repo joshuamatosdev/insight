@@ -4,8 +4,10 @@ import com.samgov.ingestor.client.SamApiClient;
 import com.samgov.ingestor.dto.SamOpportunityDto;
 import com.samgov.ingestor.model.Opportunity;
 import com.samgov.ingestor.repository.OpportunityRepository;
+import com.samgov.ingestor.service.GeocodingService;
 import com.samgov.ingestor.service.IngestionService;
 import com.samgov.ingestor.service.IngestionService.IngestionResult;
+import com.samgov.ingestor.service.UsaSpendingIngestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import java.util.Map;
  * REST controller for manual ingestion triggers and opportunity queries.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @PreAuthorize("isAuthenticated()")
 public class IngestController {
 
@@ -28,13 +30,19 @@ public class IngestController {
     private final IngestionService ingestionService;
     private final OpportunityRepository opportunityRepository;
     private final SamApiClient samApiClient;
+    private final UsaSpendingIngestionService usaSpendingIngestionService;
+    private final GeocodingService geocodingService;
 
-    public IngestController(IngestionService ingestionService, 
+    public IngestController(IngestionService ingestionService,
                            OpportunityRepository opportunityRepository,
-                           SamApiClient samApiClient) {
+                           SamApiClient samApiClient,
+                           UsaSpendingIngestionService usaSpendingIngestionService,
+                           GeocodingService geocodingService) {
         this.ingestionService = ingestionService;
         this.opportunityRepository = opportunityRepository;
         this.samApiClient = samApiClient;
+        this.usaSpendingIngestionService = usaSpendingIngestionService;
+        this.geocodingService = geocodingService;
     }
 
     /**
@@ -67,19 +75,8 @@ public class IngestController {
         }
     }
 
-    /**
-     * Returns all opportunities from the database.
-     * GET /api/opportunities
-     *
-     * @return List of all Opportunity entities
-     */
-    @GetMapping("/opportunities")
-    public ResponseEntity<List<Opportunity>> getAllOpportunities() {
-        log.info("Fetching all opportunities");
-        List<Opportunity> opportunities = opportunityRepository.findAll();
-        log.info("Returning {} opportunities", opportunities.size());
-        return ResponseEntity.ok(opportunities);
-    }
+    // REMOVED: Duplicate endpoint - use OpportunityController#searchOpportunities instead
+    // OpportunityController provides proper pagination, filtering, and search
 
     /**
      * Search SAM.gov directly for opportunities by type.
@@ -267,5 +264,176 @@ public class IngestController {
                     "message", "SBIR/STTR search failed: " + e.getMessage()
             ));
         }
+    }
+
+    // ============================================
+    // USAspending.gov ENDPOINTS
+    // ============================================
+
+    /**
+     * Triggers USAspending.gov data ingestion.
+     * POST /api/ingest/usa-spending
+     *
+     * @return Status message with ingestion results
+     */
+    @PostMapping("/ingest/usa-spending")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<Map<String, Object>> triggerUsaSpendingIngestion() {
+        log.info("USAspending.gov ingestion triggered via API");
+
+        try {
+            var result = usaSpendingIngestionService.ingestRecentAwards();
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "type", "USAspending.gov",
+                    "message", result.toMessage(),
+                    "newRecords", result.newRecords(),
+                    "updatedRecords", result.updatedRecords(),
+                    "skippedRecords", result.skippedRecords(),
+                    "durationMs", result.durationMs()
+            ));
+        } catch (Exception e) {
+            log.error("USAspending.gov ingestion failed", e);
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "status", "error",
+                    "message", "USAspending.gov ingestion failed: " + e.getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Triggers USAspending.gov ingestion for a specific NAICS code.
+     * POST /api/ingest/usa-spending/naics/{naicsCode}
+     *
+     * @param naicsCode NAICS code to filter by
+     * @return Status message with ingestion results
+     */
+    @PostMapping("/ingest/usa-spending/naics/{naicsCode}")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<Map<String, Object>> triggerUsaSpendingByNaics(
+            @PathVariable String naicsCode) {
+        log.info("USAspending.gov ingestion for NAICS {} triggered via API", naicsCode);
+
+        try {
+            var result = usaSpendingIngestionService.ingestByNaics(naicsCode);
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "type", "USAspending.gov",
+                    "naicsCode", naicsCode,
+                    "message", result.toMessage(),
+                    "newRecords", result.newRecords(),
+                    "updatedRecords", result.updatedRecords(),
+                    "durationMs", result.durationMs()
+            ));
+        } catch (Exception e) {
+            log.error("USAspending.gov ingestion for NAICS {} failed", naicsCode, e);
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "status", "error",
+                    "message", "USAspending.gov ingestion failed: " + e.getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Get USAspending integration statistics.
+     * GET /api/ingest/usa-spending/stats
+     */
+    @GetMapping("/ingest/usa-spending/stats")
+    public ResponseEntity<Map<String, Object>> getUsaSpendingStats() {
+        var stats = usaSpendingIngestionService.getStats();
+        return ResponseEntity.ok(Map.of(
+                "status", "success",
+                "totalAwards", stats.totalAwards(),
+                "integrationEnabled", stats.integrationEnabled()
+        ));
+    }
+
+    // ============================================
+    // GEOCODING ENDPOINTS
+    // ============================================
+
+    /**
+     * Triggers batch geocoding of opportunities.
+     * POST /api/ingest/geocode
+     *
+     * @param limit Maximum number of opportunities to geocode (default 100)
+     * @return Status message with geocoding results
+     */
+    @PostMapping("/ingest/geocode")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    public ResponseEntity<Map<String, Object>> triggerGeocoding(
+            @RequestParam(defaultValue = "100") int limit) {
+        log.info("Geocoding triggered via API, limit: {}", limit);
+
+        try {
+            int geocoded = geocodingService.batchGeocodeOpportunities(limit);
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "type", "Geocoding",
+                    "message", String.format("Geocoded %d opportunities", geocoded),
+                    "geocodedCount", geocoded,
+                    "requestedLimit", limit
+            ));
+        } catch (Exception e) {
+            log.error("Geocoding failed", e);
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "status", "error",
+                    "message", "Geocoding failed: " + e.getMessage()
+            ));
+        }
+    }
+
+    /**
+     * Get geocoding statistics.
+     * GET /api/ingest/geocode/stats
+     */
+    @GetMapping("/ingest/geocode/stats")
+    public ResponseEntity<Map<String, Object>> getGeocodingStats() {
+        var stats = geocodingService.getStats();
+        return ResponseEntity.ok(Map.of(
+                "status", "success",
+                "totalOpportunities", stats.totalOpportunities(),
+                "geocodedCount", stats.geocodedCount(),
+                "needsGeocodingCount", stats.needsGeocodingCount(),
+                "geocodedPercentage", String.format("%.1f%%", stats.geocodedPercentage())
+        ));
+    }
+
+    /**
+     * Get geocoded opportunities for map display.
+     * GET /api/opportunities/geocoded
+     */
+    @GetMapping("/opportunities/geocoded")
+    public ResponseEntity<List<Opportunity>> getGeocodedOpportunities() {
+        log.info("Fetching geocoded opportunities for map");
+        List<Opportunity> opportunities = opportunityRepository.findAllGeocoded();
+        log.info("Returning {} geocoded opportunities", opportunities.size());
+        return ResponseEntity.ok(opportunities);
+    }
+
+    /**
+     * Get opportunity counts by state (FIPS code).
+     * GET /api/opportunities/by-state
+     */
+    @GetMapping("/opportunities/by-state")
+    public ResponseEntity<Map<String, Object>> getOpportunitiesByState() {
+        log.info("Fetching opportunity counts by state");
+        List<Object[]> counts = opportunityRepository.countByFipsState();
+
+        // Convert to map for easier frontend consumption
+        var stateCounts = counts.stream()
+                .collect(java.util.stream.Collectors.toMap(
+                        row -> (String) row[0],
+                        row -> (Long) row[1]
+                ));
+
+        return ResponseEntity.ok(Map.of(
+                "status", "success",
+                "stateCount", stateCounts.size(),
+                "data", stateCounts
+        ));
     }
 }
