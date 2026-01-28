@@ -359,7 +359,7 @@ export function ReportsListPage({
 
   if (pageState === 'loading' && reports.length === 0) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+      <Flex justify="center" align="center" className="min-h-[200px]">
         <Text variant="body">Loading reports...</Text>
       </Flex>
     );
@@ -367,8 +367,8 @@ export function ReportsListPage({
 
   if (pageState === 'error' && error !== null) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Stack spacing="md" style={{ textAlign: 'center' }}>
+      <Flex justify="center" align="center" className="min-h-[200px]">
+        <Stack spacing="md" className="text-center">
           <Text variant="body" color="danger">
             {error}
           </Text>
@@ -504,7 +504,7 @@ export function ReportsListPage({
                     <TableCell>
                       <Badge
                         color={report.isPublic ? 'green' : 'zinc'}
-                        style={{ cursor: 'pointer' }}
+                        className="cursor-pointer"
                         onClick={() => handleTogglePublic(report)}
                       >
                         {report.isPublic ? 'Public' : 'Private'}

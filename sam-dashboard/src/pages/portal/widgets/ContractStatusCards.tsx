@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
 import { Text, Button } from '../../../components/catalyst/primitives';
 
@@ -58,16 +59,36 @@ export function ContractStatusCards(): React.ReactElement {
     loadContracts();
   }, []);
 
-  const getStatusColor = (status: Contract['status']): string => {
+  const getStatusClasses = (status: Contract['status']): { border: string; bg: string; text: string; progressBg: string } => {
     switch (status) {
       case 'active':
-        return '#10b981';
+        return {
+          border: 'border-l-emerald-500',
+          bg: 'bg-emerald-500/10',
+          text: 'text-emerald-500',
+          progressBg: 'bg-emerald-500',
+        };
       case 'pending':
-        return '#f59e0b';
+        return {
+          border: 'border-l-amber-500',
+          bg: 'bg-amber-500/10',
+          text: 'text-amber-500',
+          progressBg: 'bg-amber-500',
+        };
       case 'completed':
-        return '#2563eb';
+        return {
+          border: 'border-l-blue-600',
+          bg: 'bg-blue-600/10',
+          text: 'text-blue-600',
+          progressBg: 'bg-blue-600',
+        };
       case 'at-risk':
-        return '#ef4444';
+        return {
+          border: 'border-l-red-500',
+          bg: 'bg-red-500/10',
+          text: 'text-red-500',
+          progressBg: 'bg-red-500',
+        };
     }
   };
 
@@ -92,71 +113,53 @@ export function ContractStatusCards(): React.ReactElement {
             <Text variant="caption" color="muted">Loading contracts...</Text>
           ) : (
             <Stack spacing="md">
-              {contracts.map((contract) => (
-                <Box
-                  key={contract.id}
-                  style={{
-                    padding: '0.75rem',
-                    backgroundColor: '#fafafa',
-                    borderRadius: '8px',
-                    borderLeft: `4px solid ${getStatusColor(contract.status)}`,
-                  }}
-                >
-                  <Flex justify="space-between" align="flex-start">
-                    <Stack spacing="xs">
-                      <Text variant="caption" color="muted">{contract.contractNumber}</Text>
-                      <Text variant="body" style={{ fontWeight: 600 }}>{contract.title}</Text>
-                      <Flex gap="md" align="center">
-                        <Text variant="caption">{formatCurrency(contract.value)}</Text>
-                        <Text variant="caption" color="muted">•</Text>
-                        <Text variant="caption" color="muted">Ends {contract.endDate}</Text>
-                      </Flex>
-                    </Stack>
-                    <Box
-                      style={{
-                        padding: '0.25rem 0.5rem',
-                        backgroundColor: `${getStatusColor(contract.status)}20`,
-                        borderRadius: '4px',
-                      }}
-                    >
-                      <Text
-                        variant="caption"
-                        style={{
-                          color: getStatusColor(contract.status),
-                          fontWeight: 600,
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        {contract.status}
-                      </Text>
-                    </Box>
-                  </Flex>
-
-                  {/* Progress Bar */}
-                  <Box className="mt-2">
-                    <Flex justify="space-between" style={{ marginBottom: '4px' }}>
-                      <Text variant="caption" color="muted">Progress</Text>
-                      <Text variant="caption" style={{ fontWeight: 600 }}>{contract.progressPercent}%</Text>
+              {contracts.map((contract) => {
+                const statusClasses = getStatusClasses(contract.status);
+                return (
+                  <Box
+                    key={contract.id}
+                    className={clsx(
+                      'p-3 bg-zinc-50 dark:bg-zinc-800 rounded-lg border-l-4',
+                      statusClasses.border
+                    )}
+                  >
+                    <Flex justify="space-between" align="flex-start">
+                      <Stack spacing="xs">
+                        <Text variant="caption" color="muted">{contract.contractNumber}</Text>
+                        <Text variant="body" weight="semibold">{contract.title}</Text>
+                        <Flex gap="md" align="center">
+                          <Text variant="caption">{formatCurrency(contract.value)}</Text>
+                          <Text variant="caption" color="muted">•</Text>
+                          <Text variant="caption" color="muted">Ends {contract.endDate}</Text>
+                        </Flex>
+                      </Stack>
+                      <Box className={clsx('px-2 py-1 rounded', statusClasses.bg)}>
+                        <Text
+                          variant="caption"
+                          weight="semibold"
+                          className={clsx('uppercase', statusClasses.text)}
+                        >
+                          {contract.status}
+                        </Text>
+                      </Box>
                     </Flex>
-                    <Box
-                      style={{
-                        height: '6px',
-                        backgroundColor: '#e4e4e7',
-                        borderRadius: '3px',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      <Box
-                        style={{
-                          width: `${contract.progressPercent}%`,
-                          height: '100%',
-                          backgroundColor: getStatusColor(contract.status),
-                        }}
-                      />
+
+                    {/* Progress Bar */}
+                    <Box className="mt-2">
+                      <Flex justify="space-between" className="mb-1">
+                        <Text variant="caption" color="muted">Progress</Text>
+                        <Text variant="caption" weight="semibold">{contract.progressPercent}%</Text>
+                      </Flex>
+                      <Box className="h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-sm overflow-hidden">
+                        <Box
+                          className={clsx('h-full', statusClasses.progressBg)}
+                          style={{ width: `${contract.progressPercent}%` }}
+                        />
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
-              ))}
+                );
+              })}
             </Stack>
           )}
         </Stack>

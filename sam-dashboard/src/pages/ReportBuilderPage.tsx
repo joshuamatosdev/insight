@@ -479,7 +479,7 @@ export function ReportBuilderPage({
 
   if (pageState === 'loading') {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+      <Flex justify="center" align="center" className="min-h-[200px]">
         <Text variant="body">Loading report builder...</Text>
       </Flex>
     );
@@ -487,8 +487,8 @@ export function ReportBuilderPage({
 
   if (pageState === 'error' && errors.general !== undefined) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Stack spacing="md" style={{ textAlign: 'center' }}>
+      <Flex justify="center" align="center" className="min-h-[200px]">
+        <Stack spacing="md" className="text-center">
           <Text variant="body" color="danger">
             {errors.general}
           </Text>
@@ -542,7 +542,7 @@ export function ReportBuilderPage({
           <Text variant="heading5">Data Source</Text>
         </CardHeader>
         <CardBody>
-          <Box style={{ maxWidth: '400px' }}>
+          <Box className="max-w-md">
             <Select
               value={formState.entityType ?? ''}
               onChange={(e) => handleEntityTypeChange(e.target.value as EntityType)}
@@ -655,7 +655,7 @@ export function ReportBuilderPage({
           </CardHeader>
           <CardBody>
             <Flex gap="md">
-              <Box style={{ flex: 1 }}>
+              <Box className="flex-1">
                 <Text as="label" variant="caption" color="muted" htmlFor="sortBy" className="mb-1">
                   Sort By
                 </Text>
@@ -670,7 +670,7 @@ export function ReportBuilderPage({
                   }))}
                 />
               </Box>
-              <Box style={{ flex: 1 }}>
+              <Box className="flex-1">
                 <Text as="label" variant="caption" color="muted" htmlFor="sortDirection" className="mb-1">
                   Direction
                 </Text>
@@ -701,7 +701,7 @@ export function ReportBuilderPage({
             </Flex>
           </CardHeader>
           <CardBody padding="none">
-            <Box style={{ overflowX: 'auto' }}>
+            <Box className="overflow-x-auto">
               <Table>
                 <TableHead>
                   <TableRow>

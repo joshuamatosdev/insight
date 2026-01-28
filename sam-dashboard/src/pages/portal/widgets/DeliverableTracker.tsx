@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
 import { Text, Button } from '../../../components/catalyst/primitives';
 
@@ -61,18 +62,18 @@ export function DeliverableTracker(): React.ReactElement {
     loadDeliverables();
   }, []);
 
-  const getStatusColor = (status: Deliverable['status']): string => {
+  const getStatusClasses = (status: Deliverable['status']): { text: string; progressBg: string } => {
     switch (status) {
       case 'not-started':
-        return '#71717a';
+        return { text: 'text-zinc-500', progressBg: 'bg-zinc-500' };
       case 'in-progress':
-        return '#2563eb';
+        return { text: 'text-blue-600', progressBg: 'bg-blue-600' };
       case 'review':
-        return '#f59e0b';
+        return { text: 'text-amber-500', progressBg: 'bg-amber-500' };
       case 'submitted':
-        return '#10b981';
+        return { text: 'text-emerald-500', progressBg: 'bg-emerald-500' };
       case 'accepted':
-        return '#10b981';
+        return { text: 'text-emerald-500', progressBg: 'bg-emerald-500' };
     }
   };
 
@@ -114,28 +115,26 @@ export function DeliverableTracker(): React.ReactElement {
               {deliverables.map((deliverable) => {
                 const daysUntil = getDaysUntilDue(deliverable.dueDate);
                 const isUrgent = daysUntil <= 7 && deliverable.status !== 'submitted' && deliverable.status !== 'accepted';
-                
+                const statusClasses = getStatusClasses(deliverable.status);
+
                 return (
                   <Box
                     key={deliverable.id}
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: isUrgent ? '#fef2f2' : '#fafafa',
-                      borderRadius: '8px',
-                    }}
+                    className={clsx(
+                      'p-3 rounded-lg',
+                      isUrgent ? 'bg-red-50 dark:bg-red-900/20' : 'bg-zinc-50 dark:bg-zinc-800'
+                    )}
                   >
                     <Flex justify="space-between" align="flex-start">
-                      <Stack spacing="xs" style={{ flex: 1 }}>
-                        <Text variant="body" style={{ fontWeight: 600 }}>{deliverable.title}</Text>
+                      <Stack spacing="xs" className="flex-1">
+                        <Text variant="body" weight="semibold">{deliverable.title}</Text>
                         <Text variant="caption" color="muted">{deliverable.contractNumber}</Text>
                       </Stack>
-                      <Stack spacing="0" style={{ textAlign: 'right' }}>
+                      <Stack spacing="0" className="text-right">
                         <Text
                           variant="caption"
-                          style={{
-                            color: isUrgent ? '#ef4444' : '#52525b',
-                            fontWeight: isUrgent ? 600 : 400,
-                          }}
+                          weight={isUrgent ? 'semibold' : 'normal'}
+                          className={isUrgent ? 'text-red-500' : 'text-zinc-600 dark:text-zinc-400'}
                         >
                           {daysUntil <= 0 ? 'Overdue!' : `${daysUntil} days left`}
                         </Text>
@@ -145,31 +144,16 @@ export function DeliverableTracker(): React.ReactElement {
 
                     {/* Progress Bar */}
                     <Flex align="center" gap="sm" className="mt-2">
-                      <Box
-                        style={{
-                          flex: 1,
-                          height: '6px',
-                          backgroundColor: '#e4e4e7',
-                          borderRadius: '3px',
-                          overflow: 'hidden',
-                        }}
-                      >
+                      <Box className="flex-1 h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-sm overflow-hidden">
                         <Box
-                          style={{
-                            width: `${deliverable.progressPercent}%`,
-                            height: '100%',
-                            backgroundColor: getStatusColor(deliverable.status),
-                          }}
+                          className={clsx('h-full', statusClasses.progressBg)}
+                          style={{ width: `${deliverable.progressPercent}%` }}
                         />
                       </Box>
                       <Text
                         variant="caption"
-                        style={{
-                          color: getStatusColor(deliverable.status),
-                          fontWeight: 500,
-                          minWidth: '80px',
-                          textAlign: 'right',
-                        }}
+                        weight="medium"
+                        className={clsx('min-w-20 text-right', statusClasses.text)}
                       >
                         {getStatusLabel(deliverable.status)}
                       </Text>

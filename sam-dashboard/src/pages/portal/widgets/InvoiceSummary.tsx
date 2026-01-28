@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
 import { Text, Button } from '../../../components/catalyst/primitives';
 
@@ -50,7 +51,7 @@ export function InvoiceSummary(): React.ReactElement {
         },
       ];
       setInvoices(invoiceData);
-      
+
       const pending = invoiceData
         .filter((i) => i.status === 'submitted' || i.status === 'approved')
         .reduce((sum, i) => sum + i.amount, 0);
@@ -58,24 +59,24 @@ export function InvoiceSummary(): React.ReactElement {
         .filter((i) => i.status === 'paid')
         .reduce((sum, i) => sum + i.amount, 0);
       setTotals({ pending, paid });
-      
+
       setLoading(false);
     };
     loadInvoices();
   }, []);
 
-  const getStatusColor = (status: Invoice['status']): string => {
+  const getStatusTextClass = (status: Invoice['status']): string => {
     switch (status) {
       case 'draft':
-        return '#71717a';
+        return 'text-zinc-500';
       case 'submitted':
-        return '#2563eb';
+        return 'text-blue-600';
       case 'approved':
-        return '#10b981';
+        return 'text-emerald-500';
       case 'paid':
-        return '#10b981';
+        return 'text-emerald-500';
       case 'rejected':
-        return '#ef4444';
+        return 'text-red-500';
     }
   };
 
@@ -98,37 +99,23 @@ export function InvoiceSummary(): React.ReactElement {
 
           {/* Summary Cards */}
           <Flex gap="md">
-            <Box
-              style={{
-                flex: 1,
-                padding: '0.75rem',
-                backgroundColor: '#fffbeb',
-                borderRadius: '8px',
-              }}
-            >
+            <Box className="flex-1 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
               <Text variant="caption" color="muted">Pending</Text>
-              <Text variant="heading4" style={{ color: 'rgb(245 158 11)' }}>
-                {loading ? '...' : formatCurrency(totals.pending)}
+              <Text variant="heading4" className="text-amber-500">
+                {loading === true ? '...' : formatCurrency(totals.pending)}
               </Text>
             </Box>
-            <Box
-              style={{
-                flex: 1,
-                padding: '0.75rem',
-                backgroundColor: '#ecfdf5',
-                borderRadius: '8px',
-              }}
-            >
+            <Box className="flex-1 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
               <Text variant="caption" color="muted">Paid (This Month)</Text>
-              <Text variant="heading4" style={{ color: 'rgb(16 185 129)' }}>
-                {loading ? '...' : formatCurrency(totals.paid)}
+              <Text variant="heading4" className="text-emerald-500">
+                {loading === true ? '...' : formatCurrency(totals.paid)}
               </Text>
             </Box>
           </Flex>
 
           {/* Recent Invoices */}
           <Stack spacing="sm">
-            <Text variant="caption" color="muted" style={{ fontWeight: 600 }}>
+            <Text variant="caption" color="muted" weight="semibold">
               Recent Invoices
             </Text>
             {loading === true ? (
@@ -139,21 +126,17 @@ export function InvoiceSummary(): React.ReactElement {
                   key={invoice.id}
                   justify="space-between"
                   align="center"
-                  style={{
-                    padding: '0.5rem',
-                    backgroundColor: '#fafafa',
-                    borderRadius: '6px',
-                  }}
+                  className="p-2 bg-zinc-50 dark:bg-zinc-800 rounded-md"
                 >
                   <Stack spacing="0">
-                    <Text variant="body" style={{ fontWeight: 500 }}>{invoice.invoiceNumber}</Text>
+                    <Text variant="body" weight="medium">{invoice.invoiceNumber}</Text>
                     <Text variant="caption" color="muted">{invoice.contractNumber}</Text>
                   </Stack>
-                  <Stack spacing="0" style={{ textAlign: 'right' }}>
-                    <Text variant="body" style={{ fontWeight: 600 }}>{formatCurrency(invoice.amount)}</Text>
+                  <Stack spacing="0" className="text-right">
+                    <Text variant="body" weight="semibold">{formatCurrency(invoice.amount)}</Text>
                     <Text
                       variant="caption"
-                      style={{ color: getStatusColor(invoice.status), textTransform: 'capitalize' }}
+                      className={clsx('capitalize', getStatusTextClass(invoice.status))}
                     >
                       {invoice.status}
                     </Text>

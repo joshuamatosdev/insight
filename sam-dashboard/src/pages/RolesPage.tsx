@@ -91,10 +91,7 @@ export function RolesPage(): React.ReactElement {
       <Card
         key={role.id}
         variant={isSelected ? 'elevated' : 'default'}
-        style={{
-          cursor: 'pointer',
-          border: isSelected ? '2px solid #2563eb' : undefined,
-        }}
+        className={`cursor-pointer ${isSelected ? 'border-2 border-blue-600' : ''}`}
         onClick={() => setSelectedRole(isSelected ? null : role)}
       >
         <CardBody padding="md">
@@ -154,7 +151,7 @@ export function RolesPage(): React.ReactElement {
                 <Text variant="bodySmall" weight="semibold">
                   {category.replace(/_/g, ' ')}
                 </Text>
-                <Flex gap="sm" style={{ flexWrap: 'wrap' }}>
+                <Flex gap="sm" className="flex-wrap">
                   {perms.map((perm) => {
                     const hasPermission = hasWildcard || rolePermissions.has(perm.code);
                     return (
@@ -179,7 +176,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'loading') {
     return (
       <Section id="roles-page">
-        <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+        <Flex justify="center" align="center" className="min-h-[200px]">
           <Text variant="body" color="muted">
             Loading roles...
           </Text>
@@ -191,7 +188,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'error') {
     return (
       <Section id="roles-page">
-        <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+        <Flex justify="center" align="center" className="min-h-[200px]">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error}

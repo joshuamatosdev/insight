@@ -116,22 +116,12 @@ function UsageProgressBar({
   }
 
   return (
-    <Box
-      style={{
-        width: '100%',
-        height: '8px',
-        backgroundColor: '#e4e4e7',
-        borderRadius: '9999px',
-        overflow: 'hidden',
-      }}
-    >
+    <Box className="w-full h-2 bg-zinc-200 rounded-full overflow-hidden">
       <Box
+        className="h-full rounded-full transition-[width] duration-300 ease-out"
         style={{
           width: `${Math.min(percentage, 100)}%`,
-          height: '100%',
           backgroundColor: bgColor,
-          borderRadius: '9999px',
-          transition: 'width 0.3s ease',
         }}
       />
     </Box>
@@ -166,11 +156,7 @@ function UsageMetricCard({
   return (
     <Card
       variant={isSelected === true ? 'elevated' : 'default'}
-      style={{
-        cursor: onClick !== undefined ? 'pointer' : 'default',
-        border: isSelected === true ? '2px solid #2563eb' : undefined,
-        transition: 'all 0.2s ease',
-      }}
+      className={`transition-all duration-200 ease-out ${onClick !== undefined ? 'cursor-pointer' : 'cursor-default'} ${isSelected === true ? 'border-2 border-blue-600' : ''}`}
       onClick={onClick}
     >
       <CardBody>
@@ -226,7 +212,7 @@ function TrendChart({
 }): React.ReactElement {
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ height: '200px' }}>
+      <Flex justify="center" align="center" className="h-[200px]">
         <Text variant="body" color="muted">
           Loading trend data...
         </Text>
@@ -236,7 +222,7 @@ function TrendChart({
 
   if (data.length === 0) {
     return (
-      <Flex justify="center" align="center" style={{ height: '200px' }}>
+      <Flex justify="center" align="center" className="h-[200px]">
         <Text variant="body" color="muted">
           No trend data available
         </Text>
@@ -247,20 +233,14 @@ function TrendChart({
   const maxValue = Math.max(...data.map((d) => d.total), 1);
 
   return (
-    <Box style={{ height: '200px', display: 'flex', alignItems: 'flex-end', gap: '4px' }}>
+    <Box className="h-[200px] flex items-end gap-1">
       {data.map((point) => {
         const height = (point.total / maxValue) * 100;
         return (
           <Box
             key={point.date}
-            style={{
-              flex: 1,
-              height: `${Math.max(height, 2)}%`,
-              backgroundColor: '#2563eb',
-              borderRadius: '0.25rem 0.25rem 0 0',
-              minWidth: '8px',
-              position: 'relative',
-            }}
+            className="flex-1 bg-blue-600 rounded-t min-w-2 relative"
+            style={{ height: `${Math.max(height, 2)}%` }}
             title={`${formatDate(point.date)}: ${point.total}`}
           />
         );
@@ -398,7 +378,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
   if (isLoading) {
     return (
       <Section id="usage">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading usage data...
           </Text>
@@ -412,7 +392,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       <Section id="usage">
         <Card>
           <CardBody>
-            <Stack spacing="md" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" className="text-center">
               <Text variant="body" color="danger">
                 {error}
               </Text>

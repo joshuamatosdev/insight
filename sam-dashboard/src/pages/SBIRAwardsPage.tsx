@@ -175,7 +175,7 @@ export function SBIRAwardsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                style={{ width: '200px' }}
+                className="w-[200px]"
               />
               <Button variant="outline" size="sm" onClick={handleSearch}>
                 <SearchIcon size="sm" />
@@ -211,7 +211,7 @@ export function SBIRAwardsPage() {
               </Text>
             </Box>
           ) : (
-            <Box style={{ maxHeight: '600px', overflowY: 'auto' }}>
+            <Box className="max-h-[600px] overflow-y-auto">
               <Table striped>
                 <TableHead>
                   <TableRow>
