@@ -1,32 +1,48 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback, useState} from 'react';
+import {queryKeys} from '../lib/query-keys';
 import type {
-    CreateDocumentRequest,
-    CreateFolderRequest,
-    Document,
-    DocumentFilters,
-    DocumentFolder,
-    DocumentStatus,
-    DocumentTemplate,
-    UpdateDocumentRequest,
+  CreateDocumentRequest,
+  CreateFolderRequest,
+  Document,
+  DocumentFilters,
+  DocumentFolder,
+  DocumentStatus,
+  DocumentTemplate,
+  UpdateDocumentRequest,
 } from '../types/documents';
 import {
-    checkoutDocument as checkoutDocumentApi,
-    createDocument as createDocumentApi,
-    createFolder as createFolderApi,
-    deleteDocument as deleteDocumentApi,
-    deleteFolder as deleteFolderApi,
-    fetchChildFolders,
-    fetchDocument,
-    fetchDocuments,
-    fetchDocumentsByFolder,
-    fetchFolder,
-    fetchFolderBreadcrumb,
-    fetchFolders,
-    fetchTemplates,
-    searchDocuments,
-    updateDocument as updateDocumentApi,
-    updateDocumentStatus as updateDocumentStatusApi,
+  checkoutDocument as checkoutDocumentApi,
+  createDocument as createDocumentApi,
+  createFolder as createFolderApi,
+  deleteDocument as deleteDocumentApi,
+  deleteFolder as deleteFolderApi,
+  fetchChildFolders,
+  fetchDocument,
+  fetchDocuments,
+  fetchDocumentsByFolder,
+  fetchFolder,
+  fetchFolderBreadcrumb,
+  fetchFolders,
+  fetchTemplates,
+  searchDocuments,
+  updateDocument as updateDocumentApi,
+  updateDocumentStatus as updateDocumentStatusApi,
 } from '../services/documentService';
+
+// ============ Folder Query Keys ============
+const folderKeys = {
+  all: ['folders'] as const,
+  root: () => [...folderKeys.all, 'root'] as const,
+  detail: (id: string) => [...folderKeys.all, 'detail', id] as const,
+  children: (id: string) => [...folderKeys.all, 'children', id] as const,
+  breadcrumb: (id: string) => [...folderKeys.all, 'breadcrumb', id] as const,
+};
+
+const templateKeys = {
+  all: ['templates'] as const,
+  list: (page: number) => [...templateKeys.all, 'list', page] as const,
+};
 
 export interface UseDocumentsReturn {
   documents: Document[];
@@ -48,107 +64,129 @@ export interface UseDocumentsReturn {
 }
 
 export function useDocuments(initialFilters?: DocumentFilters): UseDocumentsReturn {
-  const [documents, setDocuments] = useState<Document[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
   const [filters, setFilters] = useState<DocumentFilters>(initialFilters ?? {});
+  const [searchKeyword, setSearchKeyword] = useState<string | null>(null);
 
-  const loadDocuments = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      let result;
-      if (filters.folderId !== undefined) {
-        result = await fetchDocumentsByFolder(filters.folderId, page, 20);
-      } else {
-        result = await fetchDocuments(page, 20, filters);
+  const query = useQuery({
+    queryKey: queryKeys.documents.list({page, filters, searchKeyword}),
+    queryFn: async () => {
+      if (searchKeyword !== null && searchKeyword.length > 0) {
+        return searchDocuments(searchKeyword, page, 20);
       }
-      setDocuments(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load documents';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, filters]);
+      if (filters.folderId !== undefined) {
+        return fetchDocumentsByFolder(filters.folderId, page, 20);
+      }
+      return fetchDocuments(page, 20, filters);
+    },
+  });
 
-  useEffect(() => {
-    void loadDocuments();
-  }, [loadDocuments]);
+  const createMutation = useMutation({
+    mutationFn: createDocumentApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.documents.all});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdateDocumentRequest}) =>
+      updateDocumentApi(id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.documents.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteDocumentApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.documents.all});
+    },
+  });
+
+  const checkoutMutation = useMutation({
+    mutationFn: checkoutDocumentApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.documents.all});
+    },
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: ({id, status, notes}: {id: string; status: DocumentStatus; notes?: string}) =>
+      updateDocumentStatusApi(id, status, notes),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.documents.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadDocuments();
-  }, [loadDocuments]);
+    await query.refetch();
+  }, [query]);
 
   const search = useCallback(async (keyword: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await searchDocuments(keyword, page, 20);
-      setDocuments(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Search failed';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page]);
-
-  const create = useCallback(async (request: CreateDocumentRequest): Promise<Document> => {
-    const newDocument = await createDocumentApi(request);
-    setDocuments((prev) => [newDocument, ...prev]);
-    setTotalElements((prev) => prev + 1);
-    return newDocument;
+    setSearchKeyword(keyword.length > 0 ? keyword : null);
+    setPage(0);
   }, []);
 
-  const update = useCallback(async (id: string, request: UpdateDocumentRequest): Promise<Document> => {
-    const updatedDocument = await updateDocumentApi(id, request);
-    setDocuments((prev) =>
-      prev.map((d) => (d.id === id ? updatedDocument : d))
-    );
-    return updatedDocument;
-  }, []);
+  const create = useCallback(
+    async (request: CreateDocumentRequest): Promise<Document> => {
+      return createMutation.mutateAsync(request);
+    },
+    [createMutation]
+  );
 
-  const remove = useCallback(async (id: string): Promise<void> => {
-    await deleteDocumentApi(id);
-    setDocuments((prev) => prev.filter((d) => d.id !== id));
-    setTotalElements((prev) => prev - 1);
-  }, []);
+  const update = useCallback(
+    async (id: string, request: UpdateDocumentRequest): Promise<Document> => {
+      return updateMutation.mutateAsync({id, request});
+    },
+    [updateMutation]
+  );
 
-  const checkout = useCallback(async (id: string): Promise<Document> => {
-    const updatedDocument = await checkoutDocumentApi(id);
-    setDocuments((prev) =>
-      prev.map((d) => (d.id === id ? updatedDocument : d))
-    );
-    return updatedDocument;
-  }, []);
+  const remove = useCallback(
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation]
+  );
 
-  const updateStatus = useCallback(async (
-    id: string,
-    status: DocumentStatus,
-    notes?: string
-  ): Promise<Document> => {
-    const updatedDocument = await updateDocumentStatusApi(id, status, notes);
-    setDocuments((prev) =>
-      prev.map((d) => (d.id === id ? updatedDocument : d))
-    );
-    return updatedDocument;
-  }, []);
+  const checkout = useCallback(
+    async (id: string): Promise<Document> => {
+      return checkoutMutation.mutateAsync(id);
+    },
+    [checkoutMutation]
+  );
+
+  const updateStatus = useCallback(
+    async (id: string, status: DocumentStatus, notes?: string): Promise<Document> => {
+      return updateStatusMutation.mutateAsync({id, status, notes});
+    },
+    [updateStatusMutation]
+  );
+
+  const isLoading =
+    query.isLoading ||
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    deleteMutation.isPending ||
+    checkoutMutation.isPending ||
+    updateStatusMutation.isPending;
+
+  const error =
+    query.error ??
+    createMutation.error ??
+    updateMutation.error ??
+    deleteMutation.error ??
+    checkoutMutation.error ??
+    updateStatusMutation.error ??
+    null;
 
   return {
-    documents,
+    documents: query.data?.content ?? [],
     isLoading,
     error,
     page,
-    totalPages,
-    totalElements,
+    totalPages: query.data?.totalPages ?? 0,
+    totalElements: query.data?.totalElements ?? 0,
     filters,
     setFilters,
     setPage,
@@ -171,47 +209,37 @@ export interface UseDocumentReturn {
 }
 
 export function useDocument(id: string): UseDocumentReturn {
-  const [document, setDocument] = useState<Document | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadDocument = useCallback(async () => {
-    if (id === '') {
-      setDocument(null);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchDocument(id);
-      setDocument(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load document';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
+  const query = useQuery({
+    queryKey: queryKeys.documents.detail(id),
+    queryFn: () => fetchDocument(id),
+    enabled: id !== '',
+  });
 
-  useEffect(() => {
-    void loadDocument();
-  }, [loadDocument]);
+  const updateMutation = useMutation({
+    mutationFn: (request: UpdateDocumentRequest) => updateDocumentApi(id, request),
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKeys.documents.detail(id), data);
+      queryClient.invalidateQueries({queryKey: queryKeys.documents.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadDocument();
-  }, [loadDocument]);
+    await query.refetch();
+  }, [query]);
 
-  const update = useCallback(async (request: UpdateDocumentRequest): Promise<Document> => {
-    const updatedDocument = await updateDocumentApi(id, request);
-    setDocument(updatedDocument);
-    return updatedDocument;
-  }, [id]);
+  const update = useCallback(
+    async (request: UpdateDocumentRequest): Promise<Document> => {
+      return updateMutation.mutateAsync(request);
+    },
+    [updateMutation]
+  );
 
   return {
-    document,
-    isLoading,
-    error,
+    document: query.data ?? null,
+    isLoading: query.isLoading || updateMutation.isPending,
+    error: query.error ?? updateMutation.error ?? null,
     refresh,
     update,
   };
@@ -230,81 +258,103 @@ export interface UseFoldersReturn {
 }
 
 export function useFolders(): UseFoldersReturn {
-  const [folders, setFolders] = useState<DocumentFolder[]>([]);
-  const [currentFolder, setCurrentFolder] = useState<DocumentFolder | null>(null);
-  const [breadcrumb, setBreadcrumb] = useState<DocumentFolder[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
+  const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
 
-  const loadRootFolders = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const rootFolders = await fetchFolders();
-      setFolders(rootFolders);
-      setCurrentFolder(null);
-      setBreadcrumb([]);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load folders';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const rootFoldersQuery = useQuery({
+    queryKey: folderKeys.root(),
+    queryFn: fetchFolders,
+    enabled: currentFolderId === null,
+  });
 
-  useEffect(() => {
-    void loadRootFolders();
-  }, [loadRootFolders]);
+  const currentFolderQuery = useQuery({
+    queryKey: folderKeys.detail(currentFolderId ?? ''),
+    queryFn: () => fetchFolder(currentFolderId!),
+    enabled: currentFolderId !== null,
+  });
+
+  const childFoldersQuery = useQuery({
+    queryKey: folderKeys.children(currentFolderId ?? ''),
+    queryFn: () => fetchChildFolders(currentFolderId!),
+    enabled: currentFolderId !== null,
+  });
+
+  const breadcrumbQuery = useQuery({
+    queryKey: folderKeys.breadcrumb(currentFolderId ?? ''),
+    queryFn: () => fetchFolderBreadcrumb(currentFolderId!),
+    enabled: currentFolderId !== null,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createFolderApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: folderKeys.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteFolderApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: folderKeys.all});
+    },
+  });
 
   const loadFolder = useCallback(async (folderId: string | null) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      if (folderId === null) {
-        await loadRootFolders();
-        return;
-      }
-
-      const [folder, children, crumbs] = await Promise.all([
-        fetchFolder(folderId),
-        fetchChildFolders(folderId),
-        fetchFolderBreadcrumb(folderId),
-      ]);
-
-      setCurrentFolder(folder);
-      setFolders(children);
-      setBreadcrumb(crumbs);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load folder';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [loadRootFolders]);
+    setCurrentFolderId(folderId);
+  }, []);
 
   const refresh = useCallback(async () => {
-    if (currentFolder !== null) {
-      await loadFolder(currentFolder.id);
+    if (currentFolderId === null) {
+      await rootFoldersQuery.refetch();
     } else {
-      await loadRootFolders();
+      await Promise.all([
+        currentFolderQuery.refetch(),
+        childFoldersQuery.refetch(),
+        breadcrumbQuery.refetch(),
+      ]);
     }
-  }, [currentFolder, loadFolder, loadRootFolders]);
+  }, [currentFolderId, rootFoldersQuery, currentFolderQuery, childFoldersQuery, breadcrumbQuery]);
 
-  const create = useCallback(async (request: CreateFolderRequest): Promise<DocumentFolder> => {
-    const newFolder = await createFolderApi(request);
-    setFolders((prev) => [...prev, newFolder]);
-    return newFolder;
-  }, []);
+  const create = useCallback(
+    async (request: CreateFolderRequest): Promise<DocumentFolder> => {
+      return createMutation.mutateAsync(request);
+    },
+    [createMutation]
+  );
 
-  const remove = useCallback(async (id: string): Promise<void> => {
-    await deleteFolderApi(id);
-    setFolders((prev) => prev.filter((f) => f.id !== id));
-  }, []);
+  const remove = useCallback(
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation]
+  );
+
+  const folders =
+    currentFolderId === null
+      ? rootFoldersQuery.data ?? []
+      : childFoldersQuery.data ?? [];
+
+  const isLoading =
+    rootFoldersQuery.isLoading ||
+    currentFolderQuery.isLoading ||
+    childFoldersQuery.isLoading ||
+    breadcrumbQuery.isLoading ||
+    createMutation.isPending ||
+    deleteMutation.isPending;
+
+  const error =
+    rootFoldersQuery.error ??
+    currentFolderQuery.error ??
+    childFoldersQuery.error ??
+    breadcrumbQuery.error ??
+    createMutation.error ??
+    deleteMutation.error ??
+    null;
 
   return {
     folders,
-    currentFolder,
-    breadcrumb,
+    currentFolder: currentFolderQuery.data ?? null,
+    breadcrumb: breadcrumbQuery.data ?? [],
     isLoading,
     error,
     loadFolder,
@@ -326,44 +376,24 @@ export interface UseTemplatesReturn {
 }
 
 export function useTemplates(): UseTemplatesReturn {
-  const [templates, setTemplates] = useState<DocumentTemplate[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
 
-  const loadTemplates = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchTemplates(page, 20);
-      setTemplates(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load templates';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page]);
-
-  useEffect(() => {
-    void loadTemplates();
-  }, [loadTemplates]);
+  const query = useQuery({
+    queryKey: templateKeys.list(page),
+    queryFn: () => fetchTemplates(page, 20),
+  });
 
   const refresh = useCallback(async () => {
-    await loadTemplates();
-  }, [loadTemplates]);
+    await query.refetch();
+  }, [query]);
 
   return {
-    templates,
-    isLoading,
-    error,
+    templates: query.data?.content ?? [],
+    isLoading: query.isLoading,
+    error: query.error ?? null,
     page,
-    totalPages,
-    totalElements,
+    totalPages: query.data?.totalPages ?? 0,
+    totalElements: query.data?.totalElements ?? 0,
     setPage,
     refresh,
   };

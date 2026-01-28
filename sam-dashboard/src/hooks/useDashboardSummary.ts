@@ -1,13 +1,15 @@
 /**
  * Dashboard Summary Hook
- * Aggregates data from multiple services for the main dashboard
+ * Aggregates data from multiple services for the main dashboard using TanStack Query
  */
 
-import {useCallback, useEffect, useState} from 'react';
-import {fetchActiveContracts, fetchExpiringContracts} from '../services/contractService';
-import {fetchExpiringCertifications, fetchExpiringClearances} from '../services/complianceService';
+import {useQuery} from '@tanstack/react-query';
+import {useCallback} from 'react';
 import type {Contract} from '../components/domain/contracts/Contract.types';
 import type {Certification, SecurityClearance} from '../types/compliance.types';
+import {queryKeys} from '../lib/query-keys';
+import {fetchActiveContracts, fetchExpiringContracts} from '../services/contractService';
+import {fetchExpiringCertifications, fetchExpiringClearances} from '../services/complianceService';
 
 // Dashboard summary metrics
 export interface DashboardMetrics {
@@ -46,99 +48,88 @@ export interface UseDashboardSummaryReturn {
   refresh: () => Promise<void>;
 }
 
-export function useDashboardSummary(): UseDashboardSummaryReturn {
-  const [data, setData] = useState<DashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+async function fetchDashboardData(): Promise<DashboardData> {
+  // Fetch all data in parallel
+  const [
+    activeContractsResult,
+    expiringContractsResult,
+    expiringCertsResult,
+    expiringClearancesResult,
+  ] = await Promise.all([
+    fetchActiveContracts(0, 100),
+    fetchExpiringContracts(30),
+    fetchExpiringCertifications(30),
+    fetchExpiringClearances(30),
+  ]);
 
-  const loadDashboardData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  // Process contracts
+  const activeContracts = activeContractsResult.success
+    ? activeContractsResult.data.content
+    : [];
+  const expiringContracts = expiringContractsResult.success
+    ? expiringContractsResult.data
+    : [];
 
-      // Fetch all data in parallel
-      const [
-        activeContractsResult,
-        expiringContractsResult,
-        expiringCertsResult,
-        expiringClearancesResult,
-      ] = await Promise.all([
-        fetchActiveContracts(0, 100),
-        fetchExpiringContracts(30),
-        fetchExpiringCertifications(30),
-        fetchExpiringClearances(30),
-      ]);
+  // Process compliance
+  const expiringCerts = expiringCertsResult.success
+    ? expiringCertsResult.data
+    : [];
+  const expiringClearances = expiringClearancesResult.success
+    ? expiringClearancesResult.data
+    : [];
 
-      // Process contracts
-      const activeContracts = activeContractsResult.success
-        ? activeContractsResult.data.content
-        : [];
-      const expiringContracts = expiringContractsResult.success
-        ? expiringContractsResult.data
-        : [];
+  // Calculate total contract value
+  const totalContractValue = activeContracts.reduce(
+    (sum, c) => sum + (c.totalValue ?? 0),
+    0
+  );
 
-      // Process compliance
-      const expiringCerts = expiringCertsResult.success
-        ? expiringCertsResult.data
-        : [];
-      const expiringClearances = expiringClearancesResult.success
-        ? expiringClearancesResult.data
-        : [];
+  // Calculate metrics
+  const metrics: DashboardMetrics = {
+    // Pipeline metrics (placeholder - would come from pipeline service)
+    pipelineValue: 0,
+    pipelineCount: 0,
 
-      // Calculate total contract value
-      const totalContractValue = activeContracts.reduce(
-        (sum, c) => sum + (c.totalValue ?? 0),
-        0
-      );
+    // Contract metrics
+    activeContracts: activeContracts.length,
+    totalContractValue,
 
-      // Calculate metrics
-      const metrics: DashboardMetrics = {
-        // Pipeline metrics (placeholder - would come from pipeline service)
-        pipelineValue: 0,
-        pipelineCount: 0,
+    // Expiring items
+    expiringContracts: expiringContracts.length,
+    expiringCertifications: expiringCerts.length,
+    expiringClearances: expiringClearances.length,
+    totalExpiringSoon: expiringContracts.length + expiringCerts.length + expiringClearances.length,
 
-        // Contract metrics
-        activeContracts: activeContracts.length,
-        totalContractValue,
-
-        // Expiring items
-        expiringContracts: expiringContracts.length,
-        expiringCertifications: expiringCerts.length,
-        expiringClearances: expiringClearances.length,
-        totalExpiringSoon: expiringContracts.length + expiringCerts.length + expiringClearances.length,
-
-        // Win rate (placeholder - would come from pipeline analytics)
-        winRate: 0,
-        winsCount: 0,
-        lossesCount: 0,
-      };
-
-      setData({
-        metrics,
-        expiringContractsList: expiringContracts,
-        expiringCertificationsList: expiringCerts,
-        expiringClearancesList: expiringClearances,
-        activeContractsList: activeContracts,
-      });
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load dashboard data'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const refresh = useCallback(async () => {
-    await loadDashboardData();
-  }, [loadDashboardData]);
-
-  useEffect(() => {
-    void loadDashboardData();
-  }, [loadDashboardData]);
+    // Win rate (placeholder - would come from pipeline analytics)
+    winRate: 0,
+    winsCount: 0,
+    lossesCount: 0,
+  };
 
   return {
-    data,
-    isLoading,
-    error,
+    metrics,
+    expiringContractsList: expiringContracts,
+    expiringCertificationsList: expiringCerts,
+    expiringClearancesList: expiringClearances,
+    activeContractsList: activeContracts,
+  };
+}
+
+export function useDashboardSummary(): UseDashboardSummaryReturn {
+  const query = useQuery({
+    queryKey: queryKeys.dashboard.summary(),
+    queryFn: fetchDashboardData,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+  });
+
+  const refresh = useCallback(async () => {
+    await query.refetch();
+  }, [query]);
+
+  return {
+    data: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error ?? null,
     refresh,
   };
 }

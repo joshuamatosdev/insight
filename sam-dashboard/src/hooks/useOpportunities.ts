@@ -1,5 +1,7 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback} from 'react';
 import {Opportunity} from '../components/domain/opportunity';
+import {queryKeys} from '../lib/query-keys';
 import {fetchOpportunities, triggerIngest} from '../services/api';
 
 interface UseOpportunitiesReturn {
@@ -11,43 +13,35 @@ interface UseOpportunitiesReturn {
 }
 
 export function useOpportunities(): UseOpportunitiesReturn {
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadOpportunities = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const data = await fetchOpportunities();
-      setOpportunities(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch opportunities'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const query = useQuery({
+    queryKey: queryKeys.opportunities.list(),
+    queryFn: fetchOpportunities,
+  });
+
+  const ingestMutation = useMutation({
+    mutationFn: triggerIngest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.opportunities.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadOpportunities();
-  }, [loadOpportunities]);
+    await query.refetch();
+  }, [query]);
 
   const ingest = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      await triggerIngest();
-      await loadOpportunities();
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to ingest data'));
-      setIsLoading(false);
-    }
-  }, [loadOpportunities]);
+    await ingestMutation.mutateAsync();
+  }, [ingestMutation]);
 
-  useEffect(() => {
-    loadOpportunities();
-  }, [loadOpportunities]);
-
-  return { opportunities, isLoading, error, refresh, ingest };
+  return {
+    opportunities: query.data ?? [],
+    isLoading: query.isLoading || ingestMutation.isPending,
+    error: query.error ?? ingestMutation.error ?? null,
+    refresh,
+    ingest,
+  };
 }
 
 export default useOpportunities;

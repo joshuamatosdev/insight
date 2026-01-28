@@ -1,17 +1,19 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback, useState} from 'react';
+import {queryKeys} from '../lib/query-keys';
 import type {
-    CreateOrganizationRequest,
-    Organization,
-    OrganizationFilters,
-    UpdateOrganizationRequest,
+  CreateOrganizationRequest,
+  Organization,
+  OrganizationFilters,
+  UpdateOrganizationRequest,
 } from '../types/crm';
 import {
-    createOrganization as createOrganizationApi,
-    deleteOrganization as deleteOrganizationApi,
-    fetchOrganization,
-    fetchOrganizations,
-    searchOrganizations,
-    updateOrganization as updateOrganizationApi,
+  createOrganization as createOrganizationApi,
+  deleteOrganization as deleteOrganizationApi,
+  fetchOrganization,
+  fetchOrganizations,
+  searchOrganizations,
+  updateOrganization as updateOrganizationApi,
 } from '../services/crmService';
 
 export interface UseOrganizationsReturn {
@@ -32,82 +34,80 @@ export interface UseOrganizationsReturn {
 }
 
 export function useOrganizations(initialFilters?: OrganizationFilters): UseOrganizationsReturn {
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
   const [filters, setFilters] = useState<OrganizationFilters>(initialFilters ?? {});
+  const [searchKeyword, setSearchKeyword] = useState<string | null>(null);
 
-  const loadOrganizations = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchOrganizations(page, 20, filters);
-      setOrganizations(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load organizations';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, filters]);
+  const query = useQuery({
+    queryKey: queryKeys.organizations.list({page, filters, searchKeyword}),
+    queryFn: async () => {
+      if (searchKeyword !== null && searchKeyword.length > 0) {
+        return searchOrganizations(searchKeyword, page, 20);
+      }
+      return fetchOrganizations(page, 20, filters);
+    },
+  });
 
-  useEffect(() => {
-    void loadOrganizations();
-  }, [loadOrganizations]);
+  const createMutation = useMutation({
+    mutationFn: createOrganizationApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.organizations.all});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdateOrganizationRequest}) =>
+      updateOrganizationApi(id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.organizations.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteOrganizationApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.organizations.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadOrganizations();
-  }, [loadOrganizations]);
+    await query.refetch();
+  }, [query]);
 
   const search = useCallback(async (keyword: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await searchOrganizations(keyword, page, 20);
-      setOrganizations(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Search failed';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page]);
-
-  const create = useCallback(async (request: CreateOrganizationRequest): Promise<Organization> => {
-    const newOrg = await createOrganizationApi(request);
-    setOrganizations((prev) => [newOrg, ...prev]);
-    setTotalElements((prev) => prev + 1);
-    return newOrg;
+    setSearchKeyword(keyword.length > 0 ? keyword : null);
+    setPage(0);
   }, []);
 
-  const update = useCallback(async (id: string, request: UpdateOrganizationRequest): Promise<Organization> => {
-    const updatedOrg = await updateOrganizationApi(id, request);
-    setOrganizations((prev) =>
-      prev.map((o) => (o.id === id ? updatedOrg : o))
-    );
-    return updatedOrg;
-  }, []);
+  const create = useCallback(
+    async (request: CreateOrganizationRequest): Promise<Organization> => {
+      return createMutation.mutateAsync(request);
+    },
+    [createMutation]
+  );
 
-  const remove = useCallback(async (id: string): Promise<void> => {
-    await deleteOrganizationApi(id);
-    setOrganizations((prev) => prev.filter((o) => o.id !== id));
-    setTotalElements((prev) => prev - 1);
-  }, []);
+  const update = useCallback(
+    async (id: string, request: UpdateOrganizationRequest): Promise<Organization> => {
+      return updateMutation.mutateAsync({id, request});
+    },
+    [updateMutation]
+  );
+
+  const remove = useCallback(
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation]
+  );
 
   return {
-    organizations,
-    isLoading,
-    error,
+    organizations: query.data?.content ?? [],
+    isLoading: query.isLoading || createMutation.isPending || updateMutation.isPending || deleteMutation.isPending,
+    error: query.error ?? createMutation.error ?? updateMutation.error ?? deleteMutation.error ?? null,
     page,
-    totalPages,
-    totalElements,
+    totalPages: query.data?.totalPages ?? 0,
+    totalElements: query.data?.totalElements ?? 0,
     filters,
     setFilters,
     setPage,
@@ -128,47 +128,37 @@ export interface UseOrganizationReturn {
 }
 
 export function useOrganization(id: string): UseOrganizationReturn {
-  const [organization, setOrganization] = useState<Organization | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadOrganization = useCallback(async () => {
-    if (id === '') {
-      setOrganization(null);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchOrganization(id);
-      setOrganization(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load organization';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
+  const query = useQuery({
+    queryKey: queryKeys.organizations.detail(id),
+    queryFn: () => fetchOrganization(id),
+    enabled: id !== '',
+  });
 
-  useEffect(() => {
-    void loadOrganization();
-  }, [loadOrganization]);
+  const updateMutation = useMutation({
+    mutationFn: (request: UpdateOrganizationRequest) => updateOrganizationApi(id, request),
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKeys.organizations.detail(id), data);
+      queryClient.invalidateQueries({queryKey: queryKeys.organizations.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadOrganization();
-  }, [loadOrganization]);
+    await query.refetch();
+  }, [query]);
 
-  const update = useCallback(async (request: UpdateOrganizationRequest): Promise<Organization> => {
-    const updatedOrg = await updateOrganizationApi(id, request);
-    setOrganization(updatedOrg);
-    return updatedOrg;
-  }, [id]);
+  const update = useCallback(
+    async (request: UpdateOrganizationRequest): Promise<Organization> => {
+      return updateMutation.mutateAsync(request);
+    },
+    [updateMutation]
+  );
 
   return {
-    organization,
-    isLoading,
-    error,
+    organization: query.data ?? null,
+    isLoading: query.isLoading || updateMutation.isPending,
+    error: query.error ?? updateMutation.error ?? null,
     refresh,
     update,
   };

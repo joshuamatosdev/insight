@@ -1,40 +1,42 @@
 /**
- * Financial Management Hook - React state management for financial data
+ * Financial Management Hook - React state management for financial data using TanStack Query
  */
-import {useCallback, useEffect, useState} from 'react';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback, useState} from 'react';
+import {queryKeys} from '../lib/query-keys';
 import type {
-    BudgetItem,
-    CreateBudgetItemRequest,
-    CreateInvoiceRequest,
-    CreateLaborRateRequest,
-    Invoice,
-    InvoiceStatus,
-    LaborRate,
-    TenantFinancialSummary,
-    UpdateBudgetItemRequest,
-    UpdateLaborRateRequest,
+  BudgetItem,
+  CreateBudgetItemRequest,
+  CreateInvoiceRequest,
+  CreateLaborRateRequest,
+  Invoice,
+  InvoiceStatus,
+  LaborRate,
+  TenantFinancialSummary,
+  UpdateBudgetItemRequest,
+  UpdateLaborRateRequest,
 } from '../types/financial.types';
 import {
-    createBudget,
-    createInvoice,
-    createLaborRate,
-    deleteBudget,
-    deleteInvoice,
-    deleteLaborRate,
-    fetchBudget,
-    fetchBudgets,
-    fetchFinancialSummary,
-    fetchInvoice,
-    fetchInvoices,
-    fetchInvoicesByStatus,
-    fetchLaborRate,
-    fetchLaborRates,
-    fetchOverBudgetItems,
-    fetchOverdueInvoices,
-    setLaborRateActive,
-    submitInvoice,
-    updateBudget,
-    updateLaborRate,
+  createBudget,
+  createInvoice,
+  createLaborRate,
+  deleteBudget,
+  deleteInvoice,
+  deleteLaborRate,
+  fetchBudget,
+  fetchBudgets,
+  fetchFinancialSummary,
+  fetchInvoice,
+  fetchInvoices,
+  fetchInvoicesByStatus,
+  fetchLaborRate,
+  fetchLaborRates,
+  fetchOverBudgetItems,
+  fetchOverdueInvoices,
+  setLaborRateActive,
+  submitInvoice,
+  updateBudget,
+  updateLaborRate,
 } from '../services/financialService';
 
 // ==================== Invoices Hook ====================
@@ -56,95 +58,112 @@ interface UseInvoicesReturn {
 }
 
 export function useInvoices(): UseInvoicesReturn {
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [totalElements, setTotalElements] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(20);
+  const [statusFilter, setStatusFilter] = useState<InvoiceStatus | null>(null);
+  const [showOverdue, setShowOverdue] = useState(false);
 
-  const loadInvoices = useCallback(async (page: number = 0, size: number = 20) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetchInvoices(page, size);
-      setInvoices(response.content);
-      setTotalElements(response.totalElements);
-      setTotalPages(response.totalPages);
-      setCurrentPage(response.number);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load invoices'));
-    } finally {
-      setIsLoading(false);
-    }
+  const regularQuery = useQuery({
+    queryKey: queryKeys.invoices.list({page, size, statusFilter}),
+    queryFn: async () => {
+      if (statusFilter !== null) {
+        return fetchInvoicesByStatus(statusFilter, page);
+      }
+      return fetchInvoices(page, size);
+    },
+    enabled: showOverdue === false,
+  });
+
+  const overdueQuery = useQuery({
+    queryKey: [...queryKeys.invoices.all, 'overdue'],
+    queryFn: fetchOverdueInvoices,
+    enabled: showOverdue,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createInvoice,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.invoices.all});
+    },
+  });
+
+  const submitMutation = useMutation({
+    mutationFn: submitInvoice,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.invoices.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteInvoice,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.invoices.all});
+    },
+  });
+
+  const loadInvoices = useCallback(async (newPage: number = 0, newSize: number = 20) => {
+    setPage(newPage);
+    setSize(newSize);
+    setStatusFilter(null);
+    setShowOverdue(false);
   }, []);
 
-  const loadInvoicesByStatus = useCallback(
-    async (status: InvoiceStatus, page: number = 0) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetchInvoicesByStatus(status, page);
-        setInvoices(response.content);
-        setTotalElements(response.totalElements);
-        setTotalPages(response.totalPages);
-        setCurrentPage(response.number);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to load invoices'));
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    []
-  );
+  const loadInvoicesByStatus = useCallback(async (status: InvoiceStatus, newPage: number = 0) => {
+    setPage(newPage);
+    setStatusFilter(status);
+    setShowOverdue(false);
+  }, []);
 
   const loadOverdueInvoices = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const overdueList = await fetchOverdueInvoices();
-      setInvoices(overdueList);
-      setTotalElements(overdueList.length);
-      setTotalPages(1);
-      setCurrentPage(0);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load overdue invoices'));
-    } finally {
-      setIsLoading(false);
-    }
+    setShowOverdue(true);
+    setStatusFilter(null);
   }, []);
 
-  const createNewInvoice = useCallback(async (request: CreateInvoiceRequest) => {
-    const invoice = await createInvoice(request);
-    await loadInvoices(currentPage);
-    return invoice;
-  }, [currentPage, loadInvoices]);
+  const createNewInvoice = useCallback(
+    async (request: CreateInvoiceRequest): Promise<Invoice> => {
+      return createMutation.mutateAsync(request);
+    },
+    [createMutation]
+  );
 
-  const submitInvoiceById = useCallback(async (id: string) => {
-    await submitInvoice(id);
-    await loadInvoices(currentPage);
-  }, [currentPage, loadInvoices]);
+  const submitInvoiceById = useCallback(
+    async (id: string): Promise<void> => {
+      await submitMutation.mutateAsync(id);
+    },
+    [submitMutation]
+  );
 
-  const deleteInvoiceById = useCallback(async (id: string) => {
-    await deleteInvoice(id);
-    await loadInvoices(currentPage);
-  }, [currentPage, loadInvoices]);
+  const deleteInvoiceById = useCallback(
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation]
+  );
 
   const refresh = useCallback(async () => {
-    await loadInvoices(currentPage);
-  }, [currentPage, loadInvoices]);
+    if (showOverdue) {
+      await overdueQuery.refetch();
+    } else {
+      await regularQuery.refetch();
+    }
+  }, [showOverdue, overdueQuery, regularQuery]);
 
-  useEffect(() => {
-    loadInvoices();
-  }, [loadInvoices]);
+  // Determine which query data to use
+  const activeQuery = showOverdue ? overdueQuery : regularQuery;
+  const invoices = showOverdue
+    ? (overdueQuery.data ?? [])
+    : (regularQuery.data?.content ?? []);
 
   return {
     invoices,
-    totalElements,
-    totalPages,
-    currentPage,
-    isLoading,
-    error,
+    totalElements: showOverdue
+      ? (overdueQuery.data?.length ?? 0)
+      : (regularQuery.data?.totalElements ?? 0),
+    totalPages: showOverdue ? 1 : (regularQuery.data?.totalPages ?? 0),
+    currentPage: showOverdue ? 0 : (regularQuery.data?.number ?? page),
+    isLoading: activeQuery.isLoading || createMutation.isPending || submitMutation.isPending || deleteMutation.isPending,
+    error: activeQuery.error ?? createMutation.error ?? submitMutation.error ?? deleteMutation.error ?? null,
     loadInvoices,
     loadInvoicesByStatus,
     loadOverdueInvoices,
@@ -165,32 +184,21 @@ interface UseInvoiceReturn {
 }
 
 export function useInvoice(id: string): UseInvoiceReturn {
-  const [invoice, setInvoice] = useState<Invoice | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const query = useQuery({
+    queryKey: queryKeys.invoices.detail(id),
+    queryFn: () => fetchInvoice(id),
+    enabled: id !== '',
+  });
 
-  const loadInvoice = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchInvoice(id);
-      setInvoice(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load invoice'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    loadInvoice();
-  }, [loadInvoice]);
+  const refresh = useCallback(async () => {
+    await query.refetch();
+  }, [query]);
 
   return {
-    invoice,
-    isLoading,
-    error,
-    refresh: loadInvoice,
+    invoice: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error ?? null,
+    refresh,
   };
 }
 
@@ -213,84 +221,102 @@ interface UseBudgetsReturn {
 }
 
 export function useBudgets(): UseBudgetsReturn {
-  const [budgets, setBudgets] = useState<BudgetItem[]>([]);
-  const [overBudgetItems, setOverBudgetItems] = useState<BudgetItem[]>([]);
-  const [totalElements, setTotalElements] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(20);
+  const [category, setCategory] = useState<string | undefined>(undefined);
+
+  const budgetsQuery = useQuery({
+    queryKey: queryKeys.budgets.list({page, size, category}),
+    queryFn: () => fetchBudgets(page, size, category),
+  });
+
+  const overBudgetQuery = useQuery({
+    queryKey: [...queryKeys.budgets.all, 'overBudget'],
+    queryFn: fetchOverBudgetItems,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createBudget,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.budgets.all});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdateBudgetItemRequest}) =>
+      updateBudget(id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.budgets.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteBudget,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.budgets.all});
+    },
+  });
 
   const loadBudgets = useCallback(
-    async (page: number = 0, size: number = 20, category?: string) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetchBudgets(page, size, category);
-        setBudgets(response.content);
-        setTotalElements(response.totalElements);
-        setTotalPages(response.totalPages);
-        setCurrentPage(response.number);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to load budgets'));
-      } finally {
-        setIsLoading(false);
-      }
+    async (newPage: number = 0, newSize: number = 20, newCategory?: string) => {
+      setPage(newPage);
+      setSize(newSize);
+      setCategory(newCategory);
     },
     []
   );
 
   const loadOverBudgetItems = useCallback(async () => {
-    try {
-      const items = await fetchOverBudgetItems();
-      setOverBudgetItems(items);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load over-budget items'));
-    }
-  }, []);
+    await overBudgetQuery.refetch();
+  }, [overBudgetQuery]);
 
   const createNewBudget = useCallback(
-    async (request: CreateBudgetItemRequest) => {
-      const budget = await createBudget(request);
-      await loadBudgets(currentPage);
-      return budget;
+    async (request: CreateBudgetItemRequest): Promise<BudgetItem> => {
+      return createMutation.mutateAsync(request);
     },
-    [currentPage, loadBudgets]
+    [createMutation]
   );
 
   const updateBudgetById = useCallback(
-    async (id: string, request: UpdateBudgetItemRequest) => {
-      const budget = await updateBudget(id, request);
-      await loadBudgets(currentPage);
-      return budget;
+    async (id: string, request: UpdateBudgetItemRequest): Promise<BudgetItem> => {
+      return updateMutation.mutateAsync({id, request});
     },
-    [currentPage, loadBudgets]
+    [updateMutation]
   );
 
   const deleteBudgetById = useCallback(
-    async (id: string) => {
-      await deleteBudget(id);
-      await loadBudgets(currentPage);
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
     },
-    [currentPage, loadBudgets]
+    [deleteMutation]
   );
 
   const refresh = useCallback(async () => {
-    await loadBudgets(currentPage);
-    await loadOverBudgetItems();
-  }, [currentPage, loadBudgets, loadOverBudgetItems]);
+    await Promise.all([budgetsQuery.refetch(), overBudgetQuery.refetch()]);
+  }, [budgetsQuery, overBudgetQuery]);
 
-  useEffect(() => {
-    loadBudgets();
-    loadOverBudgetItems();
-  }, [loadBudgets, loadOverBudgetItems]);
+  const isLoading =
+    budgetsQuery.isLoading ||
+    overBudgetQuery.isLoading ||
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    deleteMutation.isPending;
+
+  const error =
+    budgetsQuery.error ??
+    overBudgetQuery.error ??
+    createMutation.error ??
+    updateMutation.error ??
+    deleteMutation.error ??
+    null;
 
   return {
-    budgets,
-    overBudgetItems,
-    totalElements,
-    totalPages,
-    currentPage,
+    budgets: budgetsQuery.data?.content ?? [],
+    overBudgetItems: overBudgetQuery.data ?? [],
+    totalElements: budgetsQuery.data?.totalElements ?? 0,
+    totalPages: budgetsQuery.data?.totalPages ?? 0,
+    currentPage: budgetsQuery.data?.number ?? page,
     isLoading,
     error,
     loadBudgets,
@@ -312,32 +338,21 @@ interface UseBudgetReturn {
 }
 
 export function useBudget(id: string): UseBudgetReturn {
-  const [budget, setBudget] = useState<BudgetItem | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const query = useQuery({
+    queryKey: queryKeys.budgets.detail(id),
+    queryFn: () => fetchBudget(id),
+    enabled: id !== '',
+  });
 
-  const loadBudget = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchBudget(id);
-      setBudget(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load budget'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    loadBudget();
-  }, [loadBudget]);
+  const refresh = useCallback(async () => {
+    await query.refetch();
+  }, [query]);
 
   return {
-    budget,
-    isLoading,
-    error,
-    refresh: loadBudget,
+    budget: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error ?? null,
+    refresh,
   };
 }
 
@@ -359,79 +374,106 @@ interface UseLaborRatesReturn {
 }
 
 export function useLaborRates(): UseLaborRatesReturn {
-  const [laborRates, setLaborRates] = useState<LaborRate[]>([]);
-  const [totalElements, setTotalElements] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(20);
+  const [activeOnly, setActiveOnly] = useState(false);
+
+  const query = useQuery({
+    queryKey: queryKeys.laborRates.list({page, size, activeOnly}),
+    queryFn: () => fetchLaborRates(page, size, activeOnly),
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createLaborRate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.laborRates.all});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdateLaborRateRequest}) =>
+      updateLaborRate(id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.laborRates.all});
+    },
+  });
+
+  const toggleActiveMutation = useMutation({
+    mutationFn: ({id, active}: {id: string; active: boolean}) => setLaborRateActive(id, active),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.laborRates.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteLaborRate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.laborRates.all});
+    },
+  });
 
   const loadLaborRates = useCallback(
-    async (page: number = 0, size: number = 20, activeOnly: boolean = false) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetchLaborRates(page, size, activeOnly);
-        setLaborRates(response.content);
-        setTotalElements(response.totalElements);
-        setTotalPages(response.totalPages);
-        setCurrentPage(response.number);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to load labor rates'));
-      } finally {
-        setIsLoading(false);
-      }
+    async (newPage: number = 0, newSize: number = 20, newActiveOnly: boolean = false) => {
+      setPage(newPage);
+      setSize(newSize);
+      setActiveOnly(newActiveOnly);
     },
     []
   );
 
   const createNewLaborRate = useCallback(
-    async (request: CreateLaborRateRequest) => {
-      const rate = await createLaborRate(request);
-      await loadLaborRates(currentPage);
-      return rate;
+    async (request: CreateLaborRateRequest): Promise<LaborRate> => {
+      return createMutation.mutateAsync(request);
     },
-    [currentPage, loadLaborRates]
+    [createMutation]
   );
 
   const updateLaborRateById = useCallback(
-    async (id: string, request: UpdateLaborRateRequest) => {
-      const rate = await updateLaborRate(id, request);
-      await loadLaborRates(currentPage);
-      return rate;
+    async (id: string, request: UpdateLaborRateRequest): Promise<LaborRate> => {
+      return updateMutation.mutateAsync({id, request});
     },
-    [currentPage, loadLaborRates]
+    [updateMutation]
   );
 
   const toggleLaborRateActive = useCallback(
-    async (id: string, active: boolean) => {
-      await setLaborRateActive(id, active);
-      await loadLaborRates(currentPage);
+    async (id: string, active: boolean): Promise<void> => {
+      await toggleActiveMutation.mutateAsync({id, active});
     },
-    [currentPage, loadLaborRates]
+    [toggleActiveMutation]
   );
 
   const deleteLaborRateById = useCallback(
-    async (id: string) => {
-      await deleteLaborRate(id);
-      await loadLaborRates(currentPage);
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
     },
-    [currentPage, loadLaborRates]
+    [deleteMutation]
   );
 
   const refresh = useCallback(async () => {
-    await loadLaborRates(currentPage);
-  }, [currentPage, loadLaborRates]);
+    await query.refetch();
+  }, [query]);
 
-  useEffect(() => {
-    loadLaborRates();
-  }, [loadLaborRates]);
+  const isLoading =
+    query.isLoading ||
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    toggleActiveMutation.isPending ||
+    deleteMutation.isPending;
+
+  const error =
+    query.error ??
+    createMutation.error ??
+    updateMutation.error ??
+    toggleActiveMutation.error ??
+    deleteMutation.error ??
+    null;
 
   return {
-    laborRates,
-    totalElements,
-    totalPages,
-    currentPage,
+    laborRates: query.data?.content ?? [],
+    totalElements: query.data?.totalElements ?? 0,
+    totalPages: query.data?.totalPages ?? 0,
+    currentPage: query.data?.number ?? page,
     isLoading,
     error,
     loadLaborRates,
@@ -453,32 +495,21 @@ interface UseLaborRateReturn {
 }
 
 export function useLaborRate(id: string): UseLaborRateReturn {
-  const [laborRate, setLaborRate] = useState<LaborRate | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const query = useQuery({
+    queryKey: [...queryKeys.laborRates.all, 'detail', id],
+    queryFn: () => fetchLaborRate(id),
+    enabled: id !== '',
+  });
 
-  const loadLaborRate = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchLaborRate(id);
-      setLaborRate(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load labor rate'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    loadLaborRate();
-  }, [loadLaborRate]);
+  const refresh = useCallback(async () => {
+    await query.refetch();
+  }, [query]);
 
   return {
-    laborRate,
-    isLoading,
-    error,
-    refresh: loadLaborRate,
+    laborRate: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error ?? null,
+    refresh,
   };
 }
 
@@ -492,31 +523,19 @@ interface UseFinancialSummaryReturn {
 }
 
 export function useFinancialSummary(): UseFinancialSummaryReturn {
-  const [summary, setSummary] = useState<TenantFinancialSummary | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const query = useQuery({
+    queryKey: [...queryKeys.dashboard.all, 'financial'],
+    queryFn: fetchFinancialSummary,
+  });
 
-  const loadSummary = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await fetchFinancialSummary();
-      setSummary(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load financial summary'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadSummary();
-  }, [loadSummary]);
+  const refresh = useCallback(async () => {
+    await query.refetch();
+  }, [query]);
 
   return {
-    summary,
-    isLoading,
-    error,
-    refresh: loadSummary,
+    summary: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error ?? null,
+    refresh,
   };
 }

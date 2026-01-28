@@ -1,35 +1,37 @@
-import {useCallback, useEffect, useState} from 'react';
-import {
-    createClin,
-    createContract,
-    createDeliverable,
-    createModification,
-    executeModification,
-    fetchClins,
-    fetchContract,
-    fetchContracts,
-    fetchContractSummary,
-    fetchDeliverables,
-    fetchModifications,
-    searchContracts,
-    updateClin,
-    updateContract,
-    updateDeliverableStatus,
-} from '../services/contractService';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback, useState} from 'react';
 import type {
-    Contract,
-    ContractClin,
-    ContractDeliverable,
-    ContractModification,
-    ContractSummary,
-    CreateClinRequest,
-    CreateContractRequest,
-    CreateDeliverableRequest,
-    CreateModificationRequest,
-    DeliverableStatus,
-    UpdateClinRequest,
-    UpdateContractRequest,
+  Contract,
+  ContractClin,
+  ContractDeliverable,
+  ContractModification,
+  ContractSummary,
+  CreateClinRequest,
+  CreateContractRequest,
+  CreateDeliverableRequest,
+  CreateModificationRequest,
+  DeliverableStatus,
+  UpdateClinRequest,
+  UpdateContractRequest,
 } from '../components/domain/contracts/Contract.types';
+import {queryKeys} from '../lib/query-keys';
+import {
+  createClin,
+  createContract,
+  createDeliverable,
+  createModification,
+  executeModification,
+  fetchClins,
+  fetchContract,
+  fetchContracts,
+  fetchContractSummary,
+  fetchDeliverables,
+  fetchModifications,
+  searchContracts,
+  updateClin,
+  updateContract,
+  updateDeliverableStatus,
+} from '../services/contractService';
 
 // ==================== useContracts - List Hook ====================
 
@@ -50,60 +52,43 @@ export interface UseContractsReturn {
 }
 
 export function useContracts(initialPage: number = 0, initialSize: number = 20): UseContractsReturn {
-  const [contracts, setContracts] = useState<Contract[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const [page, setPage] = useState(initialPage);
   const [size, setSize] = useState(initialSize);
-  const [totalElements, setTotalElements] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState<string | null>(null);
 
-  const loadContracts = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const result = searchKeyword !== null && searchKeyword.length > 0
-        ? await searchContracts(searchKeyword, page, size)
-        : await fetchContracts(page, size);
+  const query = useQuery({
+    queryKey: queryKeys.contracts.list({page, size, searchKeyword}),
+    queryFn: async () => {
+      const result =
+        searchKeyword !== null && searchKeyword.length > 0
+          ? await searchContracts(searchKeyword, page, size)
+          : await fetchContracts(page, size);
 
       if (result.success) {
-        setContracts(result.data.content);
-        setTotalElements(result.data.totalElements);
-        setTotalPages(result.data.totalPages);
-      } else {
-        setError(new Error(result.error.message));
+        return result.data;
       }
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch contracts'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, size, searchKeyword]);
+      throw new Error(result.error.message);
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadContracts();
-  }, [loadContracts]);
+    await query.refetch();
+  }, [query]);
 
   const search = useCallback(async (keyword: string) => {
     setSearchKeyword(keyword.length > 0 ? keyword : null);
     setPage(0);
   }, []);
 
-  useEffect(() => {
-    loadContracts();
-  }, [loadContracts]);
-
   return {
-    contracts,
-    isLoading,
-    error,
+    contracts: query.data?.content ?? [],
+    isLoading: query.isLoading,
+    error: query.error ?? null,
     pagination: {
       page,
       size,
-      totalElements,
-      totalPages,
+      totalElements: query.data?.totalElements ?? 0,
+      totalPages: query.data?.totalPages ?? 0,
     },
     setPage,
     setSize,
@@ -133,236 +118,308 @@ export interface UseContractReturn {
 }
 
 export function useContract(contractId: string | null): UseContractReturn {
-  const [contract, setContract] = useState<Contract | null>(null);
-  const [summary, setSummary] = useState<ContractSummary | null>(null);
-  const [clins, setClins] = useState<ContractClin[]>([]);
-  const [modifications, setModifications] = useState<ContractModification[]>([]);
-  const [deliverables, setDeliverables] = useState<ContractDeliverable[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadContract = useCallback(async () => {
-    if (contractId === null) {
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const [contractResult, summaryResult, clinsResult, modsResult, deliverablesResult] =
-        await Promise.all([
-          fetchContract(contractId),
-          fetchContractSummary(contractId),
-          fetchClins(contractId),
-          fetchModifications(contractId),
-          fetchDeliverables(contractId),
-        ]);
-
-      if (contractResult.success) {
-        setContract(contractResult.data);
-      } else {
-        setError(new Error(contractResult.error.message));
-        return;
+  const contractQuery = useQuery({
+    queryKey: queryKeys.contracts.detail(contractId ?? ''),
+    queryFn: async () => {
+      if (contractId === null) {
+        return null;
       }
-
-      if (summaryResult.success) {
-        setSummary(summaryResult.data);
+      const result = await fetchContract(contractId);
+      if (result.success) {
+        return result.data;
       }
+      throw new Error(result.error.message);
+    },
+    enabled: contractId !== null,
+  });
 
-      if (clinsResult.success) {
-        setClins(clinsResult.data);
+  const summaryQuery = useQuery({
+    queryKey: queryKeys.contracts.summary(contractId ?? ''),
+    queryFn: async () => {
+      if (contractId === null) {
+        return null;
       }
+      const result = await fetchContractSummary(contractId);
+      if (result.success) {
+        return result.data;
+      }
+      return null;
+    },
+    enabled: contractId !== null,
+  });
 
-      if (modsResult.success) {
-        setModifications(modsResult.data);
+  const clinsQuery = useQuery({
+    queryKey: queryKeys.contracts.clins(contractId ?? ''),
+    queryFn: async () => {
+      if (contractId === null) {
+        return [];
       }
+      const result = await fetchClins(contractId);
+      if (result.success) {
+        return result.data;
+      }
+      return [];
+    },
+    enabled: contractId !== null,
+  });
 
-      if (deliverablesResult.success) {
-        setDeliverables(deliverablesResult.data);
+  const modificationsQuery = useQuery({
+    queryKey: queryKeys.contracts.modifications(contractId ?? ''),
+    queryFn: async () => {
+      if (contractId === null) {
+        return [];
       }
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch contract'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [contractId]);
+      const result = await fetchModifications(contractId);
+      if (result.success) {
+        return result.data;
+      }
+      return [];
+    },
+    enabled: contractId !== null,
+  });
+
+  const deliverablesQuery = useQuery({
+    queryKey: queryKeys.contracts.deliverables(contractId ?? ''),
+    queryFn: async () => {
+      if (contractId === null) {
+        return [];
+      }
+      const result = await fetchDeliverables(contractId);
+      if (result.success) {
+        return result.data;
+      }
+      return [];
+    },
+    enabled: contractId !== null,
+  });
+
+  const updateContractMutation = useMutation({
+    mutationFn: async (data: UpdateContractRequest) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await updateContract(contractId, data);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKeys.contracts.detail(contractId ?? ''), data);
+    },
+  });
+
+  const addClinMutation = useMutation({
+    mutationFn: async (data: CreateClinRequest) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await createClin(contractId, data);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.clins(contractId ?? '')});
+    },
+  });
+
+  const updateClinMutation = useMutation({
+    mutationFn: async ({clinId, data}: {clinId: string; data: UpdateClinRequest}) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await updateClin(contractId, clinId, data);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.clins(contractId ?? '')});
+    },
+  });
+
+  const addModificationMutation = useMutation({
+    mutationFn: async (data: CreateModificationRequest) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await createModification(contractId, data);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.modifications(contractId ?? '')});
+    },
+  });
+
+  const executeModificationMutation = useMutation({
+    mutationFn: async (modificationId: string) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await executeModification(contractId, modificationId);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.detail(contractId ?? '')});
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.modifications(contractId ?? '')});
+    },
+  });
+
+  const addDeliverableMutation = useMutation({
+    mutationFn: async (data: CreateDeliverableRequest) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await createDeliverable(contractId, data);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.deliverables(contractId ?? '')});
+    },
+  });
+
+  const updateDeliverableStatusMutation = useMutation({
+    mutationFn: async ({deliverableId, status}: {deliverableId: string; status: DeliverableStatus}) => {
+      if (contractId === null) {
+        throw new Error('Contract ID is required');
+      }
+      const result = await updateDeliverableStatus(contractId, deliverableId, status);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.deliverables(contractId ?? '')});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadContract();
-  }, [loadContract]);
+    await Promise.all([
+      contractQuery.refetch(),
+      summaryQuery.refetch(),
+      clinsQuery.refetch(),
+      modificationsQuery.refetch(),
+      deliverablesQuery.refetch(),
+    ]);
+  }, [contractQuery, summaryQuery, clinsQuery, modificationsQuery, deliverablesQuery]);
 
   const updateContractData = useCallback(
     async (data: UpdateContractRequest): Promise<boolean> => {
-      if (contractId === null) {
-        return false;
-      }
-
       try {
-        const result = await updateContract(contractId, data);
-        if (result.success) {
-          setContract(result.data);
-          return true;
-        }
-        setError(new Error(result.error.message));
-        return false;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to update contract'));
+        await updateContractMutation.mutateAsync(data);
+        return true;
+      } catch {
         return false;
       }
     },
-    [contractId]
+    [updateContractMutation]
   );
 
   const addClin = useCallback(
     async (data: CreateClinRequest): Promise<ContractClin | null> => {
-      if (contractId === null) {
-        return null;
-      }
-
       try {
-        const result = await createClin(contractId, data);
-        if (result.success) {
-          setClins((prev) => [...prev, result.data]);
-          return result.data;
-        }
-        setError(new Error(result.error.message));
-        return null;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to create CLIN'));
+        return await addClinMutation.mutateAsync(data);
+      } catch {
         return null;
       }
     },
-    [contractId]
+    [addClinMutation]
   );
 
   const updateClinData = useCallback(
     async (clinId: string, data: UpdateClinRequest): Promise<ContractClin | null> => {
-      if (contractId === null) {
-        return null;
-      }
-
       try {
-        const result = await updateClin(contractId, clinId, data);
-        if (result.success) {
-          setClins((prev) =>
-            prev.map((c) => (c.id === clinId ? result.data : c))
-          );
-          return result.data;
-        }
-        setError(new Error(result.error.message));
-        return null;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to update CLIN'));
+        return await updateClinMutation.mutateAsync({clinId, data});
+      } catch {
         return null;
       }
     },
-    [contractId]
+    [updateClinMutation]
   );
 
   const addModification = useCallback(
     async (data: CreateModificationRequest): Promise<ContractModification | null> => {
-      if (contractId === null) {
-        return null;
-      }
-
       try {
-        const result = await createModification(contractId, data);
-        if (result.success) {
-          setModifications((prev) => [result.data, ...prev]);
-          return result.data;
-        }
-        setError(new Error(result.error.message));
-        return null;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to create modification'));
+        return await addModificationMutation.mutateAsync(data);
+      } catch {
         return null;
       }
     },
-    [contractId]
+    [addModificationMutation]
   );
 
   const executeModificationAction = useCallback(
     async (modificationId: string): Promise<boolean> => {
-      if (contractId === null) {
-        return false;
-      }
-
       try {
-        const result = await executeModification(contractId, modificationId);
-        if (result.success) {
-          setModifications((prev) =>
-            prev.map((m) => (m.id === modificationId ? result.data : m))
-          );
-          await refresh();
-          return true;
-        }
-        setError(new Error(result.error.message));
-        return false;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to execute modification'));
+        await executeModificationMutation.mutateAsync(modificationId);
+        return true;
+      } catch {
         return false;
       }
     },
-    [contractId, refresh]
+    [executeModificationMutation]
   );
 
   const addDeliverable = useCallback(
     async (data: CreateDeliverableRequest): Promise<ContractDeliverable | null> => {
-      if (contractId === null) {
-        return null;
-      }
-
       try {
-        const result = await createDeliverable(contractId, data);
-        if (result.success) {
-          setDeliverables((prev) => [...prev, result.data]);
-          return result.data;
-        }
-        setError(new Error(result.error.message));
-        return null;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to create deliverable'));
+        return await addDeliverableMutation.mutateAsync(data);
+      } catch {
         return null;
       }
     },
-    [contractId]
+    [addDeliverableMutation]
   );
 
   const updateDeliverableStatusAction = useCallback(
     async (deliverableId: string, status: DeliverableStatus): Promise<boolean> => {
-      if (contractId === null) {
-        return false;
-      }
-
       try {
-        const result = await updateDeliverableStatus(contractId, deliverableId, status);
-        if (result.success) {
-          setDeliverables((prev) =>
-            prev.map((d) => (d.id === deliverableId ? result.data : d))
-          );
-          return true;
-        }
-        setError(new Error(result.error.message));
-        return false;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to update deliverable status'));
+        await updateDeliverableStatusMutation.mutateAsync({deliverableId, status});
+        return true;
+      } catch {
         return false;
       }
     },
-    [contractId]
+    [updateDeliverableStatusMutation]
   );
 
-  useEffect(() => {
-    loadContract();
-  }, [loadContract]);
+  const isLoading =
+    contractQuery.isLoading ||
+    summaryQuery.isLoading ||
+    clinsQuery.isLoading ||
+    modificationsQuery.isLoading ||
+    deliverablesQuery.isLoading;
+
+  const error =
+    contractQuery.error ??
+    summaryQuery.error ??
+    clinsQuery.error ??
+    modificationsQuery.error ??
+    deliverablesQuery.error ??
+    updateContractMutation.error ??
+    null;
 
   return {
-    contract,
-    summary,
-    clins,
-    modifications,
-    deliverables,
+    contract: contractQuery.data ?? null,
+    summary: summaryQuery.data ?? null,
+    clins: clinsQuery.data ?? [],
+    modifications: modificationsQuery.data ?? [],
+    deliverables: deliverablesQuery.data ?? [],
     isLoading,
     error,
     refresh,
@@ -385,35 +442,36 @@ export interface UseCreateContractReturn {
 }
 
 export function useCreateContract(): UseCreateContractReturn {
-  const [isCreating, setIsCreating] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
+
+  const createContractMutation = useMutation({
+    mutationFn: async (data: CreateContractRequest) => {
+      const result = await createContract(data);
+      if (result.success) {
+        return result.data;
+      }
+      throw new Error(result.error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contracts.all});
+    },
+  });
 
   const createContractAction = useCallback(
     async (data: CreateContractRequest): Promise<Contract | null> => {
       try {
-        setIsCreating(true);
-        setError(null);
-
-        const result = await createContract(data);
-        if (result.success) {
-          return result.data;
-        }
-        setError(new Error(result.error.message));
+        return await createContractMutation.mutateAsync(data);
+      } catch {
         return null;
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to create contract'));
-        return null;
-      } finally {
-        setIsCreating(false);
       }
     },
-    []
+    [createContractMutation]
   );
 
   return {
     createContractAction,
-    isCreating,
-    error,
+    isCreating: createContractMutation.isPending,
+    error: createContractMutation.error ?? null,
   };
 }
 

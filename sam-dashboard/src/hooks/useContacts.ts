@@ -1,12 +1,14 @@
-import {useCallback, useEffect, useState} from 'react';
-import type {Contact, ContactFilters, CreateContactRequest, UpdateContactRequest,} from '../types/crm';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback, useState} from 'react';
+import {queryKeys} from '../lib/query-keys';
+import type {Contact, ContactFilters, CreateContactRequest, UpdateContactRequest} from '../types/crm';
 import {
-    createContact as createContactApi,
-    deleteContact as deleteContactApi,
-    fetchContact,
-    fetchContacts,
-    searchContacts,
-    updateContact as updateContactApi,
+  createContact as createContactApi,
+  deleteContact as deleteContactApi,
+  fetchContact,
+  fetchContacts,
+  searchContacts,
+  updateContact as updateContactApi,
 } from '../services/crmService';
 
 export interface UseContactsReturn {
@@ -27,82 +29,80 @@ export interface UseContactsReturn {
 }
 
 export function useContacts(initialFilters?: ContactFilters): UseContactsReturn {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
   const [filters, setFilters] = useState<ContactFilters>(initialFilters ?? {});
+  const [searchKeyword, setSearchKeyword] = useState<string | null>(null);
 
-  const loadContacts = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchContacts(page, 20, filters);
-      setContacts(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load contacts';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, filters]);
+  const query = useQuery({
+    queryKey: queryKeys.contacts.list({page, filters, searchKeyword}),
+    queryFn: async () => {
+      if (searchKeyword !== null && searchKeyword.length > 0) {
+        return searchContacts(searchKeyword, page, 20);
+      }
+      return fetchContacts(page, 20, filters);
+    },
+  });
 
-  useEffect(() => {
-    void loadContacts();
-  }, [loadContacts]);
+  const createMutation = useMutation({
+    mutationFn: createContactApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contacts.all});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdateContactRequest}) =>
+      updateContactApi(id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contacts.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteContactApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.contacts.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadContacts();
-  }, [loadContacts]);
+    await query.refetch();
+  }, [query]);
 
   const search = useCallback(async (keyword: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await searchContacts(keyword, page, 20);
-      setContacts(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Search failed';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page]);
-
-  const create = useCallback(async (request: CreateContactRequest): Promise<Contact> => {
-    const newContact = await createContactApi(request);
-    setContacts((prev) => [newContact, ...prev]);
-    setTotalElements((prev) => prev + 1);
-    return newContact;
+    setSearchKeyword(keyword.length > 0 ? keyword : null);
+    setPage(0);
   }, []);
 
-  const update = useCallback(async (id: string, request: UpdateContactRequest): Promise<Contact> => {
-    const updatedContact = await updateContactApi(id, request);
-    setContacts((prev) =>
-      prev.map((c) => (c.id === id ? updatedContact : c))
-    );
-    return updatedContact;
-  }, []);
+  const create = useCallback(
+    async (request: CreateContactRequest): Promise<Contact> => {
+      return createMutation.mutateAsync(request);
+    },
+    [createMutation]
+  );
 
-  const remove = useCallback(async (id: string): Promise<void> => {
-    await deleteContactApi(id);
-    setContacts((prev) => prev.filter((c) => c.id !== id));
-    setTotalElements((prev) => prev - 1);
-  }, []);
+  const update = useCallback(
+    async (id: string, request: UpdateContactRequest): Promise<Contact> => {
+      return updateMutation.mutateAsync({id, request});
+    },
+    [updateMutation]
+  );
+
+  const remove = useCallback(
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation]
+  );
 
   return {
-    contacts,
-    isLoading,
-    error,
+    contacts: query.data?.content ?? [],
+    isLoading: query.isLoading || createMutation.isPending || updateMutation.isPending || deleteMutation.isPending,
+    error: query.error ?? createMutation.error ?? updateMutation.error ?? deleteMutation.error ?? null,
     page,
-    totalPages,
-    totalElements,
+    totalPages: query.data?.totalPages ?? 0,
+    totalElements: query.data?.totalElements ?? 0,
     filters,
     setFilters,
     setPage,
@@ -123,47 +123,37 @@ export interface UseContactReturn {
 }
 
 export function useContact(id: string): UseContactReturn {
-  const [contact, setContact] = useState<Contact | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadContact = useCallback(async () => {
-    if (id === '') {
-      setContact(null);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchContact(id);
-      setContact(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load contact';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
+  const query = useQuery({
+    queryKey: queryKeys.contacts.detail(id),
+    queryFn: () => fetchContact(id),
+    enabled: id !== '',
+  });
 
-  useEffect(() => {
-    void loadContact();
-  }, [loadContact]);
+  const updateMutation = useMutation({
+    mutationFn: (request: UpdateContactRequest) => updateContactApi(id, request),
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKeys.contacts.detail(id), data);
+      queryClient.invalidateQueries({queryKey: queryKeys.contacts.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadContact();
-  }, [loadContact]);
+    await query.refetch();
+  }, [query]);
 
-  const update = useCallback(async (request: UpdateContactRequest): Promise<Contact> => {
-    const updatedContact = await updateContactApi(id, request);
-    setContact(updatedContact);
-    return updatedContact;
-  }, [id]);
+  const update = useCallback(
+    async (request: UpdateContactRequest): Promise<Contact> => {
+      return updateMutation.mutateAsync(request);
+    },
+    [updateMutation]
+  );
 
   return {
-    contact,
-    isLoading,
-    error,
+    contact: query.data ?? null,
+    isLoading: query.isLoading || updateMutation.isPending,
+    error: query.error ?? updateMutation.error ?? null,
     refresh,
     update,
   };

@@ -1,32 +1,34 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useCallback, useState} from 'react';
+import {queryKeys} from '../lib/query-keys';
 import type {
-    AddOpportunityRequest,
-    CreatePipelineRequest,
-    Pipeline,
-    PipelineOpportunity,
-    PipelineSummary,
-    SetBidDecisionRequest,
-    UpdatePipelineOpportunityRequest,
-    UpdatePipelineRequest,
+  AddOpportunityRequest,
+  CreatePipelineRequest,
+  Pipeline,
+  PipelineOpportunity,
+  PipelineSummary,
+  SetBidDecisionRequest,
+  UpdatePipelineOpportunityRequest,
+  UpdatePipelineRequest,
 } from '../types/pipeline';
 import {
-    addOpportunityToPipeline as addOpportunityApi,
-    archivePipeline as archivePipelineApi,
-    createPipeline as createPipelineApi,
-    deletePipeline as deletePipelineApi,
-    fetchApproachingDeadlines,
-    fetchPipeline,
-    fetchPipelineOpportunities,
-    fetchPipelineOpportunity,
-    fetchPipelines,
-    fetchPipelineSummary,
-    fetchStaleOpportunities,
-    moveOpportunityToStage as moveOpportunityApi,
-    removeOpportunityFromPipeline as removeOpportunityApi,
-    setBidDecision as setBidDecisionApi,
-    setDefaultPipeline as setDefaultPipelineApi,
-    updatePipeline as updatePipelineApi,
-    updatePipelineOpportunity as updateOpportunityApi,
+  addOpportunityToPipeline as addOpportunityApi,
+  archivePipeline as archivePipelineApi,
+  createPipeline as createPipelineApi,
+  deletePipeline as deletePipelineApi,
+  fetchApproachingDeadlines,
+  fetchPipeline,
+  fetchPipelineOpportunities,
+  fetchPipelineOpportunity,
+  fetchPipelines,
+  fetchPipelineSummary,
+  fetchStaleOpportunities,
+  moveOpportunityToStage as moveOpportunityApi,
+  removeOpportunityFromPipeline as removeOpportunityApi,
+  setBidDecision as setBidDecisionApi,
+  setDefaultPipeline as setDefaultPipelineApi,
+  updatePipeline as updatePipelineApi,
+  updatePipelineOpportunity as updateOpportunityApi,
 } from '../services/pipelineService';
 
 // ============ usePipelines Hook ============
@@ -46,74 +48,108 @@ export interface UsePipelinesReturn {
 }
 
 export function usePipelines(initialIncludeArchived: boolean = false): UsePipelinesReturn {
-  const [pipelines, setPipelines] = useState<Pipeline[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
   const [includeArchived, setIncludeArchived] = useState(initialIncludeArchived);
 
-  const loadPipelines = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchPipelines(includeArchived);
-      setPipelines(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load pipelines';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [includeArchived]);
+  const query = useQuery({
+    queryKey: [...queryKeys.pipelines.list(), {includeArchived}],
+    queryFn: () => fetchPipelines(includeArchived),
+  });
 
-  useEffect(() => {
-    void loadPipelines();
-  }, [loadPipelines]);
+  const createMutation = useMutation({
+    mutationFn: createPipelineApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.all});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdatePipelineRequest}) =>
+      updatePipelineApi(id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.all});
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deletePipelineApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.all});
+    },
+  });
+
+  const setDefaultMutation = useMutation({
+    mutationFn: setDefaultPipelineApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.all});
+    },
+  });
+
+  const archiveMutation = useMutation({
+    mutationFn: archivePipelineApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadPipelines();
-  }, [loadPipelines]);
+    await query.refetch();
+  }, [query]);
 
-  const create = useCallback(async (request: CreatePipelineRequest): Promise<Pipeline> => {
-    const newPipeline = await createPipelineApi(request);
-    setPipelines((prev) => [...prev, newPipeline]);
-    return newPipeline;
-  }, []);
+  const create = useCallback(
+    async (request: CreatePipelineRequest): Promise<Pipeline> => {
+      return createMutation.mutateAsync(request);
+    },
+    [createMutation]
+  );
 
   const update = useCallback(
     async (id: string, request: UpdatePipelineRequest): Promise<Pipeline> => {
-      const updatedPipeline = await updatePipelineApi(id, request);
-      setPipelines((prev) =>
-        prev.map((p) => (p.id === id ? updatedPipeline : p))
-      );
-      return updatedPipeline;
+      return updateMutation.mutateAsync({id, request});
     },
-    []
+    [updateMutation]
   );
 
-  const remove = useCallback(async (id: string): Promise<void> => {
-    await deletePipelineApi(id);
-    setPipelines((prev) => prev.filter((p) => p.id !== id));
-  }, []);
+  const remove = useCallback(
+    async (id: string): Promise<void> => {
+      await deleteMutation.mutateAsync(id);
+    },
+    [deleteMutation]
+  );
 
-  const setDefault = useCallback(async (id: string): Promise<void> => {
-    await setDefaultPipelineApi(id);
-    setPipelines((prev) =>
-      prev.map((p) => ({
-        ...p,
-        isDefault: p.id === id,
-      }))
-    );
-  }, []);
+  const setDefault = useCallback(
+    async (id: string): Promise<void> => {
+      await setDefaultMutation.mutateAsync(id);
+    },
+    [setDefaultMutation]
+  );
 
-  const archive = useCallback(async (id: string): Promise<void> => {
-    await archivePipelineApi(id);
-    setPipelines((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, isArchived: true } : p))
-    );
-  }, []);
+  const archive = useCallback(
+    async (id: string): Promise<void> => {
+      await archiveMutation.mutateAsync(id);
+    },
+    [archiveMutation]
+  );
+
+  const isLoading =
+    query.isLoading ||
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    deleteMutation.isPending ||
+    setDefaultMutation.isPending ||
+    archiveMutation.isPending;
+
+  const error =
+    query.error ??
+    createMutation.error ??
+    updateMutation.error ??
+    deleteMutation.error ??
+    setDefaultMutation.error ??
+    archiveMutation.error ??
+    null;
 
   return {
-    pipelines,
+    pipelines: query.data ?? [],
     isLoading,
     error,
     includeArchived,
@@ -138,50 +174,37 @@ export interface UsePipelineReturn {
 }
 
 export function usePipeline(pipelineId: string): UsePipelineReturn {
-  const [pipeline, setPipeline] = useState<Pipeline | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadPipeline = useCallback(async () => {
-    if (pipelineId === '') {
-      setPipeline(null);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchPipeline(pipelineId);
-      setPipeline(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load pipeline';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pipelineId]);
+  const query = useQuery({
+    queryKey: queryKeys.pipelines.detail(pipelineId),
+    queryFn: () => fetchPipeline(pipelineId),
+    enabled: pipelineId !== '',
+  });
 
-  useEffect(() => {
-    void loadPipeline();
-  }, [loadPipeline]);
+  const updateMutation = useMutation({
+    mutationFn: (request: UpdatePipelineRequest) => updatePipelineApi(pipelineId, request),
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKeys.pipelines.detail(pipelineId), data);
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.all});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadPipeline();
-  }, [loadPipeline]);
+    await query.refetch();
+  }, [query]);
 
   const update = useCallback(
     async (request: UpdatePipelineRequest): Promise<Pipeline> => {
-      const updatedPipeline = await updatePipelineApi(pipelineId, request);
-      setPipeline(updatedPipeline);
-      return updatedPipeline;
+      return updateMutation.mutateAsync(request);
     },
-    [pipelineId]
+    [updateMutation]
   );
 
   return {
-    pipeline,
-    isLoading,
-    error,
+    pipeline: query.data ?? null,
+    isLoading: query.isLoading || updateMutation.isPending,
+    error: query.error ?? updateMutation.error ?? null,
     refresh,
     update,
   };
@@ -208,105 +231,117 @@ export interface UsePipelineOpportunitiesReturn {
 }
 
 export function usePipelineOpportunities(pipelineId: string): UsePipelineOpportunitiesReturn {
-  const [opportunities, setOpportunities] = useState<PipelineOpportunity[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
   const [stageFilter, setStageFilter] = useState<string | undefined>(undefined);
 
-  const loadOpportunities = useCallback(async () => {
-    if (pipelineId === '') {
-      setOpportunities([]);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchPipelineOpportunities(pipelineId, page, 50, stageFilter);
-      setOpportunities(result.content);
-      setTotalPages(result.totalPages);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load opportunities';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pipelineId, page, stageFilter]);
+  const query = useQuery({
+    queryKey: [...queryKeys.pipelines.opportunities(pipelineId), {page, stageFilter}],
+    queryFn: () => fetchPipelineOpportunities(pipelineId, page, 50, stageFilter),
+    enabled: pipelineId !== '',
+  });
 
-  useEffect(() => {
-    void loadOpportunities();
-  }, [loadOpportunities]);
+  const addMutation = useMutation({
+    mutationFn: (request: AddOpportunityRequest) => addOpportunityApi(pipelineId, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: UpdatePipelineOpportunityRequest}) =>
+      updateOpportunityApi(pipelineId, id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: (id: string) => removeOpportunityApi(pipelineId, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
+
+  const moveMutation = useMutation({
+    mutationFn: ({id, stageId}: {id: string; stageId: string}) =>
+      moveOpportunityApi(pipelineId, id, stageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
+
+  const decisionMutation = useMutation({
+    mutationFn: ({id, request}: {id: string; request: SetBidDecisionRequest}) =>
+      setBidDecisionApi(pipelineId, id, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadOpportunities();
-  }, [loadOpportunities]);
+    await query.refetch();
+  }, [query]);
 
   const add = useCallback(
     async (request: AddOpportunityRequest): Promise<PipelineOpportunity> => {
-      const newOpp = await addOpportunityApi(pipelineId, request);
-      setOpportunities((prev) => [newOpp, ...prev]);
-      setTotalElements((prev) => prev + 1);
-      return newOpp;
+      return addMutation.mutateAsync(request);
     },
-    [pipelineId]
+    [addMutation]
   );
 
   const update = useCallback(
-    async (
-      id: string,
-      request: UpdatePipelineOpportunityRequest
-    ): Promise<PipelineOpportunity> => {
-      const updatedOpp = await updateOpportunityApi(pipelineId, id, request);
-      setOpportunities((prev) =>
-        prev.map((o) => (o.id === id ? updatedOpp : o))
-      );
-      return updatedOpp;
+    async (id: string, request: UpdatePipelineOpportunityRequest): Promise<PipelineOpportunity> => {
+      return updateMutation.mutateAsync({id, request});
     },
-    [pipelineId]
+    [updateMutation]
   );
 
   const remove = useCallback(
     async (id: string): Promise<void> => {
-      await removeOpportunityApi(pipelineId, id);
-      setOpportunities((prev) => prev.filter((o) => o.id !== id));
-      setTotalElements((prev) => prev - 1);
+      await removeMutation.mutateAsync(id);
     },
-    [pipelineId]
+    [removeMutation]
   );
 
   const moveToStage = useCallback(
     async (id: string, stageId: string): Promise<PipelineOpportunity> => {
-      const movedOpp = await moveOpportunityApi(pipelineId, id, stageId);
-      setOpportunities((prev) =>
-        prev.map((o) => (o.id === id ? movedOpp : o))
-      );
-      return movedOpp;
+      return moveMutation.mutateAsync({id, stageId});
     },
-    [pipelineId]
+    [moveMutation]
   );
 
   const setDecision = useCallback(
     async (id: string, request: SetBidDecisionRequest): Promise<PipelineOpportunity> => {
-      const updatedOpp = await setBidDecisionApi(pipelineId, id, request);
-      setOpportunities((prev) =>
-        prev.map((o) => (o.id === id ? updatedOpp : o))
-      );
-      return updatedOpp;
+      return decisionMutation.mutateAsync({id, request});
     },
-    [pipelineId]
+    [decisionMutation]
   );
 
+  const isLoading =
+    query.isLoading ||
+    addMutation.isPending ||
+    updateMutation.isPending ||
+    removeMutation.isPending ||
+    moveMutation.isPending ||
+    decisionMutation.isPending;
+
+  const error =
+    query.error ??
+    addMutation.error ??
+    updateMutation.error ??
+    removeMutation.error ??
+    moveMutation.error ??
+    decisionMutation.error ??
+    null;
+
   return {
-    opportunities,
+    opportunities: query.data?.content ?? [],
     isLoading,
     error,
     page,
-    totalPages,
-    totalElements,
+    totalPages: query.data?.totalPages ?? 0,
+    totalElements: query.data?.totalElements ?? 0,
     stageFilter,
     setStageFilter,
     setPage,
@@ -335,66 +370,82 @@ export function usePipelineOpportunity(
   pipelineId: string,
   opportunityId: string
 ): UsePipelineOpportunityReturn {
-  const [opportunity, setOpportunity] = useState<PipelineOpportunity | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
 
-  const loadOpportunity = useCallback(async () => {
-    if (pipelineId === '' || opportunityId === '') {
-      setOpportunity(null);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await fetchPipelineOpportunity(pipelineId, opportunityId);
-      setOpportunity(result);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load opportunity';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pipelineId, opportunityId]);
+  const query = useQuery({
+    queryKey: [...queryKeys.pipelines.opportunities(pipelineId), opportunityId],
+    queryFn: () => fetchPipelineOpportunity(pipelineId, opportunityId),
+    enabled: pipelineId !== '' && opportunityId !== '',
+  });
 
-  useEffect(() => {
-    void loadOpportunity();
-  }, [loadOpportunity]);
+  const updateMutation = useMutation({
+    mutationFn: (request: UpdatePipelineOpportunityRequest) =>
+      updateOpportunityApi(pipelineId, opportunityId, request),
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        [...queryKeys.pipelines.opportunities(pipelineId), opportunityId],
+        data
+      );
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
+
+  const moveMutation = useMutation({
+    mutationFn: (stageId: string) => moveOpportunityApi(pipelineId, opportunityId, stageId),
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        [...queryKeys.pipelines.opportunities(pipelineId), opportunityId],
+        data
+      );
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
+
+  const decisionMutation = useMutation({
+    mutationFn: (request: SetBidDecisionRequest) =>
+      setBidDecisionApi(pipelineId, opportunityId, request),
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        [...queryKeys.pipelines.opportunities(pipelineId), opportunityId],
+        data
+      );
+      queryClient.invalidateQueries({queryKey: queryKeys.pipelines.opportunities(pipelineId)});
+    },
+  });
 
   const refresh = useCallback(async () => {
-    await loadOpportunity();
-  }, [loadOpportunity]);
+    await query.refetch();
+  }, [query]);
 
   const update = useCallback(
     async (request: UpdatePipelineOpportunityRequest): Promise<PipelineOpportunity> => {
-      const updatedOpp = await updateOpportunityApi(pipelineId, opportunityId, request);
-      setOpportunity(updatedOpp);
-      return updatedOpp;
+      return updateMutation.mutateAsync(request);
     },
-    [pipelineId, opportunityId]
+    [updateMutation]
   );
 
   const moveToStage = useCallback(
     async (stageId: string): Promise<PipelineOpportunity> => {
-      const movedOpp = await moveOpportunityApi(pipelineId, opportunityId, stageId);
-      setOpportunity(movedOpp);
-      return movedOpp;
+      return moveMutation.mutateAsync(stageId);
     },
-    [pipelineId, opportunityId]
+    [moveMutation]
   );
 
   const setDecision = useCallback(
     async (request: SetBidDecisionRequest): Promise<PipelineOpportunity> => {
-      const updatedOpp = await setBidDecisionApi(pipelineId, opportunityId, request);
-      setOpportunity(updatedOpp);
-      return updatedOpp;
+      return decisionMutation.mutateAsync(request);
     },
-    [pipelineId, opportunityId]
+    [decisionMutation]
   );
 
+  const isLoading =
+    query.isLoading || updateMutation.isPending || moveMutation.isPending || decisionMutation.isPending;
+
+  const error =
+    query.error ?? updateMutation.error ?? moveMutation.error ?? decisionMutation.error ?? null;
+
   return {
-    opportunity,
+    opportunity: query.data ?? null,
     isLoading,
     error,
     refresh,
@@ -420,51 +471,35 @@ export function usePipelineSummary(
   deadlineDays: number = 7,
   staleDays: number = 14
 ): UsePipelineSummaryReturn {
-  const [summary, setSummary] = useState<PipelineSummary | null>(null);
-  const [approachingDeadlines, setApproachingDeadlines] = useState<PipelineOpportunity[]>([]);
-  const [staleOpportunities, setStaleOpportunities] = useState<PipelineOpportunity[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const summaryQuery = useQuery({
+    queryKey: [...queryKeys.pipelines.detail(pipelineId), 'summary'],
+    queryFn: () => fetchPipelineSummary(pipelineId),
+    enabled: pipelineId !== '',
+  });
 
-  const loadSummary = useCallback(async () => {
-    if (pipelineId === '') {
-      setSummary(null);
-      setApproachingDeadlines([]);
-      setStaleOpportunities([]);
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    try {
-      const [summaryResult, deadlinesResult, staleResult] = await Promise.all([
-        fetchPipelineSummary(pipelineId),
-        fetchApproachingDeadlines(pipelineId, deadlineDays),
-        fetchStaleOpportunities(pipelineId, staleDays),
-      ]);
-      setSummary(summaryResult);
-      setApproachingDeadlines(deadlinesResult);
-      setStaleOpportunities(staleResult);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load summary';
-      setError(new Error(errorMessage));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [pipelineId, deadlineDays, staleDays]);
+  const deadlinesQuery = useQuery({
+    queryKey: [...queryKeys.pipelines.detail(pipelineId), 'deadlines', deadlineDays],
+    queryFn: () => fetchApproachingDeadlines(pipelineId, deadlineDays),
+    enabled: pipelineId !== '',
+  });
 
-  useEffect(() => {
-    void loadSummary();
-  }, [loadSummary]);
+  const staleQuery = useQuery({
+    queryKey: [...queryKeys.pipelines.detail(pipelineId), 'stale', staleDays],
+    queryFn: () => fetchStaleOpportunities(pipelineId, staleDays),
+    enabled: pipelineId !== '',
+  });
 
   const refresh = useCallback(async () => {
-    await loadSummary();
-  }, [loadSummary]);
+    await Promise.all([summaryQuery.refetch(), deadlinesQuery.refetch(), staleQuery.refetch()]);
+  }, [summaryQuery, deadlinesQuery, staleQuery]);
+
+  const isLoading = summaryQuery.isLoading || deadlinesQuery.isLoading || staleQuery.isLoading;
+  const error = summaryQuery.error ?? deadlinesQuery.error ?? staleQuery.error ?? null;
 
   return {
-    summary,
-    approachingDeadlines,
-    staleOpportunities,
+    summary: summaryQuery.data ?? null,
+    approachingDeadlines: deadlinesQuery.data ?? [],
+    staleOpportunities: staleQuery.data ?? [],
     isLoading,
     error,
     refresh,
