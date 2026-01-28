@@ -1,4 +1,4 @@
-import {useOpportunities} from "@/hooks";
+import {useOpportunities, useSector} from "@/hooks";
 import {useAuth} from "@/auth";
 import {useMemo, useState} from "react";
 import {
@@ -58,13 +58,14 @@ import {
     UsagePage,
     UserRolesPage
 } from "@/pages";
-import {Navbar, NavbarItem, NavbarSection, NavbarSpacer, StackedLayout, ThemeToggleCompact} from "@components/catalyst";
+import {Navbar, NavbarDivider, NavbarItem, NavbarSection, NavbarSpacer, SectorTabs, StackedLayout, ThemeToggleCompact} from "@components/catalyst";
 import {ViewSection} from "@/app/viewsection.ts";
 import {RenderSidebar, SidebarIcon} from "@/app/RenderSidebar.tsx";
 
 export function Dashboard() {
     const {opportunities, isLoading, error, ingest} = useOpportunities();
     const {user, logout} = useAuth();
+    const {currentSector, setSector} = useSector();
     const [currentSection, setCurrentSection] = useState<ViewSection>('dashboard');
     const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
     const [selectedContractId, setSelectedContractId] = useState<string | null>(null);
@@ -349,6 +350,13 @@ export function Dashboard() {
                             </SidebarIcon>
                             <Text>Insight</Text>
                         </NavbarItem>
+                    </NavbarSection>
+                    <NavbarDivider/>
+                    <NavbarSection>
+                        <SectorTabs
+                            currentSector={currentSector}
+                            onSectorChange={setSector}
+                        />
                     </NavbarSection>
                     <NavbarSpacer/>
                     <NavbarSection>

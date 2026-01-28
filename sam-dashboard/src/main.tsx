@@ -3,6 +3,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App';
+import {SectorProvider} from './hooks/useSector';
 import {queryClient} from './lib/query-client';
 import './styles/globals.css';
 
@@ -15,7 +16,9 @@ if (rootElement === null) {
 createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <SectorProvider>
+        <App />
+      </SectorProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>
