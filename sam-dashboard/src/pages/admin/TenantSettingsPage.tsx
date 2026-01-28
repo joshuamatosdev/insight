@@ -162,7 +162,7 @@ export function TenantSettingsPage(): React.ReactElement {
               onChange={(e) => updateField('passwordExpiryDays', Number(e.target.value))}
               min={0}
               max={365}
-              helpText="Set to 0 to disable password expiry"
+              // Set to 0 to disable password expiry
             />
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <input
