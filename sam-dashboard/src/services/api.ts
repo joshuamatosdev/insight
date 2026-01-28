@@ -1,7 +1,7 @@
 import { Opportunity } from '../components/domain/opportunity';
 import { SbirAward, SbirStats } from '../components/domain/sbir';
 
-const API_BASE = '/api';
+const API_BASE = '/api/v1';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**
@@ -158,7 +158,7 @@ export async function fetchOpportunityAlerts(
   size: number = 20
 ): Promise<PaginatedResponse<OpportunityAlert>> {
   const response = await authFetch(
-    `${API_BASE}/v1/opportunity-alerts?page=${page}&size=${size}`
+    `${API_BASE}/opportunity-alerts?page=${page}&size=${size}`
   );
   if (response.ok === false) {
     throw new Error(`Failed to fetch opportunity alerts: ${response.statusText}`);
@@ -167,7 +167,7 @@ export async function fetchOpportunityAlerts(
 }
 
 export async function fetchOpportunityAlert(id: string): Promise<OpportunityAlert> {
-  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}`);
+  const response = await authFetch(`${API_BASE}/opportunity-alerts/${id}`);
   if (response.ok === false) {
     throw new Error(`Failed to fetch opportunity alert: ${response.statusText}`);
   }
@@ -177,7 +177,7 @@ export async function fetchOpportunityAlert(id: string): Promise<OpportunityAler
 export async function createOpportunityAlert(
   request: CreateAlertRequest
 ): Promise<OpportunityAlert> {
-  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts`, {
+  const response = await authFetch(`${API_BASE}/opportunity-alerts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export async function updateOpportunityAlert(
   id: string,
   request: UpdateAlertRequest
 ): Promise<OpportunityAlert> {
-  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}`, {
+  const response = await authFetch(`${API_BASE}/opportunity-alerts/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ export async function updateOpportunityAlert(
 }
 
 export async function deleteOpportunityAlert(id: string): Promise<void> {
-  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}`, {
+  const response = await authFetch(`${API_BASE}/opportunity-alerts/${id}`, {
     method: 'DELETE',
   });
   if (response.ok === false) {
@@ -223,7 +223,7 @@ export async function deleteOpportunityAlert(id: string): Promise<void> {
 }
 
 export async function toggleOpportunityAlert(id: string): Promise<OpportunityAlert> {
-  const response = await authFetch(`${API_BASE}/v1/opportunity-alerts/${id}/toggle`, {
+  const response = await authFetch(`${API_BASE}/opportunity-alerts/${id}/toggle`, {
     method: 'POST',
   });
   if (response.ok === false) {
