@@ -1,6 +1,43 @@
 /**
  * Dashboard components barrel export
  */
-export { PipelineValueChart } from './PipelineValueChart';
-export { DeadlineCalendar } from './DeadlineCalendar';
-export { ActivityFeed } from './ActivityFeed';
+
+// Types
+export type {
+  PipelineStageData,
+  PipelineFunnelProps,
+  AgencyDistributionData,
+  AgencyDistributionProps,
+  ContractValueByTypeData,
+  ContractValueByTypeProps,
+  DeadlineItem,
+  DeadlineTimelineProps,
+  SetAsideData,
+  SetAsideDistributionProps,
+  UpcomingDeadline,
+  UpcomingDeadlinesTableProps,
+  PipelineOpportunityRow,
+  PipelineOpportunitiesTableProps,
+  ExpiringContract,
+  ExpiringContractsTableProps,
+  ComplianceAlert,
+  ComplianceAlertsTableProps,
+} from './Dashboard.types';
+
+// Existing components
+export {PipelineValueChart} from './PipelineValueChart';
+export {DeadlineCalendar} from './DeadlineCalendar';
+export {ActivityFeed} from './ActivityFeed';
+
+// New chart components
+export {PipelineFunnel} from './PipelineFunnel';
+export {AgencyDistribution} from './AgencyDistribution';
+export {ContractValueByType} from './ContractValueByType';
+export {DeadlineTimeline} from './DeadlineTimeline';
+export {SetAsideDistribution} from './SetAsideDistribution';
+
+// New table components
+export {UpcomingDeadlinesTable} from './UpcomingDeadlinesTable';
+export {PipelineOpportunitiesTable} from './PipelineOpportunitiesTable';
+export {ExpiringContractsTable} from './ExpiringContractsTable';
+export {ComplianceAlertsTable} from './ComplianceAlertsTable';

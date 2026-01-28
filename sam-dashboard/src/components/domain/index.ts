@@ -2,6 +2,7 @@
 export * from './analytics';
 export * from './compliance';
 export * from './contracts';
+export * from './dashboard';
 export * from './documents';
 export * from './filters';
 export * from './naics';

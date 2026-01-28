@@ -171,3 +171,15 @@ export type { AnnouncePoliteness, UseAnnounceOptions, UseAnnounceReturn } from '
 // Theme hooks
 export { useDarkMode } from './useDarkMode';
 export type { Theme } from './useDarkMode';
+
+// Dashboard hooks
+export { useDashboardSummary } from './useDashboardSummary';
+export type {
+  DashboardMetrics,
+  DashboardData,
+  UseDashboardSummaryReturn
+} from './useDashboardSummary';
+
+// Sector hooks
+export { useSector, SectorProvider, SectorContext } from './useSector';
+export type { Sector } from './useSector';
