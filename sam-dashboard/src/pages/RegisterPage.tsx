@@ -1,7 +1,27 @@
 import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button, Input, BuildingCheckIcon } from '../components/catalyst/primitives';
+import { useNavigate } from 'react-router-dom';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Flex,
+  Stack,
+  Box,
+  HStack,
+} from '../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  Input,
+  FormField,
+  InlineAlert,
+  InlineAlertDescription,
+  AuthLayout,
+  Checkbox,
+  CheckboxField,
+} from '../components/catalyst/primitives';
+import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
+import { Link } from '../components/catalyst/primitives/link';
 import type { RegisterFormState, RegisterFormErrors } from './RegisterPage.types';
 
 const API_BASE = '/api/v1';
@@ -103,6 +123,21 @@ export function RegisterPage(): React.ReactElement {
     [validationErrors, error]
   );
 
+  const handleCheckboxChange = useCallback(
+    (checked: boolean) => {
+      setForm((prev) => ({ ...prev, acceptTerms: checked }));
+
+      if (validationErrors.acceptTerms !== undefined) {
+        setValidationErrors((prev) => ({ ...prev, acceptTerms: undefined }));
+      }
+
+      if (error !== null) {
+        setError(null);
+      }
+    },
+    [validationErrors, error]
+  );
+
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -150,30 +185,23 @@ export function RegisterPage(): React.ReactElement {
 
   if (success) {
     return (
-      <Flex
-        justify="center"
-        align="center"
-        style={{
-          minHeight: '100vh',
-          backgroundColor: '#f4f4f5',
-          padding: '1rem',
-        }}
-      >
-        <Box style={{ width: '100%', maxWidth: '400px' }}>
+      <AuthLayout>
+        <Box className="w-full max-w-md">
           <Card variant="elevated">
             <CardBody padding="lg">
-              <Stack spacing="md" style={{ textAlign: 'center' }}>
+              <Stack spacing="md" align="center" className="text-center">
                 <Text variant="heading4" color="success">
                   Registration Successful!
                 </Text>
                 <Text variant="body">
-                  We have sent a verification email to <strong>{form.email}</strong>.
+                  We have sent a verification email to{' '}
+                  <Text as="span" weight="semibold">{form.email}</Text>.
                   Please check your inbox and click the verification link to activate your account.
                 </Text>
                 <Button
                   variant="primary"
                   onClick={() => navigate('/login')}
-                  className="w-full"
+                  fullWidth
                 >
                   Go to Login
                 </Button>
@@ -181,37 +209,22 @@ export function RegisterPage(): React.ReactElement {
             </CardBody>
           </Card>
         </Box>
-      </Flex>
+      </AuthLayout>
     );
   }
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f5',
-        padding: '1rem',
-      }}
-    >
-      <Box style={{ width: '100%', maxWidth: '450px' }}>
+    <AuthLayout>
+      <Box className="w-full max-w-md">
         <Card variant="elevated">
-          <CardHeader
-            style={{
-              backgroundColor: '#2563eb',
-              borderBottom: 'none',
-              textAlign: 'center',
-              padding: '1.5rem',
-            }}
-          >
+          <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
-              <Stack spacing="xs" style={{ alignItems: 'center' }}>
+              <Stack spacing="xs" align="center">
                 <Text variant="heading3" color="white" weight="semibold">
                   Create Account
                 </Text>
-                <Text variant="bodySmall" color="white" style={{ opacity: 0.8 }}>
+                <Text variant="bodySmall" color="white" className="opacity-80">
                   Start your contract intelligence journey
                 </Text>
               </Stack>
@@ -219,70 +232,60 @@ export function RegisterPage(): React.ReactElement {
           </CardHeader>
 
           <CardBody padding="lg">
-            <form onSubmit={handleSubmit}>
+            <Box as="form" onSubmit={handleSubmit}>
               <Stack spacing="md">
                 {/* Error message */}
                 {error !== null && (
-                  <Box
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#fef2f2',
-                      borderRadius: '0.375rem',
-                      border: '1px solid #ef4444',
-                    }}
-                  >
-                    <Text variant="bodySmall" color="danger">
+                  <InlineAlert color="error">
+                    <InlineAlertDescription>
                       {error}
-                    </Text>
-                  </Box>
+                    </InlineAlertDescription>
+                  </InlineAlert>
                 )}
 
                 {/* Name fields */}
-                <Flex gap="md">
-                  <Box style={{ flex: 1 }}>
-                    <Text as="label" variant="label" className="block mb-1">
-                      First Name *
-                    </Text>
-                    <Input
-                      type="text"
-                      value={form.firstName}
-                      onChange={handleInputChange('firstName')}
-                      placeholder="John"
-                      invalid={validationErrors.firstName !== undefined}
-                      autoComplete="given-name"
-                      autoFocus
-                    />
-                    {validationErrors.firstName !== undefined && (
-                      <Text variant="caption" color="danger" className="mt-1">
-                        {validationErrors.firstName}
-                      </Text>
-                    )}
+                <HStack gap="md" align="start">
+                  <Box className="flex-1">
+                    <FormField
+                      label="First Name"
+                      required
+                      error={validationErrors.firstName}
+                    >
+                      <Input
+                        type="text"
+                        value={form.firstName}
+                        onChange={handleInputChange('firstName')}
+                        placeholder="John"
+                        invalid={validationErrors.firstName !== undefined}
+                        autoComplete="given-name"
+                        autoFocus
+                      />
+                    </FormField>
                   </Box>
-                  <Box style={{ flex: 1 }}>
-                    <Text as="label" variant="label" className="block mb-1">
-                      Last Name *
-                    </Text>
-                    <Input
-                      type="text"
-                      value={form.lastName}
-                      onChange={handleInputChange('lastName')}
-                      placeholder="Doe"
-                      invalid={validationErrors.lastName !== undefined}
-                      autoComplete="family-name"
-                    />
-                    {validationErrors.lastName !== undefined && (
-                      <Text variant="caption" color="danger" className="mt-1">
-                        {validationErrors.lastName}
-                      </Text>
-                    )}
+                  <Box className="flex-1">
+                    <FormField
+                      label="Last Name"
+                      required
+                      error={validationErrors.lastName}
+                    >
+                      <Input
+                        type="text"
+                        value={form.lastName}
+                        onChange={handleInputChange('lastName')}
+                        placeholder="Doe"
+                        invalid={validationErrors.lastName !== undefined}
+                        autoComplete="family-name"
+                      />
+                    </FormField>
                   </Box>
-                </Flex>
+                </HStack>
 
                 {/* Email field */}
-                <Box>
-                  <Text as="label" variant="label" className="block mb-1">
-                    Email Address *
-                  </Text>
+                <FormField
+                  label="Email Address"
+                  required
+                  error={validationErrors.email}
+                >
                   <Input
                     type="email"
                     value={form.email}
@@ -291,18 +294,13 @@ export function RegisterPage(): React.ReactElement {
                     invalid={validationErrors.email !== undefined}
                     autoComplete="email"
                   />
-                  {validationErrors.email !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
-                      {validationErrors.email}
-                    </Text>
-                  )}
-                </Box>
+                </FormField>
 
                 {/* Organization field */}
-                <Box>
-                  <Text as="label" variant="label" className="block mb-1">
-                    Organization Name
-                  </Text>
+                <FormField
+                  label="Organization Name"
+                  hint="Optional. Creates a new organization with you as admin."
+                >
                   <Input
                     type="text"
                     value={form.organizationName}
@@ -310,16 +308,14 @@ export function RegisterPage(): React.ReactElement {
                     placeholder="Your Company LLC"
                     autoComplete="organization"
                   />
-                  <Text variant="caption" color="muted" className="mt-1">
-                    Optional. Creates a new organization with you as admin.
-                  </Text>
-                </Box>
+                </FormField>
 
                 {/* Password field */}
-                <Box>
-                  <Text as="label" variant="label" className="block mb-1">
-                    Password *
-                  </Text>
+                <FormField
+                  label="Password"
+                  required
+                  error={validationErrors.password}
+                >
                   <Input
                     type="password"
                     value={form.password}
@@ -328,18 +324,14 @@ export function RegisterPage(): React.ReactElement {
                     invalid={validationErrors.password !== undefined}
                     autoComplete="new-password"
                   />
-                  {validationErrors.password !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
-                      {validationErrors.password}
-                    </Text>
-                  )}
-                </Box>
+                </FormField>
 
                 {/* Confirm Password field */}
-                <Box>
-                  <Text as="label" variant="label" className="block mb-1">
-                    Confirm Password *
-                  </Text>
+                <FormField
+                  label="Confirm Password"
+                  required
+                  error={validationErrors.confirmPassword}
+                >
                   <Input
                     type="password"
                     value={form.confirmPassword}
@@ -348,39 +340,33 @@ export function RegisterPage(): React.ReactElement {
                     invalid={validationErrors.confirmPassword !== undefined}
                     autoComplete="new-password"
                   />
-                  {validationErrors.confirmPassword !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
-                      {validationErrors.confirmPassword}
-                    </Text>
-                  )}
-                </Box>
+                </FormField>
 
                 {/* Terms checkbox */}
-                <Box>
-                  <Flex align="start" gap="sm">
-                    <input
-                      type="checkbox"
-                      id="acceptTerms"
+                <Stack spacing="xs">
+                  <CheckboxField>
+                    <Checkbox
                       checked={form.acceptTerms}
-                      onChange={handleInputChange('acceptTerms')}
-                      style={{ marginTop: '4px' }}
+                      onChange={handleCheckboxChange}
+                      color="blue"
                     />
-                    <Text as="label" htmlFor="acceptTerms" variant="bodySmall">
+                    <Text as="label" variant="bodySmall">
                       I agree to the Terms of Service and Privacy Policy
                     </Text>
-                  </Flex>
+                  </CheckboxField>
                   {validationErrors.acceptTerms !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
+                    <Text variant="caption" color="danger">
                       {validationErrors.acceptTerms}
                     </Text>
                   )}
-                </Box>
+                </Stack>
 
                 {/* Submit button */}
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2"
+                  fullWidth
+                  className="mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                 >
@@ -388,18 +374,18 @@ export function RegisterPage(): React.ReactElement {
                 </Button>
 
                 {/* Login link */}
-                <Text variant="bodySmall" style={{ textAlign: 'center' }}>
+                <Text variant="bodySmall" className="text-center">
                   Already have an account?{' '}
-                  <Link to="/login" className="text-primary">
+                  <Link href="/login" className="text-blue-600 dark:text-blue-400">
                     Sign in
                   </Link>
                 </Text>
               </Stack>
-            </form>
+            </Box>
           </CardBody>
         </Card>
       </Box>
-    </Flex>
+    </AuthLayout>
   );
 }
 

@@ -14,6 +14,7 @@ vi.mock('../../hooks/usePortal', () => ({
 const mockTasks: SprintTask[] = [
   {
     id: 'task-1',
+    sprintId: 'sprint-1',
     title: 'Implement login flow',
     description: 'Add OAuth2 login functionality',
     status: 'IN_PROGRESS',
@@ -22,11 +23,14 @@ const mockTasks: SprintTask[] = [
     assigneeName: 'John Doe',
     estimatedHours: 16,
     actualHours: 12,
+    dueDate: null,
+    order: 1,
     createdAt: '2025-01-10T00:00:00Z',
     updatedAt: '2025-01-15T00:00:00Z',
   },
   {
     id: 'task-2',
+    sprintId: 'sprint-1',
     title: 'Design API endpoints',
     description: 'Create REST API specification',
     status: 'DONE',
@@ -35,11 +39,14 @@ const mockTasks: SprintTask[] = [
     assigneeName: 'Jane Smith',
     estimatedHours: 8,
     actualHours: 10,
+    dueDate: null,
+    order: 2,
     createdAt: '2025-01-08T00:00:00Z',
     updatedAt: '2025-01-12T00:00:00Z',
   },
   {
     id: 'task-3',
+    sprintId: 'sprint-1',
     title: 'Write unit tests',
     description: 'Add test coverage for core modules',
     status: 'TODO',
@@ -48,6 +55,8 @@ const mockTasks: SprintTask[] = [
     assigneeName: 'John Doe',
     estimatedHours: 24,
     actualHours: 0,
+    dueDate: null,
+    order: 3,
     createdAt: '2025-01-12T00:00:00Z',
     updatedAt: '2025-01-12T00:00:00Z',
   },
@@ -56,27 +65,29 @@ const mockTasks: SprintTask[] = [
 const mockSprints: Sprint[] = [
   {
     id: 'sprint-1',
+    contractId: 'contract-1',
     name: 'Sprint 1 - MVP Features',
     goal: 'Complete core authentication and dashboard',
     status: 'ACTIVE',
     startDate: '2025-01-06',
     endDate: '2025-01-20',
+    plannedVelocity: 48,
+    actualVelocity: 18,
     tasks: mockTasks,
-    totalPoints: 48,
-    completedPoints: 18,
     createdAt: '2025-01-05T00:00:00Z',
     updatedAt: '2025-01-15T00:00:00Z',
   },
   {
     id: 'sprint-2',
+    contractId: 'contract-1',
     name: 'Sprint 2 - Reporting',
     goal: 'Implement reporting features',
-    status: 'PLANNED',
+    status: 'PLANNING',
     startDate: '2025-01-20',
     endDate: '2025-02-03',
+    plannedVelocity: null,
+    actualVelocity: null,
     tasks: [],
-    totalPoints: 0,
-    completedPoints: 0,
     createdAt: '2025-01-10T00:00:00Z',
     updatedAt: '2025-01-10T00:00:00Z',
   },
@@ -147,7 +158,7 @@ describe('SprintTrackingPage', () => {
 
     it('should display sprint progress', () => {
       renderSprintTrackingPage();
-      // Should show completed points / total points
+      // Should show actualVelocity / plannedVelocity
       expect(screen.getByText(/18/)).toBeInTheDocument();
       expect(screen.getByText(/48/)).toBeInTheDocument();
     });

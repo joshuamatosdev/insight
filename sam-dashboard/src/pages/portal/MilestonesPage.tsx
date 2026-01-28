@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, Button, Badge } from '../../components/catalyst/primitives';
+import { Text, Button, Badge, Select } from '../../components/catalyst/primitives';
 import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
 import { MilestoneTimeline, MilestoneCard } from '../../components/domain/portal';
 import { useMilestones } from '../../hooks';
@@ -67,7 +67,7 @@ export function MilestonesPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+      <Flex justify="center" align="center" className="min-h-[300px]">
         <Text variant="body" color="muted">
           Loading milestones...
         </Text>
@@ -77,14 +77,7 @@ export function MilestonesPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fef2f2',
-          borderRadius: '0.5rem',
-        }}
-      >
+      <Box className="p-8 text-center bg-red-50 rounded-lg">
         <Text variant="body" color="danger">
           Error loading milestones: {error.message}
         </Text>
@@ -212,23 +205,25 @@ export function MilestonesPage(): React.ReactElement {
 
             {/* Status Filter */}
             <Flex align="center" gap="sm">
-              <Text variant="bodySmall" color="muted">
+              <Text as="label" htmlFor="milestone-status-filter" variant="bodySmall" color="muted">
                 Status:
               </Text>
-              <select
+              <Select
+                id="milestone-status-filter"
+                name="milestone-status-filter"
                 value={statusFilter}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setStatusFilter(e.target.value as MilestoneStatus | 'ALL')
                 }
-                className="px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm"
-              >
-                <option value="ALL">All Statuses</option>
-                <option value="NOT_STARTED">Not Started</option>
-                <option value="IN_PROGRESS">In Progress</option>
-                <option value="COMPLETED">Completed</option>
-                <option value="DELAYED">Delayed</option>
-                <option value="AT_RISK">At Risk</option>
-              </select>
+                options={[
+                  { value: 'ALL', label: 'All Statuses' },
+                  { value: 'NOT_STARTED', label: 'Not Started' },
+                  { value: 'IN_PROGRESS', label: 'In Progress' },
+                  { value: 'COMPLETED', label: 'Completed' },
+                  { value: 'DELAYED', label: 'Delayed' },
+                  { value: 'AT_RISK', label: 'At Risk' },
+                ]}
+              />
             </Flex>
           </Flex>
         </CardBody>
@@ -240,11 +235,7 @@ export function MilestonesPage(): React.ReactElement {
           justify="center"
           align="center"
           direction="column"
-          style={{
-            padding: '2rem',
-            backgroundColor: '#fafafa',
-            borderRadius: '0.5rem',
-          }}
+          className="p-8 bg-zinc-50 rounded-lg"
         >
           <Text variant="heading4" color="muted">
             No milestones found

@@ -1,7 +1,23 @@
 import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button, Input, BuildingCheckIcon } from '../components/catalyst/primitives';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Flex,
+  Stack,
+  Box,
+} from '../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  Input,
+  FormField,
+  InlineAlert,
+  InlineAlertDescription,
+  AuthLayout,
+} from '../components/catalyst/primitives';
+import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
+import { Link } from '../components/catalyst/primitives/link';
 import type { ForgotPasswordFormState, ForgotPasswordFormErrors } from './types';
 
 const API_BASE = '/api/v1';
@@ -94,66 +110,45 @@ export function ForgotPasswordPage(): React.ReactElement {
 
   if (success) {
     return (
-      <Flex
-        justify="center"
-        align="center"
-        style={{
-          minHeight: '100vh',
-          backgroundColor: '#f4f4f5',
-          padding: '1rem',
-        }}
-      >
-        <Box style={{ width: '100%', maxWidth: '400px' }}>
+      <AuthLayout>
+        <Box className="w-full max-w-md">
           <Card variant="elevated">
             <CardBody padding="lg">
-              <Stack spacing="md" style={{ textAlign: 'center' }}>
+              <Stack spacing="md" align="center" className="text-center">
                 <Text variant="heading4" color="success">
                   Check Your Email
                 </Text>
                 <Text variant="body">
-                  If an account exists for <strong>{form.email}</strong>, we have sent password reset instructions.
+                  If an account exists for{' '}
+                  <Text as="span" weight="semibold">{form.email}</Text>,
+                  we have sent password reset instructions.
                 </Text>
                 <Text variant="bodySmall" color="muted">
                   Please check your inbox and spam folder.
                 </Text>
-                <Link to="/login" className="text-primary">
+                <Link href="/login" className="text-blue-600 dark:text-blue-400">
                   Return to login
                 </Link>
               </Stack>
             </CardBody>
           </Card>
         </Box>
-      </Flex>
+      </AuthLayout>
     );
   }
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f5',
-        padding: '1rem',
-      }}
-    >
-      <Box style={{ width: '100%', maxWidth: '400px' }}>
+    <AuthLayout>
+      <Box className="w-full max-w-md">
         <Card variant="elevated">
-          <CardHeader
-            style={{
-              backgroundColor: '#2563eb',
-              borderBottom: 'none',
-              textAlign: 'center',
-              padding: '1.5rem',
-            }}
-          >
+          <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
-              <Stack spacing="xs" style={{ alignItems: 'center' }}>
+              <Stack spacing="xs" align="center">
                 <Text variant="heading3" color="white" weight="semibold">
                   Forgot Password
                 </Text>
-                <Text variant="bodySmall" color="white" style={{ opacity: 0.8 }}>
+                <Text variant="bodySmall" color="white" className="opacity-80">
                   Enter your email to reset your password
                 </Text>
               </Stack>
@@ -161,32 +156,20 @@ export function ForgotPasswordPage(): React.ReactElement {
           </CardHeader>
 
           <CardBody padding="lg">
-            <form onSubmit={handleSubmit}>
+            <Box as="form" onSubmit={handleSubmit}>
               <Stack spacing="md">
                 {error !== null && (
-                  <Box
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#fef2f2',
-                      borderRadius: '0.375rem',
-                      border: '1px solid #ef4444',
-                    }}
-                  >
-                    <Text variant="bodySmall" color="danger">
+                  <InlineAlert color="error">
+                    <InlineAlertDescription>
                       {error}
-                    </Text>
-                  </Box>
+                    </InlineAlertDescription>
+                  </InlineAlert>
                 )}
 
-                <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    className="block mb-1"
-                  >
-                    Email Address
-                  </Text>
+                <FormField
+                  label="Email Address"
+                  error={validationErrors.email}
+                >
                   <Input
                     type="email"
                     value={form.email}
@@ -196,35 +179,31 @@ export function ForgotPasswordPage(): React.ReactElement {
                     autoComplete="email"
                     autoFocus
                   />
-                  {validationErrors.email !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
-                      {validationErrors.email}
-                    </Text>
-                  )}
-                </Box>
+                </FormField>
 
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2"
+                  fullWidth
+                  className="mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                 >
                   Send Reset Link
                 </Button>
 
-                <Text variant="bodySmall" style={{ textAlign: 'center' }}>
+                <Text variant="bodySmall" className="text-center">
                   Remember your password?{' '}
-                  <Link to="/login" className="text-primary">
+                  <Link href="/login" className="text-blue-600 dark:text-blue-400">
                     Sign in
                   </Link>
                 </Text>
               </Stack>
-            </form>
+            </Box>
           </CardBody>
         </Card>
       </Box>
-    </Flex>
+    </AuthLayout>
   );
 }
 

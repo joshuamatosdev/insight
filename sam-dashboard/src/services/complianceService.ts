@@ -18,8 +18,8 @@ import type {
   SbomInfo,
   SbomVulnerabilityInfo,
   CycloneDxBom,
-  PaginatedResponse,
 } from '../types/compliance.types';
+import type { PaginatedResponse } from '../types/financial.types';
 
 // ==================== Certification API ====================
 

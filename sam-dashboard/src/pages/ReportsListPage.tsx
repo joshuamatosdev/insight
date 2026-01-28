@@ -6,26 +6,40 @@ import {
   Stack,
   Box,
   Grid,
-} from '../components/catalyst/layout';
-import {
+  GridItem,
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeader,
+  TableHeaderCell,
   TableCell,
-} from '../components/catalyst';
+} from '../components/catalyst/layout';
 import {
   Text,
   Button,
   Badge,
   Input,
   Select,
+  IconButton,
+} from '../components/catalyst/primitives';
+import {
   TrashIcon,
   PencilIcon,
-  IconButton,
   DownloadIcon,
-} from '../components/catalyst/primitives';
+} from '../components/catalyst/primitives/Icon';
+import {
+  PageHeading,
+  PageHeadingSection,
+  PageHeadingTitle,
+  PageHeadingDescription,
+  PageHeadingActions,
+} from '../components/catalyst/navigation';
+import {
+  EmptyState,
+  EmptyStateTitle,
+  EmptyStateDescription,
+  EmptyStateActions,
+} from '../components/catalyst';
 import type {
   ReportDefinition,
   EntityType,
@@ -369,39 +383,43 @@ export function ReportsListPage({
   return (
     <Stack spacing="lg">
       {/* Header */}
-      <Flex justify="space-between" align="center">
-        <Stack spacing="xs">
-          <Text variant="heading3">Reports</Text>
-          <Text variant="bodySmall" color="muted">
+      <PageHeading>
+        <PageHeadingSection>
+          <PageHeadingTitle>Reports</PageHeadingTitle>
+          <PageHeadingDescription>
             Manage your custom reports
-          </Text>
-        </Stack>
+          </PageHeadingDescription>
+        </PageHeadingSection>
         {onCreateReport !== undefined && (
-          <Button variant="primary" onClick={onCreateReport}>
-            Create Report
-          </Button>
+          <PageHeadingActions>
+            <Button variant="primary" onClick={onCreateReport}>
+              Create Report
+            </Button>
+          </PageHeadingActions>
         )}
-      </Flex>
+      </PageHeading>
 
       {/* Filters */}
       <Card>
         <CardBody>
           <Grid columns={3} gap="md">
-            <Box>
-              <Text variant="caption" color="muted" className="mb-1">
+            <GridItem>
+              <Text as="label" variant="caption" color="muted" htmlFor="reportSearch" className="mb-1">
                 Search
               </Text>
               <Input
+                id="reportSearch"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Search reports..."
               />
-            </Box>
-            <Box>
-              <Text variant="caption" color="muted" className="mb-1">
+            </GridItem>
+            <GridItem>
+              <Text as="label" variant="caption" color="muted" htmlFor="dataSourceFilter" className="mb-1">
                 Data Source
               </Text>
               <Select
+                id="dataSourceFilter"
                 value={entityTypeFilter}
                 onChange={(e) => handleEntityTypeFilter(e.target.value)}
                 placeholder="All Sources"
@@ -410,7 +428,7 @@ export function ReportsListPage({
                   label,
                 }))}
               />
-            </Box>
+            </GridItem>
             <Flex align="end">
               <Text variant="bodySmall" color="muted">
                 {totalElements} report{totalElements !== 1 ? 's' : ''} found
@@ -424,29 +442,32 @@ export function ReportsListPage({
       <Card>
         <CardBody padding="none">
           {reports.length === 0 ? (
-            <Box className="p-8 text-center">
-              <Stack spacing="md" style={{ alignItems: 'center' }}>
-                <Text variant="body" color="muted">
-                  No reports found
-                </Text>
+            <Box className="p-8">
+              <EmptyState>
+                <EmptyStateTitle>No reports found</EmptyStateTitle>
+                <EmptyStateDescription>
+                  Get started by creating your first report.
+                </EmptyStateDescription>
                 {onCreateReport !== undefined && (
-                  <Button variant="outline" onClick={onCreateReport}>
-                    Create Your First Report
-                  </Button>
+                  <EmptyStateActions>
+                    <Button variant="outline" onClick={onCreateReport}>
+                      Create Your First Report
+                    </Button>
+                  </EmptyStateActions>
                 )}
-              </Stack>
+              </EmptyState>
             </Box>
           ) : (
             <Table striped>
               <TableHead>
                 <TableRow>
-                  <TableHeader>Name</TableHeader>
-                  <TableHeader>Data Source</TableHeader>
-                  <TableHeader>Columns</TableHeader>
-                  <TableHeader>Runs</TableHeader>
-                  <TableHeader>Last Run</TableHeader>
-                  <TableHeader>Shared</TableHeader>
-                  <TableHeader>Actions</TableHeader>
+                  <TableHeaderCell>Name</TableHeaderCell>
+                  <TableHeaderCell>Data Source</TableHeaderCell>
+                  <TableHeaderCell>Columns</TableHeaderCell>
+                  <TableHeaderCell>Runs</TableHeaderCell>
+                  <TableHeaderCell>Last Run</TableHeaderCell>
+                  <TableHeaderCell>Shared</TableHeaderCell>
+                  <TableHeaderCell>Actions</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>

@@ -255,7 +255,7 @@ export function CertificationsPage({
       <Stack spacing="md">
         {/* Error Display */}
         {(error !== null || loadError !== null) && (
-          <Card variant="outlined" style={{ borderColor: '#ef4444' }}>
+          <Card variant="outlined" className="border-red-500">
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
                 {error ?? loadError?.message}

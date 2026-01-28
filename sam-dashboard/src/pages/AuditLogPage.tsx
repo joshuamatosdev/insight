@@ -1,15 +1,18 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, Fragment } from 'react';
 import {
   Text,
   Badge,
   Button,
   Input,
   Select,
+  Code,
+} from '../components/catalyst/primitives';
+import {
   ListIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   SearchIcon,
-} from '../components/catalyst/primitives';
+} from '../components/catalyst/primitives/Icon';
 import {
   Section,
   SectionHeader,
@@ -20,15 +23,14 @@ import {
   Stack,
   Grid,
   GridItem,
-} from '../components/catalyst/layout';
-import {
+  Box,
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeader,
+  TableHeaderCell,
   TableCell,
-} from '../components/catalyst';
+} from '../components/catalyst/layout';
 import {
   AuditLog,
   AuditLogFilterState,
@@ -338,12 +340,12 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
             <Table striped>
               <TableHead>
                 <TableRow>
-                  <TableHeader>Timestamp</TableHeader>
-                  <TableHeader>Action</TableHeader>
-                  <TableHeader>Entity</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                  <TableHeader>IP Address</TableHeader>
-                  <TableHeader className="text-center">Details</TableHeader>
+                  <TableHeaderCell>Timestamp</TableHeaderCell>
+                  <TableHeaderCell>Action</TableHeaderCell>
+                  <TableHeaderCell>Entity</TableHeaderCell>
+                  <TableHeaderCell>Description</TableHeaderCell>
+                  <TableHeaderCell>IP Address</TableHeaderCell>
+                  <TableHeaderCell className="text-center">Details</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -353,8 +355,8 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                   const hasDetails = parsedDetails !== null;
 
                   return (
-                    <>
-                      <TableRow key={log.id}>
+                    <Fragment key={log.id}>
+                      <TableRow>
                         <TableCell>
                           <Text variant="caption" color="muted">
                             {formatTimestamp(log.createdAt)}
@@ -416,15 +418,17 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                         </TableCell>
                       </TableRow>
                       {isExpanded && parsedDetails !== null && (
-                        <tr key={`${log.id}-details`}>
-                          <td colSpan={6} className="bg-zinc-50 dark:bg-zinc-800 p-4">
-                            <pre className="m-0 p-4 bg-zinc-100 dark:bg-zinc-900 rounded-md text-sm font-mono overflow-auto max-h-[300px]">
-                              {formatDetailsForDisplay(parsedDetails)}
-                            </pre>
-                          </td>
-                        </tr>
+                        <TableRow>
+                          <TableCell colSpan={6} className="bg-zinc-50 dark:bg-zinc-800 p-4">
+                            <Box className="m-0 p-4 bg-zinc-100 dark:bg-zinc-900 rounded-md overflow-auto max-h-[300px]">
+                              <Code className="whitespace-pre text-sm font-mono block">
+                                {formatDetailsForDisplay(parsedDetails)}
+                              </Code>
+                            </Box>
+                          </TableCell>
+                        </TableRow>
                       )}
-                    </>
+                    </Fragment>
                   );
                 })}
               </TableBody>

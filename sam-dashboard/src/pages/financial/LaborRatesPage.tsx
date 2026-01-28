@@ -2,7 +2,7 @@
  * LaborRatesPage - Labor rate management page
  */
 import { useState, useCallback, ChangeEvent, FormEvent } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, Input, Select } from '@/components/catalyst/primitives';
+import { Text, Button, Badge, PlusIcon, RefreshIcon, Input, Select, InlineAlert, InlineAlertDescription } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -242,7 +242,7 @@ export function LaborRatesPage() {
   if (isLoading && laborRates.length === 0) {
     return (
       <Section id="labor-rates">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading labor rates...
           </Text>
@@ -283,19 +283,9 @@ export function LaborRatesPage() {
       />
 
       {error !== null && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="bodySmall" color="danger">
-            {error.message}
-          </Text>
-        </Box>
+        <InlineAlert color="error" className="mb-4">
+          <InlineAlertDescription>{error.message}</InlineAlertDescription>
+        </InlineAlert>
       )}
 
       {/* Form */}
@@ -307,21 +297,12 @@ export function LaborRatesPage() {
             </Text>
           </CardHeader>
           <CardBody>
-            <form onSubmit={handleSubmitForm}>
+            <Box as="form" onSubmit={handleSubmitForm}>
               <Stack spacing="md">
                 {formErrors.general !== undefined && (
-                  <Box
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#fef2f2',
-                      borderRadius: '0.375rem',
-                      border: '1px solid #ef4444',
-                    }}
-                  >
-                    <Text variant="bodySmall" color="danger">
-                      {formErrors.general}
-                    </Text>
-                  </Box>
+                  <InlineAlert color="error">
+                    <InlineAlertDescription>{formErrors.general}</InlineAlertDescription>
+                  </InlineAlert>
                 )}
 
                 {/* Category Info */}
@@ -451,13 +432,8 @@ export function LaborRatesPage() {
                       value={form.rateType}
                       onChange={handleSelectChange('rateType')}
                       fullWidth
-                    >
-                      {RATE_TYPES.map((type) => (
-                        <option key={type} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </Select>
+                      options={RATE_TYPES.map((type) => ({ value: type, label: type }))}
+                    />
                   </GridItem>
                 </Grid>
 
@@ -585,7 +561,7 @@ export function LaborRatesPage() {
                   </Button>
                 </HStack>
               </Stack>
-            </form>
+            </Box>
           </CardBody>
         </Card>
       )}

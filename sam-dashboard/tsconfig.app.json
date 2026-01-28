@@ -44,5 +44,8 @@
       "@types/*": ["./src/types/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/components/studio_ui_base/**/*"
+  ]
 }

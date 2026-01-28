@@ -21,6 +21,7 @@ import {
 } from '../components/domain';
 import { DashboardPageProps } from './Pages.types';
 import { Grid, GridItem } from '@/components';
+import OpportunityTableCatalyst from "../components/domain/opportunity/OpportunityTableCatalyst.tsx";
 
 export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps) {
   const stats = useMemo(() => {
@@ -67,7 +68,7 @@ export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps)
   }, [opportunities]);
 
   return (
-    <Grid columns={1} gap="lg" rowGap="lg">
+    <Grid columns={1} gap="lg" rowGap="lg" padding="lg" marginRight={"lg"}>
       {/* Page Header - Full Width */}
       <GridItem>
         <PageHeading>
@@ -104,18 +105,18 @@ export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps)
 
       {/* Cards Section - 2 columns on lg, 1 column on mobile */}
       <GridItem>
-        <Grid columns={1} gap="lg" className="lg:grid-cols-2">
+        <Grid columns={2} gap="lg" rowGap="lg">
           {/* Recent Opportunities */}
-          <GridItem>
-            <Card padding="none">
+          <GridItem margin={"md"}>
+            <Card>
               <CardHeader divider className="flex items-center justify-between">
                 <CardTitle>Recent Opportunities</CardTitle>
                 <Button outline onClick={() => onNavigate('all-opportunities')}>
                   View All
                 </Button>
               </CardHeader>
-              <CardBody className="p-0">
-                <OpportunityTable opportunities={recentOpportunities} maxRows={10} />
+              <CardBody padding="md">
+                <OpportunityTableCatalyst opportunities={recentOpportunities} maxRows={10} />
               </CardBody>
             </Card>
           </GridItem>

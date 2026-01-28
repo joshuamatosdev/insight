@@ -12,7 +12,8 @@ import {
   MfaSetupPage,
   OAuthCallbackPage,
 } from './pages';
-import { Dashboard } from './Dashboard';
+
+import Dashboard from "@/app/Dashboard.tsx";
 
 function App() {
   return (

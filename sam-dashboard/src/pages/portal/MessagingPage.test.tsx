@@ -3,12 +3,33 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MessagingPage } from './MessagingPage';
 import * as hooks from '../../hooks/usePortal';
-import type { MessageThread, Message } from '../../types/portal';
+import type { MessageThread, Message, ThreadParticipant } from '../../types/portal';
 
 // Mock the hooks
 vi.mock('../../hooks/usePortal', () => ({
   useMessaging: vi.fn(),
 }));
+
+const mockParticipant1: ThreadParticipant = {
+  userId: 'user-1',
+  userName: 'John Doe',
+  userEmail: 'john@example.com',
+  lastReadAt: null,
+};
+
+const mockParticipant2: ThreadParticipant = {
+  userId: 'user-2',
+  userName: 'Jane Smith',
+  userEmail: 'jane@example.com',
+  lastReadAt: null,
+};
+
+const mockParticipant3: ThreadParticipant = {
+  userId: 'user-3',
+  userName: 'Mike Johnson',
+  userEmail: 'mike@example.com',
+  lastReadAt: null,
+};
 
 const mockMessages: Message[] = [
   {
@@ -16,33 +37,44 @@ const mockMessages: Message[] = [
     threadId: 'thread-1',
     senderId: 'user-1',
     senderName: 'John Doe',
-    senderRole: 'Project Manager',
-    content: 'Can we discuss the project timeline?',
-    isRead: true,
+    senderEmail: 'john@example.com',
+    recipientIds: ['user-2'],
+    subject: 'Project Timeline Discussion',
+    body: 'Can we discuss the project timeline?',
+    priority: 'NORMAL',
+    status: 'READ',
+    attachments: [],
+    parentMessageId: null,
     createdAt: '2025-01-20T10:00:00Z',
-    updatedAt: '2025-01-20T10:00:00Z',
+    readAt: '2025-01-20T10:05:00Z',
   },
   {
     id: 'msg-2',
     threadId: 'thread-1',
     senderId: 'user-2',
     senderName: 'Jane Smith',
-    senderRole: 'Developer',
-    content: 'Sure, I have some updates to share.',
-    isRead: true,
+    senderEmail: 'jane@example.com',
+    recipientIds: ['user-1'],
+    subject: 'RE: Project Timeline Discussion',
+    body: 'Sure, I have some updates to share.',
+    priority: 'NORMAL',
+    status: 'READ',
+    attachments: [],
+    parentMessageId: 'msg-1',
     createdAt: '2025-01-20T10:15:00Z',
-    updatedAt: '2025-01-20T10:15:00Z',
+    readAt: '2025-01-20T10:20:00Z',
   },
 ];
 
 const mockThreads: MessageThread[] = [
   {
     id: 'thread-1',
+    contractId: null,
     subject: 'Project Timeline Discussion',
-    participants: ['user-1', 'user-2'],
-    participantNames: ['John Doe', 'Jane Smith'],
+    participants: [mockParticipant1, mockParticipant2],
     lastMessageAt: '2025-01-20T10:15:00Z',
     lastMessagePreview: 'Sure, I have some updates to share.',
+    messageCount: 2,
     unreadCount: 0,
     messages: mockMessages,
     createdAt: '2025-01-20T10:00:00Z',
@@ -50,11 +82,12 @@ const mockThreads: MessageThread[] = [
   },
   {
     id: 'thread-2',
+    contractId: null,
     subject: 'Budget Approval Request',
-    participants: ['user-1', 'user-3'],
-    participantNames: ['John Doe', 'Mike Johnson'],
+    participants: [mockParticipant1, mockParticipant3],
     lastMessageAt: '2025-01-19T15:30:00Z',
     lastMessagePreview: 'Please review the attached budget.',
+    messageCount: 3,
     unreadCount: 2,
     messages: [],
     createdAt: '2025-01-19T15:00:00Z',
@@ -63,10 +96,10 @@ const mockThreads: MessageThread[] = [
 ];
 
 const mockInboxSummary = {
-  totalThreads: 2,
-  unreadThreads: 1,
   totalMessages: 5,
   unreadMessages: 2,
+  urgentMessages: 0,
+  archivedMessages: 0,
 };
 
 function renderMessagingPage() {
@@ -192,7 +225,7 @@ describe('MessagingPage', () => {
     it('should display empty state when no threads exist', () => {
       (hooks.useMessaging as Mock).mockReturnValue({
         threads: [],
-        inboxSummary: { totalThreads: 0, unreadThreads: 0, totalMessages: 0, unreadMessages: 0 },
+        inboxSummary: { totalMessages: 0, unreadMessages: 0, urgentMessages: 0, archivedMessages: 0 },
         selectedThread: null,
         isLoading: false,
         error: null,

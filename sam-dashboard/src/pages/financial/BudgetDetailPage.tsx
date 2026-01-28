@@ -9,6 +9,8 @@ import {
   PencilIcon,
   TrashIcon,
   ChevronLeftIcon,
+  InlineAlert,
+  InlineAlertDescription,
 } from '@/components/catalyst/primitives';
 import {
   Section,
@@ -97,7 +99,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
   if (isLoading) {
     return (
       <Section id="budget-detail">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading budget details...
           </Text>
@@ -109,18 +111,11 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
   if (error !== null || budget === null) {
     return (
       <Section id="budget-detail">
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="body" color="danger">
+        <InlineAlert color="error">
+          <InlineAlertDescription>
             {error !== null ? error.message : 'Budget not found'}
-          </Text>
-        </Box>
+          </InlineAlertDescription>
+        </InlineAlert>
       </Section>
     );
   }
@@ -265,10 +260,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
                     )}
                     <HStack
                       justify="between"
-                      style={{
-                        paddingTop: '0.5rem',
-                        borderTop: '1px solid #e4e4e7',
-                      }}
+                      className="pt-2 border-t border-outline-variant"
                     >
                       <Text variant="bodySmall" weight="medium">
                         Remaining

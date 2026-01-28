@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button } from '../components/catalyst/primitives';
+import { Text, Button, Link } from '../components/catalyst/primitives';
 
 interface ErrorPageProps {
   code?: '404' | '403' | '500' | '503';
@@ -57,34 +57,23 @@ export function ErrorPage({
     <Flex
       justify="center"
       align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f5',
-        padding: '1rem',
-      }}
+      className="min-h-screen bg-zinc-100 p-4"
     >
-      <Card variant="elevated" style={{ maxWidth: '500px', width: '100%' }}>
+      <Card variant="elevated" className="max-w-lg w-full">
         <CardBody padding="xl">
-          <Stack spacing="lg" style={{ textAlign: 'center' }}>
+          <Stack spacing="lg" className="text-center">
             {/* Error Code */}
             <Text
               variant="heading1"
-              style={{
-                fontSize: '80px',
-                fontWeight: 700,
-                color: content.color,
-                lineHeight: 1,
-              }}
+              className={`text-[80px] font-bold leading-none ${
+                code === '404' || code === '503' ? 'text-amber-500' : 'text-red-500'
+              }`}
             >
               {code}
             </Text>
 
             {/* Icon */}
-            <Box
-              style={{
-                fontSize: '48px',
-              }}
-            >
+            <Box className="text-5xl">
               {content.icon}
             </Box>
 
@@ -109,12 +98,12 @@ export function ErrorPage({
             {/* Support Link */}
             <Text variant="caption" color="muted">
               Need help?{' '}
-              <a
+              <Link
                 href="mailto:support@example.com"
                 className="text-primary"
               >
                 Contact Support
-              </a>
+              </Link>
             </Text>
           </Stack>
         </CardBody>

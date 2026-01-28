@@ -33,7 +33,7 @@ export function SbomDashboardPage(): React.ReactElement {
   if (isLoading) {
     return (
       <Section id="sbom-dashboard">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading SBOM data...
           </Text>
@@ -175,24 +175,13 @@ export function SbomDashboardPage(): React.ReactElement {
               </Box>
 
               {info.cyclonedxAvailable === false && info.spdxAvailable === false && (
-                <Box
-                  style={{
-                    marginTop: '1rem',
-                    padding: '0.75rem',
-                    backgroundColor: '#fffbeb',
-                    borderRadius: '0.375rem',
-                  }}
-                >
+                <Box className="mt-4 p-3 bg-amber-50 rounded-md">
                   <Text variant="bodySmall" color="warning">
                     SBOM not generated. Run the following command to generate:
                   </Text>
                   <Text
                     variant="caption"
-                    style={{
-                      fontFamily: 'monospace',
-                      marginTop: '0.25rem',
-                      display: 'block',
-                    }}
+                    className="font-mono mt-1 block"
                   >
                     {info.generationCommand}
                   </Text>
@@ -233,23 +222,13 @@ export function SbomDashboardPage(): React.ReactElement {
                 </Text>
 
                 {vulnerabilities.recommendation.length > 0 && (
-                  <Box
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#f0f9ff',
-                      borderRadius: '0.375rem',
-                    }}
-                  >
+                  <Box className="p-3 bg-sky-50 rounded-md">
                     <Text variant="caption" color="info" weight="medium">
                       Recommendation:
                     </Text>
                     <Text
                       variant="caption"
-                      style={{
-                        fontFamily: 'monospace',
-                        marginTop: '0.25rem',
-                        display: 'block',
-                      }}
+                      className="font-mono mt-1 block"
                     >
                       {vulnerabilities.recommendation}
                     </Text>

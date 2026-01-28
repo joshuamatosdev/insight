@@ -125,11 +125,7 @@ export function DocumentDetailPage() {
                     key={version.id}
                     justify="between"
                     align="center"
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#fafafa',
-                      borderRadius: '0.375rem',
-                    }}
+                    className="p-3 bg-zinc-50 rounded-md"
                   >
                     <Stack gap="xs">
                       <Text variant="bodySmall" weight="semibold">

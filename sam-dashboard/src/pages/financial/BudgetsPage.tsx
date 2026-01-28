@@ -2,7 +2,7 @@
  * BudgetsPage - Budget management list page
  */
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon } from '@/components/catalyst/primitives';
+import { Text, Button, Badge, PlusIcon, RefreshIcon, InlineAlert, InlineAlertDescription } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -14,7 +14,6 @@ import {
   Grid,
   GridItem,
   Flex,
-  Box,
 } from '@/components/catalyst/layout';
 import { BudgetCard, BudgetForm } from '@/components/domain/financial';
 import { useBudgets } from '@/hooks/useFinancial';
@@ -181,7 +180,7 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
   if (isLoading && budgets.length === 0) {
     return (
       <Section id="budgets">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading budgets...
           </Text>
@@ -219,41 +218,23 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
       />
 
       {error !== null && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="bodySmall" color="danger">
-            {error.message}
-          </Text>
-        </Box>
+        <InlineAlert color="error" className="mb-4">
+          <InlineAlertDescription>{error.message}</InlineAlertDescription>
+        </InlineAlert>
       )}
 
       {/* Over Budget Alert */}
       {overBudgetItems.length > 0 && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fffbeb',
-            borderRadius: '0.375rem',
-            border: '1px solid #f59e0b',
-          }}
-        >
+        <InlineAlert color="warning" className="mb-4">
           <HStack spacing="sm" align="center">
             <Badge color="red">
               {overBudgetItems.length}
             </Badge>
-            <Text variant="bodySmall" color="warning">
+            <InlineAlertDescription>
               budget items are over budget
-            </Text>
+            </InlineAlertDescription>
           </HStack>
-        </Box>
+        </InlineAlert>
       )}
 
       {/* Form */}
@@ -308,11 +289,14 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
                 gap="md"
                 className="p-8"
               >
-                <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
-                  No budget items found.
-                  <br />
-                  Create a budget item to start tracking your contract finances.
-                </Text>
+                <Stack spacing="xs" className="text-center">
+                  <Text variant="body" color="muted">
+                    No budget items found.
+                  </Text>
+                  <Text variant="body" color="muted">
+                    Create a budget item to start tracking your contract finances.
+                  </Text>
+                </Stack>
                 <Button variant="primary" onClick={handleCreateClick}>
                   <HStack spacing="xs" align="center">
                     <PlusIcon size="sm" />

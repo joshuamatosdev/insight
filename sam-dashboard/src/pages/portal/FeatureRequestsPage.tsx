@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, Button, Badge, Input } from '../../components/catalyst/primitives';
+import { Text, Button, Badge, Input, Select } from '../../components/catalyst/primitives';
 import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
 import { FeatureRequestCard } from '../../components/domain/portal';
 import { useFeatureRequests } from '../../hooks';
@@ -139,7 +139,7 @@ export function FeatureRequestsPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+      <Flex justify="center" align="center" className="min-h-[300px]">
         <Text variant="body" color="muted">
           Loading feature requests...
         </Text>
@@ -149,14 +149,7 @@ export function FeatureRequestsPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fef2f2',
-          borderRadius: '0.5rem',
-        }}
-      >
+      <Box className="p-8 text-center bg-red-50 rounded-lg">
         <Text variant="body" color="danger">
           Error loading feature requests: {error.message}
         </Text>
@@ -187,7 +180,7 @@ export function FeatureRequestsPage(): React.ReactElement {
         <CardBody>
           <Flex justify="space-between" align="center" gap="md">
             {/* Search */}
-            <Box style={{ flex: 1, maxWidth: '400px' }}>
+            <Box className="flex-1 max-w-md">
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -217,23 +210,24 @@ export function FeatureRequestsPage(): React.ReactElement {
 
             {/* Status Filter */}
             <Flex align="center" gap="sm">
-              <Text variant="bodySmall" color="muted">
+              <Text as="label" htmlFor="status-filter" variant="bodySmall" color="muted">
                 Status:
               </Text>
-              <select
+              <Select
+                id="status-filter"
+                name="status-filter"
                 value={statusFilter}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setStatusFilter(e.target.value as FeatureRequestStatus | 'ALL')
                 }
-                className="px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm"
-              >
-                <option value="ALL">All Statuses</option>
-                {STATUS_ORDER.map((status) => (
-                  <option key={status} value={status}>
-                    {status.replace('_', ' ')}
-                  </option>
-                ))}
-              </select>
+                options={[
+                  { value: 'ALL', label: 'All Statuses' },
+                  ...STATUS_ORDER.map((status) => ({
+                    value: status,
+                    label: status.replace('_', ' '),
+                  })),
+                ]}
+              />
             </Flex>
           </Flex>
         </CardBody>
@@ -295,11 +289,7 @@ export function FeatureRequestsPage(): React.ReactElement {
           justify="center"
           align="center"
           direction="column"
-          style={{
-            padding: '2rem',
-            backgroundColor: '#fafafa',
-            borderRadius: '0.5rem',
-          }}
+          className="p-8 bg-zinc-50 rounded-lg"
         >
           <Text variant="heading4" color="muted">
             No feature requests found

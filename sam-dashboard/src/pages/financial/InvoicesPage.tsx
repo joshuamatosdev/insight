@@ -2,7 +2,7 @@
  * InvoicesPage - Invoice management list page
  */
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, FileTextIcon } from '@/components/catalyst/primitives';
+import { Text, Button, Badge, PlusIcon, RefreshIcon, FileTextIcon, InlineAlert, InlineAlertDescription } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -14,7 +14,6 @@ import {
   Grid,
   GridItem,
   Flex,
-  Box,
 } from '@/components/catalyst/layout';
 import { InvoiceCard, InvoiceForm } from '@/components/domain/financial';
 import { useInvoices } from '@/hooks/useFinancial';
@@ -172,7 +171,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
   if (isLoading && invoices.length === 0) {
     return (
       <Section id="invoices">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading invoices...
           </Text>
@@ -211,19 +210,9 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
       />
 
       {error !== null && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="bodySmall" color="danger">
-            {error.message}
-          </Text>
-        </Box>
+        <InlineAlert color="error" className="mb-4">
+          <InlineAlertDescription>{error.message}</InlineAlertDescription>
+        </InlineAlert>
       )}
 
       {/* Form */}
@@ -246,7 +235,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
 
       {/* Status Filter */}
       <Stack spacing="md">
-        <HStack spacing="sm" style={{ flexWrap: 'wrap' }}>
+        <HStack spacing="sm" className="flex-wrap">
           {STATUS_FILTERS.map((filter) => (
             <Button
               key={filter.value}
@@ -270,11 +259,14 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
                 className="p-8"
               >
                 <FileTextIcon size="xl" color="muted" />
-                <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
-                  No invoices found.
-                  <br />
-                  Create an invoice to start billing your contracts.
-                </Text>
+                <Stack spacing="xs" className="text-center">
+                  <Text variant="body" color="muted">
+                    No invoices found.
+                  </Text>
+                  <Text variant="body" color="muted">
+                    Create an invoice to start billing your contracts.
+                  </Text>
+                </Stack>
                 <Button variant="primary" onClick={handleCreateClick}>
                   <HStack spacing="xs" align="center">
                     <PlusIcon size="sm" />

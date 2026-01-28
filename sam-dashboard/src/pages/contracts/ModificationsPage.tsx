@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select } from '../../components/catalyst/primitives';
+import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select, FormField, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
 import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid, GridItem } from '../../components/catalyst/layout';
 import { ModificationTimeline } from '../../components/domain/contracts';
 import { useContract } from '../../hooks/useContracts';
@@ -10,7 +10,7 @@ export interface ModificationsPageProps {
   onBack?: () => void;
 }
 
-const MODIFICATION_TYPES: { value: ModificationType; label: string }[] = [
+const MODIFICATION_TYPE_OPTIONS: Array<{ value: ModificationType; label: string }> = [
   { value: 'ADMINISTRATIVE', label: 'Administrative' },
   { value: 'BILATERAL', label: 'Bilateral' },
   { value: 'UNILATERAL', label: 'Unilateral' },
@@ -143,7 +143,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
+        <Flex justify="center" align="center" className="min-h-[400px]">
           <Text variant="body" color="muted">
             Loading modifications...
           </Text>
@@ -155,17 +155,12 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
   if (error !== null || contract === null) {
     return (
       <Section>
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.5rem',
-          }}
-        >
-          <Text variant="body" color="danger">
-            {error !== null ? `Error: ${error.message}` : 'Contract not found'}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>
+            {error !== null ? error.message : 'Contract not found'}
+          </InlineAlertDescription>
+        </InlineAlert>
         {onBack !== undefined && (
           <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
@@ -210,7 +205,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
 
       {showAddForm && (
         <Card className="mb-6">
-          <form onSubmit={handleSubmit}>
+          <Box as="form" onSubmit={handleSubmit}>
             <CardHeader>
               <Text variant="heading4">Create Modification</Text>
             </CardHeader>
@@ -221,106 +216,51 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                     Basic Information
                   </Text>
                   <Grid columns={2} gap="md">
-                    <Box>
-                      <label htmlFor="modificationNumber">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Modification Number *
-                        </Text>
-                      </label>
+                    <FormField label="Modification Number" id="modificationNumber" required>
                       <Input
-                        id="modificationNumber"
                         value={formState.modificationNumber}
                         onChange={handleChange('modificationNumber')}
                         disabled={isSaving}
                         placeholder="e.g., P00001"
                         required
                       />
-                    </Box>
-                    <Box>
-                      <label htmlFor="modificationType">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Type *
-                        </Text>
-                      </label>
+                    </FormField>
+                    <FormField label="Type" id="modificationType" required>
                       <Select
-                        id="modificationType"
                         value={formState.modificationType}
                         onChange={handleChange('modificationType')}
                         disabled={isSaving}
-                      >
-                        {MODIFICATION_TYPES.map((type) => (
-                          <option key={type.value} value={type.value}>
-                            {type.label}
-                          </option>
-                        ))}
-                      </Select>
-                    </Box>
+                        options={MODIFICATION_TYPE_OPTIONS}
+                      />
+                    </FormField>
                     <GridItem colSpan={2}>
-                      <Box>
-                        <label htmlFor="title">
-                          <Text
-                            variant="bodySmall"
-                            weight="semibold"
-                            className="mb-1"
-                          >
-                            Title
-                          </Text>
-                        </label>
+                      <FormField label="Title" id="title">
                         <Input
-                          id="title"
                           value={formState.title}
                           onChange={handleChange('title')}
                           disabled={isSaving}
                           placeholder="Modification title"
                         />
-                      </Box>
+                      </FormField>
                     </GridItem>
                     <GridItem colSpan={2}>
-                      <Box>
-                        <label htmlFor="description">
-                          <Text
-                            variant="bodySmall"
-                            weight="semibold"
-                            className="mb-1"
-                          >
-                            Description
-                          </Text>
-                        </label>
+                      <FormField label="Description" id="description">
                         <Input
-                          id="description"
                           value={formState.description}
                           onChange={handleChange('description')}
                           disabled={isSaving}
                           placeholder="Detailed description of the modification"
                         />
-                      </Box>
+                      </FormField>
                     </GridItem>
-                    <Box>
-                      <label htmlFor="effectiveDate">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Effective Date
-                        </Text>
-                      </label>
+                    <FormField label="Effective Date" id="effectiveDate">
                       <Input
-                        id="effectiveDate"
                         type="date"
                         value={formState.effectiveDate}
                         onChange={handleChange('effectiveDate')}
                         disabled={isSaving}
                       />
-                    </Box>
+                    </FormField>
                   </Grid>
                 </Box>
 
@@ -329,44 +269,24 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                     Value Changes
                   </Text>
                   <Grid columns={2} gap="md">
-                    <Box>
-                      <label htmlFor="valueChange">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Value Change ($)
-                        </Text>
-                      </label>
+                    <FormField label="Value Change ($)" id="valueChange">
                       <Input
-                        id="valueChange"
                         type="number"
                         value={formState.valueChange}
                         onChange={handleChange('valueChange')}
                         disabled={isSaving}
                         placeholder="Use negative for decreases"
                       />
-                    </Box>
-                    <Box>
-                      <label htmlFor="fundingChange">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          Funding Change ($)
-                        </Text>
-                      </label>
+                    </FormField>
+                    <FormField label="Funding Change ($)" id="fundingChange">
                       <Input
-                        id="fundingChange"
                         type="number"
                         value={formState.fundingChange}
                         onChange={handleChange('fundingChange')}
                         disabled={isSaving}
                         placeholder="Use negative for decreases"
                       />
-                    </Box>
+                    </FormField>
                   </Grid>
                 </Box>
 
@@ -375,83 +295,43 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                     Period of Performance Changes
                   </Text>
                   <Grid columns={2} gap="md">
-                    <Box>
-                      <label htmlFor="popExtensionDays">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          PoP Extension (days)
-                        </Text>
-                      </label>
+                    <FormField label="PoP Extension (days)" id="popExtensionDays">
                       <Input
-                        id="popExtensionDays"
                         type="number"
                         value={formState.popExtensionDays}
                         onChange={handleChange('popExtensionDays')}
                         disabled={isSaving}
                         placeholder="0"
                       />
-                    </Box>
-                    <Box>
-                      <label htmlFor="newPopEndDate">
-                        <Text
-                          variant="bodySmall"
-                          weight="semibold"
-                          className="mb-1"
-                        >
-                          New PoP End Date
-                        </Text>
-                      </label>
+                    </FormField>
+                    <FormField label="New PoP End Date" id="newPopEndDate">
                       <Input
-                        id="newPopEndDate"
                         type="date"
                         value={formState.newPopEndDate}
                         onChange={handleChange('newPopEndDate')}
                         disabled={isSaving}
                       />
-                    </Box>
+                    </FormField>
                   </Grid>
                 </Box>
 
-                <Box>
-                  <label htmlFor="scopeChangeSummary">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Scope Change Summary
-                    </Text>
-                  </label>
+                <FormField label="Scope Change Summary" id="scopeChangeSummary">
                   <Input
-                    id="scopeChangeSummary"
                     value={formState.scopeChangeSummary}
                     onChange={handleChange('scopeChangeSummary')}
                     disabled={isSaving}
                     placeholder="Summary of any scope changes"
                   />
-                </Box>
+                </FormField>
 
-                <Box>
-                  <label htmlFor="reason">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Reason
-                    </Text>
-                  </label>
+                <FormField label="Reason" id="reason">
                   <Input
-                    id="reason"
                     value={formState.reason}
                     onChange={handleChange('reason')}
                     disabled={isSaving}
                     placeholder="Reason for the modification"
                   />
-                </Box>
+                </FormField>
               </Stack>
             </CardBody>
             <CardFooter>
@@ -469,7 +349,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 </Button>
               </HStack>
             </CardFooter>
-          </form>
+          </Box>
         </Card>
       )}
 

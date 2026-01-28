@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, Input, PlusIcon } from '../../components/catalyst/primitives';
+import { Text, Button, Input, PlusIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
 import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/catalyst/layout';
 import { ContractList, ContractForm } from '../../components/domain/contracts';
 import { useContracts, useCreateContract } from '../../hooks/useContracts';
-import type { Contract, CreateContractRequest } from '../../components/domain/contracts';
+import type { Contract, CreateContractRequest, UpdateContractRequest } from '../../components/domain/contracts';
 
 export interface ContractsPageProps {
   onContractSelect?: (contractId: string) => void;
@@ -49,8 +49,10 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
   );
 
   const handleCreateContract = useCallback(
-    async (data: CreateContractRequest) => {
-      const result = await createContractAction(data);
+    async (data: CreateContractRequest | UpdateContractRequest) => {
+      // For new contracts, we need CreateContractRequest which has required fields
+      const createData = data as CreateContractRequest;
+      const result = await createContractAction(createData);
       if (result !== null) {
         setShowCreateForm(false);
         refresh();
@@ -94,23 +96,23 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
       </SectionHeader>
 
       <Box className="mb-4">
-        <form onSubmit={handleSearchSubmit}>
+        <Box as="form" onSubmit={handleSearchSubmit}>
           <HStack spacing="sm">
             <Input
               placeholder="Search contracts..."
               value={searchTerm}
               onChange={handleSearch}
-              style={{ maxWidth: '400px' }}
+              className="max-w-md"
             />
             <Button type="submit" variant="secondary">
               Search
             </Button>
           </HStack>
-        </form>
+        </Box>
       </Box>
 
       {isLoading && (
-        <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+        <Flex justify="center" align="center" className="min-h-[200px]">
           <Text variant="body" color="muted">
             Loading contracts...
           </Text>
@@ -118,17 +120,10 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
       )}
 
       {error !== null && (
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.5rem',
-          }}
-        >
-          <Text variant="body" color="danger">
-            Error: {error.message}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>{error.message}</InlineAlertDescription>
+        </InlineAlert>
       )}
 
       {isLoading === false && error === null && (

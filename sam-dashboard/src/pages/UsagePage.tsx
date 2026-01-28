@@ -12,6 +12,9 @@ import {
   UsersIcon,
   ChevronUpIcon,
   ChevronDownIcon,
+  InlineAlert,
+  InlineAlertTitle,
+  InlineAlertDescription,
 } from '../components/catalyst/primitives';
 import {
   Section,
@@ -282,33 +285,20 @@ function LimitWarningBanner({
   const warningCount = warnings.filter((w) => w.exceeded === false).length;
 
   return (
-    <Box
-      style={{
-        padding: '1rem',
-        backgroundColor: exceededCount > 0 ? '#fef2f2' : '#fffbeb',
-        borderRadius: '0.375rem',
-        border: `1px solid ${exceededCount > 0 ? '#ef4444' : '#f59e0b'}`,
-        marginBottom: '1rem',
-      }}
+    <InlineAlert
+      color={exceededCount > 0 ? 'error' : 'warning'}
+      icon={BellIcon}
+      className="mb-4"
     >
-      <HStack spacing="md" align="start">
-        <BellIcon size="md" color={exceededCount > 0 ? 'danger' : 'warning'} />
-        <Stack spacing="sm">
-          <Text
-            variant="body"
-            weight="semibold"
-            color={exceededCount > 0 ? 'danger' : 'warning'}
-          >
-            {exceededCount > 0
-              ? `${exceededCount} limit${exceededCount > 1 ? 's' : ''} exceeded`
-              : `${warningCount} metric${warningCount > 1 ? 's' : ''} approaching limit`}
-          </Text>
-          <Text variant="bodySmall" color="muted">
-            {warnings.map((w) => METRIC_DISPLAY_LABELS[w.metricType]).join(', ')}
-          </Text>
-        </Stack>
-      </HStack>
-    </Box>
+      <InlineAlertTitle>
+        {exceededCount > 0
+          ? `${exceededCount} limit${exceededCount > 1 ? 's' : ''} exceeded`
+          : `${warningCount} metric${warningCount > 1 ? 's' : ''} approaching limit`}
+      </InlineAlertTitle>
+      <InlineAlertDescription>
+        {warnings.map((w) => METRIC_DISPLAY_LABELS[w.metricType]).join(', ')}
+      </InlineAlertDescription>
+    </InlineAlert>
   );
 }
 

@@ -1,7 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button, BuildingCheckIcon } from '../components/catalyst/primitives';
+import {
+  Card,
+  CardBody,
+  Flex,
+  Stack,
+  Box,
+} from '../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  AuthLayout,
+} from '../components/catalyst/primitives';
+import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
 import { processOAuthCallback } from '../services/oauthService';
 import { useAuth } from '../auth';
 
@@ -14,7 +25,7 @@ export function OAuthCallbackPage(): React.ReactElement {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { setAuthData } = useAuth();
-  
+
   const [status, setStatus] = useState<CallbackStatus>('processing');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const processedRef = useRef(false);
@@ -66,7 +77,7 @@ export function OAuthCallbackPage(): React.ReactElement {
         });
 
         setStatus('success');
-        
+
         // Redirect to dashboard after short delay
         setTimeout(() => {
           navigate('/', { replace: true });
@@ -84,7 +95,7 @@ export function OAuthCallbackPage(): React.ReactElement {
     switch (status) {
       case 'processing':
         return (
-          <Stack spacing="md" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" align="center" className="text-center">
             <Text variant="heading4">Completing sign in...</Text>
             <Text variant="body" color="muted">
               Please wait while we authenticate your account.
@@ -94,7 +105,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
       case 'success':
         return (
-          <Stack spacing="md" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" align="center" className="text-center">
             <Text variant="heading4" color="success">
               Sign in successful!
             </Text>
@@ -106,7 +117,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
       case 'error':
         return (
-          <Stack spacing="md" style={{ textAlign: 'center' }}>
+          <Stack spacing="md" align="center" className="text-center">
             <Text variant="heading4" color="danger">
               Sign in failed
             </Text>
@@ -116,7 +127,7 @@ export function OAuthCallbackPage(): React.ReactElement {
             <Button
               variant="primary"
               onClick={() => navigate('/login')}
-              className="w-full"
+              fullWidth
             >
               Return to login
             </Button>
@@ -126,16 +137,8 @@ export function OAuthCallbackPage(): React.ReactElement {
   };
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f5',
-        padding: '1rem',
-      }}
-    >
-      <Box style={{ width: '100%', maxWidth: '400px' }}>
+    <AuthLayout>
+      <Box className="w-full max-w-md">
         <Card variant="elevated">
           <CardBody padding="lg">
             <Flex justify="center" className="mb-4">
@@ -145,7 +148,7 @@ export function OAuthCallbackPage(): React.ReactElement {
           </CardBody>
         </Card>
       </Box>
-    </Flex>
+    </AuthLayout>
   );
 }
 

@@ -9,9 +9,38 @@ import {
   Box,
   Grid,
   GridItem,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
 } from '../components/catalyst/layout';
-import { Text, Button, Input, Select, Badge } from '../components/catalyst/primitives';
+import {
+  Text,
+  Button,
+  Input,
+  Select,
+  Badge,
+  Checkbox,
+  CheckboxField,
+} from '../components/catalyst/primitives';
+import {
+  Dialog,
+  DialogTitle,
+  DialogBody,
+  DialogActions,
+  InlineAlert,
+  InlineAlertDescription,
+} from '../components/catalyst';
 import { DraggableColumn, DropZone, FilterBuilder } from '../components/domain/reports';
+import {
+  PageHeading,
+  PageHeadingSection,
+  PageHeadingTitle,
+  PageHeadingDescription,
+  PageHeadingActions,
+} from '../components/catalyst/navigation';
 import type {
   EntityType,
   ColumnDefinition,
@@ -474,14 +503,14 @@ export function ReportBuilderPage({
   return (
     <Stack spacing="lg">
       {/* Header */}
-      <Flex justify="space-between" align="center">
-        <Stack spacing="xs">
-          <Text variant="heading3">{isEditMode ? 'Edit Report' : 'Create Report'}</Text>
-          <Text variant="bodySmall" color="muted">
+      <PageHeading>
+        <PageHeadingSection>
+          <PageHeadingTitle>{isEditMode ? 'Edit Report' : 'Create Report'}</PageHeadingTitle>
+          <PageHeadingDescription>
             Build a custom report by selecting columns and filters
-          </Text>
-        </Stack>
-        <Flex gap="sm">
+          </PageHeadingDescription>
+        </PageHeadingSection>
+        <PageHeadingActions>
           {onCancel !== undefined && (
             <Button variant="outline" onClick={onCancel}>
               Cancel
@@ -497,22 +526,14 @@ export function ReportBuilderPage({
           <Button variant="primary" onClick={() => setShowSaveDialog(true)}>
             Save Report
           </Button>
-        </Flex>
-      </Flex>
+        </PageHeadingActions>
+      </PageHeading>
 
       {/* Error display */}
       {errors.general !== undefined && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-          }}
-        >
-          <Text variant="bodySmall" color="danger">
-            {errors.general}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertDescription>{errors.general}</InlineAlertDescription>
+        </InlineAlert>
       )}
 
       {/* Entity Type Selector */}
@@ -635,10 +656,11 @@ export function ReportBuilderPage({
           <CardBody>
             <Flex gap="md">
               <Box style={{ flex: 1 }}>
-                <Text variant="caption" color="muted" className="mb-1">
+                <Text as="label" variant="caption" color="muted" htmlFor="sortBy" className="mb-1">
                   Sort By
                 </Text>
                 <Select
+                  id="sortBy"
                   value={formState.sortBy}
                   onChange={(e) => setFormState({ ...formState, sortBy: e.target.value })}
                   placeholder="None"
@@ -649,10 +671,11 @@ export function ReportBuilderPage({
                 />
               </Box>
               <Box style={{ flex: 1 }}>
-                <Text variant="caption" color="muted" className="mb-1">
+                <Text as="label" variant="caption" color="muted" htmlFor="sortDirection" className="mb-1">
                   Direction
                 </Text>
                 <Select
+                  id="sortDirection"
                   value={formState.sortDirection}
                   onChange={(e) =>
                     setFormState({ ...formState, sortDirection: e.target.value as SortDirection })
@@ -679,52 +702,30 @@ export function ReportBuilderPage({
           </CardHeader>
           <CardBody padding="none">
             <Box style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr className="bg-surface-container">
+              <Table>
+                <TableHead>
+                  <TableRow>
                     {previewData.columns
                       .filter((col) => col.visible)
                       .map((col) => (
-                        <th
-                          key={col.field}
-                          style={{
-                            padding: '0.75rem',
-                            textAlign: 'left',
-                            fontWeight: 600,
-                            fontSize: '0.875rem',
-                            borderBottom: '1px solid #e4e4e7',
-                          }}
-                        >
-                          {col.label}
-                        </th>
+                        <TableHeaderCell key={col.field}>{col.label}</TableHeaderCell>
                       ))}
-                  </tr>
-                </thead>
-                <tbody>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
                   {previewData.data.slice(0, 10).map((row, rowIndex) => (
-                    <tr
-                      key={`row-${rowIndex}`}
-                      style={{
-                        borderBottom: '1px solid #e4e4e7',
-                      }}
-                    >
+                    <TableRow key={`row-${rowIndex}`}>
                       {previewData.columns
                         .filter((col) => col.visible)
                         .map((col) => (
-                          <td
-                            key={`${rowIndex}-${col.field}`}
-                            style={{
-                              padding: '0.75rem',
-                              fontSize: '0.875rem',
-                            }}
-                          >
+                          <TableCell key={`${rowIndex}-${col.field}`}>
                             {String(row[col.field] ?? '-')}
-                          </td>
+                          </TableCell>
                         ))}
-                    </tr>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             </Box>
             {previewData.totalRecords > 10 && (
               <Box className="p-3 text-center">
@@ -738,82 +739,55 @@ export function ReportBuilderPage({
       )}
 
       {/* Save Dialog */}
-      {showSaveDialog && (
-        <Box
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-          }}
-          onClick={() => setShowSaveDialog(false)}
-        >
-          <Card
-            style={{ width: '500px', maxWidth: '90vw' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <CardHeader>
-              <Text variant="heading5">Save Report</Text>
-            </CardHeader>
-            <CardBody>
-              <Stack spacing="md">
-                <Box>
-                  <Text variant="caption" color="muted" className="mb-1">
-                    Report Name *
-                  </Text>
-                  <Input
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="Enter report name..."
-                  />
-                  {errors.name !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
-                      {errors.name}
-                    </Text>
-                  )}
-                </Box>
-                <Box>
-                  <Text variant="caption" color="muted" className="mb-1">
-                    Description
-                  </Text>
-                  <Input
-                    value={formState.description}
-                    onChange={(e) => setFormState({ ...formState, description: e.target.value })}
-                    placeholder="Enter description..."
-                  />
-                </Box>
-                <Flex align="center" gap="sm">
-                  <input
-                    type="checkbox"
-                    id="isPublic"
-                    checked={formState.isPublic}
-                    onChange={(e) => setFormState({ ...formState, isPublic: e.target.checked })}
-                  />
-                  <label htmlFor="isPublic">
-                    <Text variant="bodySmall">Share with all team members</Text>
-                  </label>
-                </Flex>
-              </Stack>
-            </CardBody>
-            <CardFooter>
-              <Flex justify="end" gap="sm">
-                <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={handleSave} disabled={isSaving}>
-                  {isSaving ? 'Saving...' : 'Save Report'}
-                </Button>
-              </Flex>
-            </CardFooter>
-          </Card>
-        </Box>
-      )}
+      <Dialog open={showSaveDialog} onClose={() => setShowSaveDialog(false)} size="md">
+        <DialogTitle>Save Report</DialogTitle>
+        <DialogBody>
+          <Stack spacing="md">
+            <Box>
+              <Text as="label" variant="caption" color="muted" htmlFor="reportName" className="mb-1">
+                Report Name *
+              </Text>
+              <Input
+                id="reportName"
+                value={formState.name}
+                onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                placeholder="Enter report name..."
+              />
+              {errors.name !== undefined && (
+                <Text variant="caption" color="danger" className="mt-1">
+                  {errors.name}
+                </Text>
+              )}
+            </Box>
+            <Box>
+              <Text as="label" variant="caption" color="muted" htmlFor="reportDescription" className="mb-1">
+                Description
+              </Text>
+              <Input
+                id="reportDescription"
+                value={formState.description}
+                onChange={(e) => setFormState({ ...formState, description: e.target.value })}
+                placeholder="Enter description..."
+              />
+            </Box>
+            <CheckboxField>
+              <Checkbox
+                checked={formState.isPublic}
+                onChange={(checked) => setFormState({ ...formState, isPublic: checked })}
+              />
+              <Text as="label" variant="bodySmall">Share with all team members</Text>
+            </CheckboxField>
+          </Stack>
+        </DialogBody>
+        <DialogActions>
+          <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSave} disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save Report'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 }

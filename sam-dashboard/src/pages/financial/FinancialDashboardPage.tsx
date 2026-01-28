@@ -2,7 +2,7 @@
  * FinancialDashboardPage - Financial overview and key metrics
  */
 import { useState, useEffect, useCallback } from 'react';
-import { Text, Badge, Button, SpeedometerIcon, RefreshIcon } from '@/components/catalyst/primitives';
+import { Text, Badge, Button, SpeedometerIcon, RefreshIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '@/components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -14,7 +14,6 @@ import {
   Grid,
   GridItem,
   Flex,
-  Box,
 } from '@/components/catalyst/layout';
 import {
   FinancialSummaryCard,
@@ -67,7 +66,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
   if (isLoading && summary === null) {
     return (
       <Section id="financial-dashboard">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading financial data...
           </Text>
@@ -79,18 +78,10 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
   if (summaryError !== null) {
     return (
       <Section id="financial-dashboard">
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="body" color="danger">
-            Error loading financial data: {summaryError.message}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertTitle>Error loading financial data</InlineAlertTitle>
+          <InlineAlertDescription>{summaryError.message}</InlineAlertDescription>
+        </InlineAlert>
       </Section>
     );
   }
@@ -226,7 +217,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                       />
                     ))}
                     {invoices.length > 3 && (
-                      <Text variant="bodySmall" color="muted" style={{ textAlign: 'center' }}>
+                      <Text variant="bodySmall" color="muted" className="text-center">
                         +{invoices.length - 3} more overdue invoices
                       </Text>
                     )}
@@ -286,7 +277,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                       </HStack>
                     ))}
                     {overBudgetItems.length > 5 && (
-                      <Text variant="bodySmall" color="muted" style={{ textAlign: 'center' }}>
+                      <Text variant="bodySmall" color="muted" className="text-center">
                         +{overBudgetItems.length - 5} more over-budget items
                       </Text>
                     )}

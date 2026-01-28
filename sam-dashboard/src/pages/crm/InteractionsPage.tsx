@@ -1,9 +1,22 @@
 import { useState } from 'react';
-import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
-import { Select, Button, Text } from '../../components/catalyst/primitives';
-import { InteractionTimeline, InteractionForm, UpcomingFollowups } from '../../components/domain/crm';
-import { useInteractions, useUpcomingFollowups } from '../../hooks/useInteractions';
-import type { InteractionType, CreateInteractionRequest, UpcomingFollowup } from '../../types/crm';
+import {
+  Box,
+  Flex,
+  Stack,
+  HStack,
+  Card,
+  CardBody,
+} from '@/components/catalyst/layout';
+import {
+  PageHeading,
+  PageHeadingTitle,
+  PageHeadingSection,
+  PageHeadingActions,
+} from '@/components/catalyst/navigation';
+import { Select, Button, Text } from '@/components/catalyst/primitives';
+import { InteractionTimeline, InteractionForm, UpcomingFollowups } from '@/components/domain/crm';
+import { useInteractions, useUpcomingFollowups } from '@/hooks/useInteractions';
+import type { InteractionType, CreateInteractionRequest, UpcomingFollowup } from '@/types/crm';
 
 const INTERACTION_TYPE_OPTIONS: { value: InteractionType | ''; label: string }[] = [
   { value: '', label: 'All Types' },
@@ -80,83 +93,95 @@ export function InteractionsPage() {
 
   if (showCreateForm === true) {
     return (
-      <Section id="log-interaction">
+      <Box as="section" id="log-interaction">
         <InteractionForm
           onSubmit={handleCreateSubmit}
           onCancel={() => setShowCreateForm(false)}
           isLoading={isSubmitting}
         />
-      </Section>
+      </Box>
     );
   }
 
   return (
-    <Section id="interactions">
-      <SectionHeader 
-        title="Interactions"
-        actions={<Button onClick={() => setShowCreateForm(true)}>Log Interaction</Button>}
-      />
+    <Box as="section" id="interactions">
+      <Stack gap="lg">
+        <PageHeading>
+          <PageHeadingSection>
+            <PageHeadingTitle>Interactions</PageHeadingTitle>
+          </PageHeadingSection>
+          <PageHeadingActions>
+            <Button onClick={() => setShowCreateForm(true)}>Log Interaction</Button>
+          </PageHeadingActions>
+        </PageHeading>
 
-      <HStack gap="lg" align="start">
-        <Stack gap="lg" style={{ flex: 2 }}>
-          <HStack gap="md">
-            <Select
-              value={filters.interactionType ?? ''}
-              onChange={(e) => handleTypeFilterChange(e.target.value)}
-              options={INTERACTION_TYPE_OPTIONS}
+        <Flex gap="lg" align="start">
+          <Box className="flex-[2]">
+            <Card>
+              <CardBody>
+                <Stack gap="lg">
+                  <HStack gap="md">
+                    <Select
+                      value={filters.interactionType ?? ''}
+                      onChange={(e) => handleTypeFilterChange(e.target.value)}
+                      options={INTERACTION_TYPE_OPTIONS}
+                    />
+                  </HStack>
+
+                  {error !== null && (
+                    <Text variant="body" color="danger">
+                      {error.message}
+                    </Text>
+                  )}
+
+                  <InteractionTimeline
+                    interactions={interactions}
+                    isLoading={isLoading}
+                    emptyMessage="No interactions found"
+                  />
+
+                  {totalPages > 1 && (
+                    <HStack justify="between" align="center">
+                      <Text variant="bodySmall" color="secondary">
+                        Showing {interactions.length} of {totalElements} interactions
+                      </Text>
+                      <HStack gap="sm">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          disabled={page === 0}
+                          onClick={() => setPage(page - 1)}
+                        >
+                          Previous
+                        </Button>
+                        <Text variant="bodySmall">
+                          Page {page + 1} of {totalPages}
+                        </Text>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          disabled={page >= totalPages - 1}
+                          onClick={() => setPage(page + 1)}
+                        >
+                          Next
+                        </Button>
+                      </HStack>
+                    </HStack>
+                  )}
+                </Stack>
+              </CardBody>
+            </Card>
+          </Box>
+
+          <Box className="flex-1">
+            <UpcomingFollowups
+              followups={followups}
+              isLoading={followupsLoading}
+              onMarkComplete={handleMarkFollowupComplete}
             />
-          </HStack>
-
-          {error !== null && (
-            <Text variant="body" color="danger">
-              {error.message}
-            </Text>
-          )}
-
-          <InteractionTimeline
-            interactions={interactions}
-            isLoading={isLoading}
-            emptyMessage="No interactions found"
-          />
-
-          {totalPages > 1 && (
-            <HStack justify="between" align="center">
-              <Text variant="bodySmall" color="secondary">
-                Showing {interactions.length} of {totalElements} interactions
-              </Text>
-              <HStack gap="sm">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={page === 0}
-                  onClick={() => setPage(page - 1)}
-                >
-                  Previous
-                </Button>
-                <Text variant="bodySmall">
-                  Page {page + 1} of {totalPages}
-                </Text>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={page >= totalPages - 1}
-                  onClick={() => setPage(page + 1)}
-                >
-                  Next
-                </Button>
-              </HStack>
-            </HStack>
-          )}
-        </Stack>
-
-        <Stack style={{ flex: 1 }}>
-          <UpcomingFollowups
-            followups={followups}
-            isLoading={followupsLoading}
-            onMarkComplete={handleMarkFollowupComplete}
-          />
-        </Stack>
-      </HStack>
-    </Section>
+          </Box>
+        </Flex>
+      </Stack>
+    </Box>
   );
 }

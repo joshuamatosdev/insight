@@ -155,7 +155,7 @@ export function PipelinePage() {
               value={activePipeline?.id ?? ''}
               onChange={(e) => handlePipelineChange(e.target.value)}
               options={pipelineOptions}
-              style={{ minWidth: '200px' }}
+              className="min-w-[200px]"
             />
             <Button variant="secondary" onClick={() => navigate('/pipeline/settings')}>
               Settings
@@ -205,13 +205,7 @@ export function PipelinePage() {
       {/* Approaching Deadlines Alert */}
       {approachingDeadlines.length > 0 && (
         <Box
-          style={{
-            padding: '0.75rem 1rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fffbeb',
-            borderRadius: '0.375rem',
-            border: '1px solid #f59e0b',
-          }}
+          className="px-4 py-3 mb-4 bg-amber-50 rounded-md border border-amber-500"
         >
           <HStack justify="between" align="center">
             <Text variant="bodySmall" color="warning" weight="semibold">

@@ -189,12 +189,7 @@ export function PipelineDetailPage() {
       <Stack gap="lg">
         {/* Overview Card */}
         <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#f4f4f5',
-            borderRadius: '0.5rem',
-            border: '1px solid #e4e4e7',
-          }}
+          className="p-4 bg-zinc-100 rounded-lg border border-zinc-200"
         >
           <Stack gap="md">
             <HStack justify="between" align="start" wrap="wrap">
@@ -268,7 +263,7 @@ export function PipelineDetailPage() {
                 <Text variant="caption" color="secondary">
                   Decision Notes
                 </Text>
-                <Text variant="bodySmall" style={{ whiteSpace: 'pre-wrap' }}>
+                <Text variant="bodySmall" className="whitespace-pre-wrap">
                   {opportunity.decisionNotes}
                 </Text>
               </Stack>

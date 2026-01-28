@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon } from '../../components/catalyst/primitives';
+import { Text, Button, ChevronLeftIcon, PlusIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
 import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/catalyst/layout';
 import { ClinTable, ClinForm } from '../../components/domain/contracts';
 import { useContract } from '../../hooks/useContracts';
@@ -23,9 +23,11 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
   const [isSaving, setIsSaving] = useState(false);
 
   const handleAddClin = useCallback(
-    async (data: CreateClinRequest) => {
+    async (data: CreateClinRequest | UpdateClinRequest) => {
       setIsSaving(true);
-      const result = await addClin(data);
+      // For new CLINs, we need CreateClinRequest which has required fields
+      const createData = data as CreateClinRequest;
+      const result = await addClin(createData);
       setIsSaving(false);
       if (result !== null) {
         setShowAddForm(false);
@@ -63,7 +65,7 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
+        <Flex justify="center" align="center" className="min-h-[400px]">
           <Text variant="body" color="muted">
             Loading CLINs...
           </Text>
@@ -75,17 +77,12 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
   if (error !== null || contract === null) {
     return (
       <Section>
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.5rem',
-          }}
-        >
-          <Text variant="body" color="danger">
-            {error !== null ? `Error: ${error.message}` : 'Contract not found'}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>
+            {error !== null ? error.message : 'Contract not found'}
+          </InlineAlertDescription>
+        </InlineAlert>
         {onBack !== undefined && (
           <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>

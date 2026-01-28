@@ -67,7 +67,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+      <Flex justify="center" align="center" className="min-h-[300px]">
         <Text variant="body" color="muted">
           Loading sprints...
         </Text>
@@ -77,14 +77,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fef2f2',
-          borderRadius: '0.5rem',
-        }}
-      >
+      <Box className="p-8 text-center bg-red-50 rounded-lg">
         <Text variant="body" color="danger">
           Error loading sprints: {error.message}
         </Text>
@@ -204,7 +197,7 @@ export function SprintTrackingPage(): React.ReactElement {
         </Box>
 
         {/* Sprint Board (3 columns) */}
-        <Box style={{ gridColumn: 'span 3' }}>
+        <Box className="col-span-3">
           {selectedSprint !== null ? (
             <Card>
               <CardBody>
@@ -220,11 +213,7 @@ export function SprintTrackingPage(): React.ReactElement {
               justify="center"
               align="center"
               direction="column"
-              style={{
-                minHeight: '400px',
-                backgroundColor: '#fafafa',
-                borderRadius: '0.5rem',
-              }}
+              className="min-h-[400px] bg-zinc-50 rounded-lg"
             >
               <Text variant="heading4" color="muted">
                 Select a Sprint

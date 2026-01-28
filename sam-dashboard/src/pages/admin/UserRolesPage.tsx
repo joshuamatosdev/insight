@@ -4,7 +4,14 @@
  */
 
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
-import { Text, Button, Input, Badge, SearchIcon } from '../../components/catalyst/primitives';
+import {
+  Text,
+  Button,
+  Input,
+  Badge,
+  Select,
+} from '../../components/catalyst/primitives';
+import { SearchIcon } from '../../components/catalyst/primitives/Icon';
 import {
   Section,
   SectionHeader,
@@ -14,17 +21,15 @@ import {
   Flex,
   Box,
   HStack,
-} from '../../components/catalyst/layout';
-import {
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeader,
+  TableHeaderCell,
   TableCell,
-} from '../../components/catalyst';
+} from '../../components/catalyst/layout';
 import { fetchUsersWithRoles, fetchRoles, updateUserRole } from '../../services';
-import type { Role, UserWithRoles, AdminPageState, PaginatedResponse } from '../../types';
+import type { Role, UserWithRoles, AdminPageState } from '../../types';
 
 /**
  * Format date for display
@@ -74,30 +79,18 @@ function RoleSelect({
     [currentRole, onRoleChange]
   );
 
+  const options = [
+    { value: '', label: 'Select role...' },
+    ...availableRoles.map((role) => ({ value: role.name, label: role.name })),
+  ];
+
   return (
-    <select
+    <Select
       value={currentRole ?? ''}
       onChange={handleChange}
       disabled={isLoading}
-      style={{
-        padding: '0.25rem 0.5rem',
-        fontSize: '0.875rem',
-        borderRadius: '0.375rem',
-        border: '1px solid #d4d4d8',
-        backgroundColor: '#ffffff',
-        cursor: isLoading ? 'wait' : 'pointer',
-        minWidth: '150px',
-      }}
-    >
-      <option value="" disabled>
-        Select role...
-      </option>
-      {availableRoles.map((role) => (
-        <option key={role.id} value={role.name}>
-          {role.name}
-        </option>
-      ))}
-    </select>
+      options={options}
+    />
   );
 }
 
@@ -201,7 +194,7 @@ export function UserRolesPage(): React.ReactElement {
   if (pageState === 'loading' && users.length === 0) {
     return (
       <Section id="user-roles-admin">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading users...
           </Text>
@@ -213,7 +206,7 @@ export function UserRolesPage(): React.ReactElement {
   if (pageState === 'error' && users.length === 0) {
     return (
       <Section id="user-roles-admin">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load users'}
@@ -234,63 +227,62 @@ export function UserRolesPage(): React.ReactElement {
       {/* Search Bar */}
       <Card variant="filled" className="mb-4">
         <CardBody padding="md">
-          <Flex gap="sm" align="center">
-            <Box style={{ flex: 1 }}>
-              <Input
-                type="text"
-                value={searchInput}
-                onChange={handleSearchInputChange}
-                onKeyDown={handleSearchKeyDown}
-                placeholder="Search by name or email..."
-                fullWidth
-                leftIcon={<SearchIcon size="sm" color="muted" />}
-              />
-            </Box>
-            <Button variant="primary" onClick={handleSearch}>
-              Search
-            </Button>
-            {searchQuery.length > 0 && (
-              <Button variant="outline" onClick={handleClearSearch}>
-                Clear
+          <Stack spacing="sm">
+            <Flex gap="sm" align="center">
+              <Box className="flex-1">
+                <Input
+                  type="text"
+                  value={searchInput}
+                  onChange={handleSearchInputChange}
+                  onKeyDown={handleSearchKeyDown}
+                  placeholder="Search by name or email..."
+                />
+              </Box>
+              <Button variant="primary" onClick={handleSearch}>
+                <HStack spacing="xs" align="center">
+                  <SearchIcon size="sm" />
+                  <Text as="span" variant="bodySmall" color="white">
+                    Search
+                  </Text>
+                </HStack>
               </Button>
+              {searchQuery.length > 0 && (
+                <Button variant="outline" onClick={handleClearSearch}>
+                  Clear
+                </Button>
+              )}
+            </Flex>
+            {searchQuery.length > 0 && (
+              <Text variant="caption" color="muted">
+                Showing results for &quot;{searchQuery}&quot; ({totalUsers} user
+                {totalUsers !== 1 ? 's' : ''} found)
+              </Text>
             )}
-          </Flex>
-          {searchQuery.length > 0 && (
-            <Text variant="caption" color="muted" className="mt-2">
-              Showing results for &quot;{searchQuery}&quot; ({totalUsers} user
-              {totalUsers !== 1 ? 's' : ''} found)
-            </Text>
-          )}
+          </Stack>
         </CardBody>
       </Card>
 
       {error !== null && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="bodySmall" color="danger">
-            {error}
-          </Text>
-        </Box>
+        <Card variant="outlined" className="mb-4 border-red-500">
+          <CardBody padding="md">
+            <Text variant="bodySmall" color="danger">
+              {error}
+            </Text>
+          </CardBody>
+        </Card>
       )}
 
-      <Card variant="default">
+      <Card variant="elevated">
         <CardBody padding="none">
           <Table striped>
             <TableHead>
               <TableRow>
-                <TableHeader>User</TableHeader>
-                <TableHeader>Email</TableHeader>
-                <TableHeader>Current Role</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Joined</TableHeader>
-                <TableHeader>Change Role</TableHeader>
+                <TableHeaderCell>User</TableHeaderCell>
+                <TableHeaderCell>Email</TableHeaderCell>
+                <TableHeaderCell>Current Role</TableHeaderCell>
+                <TableHeaderCell>Status</TableHeaderCell>
+                <TableHeaderCell>Joined</TableHeaderCell>
+                <TableHeaderCell>Change Role</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -312,19 +304,13 @@ export function UserRolesPage(): React.ReactElement {
                     </TableCell>
                     <TableCell>
                       {currentRole !== null ? (
-                        <Badge color="cyan">
-                          {currentRole.name}
-                        </Badge>
+                        <Badge color="cyan">{currentRole.name}</Badge>
                       ) : (
-                        <Badge color="zinc">
-                          No role
-                        </Badge>
+                        <Badge color="zinc">No role</Badge>
                       )}
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        color={user.isActive ? 'green' : 'amber'}
-                      >
+                      <Badge color={user.isActive ? 'green' : 'amber'}>
                         {user.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </TableCell>
@@ -346,16 +332,14 @@ export function UserRolesPage(): React.ReactElement {
               })}
               {users.length === 0 && (
                 <TableRow>
-                  <TableCell>
-                    <Text
-                      variant="body"
-                      color="muted"
-                      className="p-8 text-center"
-                    >
-                      {searchQuery.length > 0
-                        ? 'No users found matching your search.'
-                        : 'No users found.'}
-                    </Text>
+                  <TableCell colSpan={6}>
+                    <Flex justify="center" padding="lg">
+                      <Text variant="body" color="muted">
+                        {searchQuery.length > 0
+                          ? 'No users found matching your search.'
+                          : 'No users found.'}
+                      </Text>
+                    </Flex>
                   </TableCell>
                 </TableRow>
               )}
@@ -376,7 +360,7 @@ export function UserRolesPage(): React.ReactElement {
               variant="outline"
               size="sm"
               onClick={handlePrevPage}
-              isDisabled={hasPrevPage === false}
+              disabled={hasPrevPage === false}
             >
               Previous
             </Button>
@@ -387,7 +371,7 @@ export function UserRolesPage(): React.ReactElement {
               variant="outline"
               size="sm"
               onClick={handleNextPage}
-              isDisabled={hasNextPage === false}
+              disabled={hasNextPage === false}
             >
               Next
             </Button>

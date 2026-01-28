@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DashboardPage } from './DashboardPage';
+import type { Opportunity } from '../components/domain/opportunity/Opportunity.types';
 
 expect.extend(toHaveNoViolations);
 
@@ -14,12 +15,12 @@ vi.mock('../hooks', () => ({
       {
         id: '1',
         title: 'Test Opportunity',
+        solicitationNumber: 'SOL-2024-001',
         type: 'Solicitation',
-        postedDate: '2024-01-01',
-        responseDeadline: '2024-02-01',
         naicsCode: '541512',
-        setAside: 'Small Business',
-        agency: 'Test Agency',
+        postedDate: '2024-01-01',
+        responseDeadLine: '2024-02-01',
+        url: 'https://sam.gov/opportunity/1',
       },
     ],
     isLoading: false,
@@ -51,26 +52,26 @@ describe('DashboardPage accessibility', () => {
   });
 
   it('should have no accessibility violations with opportunities', async () => {
-    const mockOpportunities = [
+    const mockOpportunities: Opportunity[] = [
       {
         id: '1',
         title: 'Test Opportunity 1',
-        type: 'Solicitation' as const,
-        postedDate: '2024-01-01',
-        responseDeadline: '2024-02-01',
+        solicitationNumber: 'SOL-2024-001',
+        type: 'Solicitation',
         naicsCode: '541512',
-        setAside: 'Small Business',
-        agency: 'Test Agency',
+        postedDate: '2024-01-01',
+        responseDeadLine: '2024-02-01',
+        url: 'https://sam.gov/opportunity/1',
       },
       {
         id: '2',
         title: 'Test Opportunity 2',
-        type: 'Sources Sought' as const,
-        postedDate: '2024-01-02',
-        responseDeadline: '2024-02-02',
+        solicitationNumber: 'SOL-2024-002',
+        type: 'Sources Sought',
         naicsCode: '541511',
-        setAside: null,
-        agency: 'Another Agency',
+        postedDate: '2024-01-02',
+        responseDeadLine: '2024-02-02',
+        url: 'https://sam.gov/opportunity/2',
       },
     ];
 

@@ -1,6 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Card, CardBody, CardHeader, Stack, Grid } from '../../components/catalyst/layout';
-import { Text, Button, Input, Select } from '../../components/catalyst/primitives';
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Stack,
+  Grid,
+  GridItem,
+  Section,
+  SectionHeader,
+  Flex,
+} from '../../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  Input,
+  Select,
+  Checkbox,
+  CheckboxField,
+  InlineAlert,
+  InlineAlertDescription,
+} from '../../components/catalyst/primitives';
 import {
   fetchTenantSettings,
   updateTenantSettings,
@@ -10,13 +29,14 @@ import {
   CURRENCY_OPTIONS,
 } from '../../services/tenantAdminService';
 import { useAuth } from '../../auth';
+import { Description, Label } from '../../components/catalyst/blocks/fieldset';
 
 /**
  * Tenant Settings administration page
  */
 export function TenantSettingsPage(): React.ReactElement {
   const { token } = useAuth();
-  
+
   const [settings, setSettings] = useState<TenantSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -73,152 +93,225 @@ export function TenantSettingsPage(): React.ReactElement {
 
   if (isLoading === true) {
     return (
-      <Card>
-        <CardBody>
-          <Text>Loading settings...</Text>
-        </CardBody>
-      </Card>
+      <Section id="tenant-settings">
+        <Flex justify="center" align="center" className="min-h-[300px]">
+          <Text variant="body" color="muted">
+            Loading settings...
+          </Text>
+        </Flex>
+      </Section>
     );
   }
 
   if (settings === null) {
     return (
-      <Card>
-        <CardBody>
-          <Text color="danger">{error ?? 'Failed to load settings'}</Text>
-        </CardBody>
-      </Card>
+      <Section id="tenant-settings">
+        <Flex justify="center" align="center" className="min-h-[300px]">
+          <Stack spacing="md" align="center">
+            <Text variant="body" color="danger">
+              {error ?? 'Failed to load settings'}
+            </Text>
+            <Button variant="primary" onClick={() => window.location.reload()}>
+              Retry
+            </Button>
+          </Stack>
+        </Flex>
+      </Section>
     );
   }
 
   return (
-    <Stack spacing="md">
-      <Text variant="heading3">Tenant Settings</Text>
+    <Section id="tenant-settings">
+      <SectionHeader title="Tenant Settings" />
 
-      {error !== null && (
-        <Card variant="bordered" style={{ backgroundColor: '#fef2f2' }}>
+      <Stack spacing="md">
+        {error !== null && (
+          <InlineAlert color="error">
+            <InlineAlertDescription>{error}</InlineAlertDescription>
+          </InlineAlert>
+        )}
+
+        {success !== null && (
+          <InlineAlert color="success">
+            <InlineAlertDescription>{success}</InlineAlertDescription>
+          </InlineAlert>
+        )}
+
+        {/* General Settings */}
+        <Card variant="elevated">
+          <CardHeader>
+            <Text variant="heading5" weight="semibold">
+              General Settings
+            </Text>
+          </CardHeader>
           <CardBody>
-            <Text color="danger">{error}</Text>
+            <Grid columns={2} gap="md">
+              <GridItem>
+                <Stack spacing="xs">
+                  <Text as="label" variant="label" htmlFor="timezone">
+                    Timezone
+                  </Text>
+                  <Select
+                    id="timezone"
+                    value={settings.timezone}
+                    onChange={(e) => updateField('timezone', e.target.value)}
+                    options={TIMEZONE_OPTIONS}
+                    fullWidth
+                  />
+                </Stack>
+              </GridItem>
+              <GridItem>
+                <Stack spacing="xs">
+                  <Text as="label" variant="label" htmlFor="dateFormat">
+                    Date Format
+                  </Text>
+                  <Select
+                    id="dateFormat"
+                    value={settings.dateFormat}
+                    onChange={(e) => updateField('dateFormat', e.target.value)}
+                    options={DATE_FORMAT_OPTIONS}
+                    fullWidth
+                  />
+                </Stack>
+              </GridItem>
+              <GridItem>
+                <Stack spacing="xs">
+                  <Text as="label" variant="label" htmlFor="currency">
+                    Currency
+                  </Text>
+                  <Select
+                    id="currency"
+                    value={settings.currency}
+                    onChange={(e) => updateField('currency', e.target.value)}
+                    options={CURRENCY_OPTIONS}
+                    fullWidth
+                  />
+                </Stack>
+              </GridItem>
+            </Grid>
           </CardBody>
         </Card>
-      )}
 
-      {success !== null && (
-        <Card variant="bordered" style={{ backgroundColor: '#ecfdf5' }}>
+        {/* Security Settings */}
+        <Card variant="elevated">
+          <CardHeader>
+            <Text variant="heading5" weight="semibold">
+              Security Settings
+            </Text>
+          </CardHeader>
           <CardBody>
-            <Text color="success">{success}</Text>
+            <Grid columns={2} gap="md">
+              <GridItem>
+                <Stack spacing="xs">
+                  <Text as="label" variant="label" htmlFor="sessionTimeout">
+                    Session Timeout (minutes)
+                  </Text>
+                  <Input
+                    id="sessionTimeout"
+                    type="number"
+                    value={String(settings.sessionTimeoutMinutes)}
+                    onChange={(e) =>
+                      updateField('sessionTimeoutMinutes', Number(e.target.value))
+                    }
+                    min={5}
+                    max={1440}
+                  />
+                </Stack>
+              </GridItem>
+              <GridItem>
+                <Stack spacing="xs">
+                  <Text as="label" variant="label" htmlFor="passwordExpiry">
+                    Password Expiry (days)
+                  </Text>
+                  <Input
+                    id="passwordExpiry"
+                    type="number"
+                    value={String(settings.passwordExpiryDays)}
+                    onChange={(e) =>
+                      updateField('passwordExpiryDays', Number(e.target.value))
+                    }
+                    min={0}
+                    max={365}
+                  />
+                  <Text variant="caption" color="muted">
+                    Set to 0 to disable password expiry
+                  </Text>
+                </Stack>
+              </GridItem>
+              <GridItem>
+                <CheckboxField>
+                  <Checkbox
+                    checked={settings.mfaRequired}
+                    onChange={(checked) => updateField('mfaRequired', checked)}
+                    color="blue"
+                  />
+                  <Label>Require MFA for all users</Label>
+                  <Description>
+                    When enabled, all users must set up multi-factor authentication
+                  </Description>
+                </CheckboxField>
+              </GridItem>
+            </Grid>
           </CardBody>
         </Card>
-      )}
 
-      {/* General Settings */}
-      <Card>
-        <CardHeader>
-          <Text variant="heading5">General Settings</Text>
-        </CardHeader>
-        <CardBody>
-          <Grid columns={2} gap="md">
-            <Select
-              label="Timezone"
-              value={settings.timezone}
-              onChange={(e) => updateField('timezone', e.target.value)}
-              options={TIMEZONE_OPTIONS}
-            />
-            <Select
-              label="Date Format"
-              value={settings.dateFormat}
-              onChange={(e) => updateField('dateFormat', e.target.value)}
-              options={DATE_FORMAT_OPTIONS}
-            />
-            <Select
-              label="Currency"
-              value={settings.currency}
-              onChange={(e) => updateField('currency', e.target.value)}
-              options={CURRENCY_OPTIONS}
-            />
-          </Grid>
-        </CardBody>
-      </Card>
+        {/* SSO Settings */}
+        <Card variant="elevated">
+          <CardHeader>
+            <Text variant="heading5" weight="semibold">
+              Single Sign-On (SSO)
+            </Text>
+          </CardHeader>
+          <CardBody>
+            <Stack spacing="md">
+              <CheckboxField>
+                <Checkbox
+                  checked={settings.ssoEnabled}
+                  onChange={(checked) => updateField('ssoEnabled', checked)}
+                  color="blue"
+                />
+                <Label>Enable SSO</Label>
+                <Description>
+                  Allow users to sign in using an external identity provider
+                </Description>
+              </CheckboxField>
+              {settings.ssoEnabled === true && (
+                <Stack spacing="xs">
+                  <Text as="label" variant="label" htmlFor="ssoProvider">
+                    SSO Provider
+                  </Text>
+                  <Select
+                    id="ssoProvider"
+                    value={settings.ssoProvider ?? ''}
+                    onChange={(e) => updateField('ssoProvider', e.target.value)}
+                    options={[
+                      { value: '', label: 'Select provider...' },
+                      { value: 'google', label: 'Google Workspace' },
+                      { value: 'microsoft', label: 'Microsoft Azure AD' },
+                      { value: 'okta', label: 'Okta' },
+                      { value: 'saml', label: 'Custom SAML' },
+                    ]}
+                    fullWidth
+                  />
+                </Stack>
+              )}
+            </Stack>
+          </CardBody>
+        </Card>
 
-      {/* Security Settings */}
-      <Card>
-        <CardHeader>
-          <Text variant="heading5">Security Settings</Text>
-        </CardHeader>
-        <CardBody>
-          <Grid columns={2} gap="md">
-            <Input
-              label="Session Timeout (minutes)"
-              type="number"
-              value={String(settings.sessionTimeoutMinutes)}
-              onChange={(e) => updateField('sessionTimeoutMinutes', Number(e.target.value))}
-              min={5}
-              max={1440}
-            />
-            <Input
-              label="Password Expiry (days)"
-              type="number"
-              value={String(settings.passwordExpiryDays)}
-              onChange={(e) => updateField('passwordExpiryDays', Number(e.target.value))}
-              min={0}
-              max={365}
-              // Set to 0 to disable password expiry
-            />
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <input
-                type="checkbox"
-                checked={settings.mfaRequired}
-                onChange={(e) => updateField('mfaRequired', e.target.checked)}
-              />
-              <Text>Require MFA for all users</Text>
-            </label>
-          </Grid>
-        </CardBody>
-      </Card>
-
-      {/* SSO Settings */}
-      <Card>
-        <CardHeader>
-          <Text variant="heading5">Single Sign-On (SSO)</Text>
-        </CardHeader>
-        <CardBody>
-          <Stack spacing="md">
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <input
-                type="checkbox"
-                checked={settings.ssoEnabled}
-                onChange={(e) => updateField('ssoEnabled', e.target.checked)}
-              />
-              <Text>Enable SSO</Text>
-            </label>
-            {settings.ssoEnabled === true && (
-              <Select
-                label="SSO Provider"
-                value={settings.ssoProvider ?? ''}
-                onChange={(e) => updateField('ssoProvider', e.target.value)}
-                options={[
-                  { value: '', label: 'Select provider...' },
-                  { value: 'google', label: 'Google Workspace' },
-                  { value: 'microsoft', label: 'Microsoft Azure AD' },
-                  { value: 'okta', label: 'Okta' },
-                  { value: 'saml', label: 'Custom SAML' },
-                ]}
-              />
-            )}
-          </Stack>
-        </CardBody>
-      </Card>
-
-      {/* Save Button */}
-      <Button
-        variant="primary"
-        onClick={handleSave}
-        disabled={isSaving === true}
-        size="lg"
-      >
-        {isSaving === true ? 'Saving...' : 'Save Settings'}
-      </Button>
-    </Stack>
+        {/* Save Button */}
+        <Flex justify="end">
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            disabled={isSaving === true}
+            size="lg"
+          >
+            {isSaving === true ? 'Saving...' : 'Save Settings'}
+          </Button>
+        </Flex>
+      </Stack>
+    </Section>
   );
 }
 

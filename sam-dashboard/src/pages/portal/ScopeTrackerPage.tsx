@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, Button, Badge } from '../../components/catalyst/primitives';
+import { Text, Button, Badge, Select } from '../../components/catalyst/primitives';
 import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
 import { ScopeItemList, ScopeChangeTracker } from '../../components/domain/portal';
 import { useScope } from '../../hooks';
@@ -86,7 +86,7 @@ export function ScopeTrackerPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+      <Flex justify="center" align="center" className="min-h-[300px]">
         <Text variant="body" color="muted">
           Loading scope data...
         </Text>
@@ -96,14 +96,7 @@ export function ScopeTrackerPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fef2f2',
-          borderRadius: '0.5rem',
-        }}
-      >
+      <Box className="p-8 text-center bg-red-50 rounded-lg">
         <Text variant="body" color="danger">
           Error loading scope data: {error.message}
         </Text>
@@ -258,22 +251,24 @@ export function ScopeTrackerPage(): React.ReactElement {
 
                 {/* Status Filter */}
                 <Flex align="center" gap="sm">
-                  <Text variant="bodySmall" color="muted">
+                  <Text as="label" htmlFor="scope-status-filter" variant="bodySmall" color="muted">
                     Status:
                   </Text>
-                  <select
+                  <Select
+                    id="scope-status-filter"
+                    name="scope-status-filter"
                     value={statusFilter}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setStatusFilter(e.target.value as ScopeItemStatus | 'ALL')
                     }
-                    className="px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm"
-                  >
-                    <option value="ALL">All Statuses</option>
-                    <option value="ACTIVE">Active</option>
-                    <option value="COMPLETED">Completed</option>
-                    <option value="ON_HOLD">On Hold</option>
-                    <option value="REMOVED">Removed</option>
-                  </select>
+                    options={[
+                      { value: 'ALL', label: 'All Statuses' },
+                      { value: 'ACTIVE', label: 'Active' },
+                      { value: 'COMPLETED', label: 'Completed' },
+                      { value: 'ON_HOLD', label: 'On Hold' },
+                      { value: 'REMOVED', label: 'Removed' },
+                    ]}
+                  />
                 </Flex>
               </Flex>
             </CardBody>
@@ -285,11 +280,7 @@ export function ScopeTrackerPage(): React.ReactElement {
               justify="center"
               align="center"
               direction="column"
-              style={{
-                padding: '2rem',
-                backgroundColor: '#fafafa',
-                borderRadius: '0.5rem',
-              }}
+              className="p-8 bg-zinc-50 rounded-lg"
             >
               <Text variant="heading4" color="muted">
                 No scope items found
@@ -318,11 +309,7 @@ export function ScopeTrackerPage(): React.ReactElement {
               justify="center"
               align="center"
               direction="column"
-              style={{
-                padding: '2rem',
-                backgroundColor: '#fafafa',
-                borderRadius: '0.5rem',
-              }}
+              className="p-8 bg-zinc-50 rounded-lg"
             >
               <Text variant="heading4" color="muted">
                 No scope changes

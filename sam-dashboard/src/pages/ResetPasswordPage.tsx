@@ -1,7 +1,24 @@
 import { useState, useEffect, useCallback, FormEvent, ChangeEvent } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button, Input, BuildingCheckIcon } from '../components/catalyst/primitives';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Flex,
+  Stack,
+  Box,
+} from '../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  Input,
+  FormField,
+  InlineAlert,
+  InlineAlertDescription,
+  AuthLayout,
+} from '../components/catalyst/primitives';
+import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
+import { Link } from '../components/catalyst/primitives/link';
 import type {
   ResetPasswordFormState,
   ResetPasswordFormErrors,
@@ -148,7 +165,7 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'validating':
         return (
           <CardBody padding="lg">
-            <Stack spacing="md" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" align="center" className="text-center">
               <Text variant="heading4">Validating Reset Link...</Text>
               <Text variant="body" color="muted">
                 Please wait while we verify your reset link.
@@ -160,22 +177,22 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'invalid':
         return (
           <CardBody padding="lg">
-            <Stack spacing="md" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" align="center" className="text-center">
               <Text variant="heading4" color="danger">
                 Invalid Reset Link
               </Text>
               <Text variant="body">
                 This password reset link is invalid or has expired. Please request a new one.
               </Text>
-              <Stack spacing="sm">
+              <Stack spacing="sm" className="w-full">
                 <Button
                   variant="primary"
                   onClick={() => navigate('/forgot-password')}
-                  className="w-full"
+                  fullWidth
                 >
                   Request New Link
                 </Button>
-                <Link to="/login" className="text-primary text-center">
+                <Link href="/login" className="text-blue-600 dark:text-blue-400 text-center block">
                   Return to login
                 </Link>
               </Stack>
@@ -186,7 +203,7 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'success':
         return (
           <CardBody padding="lg">
-            <Stack spacing="md" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" align="center" className="text-center">
               <Text variant="heading4" color="success">
                 Password Reset Successful
               </Text>
@@ -196,7 +213,7 @@ export function ResetPasswordPage(): React.ReactElement {
               <Button
                 variant="primary"
                 onClick={() => navigate('/login')}
-                className="w-full"
+                fullWidth
               >
                 Go to Login
               </Button>
@@ -206,22 +223,15 @@ export function ResetPasswordPage(): React.ReactElement {
 
       case 'form':
         return (
-          <>
-            <CardHeader
-              style={{
-                backgroundColor: '#2563eb',
-                borderBottom: 'none',
-                textAlign: 'center',
-                padding: '1.5rem',
-              }}
-            >
+          <Box>
+            <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
               <Flex justify="center" align="center" direction="column" gap="sm">
                 <BuildingCheckIcon size="xl" color="white" />
-                <Stack spacing="xs" style={{ alignItems: 'center' }}>
+                <Stack spacing="xs" align="center">
                   <Text variant="heading3" color="white" weight="semibold">
                     Reset Password
                   </Text>
-                  <Text variant="bodySmall" color="white" style={{ opacity: 0.8 }}>
+                  <Text variant="bodySmall" color="white" className="opacity-80">
                     Enter your new password
                   </Text>
                 </Stack>
@@ -229,32 +239,20 @@ export function ResetPasswordPage(): React.ReactElement {
             </CardHeader>
 
             <CardBody padding="lg">
-              <form onSubmit={handleSubmit}>
+              <Box as="form" onSubmit={handleSubmit}>
                 <Stack spacing="md">
                   {error !== null && (
-                    <Box
-                      style={{
-                        padding: '0.75rem',
-                        backgroundColor: '#fef2f2',
-                        borderRadius: '0.375rem',
-                        border: '1px solid #ef4444',
-                      }}
-                    >
-                      <Text variant="bodySmall" color="danger">
+                    <InlineAlert color="error">
+                      <InlineAlertDescription>
                         {error}
-                      </Text>
-                    </Box>
+                      </InlineAlertDescription>
+                    </InlineAlert>
                   )}
 
-                  <Box>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
-                      New Password
-                    </Text>
+                  <FormField
+                    label="New Password"
+                    error={validationErrors.password}
+                  >
                     <Input
                       type="password"
                       value={form.password}
@@ -264,22 +262,12 @@ export function ResetPasswordPage(): React.ReactElement {
                       autoComplete="new-password"
                       autoFocus
                     />
-                    {validationErrors.password !== undefined && (
-                      <Text variant="caption" color="danger" className="mt-1">
-                        {validationErrors.password}
-                      </Text>
-                    )}
-                  </Box>
+                  </FormField>
 
-                  <Box>
-                    <Text
-                      as="label"
-                      variant="bodySmall"
-                      weight="medium"
-                      className="block mb-1"
-                    >
-                      Confirm Password
-                    </Text>
+                  <FormField
+                    label="Confirm Password"
+                    error={validationErrors.confirmPassword}
+                  >
                     <Input
                       type="password"
                       value={form.confirmPassword}
@@ -288,46 +276,34 @@ export function ResetPasswordPage(): React.ReactElement {
                       invalid={validationErrors.confirmPassword !== undefined}
                       autoComplete="new-password"
                     />
-                    {validationErrors.confirmPassword !== undefined && (
-                      <Text variant="caption" color="danger" className="mt-1">
-                        {validationErrors.confirmPassword}
-                      </Text>
-                    )}
-                  </Box>
+                  </FormField>
 
                   <Button
                     type="submit"
                     variant="primary"
-                    className="w-full mt-2"
+                    fullWidth
+                    className="mt-2"
                     isLoading={isLoading}
                     isDisabled={isLoading}
                   >
                     Reset Password
                   </Button>
                 </Stack>
-              </form>
+              </Box>
             </CardBody>
-          </>
+          </Box>
         );
     }
   };
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f5',
-        padding: '1rem',
-      }}
-    >
-      <Box style={{ width: '100%', maxWidth: '400px' }}>
+    <AuthLayout>
+      <Box className="w-full max-w-md">
         <Card variant="elevated">
           {renderContent()}
         </Card>
       </Box>
-    </Flex>
+    </AuthLayout>
   );
 }
 

@@ -1,10 +1,12 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   Text,
   Button,
+} from '../components/catalyst/primitives';
+import {
   SpeedometerIcon,
   RefreshIcon,
-} from '../components/catalyst/primitives';
+} from '../components/catalyst/primitives/Icon';
 import {
   Section,
   SectionHeader,
@@ -225,7 +227,7 @@ export function AnalyticsDashboardPage() {
         />
         <Card>
           <CardBody>
-            <Stack spacing="md" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" className="text-center">
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -252,7 +254,7 @@ export function AnalyticsDashboardPage() {
           disabled={isLoading}
         >
           <RefreshIcon size="sm" />
-          <span className="ml-2">Refresh</span>
+          <Text as="span" className="ml-2">Refresh</Text>
         </Button>
       </SectionHeader>
 
@@ -305,7 +307,7 @@ export function AnalyticsDashboardPage() {
                   : '--'}
               </Text>
             </Stack>
-            <Stack spacing="xs" style={{ textAlign: 'right' }}>
+            <Stack spacing="xs" className="text-right">
               <Text variant="caption" color="secondary">
                 Recent Activity
               </Text>
@@ -365,7 +367,7 @@ export function AnalyticsDashboardPage() {
             <Grid columns="repeat(5, 1fr)" gap="md">
               {Object.entries(stats?.eventCounts ?? {}).map(([eventType, count]) => (
                 <GridItem key={eventType}>
-                  <Stack spacing="xs" style={{ textAlign: 'center' }}>
+                  <Stack spacing="xs" className="text-center">
                     <Text variant="heading4">{count.toLocaleString()}</Text>
                     <Text variant="caption" color="secondary">
                       {eventType

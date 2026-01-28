@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Stack } from '../../../components/catalyst/layout';
-import { Input } from '../../../components/catalyst/primitives';
+import { Stack, Box } from '../../../components/catalyst/layout';
+import { Input, Text } from '../../../components/catalyst/primitives';
+import { Fieldset, FieldGroup, Field, Label, Description } from '../../../components/catalyst';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface CompanyProfileStepProps {
@@ -33,46 +34,86 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
       isFirst={true}
     >
       <Stack spacing="md">
-        <Input
-          label="Company Name"
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-          placeholder="Enter your company name"
-          required
-        />
-        <Input
-          label="UEI Number"
-          value={uei}
-          onChange={(e) => setUei(e.target.value)}
-          placeholder="12-character Unique Entity ID"
-          helperText="Your SAM.gov Unique Entity Identifier"
-        />
-        <Input
-          label="CAGE Code"
-          value={cage}
-          onChange={(e) => setCage(e.target.value)}
-          placeholder="5-character CAGE code"
-          helperText="Commercial and Government Entity Code"
-        />
-        <Input
-          label="Business Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="123 Main St, City, State ZIP"
-        />
-        <Input
-          label="Primary Contact Name"
-          value={contactName}
-          onChange={(e) => setContactName(e.target.value)}
-          placeholder="John Smith"
-        />
-        <Input
-          label="Primary Contact Email"
-          type="email"
-          value={contactEmail}
-          onChange={(e) => setContactEmail(e.target.value)}
-          placeholder="john@company.com"
-        />
+        <Box>
+          <Text as="label" variant="label" htmlFor="companyName">
+            Company Name *
+          </Text>
+          <Input
+            id="companyName"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="Enter your company name"
+            required
+            className="mt-1"
+          />
+        </Box>
+        <Box>
+          <Text as="label" variant="label" htmlFor="uei">
+            UEI Number
+          </Text>
+          <Input
+            id="uei"
+            value={uei}
+            onChange={(e) => setUei(e.target.value)}
+            placeholder="12-character Unique Entity ID"
+            className="mt-1"
+          />
+          <Text variant="caption" color="muted" className="mt-1">
+            Your SAM.gov Unique Entity Identifier
+          </Text>
+        </Box>
+        <Box>
+          <Text as="label" variant="label" htmlFor="cage">
+            CAGE Code
+          </Text>
+          <Input
+            id="cage"
+            value={cage}
+            onChange={(e) => setCage(e.target.value)}
+            placeholder="5-character CAGE code"
+            className="mt-1"
+          />
+          <Text variant="caption" color="muted" className="mt-1">
+            Commercial and Government Entity Code
+          </Text>
+        </Box>
+        <Box>
+          <Text as="label" variant="label" htmlFor="address">
+            Business Address
+          </Text>
+          <Input
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="123 Main St, City, State ZIP"
+            className="mt-1"
+          />
+        </Box>
+        <Box>
+          <Text as="label" variant="label" htmlFor="contactName">
+            Primary Contact Name
+          </Text>
+          <Input
+            id="contactName"
+            value={contactName}
+            onChange={(e) => setContactName(e.target.value)}
+            placeholder="John Smith"
+            className="mt-1"
+          />
+        </Box>
+        <Box>
+          <Text as="label" variant="label" htmlFor="contactEmail">
+            Primary Contact Email
+          </Text>
+          <Input
+            id="contactEmail"
+            type="email"
+            value={contactEmail}
+            onChange={(e) => setContactEmail(e.target.value)}
+            placeholder="john@company.com"
+            className="mt-1"
+          />
+        </Box>
       </Stack>
     </OnboardingCard>
   );

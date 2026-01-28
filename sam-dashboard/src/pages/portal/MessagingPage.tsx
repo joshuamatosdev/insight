@@ -92,7 +92,7 @@ export function MessagingPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+      <Flex justify="center" align="center" className="min-h-[300px]">
         <Text variant="body" color="muted">
           Loading messages...
         </Text>
@@ -102,14 +102,7 @@ export function MessagingPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fef2f2',
-          borderRadius: '0.5rem',
-        }}
-      >
+      <Box className="p-8 text-center bg-red-50 rounded-lg">
         <Text variant="body" color="danger">
           Error loading messages: {error.message}
         </Text>
@@ -202,23 +195,12 @@ export function MessagingPage(): React.ReactElement {
       )}
 
       {/* Main Content */}
-      <Card style={{ minHeight: '600px' }}>
-        <Grid columns={3} style={{ height: '100%' }}>
+      <Card className="min-h-[600px]">
+        <Grid columns={3} className="h-full">
           {/* Inbox Sidebar */}
-          <Box
-            style={{
-              borderRight: '1px solid #e4e4e7',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
+          <Box className="border-r border-zinc-200 flex flex-col">
             {/* Search */}
-            <Box
-              style={{
-                padding: '0.75rem',
-                borderBottom: '1px solid #e4e4e7',
-              }}
-            >
+            <Box className="p-3 border-b border-zinc-200">
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -232,12 +214,12 @@ export function MessagingPage(): React.ReactElement {
               threads={filteredThreads}
               selectedThreadId={selectedThread?.id}
               onSelectThread={handleSelectThread}
-              style={{ flex: 1 }}
+              className="flex-1"
             />
           </Box>
 
           {/* Message Content (2 columns) */}
-          <Box style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column' }}>
+          <Box className="col-span-2 flex flex-col">
             {showComposer ? (
               <Box className="p-4">
                 <MessageComposer
@@ -252,14 +234,14 @@ export function MessagingPage(): React.ReactElement {
                 currentUserId={currentUserId}
                 onSendMessage={handleSendMessage}
                 onMarkAsRead={handleMarkAsRead}
-                style={{ flex: 1 }}
+                className="flex-1"
               />
             ) : (
               <Flex
                 justify="center"
                 align="center"
                 direction="column"
-                style={{ flex: 1 }}
+                className="flex-1"
               >
                 <Text variant="heading4" color="muted">
                   Select a Conversation

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/catalyst/layout';
-import { Text, Input } from '../../../components/catalyst/primitives';
+import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
+import { Text, Input, Checkbox, CheckboxField, Badge } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface NAICSStepProps {
@@ -51,63 +51,58 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
       onBack={onBack}
     >
       <Stack spacing="md">
-        <Input
-          label="Search NAICS Codes"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search by code or description..."
-        />
+        <Box>
+          <Text as="label" variant="label" htmlFor="naicsSearch">
+            Search NAICS Codes
+          </Text>
+          <Input
+            id="naicsSearch"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by code or description..."
+            className="mt-1"
+          />
+        </Box>
 
         <Stack spacing="sm">
           {filteredCodes.map((naics) => {
             const isSelected = selectedCodes.includes(naics.code);
             const isPrimary = primaryCode === naics.code;
             return (
-              <Flex
+              <Card
                 key={naics.code}
-                align="center"
-                justify="space-between"
-                style={{
-                  padding: '0.75rem',
-                  borderRadius: '6px',
-                  border: `2px solid ${isSelected ? '#2563eb' : '#e4e4e7'}`,
-                  backgroundColor: isSelected ? '#eff6ff' : 'white',
-                  cursor: 'pointer',
-                }}
                 onClick={() => toggleCode(naics.code)}
+                className={`cursor-pointer transition-all duration-200 ${
+                  isSelected
+                    ? 'border-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20'
+                    : 'border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
+                }`}
               >
-                <Flex align="center" gap="md">
-                  <Box
-                    style={{
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '4px',
-                      border: `2px solid ${isSelected ? '#2563eb' : '#d4d4d8'}`,
-                      backgroundColor: isSelected ? '#2563eb' : 'white',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: '12px',
-                    }}
-                  >
-                    {isSelected ? '✓' : ''}
-                  </Box>
-                  <Stack spacing="0">
-                    <Text variant="body" style={{ fontWeight: 500 }}>
-                      {naics.code}
-                    </Text>
-                    <Text variant="caption" color="muted">
-                      {naics.name}
-                    </Text>
-                  </Stack>
-                </Flex>
-                {isPrimary && (
-                  <Text variant="caption" style={{ color: 'rgb(37 99 235)', fontWeight: 600 }}>
-                    Primary
-                  </Text>
-                )}
-              </Flex>
+                <CardBody className="py-3">
+                  <Flex align="center" justify="space-between">
+                    <Flex align="center" gap="md">
+                      <CheckboxField>
+                        <Checkbox
+                          checked={isSelected}
+                          onChange={() => toggleCode(naics.code)}
+                          color="blue"
+                        />
+                      </CheckboxField>
+                      <Stack spacing="xs">
+                        <Text variant="body" weight="medium">
+                          {naics.code}
+                        </Text>
+                        <Text variant="caption" color="muted">
+                          {naics.name}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                    {isPrimary && (
+                      <Badge color="blue">Primary</Badge>
+                    )}
+                  </Flex>
+                </CardBody>
+              </Card>
             );
           })}
         </Stack>

@@ -271,13 +271,11 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
           <Field>
             <Label>Theme</Label>
             <Description>Choose your preferred color scheme.</Description>
-            <Select value={form.theme} onChange={handleThemeChange}>
-              {THEME_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
+            <Select
+              value={form.theme}
+              onChange={handleThemeChange}
+              options={THEME_OPTIONS}
+            />
           </Field>
         </SettingsSection>
 
@@ -313,13 +311,11 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
             <Description>
               Used for displaying deadlines and scheduling alerts.
             </Description>
-            <Select value={form.timezone} onChange={handleTimezoneChange}>
-              {TIMEZONE_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
+            <Select
+              value={form.timezone}
+              onChange={handleTimezoneChange}
+              options={TIMEZONE_OPTIONS}
+            />
           </Field>
         </SettingsSection>
       </Box>

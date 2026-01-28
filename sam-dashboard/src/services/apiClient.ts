@@ -266,6 +266,131 @@ export async function del<T = void>(
 }
 
 /**
+ * Upload a file with multipart/form-data
+ */
+export async function upload<T>(
+  path: string,
+  formData: FormData,
+  onProgress?: (progress: number) => void,
+  options: { auth?: boolean } = {}
+): Promise<ApiResult<T>> {
+  const { auth = true } = options;
+
+  try {
+    // Build headers without Content-Type (browser sets it with boundary for FormData)
+    const headers: HeadersInit = {};
+    if (auth) {
+      const token = getAuthToken();
+      if (token !== null) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+
+    // Use XMLHttpRequest for progress tracking if callback provided
+    if (onProgress !== undefined) {
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `${API_BASE}${path}`);
+
+        Object.entries(headers).forEach(([key, value]) => {
+          xhr.setRequestHeader(key, value);
+        });
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percentComplete = (event.loaded / event.total) * 100;
+            onProgress(percentComplete);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            const data = JSON.parse(xhr.responseText) as T;
+            resolve({ success: true, data });
+          } else {
+            resolve({
+              success: false,
+              error: {
+                message: xhr.statusText || 'Upload failed',
+                status: xhr.status,
+              },
+            });
+          }
+        };
+
+        xhr.onerror = () => {
+          resolve({
+            success: false,
+            error: {
+              message: 'Network error during upload',
+              status: 0,
+            },
+          });
+        };
+
+        xhr.send(formData);
+      });
+    }
+
+    // Standard fetch for uploads without progress
+    const response = await fetch(`${API_BASE}${path}`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+
+    if (response.ok === false) {
+      const error = await parseError(response);
+      return { success: false, error };
+    }
+
+    const data = (await response.json()) as T;
+    return { success: true, data };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Upload error',
+        status: 0,
+      },
+    };
+  }
+}
+
+/**
+ * Download a file as Blob
+ */
+export async function getBlob(
+  path: string,
+  options: { auth?: boolean } = {}
+): Promise<ApiResult<Blob>> {
+  const { auth = true } = options;
+
+  try {
+    const response = await fetch(`${API_BASE}${path}`, {
+      method: 'GET',
+      headers: buildHeaders(auth),
+    });
+
+    if (response.ok === false) {
+      const error = await parseError(response);
+      return { success: false, error };
+    }
+
+    const blob = await response.blob();
+    return { success: true, data: blob };
+  } catch (err) {
+    return {
+      success: false,
+      error: {
+        message: err instanceof Error ? err.message : 'Download error',
+        status: 0,
+      },
+    };
+  }
+}
+
+/**
  * API client object for convenient imports
  */
 export const apiClient = {
@@ -274,6 +399,8 @@ export const apiClient = {
   put,
   patch,
   delete: del,
+  upload,
+  getBlob,
 };
 
 export default apiClient;

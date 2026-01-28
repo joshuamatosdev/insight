@@ -156,20 +156,11 @@ export function ProposalPage() {
               <Stack gap="xs" align="end">
                 <Text variant="heading4">{progressPercentage}%</Text>
                 <Box
-                  style={{
-                    width: '200px',
-                    height: '8px',
-                    backgroundColor: '#e4e4e7',
-                    borderRadius: '9999px',
-                    overflow: 'hidden',
-                  }}
+                  className="w-[200px] h-2 bg-zinc-200 rounded-full overflow-hidden"
                 >
                   <Box
-                    style={{
-                      height: '100%',
-                      width: `${progressPercentage}%`,
-                      backgroundColor: '#10b981',
-                    }}
+                    className="h-full bg-emerald-500"
+                    style={{ width: `${progressPercentage}%` }}
                   />
                 </Box>
               </Stack>
@@ -182,7 +173,7 @@ export function ProposalPage() {
 
         <HStack gap="lg" align="start">
           {/* Section List */}
-          <Card style={{ flex: '0 0 350px' }}>
+          <Card className="flex-none w-[350px]">
             <CardHeader>
               <Text variant="heading5">Proposal Sections</Text>
             </CardHeader>
@@ -195,20 +186,11 @@ export function ProposalPage() {
                       setSelectedSection(section.id);
                       setSectionContent('');
                     }}
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor:
-                        selectedSection === section.id
-                          ? '#dbeafe'
-                          : '#ffffff',
-                      borderRadius: '0.375rem',
-                      border: `1px solid ${
-                        selectedSection === section.id
-                          ? '#2563eb'
-                          : '#e4e4e7'
-                      }`,
-                      cursor: 'pointer',
-                    }}
+                    className={`p-3 rounded-md border cursor-pointer ${
+                      selectedSection === section.id
+                        ? 'bg-blue-100 border-blue-600'
+                        : 'bg-white border-zinc-200'
+                    }`}
                   >
                     <HStack justify="between" align="center">
                       <Stack gap="0">
@@ -235,7 +217,7 @@ export function ProposalPage() {
           </Card>
 
           {/* Section Editor */}
-          <Card style={{ flex: 1 }}>
+          <Card className="flex-1">
             <CardHeader>
               <HStack justify="between" align="center">
                 <Text variant="heading5">

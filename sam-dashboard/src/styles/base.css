@@ -33,21 +33,4 @@ html {
   background: var(--color-zinc-500);
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: var(--color-zinc-600);
-}
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-zinc-500);
-}
-
-/* Selection color */
-::selection {
-  background-color: var(--color-blue-100);
-  color: var(--color-blue-900);
-}
-
-.dark ::selection {
-  background-color: var(--color-blue-900);
-  color: var(--color-blue-100);
-}

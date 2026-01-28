@@ -139,35 +139,20 @@ function QuickStat({ title, value, icon, color, className, loading }: QuickStatP
           <Stack spacing="xs">
             <Text variant="caption" color="muted">{title}</Text>
             {loading === true ? (
-              <Box
-                style={{
-                  width: '80px',
-                  height: '32px',
-                  backgroundColor: '#e4e4e7',
-                  borderRadius: '4px',
-                }}
-              />
+              <Box className="w-20 h-8 bg-zinc-200 rounded" />
             ) : (
               <Text
                 variant="heading3"
-                className={className}
-                style={{ color: className !== undefined ? undefined : effectiveColor, fontWeight: 700 }}
+                className={`font-bold ${className ?? ''}`}
+                style={className !== undefined ? undefined : { color: effectiveColor }}
               >
                 {value}
               </Text>
             )}
           </Stack>
           <Box
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '8px',
-              backgroundColor: `${effectiveColor}15`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '24px',
-            }}
+            className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl"
+            style={{ backgroundColor: `${effectiveColor}15` }}
           >
             {icon}
           </Box>

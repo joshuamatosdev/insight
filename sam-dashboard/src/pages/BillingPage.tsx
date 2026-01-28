@@ -115,7 +115,7 @@ function PlanCard({
           <Stack spacing="sm">
             {plan.features.map((feature, index) => (
               <Flex key={index} align="start" gap="sm">
-                <Text variant="body" color="success" style={{ flexShrink: 0 }}>
+                <Text variant="body" color="success" className="shrink-0">
                   &#10003;
                 </Text>
                 <Text variant="bodySmall">{feature}</Text>
@@ -257,7 +257,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
       <Box className="p-6 max-w-xl mx-auto">
         <Card>
           <CardBody>
-            <Stack spacing="md" style={{ textAlign: 'center' }}>
+            <Stack spacing="md" className="text-center">
               <Text variant="heading4">Billing Not Configured</Text>
               <Text variant="body" color="muted">
                 Payment processing is not currently configured for this instance.

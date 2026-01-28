@@ -72,30 +72,51 @@ interface Page<T> {
 const SAVED_SEARCH_BASE = '/saved-searches';
 
 export async function fetchSavedSearches(): Promise<SavedSearch[]> {
-  const response = await apiClient.get(SAVED_SEARCH_BASE);
-  return response as SavedSearch[];
+  const response = await apiClient.get<SavedSearch[]>(SAVED_SEARCH_BASE);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function fetchSavedSearch(id: string): Promise<SavedSearch> {
-  const response = await apiClient.get(`${SAVED_SEARCH_BASE}/${id}`);
-  return response as SavedSearch;
+  const response = await apiClient.get<SavedSearch>(`${SAVED_SEARCH_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function createSavedSearch(data: CreateSavedSearchRequest): Promise<SavedSearch> {
-  const response = await apiClient.post(SAVED_SEARCH_BASE, data);
-  return response as SavedSearch;
+  const response = await apiClient.post<SavedSearch, CreateSavedSearchRequest>(
+    SAVED_SEARCH_BASE,
+    data
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function updateSavedSearch(
   id: string,
   data: UpdateSavedSearchRequest
 ): Promise<SavedSearch> {
-  const response = await apiClient.put(`${SAVED_SEARCH_BASE}/${id}`, data);
-  return response as SavedSearch;
+  const response = await apiClient.put<SavedSearch, UpdateSavedSearchRequest>(
+    `${SAVED_SEARCH_BASE}/${id}`,
+    data
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function deleteSavedSearch(id: string): Promise<void> {
-  await apiClient.delete(`${SAVED_SEARCH_BASE}/${id}`);
+  const response = await apiClient.delete<void>(`${SAVED_SEARCH_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function executeSavedSearch(
@@ -106,16 +127,33 @@ export async function executeSavedSearch(
   const params = new URLSearchParams();
   params.set('page', page.toString());
   params.set('size', size.toString());
-  const response = await apiClient.get(`${SAVED_SEARCH_BASE}/${id}/execute?${params.toString()}`);
-  return response as Page<SearchResult>;
+  const response = await apiClient.get<Page<SearchResult>>(
+    `${SAVED_SEARCH_BASE}/${id}/execute?${params.toString()}`
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function setDefaultSearch(id: string): Promise<SavedSearch> {
-  const response = await apiClient.patch(`${SAVED_SEARCH_BASE}/${id}/default`);
-  return response as SavedSearch;
+  const response = await apiClient.patch<SavedSearch, Record<string, never>>(
+    `${SAVED_SEARCH_BASE}/${id}/default`,
+    {}
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function duplicateSavedSearch(id: string, newName: string): Promise<SavedSearch> {
-  const response = await apiClient.post(`${SAVED_SEARCH_BASE}/${id}/duplicate`, { name: newName });
-  return response as SavedSearch;
+  const response = await apiClient.post<SavedSearch, { name: string }>(
+    `${SAVED_SEARCH_BASE}/${id}/duplicate`,
+    { name: newName }
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }

@@ -1,11 +1,25 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Card, CardHeader, CardBody, Stack, HStack, Grid } from '../../components/catalyst/layout';
-import { Text, Badge, Button } from '../../components/catalyst/primitives';
-import { InteractionTimeline, InteractionForm, ContactForm } from '../../components/domain/crm';
-import { useContact } from '../../hooks';
-import { useContactInteractions } from '../../hooks/useInteractions';
-import type { ContactType, ContactStatus, CreateContactRequest, CreateInteractionRequest } from '../../types/crm';
+import {
+  Box,
+  Stack,
+  HStack,
+  Grid,
+  Card,
+  CardHeader,
+  CardBody,
+} from '@/components/catalyst/layout';
+import {
+  PageHeading,
+  PageHeadingTitle,
+  PageHeadingSection,
+  PageHeadingActions,
+} from '@/components/catalyst/navigation';
+import { Text, Badge, Button } from '@/components/catalyst/primitives';
+import { InteractionTimeline, InteractionForm, ContactForm } from '@/components/domain/crm';
+import { useContact } from '@/hooks';
+import { useContactInteractions } from '@/hooks/useInteractions';
+import type { ContactType, ContactStatus, CreateContactRequest, CreateInteractionRequest } from '@/types/crm';
 
 function getContactTypeLabel(type: ContactType): string {
   const labels: Record<ContactType, string> = {
@@ -80,60 +94,62 @@ export function ContactDetailPage() {
 
   if (isLoading === true) {
     return (
-      <Section id="contact-detail">
+      <Box as="section" id="contact-detail">
         <Text variant="body" color="secondary">Loading contact...</Text>
-      </Section>
+      </Box>
     );
   }
 
   if (error !== null) {
     return (
-      <Section id="contact-detail">
+      <Box as="section" id="contact-detail">
         <Text variant="body" color="danger">{error.message}</Text>
-      </Section>
+      </Box>
     );
   }
 
   if (contact === null) {
     return (
-      <Section id="contact-detail">
+      <Box as="section" id="contact-detail">
         <Text variant="body" color="secondary">Contact not found</Text>
-      </Section>
+      </Box>
     );
   }
 
   if (isEditing === true) {
     return (
-      <Section id="edit-contact">
+      <Box as="section" id="edit-contact">
         <ContactForm
           contact={contact}
           onSubmit={handleEditSubmit}
           onCancel={() => setIsEditing(false)}
           isLoading={isSubmitting}
         />
-      </Section>
+      </Box>
     );
   }
 
   if (showInteractionForm === true) {
     return (
-      <Section id="log-interaction">
+      <Box as="section" id="log-interaction">
         <InteractionForm
           onSubmit={handleInteractionSubmit}
           onCancel={() => setShowInteractionForm(false)}
           isLoading={isSubmitting}
           contactId={contact.id}
         />
-      </Section>
+      </Box>
     );
   }
 
   return (
-    <Section id="contact-detail">
-      <SectionHeader 
-        title={`${contact.firstName} ${contact.lastName}`}
-        actions={
-          <HStack gap="md">
+    <Box as="section" id="contact-detail">
+      <Stack gap="lg">
+        <PageHeading>
+          <PageHeadingSection>
+            <PageHeadingTitle>{`${contact.firstName} ${contact.lastName}`}</PageHeadingTitle>
+          </PageHeadingSection>
+          <PageHeadingActions>
             <Button variant="ghost" onClick={() => navigate('/crm/contacts')}>
               Back to Contacts
             </Button>
@@ -143,155 +159,155 @@ export function ContactDetailPage() {
             <Button onClick={() => setShowInteractionForm(true)}>
               Log Interaction
             </Button>
-          </HStack>
-        }
-      />
+          </PageHeadingActions>
+        </PageHeading>
 
-      <Grid columns={2} gap="lg">
+        <Grid columns={2} gap="lg">
+          <Card>
+            <CardHeader>
+              <HStack justify="between" align="center">
+                <Text variant="heading5">Contact Information</Text>
+                <HStack gap="sm">
+                  <Badge color="blue">{getContactTypeLabel(contact.contactType)}</Badge>
+                  <Badge color={getStatusVariant(contact.status)}>{contact.status}</Badge>
+                </HStack>
+              </HStack>
+            </CardHeader>
+            <CardBody>
+              <Stack gap="md">
+                {contact.jobTitle !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Job Title</Text>
+                    <Text variant="body">{contact.jobTitle}</Text>
+                  </Stack>
+                )}
+                {contact.department !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Department</Text>
+                    <Text variant="body">{contact.department}</Text>
+                  </Stack>
+                )}
+                {contact.organizationName !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Organization</Text>
+                    <Text variant="body">{contact.organizationName}</Text>
+                  </Stack>
+                )}
+                {contact.email !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Email</Text>
+                    <Text variant="body">{contact.email}</Text>
+                  </Stack>
+                )}
+                {contact.phoneWork !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Work Phone</Text>
+                    <Text variant="body">{contact.phoneWork}</Text>
+                  </Stack>
+                )}
+                {contact.phoneMobile !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Mobile Phone</Text>
+                    <Text variant="body">{contact.phoneMobile}</Text>
+                  </Stack>
+                )}
+                {contact.linkedinUrl !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">LinkedIn</Text>
+                    <Text variant="body">{contact.linkedinUrl}</Text>
+                  </Stack>
+                )}
+              </Stack>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <Text variant="heading5">Address</Text>
+            </CardHeader>
+            <CardBody>
+              <Stack gap="md">
+                {contact.addressLine1 !== null && (
+                  <Text variant="body">{contact.addressLine1}</Text>
+                )}
+                {contact.addressLine2 !== null && (
+                  <Text variant="body">{contact.addressLine2}</Text>
+                )}
+                {(contact.city !== null || contact.state !== null || contact.postalCode !== null) && (
+                  <Text variant="body">
+                    {[contact.city, contact.state, contact.postalCode].filter((v) => v !== null).join(', ')}
+                  </Text>
+                )}
+                {contact.country !== null && (
+                  <Text variant="body">{contact.country}</Text>
+                )}
+                {contact.addressLine1 === null && contact.city === null && (
+                  <Text variant="bodySmall" color="secondary">No address on file</Text>
+                )}
+              </Stack>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <Text variant="heading5">Notes</Text>
+            </CardHeader>
+            <CardBody>
+              {contact.notes !== null ? (
+                <Text variant="body">{contact.notes}</Text>
+              ) : (
+                <Text variant="bodySmall" color="secondary">No notes</Text>
+              )}
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <Text variant="heading5">Relationship</Text>
+            </CardHeader>
+            <CardBody>
+              <Stack gap="md">
+                {contact.relationshipScore !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Relationship Score</Text>
+                    <Text variant="body">{contact.relationshipScore}/100</Text>
+                  </Stack>
+                )}
+                {contact.lastContactDate !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Last Contact</Text>
+                    <Text variant="body">{new Date(contact.lastContactDate).toLocaleDateString()}</Text>
+                  </Stack>
+                )}
+                {contact.nextFollowupDate !== null && (
+                  <Stack gap="xs">
+                    <Text variant="bodySmall" color="secondary">Next Follow-up</Text>
+                    <Text variant="body">{new Date(contact.nextFollowupDate).toLocaleDateString()}</Text>
+                  </Stack>
+                )}
+              </Stack>
+            </CardBody>
+          </Card>
+        </Grid>
+
         <Card>
           <CardHeader>
             <HStack justify="between" align="center">
-              <Text variant="heading5">Contact Information</Text>
-              <HStack gap="sm">
-                <Badge color="blue">{getContactTypeLabel(contact.contactType)}</Badge>
-                <Badge color={getStatusVariant(contact.status)}>{contact.status}</Badge>
-              </HStack>
+              <Text variant="heading5">Interaction History</Text>
+              <Button variant="ghost" size="sm" onClick={() => setShowInteractionForm(true)}>
+                Log Interaction
+              </Button>
             </HStack>
           </CardHeader>
           <CardBody>
-            <Stack gap="md">
-              {contact.jobTitle !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Job Title</Text>
-                  <Text variant="body">{contact.jobTitle}</Text>
-                </Stack>
-              )}
-              {contact.department !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Department</Text>
-                  <Text variant="body">{contact.department}</Text>
-                </Stack>
-              )}
-              {contact.organizationName !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Organization</Text>
-                  <Text variant="body">{contact.organizationName}</Text>
-                </Stack>
-              )}
-              {contact.email !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Email</Text>
-                  <Text variant="body">{contact.email}</Text>
-                </Stack>
-              )}
-              {contact.phoneWork !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Work Phone</Text>
-                  <Text variant="body">{contact.phoneWork}</Text>
-                </Stack>
-              )}
-              {contact.phoneMobile !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Mobile Phone</Text>
-                  <Text variant="body">{contact.phoneMobile}</Text>
-                </Stack>
-              )}
-              {contact.linkedinUrl !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">LinkedIn</Text>
-                  <Text variant="body">{contact.linkedinUrl}</Text>
-                </Stack>
-              )}
-            </Stack>
+            <InteractionTimeline
+              interactions={interactions}
+              isLoading={interactionsLoading}
+              emptyMessage="No interactions recorded yet"
+            />
           </CardBody>
         </Card>
-
-        <Card>
-          <CardHeader>
-            <Text variant="heading5">Address</Text>
-          </CardHeader>
-          <CardBody>
-            <Stack gap="md">
-              {contact.addressLine1 !== null && (
-                <Text variant="body">{contact.addressLine1}</Text>
-              )}
-              {contact.addressLine2 !== null && (
-                <Text variant="body">{contact.addressLine2}</Text>
-              )}
-              {(contact.city !== null || contact.state !== null || contact.postalCode !== null) && (
-                <Text variant="body">
-                  {[contact.city, contact.state, contact.postalCode].filter((v) => v !== null).join(', ')}
-                </Text>
-              )}
-              {contact.country !== null && (
-                <Text variant="body">{contact.country}</Text>
-              )}
-              {contact.addressLine1 === null && contact.city === null && (
-                <Text variant="bodySmall" color="secondary">No address on file</Text>
-              )}
-            </Stack>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <Text variant="heading5">Notes</Text>
-          </CardHeader>
-          <CardBody>
-            {contact.notes !== null ? (
-              <Text variant="body">{contact.notes}</Text>
-            ) : (
-              <Text variant="bodySmall" color="secondary">No notes</Text>
-            )}
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <Text variant="heading5">Relationship</Text>
-          </CardHeader>
-          <CardBody>
-            <Stack gap="md">
-              {contact.relationshipScore !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Relationship Score</Text>
-                  <Text variant="body">{contact.relationshipScore}/100</Text>
-                </Stack>
-              )}
-              {contact.lastContactDate !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Last Contact</Text>
-                  <Text variant="body">{new Date(contact.lastContactDate).toLocaleDateString()}</Text>
-                </Stack>
-              )}
-              {contact.nextFollowupDate !== null && (
-                <Stack gap="xs">
-                  <Text variant="bodySmall" color="secondary">Next Follow-up</Text>
-                  <Text variant="body">{new Date(contact.nextFollowupDate).toLocaleDateString()}</Text>
-                </Stack>
-              )}
-            </Stack>
-          </CardBody>
-        </Card>
-      </Grid>
-
-      <Card>
-        <CardHeader>
-          <HStack justify="between" align="center">
-            <Text variant="heading5">Interaction History</Text>
-            <Button variant="ghost" size="sm" onClick={() => setShowInteractionForm(true)}>
-              Log Interaction
-            </Button>
-          </HStack>
-        </CardHeader>
-        <CardBody>
-          <InteractionTimeline
-            interactions={interactions}
-            isLoading={interactionsLoading}
-            emptyMessage="No interactions recorded yet"
-          />
-        </CardBody>
-      </Card>
-    </Section>
+      </Stack>
+    </Box>
   );
 }

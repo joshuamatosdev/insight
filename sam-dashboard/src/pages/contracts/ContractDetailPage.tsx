@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, Badge, ChevronLeftIcon, PencilIcon } from '../../components/catalyst/primitives';
+import { Text, Button, Badge, ChevronLeftIcon, PencilIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
 import { Box, Stack, HStack, Flex, Grid, Section, SectionHeader, Card, CardBody } from '../../components/catalyst/layout';
 import {
   ContractForm,
@@ -85,7 +85,7 @@ export function ContractDetailPage({
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
+        <Flex justify="center" align="center" className="min-h-[400px]">
           <Text variant="body" color="muted">
             Loading contract details...
           </Text>
@@ -97,17 +97,12 @@ export function ContractDetailPage({
   if (error !== null || contract === null) {
     return (
       <Section>
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.5rem',
-          }}
-        >
-          <Text variant="body" color="danger">
-            {error !== null ? `Error: ${error.message}` : 'Contract not found'}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>
+            {error !== null ? error.message : 'Contract not found'}
+          </InlineAlertDescription>
+        </InlineAlert>
         {onBack !== undefined && (
           <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
@@ -185,14 +180,13 @@ export function ContractDetailPage({
               key={tab.key}
               variant={activeTab === tab.key ? 'primary' : 'secondary'}
               onClick={() => setActiveTab(tab.key)}
-              style={{
-                borderRadius:
-                  tab.key === 'overview'
-                    ? '0.375rem 0 0 0.375rem'
-                    : tab.key === 'modifications'
-                      ? '0 0.375rem 0.375rem 0'
-                      : '0',
-              }}
+              className={
+                tab.key === 'overview'
+                  ? 'rounded-l-md rounded-r-none'
+                  : tab.key === 'modifications'
+                    ? 'rounded-r-md rounded-l-none'
+                    : 'rounded-none'
+              }
             >
               {tab.label}
               {tab.count !== undefined && tab.count > 0 && (

@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/catalyst/layout';
+import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
 import { Text, Input, Button, Select } from '../../../components/catalyst/primitives';
+import {
+  EmptyState,
+  EmptyStateDescription,
+} from '../../../components/catalyst';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface TeamInviteStepProps {
@@ -57,21 +61,29 @@ export function TeamInviteStep({
       <Stack spacing="md">
         {/* Add Member Form */}
         <Flex gap="sm" align="flex-end">
-          <Box style={{ flex: 2 }}>
+          <Box className="flex-[2]">
+            <Text as="label" variant="label" htmlFor="memberEmail">
+              Email Address
+            </Text>
             <Input
-              label="Email Address"
+              id="memberEmail"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="colleague@company.com"
+              className="mt-1"
             />
           </Box>
-          <Box style={{ flex: 1 }}>
+          <Box className="flex-1">
+            <Text as="label" variant="label" htmlFor="memberRole">
+              Role
+            </Text>
             <Select
-              label="Role"
+              id="memberRole"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               options={ROLES}
+              className="mt-1"
             />
           </Box>
           <Button variant="secondary" onClick={addMember}>
@@ -82,51 +94,46 @@ export function TeamInviteStep({
         {/* Member List */}
         {members.length > 0 && (
           <Stack spacing="sm">
-            <Text variant="caption" color="muted" style={{ fontWeight: 600 }}>
+            <Text variant="caption" color="muted" weight="semibold">
               Pending Invitations ({members.length})
             </Text>
             {members.map((member, index) => (
-              <Flex
+              <Card
                 key={index}
-                align="center"
-                justify="space-between"
-                style={{
-                  padding: '0.75rem',
-                  backgroundColor: '#fafafa',
-                  borderRadius: '6px',
-                }}
+                className="bg-zinc-50 dark:bg-zinc-800"
               >
-                <Stack spacing="0">
-                  <Text variant="body">{member.email}</Text>
-                  <Text variant="caption" color="muted">
-                    {ROLES.find((r) => r.value === member.role)?.label ?? member.role}
-                  </Text>
-                </Stack>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => removeMember(index)}
-                >
-                  Remove
-                </Button>
-              </Flex>
+                <CardBody className="py-3">
+                  <Flex align="center" justify="space-between">
+                    <Stack spacing="xs">
+                      <Text variant="body">{member.email}</Text>
+                      <Text variant="caption" color="muted">
+                        {ROLES.find((r) => r.value === member.role)?.label ?? member.role}
+                      </Text>
+                    </Stack>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeMember(index)}
+                    >
+                      Remove
+                    </Button>
+                  </Flex>
+                </CardBody>
+              </Card>
             ))}
           </Stack>
         )}
 
         {members.length === 0 && (
-          <Box
-            style={{
-              padding: '1.5rem',
-              textAlign: 'center',
-              backgroundColor: '#fafafa',
-              borderRadius: '8px',
-            }}
-          >
-            <Text variant="body" color="muted">
-              No team members added yet. You can always invite people later from Settings.
-            </Text>
-          </Box>
+          <Card className="bg-zinc-50 dark:bg-zinc-800">
+            <CardBody className="py-6">
+              <EmptyState>
+                <EmptyStateDescription>
+                  No team members added yet. You can always invite people later from Settings.
+                </EmptyStateDescription>
+              </EmptyState>
+            </CardBody>
+          </Card>
         )}
       </Stack>
     </OnboardingCard>

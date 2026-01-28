@@ -1,6 +1,6 @@
 import { apiClient } from './apiClient';
 
-export type NotificationType = 
+export type NotificationType =
   | 'OPPORTUNITY_MATCH'
   | 'DEADLINE_REMINDER'
   | 'SYSTEM_ALERT'
@@ -57,45 +57,83 @@ export async function fetchNotifications(
   if (unreadOnly === true) {
     params.set('unreadOnly', 'true');
   }
-  const response = await apiClient.get(`${NOTIFICATION_BASE}?${params.toString()}`);
-  return response as Page<Notification>;
+  const response = await apiClient.get<Page<Notification>>(
+    `${NOTIFICATION_BASE}?${params.toString()}`
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function fetchNotification(id: string): Promise<Notification> {
-  const response = await apiClient.get(`${NOTIFICATION_BASE}/${id}`);
-  return response as Notification;
+  const response = await apiClient.get<Notification>(`${NOTIFICATION_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function markAsRead(id: string): Promise<Notification> {
-  const response = await apiClient.patch(`${NOTIFICATION_BASE}/${id}/read`);
-  return response as Notification;
+  const response = await apiClient.patch<Notification, Record<string, never>>(
+    `${NOTIFICATION_BASE}/${id}/read`,
+    {}
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function markAllAsRead(): Promise<void> {
-  await apiClient.post(`${NOTIFICATION_BASE}/read-all`);
+  const response = await apiClient.post<void, Record<string, never>>(
+    `${NOTIFICATION_BASE}/read-all`,
+    {}
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function deleteNotification(id: string): Promise<void> {
-  await apiClient.delete(`${NOTIFICATION_BASE}/${id}`);
+  const response = await apiClient.delete<void>(`${NOTIFICATION_BASE}/${id}`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function deleteAllRead(): Promise<void> {
-  await apiClient.delete(`${NOTIFICATION_BASE}/read`);
+  const response = await apiClient.delete<void>(`${NOTIFICATION_BASE}/read`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
 }
 
 export async function getUnreadCount(): Promise<number> {
-  const response = await apiClient.get(`${NOTIFICATION_BASE}/unread-count`);
-  return (response as { count: number }).count;
+  const response = await apiClient.get<{ count: number }>(`${NOTIFICATION_BASE}/unread-count`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data.count;
 }
 
 export async function fetchPreferences(): Promise<NotificationPreferences> {
-  const response = await apiClient.get(`${NOTIFICATION_BASE}/preferences`);
-  return response as NotificationPreferences;
+  const response = await apiClient.get<NotificationPreferences>(`${NOTIFICATION_BASE}/preferences`);
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }
 
 export async function updatePreferences(
   preferences: Partial<NotificationPreferences>
 ): Promise<NotificationPreferences> {
-  const response = await apiClient.put(`${NOTIFICATION_BASE}/preferences`, preferences);
-  return response as NotificationPreferences;
+  const response = await apiClient.put<NotificationPreferences, Partial<NotificationPreferences>>(
+    `${NOTIFICATION_BASE}/preferences`,
+    preferences
+  );
+  if (response.success === false) {
+    throw new Error(response.error.message);
+  }
+  return response.data;
 }

@@ -57,7 +57,7 @@ function StatCard({
     <Card
       variant="outlined"
       onClick={onClick}
-      style={onClick !== undefined ? { cursor: 'pointer' } : undefined}
+      className={onClick !== undefined ? 'cursor-pointer' : undefined}
     >
       <CardBody>
         <HStack spacing="md" align="center">
@@ -143,7 +143,7 @@ export function CompliancePage({
   if (isLoading) {
     return (
       <Section id="compliance">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading compliance data...
           </Text>
@@ -252,7 +252,7 @@ export function CompliancePage({
             <Card
               variant="outlined"
               onClick={handleViewCertifications}
-              style={{ cursor: 'pointer' }}
+              className="cursor-pointer"
             >
               <CardBody>
                 <Flex direction="column" align="center" gap="sm">
@@ -272,7 +272,7 @@ export function CompliancePage({
             <Card
               variant="outlined"
               onClick={handleViewClearances}
-              style={{ cursor: 'pointer' }}
+              className="cursor-pointer"
             >
               <CardBody>
                 <Flex direction="column" align="center" gap="sm">
@@ -292,7 +292,7 @@ export function CompliancePage({
             <Card
               variant="outlined"
               onClick={handleViewSbom}
-              style={{ cursor: 'pointer' }}
+              className="cursor-pointer"
             >
               <CardBody>
                 <Flex direction="column" align="center" gap="sm">
@@ -349,7 +349,7 @@ export function CompliancePage({
                 className="p-8"
               >
                 <FileCheckIcon size="xl" color="muted" />
-                <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
+                <Text variant="body" color="muted" className="text-center">
                   No compliance items configured yet.
                 </Text>
                 <HStack spacing="sm">

@@ -4,7 +4,11 @@
  */
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Text, Button, Badge } from '../../components/catalyst/primitives';
+import {
+  Text,
+  Button,
+  Badge,
+} from '../../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -13,7 +17,6 @@ import {
   CardBody,
   Stack,
   Flex,
-  Box,
   Grid,
   GridItem,
   HStack,
@@ -74,7 +77,7 @@ function PermissionCard({
               <Text variant="bodySmall" weight="medium">
                 {permission.displayName}
               </Text>
-              <Text variant="caption" color="muted" style={{ fontFamily: 'monospace' }}>
+              <Text variant="caption" color="muted" className="font-mono">
                 {permission.code}
               </Text>
             </Stack>
@@ -90,7 +93,7 @@ function PermissionCard({
           )}
 
           {rolesWithPermission.length > 0 && (
-            <Flex gap="xs" style={{ flexWrap: 'wrap', marginTop: '0.25rem' }}>
+            <Flex gap="xs" className="flex-wrap mt-1">
               {rolesWithPermission.map((role) => (
                 <Badge
                   key={role.id}
@@ -204,7 +207,7 @@ export function PermissionsPage(): React.ReactElement {
   if (pageState === 'loading') {
     return (
       <Section id="permissions-admin">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading permissions...
           </Text>
@@ -216,7 +219,7 @@ export function PermissionsPage(): React.ReactElement {
   if (pageState === 'error') {
     return (
       <Section id="permissions-admin">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load permissions'}
@@ -296,7 +299,7 @@ export function PermissionsPage(): React.ReactElement {
         <Card variant="elevated">
           <CardBody>
             <Flex direction="column" align="center" gap="md" className="p-8">
-              <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
+              <Text variant="body" color="muted" className="text-center">
                 No permissions found. Permissions are typically seeded automatically.
               </Text>
             </Flex>

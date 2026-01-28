@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FinancialDashboardPage } from './FinancialDashboardPage';
 import * as financialHooks from '../../hooks/useFinancial';
-import type { Invoice, Budget, FinancialSummary } from '../../types/financial.types';
+import type { Invoice, BudgetItem, TenantFinancialSummary } from '../../types/financial.types';
 
 // Mock the hooks
 vi.mock('../../hooks/useFinancial', () => ({
@@ -12,19 +12,12 @@ vi.mock('../../hooks/useFinancial', () => ({
   useBudgets: vi.fn(),
 }));
 
-const mockSummary: FinancialSummary = {
+const mockSummary: TenantFinancialSummary = {
   totalInvoiced: 2500000,
-  totalPaid: 2000000,
   totalOutstanding: 500000,
-  totalOverdue: 100000,
-  totalBudgeted: 3000000,
-  totalActual: 2200000,
-  totalCommitted: 400000,
   draftInvoices: 3,
-  pendingInvoices: 5,
-  paidInvoices: 20,
+  submittedInvoices: 5,
   overdueInvoices: 2,
-  averagePaymentDays: 32,
 };
 
 const mockInvoices: Invoice[] = [
@@ -33,14 +26,26 @@ const mockInvoices: Invoice[] = [
     invoiceNumber: 'INV-2025-001',
     contractId: 'contract-1',
     contractNumber: 'FA8771-25-C-0001',
-    status: 'OVERDUE',
-    amount: 75000,
+    invoiceType: 'PROGRESS',
+    status: 'SUBMITTED',
+    invoiceDate: '2025-01-01',
+    periodStart: '2024-12-01',
+    periodEnd: '2024-12-31',
     dueDate: '2025-01-15',
     submittedDate: '2025-01-01',
     paidDate: null,
-    paidAmount: null,
-    lineItems: [],
+    subtotal: 75000,
+    adjustments: 0,
+    totalAmount: 75000,
+    amountPaid: 0,
+    retainage: 0,
+    balance: 75000,
+    paymentMethod: null,
+    paymentReference: null,
+    voucherNumber: null,
     notes: null,
+    isOverdue: true,
+    daysOutstanding: 12,
     createdAt: '2025-01-01T00:00:00Z',
     updatedAt: '2025-01-01T00:00:00Z',
   },
@@ -49,37 +54,54 @@ const mockInvoices: Invoice[] = [
     invoiceNumber: 'INV-2025-002',
     contractId: 'contract-1',
     contractNumber: 'FA8771-25-C-0001',
-    status: 'OVERDUE',
-    amount: 25000,
+    invoiceType: 'PROGRESS',
+    status: 'SUBMITTED',
+    invoiceDate: '2024-12-28',
+    periodStart: '2024-11-01',
+    periodEnd: '2024-11-30',
     dueDate: '2025-01-10',
     submittedDate: '2024-12-28',
     paidDate: null,
-    paidAmount: null,
-    lineItems: [],
+    subtotal: 25000,
+    adjustments: 0,
+    totalAmount: 25000,
+    amountPaid: 0,
+    retainage: 0,
+    balance: 25000,
+    paymentMethod: null,
+    paymentReference: null,
+    voucherNumber: null,
     notes: null,
+    isOverdue: true,
+    daysOutstanding: 17,
     createdAt: '2024-12-28T00:00:00Z',
     updatedAt: '2024-12-28T00:00:00Z',
   },
 ];
 
-const mockOverBudgetItems: Budget[] = [
+const mockOverBudgetItems: BudgetItem[] = [
   {
     id: 'budget-1',
     contractId: 'contract-1',
+    clinId: null,
+    clinNumber: null,
     name: 'Travel Budget',
+    description: null,
     category: 'TRAVEL',
     budgetedAmount: 50000,
     actualAmount: 55000,
     committedAmount: 5000,
+    forecastAmount: null,
+    variance: -10000,
+    variancePercentage: -20,
     remainingBudget: -10000,
-    percentUsed: 120,
+    isOverBudget: true,
+    periodStart: '2025-01-01',
+    periodEnd: '2025-12-31',
     fiscalYear: 2025,
-    fiscalQuarter: null,
-    startDate: '2025-01-01',
-    endDate: '2025-12-31',
+    fiscalPeriod: null,
+    lastUpdatedDate: '2025-01-15',
     notes: null,
-    createdAt: '2025-01-01T00:00:00Z',
-    updatedAt: '2025-01-15T00:00:00Z',
   },
 ];
 

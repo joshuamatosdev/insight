@@ -132,52 +132,33 @@ export function UpcomingDeadlines(): React.ReactElement {
                     key={deadline.id}
                     align="center"
                     gap="sm"
-                    style={{
-                      padding: '0.5rem',
-                      backgroundColor: '#fafafa',
-                      borderRadius: '6px',
-                    }}
+                    className="p-2 bg-zinc-50 dark:bg-zinc-800 rounded-md"
                   >
                     {/* Icon */}
-                    <Box
-                      style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '6px',
-                        backgroundColor: '#f4f4f5',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '18px',
-                      }}
-                    >
+                    <Box className="w-9 h-9 rounded-md bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-lg">
                       {getTypeIcon(deadline.type)}
                     </Box>
 
                     {/* Details */}
-                    <Stack spacing="0" style={{ flex: 1 }}>
+                    <Stack spacing="0" className="flex-1">
                       <Flex align="center" gap="sm">
-                        <Text variant="body" style={{ fontWeight: 500 }}>{deadline.title}</Text>
+                        <Text variant="body" weight="semibold">{deadline.title}</Text>
                         <Box
-                          style={{
-                            width: '8px',
-                            height: '8px',
-                            borderRadius: '50%',
-                            backgroundColor: getPriorityColor(deadline.priority),
-                          }}
+                          className={`w-2 h-2 rounded-full ${
+                            deadline.priority === 'high' ? 'bg-red-500' :
+                            deadline.priority === 'medium' ? 'bg-amber-500' : 'bg-zinc-500'
+                          }`}
                         />
                       </Flex>
                       <Text variant="caption" color="muted">{deadline.contractNumber}</Text>
                     </Stack>
 
                     {/* Date */}
-                    <Stack spacing="0" style={{ textAlign: 'right' }}>
+                    <Stack spacing="0" className="text-right">
                       <Text
                         variant="caption"
-                        style={{
-                          fontWeight: 600,
-                          color: daysUntil <= 3 ? '#ef4444' : '#3f3f46',
-                        }}
+                        weight="semibold"
+                        className={daysUntil <= 3 ? 'text-red-500' : 'text-zinc-700 dark:text-zinc-300'}
                       >
                         {daysUntil <= 0 ? 'Today!' : daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}
                       </Text>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Text, Badge, Button, CheckCircleIcon, RefreshIcon, SearchIcon, Input } from '../components/catalyst/primitives';
+import { Text, Badge, Button, CheckCircleIcon, RefreshIcon, SearchIcon, Input, Select, Link } from '../components/catalyst/primitives';
 import {
   Section,
   SectionHeader,
@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardBody,
   HStack,
+  Stack,
   Box,
 } from '../components/catalyst/layout';
 import {
@@ -142,36 +143,30 @@ export function SBIRAwardsPage() {
         <CardHeader>
           <HStack justify="between" align="center" className="flex-wrap gap-4">
             <HStack spacing="sm">
-              <select
+              <Select
                 value={agencyFilter}
                 onChange={(e) => setAgencyFilter(e.target.value)}
                 aria-label="Filter by agency"
-                style={{
-                  padding: '0.5rem 0.75rem',
-                  borderRadius: '0.375rem',
-                  border: '1px solid #e4e4e7',
-                }}
-              >
-                <option value="">All Agencies</option>
-                {(stats?.agencies ?? []).map((a) => (
-                  <option key={a} value={a}>{a} - {getAgencyFullName(a)}</option>
-                ))}
-              </select>
-              <select
+                options={[
+                  { value: '', label: 'All Agencies' },
+                  ...(stats?.agencies ?? []).map((a) => ({
+                    value: a,
+                    label: `${a} - ${getAgencyFullName(a)}`,
+                  })),
+                ]}
+              />
+              <Select
                 value={phaseFilter}
                 onChange={(e) => setPhaseFilter(e.target.value)}
                 aria-label="Filter by phase"
-                style={{
-                  padding: '0.5rem 0.75rem',
-                  borderRadius: '0.375rem',
-                  border: '1px solid #e4e4e7',
-                }}
-              >
-                <option value="">All Phases</option>
-                {(stats?.phases ?? []).map((p) => (
-                  <option key={p} value={p}>Phase {p}</option>
-                ))}
-              </select>
+                options={[
+                  { value: '', label: 'All Phases' },
+                  ...(stats?.phases ?? []).map((p) => ({
+                    value: p,
+                    label: `Phase ${p}`,
+                  })),
+                ]}
+              />
             </HStack>
 
             <HStack spacing="sm">
@@ -232,22 +227,16 @@ export function SBIRAwardsPage() {
                   {filteredAwards.map((award) => (
                     <TableRow key={award.id}>
                       <TableCell className="max-w-xs">
-                        <a
-                          href={award.awardLink || '#'}
+                        <Link
+                          href={award.awardLink !== null && award.awardLink !== undefined && award.awardLink !== '' ? award.awardLink : '#'}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ textDecoration: 'none' }}
+                          className="no-underline"
                         >
-                          <Text variant="bodySmall" style={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                          }}>
-                            {award.awardTitle || 'Untitled'}
+                          <Text variant="bodySmall" className="line-clamp-2">
+                            {award.awardTitle !== null && award.awardTitle !== undefined && award.awardTitle !== '' ? award.awardTitle : 'Untitled'}
                           </Text>
-                        </a>
+                        </Link>
                         <HStack spacing="xs" className="mt-1">
                           {award.isSbir === true && <Badge color="cyan">SBIR</Badge>}
                           {award.isSttr === true && <Badge color="green">STTR</Badge>}
@@ -282,10 +271,12 @@ export function SBIRAwardsPage() {
         </CardBody>
       </Card>
 
-      <Text variant="caption" color="muted" className="mt-4 text-center block">
-        Data source: <a href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</a> -
-        Small Business Innovation Research / Small Business Technology Transfer
-      </Text>
+      <Stack gap="xs" align="center" className="mt-4">
+        <Text variant="caption" color="muted">
+          Data source: <Link href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</Link> -
+          Small Business Innovation Research / Small Business Technology Transfer
+        </Text>
+      </Stack>
     </Section>
   );
 }

@@ -323,7 +323,7 @@ function AlertForm({
   );
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Box as="form" onSubmit={handleSubmit}>
       <Stack spacing="md">
         {errors.general !== undefined && (
           <Box className="p-3 bg-danger-bg rounded-md border border-red-500">
@@ -479,7 +479,7 @@ function AlertForm({
           </Button>
         </HStack>
       </Stack>
-    </form>
+    </Box>
   );
 }
 
@@ -618,7 +618,7 @@ export function AlertsPage(): React.ReactElement {
   if (isLoading) {
     return (
       <Section id="alerts">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading alerts...
           </Text>
@@ -677,11 +677,14 @@ export function AlertsPage(): React.ReactElement {
           <CardBody>
             <Flex direction="column" align="center" gap="md" className="p-8">
               <BellIcon size="xl" color="muted" />
-              <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
-                No alerts configured yet.
-                <br />
-                Create an alert to get notified when matching opportunities are posted.
-              </Text>
+              <Stack spacing="xs" align="center">
+                <Text variant="body" color="muted" className="text-center">
+                  No alerts configured yet.
+                </Text>
+                <Text variant="body" color="muted" className="text-center">
+                  Create an alert to get notified when matching opportunities are posted.
+                </Text>
+              </Stack>
               <Button variant="primary" onClick={handleCreateClick}>
                 <HStack spacing="xs" align="center">
                   <PlusIcon size="sm" />

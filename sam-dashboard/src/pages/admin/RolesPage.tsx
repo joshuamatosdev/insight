@@ -4,7 +4,12 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, PencilIcon, TrashIcon } from '../../components/catalyst/primitives';
+import {
+  Text,
+  Button,
+  Badge,
+} from '../../components/catalyst/primitives';
+import { PlusIcon, PencilIcon, TrashIcon } from '../../components/catalyst/primitives/Icon';
 import {
   Section,
   SectionHeader,
@@ -14,15 +19,14 @@ import {
   Flex,
   Box,
   HStack,
-} from '../../components/catalyst/layout';
-import {
   Table,
   TableHead,
   TableBody,
   TableRow,
-  TableHeader,
+  TableHeaderCell,
   TableCell,
-} from '../../components/catalyst';
+} from '../../components/catalyst/layout';
+import { InlineAlert, InlineAlertDescription } from '../../components/catalyst/primitives';
 import { RoleFormModal } from '../../components/domain/rbac';
 import { fetchRoles, fetchPermissions, createRole, updateRole, deleteRole } from '../../services';
 import type {
@@ -158,7 +162,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'loading') {
     return (
       <Section id="roles-admin">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading roles...
           </Text>
@@ -170,7 +174,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'error' && roles.length === 0) {
     return (
       <Section id="roles-admin">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load roles'}
@@ -201,18 +205,10 @@ export function RolesPage(): React.ReactElement {
       />
 
       {error !== null && (
-        <Box
-          style={{
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.375rem',
-            border: '1px solid #ef4444',
-          }}
-        >
-          <Text variant="bodySmall" color="danger">
-            {error}
-          </Text>
+        <Box className="mb-4">
+          <InlineAlert color="error">
+            <InlineAlertDescription>{error}</InlineAlertDescription>
+          </InlineAlert>
         </Box>
       )}
 
@@ -221,11 +217,11 @@ export function RolesPage(): React.ReactElement {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Role Name</TableHeader>
-                <TableHeader>Description</TableHeader>
-                <TableHeader className="text-center">Permissions</TableHeader>
-                <TableHeader>Created</TableHeader>
-                <TableHeader className="text-center">Actions</TableHeader>
+                <TableHeaderCell>Role Name</TableHeaderCell>
+                <TableHeaderCell>Description</TableHeaderCell>
+                <TableHeaderCell className="text-center">Permissions</TableHeaderCell>
+                <TableHeaderCell>Created</TableHeaderCell>
+                <TableHeaderCell className="text-center">Actions</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -237,9 +233,7 @@ export function RolesPage(): React.ReactElement {
                         {role.name}
                       </Text>
                       {role.isSystemRole && (
-                        <Badge color="zinc">
-                          System
-                        </Badge>
+                        <Badge color="zinc">System</Badge>
                       )}
                     </HStack>
                   </TableCell>
@@ -249,9 +243,7 @@ export function RolesPage(): React.ReactElement {
                     </Text>
                   </TableCell>
                   <TableCell className="text-center">
-                    <Badge color="cyan">
-                      {role.permissions.length}
-                    </Badge>
+                    <Badge color="cyan">{role.permissions.length}</Badge>
                   </TableCell>
                   <TableCell>
                     <Text variant="caption" color="muted">
@@ -283,10 +275,12 @@ export function RolesPage(): React.ReactElement {
               ))}
               {roles.length === 0 && (
                 <TableRow>
-                  <TableCell>
-                    <Text variant="body" color="muted" className="p-8">
-                      No roles found. Create your first role to get started.
-                    </Text>
+                  <TableCell colSpan={5}>
+                    <Flex justify="center" padding="lg">
+                      <Text variant="body" color="muted">
+                        No roles found. Create your first role to get started.
+                      </Text>
+                    </Flex>
                   </TableCell>
                 </TableRow>
               )}

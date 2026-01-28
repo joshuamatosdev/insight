@@ -246,7 +246,7 @@ export function ClearancesPage(): React.ReactElement {
       <Stack spacing="md">
         {/* Error Display */}
         {(error !== null || loadError !== null) && (
-          <Card variant="outlined" style={{ borderColor: '#ef4444' }}>
+          <Card variant="outlined" className="border-red-500">
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
                 {error ?? loadError?.message}
@@ -309,7 +309,7 @@ export function ClearancesPage(): React.ReactElement {
 
         {/* Loading State */}
         {isLoading && showForm === false && (
-          <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+          <Flex justify="center" align="center" className="min-h-[200px]">
             <Text variant="body" color="muted">
               Loading clearances...
             </Text>
@@ -327,7 +327,7 @@ export function ClearancesPage(): React.ReactElement {
                 className="p-8"
               >
                 <ShieldLockIcon size="xl" color="muted" />
-                <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
+                <Text variant="body" color="muted" className="text-center">
                   No security clearances found.
                 </Text>
                 <Button variant="primary" onClick={handleCreateClick}>

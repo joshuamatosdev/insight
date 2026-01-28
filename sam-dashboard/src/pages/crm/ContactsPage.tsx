@@ -1,10 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
-import { Input, Select, Button, Text } from '../../components/catalyst/primitives';
-import { ContactList, ContactForm } from '../../components/domain/crm';
-import { useContacts } from '../../hooks';
-import type { Contact, ContactType, CreateContactRequest } from '../../types/crm';
+import {
+  Box,
+  Stack,
+  HStack,
+  Card,
+  CardBody,
+} from '@/components/catalyst/layout';
+import {
+  PageHeading,
+  PageHeadingTitle,
+  PageHeadingSection,
+  PageHeadingActions,
+} from '@/components/catalyst/navigation';
+import { Input, Select, Button, Text } from '@/components/catalyst/primitives';
+import { ContactList, ContactForm } from '@/components/domain/crm';
+import { useContacts } from '@/hooks';
+import type { Contact, ContactType, CreateContactRequest } from '@/types/crm';
 
 const CONTACT_TYPE_OPTIONS: { value: ContactType | ''; label: string }[] = [
   { value: '', label: 'All Types' },
@@ -112,93 +124,103 @@ export function ContactsPage() {
 
   if (showCreateForm === true) {
     return (
-      <Section id="create-contact">
+      <Box as="section" id="create-contact">
         <ContactForm
           onSubmit={handleCreateSubmit}
           onCancel={handleCancelForm}
           isLoading={isSubmitting}
         />
-      </Section>
+      </Box>
     );
   }
 
   if (editingContact !== null) {
     return (
-      <Section id="edit-contact">
+      <Box as="section" id="edit-contact">
         <ContactForm
           contact={editingContact}
           onSubmit={handleEditSubmit}
           onCancel={handleCancelForm}
           isLoading={isSubmitting}
         />
-      </Section>
+      </Box>
     );
   }
 
   return (
-    <Section id="contacts">
-      <SectionHeader 
-        title="Contacts"
-        actions={<Button onClick={() => setShowCreateForm(true)}>Add Contact</Button>}
-      />
-
+    <Box as="section" id="contacts">
       <Stack gap="lg">
-        <HStack gap="md">
-          <Input
-            placeholder="Search contacts..."
-            value={searchQuery}
-            onChange={(e) => handleSearchChange(e.target.value)}
-          />
-          <Select
-            value={filters.contactType ?? ''}
-            onChange={(e) => handleTypeFilterChange(e.target.value)}
-            options={CONTACT_TYPE_OPTIONS}
-          />
-        </HStack>
+        <PageHeading>
+          <PageHeadingSection>
+            <PageHeadingTitle>Contacts</PageHeadingTitle>
+          </PageHeadingSection>
+          <PageHeadingActions>
+            <Button onClick={() => setShowCreateForm(true)}>Add Contact</Button>
+          </PageHeadingActions>
+        </PageHeading>
 
-        {error !== null && (
-          <Text variant="body" color="danger">
-            {error.message}
-          </Text>
-        )}
+        <Card>
+          <CardBody>
+            <Stack gap="lg">
+              <HStack gap="md">
+                <Input
+                  placeholder="Search contacts..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                />
+                <Select
+                  value={filters.contactType ?? ''}
+                  onChange={(e) => handleTypeFilterChange(e.target.value)}
+                  options={CONTACT_TYPE_OPTIONS}
+                />
+              </HStack>
 
-        <ContactList
-          contacts={contacts}
-          isLoading={isLoading}
-          onContactClick={handleContactClick}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+              {error !== null && (
+                <Text variant="body" color="danger">
+                  {error.message}
+                </Text>
+              )}
 
-        {totalPages > 1 && (
-          <HStack justify="between" align="center">
-            <Text variant="bodySmall" color="secondary">
-              Showing {contacts.length} of {totalElements} contacts
-            </Text>
-            <HStack gap="sm">
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={page === 0}
-                onClick={() => setPage(page - 1)}
-              >
-                Previous
-              </Button>
-              <Text variant="bodySmall">
-                Page {page + 1} of {totalPages}
-              </Text>
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={page >= totalPages - 1}
-                onClick={() => setPage(page + 1)}
-              >
-                Next
-              </Button>
-            </HStack>
-          </HStack>
-        )}
+              <ContactList
+                contacts={contacts}
+                isLoading={isLoading}
+                onContactClick={handleContactClick}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+
+              {totalPages > 1 && (
+                <HStack justify="between" align="center">
+                  <Text variant="bodySmall" color="secondary">
+                    Showing {contacts.length} of {totalElements} contacts
+                  </Text>
+                  <HStack gap="sm">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={page === 0}
+                      onClick={() => setPage(page - 1)}
+                    >
+                      Previous
+                    </Button>
+                    <Text variant="bodySmall">
+                      Page {page + 1} of {totalPages}
+                    </Text>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={page >= totalPages - 1}
+                      onClick={() => setPage(page + 1)}
+                    >
+                      Next
+                    </Button>
+                  </HStack>
+                </HStack>
+              )}
+            </Stack>
+          </CardBody>
+        </Card>
       </Stack>
-    </Section>
+    </Box>
   );
 }

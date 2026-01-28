@@ -1,6 +1,21 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Card, CardBody, Flex, Stack, Box, Grid } from '../components/catalyst/layout';
-import { Text, Button, Badge } from '../components/catalyst/primitives';
+import {
+  Card,
+  CardBody,
+  Flex,
+  Stack,
+  Grid,
+  GridItem,
+  Section,
+  SectionHeader,
+} from '../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  Badge,
+  InlineAlert,
+  InlineAlertDescription,
+} from '../components/catalyst/primitives';
 import type { Role, PermissionsByCategory, RolesPageState } from './types';
 
 const API_BASE = '/api/v1';
@@ -89,9 +104,7 @@ export function RolesPage(): React.ReactElement {
                 {role.name}
               </Text>
               {role.isSystemRole === true && (
-                <Badge color="zinc">
-                  System
-                </Badge>
+                <Badge color="zinc">System</Badge>
               )}
             </Flex>
             <Text variant="bodySmall" color="muted">
@@ -109,11 +122,11 @@ export function RolesPage(): React.ReactElement {
   const renderPermissions = (): React.ReactElement => {
     if (selectedRole === null) {
       return (
-        <Box className="p-8 text-center">
+        <Flex justify="center" align="center" padding="xl">
           <Text variant="body" color="muted">
             Select a role to view its permissions
           </Text>
-        </Box>
+        </Flex>
       );
     }
 
@@ -127,39 +140,35 @@ export function RolesPage(): React.ReactElement {
         </Text>
 
         {hasWildcard === true && (
-          <Box
-            style={{
-              padding: '0.75rem',
-              backgroundColor: '#fffbeb',
-              borderRadius: '0.375rem',
-            }}
-          >
-            <Text variant="bodySmall" weight="medium">
+          <InlineAlert color="warning">
+            <InlineAlertDescription>
               This role has full system access (*).
-            </Text>
-          </Box>
+            </InlineAlertDescription>
+          </InlineAlert>
         )}
 
         {Object.entries(permissions).map(([category, perms]) => (
-          <Card key={category} variant="default">
+          <Card key={category} variant="outlined">
             <CardBody padding="md">
-              <Text variant="bodySmall" weight="semibold" className="mb-2">
-                {category.replace(/_/g, ' ')}
-              </Text>
-              <Flex gap="sm" style={{ flexWrap: 'wrap' }}>
-                {perms.map((perm) => {
-                  const hasPermission = hasWildcard || rolePermissions.has(perm.code);
-                  return (
-                    <Badge
-                      key={perm.id}
-                      color={hasPermission ? 'green' : 'zinc'}
-                      title={perm.description}
-                    >
-                      {perm.displayName}
-                    </Badge>
-                  );
-                })}
-              </Flex>
+              <Stack spacing="sm">
+                <Text variant="bodySmall" weight="semibold">
+                  {category.replace(/_/g, ' ')}
+                </Text>
+                <Flex gap="sm" style={{ flexWrap: 'wrap' }}>
+                  {perms.map((perm) => {
+                    const hasPermission = hasWildcard || rolePermissions.has(perm.code);
+                    return (
+                      <Badge
+                        key={perm.id}
+                        color={hasPermission ? 'green' : 'zinc'}
+                        title={perm.description}
+                      >
+                        {perm.displayName}
+                      </Badge>
+                    );
+                  })}
+                </Flex>
+              </Stack>
             </CardBody>
           </Card>
         ))}
@@ -169,57 +178,61 @@ export function RolesPage(): React.ReactElement {
 
   if (pageState === 'loading') {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Text variant="body">Loading roles...</Text>
-      </Flex>
+      <Section id="roles-page">
+        <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+          <Text variant="body" color="muted">
+            Loading roles...
+          </Text>
+        </Flex>
+      </Section>
     );
   }
 
   if (pageState === 'error') {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
-        <Stack spacing="md" style={{ textAlign: 'center' }}>
-          <Text variant="body" color="danger">
-            {error}
-          </Text>
-          <Button variant="primary" onClick={fetchData}>
-            Retry
-          </Button>
-        </Stack>
-      </Flex>
+      <Section id="roles-page">
+        <Flex justify="center" align="center" style={{ minHeight: '200px' }}>
+          <Stack spacing="md" align="center">
+            <Text variant="body" color="danger">
+              {error}
+            </Text>
+            <Button variant="primary" onClick={fetchData}>
+              Retry
+            </Button>
+          </Stack>
+        </Flex>
+      </Section>
     );
   }
 
   return (
-    <Stack spacing="lg">
-      <Flex justify="space-between" align="center">
-        <Stack spacing="xs">
-          <Text variant="heading3">Roles & Permissions</Text>
-          <Text variant="bodySmall" color="muted">
-            Manage roles and their associated permissions
-          </Text>
-        </Stack>
-      </Flex>
+    <Section id="roles-page">
+      <SectionHeader
+        title="Roles & Permissions"
+        description="Manage roles and their associated permissions"
+      />
 
       <Grid columns={3} gap="lg">
         {/* Roles List */}
-        <Stack spacing="md">
-          <Text variant="bodySmall" weight="semibold" color="muted">
-            ROLES ({roles.length})
-          </Text>
-          {roles.map(renderRoleCard)}
-        </Stack>
+        <GridItem>
+          <Stack spacing="md">
+            <Text variant="bodySmall" weight="semibold" color="muted">
+              ROLES ({roles.length})
+            </Text>
+            {roles.map(renderRoleCard)}
+          </Stack>
+        </GridItem>
 
         {/* Permissions Panel */}
-        <Box style={{ gridColumn: 'span 2' }}>
-          <Card variant="default">
+        <GridItem colSpan={2}>
+          <Card variant="elevated">
             <CardBody padding="lg">
               {renderPermissions()}
             </CardBody>
           </Card>
-        </Box>
+        </GridItem>
       </Grid>
-    </Stack>
+    </Section>
   );
 }
 

@@ -14,7 +14,7 @@ export const TableContext = createContext<TableContextValue>({});
 export function Table({ className, style, children, striped, dense, grid, bleed }: TableProps) {
   const tableStyles: CSSProperties = {
     width: '100%',
-    borderCollapse: 'collapse',
+    borderCollapse: 'inherit',
     ...style,
   };
 

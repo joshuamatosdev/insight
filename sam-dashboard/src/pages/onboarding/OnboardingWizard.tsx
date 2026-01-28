@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Flex, Stack, Box } from '../../components/catalyst/layout';
 import { Text, Button } from '../../components/catalyst/primitives';
-import { StepProgress } from '../../components/domain/onboarding';
+import { Stepper, Step } from '../../components/catalyst';
 import { useOnboarding } from '../../hooks/useOnboarding';
 import { CompanyProfileStep } from './steps/CompanyProfileStep';
 import { CertificationsStep } from './steps/CertificationsStep';
@@ -44,7 +44,7 @@ export function OnboardingWizard(): React.ReactElement {
 
   if (loading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '100vh' }}>
+      <Flex justify="center" align="center" className="min-h-screen">
         <Text>Loading...</Text>
       </Flex>
     );
@@ -52,8 +52,8 @@ export function OnboardingWizard(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: '100vh' }}>
-        <Stack spacing="md" style={{ textAlign: 'center' }}>
+      <Flex justify="center" align="center" className="min-h-screen">
+        <Stack spacing="md" className="text-center">
           <Text variant="heading4">Failed to load onboarding</Text>
           <Text color="muted">{error}</Text>
           <Button variant="primary" onClick={() => window.location.reload()}>
@@ -70,14 +70,12 @@ export function OnboardingWizard(): React.ReactElement {
         justify="center"
         align="center"
         direction="column"
-        style={{
-          minHeight: '100vh',
-          backgroundColor: '#fafafa',
-          padding: '1.5rem',
-        }}
+        className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-6"
       >
-        <Stack spacing="lg" style={{ textAlign: 'center', maxWidth: '500px' }}>
-          <Box style={{ fontSize: '64px' }}>🎉</Box>
+        <Stack spacing="lg" className="text-center max-w-lg">
+          <Text as="span" className="text-6xl">
+            {''}
+          </Text>
           <Text variant="heading2">Setup Complete!</Text>
           <Text variant="body" color="muted">
             Your organization is ready. Start exploring opportunities and managing your contracts.
@@ -141,17 +139,13 @@ export function OnboardingWizard(): React.ReactElement {
     <Flex
       direction="column"
       align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#fafafa',
-        padding: '1.5rem',
-      }}
+      className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-6"
     >
       {/* Header */}
       <Flex
         justify="space-between"
         align="center"
-        style={{ width: '100%', maxWidth: '700px', marginBottom: '1.5rem' }}
+        className="w-full max-w-[700px] mb-6"
       >
         <Text variant="heading4">Welcome to SAMGov</Text>
         <Button variant="ghost" onClick={handleDismiss}>
@@ -159,9 +153,17 @@ export function OnboardingWizard(): React.ReactElement {
         </Button>
       </Flex>
 
-      {/* Progress */}
-      <Box style={{ width: '100%', maxWidth: '700px' }}>
-        <StepProgress steps={steps} currentStep={currentStep} />
+      {/* Progress - Using Catalyst Stepper */}
+      <Box className="w-full max-w-[700px] mb-6">
+        <Stepper currentStep={currentStep} orientation="horizontal">
+          {steps.map((step, index) => (
+            <Step
+              key={index}
+              label={step.title}
+              description={step.description}
+            />
+          ))}
+        </Stepper>
       </Box>
 
       {/* Step Content */}

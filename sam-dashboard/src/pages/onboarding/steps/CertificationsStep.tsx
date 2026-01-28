@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Stack, Flex, Box } from '../../../components/catalyst/layout';
-import { Text } from '../../../components/catalyst/primitives';
+import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
+import { Text, Checkbox, CheckboxField } from '../../../components/catalyst/primitives';
 import { OnboardingCard } from '../../../components/domain/onboarding';
 
 interface CertificationsStepProps {
@@ -47,45 +47,35 @@ export function CertificationsStep({
         {CERTIFICATIONS.map((cert) => {
           const isSelected = selected.includes(cert.id);
           return (
-            <Box
+            <Card
               key={cert.id}
               onClick={() => toggleCertification(cert.id)}
-              style={{
-                padding: '1rem',
-                borderRadius: '8px',
-                border: `2px solid ${isSelected ? '#2563eb' : '#e4e4e7'}`,
-                backgroundColor: isSelected ? '#eff6ff' : 'white',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-              }}
+              className={`cursor-pointer transition-all duration-200 ${
+                isSelected
+                  ? 'border-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20'
+                  : 'border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
+              }`}
             >
-              <Flex align="center" gap="md">
-                <Box
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '4px',
-                    border: `2px solid ${isSelected ? '#2563eb' : '#d4d4d8'}`,
-                    backgroundColor: isSelected ? '#2563eb' : 'white',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '14px',
-                  }}
-                >
-                  {isSelected ? '✓' : ''}
-                </Box>
-                <Stack spacing="0">
-                  <Text variant="body" style={{ fontWeight: 600 }}>
-                    {cert.name}
-                  </Text>
-                  <Text variant="caption" color="muted">
-                    {cert.description}
-                  </Text>
-                </Stack>
-              </Flex>
-            </Box>
+              <CardBody>
+                <Flex align="center" gap="md">
+                  <CheckboxField>
+                    <Checkbox
+                      checked={isSelected}
+                      onChange={() => toggleCertification(cert.id)}
+                      color="blue"
+                    />
+                  </CheckboxField>
+                  <Stack spacing="xs">
+                    <Text variant="body" weight="semibold">
+                      {cert.name}
+                    </Text>
+                    <Text variant="caption" color="muted">
+                      {cert.description}
+                    </Text>
+                  </Stack>
+                </Flex>
+              </CardBody>
+            </Card>
           );
         })}
       </Stack>

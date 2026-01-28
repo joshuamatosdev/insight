@@ -1,8 +1,24 @@
 import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth';
-import { Card, CardHeader, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button, Input, BuildingCheckIcon } from '../components/catalyst/primitives';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Flex,
+  Stack,
+  Box,
+} from '../components/catalyst/layout';
+import {
+  Text,
+  Button,
+  Input,
+  FormField,
+  InlineAlert,
+  InlineAlertDescription,
+  AuthLayout,
+} from '../components/catalyst/primitives';
+import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
 import type { LoginFormState, LoginFormErrors } from './LoginPage.types';
 
 /**
@@ -101,32 +117,17 @@ export function LoginPage(): React.ReactElement {
   }, [isAuthenticated, navigate, from]);
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      style={{
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f5',
-        padding: '1rem',
-      }}
-    >
-      <Box style={{ width: '100%', maxWidth: '400px' }}>
+    <AuthLayout>
+      <Box className="w-full max-w-md">
         <Card variant="elevated">
-          <CardHeader
-            style={{
-              backgroundColor: '#2563eb',
-              borderBottom: 'none',
-              textAlign: 'center',
-              padding: '1.5rem',
-            }}
-          >
+          <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
-              <Stack spacing="xs" style={{ alignItems: 'center' }}>
+              <Stack spacing="xs" align="center">
                 <Text variant="heading3" color="white" weight="semibold">
                   SAM.gov Dashboard
                 </Text>
-                <Text variant="bodySmall" color="white" style={{ opacity: 0.8 }}>
+                <Text variant="bodySmall" color="white" className="opacity-80">
                   Sign in to your account
                 </Text>
               </Stack>
@@ -134,37 +135,22 @@ export function LoginPage(): React.ReactElement {
           </CardHeader>
 
           <CardBody padding="lg">
-            <form onSubmit={handleSubmit}>
+            <Box as="form" onSubmit={handleSubmit}>
               <Stack spacing="md">
                 {/* Error message from authentication */}
                 {error !== null && (
-                  <Box
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#fef2f2',
-                      borderRadius: '0.375rem',
-                      border: '1px solid #ef4444',
-                    }}
-                  >
-                    <Text variant="bodySmall" color="danger">
+                  <InlineAlert color="error">
+                    <InlineAlertDescription>
                       {error.message}
-                    </Text>
-                  </Box>
+                    </InlineAlertDescription>
+                  </InlineAlert>
                 )}
 
                 {/* Email field */}
-                <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    style={{
-                      display: 'block',
-                      marginBottom: '0.25rem',
-                    }}
-                  >
-                    Email Address
-                  </Text>
+                <FormField
+                  label="Email Address"
+                  error={validationErrors.email}
+                >
                   <Input
                     type="email"
                     value={form.email}
@@ -174,30 +160,13 @@ export function LoginPage(): React.ReactElement {
                     autoComplete="email"
                     autoFocus
                   />
-                  {validationErrors.email !== undefined && (
-                    <Text
-                      variant="caption"
-                      color="danger"
-                      className="mt-1"
-                    >
-                      {validationErrors.email}
-                    </Text>
-                  )}
-                </Box>
+                </FormField>
 
                 {/* Password field */}
-                <Box>
-                  <Text
-                    as="label"
-                    variant="bodySmall"
-                    weight="medium"
-                    style={{
-                      display: 'block',
-                      marginBottom: '0.25rem',
-                    }}
-                  >
-                    Password
-                  </Text>
+                <FormField
+                  label="Password"
+                  error={validationErrors.password}
+                >
                   <Input
                     type="password"
                     value={form.password}
@@ -206,29 +175,21 @@ export function LoginPage(): React.ReactElement {
                     invalid={validationErrors.password !== undefined}
                     autoComplete="current-password"
                   />
-                  {validationErrors.password !== undefined && (
-                    <Text
-                      variant="caption"
-                      color="danger"
-                      className="mt-1"
-                    >
-                      {validationErrors.password}
-                    </Text>
-                  )}
-                </Box>
+                </FormField>
 
                 {/* Submit button */}
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2"
+                  fullWidth
+                  className="mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                 >
                   Sign In
                 </Button>
               </Stack>
-            </form>
+            </Box>
           </CardBody>
         </Card>
 
@@ -236,16 +197,12 @@ export function LoginPage(): React.ReactElement {
         <Text
           variant="caption"
           color="muted"
-          style={{
-            textAlign: 'center',
-            marginTop: '1rem',
-            display: 'block',
-          }}
+          className="text-center mt-4 block"
         >
           Government Contract Intelligence Platform
         </Text>
       </Box>
-    </Flex>
+    </AuthLayout>
   );
 }
 

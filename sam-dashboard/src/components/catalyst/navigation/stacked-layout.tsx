@@ -1,6 +1,7 @@
 import * as Headless from '@headlessui/react'
-import React, { useState } from 'react'
+import React, {JSX, useState} from 'react'
 import { NavbarItem } from './navbar'
+import {SidebarLayout} from "@components/catalyst";
 
 function OpenMenuIcon() {
   return (
@@ -42,12 +43,16 @@ function MobileSidebar({ open, close, children }: React.PropsWithChildren<{ open
   )
 }
 
+type StackedLayoutProps = { fullWidth?: boolean; navbar: React.ReactNode; sidebar?: React.ReactNode;
+    desktopSidebar: JSX.Element };
+
 export function StackedLayout({
   navbar,
   sidebar,
+                                  desktopSidebar,
   children,
   fullWidth = false,
-}: React.PropsWithChildren<{ navbar: React.ReactNode; sidebar: React.ReactNode; fullWidth?: boolean }>) {
+}: React.PropsWithChildren<StackedLayoutProps>) {
   let [showSidebar, setShowSidebar] = useState(false)
 
   return (
@@ -57,7 +62,7 @@ export function StackedLayout({
         {sidebar}
       </MobileSidebar>
 
-      {/* Navbar */}
+      {/* Navbar - spans full width */}
       <header className="flex items-center px-4">
         <div className="py-2.5 lg:hidden">
           <NavbarItem onClick={() => setShowSidebar(true)} aria-label="Open navigation">
@@ -67,12 +72,20 @@ export function StackedLayout({
         <div className="min-w-0 flex-1">{navbar}</div>
       </header>
 
-      {/* Content */}
-      <main className="flex flex-1 flex-col pb-2 lg:px-2">
-        <div className="grow p-6 lg:rounded-lg lg:bg-white lg:p-10 lg:shadow-xs lg:ring-1 lg:ring-zinc-950/5 dark:lg:bg-zinc-900 dark:lg:ring-white/10">
-          {fullWidth ? children : <div className="mx-auto max-w-6xl">{children}</div>}
+      {/* Sidebar + Content row */}
+      <div className="flex flex-1 flex-row">
+        {/* Desktop Sidebar */}
+        <div className="hidden shrink-0 lg:block">
+          {desktopSidebar}
         </div>
-      </main>
+
+        {/* Content */}
+        <main className="min-w-0 flex-1 pb-2 lg:px-2">
+          <div className="h-full p-6 lg:rounded-lg lg:bg-white lg:p-10 lg:shadow-xs lg:ring-1 lg:ring-zinc-950/5 dark:lg:bg-zinc-900 dark:lg:ring-white/10">
+            {fullWidth ? children : <div className="mx-auto max-w-6xl">{children}</div>}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

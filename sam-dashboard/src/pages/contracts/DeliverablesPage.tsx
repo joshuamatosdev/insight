@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select } from '../../components/catalyst/primitives';
+import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select, FormField, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
 import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid, GridItem } from '../../components/catalyst/layout';
 import { DeliverableTracker } from '../../components/domain/contracts';
 import { useContract } from '../../hooks/useContracts';
@@ -15,7 +15,7 @@ export interface DeliverablesPageProps {
   onBack?: () => void;
 }
 
-const DELIVERABLE_TYPES: { value: DeliverableType; label: string }[] = [
+const DELIVERABLE_TYPE_OPTIONS: Array<{ value: DeliverableType; label: string }> = [
   { value: 'REPORT', label: 'Report' },
   { value: 'DATA', label: 'Data' },
   { value: 'SOFTWARE', label: 'Software' },
@@ -29,7 +29,8 @@ const DELIVERABLE_TYPES: { value: DeliverableType; label: string }[] = [
   { value: 'OTHER', label: 'Other' },
 ];
 
-const FREQUENCIES: { value: DeliverableFrequency; label: string }[] = [
+const FREQUENCY_OPTIONS: Array<{ value: DeliverableFrequency | ''; label: string }> = [
+  { value: '', label: 'Select...' },
   { value: 'ONE_TIME', label: 'One-time' },
   { value: 'DAILY', label: 'Daily' },
   { value: 'WEEKLY', label: 'Weekly' },
@@ -138,7 +139,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
+        <Flex justify="center" align="center" className="min-h-[400px]">
           <Text variant="body" color="muted">
             Loading deliverables...
           </Text>
@@ -150,17 +151,12 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
   if (error !== null || contract === null) {
     return (
       <Section>
-        <Box
-          style={{
-            padding: '1rem',
-            backgroundColor: '#fef2f2',
-            borderRadius: '0.5rem',
-          }}
-        >
-          <Text variant="body" color="danger">
-            {error !== null ? `Error: ${error.message}` : 'Contract not found'}
-          </Text>
-        </Box>
+        <InlineAlert color="error">
+          <InlineAlertTitle>Error</InlineAlertTitle>
+          <InlineAlertDescription>
+            {error !== null ? error.message : 'Contract not found'}
+          </InlineAlertDescription>
+        </InlineAlert>
         {onBack !== undefined && (
           <Box className="mt-4">
             <Button variant="secondary" onClick={onBack}>
@@ -205,155 +201,74 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
 
       {showAddForm && (
         <Card className="mb-6">
-          <form onSubmit={handleSubmit}>
+          <Box as="form" onSubmit={handleSubmit}>
             <CardHeader>
               <Text variant="heading4">Add Deliverable</Text>
             </CardHeader>
             <CardBody>
               <Grid columns={2} gap="md">
-                <Box>
-                  <label htmlFor="cdrlNumber">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      CDRL Number
-                    </Text>
-                  </label>
+                <FormField label="CDRL Number" id="cdrlNumber">
                   <Input
-                    id="cdrlNumber"
                     value={formState.cdrlNumber}
                     onChange={handleChange('cdrlNumber')}
                     disabled={isSaving}
                     placeholder="e.g., A001"
                   />
-                </Box>
-                <Box>
-                  <label htmlFor="deliverableType">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Type *
-                    </Text>
-                  </label>
+                </FormField>
+                <FormField label="Type" id="deliverableType" required>
                   <Select
-                    id="deliverableType"
                     value={formState.deliverableType}
                     onChange={handleChange('deliverableType')}
                     disabled={isSaving}
-                  >
-                    {DELIVERABLE_TYPES.map((type) => (
-                      <option key={type.value} value={type.value}>
-                        {type.label}
-                      </option>
-                    ))}
-                  </Select>
-                </Box>
+                    options={DELIVERABLE_TYPE_OPTIONS}
+                  />
+                </FormField>
                 <GridItem colSpan={2}>
-                  <Box>
-                    <label htmlFor="title">
-                      <Text
-                        variant="bodySmall"
-                        weight="semibold"
-                        className="mb-1"
-                      >
-                        Title *
-                      </Text>
-                    </label>
+                  <FormField label="Title" id="title" required>
                     <Input
-                      id="title"
                       value={formState.title}
                       onChange={handleChange('title')}
                       disabled={isSaving}
                       placeholder="Deliverable title"
                       required
                     />
-                  </Box>
+                  </FormField>
                 </GridItem>
                 <GridItem colSpan={2}>
-                  <Box>
-                    <label htmlFor="description">
-                      <Text
-                        variant="bodySmall"
-                        weight="semibold"
-                        className="mb-1"
-                      >
-                        Description
-                      </Text>
-                    </label>
+                  <FormField label="Description" id="description">
                     <Input
-                      id="description"
                       value={formState.description}
                       onChange={handleChange('description')}
                       disabled={isSaving}
                       placeholder="Deliverable description"
                     />
-                  </Box>
+                  </FormField>
                 </GridItem>
-                <Box>
-                  <label htmlFor="dueDate">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Due Date
-                    </Text>
-                  </label>
+                <FormField label="Due Date" id="dueDate">
                   <Input
-                    id="dueDate"
                     type="date"
                     value={formState.dueDate}
                     onChange={handleChange('dueDate')}
                     disabled={isSaving}
                   />
-                </Box>
-                <Box>
-                  <label htmlFor="frequency">
-                    <Text
-                      variant="bodySmall"
-                      weight="semibold"
-                      className="mb-1"
-                    >
-                      Frequency
-                    </Text>
-                  </label>
+                </FormField>
+                <FormField label="Frequency" id="frequency">
                   <Select
-                    id="frequency"
                     value={formState.frequency}
                     onChange={handleChange('frequency')}
                     disabled={isSaving}
-                  >
-                    <option value="">Select...</option>
-                    {FREQUENCIES.map((freq) => (
-                      <option key={freq.value} value={freq.value}>
-                        {freq.label}
-                      </option>
-                    ))}
-                  </Select>
-                </Box>
+                    options={FREQUENCY_OPTIONS}
+                  />
+                </FormField>
                 <GridItem colSpan={2}>
-                  <Box>
-                    <label htmlFor="notes">
-                      <Text
-                        variant="bodySmall"
-                        weight="semibold"
-                        className="mb-1"
-                      >
-                        Notes
-                      </Text>
-                    </label>
+                  <FormField label="Notes" id="notes">
                     <Input
-                      id="notes"
                       value={formState.notes}
                       onChange={handleChange('notes')}
                       disabled={isSaving}
                       placeholder="Additional notes"
                     />
-                  </Box>
+                  </FormField>
                 </GridItem>
               </Grid>
             </CardBody>
@@ -372,7 +287,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                 </Button>
               </HStack>
             </CardFooter>
-          </form>
+          </Box>
         </Card>
       )}
 

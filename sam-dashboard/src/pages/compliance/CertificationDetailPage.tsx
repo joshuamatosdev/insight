@@ -7,6 +7,7 @@ import {
   Text,
   Button,
   Badge,
+  Link,
   FileCheckIcon,
   PencilIcon,
   TrashIcon,
@@ -166,16 +167,16 @@ function DetailRow({
       </Text>
       {isLink ? (
         <HStack spacing="xs" align="center">
-          <a
+          <Link
             href={value}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'rgb(37 99 235)', textDecoration: 'none' }}
+            className="text-primary no-underline hover:underline"
           >
             <Text variant="body" color="primary">
               View Document
             </Text>
-          </a>
+          </Link>
           <ExternalLinkIcon size="xs" color="primary" />
         </HStack>
       ) : (
@@ -252,7 +253,7 @@ export function CertificationDetailPage({
   if (isLoading) {
     return (
       <Section id="certification-detail">
-        <Flex justify="center" align="center" style={{ minHeight: '300px' }}>
+        <Flex justify="center" align="center" className="min-h-[300px]">
           <Text variant="body" color="muted">
             Loading certification...
           </Text>
@@ -308,7 +309,7 @@ export function CertificationDetailPage({
         {submitError !== null && (
           <Card
             variant="outlined"
-            style={{ marginBottom: '1rem', borderColor: '#ef4444' }}
+            className="mb-4 border-red-500"
           >
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
@@ -396,12 +397,11 @@ export function CertificationDetailPage({
           certification.daysUntilExpiration <= 90 && (
             <Card
               variant="outlined"
-              style={{
-                borderColor:
-                  certification.daysUntilExpiration <= 30
-                    ? '#ef4444'
-                    : '#f59e0b',
-              }}
+              className={
+                certification.daysUntilExpiration <= 30
+                  ? 'border-red-500'
+                  : 'border-amber-500'
+              }
             >
               <CardBody>
                 <HStack spacing="sm" align="center">

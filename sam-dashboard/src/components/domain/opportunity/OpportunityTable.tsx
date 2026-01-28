@@ -43,7 +43,7 @@ export function OpportunityTable({ opportunities, maxRows }: OpportunityTablePro
   }
 
   return (
-    <Table dense>
+    <Table >
       <TableHead>
         <TableRow>
           <TableHeader>Title</TableHeader>

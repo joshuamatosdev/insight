@@ -1,10 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
-import { Input, Select, Button, Text } from '../../components/catalyst/primitives';
-import { OrganizationList, OrganizationForm } from '../../components/domain/crm';
-import { useOrganizations } from '../../hooks';
-import type { Organization, OrganizationType, CreateOrganizationRequest } from '../../types/crm';
+import {
+  Box,
+  Stack,
+  HStack,
+  Card,
+  CardBody,
+} from '@/components/catalyst/layout';
+import {
+  PageHeading,
+  PageHeadingTitle,
+  PageHeadingSection,
+  PageHeadingActions,
+} from '@/components/catalyst/navigation';
+import { Input, Select, Button, Text } from '@/components/catalyst/primitives';
+import { OrganizationList, OrganizationForm } from '@/components/domain/crm';
+import { useOrganizations } from '@/hooks';
+import type { Organization, OrganizationType, CreateOrganizationRequest } from '@/types/crm';
 
 const ORG_TYPE_OPTIONS: { value: OrganizationType | ''; label: string }[] = [
   { value: '', label: 'All Types' },
@@ -110,93 +122,103 @@ export function OrganizationsPage() {
 
   if (showCreateForm === true) {
     return (
-      <Section id="create-organization">
+      <Box as="section" id="create-organization">
         <OrganizationForm
           onSubmit={handleCreateSubmit}
           onCancel={handleCancelForm}
           isLoading={isSubmitting}
         />
-      </Section>
+      </Box>
     );
   }
 
   if (editingOrg !== null) {
     return (
-      <Section id="edit-organization">
+      <Box as="section" id="edit-organization">
         <OrganizationForm
           organization={editingOrg}
           onSubmit={handleEditSubmit}
           onCancel={handleCancelForm}
           isLoading={isSubmitting}
         />
-      </Section>
+      </Box>
     );
   }
 
   return (
-    <Section id="organizations">
-      <SectionHeader 
-        title="Organizations"
-        actions={<Button onClick={() => setShowCreateForm(true)}>Add Organization</Button>}
-      />
-
+    <Box as="section" id="organizations">
       <Stack gap="lg">
-        <HStack gap="md">
-          <Input
-            placeholder="Search organizations..."
-            value={searchQuery}
-            onChange={(e) => handleSearchChange(e.target.value)}
-          />
-          <Select
-            value={filters.organizationType ?? ''}
-            onChange={(e) => handleTypeFilterChange(e.target.value)}
-            options={ORG_TYPE_OPTIONS}
-          />
-        </HStack>
+        <PageHeading>
+          <PageHeadingSection>
+            <PageHeadingTitle>Organizations</PageHeadingTitle>
+          </PageHeadingSection>
+          <PageHeadingActions>
+            <Button onClick={() => setShowCreateForm(true)}>Add Organization</Button>
+          </PageHeadingActions>
+        </PageHeading>
 
-        {error !== null && (
-          <Text variant="body" color="danger">
-            {error.message}
-          </Text>
-        )}
+        <Card>
+          <CardBody>
+            <Stack gap="lg">
+              <HStack gap="md">
+                <Input
+                  placeholder="Search organizations..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                />
+                <Select
+                  value={filters.organizationType ?? ''}
+                  onChange={(e) => handleTypeFilterChange(e.target.value)}
+                  options={ORG_TYPE_OPTIONS}
+                />
+              </HStack>
 
-        <OrganizationList
-          organizations={organizations}
-          isLoading={isLoading}
-          onOrganizationClick={handleOrgClick}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+              {error !== null && (
+                <Text variant="body" color="danger">
+                  {error.message}
+                </Text>
+              )}
 
-        {totalPages > 1 && (
-          <HStack justify="between" align="center">
-            <Text variant="bodySmall" color="secondary">
-              Showing {organizations.length} of {totalElements} organizations
-            </Text>
-            <HStack gap="sm">
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={page === 0}
-                onClick={() => setPage(page - 1)}
-              >
-                Previous
-              </Button>
-              <Text variant="bodySmall">
-                Page {page + 1} of {totalPages}
-              </Text>
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={page >= totalPages - 1}
-                onClick={() => setPage(page + 1)}
-              >
-                Next
-              </Button>
-            </HStack>
-          </HStack>
-        )}
+              <OrganizationList
+                organizations={organizations}
+                isLoading={isLoading}
+                onOrganizationClick={handleOrgClick}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+
+              {totalPages > 1 && (
+                <HStack justify="between" align="center">
+                  <Text variant="bodySmall" color="secondary">
+                    Showing {organizations.length} of {totalElements} organizations
+                  </Text>
+                  <HStack gap="sm">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={page === 0}
+                      onClick={() => setPage(page - 1)}
+                    >
+                      Previous
+                    </Button>
+                    <Text variant="bodySmall">
+                      Page {page + 1} of {totalPages}
+                    </Text>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={page >= totalPages - 1}
+                      onClick={() => setPage(page + 1)}
+                    >
+                      Next
+                    </Button>
+                  </HStack>
+                </HStack>
+              )}
+            </Stack>
+          </CardBody>
+        </Card>
       </Stack>
-    </Section>
+    </Box>
   );
 }

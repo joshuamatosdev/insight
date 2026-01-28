@@ -18,8 +18,8 @@ import {
   TableCell,
 } from '../../catalyst'
 import { Box } from '../../catalyst/layout'
-import { Text } from '../../catalyst/primitives'
-import { OpportunityTableProps } from './Opportunity.types'
+import { Text } from '@/components'
+import { OpportunityTableProps } from '@/components'
 
 export function OpportunityTableCatalyst({ opportunities, maxRows }: OpportunityTableProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -63,7 +63,7 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
   }
 
   return (
-    <Table dense>
+    <Table>
       <TableHead>
         <TableRow>
           <TableHeader>Title</TableHeader>
@@ -76,7 +76,7 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
         {displayOpportunities.map((opp) => (
           <TableRow key={opp.id} href={opp.url ?? '#'} title={opp.title}>
             <TableCell>
-              <Text as="span" variant="bodySmall" weight="medium" color="primary">
+              <Text as="span" variant="bodySmall" weight="medium" >
                 {truncate(opp.title, 50)}
               </Text>
             </TableCell>
