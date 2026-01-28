@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { DeliverableTracker } from './DeliverableTracker';
+import {describe, expect, it} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
+import {DeliverableTracker} from './DeliverableTracker';
 
 describe('DeliverableTracker', () => {
   describe('Header', () => {

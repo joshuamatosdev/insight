@@ -1,4 +1,4 @@
-import type { Document } from '../../../types/documents';
+import type {Document} from '../../../types/documents';
 
 export interface DocumentCardProps {
   document: Document;

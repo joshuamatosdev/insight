@@ -2,23 +2,22 @@
  * Modal for creating and editing roles
  */
 
-import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
-import clsx from 'clsx';
+import {ChangeEvent, FormEvent, useCallback, useEffect, useState} from 'react';
+
 import {
-  Dialog,
-  DialogTitle,
-  DialogBody,
-  DialogActions,
-  Button,
-  Field,
-  FieldGroup,
-  Fieldset,
-  Input,
-  Label,
-  Badge,
-  Text,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogBody,
+    DialogTitle,
+    Field,
+    FieldGroup,
+    Fieldset,
+    Input,
+    Label,
+    Text,
 } from '../../catalyst';
-import type { RoleFormModalProps, RoleFormState, RoleFormErrors } from './RoleFormModal.types';
+import type {RoleFormErrors, RoleFormModalProps, RoleFormState} from './RoleFormModal.types';
 
 const INITIAL_FORM_STATE: RoleFormState = {
   name: '',
@@ -169,18 +168,18 @@ export function RoleFormModal({
 
       <form onSubmit={handleSubmit}>
         <DialogBody>
-          <div className="space-y-6">
+          <div>
             {errors.general !== undefined && (
-              <div className="rounded-lg bg-danger-bg px-4 py-3 ring-1 ring-danger/20">
-                <Text className="text-sm text-danger-text">
+              <div>
+                <Text>
                   {errors.general}
                 </Text>
               </div>
             )}
 
             {isSystemRole && (
-              <div className="rounded-lg bg-warning-bg px-4 py-3 ring-1 ring-warning/20">
-                <Text className="text-sm text-warning-text">
+              <div>
+                <Text>
                   System roles cannot be modified. You can only view their permissions.
                 </Text>
               </div>
@@ -199,10 +198,7 @@ export function RoleFormModal({
                     invalid={errors.name !== undefined}
                     disabled={isSystemRole}
                   />
-                  <Text className={clsx(
-                    'mt-1 text-xs',
-                    errors.name !== undefined ? 'text-danger' : 'text-on-surface-muted'
-                  )}>
+                  <Text>
                     {errors.name ?? 'Uppercase letters and underscores only'}
                   </Text>
                 </Field>
@@ -218,7 +214,7 @@ export function RoleFormModal({
                     disabled={isSystemRole}
                   />
                   {errors.description !== undefined && (
-                    <Text className="mt-1 text-xs text-danger">
+                    <Text>
                       {errors.description}
                     </Text>
                   )}
@@ -228,9 +224,9 @@ export function RoleFormModal({
 
             {/* Permissions */}
             <div>
-              <Label className="mb-3">Permissions</Label>
+              <Label>Permissions</Label>
 
-              <div className="space-y-4">
+              <div>
                 {Object.entries(permissions).map(([category, categoryPermissions]) => {
                   const allSelected = categoryPermissions.every((p) =>
                     form.permissions.includes(p.code)
@@ -239,10 +235,9 @@ export function RoleFormModal({
                   return (
                     <div
                       key={category}
-                      className="rounded-lg bg-zinc-50 p-4 ring-1 ring-zinc-950/5 dark:bg-zinc-800/50 dark:ring-white/10"
                     >
-                      <div className="mb-3 flex items-center justify-between">
-                        <Text className="text-sm font-semibold text-zinc-950 dark:text-white">
+                      <div>
+                        <Text>
                           {formatCategoryName(category)}
                         </Text>
                         {isSystemRole === false && (
@@ -256,19 +251,12 @@ export function RoleFormModal({
                         )}
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div>
                         {categoryPermissions.map((permission) => {
                           const isChecked = form.permissions.includes(permission.code);
                           return (
                             <label
                               key={permission.id}
-                              className={clsx(
-                                'flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm ring-1 transition-colors',
-                                isChecked
-                                  ? 'bg-blue-50 ring-blue-600/20 dark:bg-blue-950/50 dark:ring-blue-400/20'
-                                  : 'bg-white ring-zinc-950/5 dark:bg-zinc-900 dark:ring-white/10',
-                                isSystemRole && 'cursor-default opacity-70'
-                              )}
                               title={permission.description}
                             >
                               <input
@@ -276,12 +264,8 @@ export function RoleFormModal({
                                 checked={isChecked}
                                 onChange={() => handlePermissionToggle(permission.code)}
                                 disabled={isSystemRole}
-                                className={clsx(
-                                  'h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-600 dark:border-zinc-600 dark:bg-zinc-900',
-                                  isSystemRole ? 'cursor-default' : 'cursor-pointer'
-                                )}
                               />
-                              <span className="text-zinc-950 dark:text-white">{permission.displayName}</span>
+                              <span>{permission.displayName}</span>
                             </label>
                           );
                         })}
@@ -291,7 +275,7 @@ export function RoleFormModal({
                 })}
               </div>
 
-              <Text className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
+              <Text>
                 {form.permissions.length} permission
                 {form.permissions.length !== 1 ? 's' : ''} selected
               </Text>

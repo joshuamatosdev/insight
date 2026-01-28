@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import {HTMLAttributes, ReactNode} from 'react';
 
 export type GapSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '0';
 

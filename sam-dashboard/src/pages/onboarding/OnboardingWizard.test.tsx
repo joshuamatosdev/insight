@@ -2,11 +2,13 @@
  * Tests for OnboardingWizard component
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { OnboardingWizard } from './OnboardingWizard';
+import {BrowserRouter} from 'react-router-dom';
+import {OnboardingWizard} from './OnboardingWizard';
+import {useOnboarding} from '../../hooks/useOnboarding';
+import type {OnboardingProgress, StepInfo} from '../../services/onboardingService';
 
 // Mock useNavigate
 const mockNavigate = vi.fn();
@@ -22,9 +24,6 @@ vi.mock('react-router-dom', async () => {
 vi.mock('../../hooks/useOnboarding', () => ({
   useOnboarding: vi.fn(),
 }));
-
-import { useOnboarding } from '../../hooks/useOnboarding';
-import type { OnboardingProgress, StepInfo } from '../../services/onboardingService';
 
 const mockProgress: OnboardingProgress = {
   id: 'p1',

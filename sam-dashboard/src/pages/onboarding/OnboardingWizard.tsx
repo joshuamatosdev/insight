@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import { Flex, Stack, Box } from '../../components/catalyst/layout';
-import { Text, Button } from '../../components/catalyst/primitives';
-import { Stepper, Step } from '../../components/catalyst';
-import { useOnboarding } from '../../hooks/useOnboarding';
-import { CompanyProfileStep } from './steps/CompanyProfileStep';
-import { CertificationsStep } from './steps/CertificationsStep';
-import { NAICSStep } from './steps/NAICSStep';
-import { TeamInviteStep } from './steps/TeamInviteStep';
-import { IntegrationStep } from './steps/IntegrationStep';
+import {useNavigate} from 'react-router-dom';
+import {Box, Flex, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
+import {Step, Stepper} from '../../components/catalyst';
+import {useOnboarding} from '../../hooks/useOnboarding';
+import {CompanyProfileStep} from './steps/CompanyProfileStep';
+import {CertificationsStep} from './steps/CertificationsStep';
+import {NAICSStep} from './steps/NAICSStep';
+import {TeamInviteStep} from './steps/TeamInviteStep';
+import {IntegrationStep} from './steps/IntegrationStep';
 
 /**
  * Main onboarding wizard page.
@@ -44,7 +44,7 @@ export function OnboardingWizard(): React.ReactElement {
 
   if (loading) {
     return (
-      <Flex justify="center" align="center" className="min-h-screen">
+      <Flex justify="center" align="center">
         <Text>Loading...</Text>
       </Flex>
     );
@@ -52,8 +52,8 @@ export function OnboardingWizard(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Flex justify="center" align="center" className="min-h-screen">
-        <Stack spacing="md" className="text-center">
+      <Flex justify="center" align="center">
+        <Stack spacing="md">
           <Text variant="heading4">Failed to load onboarding</Text>
           <Text color="muted">{error}</Text>
           <Button variant="primary" onClick={() => window.location.reload()}>
@@ -70,10 +70,9 @@ export function OnboardingWizard(): React.ReactElement {
         justify="center"
         align="center"
         direction="column"
-        className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-6"
       >
-        <Stack spacing="lg" className="text-center max-w-lg">
-          <Text as="span" className="text-6xl">
+        <Stack spacing="lg">
+          <Text as="span">
             {''}
           </Text>
           <Text variant="heading2">Setup Complete!</Text>
@@ -139,13 +138,11 @@ export function OnboardingWizard(): React.ReactElement {
     <Flex
       direction="column"
       align="center"
-      className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-6"
     >
       {/* Header */}
       <Flex
         justify="space-between"
         align="center"
-        className="w-full max-w-[700px] mb-6"
       >
         <Text variant="heading4">Welcome to SAMGov</Text>
         <Button variant="ghost" onClick={handleDismiss}>
@@ -154,7 +151,7 @@ export function OnboardingWizard(): React.ReactElement {
       </Flex>
 
       {/* Progress - Using Catalyst Stepper */}
-      <Box className="w-full max-w-[700px] mb-6">
+      <Box>
         <Stepper currentStep={currentStep} orientation="horizontal">
           {steps.map((step, index) => (
             <Step

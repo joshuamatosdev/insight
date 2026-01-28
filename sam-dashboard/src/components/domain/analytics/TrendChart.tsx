@@ -1,7 +1,7 @@
-import { CSSProperties, useMemo } from 'react';
-import { TrendChartProps } from './Analytics.types';
-import { Text } from '../../catalyst/primitives';
-import { Box, Stack, Card, CardHeader, CardBody } from '../../catalyst/layout';
+import {CSSProperties, useMemo} from 'react';
+import {TrendChartProps} from './Analytics.types';
+import {Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Stack} from '../../catalyst/layout';
 
 /**
  * TrendChart displays a simple line chart for trend data.
@@ -55,7 +55,7 @@ export function TrendChart({
 
   if (loading) {
     return (
-      <Card className={className} style={containerStyles}>
+      <Card style={containerStyles}>
         <CardHeader>
           <Text variant="heading5">{title}</Text>
         </CardHeader>
@@ -81,7 +81,7 @@ export function TrendChart({
 
   if (data.length === 0) {
     return (
-      <Card className={className} style={containerStyles}>
+      <Card style={containerStyles}>
         <CardHeader>
           <Text variant="heading5">{title}</Text>
         </CardHeader>
@@ -108,7 +108,7 @@ export function TrendChart({
   const average = total / data.length;
 
   return (
-    <Card className={className} style={containerStyles}>
+    <Card style={containerStyles}>
       <CardHeader>
         <Stack spacing="xs">
           <Text variant="heading5">{title}</Text>

@@ -1,4 +1,4 @@
-import type { ApiError } from './ApiError.types';
+import type {ApiError} from './ApiError.types';
 
 /**
  * Result type for API calls

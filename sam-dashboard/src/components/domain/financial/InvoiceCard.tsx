@@ -1,17 +1,12 @@
 /**
  * InvoiceCard - Displays invoice summary with Pocket-style design
  */
-import clsx from 'clsx';
-import { Badge, Button } from '../../catalyst';
-import { DocumentTextIcon, PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
-import type { InvoiceCardProps } from './Financial.types';
-import type { InvoiceStatus } from '../../../types/financial.types';
-import {
-  formatCurrency,
-  formatDate,
-  getStatusColor,
-  getStatusLabel,
-} from '../../../services/financialService';
+
+import {Badge, Button} from '../../catalyst';
+import {DocumentTextIcon, PencilIcon, TrashIcon} from '@heroicons/react/20/solid';
+import type {InvoiceCardProps} from './Financial.types';
+import type {InvoiceStatus} from '../../../types/financial.types';
+import {formatCurrency, formatDate, getStatusColor, getStatusLabel,} from '../../../services/financialService';
 
 // Map status colors to Catalyst badge colors
 function getBadgeColor(status: InvoiceStatus): 'green' | 'yellow' | 'red' | 'zinc' {
@@ -38,21 +33,18 @@ export function InvoiceCard({
   const canDelete = invoice.status === 'DRAFT';
 
   return (
-    <div className={clsx(
-      'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
-      className
-    )}>
+    <div>
       {/* Header */}
-      <div className="flex items-start justify-between border-b border-border px-6 py-4 dark:border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-light">
-            <DocumentTextIcon className="h-5 w-5 text-accent" />
+      <div>
+        <div>
+          <div>
+            <DocumentTextIcon />
           </div>
           <div>
-            <h3 className="text-base/6 font-semibold text-on-surface">
+            <h3>
               {invoice.invoiceNumber}
             </h3>
-            <p className="text-sm/5 text-on-surface-muted">
+            <p>
               {invoice.contractNumber}
             </p>
           </div>
@@ -63,38 +55,33 @@ export function InvoiceCard({
       </div>
 
       {/* Body */}
-      <div className="px-6 py-5 space-y-5">
+      <div>
         {/* Invoice Details */}
-        <dl className="grid grid-cols-2 gap-4">
+        <dl>
           <div>
-            <dt className="text-xs/5 font-medium text-on-surface-muted">
+            <dt>
               Invoice Date
             </dt>
-            <dd className="text-sm/6 text-on-surface">
+            <dd>
               {formatDate(invoice.invoiceDate)}
             </dd>
           </div>
 
           <div>
-            <dt className="text-xs/5 font-medium text-on-surface-muted">
+            <dt>
               Due Date
             </dt>
-            <dd className={clsx(
-              'text-sm/6',
-              invoice.isOverdue
-                ? 'text-danger'
-                : 'text-on-surface'
-            )}>
+            <dd>
               {formatDate(invoice.dueDate)}
               {invoice.isOverdue && ' (Overdue)'}
             </dd>
           </div>
 
           <div>
-            <dt className="text-xs/5 font-medium text-on-surface-muted">
+            <dt>
               Period
             </dt>
-            <dd className="text-sm/6 text-on-surface">
+            <dd>
               {invoice.periodStart !== null && invoice.periodEnd !== null
                 ? `${formatDate(invoice.periodStart)} - ${formatDate(invoice.periodEnd)}`
                 : '-'}
@@ -102,53 +89,48 @@ export function InvoiceCard({
           </div>
 
           <div>
-            <dt className="text-xs/5 font-medium text-on-surface-muted">
+            <dt>
               Type
             </dt>
-            <dd className="text-sm/6 text-on-surface">
+            <dd>
               {invoice.invoiceType}
             </dd>
           </div>
         </dl>
 
         {/* Amounts */}
-        <dl className="space-y-2 border-t border-border pt-4 dark:border-white/10">
-          <div className="flex items-center justify-between">
-            <dt className="text-sm/6 text-on-surface-muted">Subtotal</dt>
-            <dd className="text-sm/6 text-on-surface">
+        <dl>
+          <div>
+            <dt>Subtotal</dt>
+            <dd>
               {formatCurrency(invoice.subtotal)}
             </dd>
           </div>
           {invoice.adjustments !== 0 && (
-            <div className="flex items-center justify-between">
-              <dt className="text-sm/6 text-on-surface-muted">Adjustments</dt>
-              <dd className="text-sm/6 text-on-surface">
+            <div>
+              <dt>Adjustments</dt>
+              <dd>
                 {formatCurrency(invoice.adjustments)}
               </dd>
             </div>
           )}
-          <div className="flex items-center justify-between">
-            <dt className="text-sm/6 font-semibold text-on-surface">Total</dt>
-            <dd className="text-sm/6 font-semibold text-accent">
+          <div>
+            <dt>Total</dt>
+            <dd>
               {formatCurrency(invoice.totalAmount)}
             </dd>
           </div>
           {invoice.amountPaid > 0 && (
             <>
-              <div className="flex items-center justify-between">
-                <dt className="text-sm/6 text-on-surface-muted">Paid</dt>
-                <dd className="text-sm/6 text-success">
+              <div>
+                <dt>Paid</dt>
+                <dd>
                   {formatCurrency(invoice.amountPaid)}
                 </dd>
               </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-sm/6 font-medium text-on-surface">Balance</dt>
-                <dd className={clsx(
-                  'text-sm/6 font-medium',
-                  invoice.balance > 0
-                    ? 'text-warning'
-                    : 'text-success'
-                )}>
+              <div>
+                <dt>Balance</dt>
+                <dd>
                   {formatCurrency(invoice.balance)}
                 </dd>
               </div>
@@ -158,14 +140,14 @@ export function InvoiceCard({
 
         {/* Days Outstanding */}
         {invoice.daysOutstanding !== null && invoice.daysOutstanding > 0 && (
-          <p className="text-xs/5 text-on-surface-muted">
+          <p>
             {invoice.daysOutstanding} days outstanding
           </p>
         )}
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-border px-6 py-3 dark:border-white/10">
+      <div>
         {canSubmit && onSubmit !== undefined ? (
           <Button color="dark/zinc" onClick={() => onSubmit(invoice.id)}>
             Submit
@@ -174,14 +156,14 @@ export function InvoiceCard({
           <span />
         )}
 
-        <div className="flex items-center gap-2">
+        <div>
           {onView !== undefined && (
             <Button
               plain
               onClick={() => onView(invoice)}
               aria-label="View invoice"
             >
-              <PencilIcon className="size-4" />
+              <PencilIcon />
             </Button>
           )}
           {canDelete && onDelete !== undefined && (
@@ -190,7 +172,7 @@ export function InvoiceCard({
               onClick={() => onDelete(invoice.id)}
               aria-label="Delete invoice"
             >
-              <TrashIcon className="size-4 text-danger" />
+              <TrashIcon />
             </Button>
           )}
         </div>

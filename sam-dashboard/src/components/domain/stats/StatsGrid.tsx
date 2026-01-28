@@ -1,6 +1,6 @@
-import { StatsGridProps } from './Stats.types';
-import clsx from 'clsx';
-import { Children, cloneElement, isValidElement, ReactElement } from 'react';
+import {StatsGridProps} from './Stats.types';
+
+import {Children, cloneElement, isValidElement, ReactElement} from 'react';
 
 const columnConfig = {
   1: 'grid-cols-1',
@@ -51,13 +51,8 @@ export function StatsGrid({ children, columns = 4, className }: StatsGridProps &
   const colConfig = columnConfig[columns] ?? columnConfig[4];
 
   return (
-    <div className={clsx('border-b border-border lg:border-t', className)}>
+    <div>
       <dl
-        className={clsx(
-          'mx-auto grid max-w-7xl grid-cols-1',
-          colConfig,
-          'lg:px-2 xl:px-0'
-        )}
       >
         {childrenWithBorders}
       </dl>

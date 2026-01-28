@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { RootFrame } from './RootFrame';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {RootFrame} from './RootFrame';
 
 describe('RootFrame', () => {
   it('renders children content', () => {

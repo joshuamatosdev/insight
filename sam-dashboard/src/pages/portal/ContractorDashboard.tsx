@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Flex, Stack, Grid, Box, Card, CardBody } from '../../components/catalyst/layout';
-import { Text, Button } from '../../components/catalyst/primitives';
-import { ContractStatusCards } from './widgets/ContractStatusCards';
-import { InvoiceSummary } from './widgets/InvoiceSummary';
-import { DeliverableTracker } from './widgets/DeliverableTracker';
-import { UpcomingDeadlines } from './widgets/UpcomingDeadlines';
+import {useEffect, useState} from 'react';
+import {Box, Card, CardBody, Flex, Grid, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
+import {ContractStatusCards} from './widgets/ContractStatusCards';
+import {InvoiceSummary} from './widgets/InvoiceSummary';
+import {DeliverableTracker} from './widgets/DeliverableTracker';
+import {UpcomingDeadlines} from './widgets/UpcomingDeadlines';
 
 interface DashboardMetrics {
   activeContracts: number;
@@ -52,7 +52,7 @@ export function ContractorDashboard(): React.ReactElement {
   };
 
   return (
-    <Stack spacing="lg" className="p-6">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -73,7 +73,6 @@ export function ContractorDashboard(): React.ReactElement {
           title="Active Contracts"
           value={metrics.activeContracts.toString()}
           icon="📋"
-          className="text-blue-600 dark:text-blue-400"
           loading={loading}
         />
         <QuickStat
@@ -139,11 +138,10 @@ function QuickStat({ title, value, icon, color, className, loading }: QuickStatP
           <Stack spacing="xs">
             <Text variant="caption" color="muted">{title}</Text>
             {loading === true ? (
-              <Box className="w-20 h-8 bg-zinc-200 rounded" />
+              <Box />
             ) : (
               <Text
                 variant="heading3"
-                className={`font-bold ${className ?? ''}`}
                 style={className !== undefined ? undefined : { color: effectiveColor }}
               >
                 {value}
@@ -151,7 +149,6 @@ function QuickStat({ title, value, icon, color, className, loading }: QuickStatP
             )}
           </Stack>
           <Box
-            className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl"
             style={{ backgroundColor: `${effectiveColor}15` }}
           >
             {icon}

@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { FileTextIcon } from '../components/catalyst/primitives';
-import { Section, SectionHeader } from '../components/catalyst/layout';
-import { getOpportunityType, OpportunityList } from '../components/domain';
-import { PresolicationPageProps } from './Pages.types';
+import {useMemo} from 'react';
+import {FileTextIcon} from '../components/catalyst/primitives';
+import {Section, SectionHeader} from '../components/catalyst/layout';
+import {getOpportunityType, OpportunityList} from '../components/domain';
+import {PresolicationPageProps} from './Pages.types';
 
 export function PresolicationPage({ opportunities }: PresolicationPageProps) {
   const presolicitations = useMemo(() => {

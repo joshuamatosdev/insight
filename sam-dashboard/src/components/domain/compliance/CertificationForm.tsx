@@ -2,14 +2,14 @@
  * CertificationForm - Add/edit certification form
  */
 
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { Text, Button, Input, Select } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, Stack, HStack, Box, Grid, GridItem } from '../../catalyst/layout';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Grid, GridItem, HStack, Stack} from '../../catalyst/layout';
 import type {
-  CertificationFormProps,
-  CertificationFormState,
-  CertificationFormErrors,
-  CertificationType,
+    CertificationFormErrors,
+    CertificationFormProps,
+    CertificationFormState,
+    CertificationType,
 } from './Compliance.types';
 
 const INITIAL_FORM_STATE: CertificationFormState = {
@@ -151,14 +151,7 @@ export function CertificationForm({
     <form onSubmit={handleSubmit}>
       <Stack spacing="md">
         {errors.general !== undefined && (
-          <Box
-            style={{
-              padding: '0.75rem',
-              backgroundColor: '#fef2f2',
-              borderRadius: '0.375rem',
-              border: '1px solid #ef4444',
-            }}
-          >
+          <Box>
             <Text variant="bodySmall" color="danger">
               {errors.general}
             </Text>
@@ -181,7 +174,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       Certification Type *
                     </Text>
@@ -196,7 +188,6 @@ export function CertificationForm({
                       <Text
                         variant="caption"
                         color="danger"
-                        className="mt-1"
                       >
                         {errors.certificationType}
                       </Text>
@@ -210,7 +201,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       Certification Name *
                     </Text>
@@ -226,7 +216,6 @@ export function CertificationForm({
                       <Text
                         variant="caption"
                         color="danger"
-                        className="mt-1"
                       >
                         {errors.name}
                       </Text>
@@ -240,7 +229,6 @@ export function CertificationForm({
                   as="label"
                   variant="bodySmall"
                   weight="medium"
-                  className="block mb-1"
                 >
                   Description
                 </Text>
@@ -260,7 +248,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       Certificate Number
                     </Text>
@@ -280,7 +267,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       Issuing Agency
                     </Text>
@@ -313,7 +299,6 @@ export function CertificationForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    className="block mb-1"
                   >
                     Issue Date
                   </Text>
@@ -332,7 +317,6 @@ export function CertificationForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    className="block mb-1"
                   >
                     Expiration Date
                   </Text>
@@ -352,7 +336,6 @@ export function CertificationForm({
                     as="label"
                     variant="bodySmall"
                     weight="medium"
-                    className="block mb-1"
                   >
                     Renewal Date
                   </Text>
@@ -385,7 +368,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       UEI (Unique Entity Identifier)
                     </Text>
@@ -405,7 +387,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       CAGE Code
                     </Text>
@@ -425,7 +406,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       SAM Registration Date
                     </Text>
@@ -444,7 +424,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       SAM Expiration Date
                     </Text>
@@ -477,7 +456,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       8(a) Entry Date
                     </Text>
@@ -496,7 +474,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       8(a) Graduation Date
                     </Text>
@@ -527,7 +504,6 @@ export function CertificationForm({
                   as="label"
                   variant="bodySmall"
                   weight="medium"
-                  className="block mb-1"
                 >
                   HUBZone Certification Date
                 </Text>
@@ -558,7 +534,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       NAICS Code
                     </Text>
@@ -578,7 +553,6 @@ export function CertificationForm({
                       as="label"
                       variant="bodySmall"
                       weight="medium"
-                      className="block mb-1"
                     >
                       Reminder (Days Before Expiration)
                     </Text>
@@ -598,7 +572,6 @@ export function CertificationForm({
                   as="label"
                   variant="bodySmall"
                   weight="medium"
-                  className="block mb-1"
                 >
                   Document URL
                 </Text>
@@ -616,7 +589,6 @@ export function CertificationForm({
                   as="label"
                   variant="bodySmall"
                   weight="medium"
-                  className="block mb-1"
                 >
                   Notes
                 </Text>

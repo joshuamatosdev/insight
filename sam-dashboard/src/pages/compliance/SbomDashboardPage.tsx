@@ -2,22 +2,22 @@
  * SbomDashboardPage - SBOM visualization dashboard
  */
 
-import { Text, Button, FileCheckIcon, DownloadIcon, RefreshIcon } from '../../components/catalyst/primitives';
+import {Button, DownloadIcon, FileCheckIcon, RefreshIcon, Text} from '../../components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Flex,
-  Grid,
-  GridItem,
-  Box,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../components/catalyst/layout';
-import { SbomViewer } from '../../components/domain/compliance';
-import { useSbom } from '../../hooks';
+import {SbomViewer} from '../../components/domain/compliance';
+import {useSbom} from '../../hooks';
 
 export function SbomDashboardPage(): React.ReactElement {
   const { info, bom, vulnerabilities, isLoading, error, refresh } = useSbom();
@@ -33,7 +33,7 @@ export function SbomDashboardPage(): React.ReactElement {
   if (isLoading) {
     return (
       <Section id="sbom-dashboard">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading SBOM data...
           </Text>
@@ -55,7 +55,6 @@ export function SbomDashboardPage(): React.ReactElement {
               direction="column"
               align="center"
               gap="md"
-              className="p-8"
             >
               <Text variant="body" color="danger">
                 Error loading SBOM data: {error.message}
@@ -151,11 +150,11 @@ export function SbomDashboardPage(): React.ReactElement {
                 </GridItem>
               </Grid>
 
-              <Box className="mt-4">
+              <Box>
                 <Text variant="caption" color="muted">
                   Available Formats
                 </Text>
-                <HStack spacing="sm" className="mt-1">
+                <HStack spacing="sm">
                   <Text
                     variant="bodySmall"
                     color={info.cyclonedxAvailable ? 'success' : 'muted'}
@@ -175,13 +174,12 @@ export function SbomDashboardPage(): React.ReactElement {
               </Box>
 
               {info.cyclonedxAvailable === false && info.spdxAvailable === false && (
-                <Box className="mt-4 p-3 bg-amber-50 rounded-md">
+                <Box>
                   <Text variant="bodySmall" color="warning">
                     SBOM not generated. Run the following command to generate:
                   </Text>
                   <Text
                     variant="caption"
-                    className="font-mono mt-1 block"
                   >
                     {info.generationCommand}
                   </Text>
@@ -222,13 +220,12 @@ export function SbomDashboardPage(): React.ReactElement {
                 </Text>
 
                 {vulnerabilities.recommendation.length > 0 && (
-                  <Box className="p-3 bg-sky-50 rounded-md">
+                  <Box>
                     <Text variant="caption" color="info" weight="medium">
                       Recommendation:
                     </Text>
                     <Text
                       variant="caption"
-                      className="font-mono mt-1 block"
                     >
                       {vulnerabilities.recommendation}
                     </Text>

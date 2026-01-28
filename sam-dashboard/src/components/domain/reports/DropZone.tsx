@@ -1,7 +1,7 @@
-import type { ColumnDefinition } from '../../../types/report.types';
-import { Text } from '../../catalyst/primitives';
-import { Box, Stack } from '../../catalyst/layout';
-import { DraggableColumn } from './DraggableColumn';
+import type {ColumnDefinition} from '../../../types/report.types';
+import {Text} from '../../catalyst/primitives';
+import {Box, Stack} from '../../catalyst/layout';
+import {DraggableColumn} from './DraggableColumn';
 
 /**
  * Props for DropZone component
@@ -61,27 +61,10 @@ export function DropZone({
     <Box
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      style={{
-        minHeight: '200px',
-        padding: '0.75rem',
-        backgroundColor: isDropTarget
-          ? '#dbeafe'
-          : '#f4f4f5',
-        border: `2px dashed ${isDropTarget ? '#2563eb' : '#d4d4d8'}`,
-        borderRadius: '0.375rem',
-        transition: 'all 150ms ease',
-      }}
     >
       {isEmpty ? (
-        <Box
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '176px',
-          }}
-        >
-          <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
+        <Box>
+          <Text variant="body" color="muted">
             {placeholder}
           </Text>
         </Box>

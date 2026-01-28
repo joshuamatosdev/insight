@@ -1,7 +1,7 @@
-import { Stack } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
-import { OrganizationCard } from './OrganizationCard';
-import type { Organization } from '../../../types/crm';
+import {Stack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
+import {OrganizationCard} from './OrganizationCard';
+import type {Organization} from '../../../types/crm';
 
 export interface OrganizationListProps {
   organizations: Organization[];

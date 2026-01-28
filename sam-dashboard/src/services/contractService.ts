@@ -2,23 +2,23 @@
  * Contract Service - API calls for contract management
  */
 
-import { apiClient } from './apiClient';
-import type { ApiResult } from './types';
+import {apiClient} from './apiClient';
+import type {ApiResult} from './types';
 import type {
-  Contract,
-  ContractClin,
-  ContractModification,
-  ContractDeliverable,
-  ContractSummary,
-  CreateContractRequest,
-  UpdateContractRequest,
-  CreateClinRequest,
-  UpdateClinRequest,
-  CreateModificationRequest,
-  CreateDeliverableRequest,
-  DeliverableStatus,
-  ContractStatus,
-  PaginatedResponse,
+    Contract,
+    ContractClin,
+    ContractDeliverable,
+    ContractModification,
+    ContractStatus,
+    ContractSummary,
+    CreateClinRequest,
+    CreateContractRequest,
+    CreateDeliverableRequest,
+    CreateModificationRequest,
+    DeliverableStatus,
+    PaginatedResponse,
+    UpdateClinRequest,
+    UpdateContractRequest,
 } from '../components/domain/contracts/Contract.types';
 
 // ==================== Contract Endpoints ====================

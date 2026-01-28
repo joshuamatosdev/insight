@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Stack, HStack, Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout';
-import { Text, Input, Select, Button } from '../../catalyst/primitives';
-import type { ContactFormProps, ContactFormData, ContactFormErrors } from './ContactForm.types';
-import type { ContactType, ContactStatus, CreateContactRequest } from '../../../types/crm';
+import {useState} from 'react';
+import {Card, CardBody, CardFooter, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import type {ContactFormData, ContactFormErrors, ContactFormProps} from './ContactForm.types';
+import type {ContactStatus, ContactType, CreateContactRequest} from '../../../types/crm';
 
 const CONTACT_TYPES: { value: ContactType; label: string }[] = [
   { value: 'GOVERNMENT_CUSTOMER', label: 'Government Customer' },

@@ -5,7 +5,7 @@
  * Adds/removes 'dark' class on document.documentElement for Tailwind CSS.
  */
 
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 
 type Theme = 'light' | 'dark' | 'system'
 

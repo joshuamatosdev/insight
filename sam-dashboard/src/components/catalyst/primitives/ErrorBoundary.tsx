@@ -1,7 +1,7 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../layout';
-import { Text } from './text';
-import { Button } from './button';
+import {Component, ErrorInfo, ReactNode} from 'react';
+import {Box, Card, CardBody, Flex, Stack} from '../layout';
+import {Text} from './text';
+import {Button} from './button';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -57,26 +57,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         <Flex
           justify="center"
           align="center"
-          style={{
-            minHeight: '400px',
-            padding: '1rem',
-          }}
+          className="min-h-[400px] p-4"
         >
-          <Card variant="bordered" style={{ maxWidth: '500px' }}>
+          <Card variant="bordered" className="max-w-[500px]">
             <CardBody padding="lg">
-              <Stack spacing="md" style={{ textAlign: 'center' }}>
+              <Stack spacing="md" className="text-center">
                 <Box
-                  style={{
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: '50%',
-                    backgroundColor: '#fee2e2',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto',
-                    fontSize: '32px',
-                  }}
+                  className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto text-[32px]"
                 >
                   ⚠️
                 </Box>
@@ -87,18 +74,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 </Text>
                 {process.env['NODE_ENV'] === 'development' && this.state.error !== null && (
                   <Box
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#f4f4f5',
-                      borderRadius: '4px',
-                      textAlign: 'left',
-                      fontFamily: 'monospace',
-                      fontSize: '12px',
-                      overflow: 'auto',
-                      maxHeight: '200px',
-                    }}
+                    className="p-3 bg-zinc-100 rounded text-left font-mono text-xs overflow-auto max-h-[200px]"
                   >
-                    <Text variant="caption" style={{ color: '#ef4444' }}>
+                    <Text variant="caption" className="text-red-500">
                       {this.state.error.toString()}
                     </Text>
                   </Box>

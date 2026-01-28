@@ -1,23 +1,32 @@
 /**
  * InvoicesPage - Invoice management list page
  */
-import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, FileTextIcon, InlineAlert, InlineAlertDescription } from '@/components/catalyst/primitives';
+import {useCallback, useState} from 'react';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
+    Badge,
+    Button,
+    FileTextIcon,
+    InlineAlert,
+    InlineAlertDescription,
+    PlusIcon,
+    RefreshIcon,
+    Text
+} from '@/components/catalyst/primitives';
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '@/components/catalyst/layout';
-import { InvoiceCard, InvoiceForm } from '@/components/domain/financial';
-import { useInvoices } from '@/hooks/useFinancial';
-import type { Invoice, InvoiceFormState, InvoiceStatus, InvoiceType } from '@/types/financial.types';
+import {InvoiceCard, InvoiceForm} from '@/components/domain/financial';
+import {useInvoices} from '@/hooks/useFinancial';
+import type {Invoice, InvoiceFormState, InvoiceStatus, InvoiceType} from '@/types/financial.types';
 
 const INITIAL_FORM_STATE: InvoiceFormState = {
   contractId: '',
@@ -171,7 +180,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
   if (isLoading && invoices.length === 0) {
     return (
       <Section id="invoices">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading invoices...
           </Text>
@@ -210,14 +219,14 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
       />
 
       {error !== null && (
-        <InlineAlert color="error" className="mb-4">
+        <InlineAlert color="error">
           <InlineAlertDescription>{error.message}</InlineAlertDescription>
         </InlineAlert>
       )}
 
       {/* Form */}
       {showForm && (
-        <Card variant="elevated" className="mb-6">
+        <Card variant="elevated">
           <CardHeader>
             <Text variant="heading5">Create New Invoice</Text>
           </CardHeader>
@@ -235,7 +244,7 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
 
       {/* Status Filter */}
       <Stack spacing="md">
-        <HStack spacing="sm" className="flex-wrap">
+        <HStack spacing="sm">
           {STATUS_FILTERS.map((filter) => (
             <Button
               key={filter.value}
@@ -256,10 +265,9 @@ export function InvoicesPage({ onViewInvoice }: InvoicesPageProps) {
                 direction="column"
                 align="center"
                 gap="md"
-                className="p-8"
               >
                 <FileTextIcon size="xl" color="muted" />
-                <Stack spacing="xs" className="text-center">
+                <Stack spacing="xs">
                   <Text variant="body" color="muted">
                     No invoices found.
                   </Text>

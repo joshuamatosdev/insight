@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { SearchIcon } from '../components/catalyst/primitives';
-import { Section, SectionHeader } from '../components/catalyst/layout';
-import { getOpportunityType, OpportunityList } from '../components/domain';
-import { SourcesSoughtPageProps } from './Pages.types';
+import {useMemo} from 'react';
+import {SearchIcon} from '../components/catalyst/primitives';
+import {Section, SectionHeader} from '../components/catalyst/layout';
+import {getOpportunityType, OpportunityList} from '../components/domain';
+import {SourcesSoughtPageProps} from './Pages.types';
 
 export function SourcesSoughtPage({ opportunities }: SourcesSoughtPageProps) {
   const sourcesSought = useMemo(() => {

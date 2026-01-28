@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack } from '../../components/catalyst/layout';
-import { Button, Text } from '../../components/catalyst/primitives';
-import { DocumentViewer } from '../../components/domain/documents';
-import { useDocument } from '../../hooks';
-import { fetchDocumentVersions } from '../../services/documentService';
-import type { Document } from '../../types/documents';
+import {useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
+import {DocumentViewer} from '../../components/domain/documents';
+import {useDocument} from '../../hooks';
+import {fetchDocumentVersions} from '../../services/documentService';
+import type {Document} from '../../types/documents';
 
 export function DocumentDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -125,7 +125,6 @@ export function DocumentDetailPage() {
                     key={version.id}
                     justify="between"
                     align="center"
-                    className="p-3 bg-zinc-50 rounded-md"
                   >
                     <Stack gap="xs">
                       <Text variant="bodySmall" weight="semibold">

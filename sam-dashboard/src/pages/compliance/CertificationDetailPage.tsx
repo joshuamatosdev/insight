@@ -2,42 +2,34 @@
  * CertificationDetailPage - Single certification detail view
  */
 
-import { useState, useCallback } from 'react';
+import {useCallback, useState} from 'react';
 import {
-  Text,
-  Button,
-  Badge,
-  Link,
-  FileCheckIcon,
-  PencilIcon,
-  TrashIcon,
-  ChevronLeftIcon,
-  ExternalLinkIcon,
-  CalendarIcon,
+    Button,
+    CalendarIcon,
+    ChevronLeftIcon,
+    ExternalLinkIcon,
+    FileCheckIcon,
+    Link,
+    PencilIcon,
+    Text,
+    TrashIcon,
 } from '../../components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Flex,
-  Grid,
-  GridItem,
-  Box,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../components/catalyst/layout';
-import {
-  CertificationForm,
-  ComplianceStatusBadge,
-} from '../../components/domain/compliance';
-import { useCertification, useCertifications } from '../../hooks';
-import type {
-  Certification,
-  CertificationFormState,
-  UpdateCertificationRequest,
-} from '../../types/compliance.types';
+import {CertificationForm, ComplianceStatusBadge,} from '../../components/domain/compliance';
+import {useCertification, useCertifications} from '../../hooks';
+import type {Certification, CertificationFormState, UpdateCertificationRequest,} from '../../types/compliance.types';
 
 interface CertificationDetailPageProps {
   certificationId: string;
@@ -171,7 +163,6 @@ function DetailRow({
             href={value}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary no-underline hover:underline"
           >
             <Text variant="body" color="primary">
               View Document
@@ -253,7 +244,7 @@ export function CertificationDetailPage({
   if (isLoading) {
     return (
       <Section id="certification-detail">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading certification...
           </Text>
@@ -271,7 +262,6 @@ export function CertificationDetailPage({
               direction="column"
               align="center"
               gap="md"
-              className="p-8"
             >
               <Text variant="body" color="danger">
                 {error?.message ?? 'Certification not found'}
@@ -309,7 +299,6 @@ export function CertificationDetailPage({
         {submitError !== null && (
           <Card
             variant="outlined"
-            className="mb-4 border-red-500"
           >
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
@@ -397,11 +386,6 @@ export function CertificationDetailPage({
           certification.daysUntilExpiration <= 90 && (
             <Card
               variant="outlined"
-              className={
-                certification.daysUntilExpiration <= 30
-                  ? 'border-red-500'
-                  : 'border-amber-500'
-              }
             >
               <CardBody>
                 <HStack spacing="sm" align="center">

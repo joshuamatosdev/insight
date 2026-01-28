@@ -1,6 +1,6 @@
-import type { ColumnDefinition } from '../../../types/report.types';
-import { Badge, Text, TrashIcon, IconButton } from '../../catalyst/primitives';
-import { Flex, Box } from '../../catalyst/layout';
+import type {ColumnDefinition} from '../../../types/report.types';
+import {Badge, IconButton, Text, TrashIcon} from '../../catalyst/primitives';
+import {Box, Flex} from '../../catalyst/layout';
 
 /**
  * Props for DraggableColumn component
@@ -50,31 +50,10 @@ export function DraggableColumn({
       draggable
       onDragStart={handleDragStart}
       onDragEnd={onDragEnd}
-      style={{
-        padding: '0.5rem 0.75rem',
-        backgroundColor: isDragging
-          ? '#dbeafe'
-          : isSelected
-            ? '#f4f4f5'
-            : '#ffffff',
-        border: '1px solid #e4e4e7',
-        borderRadius: '0.25rem',
-        cursor: 'grab',
-        opacity: isDragging ? 0.5 : 1,
-        transition: 'background-color 150ms ease',
-      }}
     >
       <Flex justify="space-between" align="center">
         <Flex align="center" gap="sm">
-          <Box
-            style={{
-              width: '6px',
-              height: '16px',
-              backgroundColor: '#e4e4e7',
-              borderRadius: '2px',
-              marginRight: '0.25rem',
-            }}
-          />
+          <Box />
           <Text variant="bodySmall" weight="medium">
             {column.label}
           </Text>

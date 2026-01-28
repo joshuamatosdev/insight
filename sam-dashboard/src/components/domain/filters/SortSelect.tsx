@@ -1,5 +1,5 @@
-import { SortSelectProps, SortOption } from './Filters.types';
-import { Select } from '../../catalyst/primitives';
+import {SortOption, SortSelectProps} from './Filters.types';
+import {Select} from '../../catalyst/primitives';
 
 const SORT_OPTIONS = [
   { value: 'deadline', label: 'Sort by Deadline' },
@@ -13,7 +13,6 @@ export function SortSelect({ value, onChange, className, style }: SortSelectProp
       value={value}
       onChange={(e) => onChange(e.target.value as SortOption)}
       options={SORT_OPTIONS}
-      className={className}
       style={{ width: '180px', ...style }}
     />
   );

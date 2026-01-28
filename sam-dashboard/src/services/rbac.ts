@@ -3,13 +3,12 @@
  */
 
 import type {
-  Role,
-  Permission,
-  PermissionsByCategory,
-  UserWithRoles,
-  CreateRoleRequest,
-  UpdateRoleRequest,
-  PaginatedResponse,
+    CreateRoleRequest,
+    PaginatedResponse,
+    PermissionsByCategory,
+    Role,
+    UpdateRoleRequest,
+    UserWithRoles,
 } from '../types/rbac.types';
 
 const API_BASE = '/api/v1';

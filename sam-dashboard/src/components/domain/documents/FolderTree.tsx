@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Stack, HStack } from '../../catalyst/layout';
-import { Text, Button, ChevronRightIcon, ChevronDownIcon } from '../../catalyst/primitives';
-import type { DocumentFolder } from '../../../types/documents';
+import {useState} from 'react';
+
+import {HStack, Stack} from '../../catalyst/layout';
+import {Button, ChevronDownIcon, ChevronRightIcon, Text} from '../../catalyst/primitives';
+import type {DocumentFolder} from '../../../types/documents';
 
 export interface FolderTreeProps {
   folders: DocumentFolder[];
@@ -36,15 +37,7 @@ function FolderNode({ folder, isSelected, onSelect, depth }: FolderNodeProps) {
       <HStack
         gap="xs"
         align="center"
-        style={{
-          paddingLeft: `${depth * 16}px`,
-          paddingTop: '0.25rem',
-          paddingBottom: '0.25rem',
-          paddingRight: '0.5rem',
-          backgroundColor: isSelected ? '#dbeafe' : 'transparent',
-          borderRadius: '0.25rem',
-          cursor: 'pointer',
-        }}
+        style={{ paddingLeft: `${depth * 16}px` }}
         onClick={handleClick}
       >
         {hasChildren && (
@@ -112,17 +105,6 @@ export function FolderTree({
       <HStack
         gap="xs"
         align="center"
-        style={{
-          paddingTop: '0.25rem',
-          paddingBottom: '0.25rem',
-          paddingLeft: '0.5rem',
-          paddingRight: '0.5rem',
-          backgroundColor: selectedFolderId === null || selectedFolderId === undefined
-            ? '#dbeafe'
-            : 'transparent',
-          borderRadius: '0.25rem',
-          cursor: 'pointer',
-        }}
         onClick={handleRootClick}
       >
         <Text

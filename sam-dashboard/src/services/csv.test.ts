@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { exportToCSV } from './csv';
-import type { Opportunity } from '../components/domain/opportunity';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {exportToCSV} from './csv';
+import type {Opportunity} from '../components/domain/opportunity';
 
 // ==================== Test Fixtures ====================
 

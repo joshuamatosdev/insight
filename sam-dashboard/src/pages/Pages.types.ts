@@ -1,4 +1,4 @@
-import { Opportunity } from '../components/domain';
+import {Opportunity} from '../components/domain';
 
 export interface AllOpportunitiesPageProps {
   opportunities: Opportunity[];

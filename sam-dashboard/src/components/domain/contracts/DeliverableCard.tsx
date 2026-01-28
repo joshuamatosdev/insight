@@ -1,13 +1,7 @@
-import { CSSProperties } from 'react';
-import { Text, Badge, Button, Select } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../catalyst/layout';
-import type {
-  DeliverableCardProps,
-  DeliverableStatus,
-  DeliverableType,
-  DeliverableFrequency,
-} from './Contract.types';
-import { getDeliverableStatusLabel, formatDate } from './Contract.types';
+import {Badge, Select, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Grid, HStack, Stack} from '../../catalyst/layout';
+import type {DeliverableCardProps, DeliverableFrequency, DeliverableStatus, DeliverableType,} from './Contract.types';
+import {formatDate, getDeliverableStatusLabel} from './Contract.types';
 
 type BadgeColor = 'zinc' | 'cyan' | 'blue' | 'amber' | 'red' | 'green';
 
@@ -74,21 +68,7 @@ const STATUS_OPTIONS: DeliverableStatus[] = [
 export function DeliverableCard({
   deliverable,
   onStatusChange,
-  className,
-  style,
 }: DeliverableCardProps) {
-  const cardStyles: CSSProperties = {
-    marginBottom: '0.75rem',
-    ...(deliverable.isOverdue === true && {
-      borderLeft: '4px solid #ef4444',
-    }),
-    ...(deliverable.isDueSoon === true &&
-      deliverable.isOverdue === false && {
-        borderLeft: '4px solid #f59e0b',
-      }),
-    ...style,
-  };
-
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (onStatusChange !== undefined) {
       onStatusChange(deliverable.id, event.target.value as DeliverableStatus);
@@ -96,10 +76,10 @@ export function DeliverableCard({
   };
 
   return (
-    <Card className={className} style={cardStyles}>
+    <Card>
       <CardHeader>
         <HStack justify="between" align="start">
-          <Box style={{ flex: 1, minWidth: 0 }}>
+          <Box>
             <HStack spacing="sm" align="center">
               {deliverable.cdrlNumber !== null && (
                 <Text variant="bodySmall" color="muted">
@@ -170,7 +150,7 @@ export function DeliverableCard({
         </Grid>
 
         {deliverable.description !== null && (
-          <Box className="mt-3">
+          <Box>
             <Text variant="bodySmall" color="muted">
               {deliverable.description}
             </Text>
@@ -178,13 +158,7 @@ export function DeliverableCard({
         )}
 
         {(deliverable.submittedDate !== null || deliverable.acceptedDate !== null) && (
-          <Box
-            style={{
-              marginTop: '0.75rem',
-              paddingTop: '0.75rem',
-              borderTop: '1px solid #e4e4e7',
-            }}
-          >
+          <Box>
             <Grid columns={2} gap="md">
               {deliverable.submittedDate !== null && (
                 <Stack spacing="xs">
@@ -211,13 +185,7 @@ export function DeliverableCard({
         )}
 
         {onStatusChange !== undefined && (
-          <Box
-            style={{
-              marginTop: '0.75rem',
-              paddingTop: '0.75rem',
-              borderTop: '1px solid #e4e4e7',
-            }}
-          >
+          <Box>
             <HStack spacing="md" align="center">
               <Text variant="bodySmall" weight="semibold">
                 Update Status:
@@ -225,7 +193,6 @@ export function DeliverableCard({
               <Select
                 value={deliverable.status}
                 onChange={handleStatusChange}
-                className="min-w-[150px] text-sm"
               >
                 {STATUS_OPTIONS.map((status) => (
                   <option key={status} value={status}>

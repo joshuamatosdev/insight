@@ -2,11 +2,13 @@
  * Tests for RolesPage component
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { RolesPage } from './RolesPage';
-import type { Role, PermissionsByCategory } from '../../types';
+import {RolesPage} from './RolesPage';
+import type {PermissionsByCategory, Role} from '../../types';
+// Import mocked functions
+import {createRole, deleteRole, fetchPermissions, fetchRoles} from '../../services';
 
 // Mock the services
 vi.mock('../../services', () => ({
@@ -16,9 +18,6 @@ vi.mock('../../services', () => ({
   updateRole: vi.fn(),
   deleteRole: vi.fn(),
 }));
-
-// Import mocked functions
-import { fetchRoles, fetchPermissions, createRole, updateRole, deleteRole } from '../../services';
 
 const mockRoles: Role[] = [
   {

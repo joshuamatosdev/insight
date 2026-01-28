@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react';
-import type { AuthContextType } from './Auth.types';
+import {createContext, useContext} from 'react';
+import type {AuthContextType} from './Auth.types';
 
 /**
  * Default context value for unauthenticated state

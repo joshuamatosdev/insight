@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import { useOrganizations } from './useOrganizations';
+import {beforeEach, describe, expect, it, vi} from 'vitest';
+import {act, renderHook, waitFor} from '@testing-library/react';
+import {useOrganizations} from './useOrganizations';
 import * as crmService from '../services/crmService';
 
 vi.mock('../services/crmService');

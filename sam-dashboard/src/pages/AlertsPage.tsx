@@ -1,41 +1,41 @@
-import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
+import {ChangeEvent, FormEvent, useCallback, useEffect, useState} from 'react';
 import {
-  Text,
-  Button,
-  Input,
-  Badge,
-  BellIcon,
-  PlusIcon,
-  TrashIcon,
-  PencilIcon,
+    Badge,
+    BellIcon,
+    Button,
+    Input,
+    PencilIcon,
+    PlusIcon,
+    Text,
+    TrashIcon,
 } from '../components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Stack,
-  HStack,
-  Flex,
-  Box,
-  Grid,
-  GridItem,
+    Box,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../components/catalyst/layout';
 import {
-  fetchOpportunityAlerts,
-  createOpportunityAlert,
-  updateOpportunityAlert,
-  deleteOpportunityAlert,
-  toggleOpportunityAlert,
+    createOpportunityAlert,
+    deleteOpportunityAlert,
+    fetchOpportunityAlerts,
+    toggleOpportunityAlert,
+    updateOpportunityAlert,
 } from '../services/api';
 import type {
-  OpportunityAlert,
-  AlertFormState,
-  AlertFormErrors,
-  CreateAlertRequest,
-  UpdateAlertRequest,
+    AlertFormErrors,
+    AlertFormState,
+    CreateAlertRequest,
+    OpportunityAlert,
+    UpdateAlertRequest,
 } from './AlertsPage.types';
 
 const INITIAL_FORM_STATE: AlertFormState = {
@@ -326,7 +326,7 @@ function AlertForm({
     <Box as="form" onSubmit={handleSubmit}>
       <Stack spacing="md">
         {errors.general !== undefined && (
-          <Box className="p-3 bg-danger-bg rounded-md border border-red-500">
+          <Box>
             <Text variant="bodySmall" color="danger">
               {errors.general}
             </Text>
@@ -335,7 +335,7 @@ function AlertForm({
 
         {/* Alert Name */}
         <Box>
-          <Text as="label" variant="label" className="block mb-1">
+          <Text as="label" variant="label">
             Alert Name *
           </Text>
           <Input
@@ -350,7 +350,6 @@ function AlertForm({
             <Text
               variant="caption"
               color="danger"
-              className="mt-1"
             >
               {errors.name}
             </Text>
@@ -359,7 +358,7 @@ function AlertForm({
 
         {/* Description */}
         <Box>
-          <Text as="label" variant="label" className="block mb-1">
+          <Text as="label" variant="label">
             Description
           </Text>
           <Input
@@ -373,7 +372,7 @@ function AlertForm({
 
         {/* NAICS Codes */}
         <Box>
-          <Text as="label" variant="label" className="block mb-1">
+          <Text as="label" variant="label">
             NAICS Codes
           </Text>
           <Input
@@ -387,7 +386,6 @@ function AlertForm({
           <Text
             variant="caption"
             color="muted"
-            className="mt-1"
           >
             Comma-separated NAICS codes to monitor
           </Text>
@@ -395,7 +393,7 @@ function AlertForm({
 
         {/* Keywords */}
         <Box>
-          <Text as="label" variant="label" className="block mb-1">
+          <Text as="label" variant="label">
             Keywords
           </Text>
           <Input
@@ -409,7 +407,6 @@ function AlertForm({
           <Text
             variant="caption"
             color="muted"
-            className="mt-1"
           >
             Comma-separated keywords to match in title or description
           </Text>
@@ -418,7 +415,7 @@ function AlertForm({
         {/* Value Range */}
         <Grid columns="1fr 1fr" gap="md">
           <GridItem>
-            <Text as="label" variant="label" className="block mb-1">
+            <Text as="label" variant="label">
               Minimum Value ($)
             </Text>
             <Input
@@ -433,7 +430,6 @@ function AlertForm({
               <Text
                 variant="caption"
                 color="danger"
-                className="mt-1"
               >
                 {errors.minValue}
               </Text>
@@ -441,7 +437,7 @@ function AlertForm({
           </GridItem>
 
           <GridItem>
-            <Text as="label" variant="label" className="block mb-1">
+            <Text as="label" variant="label">
               Maximum Value ($)
             </Text>
             <Input
@@ -456,7 +452,6 @@ function AlertForm({
               <Text
                 variant="caption"
                 color="danger"
-                className="mt-1"
               >
                 {errors.maxValue}
               </Text>
@@ -618,7 +613,7 @@ export function AlertsPage(): React.ReactElement {
   if (isLoading) {
     return (
       <Section id="alerts">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading alerts...
           </Text>
@@ -647,7 +642,7 @@ export function AlertsPage(): React.ReactElement {
       />
 
       {error !== null && (
-        <Box className="p-3 mb-4 bg-danger-bg rounded-md border border-red-500">
+        <Box>
           <Text variant="bodySmall" color="danger">
             {error}
           </Text>
@@ -655,7 +650,7 @@ export function AlertsPage(): React.ReactElement {
       )}
 
       {showForm && (
-        <Card variant="elevated" className="mb-6">
+        <Card variant="elevated">
           <CardHeader>
             <Text variant="heading5">
               {editingAlert !== null ? 'Edit Alert' : 'Create New Alert'}
@@ -675,13 +670,13 @@ export function AlertsPage(): React.ReactElement {
       {alerts.length === 0 && showForm === false ? (
         <Card variant="default">
           <CardBody>
-            <Flex direction="column" align="center" gap="md" className="p-8">
+            <Flex direction="column" align="center" gap="md">
               <BellIcon size="xl" color="muted" />
               <Stack spacing="xs" align="center">
-                <Text variant="body" color="muted" className="text-center">
+                <Text variant="body" color="muted">
                   No alerts configured yet.
                 </Text>
-                <Text variant="body" color="muted" className="text-center">
+                <Text variant="body" color="muted">
                   Create an alert to get notified when matching opportunities are posted.
                 </Text>
               </Stack>

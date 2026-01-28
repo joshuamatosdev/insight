@@ -1,7 +1,7 @@
-import { ChevronDownIcon } from '@heroicons/react/16/solid'
+import {ChevronDownIcon} from '@heroicons/react/16/solid'
 import clsx from 'clsx'
 import type React from 'react'
-import { Children, createContext, forwardRef, useContext, useState } from 'react'
+import {Children, createContext, forwardRef, useContext, useState} from 'react'
 
 // Types
 type TabVariant = 'underline' | 'pill' | 'bar'

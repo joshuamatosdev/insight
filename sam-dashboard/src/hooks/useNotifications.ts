@@ -1,14 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import type {Notification, NotificationPreferences} from '../services';
 import {
-  fetchNotifications,
-  markNotificationAsRead,
-  markAllNotificationsAsRead,
-  deleteNotification,
-  getUnreadCount,
-  fetchNotificationPreferences,
-  updateNotificationPreferences,
+    deleteNotification,
+    fetchNotificationPreferences,
+    fetchNotifications,
+    getUnreadCount,
+    markAllNotificationsAsRead,
+    markNotificationAsRead,
+    updateNotificationPreferences,
 } from '../services';
-import type { Notification, NotificationPreferences } from '../services';
 
 interface Page<T> {
   content: T[];

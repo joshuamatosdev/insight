@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import { useOpportunities } from './useOpportunities';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {act, renderHook, waitFor} from '@testing-library/react';
+import {useOpportunities} from './useOpportunities';
 import * as api from '../services/api';
-import { Opportunity } from '../components/domain/opportunity';
+import {Opportunity} from '../components/domain/opportunity';
 
 // Mock the API module
 vi.mock('../services/api', () => ({

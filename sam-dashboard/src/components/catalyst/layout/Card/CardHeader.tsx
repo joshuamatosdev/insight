@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { CardHeaderProps } from './Card.types';
+import {CardHeaderProps} from './Card.types';
 
 /**
  * CardHeader - Header section of a Card

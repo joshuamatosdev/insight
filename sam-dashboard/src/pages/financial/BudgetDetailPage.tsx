@@ -1,34 +1,34 @@
 /**
  * BudgetDetailPage - Single budget item detail view
  */
-import { useState, useCallback } from 'react';
+import {useCallback, useState} from 'react';
 import {
-  Text,
-  Button,
-  Badge,
-  PencilIcon,
-  TrashIcon,
-  ChevronLeftIcon,
-  InlineAlert,
-  InlineAlertDescription,
+    Badge,
+    Button,
+    ChevronLeftIcon,
+    InlineAlert,
+    InlineAlertDescription,
+    PencilIcon,
+    Text,
+    TrashIcon,
 } from '@/components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
-  Box,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '@/components/catalyst/layout';
-import { BudgetChart, BudgetForm } from '@/components/domain/financial';
-import { useBudget } from '@/hooks/useFinancial';
-import { updateBudget, deleteBudget, formatCurrency, formatDate, getCategoryLabel } from '@/services/financialService';
-import type { BudgetFormState, BudgetCategory } from '@/types/financial.types';
+import {BudgetChart, BudgetForm} from '@/components/domain/financial';
+import {useBudget} from '@/hooks/useFinancial';
+import {deleteBudget, formatCurrency, formatDate, getCategoryLabel, updateBudget} from '@/services/financialService';
+import type {BudgetCategory, BudgetFormState} from '@/types/financial.types';
 
 export interface BudgetDetailPageProps {
   budgetId: string;
@@ -99,7 +99,7 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
   if (isLoading) {
     return (
       <Section id="budget-detail">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading budget details...
           </Text>
@@ -260,7 +260,6 @@ export function BudgetDetailPage({ budgetId, onBack }: BudgetDetailPageProps) {
                     )}
                     <HStack
                       justify="between"
-                      className="pt-2 border-t border-outline-variant"
                     >
                       <Text variant="bodySmall" weight="medium">
                         Remaining

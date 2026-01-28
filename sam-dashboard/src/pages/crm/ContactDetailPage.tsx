@@ -1,25 +1,12 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Stack,
-  HStack,
-  Grid,
-  Card,
-  CardHeader,
-  CardBody,
-} from '@/components/catalyst/layout';
-import {
-  PageHeading,
-  PageHeadingTitle,
-  PageHeadingSection,
-  PageHeadingActions,
-} from '@/components/catalyst/navigation';
-import { Text, Badge, Button } from '@/components/catalyst/primitives';
-import { InteractionTimeline, InteractionForm, ContactForm } from '@/components/domain/crm';
-import { useContact } from '@/hooks';
-import { useContactInteractions } from '@/hooks/useInteractions';
-import type { ContactType, ContactStatus, CreateContactRequest, CreateInteractionRequest } from '@/types/crm';
+import {useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, Card, CardBody, CardHeader, Grid, HStack, Stack,} from '@/components/catalyst/layout';
+import {PageHeading, PageHeadingActions, PageHeadingSection, PageHeadingTitle,} from '@/components/catalyst/navigation';
+import {Badge, Button, Text} from '@/components/catalyst/primitives';
+import {ContactForm, InteractionForm, InteractionTimeline} from '@/components/domain/crm';
+import {useContact} from '@/hooks';
+import {useContactInteractions} from '@/hooks/useInteractions';
+import type {ContactStatus, ContactType, CreateContactRequest, CreateInteractionRequest} from '@/types/crm';
 
 function getContactTypeLabel(type: ContactType): string {
   const labels: Record<ContactType, string> = {

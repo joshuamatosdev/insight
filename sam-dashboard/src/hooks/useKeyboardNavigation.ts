@@ -1,4 +1,4 @@
-import { useCallback, useRef, KeyboardEvent, RefObject } from 'react';
+import {KeyboardEvent, RefObject, useCallback, useRef} from 'react';
 
 export interface UseKeyboardNavigationOptions {
   /** The orientation of the list (vertical = up/down arrows, horizontal = left/right) */

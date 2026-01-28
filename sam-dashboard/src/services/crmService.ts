@@ -1,18 +1,18 @@
-import { apiClient } from './apiClient';
+import {apiClient} from './apiClient';
 import type {
-  Contact,
-  CreateContactRequest,
-  UpdateContactRequest,
-  ContactFilters,
-  Organization,
-  CreateOrganizationRequest,
-  UpdateOrganizationRequest,
-  OrganizationFilters,
-  Interaction,
-  CreateInteractionRequest,
-  UpdateInteractionRequest,
-  InteractionFilters,
-  UpcomingFollowup,
+    Contact,
+    ContactFilters,
+    CreateContactRequest,
+    CreateInteractionRequest,
+    CreateOrganizationRequest,
+    Interaction,
+    InteractionFilters,
+    Organization,
+    OrganizationFilters,
+    UpcomingFollowup,
+    UpdateContactRequest,
+    UpdateInteractionRequest,
+    UpdateOrganizationRequest,
 } from '../types/crm';
 
 interface Page<T> {

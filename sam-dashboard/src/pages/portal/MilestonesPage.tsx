@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Text, Button, Badge, Select } from '../../components/catalyst/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
-import { MilestoneTimeline, MilestoneCard } from '../../components/domain/portal';
-import { useMilestones } from '../../hooks';
-import type { Milestone, MilestoneStatus } from '../../types/portal';
+import {useEffect, useState} from 'react';
+import {Button, Select, Text} from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Flex, Grid, Stack} from '../../components/catalyst/layout';
+import {MilestoneCard, MilestoneTimeline} from '../../components/domain/portal';
+import {useMilestones} from '../../hooks';
+import type {Milestone, MilestoneStatus} from '../../types/portal';
 
 type ViewMode = 'timeline' | 'cards' | 'calendar';
 
@@ -67,7 +67,7 @@ export function MilestonesPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="min-h-[300px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           Loading milestones...
         </Text>
@@ -77,11 +77,11 @@ export function MilestonesPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box className="p-8 text-center bg-red-50 rounded-lg">
+      <Box>
         <Text variant="body" color="danger">
           Error loading milestones: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} className="mt-3">
+        <Button variant="secondary" onClick={refresh}>
           Retry
         </Button>
       </Box>
@@ -89,7 +89,7 @@ export function MilestonesPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="lg" className="p-6">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -138,7 +138,7 @@ export function MilestonesPage(): React.ReactElement {
               <Text variant="caption" color="muted">
                 In Progress
               </Text>
-              <Text variant="heading3" className="text-primary">
+              <Text variant="heading3">
                 {stats.inProgress}
               </Text>
             </Stack>
@@ -235,7 +235,6 @@ export function MilestonesPage(): React.ReactElement {
           justify="center"
           align="center"
           direction="column"
-          className="p-8 bg-zinc-50 rounded-lg"
         >
           <Text variant="heading4" color="muted">
             No milestones found

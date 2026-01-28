@@ -1,23 +1,31 @@
 /**
  * BudgetsPage - Budget management list page
  */
-import { useState, useCallback } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, InlineAlert, InlineAlertDescription } from '@/components/catalyst/primitives';
+import {useCallback, useState} from 'react';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
+    Badge,
+    Button,
+    InlineAlert,
+    InlineAlertDescription,
+    PlusIcon,
+    RefreshIcon,
+    Text
+} from '@/components/catalyst/primitives';
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '@/components/catalyst/layout';
-import { BudgetCard, BudgetForm } from '@/components/domain/financial';
-import { useBudgets } from '@/hooks/useFinancial';
-import type { BudgetItem, BudgetFormState, BudgetCategory } from '@/types/financial.types';
+import {BudgetCard, BudgetForm} from '@/components/domain/financial';
+import {useBudgets} from '@/hooks/useFinancial';
+import type {BudgetCategory, BudgetFormState, BudgetItem} from '@/types/financial.types';
 
 const INITIAL_FORM_STATE: BudgetFormState = {
   contractId: '',
@@ -180,7 +188,7 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
   if (isLoading && budgets.length === 0) {
     return (
       <Section id="budgets">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading budgets...
           </Text>
@@ -218,14 +226,14 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
       />
 
       {error !== null && (
-        <InlineAlert color="error" className="mb-4">
+        <InlineAlert color="error">
           <InlineAlertDescription>{error.message}</InlineAlertDescription>
         </InlineAlert>
       )}
 
       {/* Over Budget Alert */}
       {overBudgetItems.length > 0 && (
-        <InlineAlert color="warning" className="mb-4">
+        <InlineAlert color="warning">
           <HStack spacing="sm" align="center">
             <Badge color="red">
               {overBudgetItems.length}
@@ -239,7 +247,7 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
 
       {/* Form */}
       {showForm && (
-        <Card variant="elevated" className="mb-6">
+        <Card variant="elevated">
           <CardHeader>
             <Text variant="heading5">
               {editingBudget !== null ? 'Edit Budget Item' : 'Add Budget Item'}
@@ -287,9 +295,8 @@ export function BudgetsPage({ onViewBudget }: BudgetsPageProps) {
                 direction="column"
                 align="center"
                 gap="md"
-                className="p-8"
               >
-                <Stack spacing="xs" className="text-center">
+                <Stack spacing="xs">
                   <Text variant="body" color="muted">
                     No budget items found.
                   </Text>

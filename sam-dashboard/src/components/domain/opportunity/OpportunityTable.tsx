@@ -1,6 +1,6 @@
-import { OpportunityTableProps } from './Opportunity.types';
-import { Box } from '../../catalyst/layout';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableHeader } from '../../catalyst';
+import {OpportunityTableProps} from './Opportunity.types';
+import {Box} from '../../catalyst/layout';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '../../catalyst';
 
 export function OpportunityTable({ opportunities, maxRows }: OpportunityTableProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -36,8 +36,8 @@ export function OpportunityTable({ opportunities, maxRows }: OpportunityTablePro
 
   if (opportunities.length === 0) {
     return (
-      <Box className="p-8 text-center">
-        <span className="text-sm text-on-surface-muted">No opportunities to display.</span>
+      <Box>
+        <span>No opportunities to display.</span>
       </Box>
     );
   }
@@ -60,22 +60,22 @@ export function OpportunityTable({ opportunities, maxRows }: OpportunityTablePro
             title={opp.title}
           >
             <TableCell>
-              <span className="text-sm font-medium text-on-surface">
+              <span>
                 {truncate(opp.title, 50)}
               </span>
             </TableCell>
             <TableCell>
-              <span className="text-sm text-on-surface-muted">
+              <span>
                 {opp.type !== undefined && opp.type !== null ? opp.type : 'N/A'}
               </span>
             </TableCell>
             <TableCell>
-              <span className="text-sm text-on-surface">
+              <span>
                 {opp.naicsCode !== undefined && opp.naicsCode !== null ? opp.naicsCode : '—'}
               </span>
             </TableCell>
             <TableCell>
-              <span className={`text-sm ${getDeadlineColorClass(opp.responseDeadLine)}`}>
+              <span>
                 {formatDate(opp.responseDeadLine)}
               </span>
             </TableCell>

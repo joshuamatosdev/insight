@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Text, Button, Badge, Input, Select } from '../../components/catalyst/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
-import { FeatureRequestCard } from '../../components/domain/portal';
-import { useFeatureRequests } from '../../hooks';
+import {useState} from 'react';
+import {Badge, Button, Input, Select, Text} from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Flex, Grid, Stack} from '../../components/catalyst/layout';
+import {FeatureRequestCard} from '../../components/domain/portal';
+import {useFeatureRequests} from '../../hooks';
 import type {
-  FeatureRequest,
-  FeatureRequestStatus,
-  FeatureRequestCategory,
-  FeatureRequestPriority,
+    FeatureRequest,
+    FeatureRequestCategory,
+    FeatureRequestPriority,
+    FeatureRequestStatus,
 } from '../../types/portal';
 
 type GroupBy = 'status' | 'category' | 'priority';
@@ -139,7 +139,7 @@ export function FeatureRequestsPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="min-h-[300px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           Loading feature requests...
         </Text>
@@ -149,11 +149,11 @@ export function FeatureRequestsPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box className="p-8 text-center bg-red-50 rounded-lg">
+      <Box>
         <Text variant="body" color="danger">
           Error loading feature requests: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} className="mt-3">
+        <Button variant="secondary" onClick={refresh}>
           Retry
         </Button>
       </Box>
@@ -161,7 +161,7 @@ export function FeatureRequestsPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="lg" className="p-6">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -180,7 +180,7 @@ export function FeatureRequestsPage(): React.ReactElement {
         <CardBody>
           <Flex justify="space-between" align="center" gap="md">
             {/* Search */}
-            <Box className="flex-1 max-w-md">
+            <Box>
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -289,7 +289,6 @@ export function FeatureRequestsPage(): React.ReactElement {
           justify="center"
           align="center"
           direction="column"
-          className="p-8 bg-zinc-50 rounded-lg"
         >
           <Text variant="heading4" color="muted">
             No feature requests found
@@ -310,7 +309,7 @@ export function FeatureRequestsPage(): React.ReactElement {
 
             return (
               <Box key={key}>
-                <Flex align="center" gap="sm" className="mb-3">
+                <Flex align="center" gap="sm">
                   <Text variant="heading4">{getGroupLabel(key)}</Text>
                   <Badge color="zinc">
                     {requests.length}

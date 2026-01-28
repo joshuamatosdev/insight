@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import {HTMLAttributes, ReactNode} from 'react';
 
 export type CardRole = 'article' | 'region' | 'group' | 'listitem' | 'none';
 export type CardVariant = 'elevated' | 'outlined' | 'filled' | 'bordered' | 'default';

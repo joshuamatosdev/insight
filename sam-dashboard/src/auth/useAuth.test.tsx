@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
-import { renderHook } from '@testing-library/react';
-import { AuthContext, useAuth } from './AuthContext';
-import type { AuthContextType, User } from './Auth.types';
+import {describe, expect, it, vi} from 'vitest';
+import {renderHook} from '@testing-library/react';
+import {AuthContext, useAuth} from './AuthContext';
+import type {AuthContextType, User} from './Auth.types';
 
 // Test user data
 const mockUser: User = {

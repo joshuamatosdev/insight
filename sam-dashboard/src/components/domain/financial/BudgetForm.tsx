@@ -1,24 +1,24 @@
 /**
  * BudgetForm - Form for creating/editing budget items
  */
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import clsx from 'clsx';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
+
 import {
-  Button,
-  Field,
-  FieldGroup,
-  Fieldset,
-  Input,
-  Label,
-  Select,
-  InlineAlert,
-  InlineAlertTitle,
-  InlineAlertDescription,
+    Button,
+    Field,
+    FieldGroup,
+    Fieldset,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    Input,
+    Label,
+    Select,
 } from '../../catalyst';
-import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
-import type { BudgetFormProps } from './Financial.types';
-import type { BudgetFormState, BudgetFormErrors, BudgetCategory } from '../../../types/financial.types';
-import { getCategoryLabel } from '../../../services/financialService';
+import {ExclamationTriangleIcon} from '@heroicons/react/20/solid';
+import type {BudgetFormProps} from './Financial.types';
+import type {BudgetCategory, BudgetFormErrors, BudgetFormState} from '../../../types/financial.types';
+import {getCategoryLabel} from '../../../services/financialService';
 
 const BUDGET_CATEGORIES: BudgetCategory[] = [
   'DIRECT_LABOR',
@@ -93,7 +93,7 @@ export function BudgetForm({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit}>
       {errors.general !== undefined && (
         <InlineAlert color="error" icon={ExclamationTriangleIcon}>
           <InlineAlertTitle>Error</InlineAlertTitle>
@@ -114,7 +114,7 @@ export function BudgetForm({
               invalid={errors.name !== undefined}
             />
             {errors.name !== undefined && (
-              <p className="mt-1 text-sm text-danger">{errors.name}</p>
+              <p>{errors.name}</p>
             )}
           </Field>
 
@@ -134,7 +134,7 @@ export function BudgetForm({
           </Field>
 
           {/* Amounts */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <Field>
               <Label>Budgeted Amount ($) *</Label>
               <Input
@@ -145,7 +145,7 @@ export function BudgetForm({
                 invalid={errors.budgetedAmount !== undefined}
               />
               {errors.budgetedAmount !== undefined && (
-                <p className="mt-1 text-sm text-danger">{errors.budgetedAmount}</p>
+                <p>{errors.budgetedAmount}</p>
               )}
             </Field>
 
@@ -161,7 +161,7 @@ export function BudgetForm({
           </div>
 
           {/* Period */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <Field>
               <Label>Period Start</Label>
               <Input
@@ -182,7 +182,7 @@ export function BudgetForm({
           </div>
 
           {/* Fiscal Info */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <Field>
               <Label>Fiscal Year</Label>
               <Input
@@ -229,7 +229,7 @@ export function BudgetForm({
       </Fieldset>
 
       {/* Submit buttons */}
-      <div className="flex items-center justify-end gap-3 border-t border-zinc-950/5 pt-6 dark:border-white/10">
+      <div>
         <Button plain type="button" onClick={onCancel}>
           Cancel
         </Button>

@@ -14,7 +14,7 @@
  *   const result = await apiClient.post('/auth/login', { email, password });
  */
 
-import type { ApiError, ApiResult } from './types';
+import type {ApiError, ApiResult} from './types';
 
 // Re-export types for convenience
 export type { ApiError, ApiResult } from './types';

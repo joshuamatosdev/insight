@@ -1,24 +1,34 @@
 /**
  * LaborRatesPage - Labor rate management page
  */
-import { useState, useCallback, ChangeEvent, FormEvent } from 'react';
-import { Text, Button, Badge, PlusIcon, RefreshIcon, Input, Select, InlineAlert, InlineAlertDescription } from '@/components/catalyst/primitives';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
-  Box,
+    Badge,
+    Button,
+    InlineAlert,
+    InlineAlertDescription,
+    Input,
+    PlusIcon,
+    RefreshIcon,
+    Select,
+    Text
+} from '@/components/catalyst/primitives';
+import {
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '@/components/catalyst/layout';
-import { LaborRateTable } from '@/components/domain/financial';
-import { useLaborRates } from '@/hooks/useFinancial';
-import type { LaborRate, LaborRateFormState, LaborRateFormErrors } from '@/types/financial.types';
+import {LaborRateTable} from '@/components/domain/financial';
+import {useLaborRates} from '@/hooks/useFinancial';
+import type {LaborRate, LaborRateFormErrors, LaborRateFormState} from '@/types/financial.types';
 
 const INITIAL_FORM_STATE: LaborRateFormState = {
   contractId: '',
@@ -242,7 +252,7 @@ export function LaborRatesPage() {
   if (isLoading && laborRates.length === 0) {
     return (
       <Section id="labor-rates">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading labor rates...
           </Text>
@@ -283,14 +293,14 @@ export function LaborRatesPage() {
       />
 
       {error !== null && (
-        <InlineAlert color="error" className="mb-4">
+        <InlineAlert color="error">
           <InlineAlertDescription>{error.message}</InlineAlertDescription>
         </InlineAlert>
       )}
 
       {/* Form */}
       {showForm && (
-        <Card variant="elevated" className="mb-6">
+        <Card variant="elevated">
           <CardHeader>
             <Text variant="heading5">
               {editingRate !== null ? 'Edit Labor Rate' : 'Add Labor Rate'}
@@ -308,7 +318,7 @@ export function LaborRatesPage() {
                 {/* Category Info */}
                 <Grid columns={2} gap="md">
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Labor Category *
                     </Text>
                     <Input
@@ -323,7 +333,6 @@ export function LaborRatesPage() {
                       <Text
                         variant="caption"
                         color="danger"
-                        className="mt-1"
                       >
                         {formErrors.laborCategory}
                       </Text>
@@ -331,7 +340,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Description
                     </Text>
                     <Input
@@ -347,7 +356,7 @@ export function LaborRatesPage() {
                 {/* Experience & Education */}
                 <Grid columns={3} gap="md">
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Min Years Experience
                     </Text>
                     <Input
@@ -360,7 +369,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Max Years Experience
                     </Text>
                     <Input
@@ -373,7 +382,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Education Requirement
                     </Text>
                     <Input
@@ -389,7 +398,7 @@ export function LaborRatesPage() {
                 {/* Rates */}
                 <Grid columns={3} gap="md">
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Base Rate ($) *
                     </Text>
                     <Input
@@ -404,7 +413,6 @@ export function LaborRatesPage() {
                       <Text
                         variant="caption"
                         color="danger"
-                        className="mt-1"
                       >
                         {formErrors.baseRate}
                       </Text>
@@ -412,7 +420,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Billing Rate ($)
                     </Text>
                     <Input
@@ -425,7 +433,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Rate Type
                     </Text>
                     <Select
@@ -440,7 +448,7 @@ export function LaborRatesPage() {
                 {/* Burden Rates */}
                 <Grid columns={4} gap="md">
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Fringe Rate
                     </Text>
                     <Input
@@ -453,7 +461,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Overhead Rate
                     </Text>
                     <Input
@@ -466,7 +474,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       G&A Rate
                     </Text>
                     <Input
@@ -479,7 +487,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Fee Rate
                     </Text>
                     <Input
@@ -495,7 +503,7 @@ export function LaborRatesPage() {
                 {/* Effective Period */}
                 <Grid columns={3} gap="md">
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Effective Date
                     </Text>
                     <Input
@@ -507,7 +515,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       End Date
                     </Text>
                     <Input
@@ -519,7 +527,7 @@ export function LaborRatesPage() {
                   </GridItem>
 
                   <GridItem>
-                    <Text as="label" variant="label" className="block mb-1">
+                    <Text as="label" variant="label">
                       Fiscal Year
                     </Text>
                     <Input
@@ -534,7 +542,7 @@ export function LaborRatesPage() {
 
                 {/* Notes */}
                 <Box>
-                  <Text as="label" variant="label" className="block mb-1">
+                  <Text as="label" variant="label">
                     Notes
                   </Text>
                   <Input
@@ -576,7 +584,7 @@ export function LaborRatesPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <HStack justify="center" spacing="sm" className="mt-6">
+        <HStack justify="center" spacing="sm">
           <Button
             variant="outline"
             size="sm"

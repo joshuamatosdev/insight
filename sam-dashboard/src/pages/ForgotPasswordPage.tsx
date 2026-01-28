@@ -1,24 +1,17 @@
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
+import {Box, Card, CardBody, CardHeader, Flex, Stack,} from '../components/catalyst/layout';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  Input,
-  FormField,
-  InlineAlert,
-  InlineAlertDescription,
-  AuthLayout,
+    AuthLayout,
+    Button,
+    FormField,
+    InlineAlert,
+    InlineAlertDescription,
+    Input,
+    Text,
 } from '../components/catalyst/primitives';
-import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
-import { Link } from '../components/catalyst/primitives/link';
-import type { ForgotPasswordFormState, ForgotPasswordFormErrors } from './types';
+import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
+import {Link} from '../components/catalyst/primitives/link';
+import type {ForgotPasswordFormErrors, ForgotPasswordFormState} from './types';
 
 const API_BASE = '/api/v1';
 
@@ -111,10 +104,10 @@ export function ForgotPasswordPage(): React.ReactElement {
   if (success) {
     return (
       <AuthLayout>
-        <Box className="w-full max-w-md">
+        <Box>
           <Card variant="elevated">
             <CardBody padding="lg">
-              <Stack spacing="md" align="center" className="text-center">
+              <Stack spacing="md" align="center">
                 <Text variant="heading4" color="success">
                   Check Your Email
                 </Text>
@@ -126,7 +119,7 @@ export function ForgotPasswordPage(): React.ReactElement {
                 <Text variant="bodySmall" color="muted">
                   Please check your inbox and spam folder.
                 </Text>
-                <Link href="/login" className="text-blue-600 dark:text-blue-400">
+                <Link href="/login">
                   Return to login
                 </Link>
               </Stack>
@@ -139,16 +132,16 @@ export function ForgotPasswordPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
-          <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
+          <CardHeader>
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
               <Stack spacing="xs" align="center">
                 <Text variant="heading3" color="white" weight="semibold">
                   Forgot Password
                 </Text>
-                <Text variant="bodySmall" color="white" className="opacity-80">
+                <Text variant="bodySmall" color="white">
                   Enter your email to reset your password
                 </Text>
               </Stack>
@@ -185,16 +178,15 @@ export function ForgotPasswordPage(): React.ReactElement {
                   type="submit"
                   variant="primary"
                   fullWidth
-                  className="mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                 >
                   Send Reset Link
                 </Button>
 
-                <Text variant="bodySmall" className="text-center">
+                <Text variant="bodySmall">
                   Remember your password?{' '}
-                  <Link href="/login" className="text-blue-600 dark:text-blue-400">
+                  <Link href="/login">
                     Sign in
                   </Link>
                 </Text>

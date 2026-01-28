@@ -1,19 +1,11 @@
 /**
  * LaborRateTable - Table display of labor rates
  */
-import clsx from 'clsx';
-import { Badge, Button } from '../../catalyst';
-import { PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeader,
-  TableCell,
-} from '../../catalyst';
-import type { LaborRateTableProps } from './Financial.types';
-import { formatCurrency, formatDate } from '../../../services/financialService';
+
+import {Badge, Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '../../catalyst';
+import {PencilIcon, TrashIcon} from '@heroicons/react/20/solid';
+import type {LaborRateTableProps} from './Financial.types';
+import {formatCurrency, formatDate} from '../../../services/financialService';
 
 export function LaborRateTable({
   rates,
@@ -24,12 +16,9 @@ export function LaborRateTable({
 }: LaborRateTableProps) {
   if (rates.length === 0) {
     return (
-      <div className={clsx(
-        'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
-        className
-      )}>
-        <div className="flex flex-col items-center justify-center px-6 py-12">
-          <p className="text-sm/6 text-on-surface-muted">
+      <div>
+        <div>
+          <p>
             No labor rates configured yet.
           </p>
         </div>
@@ -38,21 +27,18 @@ export function LaborRateTable({
   }
 
   return (
-    <div className={clsx(
-      'rounded-lg bg-white ring-1 ring-zinc-950/5 dark:bg-zinc-800/50 dark:ring-white/10 overflow-hidden',
-      className
-    )}>
+    <div>
       <Table>
         <TableHead>
           <TableRow>
             <TableHeader>Labor Category</TableHeader>
             <TableHeader>Experience</TableHeader>
-            <TableHeader className="text-right">Base Rate</TableHeader>
-            <TableHeader className="text-right">Fully Burdened</TableHeader>
-            <TableHeader className="text-right">Billing Rate</TableHeader>
+            <TableHeader>Base Rate</TableHeader>
+            <TableHeader>Fully Burdened</TableHeader>
+            <TableHeader>Billing Rate</TableHeader>
             <TableHeader>Effective Period</TableHeader>
-            <TableHeader className="text-center">Status</TableHeader>
-            <TableHeader className="text-center">Actions</TableHeader>
+            <TableHeader>Status</TableHeader>
+            <TableHeader>Actions</TableHeader>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -60,11 +46,11 @@ export function LaborRateTable({
             <TableRow key={rate.id}>
               <TableCell>
                 <div>
-                  <p className="font-medium text-on-surface">
+                  <p>
                     {rate.laborCategory}
                   </p>
                   {rate.laborCategoryDescription !== null && (
-                    <p className="text-xs text-on-surface-muted">
+                    <p>
                       {rate.laborCategoryDescription}
                     </p>
                   )}
@@ -72,39 +58,39 @@ export function LaborRateTable({
               </TableCell>
               <TableCell>
                 <div>
-                  <p className="text-on-surface">
+                  <p>
                     {rate.minYearsExperience !== null || rate.maxYearsExperience !== null
                       ? `${rate.minYearsExperience ?? 0}-${rate.maxYearsExperience ?? '+'} years`
                       : '-'}
                   </p>
                   {rate.educationRequirement !== null && (
-                    <p className="text-xs text-on-surface-muted">
+                    <p>
                       {rate.educationRequirement}
                     </p>
                   )}
                 </div>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell>
                 <div>
-                  <p className="text-on-surface">{formatCurrency(rate.baseRate)}</p>
+                  <p>{formatCurrency(rate.baseRate)}</p>
                   {rate.rateType !== null && (
-                    <p className="text-xs text-on-surface-muted">
+                    <p>
                       /{rate.rateType.toLowerCase()}
                     </p>
                   )}
                 </div>
               </TableCell>
-              <TableCell className="text-right font-medium text-on-surface">
+              <TableCell>
                 {rate.fullyBurdenedRate !== null
                   ? formatCurrency(rate.fullyBurdenedRate)
                   : '-'}
               </TableCell>
-              <TableCell className="text-right font-medium text-accent">
+              <TableCell>
                 {rate.billingRate !== null ? formatCurrency(rate.billingRate) : '-'}
               </TableCell>
               <TableCell>
                 <div>
-                  <p className="text-on-surface">
+                  <p>
                     {rate.effectiveDate !== null
                       ? formatDate(rate.effectiveDate)
                       : 'No start'}
@@ -112,31 +98,26 @@ export function LaborRateTable({
                     {rate.endDate !== null ? formatDate(rate.endDate) : 'Ongoing'}
                   </p>
                   {rate.fiscalYear !== null && (
-                    <p className="text-xs text-on-surface-muted">
+                    <p>
                       FY{rate.fiscalYear}
                     </p>
                   )}
                 </div>
               </TableCell>
-              <TableCell className="text-center">
+              <TableCell>
                 <Badge color={rate.isActive ? 'green' : 'zinc'}>
                   {rate.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>
-              <TableCell className="text-center">
-                <div className="flex items-center justify-center gap-1">
+              <TableCell>
+                <div>
                   {onToggleActive !== undefined && (
                     <Button
                       plain
                       onClick={() => onToggleActive(rate.id, !rate.isActive)}
                       aria-label={rate.isActive ? 'Deactivate rate' : 'Activate rate'}
                     >
-                      <span className={clsx(
-                        'text-xs',
-                        rate.isActive
-                          ? 'text-danger'
-                          : 'text-success'
-                      )}>
+                      <span>
                         {rate.isActive ? 'Disable' : 'Enable'}
                       </span>
                     </Button>
@@ -147,7 +128,7 @@ export function LaborRateTable({
                       onClick={() => onEdit(rate)}
                       aria-label="Edit labor rate"
                     >
-                      <PencilIcon className="size-4" />
+                      <PencilIcon />
                     </Button>
                   )}
                   {onDelete !== undefined && (
@@ -156,7 +137,7 @@ export function LaborRateTable({
                       onClick={() => onDelete(rate.id)}
                       aria-label="Delete labor rate"
                     >
-                      <TrashIcon className="size-4 text-danger" />
+                      <TrashIcon />
                     </Button>
                   )}
                 </div>

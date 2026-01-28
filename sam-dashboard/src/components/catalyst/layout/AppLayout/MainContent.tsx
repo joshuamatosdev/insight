@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react';
-import { MainContentProps } from './AppLayout.types';
+import clsx from 'clsx';
+import {MainContentProps} from './AppLayout.types';
 
 export function MainContent({
   className,
@@ -7,20 +7,11 @@ export function MainContent({
   children,
   id = 'main-content',
 }: MainContentProps) {
-  const contentStyles: CSSProperties = {
-    marginLeft: '16rem',
-    padding: '2rem',
-    minHeight: '100vh',
-    backgroundColor: '#fafafa',
-    flex: 1,
-    ...style,
-  };
-
   return (
     <main
       id={id}
-      className={className}
-      style={contentStyles}
+      className={clsx('ml-64 p-8 min-h-screen bg-zinc-50 flex-1', className)}
+      style={style}
       role="main"
       aria-label="Main content"
       tabIndex={-1}

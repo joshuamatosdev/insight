@@ -1,5 +1,5 @@
-import { SearchInputProps } from './Filters.types';
-import { Input, SearchIcon } from '../../catalyst/primitives';
+import {SearchInputProps} from './Filters.types';
+import {Input, SearchIcon} from '../../catalyst/primitives';
 
 export function SearchInput({
   value,
@@ -15,7 +15,6 @@ export function SearchInput({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       leftIcon={<SearchIcon size="sm" color="muted" />}
-      className={className}
       style={{ width: '250px', ...style }}
     />
   );

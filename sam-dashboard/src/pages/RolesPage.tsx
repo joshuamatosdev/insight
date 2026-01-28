@@ -1,22 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import {
-  Card,
-  CardBody,
-  Flex,
-  Stack,
-  Grid,
-  GridItem,
-  Section,
-  SectionHeader,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  Badge,
-  InlineAlert,
-  InlineAlertDescription,
-} from '../components/catalyst/primitives';
-import type { Role, PermissionsByCategory, RolesPageState } from './types';
+import {useCallback, useEffect, useState} from 'react';
+import {Card, CardBody, Flex, Grid, GridItem, Section, SectionHeader, Stack,} from '../components/catalyst/layout';
+import {Badge, Button, InlineAlert, InlineAlertDescription, Text,} from '../components/catalyst/primitives';
+import type {PermissionsByCategory, Role, RolesPageState} from './types';
 
 const API_BASE = '/api/v1';
 
@@ -91,7 +76,6 @@ export function RolesPage(): React.ReactElement {
       <Card
         key={role.id}
         variant={isSelected ? 'elevated' : 'default'}
-        className={`cursor-pointer ${isSelected ? 'border-2 border-blue-600' : ''}`}
         onClick={() => setSelectedRole(isSelected ? null : role)}
       >
         <CardBody padding="md">
@@ -151,7 +135,7 @@ export function RolesPage(): React.ReactElement {
                 <Text variant="bodySmall" weight="semibold">
                   {category.replace(/_/g, ' ')}
                 </Text>
-                <Flex gap="sm" className="flex-wrap">
+                <Flex gap="sm">
                   {perms.map((perm) => {
                     const hasPermission = hasWildcard || rolePermissions.has(perm.code);
                     return (
@@ -176,7 +160,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'loading') {
     return (
       <Section id="roles-page">
-        <Flex justify="center" align="center" className="min-h-[200px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading roles...
           </Text>
@@ -188,7 +172,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'error') {
     return (
       <Section id="roles-page">
-        <Flex justify="center" align="center" className="min-h-[200px]">
+        <Flex justify="center" align="center">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error}

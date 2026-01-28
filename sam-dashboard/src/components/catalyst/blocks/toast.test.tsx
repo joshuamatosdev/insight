@@ -1,11 +1,7 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import {act, render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
-import {
-  Toast,
-  ToastProvider,
-  useToast,
-} from './toast'
+import {describe, expect, it, vi} from 'vitest'
+import {Toast, ToastProvider, useToast,} from './toast'
 
 // Test component that uses the useToast hook
 function ToastTrigger() {

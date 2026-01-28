@@ -1,4 +1,4 @@
-import type { PipelineOpportunity, PipelineStage } from '../../../types/pipeline';
+import type {PipelineOpportunity, PipelineStage} from '../../../types/pipeline';
 
 export interface ProposalTrackerProps {
   opportunity: PipelineOpportunity;

@@ -1,21 +1,8 @@
-import { useMemo, useState } from 'react';
-import { Text, Badge, CheckCircleIcon, Button } from '../components/catalyst/primitives';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  HStack,
-} from '../components/catalyst/layout';
-import {
-  isSbirOpportunity,
-  getSbirPhaseLabel,
-  OpportunityList,
-  StatCard,
-  StatsGrid,
-} from '../components/domain';
-import { SBIRPageProps } from './Pages.types';
+import {useMemo, useState} from 'react';
+import {Badge, Button, CheckCircleIcon, Text} from '../components/catalyst/primitives';
+import {Card, CardBody, CardHeader, HStack, Section, SectionHeader,} from '../components/catalyst/layout';
+import {getSbirPhaseLabel, isSbirOpportunity, OpportunityList, StatCard, StatsGrid,} from '../components/domain';
+import {SBIRPageProps} from './Pages.types';
 
 type PhaseFilter = 'all' | 'I' | 'II' | 'III';
 

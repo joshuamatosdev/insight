@@ -2,24 +2,24 @@
  * Compliance Service - API calls for Certifications, Clearances, and SBOM
  */
 
-import { apiClient } from './apiClient';
-import type { ApiResult } from './types';
+import {apiClient} from './apiClient';
+import type {ApiResult} from './types';
 import type {
-  Certification,
-  CreateCertificationRequest,
-  UpdateCertificationRequest,
-  CertificationType,
-  CertificationStatus,
-  SecurityClearance,
-  CreateClearanceRequest,
-  UpdateClearanceRequest,
-  ClearanceLevel,
-  ClearanceStatus,
-  SbomInfo,
-  SbomVulnerabilityInfo,
-  CycloneDxBom,
+    Certification,
+    CertificationStatus,
+    CertificationType,
+    ClearanceLevel,
+    ClearanceStatus,
+    CreateCertificationRequest,
+    CreateClearanceRequest,
+    CycloneDxBom,
+    SbomInfo,
+    SbomVulnerabilityInfo,
+    SecurityClearance,
+    UpdateCertificationRequest,
+    UpdateClearanceRequest,
 } from '../types/compliance.types';
-import type { PaginatedResponse } from '../types/financial.types';
+import type {PaginatedResponse} from '../types/financial.types';
 
 // ==================== Certification API ====================
 

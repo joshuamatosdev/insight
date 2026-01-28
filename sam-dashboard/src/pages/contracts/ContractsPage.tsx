@@ -1,9 +1,17 @@
-import { useState, useCallback } from 'react';
-import { Text, Button, Input, PlusIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/catalyst/layout';
-import { ContractList, ContractForm } from '../../components/domain/contracts';
-import { useContracts, useCreateContract } from '../../hooks/useContracts';
-import type { Contract, CreateContractRequest, UpdateContractRequest } from '../../components/domain/contracts';
+import {useCallback, useState} from 'react';
+import {
+    Button,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    Input,
+    PlusIcon,
+    Text
+} from '../../components/catalyst/primitives';
+import {Box, Flex, HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import type {Contract, CreateContractRequest, UpdateContractRequest} from '../../components/domain/contracts';
+import {ContractForm, ContractList} from '../../components/domain/contracts';
+import {useContracts, useCreateContract} from '../../hooks/useContracts';
 
 export interface ContractsPageProps {
   onContractSelect?: (contractId: string) => void;
@@ -95,14 +103,13 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
         </HStack>
       </SectionHeader>
 
-      <Box className="mb-4">
+      <Box>
         <Box as="form" onSubmit={handleSearchSubmit}>
           <HStack spacing="sm">
             <Input
               placeholder="Search contracts..."
               value={searchTerm}
               onChange={handleSearch}
-              className="max-w-md"
             />
             <Button type="submit" variant="secondary">
               Search
@@ -112,7 +119,7 @@ export function ContractsPage({ onContractSelect }: ContractsPageProps) {
       </Box>
 
       {isLoading && (
-        <Flex justify="center" align="center" className="min-h-[200px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading contracts...
           </Text>

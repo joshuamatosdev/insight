@@ -1,7 +1,7 @@
-import type { CSSProperties } from 'react';
-import type { MilestoneCardProps } from './Portal.types';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, CardFooter, Flex, Stack, Box, HStack } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+import type {MilestoneCardProps} from './Portal.types';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardFooter, CardHeader, Flex, HStack, Stack} from '../../catalyst/layout';
 
 /**
  * Card displaying milestone information.
@@ -113,7 +113,6 @@ export function MilestoneCard({
 
   return (
     <Card
-      className={className}
       style={cardStyles}
       onClick={handleClick}
       aria-label={`Milestone: ${milestone.name}`}
@@ -135,7 +134,7 @@ export function MilestoneCard({
       </CardHeader>
       <CardBody>
         {milestone.description !== null && milestone.description !== '' && (
-          <Box className="mb-3">
+          <Box>
             <Text variant="body" color="muted">
               {milestone.description}
             </Text>
@@ -143,7 +142,7 @@ export function MilestoneCard({
         )}
 
         {/* Dates */}
-        <HStack spacing="md" className="mb-3">
+        <HStack spacing="md">
           <Stack spacing="0">
             <Text variant="caption" color="muted">
               Planned Date
@@ -179,8 +178,8 @@ export function MilestoneCard({
         </HStack>
 
         {/* Progress Bar */}
-        <Box className="mb-2">
-          <Flex justify="space-between" align="center" className="mb-1">
+        <Box>
+          <Flex justify="space-between" align="center">
             <Text variant="caption" color="muted">
               Progress
             </Text>
@@ -220,8 +219,8 @@ export function MilestoneCard({
 
         {/* Deliverables */}
         {showDeliverables && milestone.deliverables.length > 0 && (
-          <Box className="mt-3">
-            <Text variant="caption" weight="medium" className="mb-2">
+          <Box>
+            <Text variant="caption" weight="medium">
               Deliverables ({milestone.deliverables.length})
             </Text>
             <Stack spacing="sm">

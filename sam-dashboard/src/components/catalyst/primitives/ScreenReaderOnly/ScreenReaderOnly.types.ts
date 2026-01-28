@@ -1,4 +1,4 @@
-import { ReactNode, HTMLAttributes } from 'react';
+import {HTMLAttributes, ReactNode} from 'react';
 
 export interface ScreenReaderOnlyProps extends HTMLAttributes<HTMLSpanElement> {
   /** Content to be read by screen readers */

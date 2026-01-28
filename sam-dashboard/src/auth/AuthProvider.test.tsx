@@ -1,20 +1,19 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AuthProvider } from './AuthProvider';
-import { useAuth } from './AuthContext';
-import { Stack } from '../components/catalyst/layout';
-import { Text, Button } from '../components/catalyst/primitives';
-import type { LoginResponse, User, StoredAuthState } from './Auth.types';
+import {AuthProvider} from './AuthProvider';
+import {useAuth} from './AuthContext';
+import {Stack} from '../components/catalyst/layout';
+import {Button, Text} from '../components/catalyst/primitives';
+import type {LoginResponse, StoredAuthState, User} from './Auth.types';
+// Import mocked modules
+import * as authService from '../services/auth';
 
 // Mock the auth service
 vi.mock('../services/auth', () => ({
   login: vi.fn(),
   validateToken: vi.fn(),
 }));
-
-// Import mocked modules
-import * as authService from '../services/auth';
 
 const mockLogin = authService.login as ReturnType<typeof vi.fn>;
 const mockValidateToken = authService.validateToken as ReturnType<typeof vi.fn>;

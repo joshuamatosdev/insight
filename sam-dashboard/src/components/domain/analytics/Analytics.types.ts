@@ -1,10 +1,5 @@
-import { CSSProperties, ReactNode } from 'react';
-import {
-  TrendPoint,
-  ActivityItem,
-  TopPerformer,
-  MetricName,
-} from '../../../types/analytics.types';
+import {CSSProperties, ReactNode} from 'react';
+import {ActivityItem, MetricName, TopPerformer, TrendPoint,} from '../../../types/analytics.types';
 
 /**
  * MetricCard component props

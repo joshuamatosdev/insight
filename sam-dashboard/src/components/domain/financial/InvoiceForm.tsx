@@ -1,22 +1,22 @@
 /**
  * InvoiceForm - Form for creating/editing invoices
  */
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
 import {
-  Button,
-  Field,
-  FieldGroup,
-  Fieldset,
-  Input,
-  Label,
-  Select,
-  InlineAlert,
-  InlineAlertTitle,
-  InlineAlertDescription,
+    Button,
+    Field,
+    FieldGroup,
+    Fieldset,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    Input,
+    Label,
+    Select,
 } from '../../catalyst';
-import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
-import type { InvoiceFormProps } from './Financial.types';
-import type { InvoiceFormState, InvoiceFormErrors, InvoiceType } from '../../../types/financial.types';
+import {ExclamationTriangleIcon} from '@heroicons/react/20/solid';
+import type {InvoiceFormProps} from './Financial.types';
+import type {InvoiceFormErrors, InvoiceFormState, InvoiceType} from '../../../types/financial.types';
 
 const INVOICE_TYPES: { value: InvoiceType; label: string }[] = [
   { value: 'PROGRESS', label: 'Progress Payment' },
@@ -94,7 +94,7 @@ export function InvoiceForm({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit}>
       {errors.general !== undefined && (
         <InlineAlert color="error" icon={ExclamationTriangleIcon}>
           <InlineAlertTitle>Error</InlineAlertTitle>
@@ -119,12 +119,12 @@ export function InvoiceForm({
               ))}
             </Select>
             {errors.contractId !== undefined && (
-              <p className="mt-1 text-sm text-danger">{errors.contractId}</p>
+              <p>{errors.contractId}</p>
             )}
           </Field>
 
           {/* Invoice Number and Type */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <Field>
               <Label>Invoice Number *</Label>
               <Input
@@ -135,7 +135,7 @@ export function InvoiceForm({
                 invalid={errors.invoiceNumber !== undefined}
               />
               {errors.invoiceNumber !== undefined && (
-                <p className="mt-1 text-sm text-danger">{errors.invoiceNumber}</p>
+                <p>{errors.invoiceNumber}</p>
               )}
             </Field>
 
@@ -155,7 +155,7 @@ export function InvoiceForm({
           </div>
 
           {/* Invoice Date and Due Date */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <Field>
               <Label>Invoice Date *</Label>
               <Input
@@ -165,7 +165,7 @@ export function InvoiceForm({
                 invalid={errors.invoiceDate !== undefined}
               />
               {errors.invoiceDate !== undefined && (
-                <p className="mt-1 text-sm text-danger">{errors.invoiceDate}</p>
+                <p>{errors.invoiceDate}</p>
               )}
             </Field>
 
@@ -180,7 +180,7 @@ export function InvoiceForm({
           </div>
 
           {/* Performance Period */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div>
             <Field>
               <Label>Period Start</Label>
               <Input
@@ -214,7 +214,7 @@ export function InvoiceForm({
       </Fieldset>
 
       {/* Submit buttons */}
-      <div className="flex items-center justify-end gap-3 border-t border-zinc-950/5 pt-6 dark:border-white/10">
+      <div>
         <Button plain type="button" onClick={onCancel}>
           Cancel
         </Button>

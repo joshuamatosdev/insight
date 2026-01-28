@@ -1,44 +1,33 @@
-import { useMemo, CSSProperties } from 'react';
-import { Text, Badge } from '../../catalyst/primitives';
-import { Box, Stack, HStack, Grid, Card, CardHeader, CardBody } from '../../catalyst/layout';
-import type { ContractValueChartProps } from './Contract.types';
-import { formatCurrency, formatDate, getContractStatusLabel } from './Contract.types';
-import { ContractStatusBadge } from './ContractStatusBadge';
+import {CSSProperties, useMemo} from 'react';
+import {Badge, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Grid, HStack, Stack} from '../../catalyst/layout';
+import type {ContractValueChartProps} from './Contract.types';
+import {formatCurrency, formatDate} from './Contract.types';
+import {ContractStatusBadge} from './ContractStatusBadge';
+
+type ProgressBarVariant = 'primary' | 'success' | 'danger';
 
 interface ProgressBarProps {
   value: number;
   max: number;
-  color: string;
+  variant: ProgressBarVariant;
   label: string;
 }
 
-function ProgressBar({ value, max, color, label }: ProgressBarProps) {
+function ProgressBar({ value, max, variant, label }: ProgressBarProps) {
   const percentage = max > 0 ? Math.min((value / max) * 100, 100) : 0;
 
   return (
     <Box>
-      <HStack justify="between" className="mb-1">
+      <HStack justify="between">
         <Text variant="bodySmall">{label}</Text>
         <Text variant="bodySmall" weight="semibold">
           {percentage.toFixed(1)}%
         </Text>
       </HStack>
-      <Box
-        style={{
-          height: '8px',
-          backgroundColor: '#e4e4e7',
-          borderRadius: '9999px',
-          overflow: 'hidden',
-        }}
-      >
+      <Box>
         <Box
-          style={{
-            height: '100%',
-            width: `${percentage}%`,
-            backgroundColor: color,
-            borderRadius: '9999px',
-            transition: 'width 0.3s ease',
-          }}
+          style={{ width: `${percentage}%` }}
         />
       </Box>
     </Box>
@@ -75,7 +64,7 @@ export function ContractValueChart({
   };
 
   return (
-    <Stack spacing="md" className={className} style={chartStyles}>
+    <Stack spacing="md" style={chartStyles}>
       <Card>
         <CardHeader>
           <HStack justify="between" align="center">
@@ -160,18 +149,18 @@ export function ContractValueChart({
             </Stack>
           </Grid>
 
-          <Box className="mt-6">
+          <Box>
             <Stack spacing="md">
               <ProgressBar
                 value={fundedValue}
                 max={totalValue}
-                color="#2563eb"
+                variant="primary"
                 label="Funding Progress"
               />
               <ProgressBar
                 value={clinInvoicedAmount}
                 max={clinFundedAmount}
-                color={burnRate > 90 ? '#ef4444' : '#10b981'}
+                variant={burnRate > 90 ? 'danger' : 'success'}
                 label="Burn Rate"
               />
             </Stack>

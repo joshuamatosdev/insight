@@ -1,36 +1,20 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {Button, Text,} from '../components/catalyst/primitives';
+import {RefreshIcon, SpeedometerIcon,} from '../components/catalyst/primitives/Icon';
 import {
-  Text,
-  Button,
-} from '../components/catalyst/primitives';
-import {
-  SpeedometerIcon,
-  RefreshIcon,
-} from '../components/catalyst/primitives/Icon';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  HStack,
-  Stack,
-  Grid,
-  GridItem,
+    Card,
+    CardBody,
+    CardHeader,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../components/catalyst/layout';
-import {
-  MetricCard,
-  TrendChart,
-  ActivityFeed,
-  TopPerformersTable,
-} from '../components/domain';
-import { StatsGrid } from '../components/domain/stats';
-import {
-  DashboardStats,
-  ActivityItem,
-  TopPerformer,
-  TrendPoint,
-} from '../types/analytics.types';
+import {ActivityFeed, MetricCard, TopPerformersTable, TrendChart,} from '../components/domain';
+import {StatsGrid} from '../components/domain/stats';
+import {ActivityItem, DashboardStats, TopPerformer, TrendPoint,} from '../types/analytics.types';
 
 /**
  * Mock data for development - replace with API calls
@@ -227,7 +211,7 @@ export function AnalyticsDashboardPage() {
         />
         <Card>
           <CardBody>
-            <Stack spacing="md" className="text-center">
+            <Stack spacing="md">
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -254,7 +238,7 @@ export function AnalyticsDashboardPage() {
           disabled={isLoading}
         >
           <RefreshIcon size="sm" />
-          <Text as="span" className="ml-2">Refresh</Text>
+          <Text as="span">Refresh</Text>
         </Button>
       </SectionHeader>
 
@@ -291,7 +275,7 @@ export function AnalyticsDashboardPage() {
       </StatsGrid>
 
       {/* Win Rate Card */}
-      <Card className="mt-6">
+      <Card>
         <CardBody>
           <HStack justify="between" align="center">
             <Stack spacing="xs">
@@ -300,14 +284,13 @@ export function AnalyticsDashboardPage() {
               </Text>
               <Text
                 variant="heading1"
-                className="text-4xl font-bold"
               >
                 {stats?.winRate !== null && stats?.winRate !== undefined
                   ? `${stats.winRate.toFixed(1)}%`
                   : '--'}
               </Text>
             </Stack>
-            <Stack spacing="xs" className="text-right">
+            <Stack spacing="xs">
               <Text variant="caption" color="secondary">
                 Recent Activity
               </Text>
@@ -320,12 +303,11 @@ export function AnalyticsDashboardPage() {
       </Card>
 
       {/* Charts and Tables */}
-      <Grid columns="2fr 1fr" gap="lg" className="mt-6">
+      <Grid columns="2fr 1fr" gap="lg">
         <GridItem>
           <TrendChart
             title="Opportunity Views Trend"
             data={trendData}
-            className="text-blue-600 dark:text-blue-400"
             height={250}
             showLegend
             loading={isLoading}
@@ -341,7 +323,7 @@ export function AnalyticsDashboardPage() {
       </Grid>
 
       {/* Activity Feed */}
-      <Grid columns="1fr" gap="lg" className="mt-6">
+      <Grid columns="1fr" gap="lg">
         <GridItem>
           <ActivityFeed
             activities={activities}
@@ -354,7 +336,7 @@ export function AnalyticsDashboardPage() {
       </Grid>
 
       {/* Event Breakdown */}
-      <Card className="mt-6">
+      <Card>
         <CardHeader>
           <Text variant="heading5">Event Breakdown (Last 30 Days)</Text>
         </CardHeader>
@@ -367,7 +349,7 @@ export function AnalyticsDashboardPage() {
             <Grid columns="repeat(5, 1fr)" gap="md">
               {Object.entries(stats?.eventCounts ?? {}).map(([eventType, count]) => (
                 <GridItem key={eventType}>
-                  <Stack spacing="xs" className="text-center">
+                  <Stack spacing="xs">
                     <Text variant="heading4">{count.toLocaleString()}</Text>
                     <Text variant="caption" color="secondary">
                       {eventType

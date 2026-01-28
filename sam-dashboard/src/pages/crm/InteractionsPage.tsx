@@ -1,22 +1,10 @@
-import { useState } from 'react';
-import {
-  Box,
-  Flex,
-  Stack,
-  HStack,
-  Card,
-  CardBody,
-} from '@/components/catalyst/layout';
-import {
-  PageHeading,
-  PageHeadingTitle,
-  PageHeadingSection,
-  PageHeadingActions,
-} from '@/components/catalyst/navigation';
-import { Select, Button, Text } from '@/components/catalyst/primitives';
-import { InteractionTimeline, InteractionForm, UpcomingFollowups } from '@/components/domain/crm';
-import { useInteractions, useUpcomingFollowups } from '@/hooks/useInteractions';
-import type { InteractionType, CreateInteractionRequest, UpcomingFollowup } from '@/types/crm';
+import {useState} from 'react';
+import {Box, Card, CardBody, Flex, HStack, Stack,} from '@/components/catalyst/layout';
+import {PageHeading, PageHeadingActions, PageHeadingSection, PageHeadingTitle,} from '@/components/catalyst/navigation';
+import {Button, Select, Text} from '@/components/catalyst/primitives';
+import {InteractionForm, InteractionTimeline, UpcomingFollowups} from '@/components/domain/crm';
+import {useInteractions, useUpcomingFollowups} from '@/hooks/useInteractions';
+import type {CreateInteractionRequest, InteractionType, UpcomingFollowup} from '@/types/crm';
 
 const INTERACTION_TYPE_OPTIONS: { value: InteractionType | ''; label: string }[] = [
   { value: '', label: 'All Types' },
@@ -116,7 +104,7 @@ export function InteractionsPage() {
         </PageHeading>
 
         <Flex gap="lg" align="start">
-          <Box className="flex-[2]">
+          <Box>
             <Card>
               <CardBody>
                 <Stack gap="lg">
@@ -173,7 +161,7 @@ export function InteractionsPage() {
             </Card>
           </Box>
 
-          <Box className="flex-1">
+          <Box>
             <UpcomingFollowups
               followups={followups}
               isLoading={followupsLoading}

@@ -1,6 +1,6 @@
-import { Card, CardHeader, CardBody, HStack, Stack } from '../../catalyst/layout';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import type { Interaction, InteractionType, InteractionOutcome } from '../../../types/crm';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import type {Interaction, InteractionOutcome, InteractionType} from '../../../types/crm';
 
 export interface InteractionCardProps {
   interaction: Interaction;

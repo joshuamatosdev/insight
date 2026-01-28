@@ -2,12 +2,12 @@
  * Tests for MfaSetupPage component
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach, beforeAll } from 'vitest';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { MfaSetupPage } from './MfaSetupPage';
-import type { AuthContextType } from '../auth';
+import {MemoryRouter} from 'react-router-dom';
+import {MfaSetupPage} from './MfaSetupPage';
+import type {AuthContextType} from '../auth';
 
 // Mock useNavigate
 const mockNavigate = vi.fn();

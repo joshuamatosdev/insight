@@ -4,9 +4,9 @@
  * Toggles between light/dark mode using the useDarkMode hook.
  */
 
-import { SunIcon, MoonIcon } from '@heroicons/react/20/solid'
-import { Button } from '../primitives/button'
-import { useDarkMode } from '../../../hooks/useDarkMode'
+import {MoonIcon, SunIcon} from '@heroicons/react/20/solid'
+import {Button} from '../primitives/button'
+import {useDarkMode} from '../../../hooks/useDarkMode'
 
 export function ThemeToggle() {
   const { isDark, toggleDark } = useDarkMode()

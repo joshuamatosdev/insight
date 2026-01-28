@@ -1,4 +1,10 @@
-import type { Organization, CreateOrganizationRequest, OrganizationType, OrganizationStatus, BusinessSize } from '../../../types/crm';
+import type {
+    BusinessSize,
+    CreateOrganizationRequest,
+    Organization,
+    OrganizationStatus,
+    OrganizationType
+} from '../../../types/crm';
 
 export interface OrganizationFormProps {
   organization?: Organization;

@@ -3,39 +3,34 @@
  * Lists all roles with ability to create, edit, and delete
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {Badge, Button, InlineAlert, InlineAlertDescription, Text,} from '../../components/catalyst/primitives';
+import {PencilIcon, PlusIcon, TrashIcon} from '../../components/catalyst/primitives/Icon';
 import {
-  Text,
-  Button,
-  Badge,
-} from '../../components/catalyst/primitives';
-import { PlusIcon, PencilIcon, TrashIcon } from '../../components/catalyst/primitives/Icon';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardBody,
-  Stack,
-  Flex,
-  Box,
-  HStack,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeaderCell,
-  TableCell,
+    Box,
+    Card,
+    CardBody,
+    Flex,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeaderCell,
+    TableRow,
 } from '../../components/catalyst/layout';
-import { InlineAlert, InlineAlertDescription } from '../../components/catalyst/primitives';
-import { RoleFormModal } from '../../components/domain/rbac';
-import { fetchRoles, fetchPermissions, createRole, updateRole, deleteRole } from '../../services';
+import {RoleFormModal} from '../../components/domain/rbac';
+import {createRole, deleteRole, fetchPermissions, fetchRoles, updateRole} from '../../services';
 import type {
-  Role,
-  PermissionsByCategory,
-  RoleFormState,
-  AdminPageState,
-  CreateRoleRequest,
-  UpdateRoleRequest,
+    AdminPageState,
+    CreateRoleRequest,
+    PermissionsByCategory,
+    Role,
+    RoleFormState,
+    UpdateRoleRequest,
 } from '../../types';
 
 /**
@@ -162,7 +157,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'loading') {
     return (
       <Section id="roles-admin">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading roles...
           </Text>
@@ -174,7 +169,7 @@ export function RolesPage(): React.ReactElement {
   if (pageState === 'error' && roles.length === 0) {
     return (
       <Section id="roles-admin">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load roles'}
@@ -205,7 +200,7 @@ export function RolesPage(): React.ReactElement {
       />
 
       {error !== null && (
-        <Box className="mb-4">
+        <Box>
           <InlineAlert color="error">
             <InlineAlertDescription>{error}</InlineAlertDescription>
           </InlineAlert>
@@ -219,9 +214,9 @@ export function RolesPage(): React.ReactElement {
               <TableRow>
                 <TableHeaderCell>Role Name</TableHeaderCell>
                 <TableHeaderCell>Description</TableHeaderCell>
-                <TableHeaderCell className="text-center">Permissions</TableHeaderCell>
+                <TableHeaderCell>Permissions</TableHeaderCell>
                 <TableHeaderCell>Created</TableHeaderCell>
-                <TableHeaderCell className="text-center">Actions</TableHeaderCell>
+                <TableHeaderCell>Actions</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -242,7 +237,7 @@ export function RolesPage(): React.ReactElement {
                       {role.description ?? '-'}
                     </Text>
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>
                     <Badge color="cyan">{role.permissions.length}</Badge>
                   </TableCell>
                   <TableCell>
@@ -250,7 +245,7 @@ export function RolesPage(): React.ReactElement {
                       {formatDate(role.createdAt)}
                     </Text>
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>
                     <HStack spacing="xs" justify="center">
                       <Button
                         variant="ghost"

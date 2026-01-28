@@ -1,13 +1,17 @@
-import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader } from '../../components/catalyst/layout';
-import { ClinTable, ClinForm } from '../../components/domain/contracts';
-import { useContract } from '../../hooks/useContracts';
-import type {
-  ContractClin,
-  CreateClinRequest,
-  UpdateClinRequest,
-} from '../../components/domain/contracts';
+import {useCallback, useState} from 'react';
+import {
+    Button,
+    ChevronLeftIcon,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    PlusIcon,
+    Text
+} from '../../components/catalyst/primitives';
+import {Box, Flex, HStack, Section, SectionHeader} from '../../components/catalyst/layout';
+import type {ContractClin, CreateClinRequest, UpdateClinRequest,} from '../../components/domain/contracts';
+import {ClinForm, ClinTable} from '../../components/domain/contracts';
+import {useContract} from '../../hooks/useContracts';
 
 export interface ContractClinsPageProps {
   contractId: string;
@@ -65,7 +69,7 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" className="min-h-[400px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading CLINs...
           </Text>
@@ -84,7 +88,7 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
           </InlineAlertDescription>
         </InlineAlert>
         {onBack !== undefined && (
-          <Box className="mt-4">
+          <Box>
             <Button variant="secondary" onClick={onBack}>
               Back
             </Button>
@@ -146,7 +150,6 @@ export function ContractClinsPage({ contractId, onBack }: ContractClinsPageProps
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                className="mb-2"
               >
                 Back to Contract
               </Button>

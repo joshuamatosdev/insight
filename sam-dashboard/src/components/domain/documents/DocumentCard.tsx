@@ -1,11 +1,7 @@
-import { Card, CardHeader, CardBody, HStack, Stack } from '../../catalyst/layout';
-import { Text, Badge, Button, FileIcon, DownloadIcon } from '../../catalyst/primitives';
-import type { DocumentCardProps } from './DocumentCard.types';
-import {
-  formatFileSize,
-  getDocumentTypeLabel,
-  getDocumentStatusVariant,
-} from '../../../services/documentService';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Badge, Button, DownloadIcon, FileIcon, Text} from '../../catalyst/primitives';
+import type {DocumentCardProps} from './DocumentCard.types';
+import {formatFileSize, getDocumentStatusVariant, getDocumentTypeLabel,} from '../../../services/documentService';
 
 function formatDate(dateString: string | null): string {
   if (dateString === null) {

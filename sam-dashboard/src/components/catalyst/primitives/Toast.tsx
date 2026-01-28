@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Flex, Box, Stack } from '../layout';
-import { Text } from './text';
-import { Button } from './button';
+import {useCallback, useEffect, useState} from 'react';
+import clsx from 'clsx';
+import {Box, Flex, Stack} from '../layout';
+import {Text} from './text';
+import {Button} from './button';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -22,6 +23,34 @@ interface ToastProps {
   onDismiss: (id: string) => void;
 }
 
+/** Map of toast type to Tailwind class configurations */
+const toastTypeConfig: Record<ToastType, { bgClass: string; borderClass: string; iconBgClass: string; icon: string }> = {
+  success: {
+    bgClass: 'bg-emerald-50',
+    borderClass: 'border-l-emerald-500',
+    iconBgClass: 'bg-emerald-500',
+    icon: '✓',
+  },
+  error: {
+    bgClass: 'bg-red-50',
+    borderClass: 'border-l-red-500',
+    iconBgClass: 'bg-red-500',
+    icon: '✕',
+  },
+  warning: {
+    bgClass: 'bg-amber-50',
+    borderClass: 'border-l-amber-500',
+    iconBgClass: 'bg-amber-500',
+    icon: '⚠',
+  },
+  info: {
+    bgClass: 'bg-blue-50',
+    borderClass: 'border-l-blue-600',
+    iconBgClass: 'bg-blue-600',
+    icon: 'ℹ',
+  },
+};
+
 /**
  * Individual toast notification component.
  */
@@ -37,70 +66,28 @@ function Toast({ toast, onDismiss }: ToastProps): React.ReactElement {
     return undefined;
   }, [toast.id, toast.duration, onDismiss]);
 
-  const getTypeStyles = (): { bg: string; border: string; icon: string } => {
-    switch (toast.type) {
-      case 'success':
-        return {
-          bg: '#ecfdf5',
-          border: '#10b981',
-          icon: '✓',
-        };
-      case 'error':
-        return {
-          bg: '#fef2f2',
-          border: '#ef4444',
-          icon: '✕',
-        };
-      case 'warning':
-        return {
-          bg: '#fffbeb',
-          border: '#f59e0b',
-          icon: '⚠',
-        };
-      case 'info':
-        return {
-          bg: '#eff6ff',
-          border: '#2563eb',
-          icon: 'ℹ',
-        };
-    }
-  };
-
-  const styles = getTypeStyles();
+  const config = toastTypeConfig[toast.type];
 
   return (
     <Box
-      style={{
-        backgroundColor: styles.bg,
-        borderLeft: `4px solid ${styles.border}`,
-        borderRadius: '4px',
-        padding: '0.75rem',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-        minWidth: '300px',
-        maxWidth: '400px',
-        animation: 'slideIn 0.3s ease-out',
-      }}
+      className={clsx(
+        config.bgClass,
+        'border-l-4',
+        config.borderClass,
+        'rounded p-3 shadow-md min-w-[300px] max-w-[400px] animate-slide-in'
+      )}
     >
       <Flex gap="sm" align="start">
         <Box
-          style={{
-            width: '24px',
-            height: '24px',
-            borderRadius: '50%',
-            backgroundColor: styles.border,
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: 600,
-            flexShrink: 0,
-          }}
+          className={clsx(
+            config.iconBgClass,
+            'w-6 h-6 rounded-full text-white flex items-center justify-center text-sm font-semibold shrink-0'
+          )}
         >
-          {styles.icon}
+          {config.icon}
         </Box>
-        <Stack spacing="0" style={{ flex: 1 }}>
-          <Text variant="body" style={{ fontWeight: 600 }}>
+        <Stack spacing="0" className="flex-1">
+          <Text variant="body" className="font-semibold">
             {toast.title}
           </Text>
           {toast.message !== undefined && (
@@ -113,7 +100,7 @@ function Toast({ toast, onDismiss }: ToastProps): React.ReactElement {
               variant="link"
               size="sm"
               onClick={toast.action.onClick}
-              style={{ marginTop: '0.25rem', padding: 0 }}
+              className="mt-1 p-0"
             >
               {toast.action.label}
             </Button>

@@ -1,26 +1,26 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Card, CardHeader, CardBody, Flex, Stack, Box, Grid, GridItem } from '../components/catalyst/layout';
-import { Text, Button, Badge } from '../components/catalyst/primitives';
-import { useAuth } from '../auth';
+import {useCallback, useEffect, useState} from 'react';
+import {Box, Card, CardBody, CardHeader, Flex, Grid, GridItem, Stack} from '../components/catalyst/layout';
+import {Badge, Button, Text} from '../components/catalyst/primitives';
+import {useAuth} from '../auth';
 import type {
-  Subscription,
-  PlanDetails,
-  BillingConfig,
-  SubscriptionPlan,
-  BillingPageProps,
+    BillingConfig,
+    BillingPageProps,
+    PlanDetails,
+    Subscription,
+    SubscriptionPlan,
 } from '../types/billing.types';
-import { STATUS_DISPLAY, PLAN_ORDER } from '../types/billing.types';
+import {PLAN_ORDER, STATUS_DISPLAY} from '../types/billing.types';
 import {
-  fetchSubscription,
-  fetchPlans,
-  fetchBillingConfig,
-  subscribeToPlan,
-  cancelSubscription,
-  updatePlan,
-  isPlanUpgrade,
-  isPlanDowngrade,
-  formatPrice,
-  formatBillingDate,
+    cancelSubscription,
+    fetchBillingConfig,
+    fetchPlans,
+    fetchSubscription,
+    formatBillingDate,
+    formatPrice,
+    isPlanDowngrade,
+    isPlanUpgrade,
+    subscribeToPlan,
+    updatePlan,
 } from '../services/billing';
 
 /**
@@ -85,7 +85,6 @@ function PlanCard({
   return (
     <Card
       variant={isCurrent ? 'outlined' : 'elevated'}
-      className={`h-full ${isCurrent ? 'border-2 border-blue-500' : ''}`}
     >
       <CardHeader>
         <Stack spacing="sm">
@@ -115,7 +114,7 @@ function PlanCard({
           <Stack spacing="sm">
             {plan.features.map((feature, index) => (
               <Flex key={index} align="start" gap="sm">
-                <Text variant="body" color="success" className="shrink-0">
+                <Text variant="body" color="success">
                   &#10003;
                 </Text>
                 <Text variant="bodySmall">{feature}</Text>
@@ -246,7 +245,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="p-8">
+      <Flex justify="center" align="center">
         <Text variant="body">Loading billing information...</Text>
       </Flex>
     );
@@ -254,10 +253,10 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
   if (config !== null && config.configured === false) {
     return (
-      <Box className="p-6 max-w-xl mx-auto">
+      <Box>
         <Card>
           <CardBody>
-            <Stack spacing="md" className="text-center">
+            <Stack spacing="md">
               <Text variant="heading4">Billing Not Configured</Text>
               <Text variant="body" color="muted">
                 Payment processing is not currently configured for this instance.
@@ -274,13 +273,13 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
   const statusDisplay = subscription !== null ? STATUS_DISPLAY[subscription.status] : null;
 
   return (
-    <Box className="p-6 max-w-6xl mx-auto">
+    <Box>
       <Stack spacing="lg">
         <Text variant="heading3">Billing & Subscription</Text>
 
         {/* Error message */}
         {error !== null && (
-          <Box className="p-3 bg-danger-bg rounded-md border border-danger">
+          <Box>
             <Text variant="bodySmall" color="danger">
               {error}
             </Text>
@@ -289,7 +288,7 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
 
         {/* Success message */}
         {successMessage !== null && (
-          <Box className="p-3 bg-success-bg rounded-md border border-success">
+          <Box>
             <Text variant="bodySmall" color="success">
               {successMessage}
             </Text>
@@ -365,7 +364,6 @@ export function BillingPage({ onPlanChange }: BillingPageProps): React.ReactElem
                     onClick={handleCancelSubscription}
                     isLoading={isProcessing}
                     isDisabled={isProcessing}
-                    className="bg-danger"
                   >
                     Confirm Cancellation
                   </Button>

@@ -1,15 +1,15 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import type {CreateUserRequest, UpdateUserRequest, User, UserFilters, UserStatus} from '../services';
 import {
-  fetchUsers,
-  fetchUser,
-  fetchCurrentUser,
-  createUser,
-  updateUser,
-  deleteUser,
-  updateUserStatus,
-  updateUserRoles,
+    createUser,
+    deleteUser,
+    fetchCurrentUser,
+    fetchUser,
+    fetchUsers,
+    updateUser,
+    updateUserRoles,
+    updateUserStatus,
 } from '../services';
-import type { User, UserStatus, CreateUserRequest, UpdateUserRequest, UserFilters } from '../services';
 
 interface Page<T> {
   content: T[];

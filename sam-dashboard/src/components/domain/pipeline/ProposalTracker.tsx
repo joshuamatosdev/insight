@@ -1,27 +1,28 @@
-import { useMemo } from 'react';
-import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
-import { Text, Badge } from '../../catalyst/primitives';
-import type { ProposalTrackerProps } from './ProposalTracker.types';
-import type { PipelineStage } from '../../../types/pipeline';
+import {useMemo} from 'react'
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout'
+import {Badge, Text} from '../../catalyst/primitives'
+
+import type {ProposalTrackerProps} from './ProposalTracker.types'
+import type {PipelineStage} from '../../../types/pipeline'
 
 function formatDate(dateString: string | null): string {
   if (dateString === null) {
-    return '-';
+    return '-'
   }
   return new Date(dateString).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
-  });
+  })
 }
 
 function getDaysRemaining(deadline: string | null): number | null {
   if (deadline === null) {
-    return null;
+    return null
   }
-  const now = new Date();
-  const due = new Date(deadline);
-  return Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  const now = new Date()
+  const due = new Date(deadline)
+  return Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
 }
 
 function getStageStatus(
@@ -29,25 +30,12 @@ function getStageStatus(
   currentStagePosition: number
 ): 'completed' | 'current' | 'pending' {
   if (stage.position < currentStagePosition) {
-    return 'completed';
+    return 'completed'
   }
   if (stage.position === currentStagePosition) {
-    return 'current';
+    return 'current'
   }
-  return 'pending';
-}
-
-function getStatusColor(status: 'completed' | 'current' | 'pending'): string {
-  switch (status) {
-    case 'completed':
-      return '#10b981';
-    case 'current':
-      return '#2563eb';
-    case 'pending':
-      return '#d4d4d8';
-    default:
-      return '#d4d4d8';
-  }
+  return 'pending'
 }
 
 export function ProposalTracker({
@@ -56,27 +44,27 @@ export function ProposalTracker({
   onStageChange,
 }: ProposalTrackerProps) {
   const sortedStages = useMemo(() => {
-    return [...stages].sort((a, b) => a.position - b.position);
-  }, [stages]);
+    return [...stages].sort((a, b) => a.position - b.position)
+  }, [stages])
 
   const currentStage = useMemo(() => {
-    return stages.find((s) => s.id === opportunity.stageId);
-  }, [stages, opportunity.stageId]);
+    return stages.find((s) => s.id === opportunity.stageId)
+  }, [stages, opportunity.stageId])
 
-  const currentStagePosition = currentStage?.position ?? 0;
-  const daysRemaining = getDaysRemaining(opportunity.responseDeadline);
+  const currentStagePosition = currentStage?.position ?? 0
+  const daysRemaining = getDaysRemaining(opportunity.responseDeadline)
 
   // Calculate progress percentage
   const progressPercentage = useMemo(() => {
     if (sortedStages.length === 0) {
-      return 0;
+      return 0
     }
-    const maxPosition = Math.max(...sortedStages.map((s) => s.position));
+    const maxPosition = Math.max(...sortedStages.map((s) => s.position))
     if (maxPosition === 0) {
-      return 0;
+      return 0
     }
-    return Math.round((currentStagePosition / maxPosition) * 100);
-  }, [sortedStages, currentStagePosition]);
+    return Math.round((currentStagePosition / maxPosition) * 100)
+  }, [sortedStages, currentStagePosition])
 
   return (
     <Card>
@@ -116,84 +104,42 @@ export function ProposalTracker({
                 {progressPercentage}%
               </Text>
             </HStack>
-            <Box
-              style={{
-                height: '8px',
-                backgroundColor: '#e4e4e7',
-                borderRadius: '9999px',
-                overflow: 'hidden',
-              }}
-            >
-              <Box
-                style={{
-                  height: '100%',
-                  width: `${progressPercentage}%`,
-                  backgroundColor: '#2563eb',
-                  transition: 'width 0.3s ease',
-                }}
+            <div>
+              <div
+                style={{ width: `${progressPercentage}%` }}
               />
-            </Box>
+            </div>
           </Stack>
 
           {/* Stage timeline */}
           <Stack gap="sm">
             {sortedStages.map((stage, index) => {
-              const status = getStageStatus(stage, currentStagePosition);
-              const isLast = index === sortedStages.length - 1;
+              const status = getStageStatus(stage, currentStagePosition)
+              const isLast = index === sortedStages.length - 1
 
               return (
                 <HStack key={stage.id} gap="md" align="start">
                   {/* Timeline indicator */}
-                  <Stack gap="0" align="center" style={{ width: '24px' }}>
-                    <Box
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        borderRadius: '50%',
-                        backgroundColor: getStatusColor(status),
-                        border: status === 'current' ? '3px solid #dbeafe' : 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
+                  <div>
+                    <div
                     >
                       {status === 'completed' && (
-                        <Text variant="caption" color="white" style={{ fontSize: '10px' }}>
-                          ✓
-                        </Text>
+                        <span>✓</span>
                       )}
-                    </Box>
+                    </div>
                     {isLast === false && (
-                      <Box
-                        style={{
-                          width: '2px',
-                          height: '32px',
-                          backgroundColor:
-                            status === 'completed'
-                              ? '#10b981'
-                              : '#d4d4d8',
-                        }}
+                      <div
                       />
                     )}
-                  </Stack>
+                  </div>
 
                   {/* Stage info */}
-                  <Box
+                  <div
                     onClick={
                       onStageChange !== undefined
                         ? () => onStageChange(stage.id)
                         : undefined
                     }
-                    style={{
-                      flex: 1,
-                      padding: '0.5rem 0.75rem',
-                      backgroundColor:
-                        status === 'current'
-                          ? '#dbeafe'
-                          : 'transparent',
-                      borderRadius: '0.375rem',
-                      cursor: onStageChange !== undefined ? 'pointer' : 'default',
-                    }}
                   >
                     <HStack justify="between" align="center">
                       <Stack gap="0">
@@ -216,9 +162,9 @@ export function ProposalTracker({
                         </Text>
                       )}
                     </HStack>
-                  </Box>
+                  </div>
                 </HStack>
-              );
+              )
             })}
           </Stack>
 
@@ -265,5 +211,5 @@ export function ProposalTracker({
         </Stack>
       </CardBody>
     </Card>
-  );
+  )
 }

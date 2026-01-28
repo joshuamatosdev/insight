@@ -2,9 +2,16 @@
  * Tests for useOnboarding hook
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import { useOnboarding } from './useOnboarding';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {act, renderHook, waitFor} from '@testing-library/react';
+import {useOnboarding} from './useOnboarding';
+import type {OnboardingProgress, StepInfo} from '../services/onboardingService';
+import {
+    completeStep,
+    dismissOnboarding,
+    getOnboardingProgress,
+    getOnboardingSteps,
+} from '../services/onboardingService';
 
 // Mock the onboarding service
 vi.mock('../services/onboardingService', () => ({
@@ -13,14 +20,6 @@ vi.mock('../services/onboardingService', () => ({
   completeStep: vi.fn(),
   dismissOnboarding: vi.fn(),
 }));
-
-import {
-  getOnboardingProgress,
-  getOnboardingSteps,
-  completeStep,
-  dismissOnboarding,
-} from '../services/onboardingService';
-import type { OnboardingProgress, StepInfo } from '../services/onboardingService';
 
 const mockProgress: OnboardingProgress = {
   id: 'p1',

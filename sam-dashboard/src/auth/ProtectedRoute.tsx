@@ -1,7 +1,7 @@
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import { Flex } from '../components/catalyst/layout';
-import { Text } from '../components/catalyst/primitives';
+import {Navigate, useLocation} from 'react-router-dom';
+import {useAuth} from './AuthContext';
+import {Flex} from '../components/catalyst/layout';
+import {Text} from '../components/catalyst/primitives';
 
 export interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -20,7 +20,6 @@ export function ProtectedRoute({ children }: ProtectedRouteProps): React.ReactEl
       <Flex
         justify="center"
         align="center"
-        className="min-h-screen bg-zinc-50 dark:bg-zinc-900"
       >
         <Text variant="body" color="muted">
           Loading...

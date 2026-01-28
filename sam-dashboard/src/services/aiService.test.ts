@@ -2,19 +2,9 @@
  * Tests for AI Service
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-  getOpportunitySummary,
-  getFitScore,
-  getRiskAssessment,
-  getProposalSuggestions,
-} from './aiService';
-import type {
-  AISummary,
-  AIFitScore,
-  AIRiskAssessment,
-  AIProposalSuggestions,
-} from './aiService';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import type {AIFitScore, AIProposalSuggestions, AIRiskAssessment, AISummary,} from './aiService';
+import {getFitScore, getOpportunitySummary, getProposalSuggestions, getRiskAssessment,} from './aiService';
 
 // Mock fetch
 const mockFetch = vi.fn();

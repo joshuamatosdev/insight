@@ -2,9 +2,9 @@
  * ExpirationAlert - Shows expiring certifications and clearances
  */
 
-import { Text, BellIcon, CalendarIcon } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
-import type { ExpirationAlertProps, Certification, SecurityClearance } from './Compliance.types';
+import {BellIcon, CalendarIcon, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import type {Certification, ExpirationAlertProps, SecurityClearance} from './Compliance.types';
 
 /**
  * Calculates days until expiration
@@ -226,7 +226,6 @@ export function ExpirationAlert({
             <Text
               variant="caption"
               color="muted"
-              className="text-center mt-2"
             >
               +{allItems.length - 5} more items expiring soon
             </Text>

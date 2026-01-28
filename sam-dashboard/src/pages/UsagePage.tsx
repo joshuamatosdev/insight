@@ -1,52 +1,35 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {
-  Text,
-  Badge,
-  Button,
-  Select,
-  DashboardIcon,
-  RefreshIcon,
-  BellIcon,
-  SearchIcon,
-  FileIcon,
-  UsersIcon,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  InlineAlert,
-  InlineAlertTitle,
-  InlineAlertDescription,
+    Badge,
+    BellIcon,
+    Button,
+    DashboardIcon,
+    FileIcon,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    RefreshIcon,
+    SearchIcon,
+    Select,
+    Text,
+    UsersIcon,
 } from '../components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
-  Box,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../components/catalyst/layout';
-import {
-  fetchCurrentUsage,
-  fetchUsageLimits,
-  fetchUsageTrend,
-  formatUsageNumber,
-  getUsageStatusVariant,
-} from '../services';
-import type {
-  UsageSummary,
-  UsageLimits,
-  UsageLimitStatus,
-  DailyUsage,
-  MetricType,
-  SubscriptionTier,
-  METRIC_LABELS,
-  ALL_METRIC_TYPES,
-} from '../types';
-import type { UsagePageProps } from './UsagePage.types';
+import {fetchCurrentUsage, fetchUsageLimits, fetchUsageTrend, formatUsageNumber,} from '../services';
+import type {DailyUsage, MetricType, SubscriptionTier, UsageLimits, UsageSummary,} from '../types';
+import type {UsagePageProps} from './UsagePage.types';
 
 /**
  * Human-readable labels for metric types
@@ -116,9 +99,8 @@ function UsageProgressBar({
   }
 
   return (
-    <Box className="w-full h-2 bg-zinc-200 rounded-full overflow-hidden">
+    <Box>
       <Box
-        className="h-full rounded-full transition-[width] duration-300 ease-out"
         style={{
           width: `${Math.min(percentage, 100)}%`,
           backgroundColor: bgColor,
@@ -156,7 +138,6 @@ function UsageMetricCard({
   return (
     <Card
       variant={isSelected === true ? 'elevated' : 'default'}
-      className={`transition-all duration-200 ease-out ${onClick !== undefined ? 'cursor-pointer' : 'cursor-default'} ${isSelected === true ? 'border-2 border-blue-600' : ''}`}
       onClick={onClick}
     >
       <CardBody>
@@ -212,7 +193,7 @@ function TrendChart({
 }): React.ReactElement {
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="h-[200px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           Loading trend data...
         </Text>
@@ -222,7 +203,7 @@ function TrendChart({
 
   if (data.length === 0) {
     return (
-      <Flex justify="center" align="center" className="h-[200px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           No trend data available
         </Text>
@@ -233,13 +214,12 @@ function TrendChart({
   const maxValue = Math.max(...data.map((d) => d.total), 1);
 
   return (
-    <Box className="h-[200px] flex items-end gap-1">
+    <Box>
       {data.map((point) => {
         const height = (point.total / maxValue) * 100;
         return (
           <Box
             key={point.date}
-            className="flex-1 bg-blue-600 rounded-t min-w-2 relative"
             style={{ height: `${Math.max(height, 2)}%` }}
             title={`${formatDate(point.date)}: ${point.total}`}
           />
@@ -268,7 +248,6 @@ function LimitWarningBanner({
     <InlineAlert
       color={exceededCount > 0 ? 'error' : 'warning'}
       icon={BellIcon}
-      className="mb-4"
     >
       <InlineAlertTitle>
         {exceededCount > 0
@@ -378,7 +357,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
   if (isLoading) {
     return (
       <Section id="usage">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading usage data...
           </Text>
@@ -392,7 +371,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       <Section id="usage">
         <Card>
           <CardBody>
-            <Stack spacing="md" className="text-center">
+            <Stack spacing="md">
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -437,7 +416,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
 
       {/* Billing Period Info */}
       {usageSummary !== null && (
-        <Card className="mb-4">
+        <Card>
           <CardBody>
             <HStack justify="between" align="center">
               <Stack spacing="xs">
@@ -490,7 +469,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       )}
 
       {/* Trend Chart */}
-      <Card className="mt-6">
+      <Card>
         <CardHeader>
           <HStack justify="between" align="center">
             <Text variant="heading5">
@@ -507,7 +486,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
         <CardBody>
           <TrendChart data={trendData} isLoading={trendLoading} />
           {trendData.length > 0 && (
-            <HStack justify="between" className="mt-3">
+            <HStack justify="between">
               <Text variant="caption" color="muted">
                 {formatDate(trendData.at(0)?.date ?? '')}
               </Text>
@@ -520,7 +499,7 @@ export function UsagePage({ tenantId: _tenantId }: UsagePageProps): React.ReactE
       </Card>
 
       {/* Usage Tips */}
-      <Card className="mt-6">
+      <Card>
         <CardHeader>
           <Text variant="heading5">Tips to Optimize Usage</Text>
         </CardHeader>

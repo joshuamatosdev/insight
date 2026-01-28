@@ -1,12 +1,8 @@
-import { CSSProperties } from 'react';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Box, Stack, HStack, Card, CardBody, Grid } from '../../catalyst/layout';
-import type {
-  ModificationTimelineProps,
-  ContractModification,
-  ModificationStatus,
-} from './Contract.types';
-import { getModificationTypeLabel, formatCurrency, formatDate } from './Contract.types';
+import {CSSProperties} from 'react';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, Grid, HStack, Stack} from '../../catalyst/layout';
+import type {ContractModification, ModificationStatus, ModificationTimelineProps,} from './Contract.types';
+import {formatCurrency, formatDate, getModificationTypeLabel} from './Contract.types';
 
 type BadgeColor = 'zinc' | 'amber' | 'cyan' | 'blue' | 'green' | 'red';
 
@@ -60,52 +56,17 @@ function ModificationItem({
     modification.status === 'APPROVED' && onExecute !== undefined;
 
   return (
-    <Box style={{ position: 'relative', paddingLeft: '2rem' }}>
+    <Box>
       <Box
-        style={{
-          position: 'absolute',
-          left: '10px',
-          top: '0',
-          bottom: isLast ? '50%' : '0',
-          width: '2px',
-          backgroundColor: '#d4d4d8',
-        }}
       />
       {isFirst === false && (
-        <Box
-          style={{
-            position: 'absolute',
-            left: '10px',
-            top: '0',
-            height: '50%',
-            width: '2px',
-            backgroundColor: '#d4d4d8',
-          }}
-        />
+        <Box />
       )}
-      <Box
-        style={{
-          position: 'absolute',
-          left: '4px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: '14px',
-          height: '14px',
-          borderRadius: '50%',
-          backgroundColor:
-            modification.status === 'EXECUTED'
-              ? '#10b981'
-              : modification.status === 'APPROVED'
-                ? '#2563eb'
-                : '#a1a1aa',
-          border: '2px solid #ffffff',
-          zIndex: 1,
-        }}
-      />
+      <Box />
 
-      <Card className="mb-4">
+      <Card>
         <CardBody>
-          <HStack justify="between" align="start" className="mb-3">
+          <HStack justify="between" align="start">
             <Box>
               <HStack spacing="sm" align="center">
                 <Text variant="heading5">{modification.modificationNumber}</Text>
@@ -117,7 +78,7 @@ function ModificationItem({
                 </Badge>
               </HStack>
               {modification.title !== null && (
-                <Text variant="body" className="mt-1">
+                <Text variant="body">
                   {modification.title}
                 </Text>
               )}
@@ -165,17 +126,10 @@ function ModificationItem({
           </Grid>
 
           {(hasValueChange || hasFundingChange || hasPopChange) && (
-            <Box
-              style={{
-                marginTop: '0.75rem',
-                paddingTop: '0.75rem',
-                borderTop: '1px solid #e4e4e7',
-              }}
-            >
+            <Box>
               <Text
                 variant="caption"
                 color="muted"
-                className="mb-2"
               >
                 Changes
               </Text>
@@ -258,17 +212,10 @@ function ModificationItem({
           )}
 
           {modification.scopeChangeSummary !== null && (
-            <Box
-              style={{
-                marginTop: '0.75rem',
-                paddingTop: '0.75rem',
-                borderTop: '1px solid #e4e4e7',
-              }}
-            >
+            <Box>
               <Text
                 variant="caption"
                 color="muted"
-                className="mb-1"
               >
                 Scope Change Summary
               </Text>
@@ -277,11 +224,10 @@ function ModificationItem({
           )}
 
           {modification.reason !== null && (
-            <Box className="mt-2">
+            <Box>
               <Text
                 variant="caption"
                 color="muted"
-                className="mb-1"
               >
                 Reason
               </Text>
@@ -307,14 +253,7 @@ export function ModificationTimeline({
   if (modifications.length === 0) {
     return (
       <Box
-        className={className}
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fafafa',
-          borderRadius: '0.5rem',
-          ...timelineStyles,
-        }}
+        style={timelineStyles}
       >
         <Text variant="body" color="muted">
           No modifications for this contract
@@ -324,7 +263,7 @@ export function ModificationTimeline({
   }
 
   return (
-    <Stack spacing="0" className={className} style={timelineStyles}>
+    <Stack spacing="0" style={timelineStyles}>
       {modifications.map((modification, index) => (
         <ModificationItem
           key={modification.id}

@@ -2,10 +2,12 @@
  * Tests for AIInsightsPanel component
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AIInsightsPanel } from './AIInsightsPanel';
+import {AIInsightsPanel} from './AIInsightsPanel';
+import type {AIFitScore, AIRiskAssessment, AISummary,} from '../../../services/aiService';
+import {getFitScore, getOpportunitySummary, getRiskAssessment,} from '../../../services/aiService';
 
 // Mock the AI service
 vi.mock('../../../services/aiService', () => ({
@@ -13,17 +15,6 @@ vi.mock('../../../services/aiService', () => ({
   getFitScore: vi.fn(),
   getRiskAssessment: vi.fn(),
 }));
-
-import {
-  getOpportunitySummary,
-  getFitScore,
-  getRiskAssessment,
-} from '../../../services/aiService';
-import type {
-  AISummary,
-  AIFitScore,
-  AIRiskAssessment,
-} from '../../../services/aiService';
 
 const mockSummary: AISummary = {
   executiveSummary: 'This contract provides IT modernization services for the agency.',

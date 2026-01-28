@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
-import { BoxProps } from './Box.types';
+import {forwardRef} from 'react';
+import {BoxProps} from './Box.types';
 
 /**
  * Box - A generic container component

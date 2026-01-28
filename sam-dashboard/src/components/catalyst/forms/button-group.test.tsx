@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
-import { ButtonGroup, ButtonGroupItem } from './button-group'
+import {describe, expect, it, vi} from 'vitest'
+import {ButtonGroup, ButtonGroupItem} from './button-group'
 
 describe('ButtonGroup', () => {
   describe('ButtonGroup Container', () => {

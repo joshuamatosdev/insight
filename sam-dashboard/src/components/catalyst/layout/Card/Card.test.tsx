@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { Card } from './Card';
-import { CardHeader } from './CardHeader';
-import { CardBody } from './CardBody';
-import { CardFooter } from './CardFooter';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {Card} from './Card';
+import {CardHeader} from './CardHeader';
+import {CardBody} from './CardBody';
+import {CardFooter} from './CardFooter';
 
 describe('Card', () => {
   it('renders children correctly', () => {

@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
-import type { MilestoneTimelineProps } from './Portal.types';
-import type { Milestone } from '../../../types/portal';
-import { Text, Badge } from '../../catalyst/primitives';
-import { Flex, Stack, Box } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+import type {MilestoneTimelineProps} from './Portal.types';
+import type {Milestone} from '../../../types/portal';
+import {Badge, Text} from '../../catalyst/primitives';
+import {Box, Flex, Stack} from '../../catalyst/layout';
 
 /**
  * Visual timeline component for displaying milestones.
@@ -84,8 +84,8 @@ export function MilestoneTimeline({
 
   if (milestones.length === 0) {
     return (
-      <Box className={className} style={containerStyles}>
-        <Flex justify="center" align="center" className="p-8">
+      <Box style={containerStyles}>
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             No milestones to display
           </Text>
@@ -95,7 +95,7 @@ export function MilestoneTimeline({
   }
 
   return (
-    <Box className={className} style={containerStyles}>
+    <Box style={containerStyles}>
       {/* Timeline line */}
       <Box
         style={{
@@ -211,7 +211,7 @@ export function MilestoneTimeline({
 
               {/* Progress bar for in-progress milestones */}
               {milestone.status === 'IN_PROGRESS' && (
-                <Box className="mt-2">
+                <Box>
                   <Box
                     style={{
                       height: '4px',

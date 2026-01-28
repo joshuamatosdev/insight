@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Card, CardHeader, CardBody, Stack, HStack } from '../../catalyst/layout';
-import { Text, Button, Input, Textarea } from '../../catalyst/primitives';
-import type { CaptureManagementProps } from './CaptureManagement.types';
-import type { UpdatePipelineOpportunityRequest } from '../../../types/pipeline';
+import {useState} from 'react';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Button, Input, Text, Textarea} from '../../catalyst/primitives';
+import type {CaptureManagementProps} from './CaptureManagement.types';
+import type {UpdatePipelineOpportunityRequest} from '../../../types/pipeline';
 
 export function CaptureManagement({
   opportunity,

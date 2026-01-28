@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { Icon } from './Icon';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {Icon} from './Icon';
 
 describe('Icon', () => {
   const testPaths = ['M8 0L16 8L8 16L0 8Z'];

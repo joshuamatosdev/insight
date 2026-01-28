@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Flex, Stack, Box } from '../../components/catalyst/layout';
-import { Button, Text } from '../../components/catalyst/primitives';
-import { fetchOAuthProviders, getProviderInfo, initiateOAuthLogin } from '../../services/oauthService';
+import {useEffect, useState} from 'react';
+
+import {Box, Flex, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
+import {fetchOAuthProviders, getProviderInfo, initiateOAuthLogin} from '../../services/oauthService';
 
 /**
  * Social login buttons component for OAuth providers
@@ -44,11 +45,11 @@ export function SocialLoginButtons(): React.ReactElement | null {
   return (
     <Stack spacing="md">
       <Flex align="center" gap="md">
-        <Box style={{ flex: 1, height: '1px', backgroundColor: '#d4d4d8' }} />
+        <Box />
         <Text variant="caption" color="muted">
           or continue with
         </Text>
-        <Box style={{ flex: 1, height: '1px', backgroundColor: '#d4d4d8' }} />
+        <Box />
       </Flex>
 
       <Stack spacing="sm">
@@ -77,41 +78,21 @@ interface SocialButtonProps {
 }
 
 function SocialButton({ provider, onClick }: SocialButtonProps): React.ReactElement {
-  const getProviderStyles = (providerId: string): React.CSSProperties => {
+  const getProviderClasses = (providerId: string): string => {
     switch (providerId) {
       case 'google':
-        return {
-          backgroundColor: 'white',
-          border: '1px solid #d4d4d8',
-          color: '#3f3f46',
-        };
+        return 'bg-white border border-zinc-300 text-zinc-700 dark:bg-zinc-800 dark:border-zinc-600 dark:text-zinc-200';
       case 'microsoft':
-        return {
-          backgroundColor: '#2F2F2F',
-          border: 'none',
-          color: 'white',
-        };
+        return 'bg-zinc-800 border-transparent text-white dark:bg-zinc-700';
       default:
-        return {
-          backgroundColor: '#f4f4f5',
-          border: '1px solid #d4d4d8',
-          color: '#3f3f46',
-        };
+        return 'bg-zinc-100 border border-zinc-300 text-zinc-700 dark:bg-zinc-800 dark:border-zinc-600 dark:text-zinc-200';
     }
   };
 
   return (
     <Button
       variant="secondary"
-      className="w-full"
       onClick={onClick}
-      style={{
-        ...getProviderStyles(provider.id),
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '0.5rem',
-      }}
     >
       <ProviderIcon provider={provider.id} />
       <span>Continue with {provider.name}</span>

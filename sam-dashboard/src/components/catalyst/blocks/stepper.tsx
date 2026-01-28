@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import { CheckIcon } from '../primitives/Icon/icons/CheckIcon'
+import {CheckIcon} from '../primitives/Icon/icons/CheckIcon'
 
 type StepperProps = {
   currentStep: number

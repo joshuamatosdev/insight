@@ -2,19 +2,10 @@
  * ClearanceCard - Display a single security clearance
  */
 
-import { Text, Button, PencilIcon, TrashIcon, ShieldLockIcon } from '../../catalyst/primitives';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-} from '../../catalyst/layout';
-import { ComplianceStatusBadge } from './ComplianceStatusBadge';
-import type { ClearanceCardProps, ClearanceLevel, ClearanceType } from './Compliance.types';
+import {Button, PencilIcon, ShieldLockIcon, Text, TrashIcon} from '../../catalyst/primitives';
+import {Card, CardBody, CardFooter, CardHeader, Grid, GridItem, HStack, Stack,} from '../../catalyst/layout';
+import {ComplianceStatusBadge} from './ComplianceStatusBadge';
+import type {ClearanceCardProps, ClearanceLevel, ClearanceType} from './Compliance.types';
 
 /**
  * Formats date for display

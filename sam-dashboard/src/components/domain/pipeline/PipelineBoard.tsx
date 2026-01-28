@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
-import { Box, HStack } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
-import { PipelineStageColumn } from './PipelineStageColumn';
-import type { PipelineBoardProps } from './PipelineBoard.types';
-import type { PipelineOpportunity } from '../../../types/pipeline';
+import {useMemo} from 'react';
+import {Box, HStack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
+import {PipelineStageColumn} from './PipelineStageColumn';
+import type {PipelineBoardProps} from './PipelineBoard.types';
+import type {PipelineOpportunity} from '../../../types/pipeline';
 
 export function PipelineBoard({
   pipeline,

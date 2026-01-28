@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import {HTMLAttributes, ReactNode} from 'react';
 
 export type SpacingSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '0';
 

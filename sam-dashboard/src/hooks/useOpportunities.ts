@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Opportunity } from '../components/domain/opportunity';
-import { fetchOpportunities, triggerIngest } from '../services/api';
+import {useCallback, useEffect, useState} from 'react';
+import {Opportunity} from '../components/domain/opportunity';
+import {fetchOpportunities, triggerIngest} from '../services/api';
 
 interface UseOpportunitiesReturn {
   opportunities: Opportunity[];

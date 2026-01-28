@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import { Badge } from '../../catalyst/primitives/badge';
-import { Button } from '../../catalyst/primitives/button';
-import { Heading, Subheading } from '../../catalyst/primitives/heading';
-import { Text, Strong } from '../../catalyst/primitives/text';
+import {useEffect, useState} from 'react';
+
+import {Badge} from '../../catalyst/primitives/badge';
+import {Button} from '../../catalyst/primitives/button';
+import {Heading, Subheading} from '../../catalyst/primitives/heading';
+import {Strong, Text} from '../../catalyst/primitives/text';
 import {
-  AISummary,
-  AIFitScore,
-  AIRiskAssessment,
-  getOpportunitySummary,
-  getFitScore,
-  getRiskAssessment,
+    AIFitScore,
+    AIRiskAssessment,
+    AISummary,
+    getFitScore,
+    getOpportunitySummary,
+    getRiskAssessment,
 } from '../../../services/aiService';
 
 interface AIInsightsPanelProps {
@@ -67,19 +67,13 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
   }, [activeTab, opportunityId]);
 
   const renderScoreBar = (score: number, label: string) => (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between">
-        <Text className="text-xs">{label}</Text>
-        <Text className="text-xs font-semibold">{score}%</Text>
+    <div>
+      <div>
+        <Text>{label}</Text>
+        <Text>{score}%</Text>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
+      <div>
         <div
-          className={clsx(
-            'h-full transition-all duration-300',
-            score >= 70 && 'bg-success',
-            score >= 50 && score < 70 && 'bg-warning',
-            score < 50 && 'bg-danger'
-          )}
           style={{ width: `${score}%` }}
         />
       </div>
@@ -89,22 +83,22 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
   const renderSummary = () => {
     if (summary === null) return null;
     return (
-      <div className="space-y-6">
-        <div className="space-y-2">
+      <div>
+        <div>
           <Subheading>Executive Summary</Subheading>
           <Text>{summary.executiveSummary}</Text>
         </div>
-        <div className="space-y-2">
+        <div>
           <Subheading>Key Points</Subheading>
-          <ul className="space-y-1">
+          <ul>
             {summary.keyPoints.map((point, i) => (
               <li key={i}>
-                <Text className="text-sm">• {point}</Text>
+                <Text>• {point}</Text>
               </li>
             ))}
           </ul>
         </div>
-        <Text className="text-xs text-on-surface-muted">
+        <Text>
           Confidence: {summary.confidence}%
         </Text>
       </div>
@@ -114,46 +108,42 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
   const renderFitScore = () => {
     if (fitScore === null) return null;
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
+      <div>
+        <div>
           <div
-            className={clsx(
-              'flex h-20 w-20 items-center justify-center rounded-full text-2xl font-bold text-white',
-              fitScore.overallScore >= 70 ? 'bg-success' : 'bg-warning'
-            )}
           >
             {fitScore.overallScore}
           </div>
-          <div className="space-y-1">
+          <div>
             <Subheading>Overall Fit Score</Subheading>
-            <Text className="text-sm">{fitScore.reasoning}</Text>
+            <Text>{fitScore.reasoning}</Text>
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div>
           {renderScoreBar(fitScore.naicsScore, 'NAICS Match')}
           {renderScoreBar(fitScore.pastPerformanceScore, 'Past Performance')}
           {renderScoreBar(fitScore.certificationScore, 'Certifications')}
           {renderScoreBar(fitScore.geographicScore, 'Geographic')}
         </div>
 
-        <div className="space-y-2">
-          <Subheading className="text-success">Strengths</Subheading>
-          <ul className="space-y-1">
+        <div>
+          <Subheading>Strengths</Subheading>
+          <ul>
             {fitScore.strengths.map((s, i) => (
               <li key={i}>
-                <Text className="text-sm">✓ {s}</Text>
+                <Text>✓ {s}</Text>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="space-y-2">
-          <Subheading className="text-danger">Gaps</Subheading>
-          <ul className="space-y-1">
+        <div>
+          <Subheading>Gaps</Subheading>
+          <ul>
             {fitScore.weaknesses.map((w, i) => (
               <li key={i}>
-                <Text className="text-sm">• {w}</Text>
+                <Text>• {w}</Text>
               </li>
             ))}
           </ul>
@@ -190,39 +180,35 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
     };
 
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
+      <div>
+        <div>
           <Badge color={getRiskBadgeColor(riskAssessment.overallRisk)}>
             {riskAssessment.overallRisk} RISK
           </Badge>
         </div>
 
         {riskAssessment.risks.length > 0 && (
-          <div className="space-y-3">
+          <div>
             <Subheading>Identified Risks</Subheading>
-            <div className="space-y-3">
+            <div>
               {riskAssessment.risks.map((risk, i) => (
                 <div
                   key={i}
-                  className={clsx(
-                    'rounded-lg border-l-4 bg-zinc-50 p-3 dark:bg-zinc-800/50',
-                    getRiskBorderColor(risk.severity)
-                  )}
                 >
-                  <Strong className="text-sm">{risk.category}</Strong>
-                  <Text className="mt-1 text-sm">{risk.description}</Text>
+                  <Strong>{risk.category}</Strong>
+                  <Text>{risk.description}</Text>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        <div className="space-y-2">
+        <div>
           <Subheading>Mitigations</Subheading>
-          <ul className="space-y-1">
+          <ul>
             {riskAssessment.mitigations.map((m, i) => (
               <li key={i}>
-                <Text className="text-sm">→ {m}</Text>
+                <Text>→ {m}</Text>
               </li>
             ))}
           </ul>
@@ -232,16 +218,16 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
   };
 
   return (
-    <div className="rounded-lg bg-surface shadow-sm ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10">
-      <div className="p-6">
-        <div className="space-y-6">
-          <div className="flex items-center gap-3">
-            <span className="text-xl">🤖</span>
+    <div>
+      <div>
+        <div>
+          <div>
+            <span>🤖</span>
             <Heading level={3}>AI Insights</Heading>
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2">
+          <div>
             {(['summary', 'fit', 'risk'] as Tab[]).map((tab) => (
               <Button
                 key={tab}
@@ -255,10 +241,10 @@ export function AIInsightsPanel({ opportunityId }: AIInsightsPanelProps): React.
 
           {/* Content */}
           {loading && (
-            <Text className="text-sm text-on-surface-muted">Analyzing...</Text>
+            <Text>Analyzing...</Text>
           )}
           {error !== null && (
-            <Text className="text-sm text-danger">{error}</Text>
+            <Text>{error}</Text>
           )}
           {loading === false && error === null && (
             <>

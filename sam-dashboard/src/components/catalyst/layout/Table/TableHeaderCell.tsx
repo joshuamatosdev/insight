@@ -1,21 +1,22 @@
-import { CSSProperties } from 'react';
-import { TableHeaderCellProps } from './Table.types';
+import clsx from 'clsx';
+import {TableHeaderCellProps} from './Table.types';
+
+const alignClassMap: Record<string, string> = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+};
 
 export function TableHeaderCell({ align = 'left', className, style, children }: TableHeaderCellProps) {
-  const cellStyles: CSSProperties = {
-    padding: '1rem',
-    textAlign: align,
-    verticalAlign: 'middle',
-    backgroundColor: '#1f2937',
-    color: '#ffffff',
-    fontWeight: 500,
-    fontSize: '0.875rem',
-    border: 'none',
-    ...style,
-  };
-
   return (
-    <th className={className} style={cellStyles}>
+    <th
+      className={clsx(
+        'p-4 align-middle bg-gray-800 text-white font-medium text-sm border-0',
+        alignClassMap[align],
+        className
+      )}
+      style={style}
+    >
       {children}
     </th>
   );

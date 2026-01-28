@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, ReactElement } from 'react';
+import {CSSProperties, ReactElement, ReactNode} from 'react';
 
 export interface FormFieldProps {
   /** The form input element */

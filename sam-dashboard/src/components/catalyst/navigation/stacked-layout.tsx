@@ -1,7 +1,6 @@
 import * as Headless from '@headlessui/react'
 import React, {JSX, useState} from 'react'
-import { NavbarItem } from './navbar'
-import {SidebarLayout} from "@components/catalyst";
+import {NavbarItem} from './navbar'
 
 function OpenMenuIcon() {
   return (
@@ -43,13 +42,17 @@ function MobileSidebar({ open, close, children }: React.PropsWithChildren<{ open
   )
 }
 
-type StackedLayoutProps = { fullWidth?: boolean; navbar: React.ReactNode; sidebar?: React.ReactNode;
-    desktopSidebar: JSX.Element };
+type StackedLayoutProps = {
+  navbar: React.ReactNode
+  sidebar?: React.ReactNode
+  desktopSidebar?: JSX.Element
+  fullWidth?: boolean
+}
 
 export function StackedLayout({
   navbar,
   sidebar,
-                                  desktopSidebar,
+  desktopSidebar,
   children,
   fullWidth = false,
 }: React.PropsWithChildren<StackedLayoutProps>) {

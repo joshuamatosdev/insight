@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
-import { Text, Checkbox, CheckboxField } from '../../../components/catalyst/primitives';
-import { OnboardingCard } from '../../../components/domain/onboarding';
+import {useState} from 'react';
+import {Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Checkbox, CheckboxField, Text} from '../../../components/catalyst/primitives';
+import {OnboardingCard} from '../../../components/domain/onboarding';
 
 interface CertificationsStepProps {
   onNext: () => void;
@@ -50,11 +50,6 @@ export function CertificationsStep({
             <Card
               key={cert.id}
               onClick={() => toggleCertification(cert.id)}
-              className={`cursor-pointer transition-all duration-200 ${
-                isSelected
-                  ? 'border-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
-              }`}
             >
               <CardBody>
                 <Flex align="center" gap="md">

@@ -2,36 +2,16 @@
  * CertificationsPage - List of business certifications
  */
 
-import { useState, useCallback } from 'react';
-import {
-  Text,
-  Button,
-  Badge,
-  Select,
-  FileCheckIcon,
-  PlusIcon,
-  RefreshIcon,
-} from '../../components/catalyst/primitives';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Flex,
-} from '../../components/catalyst/layout';
-import {
-  CertificationList,
-  CertificationForm,
-} from '../../components/domain/compliance';
-import { useCertifications } from '../../hooks';
+import {useCallback, useState} from 'react';
+import {Badge, Button, FileCheckIcon, PlusIcon, RefreshIcon, Select, Text,} from '../../components/catalyst/primitives';
+import {Card, CardBody, CardHeader, HStack, Section, SectionHeader, Stack,} from '../../components/catalyst/layout';
+import {CertificationForm, CertificationList,} from '../../components/domain/compliance';
+import {useCertifications} from '../../hooks';
 import type {
-  Certification,
-  CertificationType,
-  CertificationFormState,
-  CreateCertificationRequest,
+    Certification,
+    CertificationFormState,
+    CertificationType,
+    CreateCertificationRequest,
 } from '../../types/compliance.types';
 
 interface CertificationsPageProps {
@@ -255,7 +235,7 @@ export function CertificationsPage({
       <Stack spacing="md">
         {/* Error Display */}
         {(error !== null || loadError !== null) && (
-          <Card variant="outlined" className="border-red-500">
+          <Card variant="outlined">
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
                 {error ?? loadError?.message}

@@ -1,9 +1,9 @@
 /**
  * BudgetChart - Visual representation of budget vs actual spending
  */
-import clsx from 'clsx';
-import type { BudgetChartProps } from './Financial.types';
-import { formatCurrency, formatPercentage } from '../../../services/financialService';
+
+import type {BudgetChartProps} from './Financial.types';
+import {formatCurrency, formatPercentage} from '../../../services/financialService';
 
 export function BudgetChart({
   budgeted,
@@ -31,48 +31,38 @@ export function BudgetChart({
   ];
 
   return (
-    <div className={clsx(
-      'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
-      className
-    )}>
-      <div className="px-6 py-5 space-y-5">
+    <div>
+      <div>
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-base/6 font-semibold text-on-surface">
+        <div>
+          <h3>
             {title}
           </h3>
-          <span className={clsx('text-sm/6 font-semibold', getStatusColor())}>
+          <span>
             {formatPercentage(utilizationPercent)} used
           </span>
         </div>
 
         {/* Stacked Bar */}
-        <div className="flex h-6 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
+        <div>
           <div
-            className="h-full bg-accent transition-all duration-300"
             style={{ width: `${Math.min(actualPercent, 100)}%` }}
           />
           <div
-            className="h-full bg-warning transition-all duration-300"
             style={{ width: `${Math.min(committedPercent, 100 - actualPercent)}%` }}
           />
         </div>
 
         {/* Legend */}
-        <div className="grid grid-cols-3 gap-4">
+        <div>
           {legendItems.map((item) => (
-            <div key={item.label} className="flex items-center gap-2">
-              <div className={clsx('h-3 w-3 shrink-0 rounded-sm', item.color)} />
-              <div className="min-w-0 flex-1">
-                <p className="text-xs/5 text-on-surface-muted">
+            <div key={item.label}>
+              <div />
+              <div>
+                <p>
                   {item.label}
                 </p>
-                <p className={clsx(
-                  'text-sm/6 font-medium',
-                  item.isNegative
-                    ? 'text-danger'
-                    : 'text-on-surface'
-                )}>
+                <p>
                   {formatCurrency(item.value)}
                 </p>
               </div>
@@ -81,11 +71,11 @@ export function BudgetChart({
         </div>
 
         {/* Total Budget */}
-        <div className="flex items-center justify-between border-t border-border pt-4 dark:border-white/10">
-          <span className="text-sm/6 text-on-surface-muted">
+        <div>
+          <span>
             Total Budget
           </span>
-          <span className="text-base/6 font-semibold text-on-surface">
+          <span>
             {formatCurrency(budgeted)}
           </span>
         </div>

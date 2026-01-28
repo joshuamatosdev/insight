@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, RefObject } from 'react';
+import {RefObject, useCallback, useEffect, useRef} from 'react';
 
 export interface UseFocusTrapOptions {
   /** Whether the focus trap is active */

@@ -1,45 +1,27 @@
-import { useState, useMemo, useCallback, useEffect, Fragment } from 'react';
+import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
+import {Badge, Button, Code, Input, Select, Text,} from '../components/catalyst/primitives';
+import {ChevronDownIcon, ChevronUpIcon, ListIcon, SearchIcon,} from '../components/catalyst/primitives/Icon';
 import {
-  Text,
-  Badge,
-  Button,
-  Input,
-  Select,
-  Code,
-} from '../components/catalyst/primitives';
-import {
-  ListIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  SearchIcon,
-} from '../components/catalyst/primitives/Icon';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  HStack,
-  Stack,
-  Grid,
-  GridItem,
-  Box,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeaderCell,
-  TableCell,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeaderCell,
+    TableRow,
 } from '../components/catalyst/layout';
-import {
-  AuditLog,
-  AuditLogFilterState,
-  AuditAction,
-  AUDIT_ACTION_CATEGORIES,
-  ENTITY_TYPES,
-} from '../types';
-import { fetchMyAuditLogs } from '../services';
-import { AuditLogPageProps } from './AuditLogPage.types';
+import {AUDIT_ACTION_CATEGORIES, AuditAction, AuditLog, AuditLogFilterState, ENTITY_TYPES,} from '../types';
+import {fetchMyAuditLogs} from '../services';
+import {AuditLogPageProps} from './AuditLogPage.types';
 
 /**
  * Formats an ISO timestamp to a human-readable format
@@ -310,7 +292,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
         </CardHeader>
         <CardBody padding="none">
           {isLoading && (
-            <Stack spacing="md" className="p-6 text-center">
+            <Stack spacing="md">
               <Text variant="body" color="muted">
                 Loading audit logs...
               </Text>
@@ -318,7 +300,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {error !== null && isLoading === false && (
-            <Stack spacing="md" className="p-6 text-center">
+            <Stack spacing="md">
               <Text variant="body" color="danger">
                 {error}
               </Text>
@@ -329,7 +311,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
           )}
 
           {isLoading === false && error === null && filteredLogs.length === 0 && (
-            <Stack spacing="md" className="p-6 text-center">
+            <Stack spacing="md">
               <Text variant="body" color="muted">
                 No audit logs found.
               </Text>
@@ -345,7 +327,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                   <TableHeaderCell>Entity</TableHeaderCell>
                   <TableHeaderCell>Description</TableHeaderCell>
                   <TableHeaderCell>IP Address</TableHeaderCell>
-                  <TableHeaderCell className="text-center">Details</TableHeaderCell>
+                  <TableHeaderCell>Details</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -395,7 +377,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                             {log.ipAddress ?? '-'}
                           </Text>
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell>
                           {hasDetails ? (
                             <Button
                               variant="ghost"
@@ -419,9 +401,9 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
                       </TableRow>
                       {isExpanded && parsedDetails !== null && (
                         <TableRow>
-                          <TableCell colSpan={6} className="bg-zinc-50 dark:bg-zinc-800 p-4">
-                            <Box className="m-0 p-4 bg-zinc-100 dark:bg-zinc-900 rounded-md overflow-auto max-h-[300px]">
-                              <Code className="whitespace-pre text-sm font-mono block">
+                          <TableCell colSpan={6}>
+                            <Box>
+                              <Code>
                                 {formatDetailsForDisplay(parsedDetails)}
                               </Code>
                             </Box>
@@ -437,7 +419,7 @@ export function AuditLogPage({ tenantId: _tenantId }: AuditLogPageProps) {
         </CardBody>
       </Card>
 
-      <HStack justify="between" className="mt-4">
+      <HStack justify="between">
         <Text variant="caption" color="muted">
           Showing {filteredLogs.length} of {logs.length} entries
         </Text>

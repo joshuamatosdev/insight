@@ -1,5 +1,5 @@
-import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Flex, Stack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
 
 interface Activity {
   id: string;
@@ -77,23 +77,8 @@ export function ActivityFeed({
               <Flex
                 key={activity.id}
                 gap="sm"
-                style={{
-                  paddingBottom: '0.75rem',
-                  borderBottom: '1px solid #e4e4e7',
-                }}
               >
-                <Box
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    backgroundColor: '#f4f4f5',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
+                <Box>
                   {getActivityIcon(activity.type)}
                 </Box>
                 <Stack spacing="0">

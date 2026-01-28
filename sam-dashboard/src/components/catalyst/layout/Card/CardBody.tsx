@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { CardBodyProps, CardPadding } from './Card.types';
+import {CardBodyProps, CardPadding} from './Card.types';
 
 /**
  * CardBody - Main content section of a Card

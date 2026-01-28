@@ -1,11 +1,8 @@
-import { useState } from 'react';
-import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
-import { Text, Input, Button, Select } from '../../../components/catalyst/primitives';
-import {
-  EmptyState,
-  EmptyStateDescription,
-} from '../../../components/catalyst';
-import { OnboardingCard } from '../../../components/domain/onboarding';
+import {useState} from 'react';
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Button, Input, Select, Text} from '../../../components/catalyst/primitives';
+import {EmptyState, EmptyStateDescription,} from '../../../components/catalyst';
+import {OnboardingCard} from '../../../components/domain/onboarding';
 
 interface TeamInviteStepProps {
   onNext: () => void;
@@ -61,7 +58,7 @@ export function TeamInviteStep({
       <Stack spacing="md">
         {/* Add Member Form */}
         <Flex gap="sm" align="flex-end">
-          <Box className="flex-[2]">
+          <Box>
             <Text as="label" variant="label" htmlFor="memberEmail">
               Email Address
             </Text>
@@ -71,10 +68,9 @@ export function TeamInviteStep({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="colleague@company.com"
-              className="mt-1"
             />
           </Box>
-          <Box className="flex-1">
+          <Box>
             <Text as="label" variant="label" htmlFor="memberRole">
               Role
             </Text>
@@ -83,7 +79,6 @@ export function TeamInviteStep({
               value={role}
               onChange={(e) => setRole(e.target.value)}
               options={ROLES}
-              className="mt-1"
             />
           </Box>
           <Button variant="secondary" onClick={addMember}>
@@ -100,9 +95,8 @@ export function TeamInviteStep({
             {members.map((member, index) => (
               <Card
                 key={index}
-                className="bg-zinc-50 dark:bg-zinc-800"
               >
-                <CardBody className="py-3">
+                <CardBody>
                   <Flex align="center" justify="space-between">
                     <Stack spacing="xs">
                       <Text variant="body">{member.email}</Text>
@@ -125,8 +119,8 @@ export function TeamInviteStep({
         )}
 
         {members.length === 0 && (
-          <Card className="bg-zinc-50 dark:bg-zinc-800">
-            <CardBody className="py-6">
+          <Card>
+            <CardBody>
               <EmptyState>
                 <EmptyStateDescription>
                   No team members added yet. You can always invite people later from Settings.

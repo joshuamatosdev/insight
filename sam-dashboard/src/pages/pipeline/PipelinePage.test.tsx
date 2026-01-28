@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {beforeEach, describe, expect, it, type Mock, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { PipelinePage } from './PipelinePage';
+import {BrowserRouter} from 'react-router-dom';
+import {PipelinePage} from './PipelinePage';
 import * as pipelineHooks from '../../hooks/usePipeline';
-import type { Pipeline, PipelineOpportunity } from '../../types/pipeline';
+import type {Pipeline, PipelineOpportunity} from '../../types/pipeline';
 
 // Mock the hooks
 vi.mock('../../hooks/usePipeline', () => ({

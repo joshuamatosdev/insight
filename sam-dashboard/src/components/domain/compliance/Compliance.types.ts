@@ -3,19 +3,19 @@
  */
 
 import type {
-  Certification,
-  CertificationFormState,
-  CertificationFormErrors,
-  CertificationType,
-  CertificationStatus,
-  SecurityClearance,
-  ClearanceFormState,
-  ClearanceFormErrors,
-  ClearanceType,
-  ClearanceLevel,
-  ClearanceStatus,
-  SbomComponent,
-  CycloneDxBom,
+    Certification,
+    CertificationFormErrors,
+    CertificationFormState,
+    CertificationStatus,
+    CertificationType,
+    ClearanceFormErrors,
+    ClearanceFormState,
+    ClearanceLevel,
+    ClearanceStatus,
+    ClearanceType,
+    CycloneDxBom,
+    SbomComponent,
+    SecurityClearance,
 } from '../../../types/compliance.types';
 
 // ==================== Certification Component Props ====================

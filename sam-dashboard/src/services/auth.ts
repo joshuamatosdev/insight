@@ -1,10 +1,4 @@
-import type {
-  LoginCredentials,
-  LoginResponse,
-  RegisterData,
-  AuthError,
-  User,
-} from '../auth/Auth.types';
+import type {AuthError, LoginCredentials, LoginResponse, RegisterData, User,} from '../auth/Auth.types';
 
 const API_BASE = '/api/v1/auth';
 

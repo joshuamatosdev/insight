@@ -1,31 +1,39 @@
-import { CSSProperties, useContext } from 'react';
-import { TableCellProps } from './Table.types';
-import { TableContext } from './Table';
-import { TableRowContext } from './TableRow';
-import { Link } from '../../primitives/link';
+import {useContext} from 'react';
+import clsx from 'clsx';
+import {TableCellProps} from './Table.types';
+import {TableContext} from './Table';
+import {TableRowContext} from './TableRow';
+import {Link} from '../../primitives/link';
+
+const alignClassMap: Record<string, string> = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+};
 
 export function TableCell({ align = 'left', className, style, children, colSpan, rowSpan }: TableCellProps) {
   const { dense } = useContext(TableContext);
   const { href, target, title } = useContext(TableRowContext);
 
-  const cellStyles: CSSProperties = {
-    padding: dense === true ? '0.625rem 1rem' : '1rem',
-    textAlign: align,
-    verticalAlign: 'middle',
-    borderBottom: '1px solid #e4e4e7',
-    position: href !== undefined ? 'relative' : undefined,
-    ...style,
-  };
-
   return (
-    <td className={className} style={cellStyles} colSpan={colSpan} rowSpan={rowSpan}>
+    <td
+      className={clsx(
+        dense === true ? 'px-4 py-2.5' : 'p-4',
+        'align-middle border-b border-zinc-200',
+        href !== undefined && 'relative',
+        alignClassMap[align],
+        className
+      )}
+      style={style}
+      colSpan={colSpan}
+      rowSpan={rowSpan}
+    >
       {href !== undefined && (
         <Link
           href={href}
           target={target}
           aria-label={title}
           className="absolute inset-0 focus:outline-hidden"
-          style={{ position: 'absolute', inset: 0 }}
         />
       )}
       {children}

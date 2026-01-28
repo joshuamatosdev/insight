@@ -1,55 +1,46 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Flex,
-  Stack,
-  Box,
-  Grid,
-  GridItem,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeaderCell,
-  TableCell,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeaderCell,
+    TableRow,
 } from '../components/catalyst/layout';
+import {Badge, Button, Checkbox, CheckboxField, Input, Select, Text,} from '../components/catalyst/primitives';
 import {
-  Text,
-  Button,
-  Input,
-  Select,
-  Badge,
-  Checkbox,
-  CheckboxField,
-} from '../components/catalyst/primitives';
-import {
-  Dialog,
-  DialogTitle,
-  DialogBody,
-  DialogActions,
-  InlineAlert,
-  InlineAlertDescription,
+    Dialog,
+    DialogActions,
+    DialogBody,
+    DialogTitle,
+    InlineAlert,
+    InlineAlertDescription,
 } from '../components/catalyst';
-import { DraggableColumn, DropZone, FilterBuilder } from '../components/domain/reports';
+import {DraggableColumn, DropZone, FilterBuilder} from '../components/domain/reports';
 import {
-  PageHeading,
-  PageHeadingSection,
-  PageHeadingTitle,
-  PageHeadingDescription,
-  PageHeadingActions,
+    PageHeading,
+    PageHeadingActions,
+    PageHeadingDescription,
+    PageHeadingSection,
+    PageHeadingTitle,
 } from '../components/catalyst/navigation';
 import type {
-  EntityType,
-  ColumnDefinition,
-  FilterCondition,
-  SortDirection,
-  ReportBuilderFormState,
-  ReportBuilderFormErrors,
-  ReportExecutionResult,
-  ReportPageState,
+    ColumnDefinition,
+    EntityType,
+    FilterCondition,
+    ReportBuilderFormErrors,
+    ReportBuilderFormState,
+    ReportExecutionResult,
+    ReportPageState,
+    SortDirection,
 } from '../types/report.types';
 
 const API_BASE = '/api/v1';
@@ -479,7 +470,7 @@ export function ReportBuilderPage({
 
   if (pageState === 'loading') {
     return (
-      <Flex justify="center" align="center" className="min-h-[200px]">
+      <Flex justify="center" align="center">
         <Text variant="body">Loading report builder...</Text>
       </Flex>
     );
@@ -487,8 +478,8 @@ export function ReportBuilderPage({
 
   if (pageState === 'error' && errors.general !== undefined) {
     return (
-      <Flex justify="center" align="center" className="min-h-[200px]">
-        <Stack spacing="md" className="text-center">
+      <Flex justify="center" align="center">
+        <Stack spacing="md">
           <Text variant="body" color="danger">
             {errors.general}
           </Text>
@@ -542,7 +533,7 @@ export function ReportBuilderPage({
           <Text variant="heading5">Data Source</Text>
         </CardHeader>
         <CardBody>
-          <Box className="max-w-md">
+          <Box>
             <Select
               value={formState.entityType ?? ''}
               onChange={(e) => handleEntityTypeChange(e.target.value as EntityType)}
@@ -550,7 +541,7 @@ export function ReportBuilderPage({
               options={ENTITY_TYPE_OPTIONS}
             />
             {errors.entityType !== undefined && (
-              <Text variant="caption" color="danger" className="mt-1">
+              <Text variant="caption" color="danger">
                 {errors.entityType}
               </Text>
             )}
@@ -589,7 +580,7 @@ export function ReportBuilderPage({
                     </Box>
                   ))}
                   {getUnselectedColumns().length === 0 && (
-                    <Text variant="bodySmall" color="muted" className="text-center p-4">
+                    <Text variant="bodySmall" color="muted">
                       All columns have been added to the report
                     </Text>
                   )}
@@ -624,7 +615,7 @@ export function ReportBuilderPage({
                   isDropTarget={isDropTarget}
                 />
                 {errors.columns !== undefined && (
-                  <Text variant="caption" color="danger" className="mt-2">
+                  <Text variant="caption" color="danger">
                     {errors.columns}
                   </Text>
                 )}
@@ -655,8 +646,8 @@ export function ReportBuilderPage({
           </CardHeader>
           <CardBody>
             <Flex gap="md">
-              <Box className="flex-1">
-                <Text as="label" variant="caption" color="muted" htmlFor="sortBy" className="mb-1">
+              <Box>
+                <Text as="label" variant="caption" color="muted" htmlFor="sortBy">
                   Sort By
                 </Text>
                 <Select
@@ -670,8 +661,8 @@ export function ReportBuilderPage({
                   }))}
                 />
               </Box>
-              <Box className="flex-1">
-                <Text as="label" variant="caption" color="muted" htmlFor="sortDirection" className="mb-1">
+              <Box>
+                <Text as="label" variant="caption" color="muted" htmlFor="sortDirection">
                   Direction
                 </Text>
                 <Select
@@ -701,7 +692,7 @@ export function ReportBuilderPage({
             </Flex>
           </CardHeader>
           <CardBody padding="none">
-            <Box className="overflow-x-auto">
+            <Box>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -728,7 +719,7 @@ export function ReportBuilderPage({
               </Table>
             </Box>
             {previewData.totalRecords > 10 && (
-              <Box className="p-3 text-center">
+              <Box>
                 <Text variant="bodySmall" color="muted">
                   Showing 10 of {previewData.totalRecords} records
                 </Text>
@@ -744,7 +735,7 @@ export function ReportBuilderPage({
         <DialogBody>
           <Stack spacing="md">
             <Box>
-              <Text as="label" variant="caption" color="muted" htmlFor="reportName" className="mb-1">
+              <Text as="label" variant="caption" color="muted" htmlFor="reportName">
                 Report Name *
               </Text>
               <Input
@@ -754,13 +745,13 @@ export function ReportBuilderPage({
                 placeholder="Enter report name..."
               />
               {errors.name !== undefined && (
-                <Text variant="caption" color="danger" className="mt-1">
+                <Text variant="caption" color="danger">
                   {errors.name}
                 </Text>
               )}
             </Box>
             <Box>
-              <Text as="label" variant="caption" color="muted" htmlFor="reportDescription" className="mb-1">
+              <Text as="label" variant="caption" color="muted" htmlFor="reportDescription">
                 Description
               </Text>
               <Input

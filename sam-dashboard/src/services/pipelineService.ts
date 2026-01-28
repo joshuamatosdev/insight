@@ -1,18 +1,18 @@
-import { apiClient } from './apiClient';
+import {apiClient} from './apiClient';
 import type {
-  Pipeline,
-  PipelineOpportunity,
-  PipelineSummary,
-  PipelineStage,
-  CreatePipelineRequest,
-  UpdatePipelineRequest,
-  CreateStageRequest,
-  UpdateStageRequest,
-  AddOpportunityRequest,
-  UpdatePipelineOpportunityRequest,
-  SetBidDecisionRequest,
-  Page,
-  TeamingPartner,
+    AddOpportunityRequest,
+    CreatePipelineRequest,
+    CreateStageRequest,
+    Page,
+    Pipeline,
+    PipelineOpportunity,
+    PipelineStage,
+    PipelineSummary,
+    SetBidDecisionRequest,
+    TeamingPartner,
+    UpdatePipelineOpportunityRequest,
+    UpdatePipelineRequest,
+    UpdateStageRequest,
 } from '../types/pipeline';
 
 const PIPELINE_BASE = '/pipelines';

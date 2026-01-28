@@ -1,19 +1,16 @@
 /**
  * Types for Financial Domain Components
  */
-import { CSSProperties, ReactNode } from 'react';
+import {CSSProperties, ReactNode} from 'react';
 import type {
-  Invoice,
-  BudgetItem,
-  LaborRate,
-  InvoiceFormState,
-  InvoiceFormErrors,
-  BudgetFormState,
-  BudgetFormErrors,
-  LaborRateFormState,
-  LaborRateFormErrors,
-  TenantFinancialSummary,
-  BudgetCategory,
+    BudgetCategory,
+    BudgetFormState,
+    BudgetItem,
+    Invoice,
+    InvoiceFormState,
+    LaborRate,
+    LaborRateFormState,
+    TenantFinancialSummary,
 } from '../../../types/financial.types';
 
 // Budget Card Props

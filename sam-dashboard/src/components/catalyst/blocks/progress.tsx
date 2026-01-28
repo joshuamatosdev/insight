@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { forwardRef } from 'react'
+import React, {forwardRef} from 'react'
 
 const colors = {
   blue: 'bg-blue-600 dark:bg-blue-500',

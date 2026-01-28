@@ -1,4 +1,4 @@
-import type { TeamingPartner } from '../../../types/pipeline';
+import type {TeamingPartner} from '../../../types/pipeline';
 
 export interface TeamingPartnerListProps {
   partners: TeamingPartner[];

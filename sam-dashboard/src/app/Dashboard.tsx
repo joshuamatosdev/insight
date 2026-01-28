@@ -125,7 +125,7 @@ export function Dashboard() {
     const renderContent = () => {
         if (isLoading) {
             return (
-                <div className="flex max-h-screen items-center justify-center">
+                <div>
                     <Text>Loading opportunities...</Text>
                 </div>
             );
@@ -308,28 +308,23 @@ export function Dashboard() {
         ];
 
         return (
-            <aside className="hidden w-96 shrink-0 border-l border-zinc-200 xl:block dark:border-white/10">
-                <div className="sticky top-0 h-screen overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
-                    <Heading level={2} className="text-base">Activity Feed</Heading>
-                    <Text className="mt-1">Recent updates across your pipeline</Text>
-                    <ul role="list" className="mt-6 space-y-6">
+            <aside>
+                <div>
+                    <Heading level={2}>Activity Feed</Heading>
+                    <Text>Recent updates across your pipeline</Text>
+                    <ul role="list">
                         {activityItems.map((item, index) => (
-                            <li key={item.id} className="relative flex gap-x-4">
+                            <li key={item.id}>
                                 {index < activityItems.length - 1 && (
-                                    <div className="absolute -bottom-6 left-0 top-0 flex w-6 justify-center">
-                                        <div className="w-px bg-zinc-200 dark:bg-zinc-700"/>
+                                    <div>
+                                        <div/>
                                     </div>
                                 )}
-                                <div
-                                    className="relative flex size-6 flex-none items-center justify-center bg-white dark:bg-zinc-900">
-                                    <div className={
-                                        item.isAccent
-                                            ? 'size-1.5 rounded-full bg-accent ring-1 ring-accent/50'
-                                            : 'size-1.5 rounded-full bg-zinc-100 ring-1 ring-zinc-300 dark:bg-zinc-800 dark:ring-zinc-600'
-                                    }/>
+                                <div>
+                                    <div/>
                                 </div>
-                                <Text className="flex-auto py-0.5 text-xs">
-                                    <span className="font-medium text-zinc-900 dark:text-white">{item.title}</span>{' '}
+                                <Text>
+                                    <span>{item.title}</span>{' '}
                                     {item.description}
                                 </Text>
                             </li>
@@ -352,7 +347,7 @@ export function Dashboard() {
                             <SidebarIcon>
                                 <BuildingCheckIcon size="sm"/>
                             </SidebarIcon>
-                            <Text className="font-semibold">Insight</Text>
+                            <Text>Insight</Text>
                         </NavbarItem>
                     </NavbarSection>
                     <NavbarSpacer/>
@@ -388,11 +383,11 @@ export function Dashboard() {
             }
             fullWidth
         >
-            <div className="flex min-h-full">
+            <div>
                 {/* Page content area */}
                 <div style={{ marginRight: '30px'}}>
                     {refreshMessage !== null && (
-                        <div className="mb-4">
+                        <div>
                             <InlineAlert
                                 color={refreshMessage.includes('Failed') ? 'error' : 'success'}
                             >

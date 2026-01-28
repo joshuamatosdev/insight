@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {beforeEach, describe, expect, it, type Mock, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MessagingPage } from './MessagingPage';
+import {MessagingPage} from './MessagingPage';
 import * as hooks from '../../hooks/usePortal';
-import type { MessageThread, Message, ThreadParticipant } from '../../types/portal';
+import type {Message, MessageThread, ThreadParticipant} from '../../types/portal';
 
 // Mock the hooks
 vi.mock('../../hooks/usePortal', () => ({

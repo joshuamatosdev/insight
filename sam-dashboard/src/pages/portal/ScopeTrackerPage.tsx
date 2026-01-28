@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Text, Button, Badge, Select } from '../../components/catalyst/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
-import { ScopeItemList, ScopeChangeTracker } from '../../components/domain/portal';
-import { useScope } from '../../hooks';
-import type { ScopeItem, ScopeChange, ScopeItemStatus } from '../../types/portal';
+import {useEffect, useState} from 'react';
+import {Badge, Button, Select, Text} from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Flex, Grid, Stack} from '../../components/catalyst/layout';
+import {ScopeChangeTracker, ScopeItemList} from '../../components/domain/portal';
+import {useScope} from '../../hooks';
+import type {ScopeItemStatus} from '../../types/portal';
 
 type TabView = 'wbs' | 'changes';
 
@@ -86,7 +86,7 @@ export function ScopeTrackerPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="min-h-[300px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           Loading scope data...
         </Text>
@@ -96,11 +96,11 @@ export function ScopeTrackerPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box className="p-8 text-center bg-red-50 rounded-lg">
+      <Box>
         <Text variant="body" color="danger">
           Error loading scope data: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} className="mt-3">
+        <Button variant="secondary" onClick={refresh}>
           Retry
         </Button>
       </Box>
@@ -108,7 +108,7 @@ export function ScopeTrackerPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="lg" className="p-6">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -224,7 +224,6 @@ export function ScopeTrackerPage(): React.ReactElement {
           {pendingChanges > 0 && (
             <Badge
               color="amber"
-              className="ml-2"
             >
               {pendingChanges}
             </Badge>
@@ -236,7 +235,7 @@ export function ScopeTrackerPage(): React.ReactElement {
       {activeTab === 'wbs' ? (
         <Box>
           {/* WBS Controls */}
-          <Card className="mb-4">
+          <Card>
             <CardBody>
               <Flex justify="space-between" align="center">
                 {/* Expand/Collapse */}
@@ -280,7 +279,6 @@ export function ScopeTrackerPage(): React.ReactElement {
               justify="center"
               align="center"
               direction="column"
-              className="p-8 bg-zinc-50 rounded-lg"
             >
               <Text variant="heading4" color="muted">
                 No scope items found
@@ -309,7 +307,6 @@ export function ScopeTrackerPage(): React.ReactElement {
               justify="center"
               align="center"
               direction="column"
-              className="p-8 bg-zinc-50 rounded-lg"
             >
               <Text variant="heading4" color="muted">
                 No scope changes

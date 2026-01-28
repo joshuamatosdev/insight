@@ -1,10 +1,10 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
-import { ProtectedRoute } from './ProtectedRoute';
-import { Box } from '../components/catalyst/layout';
-import type { AuthContextType, User } from './Auth.types';
+import {describe, expect, it, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {MemoryRouter, Route, Routes} from 'react-router-dom';
+import {AuthContext} from './AuthContext';
+import {ProtectedRoute} from './ProtectedRoute';
+import {Box} from '../components/catalyst/layout';
+import type {AuthContextType, User} from './Auth.types';
 
 // Test user data
 const mockUser: User = {

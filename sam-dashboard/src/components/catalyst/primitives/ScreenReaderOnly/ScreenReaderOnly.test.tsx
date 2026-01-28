@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { ScreenReaderOnly } from './ScreenReaderOnly';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {ScreenReaderOnly} from './ScreenReaderOnly';
 
 describe('ScreenReaderOnly', () => {
   it('renders visually hidden content', () => {

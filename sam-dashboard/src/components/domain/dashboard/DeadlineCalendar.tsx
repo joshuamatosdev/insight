@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
-import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../catalyst/layout';
-import { Text, Badge } from '../../catalyst/primitives';
+import {useMemo} from 'react';
+
+import {Box, Card, CardBody, CardHeader, Flex, Stack} from '../../catalyst/layout';
+import {Badge, Text} from '../../catalyst/primitives';
 
 interface Deadline {
   id: string;
@@ -63,14 +64,14 @@ export function DeadlineCalendar({
     });
   };
 
-  const getPriorityColor = (priority: Deadline['priority']): string => {
+  const getPriorityBorderClass = (priority: Deadline['priority']): string => {
     switch (priority) {
       case 'high':
-        return '#ef4444';
+        return 'border-l-red-500';
       case 'medium':
-        return '#f59e0b';
+        return 'border-l-amber-500';
       case 'low':
-        return '#10b981';
+        return 'border-l-emerald-500';
     }
   };
 
@@ -91,7 +92,7 @@ export function DeadlineCalendar({
           <Stack spacing="md">
             {Array.from(groupedDeadlines.entries()).map(([dateKey, items]) => (
               <Stack key={dateKey} spacing="sm">
-                <Text variant="caption" style={{ fontWeight: 600, color: '#52525b' }}>
+                <Text variant="caption">
                   {formatDisplayDate(dateKey)}
                 </Text>
                 {items.map((item) => (
@@ -99,12 +100,6 @@ export function DeadlineCalendar({
                     key={item.id}
                     align="center"
                     gap="sm"
-                    style={{
-                      padding: '0.5rem',
-                      backgroundColor: '#fafafa',
-                      borderRadius: '4px',
-                      borderLeft: `3px solid ${getPriorityColor(item.priority)}`,
-                    }}
                   >
                     <Box style={{ flex: 1 }}>
                       <Text variant="body" style={{ 

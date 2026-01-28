@@ -1,9 +1,9 @@
 import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
-import { LayoutGroup, motion } from 'motion/react'
-import React, { forwardRef, useId } from 'react'
-import { TouchTarget } from '../primitives/button'
-import { Link } from '../primitives/link'
+import {LayoutGroup, motion} from 'motion/react'
+import React, {forwardRef, useId} from 'react'
+import {TouchTarget} from '../primitives/button'
+import {Link} from '../primitives/link'
 
 export function Sidebar({ className, ...props }: React.ComponentPropsWithoutRef<'nav'>) {
   return <nav {...props} className={clsx(className, 'flex h-full min-h-0 flex-col')} />

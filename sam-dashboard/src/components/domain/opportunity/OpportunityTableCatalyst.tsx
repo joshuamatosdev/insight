@@ -9,17 +9,9 @@
  * - Dense spacing for cleaner look
  */
 
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeader,
-  TableCell,
-} from '../../catalyst'
-import { Box } from '../../catalyst/layout'
-import { Text } from '@/components'
-import { OpportunityTableProps } from '@/components'
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '../../catalyst'
+import {Box} from '../../catalyst/layout'
+import {OpportunityTableProps, Text} from '@/components'
 
 export function OpportunityTableCatalyst({ opportunities, maxRows }: OpportunityTableProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -56,7 +48,7 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
 
   if (opportunities.length === 0) {
     return (
-      <Box className="p-8 text-center">
+      <Box>
         <Text as="span" variant="bodySmall">No opportunities to display.</Text>
       </Box>
     )
@@ -86,12 +78,12 @@ export function OpportunityTableCatalyst({ opportunities, maxRows }: Opportunity
               </Text>
             </TableCell>
             <TableCell>
-              <Text as="span" variant="bodySmall" className="text-zinc-600">
+              <Text as="span" variant="bodySmall">
                 {opp.naicsCode !== undefined && opp.naicsCode !== null ? opp.naicsCode : '—'}
               </Text>
             </TableCell>
             <TableCell>
-              <Text as="span" variant="bodySmall" className={getDeadlineColorClass(opp.responseDeadLine)}>
+              <Text as="span" variant="bodySmall">
                 {formatDate(opp.responseDeadLine)}
               </Text>
             </TableCell>

@@ -17,7 +17,6 @@ import {
     SidebarBody,
     SidebarDivider,
     SidebarFooter,
-    SidebarHeader,
     SidebarHeading,
     SidebarItem,
     SidebarLabel,
@@ -29,12 +28,12 @@ import {
     UsersIcon
 } from "@components/catalyst";
 import {BuildingCheckIcon, DownloadIcon, LogoutIcon, RefreshIcon, Text} from "@/components";
-import type { ViewSection } from "./viewsection";
+import type {ViewSection} from "./viewsection";
 import {Dispatch, SetStateAction} from "react";
 
 export function SidebarIcon({children}: { children: React.ReactNode }) {
     return (
-        <span data-slot="icon" className="size-5">
+        <span data-slot="icon">
       {children}
     </span>
     );
@@ -71,16 +70,16 @@ export const RenderSidebar = ({
     handleExport,
     handleLogout,
 }: RenderSidebarProps) => (
-    <Sidebar className="h-full w-64 overflow-y-auto border-r border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
+    <Sidebar>
         {/*<SidebarHeader>*/}
         {/*    <SidebarSection>*/}
         {/*        <SidebarItem>*/}
         {/*            <SidebarIcon>*/}
         {/*                <BuildingCheckIcon size="sm"/>*/}
         {/*            </SidebarIcon>*/}
-        {/*            <div className="flex flex-col">*/}
-        {/*                <SidebarLabel className="font-semibold">Insight</SidebarLabel>*/}
-        {/*                <Text className="text-xs">*/}
+        {/*            <div>*/}
+        {/*                <SidebarLabel>Insight</SidebarLabel>*/}
+        {/*                <Text>*/}
         {/*                    {user !== null ? user.email : 'Dashboard'}*/}
         {/*                </Text>*/}
         {/*            </div>*/}
@@ -202,7 +201,6 @@ export const RenderSidebar = ({
                             key={naics}
                             current={currentSection === `naics-${naics}`}
                             onClick={() => setCurrentSection(`naics-${naics}`)}
-                            className="ml-6"
                         >
                             <SidebarIcon>
                                 <TagIcon size="sm"/>
@@ -550,8 +548,8 @@ export const RenderSidebar = ({
                     </SidebarIcon>
                     <SidebarLabel>Export CSV</SidebarLabel>
                 </SidebarItem>
-                <div className="flex items-center justify-between px-2 py-1">
-                    <Text className="text-sm">Theme</Text>
+                <div>
+                    <Text>Theme</Text>
                     <ThemeToggleCompact/>
                 </div>
                 <SidebarItem onClick={handleLogout}>

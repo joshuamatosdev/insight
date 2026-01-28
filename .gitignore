@@ -2,6 +2,8 @@
 # Environment & Secrets
 # ============================================
 .env
+backend/.env
+sam-dashboard/.env
 .env.local
 .env.*.local
 *.pem

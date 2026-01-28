@@ -1,13 +1,13 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {render, screen} from '@testing-library/react'
 import {
   PageHeading,
-  PageHeadingTitle,
-  PageHeadingDescription,
   PageHeadingActions,
+  PageHeadingDescription,
   PageHeadingMeta,
   PageHeadingMetaItem,
   PageHeadingSection,
+  PageHeadingTitle,
 } from './page-heading'
 
 /**

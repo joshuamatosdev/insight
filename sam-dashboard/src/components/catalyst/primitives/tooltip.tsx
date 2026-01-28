@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type React from 'react'
-import { useEffect, useId, useRef, useState } from 'react'
+import {useEffect, useId, useRef, useState} from 'react'
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right'
 

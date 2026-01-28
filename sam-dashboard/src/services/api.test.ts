@@ -1,18 +1,18 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {
-  fetchOpportunities,
-  fetchSbirOpportunities,
-  triggerIngest,
-  triggerFullIngest,
-  triggerSbirIngest,
-  fetchSbirAwards,
-  fetchSbirStats,
-  searchSbirAwards,
-  triggerSbirGovIngest,
-  fetchSbirAgencies,
+    fetchOpportunities,
+    fetchSbirAgencies,
+    fetchSbirAwards,
+    fetchSbirOpportunities,
+    fetchSbirStats,
+    searchSbirAwards,
+    triggerFullIngest,
+    triggerIngest,
+    triggerSbirGovIngest,
+    triggerSbirIngest,
 } from './api';
-import type { Opportunity } from '../components/domain/opportunity';
-import type { SbirAward, SbirStats } from '../components/domain/sbir';
+import type {Opportunity} from '../components/domain/opportunity';
+import type {SbirAward, SbirStats} from '../components/domain/sbir';
 
 // ==================== Test Fixtures ====================
 

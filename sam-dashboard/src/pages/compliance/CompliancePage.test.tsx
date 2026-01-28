@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {beforeEach, describe, expect, it, type Mock, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CompliancePage } from './CompliancePage';
+import {CompliancePage} from './CompliancePage';
 import * as hooks from '../../hooks';
-import type { Certification, SecurityClearance } from '../../types/compliance.types';
+import type {Certification, SecurityClearance} from '../../types/compliance.types';
 
 // Mock the hooks
 vi.mock('../../hooks', async () => {

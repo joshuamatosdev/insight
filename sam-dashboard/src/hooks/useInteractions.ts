@@ -1,21 +1,21 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import type {
-  Interaction,
-  CreateInteractionRequest,
-  UpdateInteractionRequest,
-  InteractionFilters,
-  UpcomingFollowup,
+    CreateInteractionRequest,
+    Interaction,
+    InteractionFilters,
+    UpcomingFollowup,
+    UpdateInteractionRequest,
 } from '../types/crm';
 import {
-  fetchInteractions,
-  fetchInteraction,
-  createInteraction as createInteractionApi,
-  updateInteraction as updateInteractionApi,
-  deleteInteraction as deleteInteractionApi,
-  fetchInteractionsByContact,
-  fetchInteractionsByOrganization,
-  fetchUpcomingFollowups,
-  markFollowupComplete as markFollowupCompleteApi,
+    createInteraction as createInteractionApi,
+    deleteInteraction as deleteInteractionApi,
+    fetchInteraction,
+    fetchInteractions,
+    fetchInteractionsByContact,
+    fetchInteractionsByOrganization,
+    fetchUpcomingFollowups,
+    markFollowupComplete as markFollowupCompleteApi,
+    updateInteraction as updateInteractionApi,
 } from '../services/crmService';
 
 export interface UseInteractionsReturn {

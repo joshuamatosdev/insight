@@ -1,4 +1,4 @@
-import { AuditLog, AuditLogFilterState } from '../types';
+import {AuditLog, AuditLogFilterState} from '../types';
 
 export interface AuditLogPageProps {
   tenantId?: string;

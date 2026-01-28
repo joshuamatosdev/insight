@@ -3,26 +3,22 @@
  * Lists all permissions grouped by category with role associations
  */
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {Badge, Button, Text,} from '../../components/catalyst/primitives';
 import {
-  Text,
-  Button,
-  Badge,
-} from '../../components/catalyst/primitives';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../components/catalyst/layout';
-import { fetchRoles, fetchPermissions } from '../../services';
-import type { Role, PermissionsByCategory, Permission, AdminPageState } from '../../types';
+import {fetchPermissions, fetchRoles} from '../../services';
+import type {AdminPageState, Permission, PermissionsByCategory, Role} from '../../types';
 
 /**
  * Format category name for display
@@ -77,7 +73,7 @@ function PermissionCard({
               <Text variant="bodySmall" weight="medium">
                 {permission.displayName}
               </Text>
-              <Text variant="caption" color="muted" className="font-mono">
+              <Text variant="caption" color="muted">
                 {permission.code}
               </Text>
             </Stack>
@@ -93,7 +89,7 @@ function PermissionCard({
           )}
 
           {rolesWithPermission.length > 0 && (
-            <Flex gap="xs" className="flex-wrap mt-1">
+            <Flex gap="xs">
               {rolesWithPermission.map((role) => (
                 <Badge
                   key={role.id}
@@ -207,7 +203,7 @@ export function PermissionsPage(): React.ReactElement {
   if (pageState === 'loading') {
     return (
       <Section id="permissions-admin">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading permissions...
           </Text>
@@ -219,7 +215,7 @@ export function PermissionsPage(): React.ReactElement {
   if (pageState === 'error') {
     return (
       <Section id="permissions-admin">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load permissions'}
@@ -238,7 +234,7 @@ export function PermissionsPage(): React.ReactElement {
       <SectionHeader title="Permissions" />
 
       {/* Stats Summary */}
-      <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="md" className="mb-6">
+      <Grid columns="repeat(auto-fit, minmax(200px, 1fr))" gap="md">
         <GridItem>
           <Card variant="filled">
             <CardBody padding="md">
@@ -298,8 +294,8 @@ export function PermissionsPage(): React.ReactElement {
       {Object.keys(permissions).length === 0 && (
         <Card variant="elevated">
           <CardBody>
-            <Flex direction="column" align="center" gap="md" className="p-8">
-              <Text variant="body" color="muted" className="text-center">
+            <Flex direction="column" align="center" gap="md">
+              <Text variant="body" color="muted">
                 No permissions found. Permissions are typically seeded automatically.
               </Text>
             </Flex>

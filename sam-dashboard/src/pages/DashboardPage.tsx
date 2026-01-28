@@ -1,26 +1,22 @@
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 import {
   Button,
-  StatGroup,
-  Stat,
-  StatLabel,
-  StatValue,
   Card,
+  CardBody,
   CardHeader,
   CardTitle,
-  CardBody,
   PageHeading,
+  PageHeadingDescription,
   PageHeadingSection,
   PageHeadingTitle,
-  PageHeadingDescription,
+  Stat,
+  StatGroup,
+  StatLabel,
+  StatValue,
 } from '../components/catalyst';
-import {
-  getOpportunityType,
-  OpportunityTable,
-  NAICSDistribution,
-} from '../components/domain';
-import { DashboardPageProps } from './Pages.types';
-import { Grid, GridItem } from '@/components';
+import {getOpportunityType, NAICSDistribution,} from '../components/domain';
+import {DashboardPageProps} from './Pages.types';
+import {Grid, GridItem} from '@/components';
 import OpportunityTableCatalyst from "../components/domain/opportunity/OpportunityTableCatalyst.tsx";
 
 export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps) {
@@ -109,7 +105,7 @@ export function DashboardPage({ opportunities, onNavigate }: DashboardPageProps)
           {/* Recent Opportunities */}
           <GridItem margin={"md"}>
             <Card>
-              <CardHeader divider className="flex items-center justify-between">
+              <CardHeader divider>
                 <CardTitle>Recent Opportunities</CardTitle>
                 <Button outline onClick={() => onNavigate('all-opportunities')}>
                   View All

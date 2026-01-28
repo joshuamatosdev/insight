@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { Card, CardBody, CardHeader, Stack, Flex, Box } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
+import {useMemo} from 'react';
+import {Box, Card, CardBody, CardHeader, Flex, Stack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
 
 interface PipelineStage {
   name: string;
@@ -55,21 +55,11 @@ export function PipelineValueChart({
                   {formatCurrency(stage.value)}
                 </Text>
               </Flex>
-              <Box
-                style={{
-                  height: '8px',
-                  backgroundColor: '#e4e4e7',
-                  borderRadius: '4px',
-                  overflow: 'hidden',
-                }}
-              >
+              <Box>
                 <Box
                   style={{
-                    height: '100%',
                     width: `${(stage.value / maxValue) * 100}%`,
                     backgroundColor: stage.color,
-                    borderRadius: '4px',
-                    transition: 'width 0.3s ease',
                   }}
                 />
               </Box>

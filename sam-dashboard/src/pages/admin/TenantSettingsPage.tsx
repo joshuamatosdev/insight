@@ -1,35 +1,35 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  Stack,
-  Grid,
-  GridItem,
-  Section,
-  SectionHeader,
-  Flex,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../components/catalyst/layout';
 import {
-  Text,
-  Button,
-  Input,
-  Select,
-  Checkbox,
-  CheckboxField,
-  InlineAlert,
-  InlineAlertDescription,
+    Button,
+    Checkbox,
+    CheckboxField,
+    InlineAlert,
+    InlineAlertDescription,
+    Input,
+    Select,
+    Text,
 } from '../../components/catalyst/primitives';
 import {
-  fetchTenantSettings,
-  updateTenantSettings,
-  TenantSettings,
-  TIMEZONE_OPTIONS,
-  DATE_FORMAT_OPTIONS,
-  CURRENCY_OPTIONS,
+    CURRENCY_OPTIONS,
+    DATE_FORMAT_OPTIONS,
+    fetchTenantSettings,
+    TenantSettings,
+    TIMEZONE_OPTIONS,
+    updateTenantSettings,
 } from '../../services/tenantAdminService';
-import { useAuth } from '../../auth';
-import { Description, Label } from '../../components/catalyst/blocks/fieldset';
+import {useAuth} from '../../auth';
+import {Description, Label} from '../../components/catalyst/blocks/fieldset';
 
 /**
  * Tenant Settings administration page
@@ -94,7 +94,7 @@ export function TenantSettingsPage(): React.ReactElement {
   if (isLoading === true) {
     return (
       <Section id="tenant-settings">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading settings...
           </Text>
@@ -106,7 +106,7 @@ export function TenantSettingsPage(): React.ReactElement {
   if (settings === null) {
     return (
       <Section id="tenant-settings">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load settings'}

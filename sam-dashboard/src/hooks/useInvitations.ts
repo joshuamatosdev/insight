@@ -1,20 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import type {AcceptInvitationRequest, CreateInvitationRequest, Invitation, InvitationDetails,} from '../services';
 import {
-  fetchInvitations,
-  fetchInvitation,
-  createInvitation,
-  createBulkInvitations,
-  resendInvitation,
-  revokeInvitation,
-  getInvitationByToken,
-  acceptInvitation,
-  validateInvitationToken,
-} from '../services';
-import type {
-  Invitation,
-  CreateInvitationRequest,
-  AcceptInvitationRequest,
-  InvitationDetails,
+    acceptInvitation,
+    createBulkInvitations,
+    createInvitation,
+    fetchInvitation,
+    fetchInvitations,
+    getInvitationByToken,
+    resendInvitation,
+    revokeInvitation,
 } from '../services';
 
 export interface UseInvitationsReturn {

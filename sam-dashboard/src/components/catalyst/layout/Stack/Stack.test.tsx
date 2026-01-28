@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { Stack } from './Stack';
-import { HStack } from './HStack';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {Stack} from './Stack';
+import {HStack} from './HStack';
 
 describe('Stack', () => {
   it('renders children correctly', () => {

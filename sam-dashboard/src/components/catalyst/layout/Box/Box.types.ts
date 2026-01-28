@@ -1,4 +1,4 @@
-import { CSSProperties, FormEvent, HTMLAttributes, ReactNode } from 'react';
+import {CSSProperties, FormEvent, HTMLAttributes, ReactNode} from 'react';
 
 export interface BoxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   children?: ReactNode;

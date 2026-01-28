@@ -1,15 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import {
-  getOpportunityType,
-  isSbirOpportunity,
-  getSbirLabel,
-  getSbirPhaseLabel,
-  Opportunity,
+    getOpportunityType,
+    getSbirLabel,
+    getSbirPhaseLabel,
+    isSbirOpportunity,
+    Opportunity,
 } from './Opportunity.types';
-import { OpportunityCard } from './OpportunityCard';
-import { TypeBadge } from './TypeBadge';
-import { Box } from '../../catalyst/layout';
+import {OpportunityCard} from './OpportunityCard';
+import {TypeBadge} from './TypeBadge';
+import {Box} from '../../catalyst/layout';
 
 const mockOpportunity: Opportunity = {
   id: '1',

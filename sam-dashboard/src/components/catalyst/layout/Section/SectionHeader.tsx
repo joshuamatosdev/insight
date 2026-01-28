@@ -1,7 +1,7 @@
-import { CSSProperties } from 'react';
-import { SectionHeaderProps } from './Section.types';
-import { Text } from '../../primitives';
-import { HStack } from '../Stack';
+import clsx from 'clsx';
+import {SectionHeaderProps} from './Section.types';
+import {Text} from '../../primitives';
+import {HStack} from '../Stack';
 
 export function SectionHeader({
   title,
@@ -13,24 +13,25 @@ export function SectionHeader({
   children,
   ...rest
 }: SectionHeaderProps) {
-  const headerStyles: CSSProperties = {
-    padding: '1rem 0',
-    marginBottom: '1.5rem',
-    borderBottom: '2px solid #e4e4e7',
-    ...style,
-  };
-
   // If children are provided, render them directly instead of the default layout
   if (children !== undefined) {
     return (
-      <header className={className} style={headerStyles} {...rest}>
+      <header
+        className={clsx('py-4 mb-6 border-b-2 border-zinc-200', className)}
+        style={style}
+        {...rest}
+      >
         {children}
       </header>
     );
   }
 
   return (
-    <header className={className} style={headerStyles} {...rest}>
+    <header
+      className={clsx('py-4 mb-6 border-b-2 border-zinc-200', className)}
+      style={style}
+      {...rest}
+    >
       <HStack justify="between" align="center">
         <HStack spacing="sm" align="center">
           {icon !== undefined && <span aria-hidden="true">{icon}</span>}

@@ -1,9 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { OAuthCallbackPage } from './OAuthCallbackPage';
-import type { AuthResponse } from '../services/oauthService';
+import {MemoryRouter} from 'react-router-dom';
+import {OAuthCallbackPage} from './OAuthCallbackPage';
+import type {AuthResponse} from '../services/oauthService';
+import * as oauthService from '../services/oauthService';
 
 // Mock the useNavigate hook
 const mockNavigate = vi.fn();
@@ -20,7 +21,6 @@ vi.mock('../services/oauthService', () => ({
   processOAuthCallback: vi.fn(),
 }));
 
-import * as oauthService from '../services/oauthService';
 const mockProcessOAuthCallback = oauthService.processOAuthCallback as ReturnType<typeof vi.fn>;
 
 // Mock the useAuth hook

@@ -1,11 +1,11 @@
-import { Card, CardHeader, CardBody, Stack, HStack } from '../../catalyst/layout';
-import { Text, Badge, Button, FileIcon, DownloadIcon } from '../../catalyst/primitives';
-import type { Document } from '../../../types/documents';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Badge, Button, DownloadIcon, FileIcon, Text} from '../../catalyst/primitives';
+import type {Document} from '../../../types/documents';
 import {
-  formatFileSize,
-  getDocumentTypeLabel,
-  getDocumentStatusVariant,
-  getAccessLevelVariant,
+    formatFileSize,
+    getAccessLevelVariant,
+    getDocumentStatusVariant,
+    getDocumentTypeLabel,
 } from '../../../services/documentService';
 
 export interface DocumentViewerProps {
@@ -100,7 +100,7 @@ export function DocumentViewer({
           </HStack>
         </CardHeader>
         <CardBody>
-          <HStack gap="sm" className="mb-4">
+          <HStack gap="sm">
             <Badge color={getDocumentStatusVariant(document.status)}>
               {document.status}
             </Badge>
@@ -121,7 +121,7 @@ export function DocumentViewer({
           </HStack>
 
           {document.description !== null && (
-            <Text variant="body" className="mb-4">
+            <Text variant="body">
               {document.description}
             </Text>
           )}

@@ -1,20 +1,27 @@
-import { useState, useCallback } from 'react';
-import { Text, Button, Badge, ChevronLeftIcon, PencilIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
-import { Box, Stack, HStack, Flex, Grid, Section, SectionHeader, Card, CardBody } from '../../components/catalyst/layout';
+import {useCallback, useState} from 'react';
 import {
-  ContractForm,
-  ContractStatusBadge,
-  ContractValueChart,
-  ClinTable,
-  ModificationTimeline,
-  DeliverableTracker,
+    Badge,
+    Button,
+    ChevronLeftIcon,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    PencilIcon,
+    Text
+} from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Flex, Grid, HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import type {DeliverableStatus, UpdateContractRequest,} from '../../components/domain/contracts';
+import {
+    ClinTable,
+    ContractForm,
+    ContractStatusBadge,
+    ContractValueChart,
+    DeliverableTracker,
+    formatDate,
+    getContractTypeLabel,
+    ModificationTimeline,
 } from '../../components/domain/contracts';
-import { useContract } from '../../hooks/useContracts';
-import type {
-  UpdateContractRequest,
-  DeliverableStatus,
-} from '../../components/domain/contracts';
-import { getContractTypeLabel, formatDate } from '../../components/domain/contracts';
+import {useContract} from '../../hooks/useContracts';
 
 export interface ContractDetailPageProps {
   contractId: string;
@@ -85,7 +92,7 @@ export function ContractDetailPage({
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" className="min-h-[400px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading contract details...
           </Text>
@@ -104,7 +111,7 @@ export function ContractDetailPage({
           </InlineAlertDescription>
         </InlineAlert>
         {onBack !== undefined && (
-          <Box className="mt-4">
+          <Box>
             <Button variant="secondary" onClick={onBack}>
               Back to Contracts
             </Button>
@@ -145,7 +152,6 @@ export function ContractDetailPage({
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                className="mb-2"
               >
                 Back to Contracts
               </Button>
@@ -154,7 +160,7 @@ export function ContractDetailPage({
               <Text variant="heading3">{contract.title}</Text>
               <ContractStatusBadge status={contract.status} />
             </HStack>
-            <HStack spacing="md" className="mt-1">
+            <HStack spacing="md">
               <Text variant="body" color="muted">
                 {contract.contractNumber}
               </Text>
@@ -173,26 +179,18 @@ export function ContractDetailPage({
         </HStack>
       </SectionHeader>
 
-      <Box className="mb-4">
+      <Box>
         <HStack spacing="0">
           {tabs.map((tab) => (
             <Button
               key={tab.key}
               variant={activeTab === tab.key ? 'primary' : 'secondary'}
               onClick={() => setActiveTab(tab.key)}
-              className={
-                tab.key === 'overview'
-                  ? 'rounded-l-md rounded-r-none'
-                  : tab.key === 'modifications'
-                    ? 'rounded-r-md rounded-l-none'
-                    : 'rounded-none'
-              }
             >
               {tab.label}
               {tab.count !== undefined && tab.count > 0 && (
                 <Badge
                   color={activeTab === tab.key ? 'zinc' : 'blue'}
-                  className="ml-2"
                 >
                   {tab.count}
                 </Badge>
@@ -208,7 +206,7 @@ export function ContractDetailPage({
 
           <Card>
             <CardBody>
-              <Text variant="heading5" className="mb-4">
+              <Text variant="heading5">
                 Contract Details
               </Text>
               <Grid columns={3} gap="md">
@@ -255,11 +253,11 @@ export function ContractDetailPage({
               </Grid>
 
               {contract.description !== null && (
-                <Box className="mt-4">
+                <Box>
                   <Text variant="caption" color="muted">
                     Description
                   </Text>
-                  <Text variant="body" className="mt-1">
+                  <Text variant="body">
                     {contract.description}
                   </Text>
                 </Box>
@@ -269,12 +267,12 @@ export function ContractDetailPage({
 
           <Card>
             <CardBody>
-              <Text variant="heading5" className="mb-4">
+              <Text variant="heading5">
                 Key Contacts
               </Text>
               <Grid columns={2} gap="lg">
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" className="mb-2">
+                  <Text variant="bodySmall" weight="semibold">
                     Contracting Officer
                   </Text>
                   <Stack spacing="xs">
@@ -289,7 +287,7 @@ export function ContractDetailPage({
                   </Stack>
                 </Box>
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" className="mb-2">
+                  <Text variant="bodySmall" weight="semibold">
                     COR (Contracting Officer Representative)
                   </Text>
                   <Stack spacing="xs">
@@ -302,7 +300,7 @@ export function ContractDetailPage({
                   </Stack>
                 </Box>
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" className="mb-2">
+                  <Text variant="bodySmall" weight="semibold">
                     Program Manager
                   </Text>
                   <Text variant="body">
@@ -310,7 +308,7 @@ export function ContractDetailPage({
                   </Text>
                 </Box>
                 <Box>
-                  <Text variant="bodySmall" weight="semibold" className="mb-2">
+                  <Text variant="bodySmall" weight="semibold">
                     Contract Manager
                   </Text>
                   <Text variant="body">

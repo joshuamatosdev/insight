@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Text, Button, Badge, Input } from '../../components/catalyst/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody, CardHeader } from '../../components/catalyst/layout';
-import { InboxList, MessageThread, MessageComposer } from '../../components/domain/portal';
-import { useMessaging } from '../../hooks';
-import { useAuth } from '../../auth';
+import {useState} from 'react';
+import {Badge, Button, Input, Text} from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Flex, Grid, Stack} from '../../components/catalyst/layout';
+import {InboxList, MessageComposer, MessageThread} from '../../components/domain/portal';
+import {useMessaging} from '../../hooks';
+import {useAuth} from '../../auth';
 
 /**
  * Messaging page with inbox and conversation view.
@@ -92,7 +92,7 @@ export function MessagingPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="min-h-[300px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           Loading messages...
         </Text>
@@ -102,11 +102,11 @@ export function MessagingPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box className="p-8 text-center bg-red-50 rounded-lg">
+      <Box>
         <Text variant="body" color="danger">
           Error loading messages: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} className="mt-3">
+        <Button variant="secondary" onClick={refresh}>
           Retry
         </Button>
       </Box>
@@ -114,7 +114,7 @@ export function MessagingPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="lg" className="p-6">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -195,12 +195,12 @@ export function MessagingPage(): React.ReactElement {
       )}
 
       {/* Main Content */}
-      <Card className="min-h-[600px]">
-        <Grid columns={3} className="h-full">
+      <Card>
+        <Grid columns={3}>
           {/* Inbox Sidebar */}
-          <Box className="border-r border-zinc-200 flex flex-col">
+          <Box>
             {/* Search */}
-            <Box className="p-3 border-b border-zinc-200">
+            <Box>
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -214,14 +214,13 @@ export function MessagingPage(): React.ReactElement {
               threads={filteredThreads}
               selectedThreadId={selectedThread?.id}
               onSelectThread={handleSelectThread}
-              className="flex-1"
             />
           </Box>
 
           {/* Message Content (2 columns) */}
-          <Box className="col-span-2 flex flex-col">
+          <Box>
             {showComposer ? (
-              <Box className="p-4">
+              <Box>
                 <MessageComposer
                   onSend={handleSendNewMessage}
                   onCancel={() => setShowComposer(false)}
@@ -234,14 +233,12 @@ export function MessagingPage(): React.ReactElement {
                 currentUserId={currentUserId}
                 onSendMessage={handleSendMessage}
                 onMarkAsRead={handleMarkAsRead}
-                className="flex-1"
               />
             ) : (
               <Flex
                 justify="center"
                 align="center"
                 direction="column"
-                className="flex-1"
               >
                 <Text variant="heading4" color="muted">
                   Select a Conversation

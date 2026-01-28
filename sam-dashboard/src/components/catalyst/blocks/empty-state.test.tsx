@@ -1,12 +1,12 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import {render, screen} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
 import {
-  EmptyState,
-  EmptyStateActions,
-  EmptyStateDashed,
-  EmptyStateDescription,
-  EmptyStateIcon,
-  EmptyStateTitle,
+    EmptyState,
+    EmptyStateActions,
+    EmptyStateDashed,
+    EmptyStateDescription,
+    EmptyStateIcon,
+    EmptyStateTitle,
 } from './empty-state'
 
 describe('EmptyState', () => {

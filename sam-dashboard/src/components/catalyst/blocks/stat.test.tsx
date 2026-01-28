@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { Stat, StatChange, StatGroup, StatLabel, StatValue } from './stat'
+import {render, screen} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {Stat, StatChange, StatGroup, StatLabel, StatValue} from './stat'
 
 describe('Stat Components', () => {
   describe('StatGroup', () => {

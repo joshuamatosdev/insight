@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import {CSSProperties, ReactNode} from 'react';
 
 export type SidebarPosition = 'fixed' | 'absolute' | 'relative' | 'sticky' | 'static';
 

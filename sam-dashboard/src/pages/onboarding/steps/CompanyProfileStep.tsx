@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Stack, Box } from '../../../components/catalyst/layout';
-import { Input, Text } from '../../../components/catalyst/primitives';
-import { Fieldset, FieldGroup, Field, Label, Description } from '../../../components/catalyst';
-import { OnboardingCard } from '../../../components/domain/onboarding';
+import {useState} from 'react';
+import {Box, Stack} from '../../../components/catalyst/layout';
+import {Input, Text} from '../../../components/catalyst/primitives';
+import {OnboardingCard} from '../../../components/domain/onboarding';
 
 interface CompanyProfileStepProps {
   onNext: () => void;
@@ -44,7 +43,6 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="Enter your company name"
             required
-            className="mt-1"
           />
         </Box>
         <Box>
@@ -56,9 +54,8 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
             value={uei}
             onChange={(e) => setUei(e.target.value)}
             placeholder="12-character Unique Entity ID"
-            className="mt-1"
           />
-          <Text variant="caption" color="muted" className="mt-1">
+          <Text variant="caption" color="muted">
             Your SAM.gov Unique Entity Identifier
           </Text>
         </Box>
@@ -71,9 +68,8 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
             value={cage}
             onChange={(e) => setCage(e.target.value)}
             placeholder="5-character CAGE code"
-            className="mt-1"
           />
-          <Text variant="caption" color="muted" className="mt-1">
+          <Text variant="caption" color="muted">
             Commercial and Government Entity Code
           </Text>
         </Box>
@@ -86,7 +82,6 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="123 Main St, City, State ZIP"
-            className="mt-1"
           />
         </Box>
         <Box>
@@ -98,7 +93,6 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
             value={contactName}
             onChange={(e) => setContactName(e.target.value)}
             placeholder="John Smith"
-            className="mt-1"
           />
         </Box>
         <Box>
@@ -111,7 +105,6 @@ export function CompanyProfileStep({ onNext, onBack }: CompanyProfileStepProps):
             value={contactEmail}
             onChange={(e) => setContactEmail(e.target.value)}
             placeholder="john@company.com"
-            className="mt-1"
           />
         </Box>
       </Stack>

@@ -1,15 +1,13 @@
-import { CSSProperties } from 'react';
-import { SidebarHeaderProps } from './Sidebar.types';
+import clsx from 'clsx';
+import {SidebarHeaderProps} from './Sidebar.types';
 
 export function SidebarHeader({ className, style, children }: SidebarHeaderProps) {
-  const headerStyles: CSSProperties = {
-    padding: '1.5rem 1rem',
-    borderBottom: '1px solid #e5e7eb',
-    ...style,
-  };
-
   return (
-    <header className={className} style={headerStyles} role="banner">
+    <header
+      className={clsx('px-4 py-6 border-b border-gray-200', className)}
+      style={style}
+      role="banner"
+    >
       {children}
     </header>
   );

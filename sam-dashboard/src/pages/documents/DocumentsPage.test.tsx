@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {beforeEach, describe, expect, it, type Mock, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { DocumentsPage } from './DocumentsPage';
+import {BrowserRouter} from 'react-router-dom';
+import {DocumentsPage} from './DocumentsPage';
 import * as hooks from '../../hooks';
-import type { Document, DocumentFolder } from '../../types/documents';
+import type {Document, DocumentFolder} from '../../types/documents';
 
 // Mock the hooks
 vi.mock('../../hooks', async () => {

@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
-import clsx from 'clsx'
+import {Link} from 'react-router-dom'
 
-import { Border } from './Border'
-import { Container } from './Container'
-import { FadeIn, FadeInStagger } from './FadeIn'
-import { GridPattern } from './GridPattern'
-import { SectionIntro } from './SectionIntro'
+
+import {Border} from './Border'
+import {Container} from './Container'
+import {FadeIn, FadeInStagger} from './FadeIn'
+import {GridPattern} from './GridPattern'
+import {SectionIntro} from './SectionIntro'
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString)
@@ -40,26 +40,23 @@ function PageLink({ page }: { page: Page }) {
     <article key={page.href}>
       <Border
         position="left"
-        className="relative flex flex-col items-start pl-8"
       >
-        <h3 className="mt-6 text-base font-semibold text-neutral-950">
+        <h3>
           {page.title}
         </h3>
         <time
           dateTime={page.date}
-          className="order-first text-sm text-neutral-600"
         >
           {formatDate(page.date)}
         </time>
-        <p className="mt-2.5 text-base text-neutral-600">{page.description}</p>
+        <p>{page.description}</p>
         <Link
           to={page.href}
-          className="mt-6 flex gap-x-3 text-base font-semibold text-neutral-950 transition hover:text-neutral-700"
           aria-label={`Read more: ${page.title}`}
         >
           Read more
-          <ArrowIcon className="w-6 flex-none fill-current" />
-          <span className="absolute inset-0" />
+          <ArrowIcon />
+          <span />
         </Link>
       </Border>
     </article>
@@ -78,10 +75,9 @@ export function PageLinks({
   className?: string
 }) {
   return (
-    <div className={clsx('relative pt-24 sm:pt-32 lg:pt-40', className)}>
-      <div className="absolute inset-x-0 top-0 -z-10 h-[884px] overflow-hidden rounded-t-4xl bg-linear-to-b from-neutral-50">
+    <div>
+      <div>
         <GridPattern
-          className="absolute inset-0 h-full w-full mask-[linear-gradient(to_bottom_left,white_40%,transparent_50%)] fill-neutral-100 stroke-neutral-950/5"
           yOffset={-270}
         />
       </div>
@@ -90,8 +86,8 @@ export function PageLinks({
         {intro && <p>{intro}</p>}
       </SectionIntro>
 
-      <Container className={intro ? 'mt-24' : 'mt-16'}>
-        <FadeInStagger className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
+      <Container>
+        <FadeInStagger>
           {pages.map((page) => (
             <FadeIn key={page.href}>
               <PageLink page={page} />

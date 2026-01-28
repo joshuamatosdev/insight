@@ -1,51 +1,35 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Card,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-  Grid,
-  GridItem,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeaderCell,
-  TableCell,
+    Box,
+    Card,
+    CardBody,
+    Flex,
+    Grid,
+    GridItem,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeaderCell,
+    TableRow,
 } from '../components/catalyst/layout';
+import {Badge, Button, IconButton, Input, Select, Text,} from '../components/catalyst/primitives';
+import {DownloadIcon, PencilIcon, TrashIcon,} from '../components/catalyst/primitives/Icon';
 import {
-  Text,
-  Button,
-  Badge,
-  Input,
-  Select,
-  IconButton,
-} from '../components/catalyst/primitives';
-import {
-  TrashIcon,
-  PencilIcon,
-  DownloadIcon,
-} from '../components/catalyst/primitives/Icon';
-import {
-  PageHeading,
-  PageHeadingSection,
-  PageHeadingTitle,
-  PageHeadingDescription,
-  PageHeadingActions,
+    PageHeading,
+    PageHeadingActions,
+    PageHeadingDescription,
+    PageHeadingSection,
+    PageHeadingTitle,
 } from '../components/catalyst/navigation';
-import {
-  EmptyState,
-  EmptyStateTitle,
-  EmptyStateDescription,
-  EmptyStateActions,
-} from '../components/catalyst';
+import {EmptyState, EmptyStateActions, EmptyStateDescription, EmptyStateTitle,} from '../components/catalyst';
 import type {
-  ReportDefinition,
-  EntityType,
-  PaginatedReportResponse,
-  ReportPageState,
-  ExportFormat,
+    EntityType,
+    ExportFormat,
+    PaginatedReportResponse,
+    ReportDefinition,
+    ReportPageState,
 } from '../types/report.types';
 
 const API_BASE = '/api/v1';
@@ -359,7 +343,7 @@ export function ReportsListPage({
 
   if (pageState === 'loading' && reports.length === 0) {
     return (
-      <Flex justify="center" align="center" className="min-h-[200px]">
+      <Flex justify="center" align="center">
         <Text variant="body">Loading reports...</Text>
       </Flex>
     );
@@ -367,8 +351,8 @@ export function ReportsListPage({
 
   if (pageState === 'error' && error !== null) {
     return (
-      <Flex justify="center" align="center" className="min-h-[200px]">
-        <Stack spacing="md" className="text-center">
+      <Flex justify="center" align="center">
+        <Stack spacing="md">
           <Text variant="body" color="danger">
             {error}
           </Text>
@@ -404,7 +388,7 @@ export function ReportsListPage({
         <CardBody>
           <Grid columns={3} gap="md">
             <GridItem>
-              <Text as="label" variant="caption" color="muted" htmlFor="reportSearch" className="mb-1">
+              <Text as="label" variant="caption" color="muted" htmlFor="reportSearch">
                 Search
               </Text>
               <Input
@@ -415,7 +399,7 @@ export function ReportsListPage({
               />
             </GridItem>
             <GridItem>
-              <Text as="label" variant="caption" color="muted" htmlFor="dataSourceFilter" className="mb-1">
+              <Text as="label" variant="caption" color="muted" htmlFor="dataSourceFilter">
                 Data Source
               </Text>
               <Select
@@ -442,7 +426,7 @@ export function ReportsListPage({
       <Card>
         <CardBody padding="none">
           {reports.length === 0 ? (
-            <Box className="p-8">
+            <Box>
               <EmptyState>
                 <EmptyStateTitle>No reports found</EmptyStateTitle>
                 <EmptyStateDescription>
@@ -504,7 +488,6 @@ export function ReportsListPage({
                     <TableCell>
                       <Badge
                         color={report.isPublic ? 'green' : 'zinc'}
-                        className="cursor-pointer"
                         onClick={() => handleTogglePublic(report)}
                       >
                         {report.isPublic ? 'Public' : 'Private'}

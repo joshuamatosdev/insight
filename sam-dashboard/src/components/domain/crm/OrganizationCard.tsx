@@ -1,7 +1,7 @@
-import { Card, CardHeader, CardBody, HStack, Stack } from '../../catalyst/layout';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import type { OrganizationCardProps } from './OrganizationCard.types';
-import type { OrganizationType, OrganizationStatus } from '../../../types/crm';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import type {OrganizationCardProps} from './OrganizationCard.types';
+import type {OrganizationStatus, OrganizationType} from '../../../types/crm';
 
 function getOrgTypeLabel(type: OrganizationType): string {
   const labels: Record<OrganizationType, string> = {

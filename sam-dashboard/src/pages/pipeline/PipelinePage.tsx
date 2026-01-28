@@ -1,14 +1,10 @@
-import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack, Box } from '../../components/catalyst/layout';
-import { Text, Button, Select, Badge } from '../../components/catalyst/primitives';
-import { PipelineBoard } from '../../components/domain/pipeline';
-import {
-  usePipelines,
-  usePipelineOpportunities,
-  usePipelineSummary,
-} from '../../hooks/usePipeline';
-import type { PipelineOpportunity } from '../../types/pipeline';
+import {useMemo, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Box, HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import {Badge, Button, Select, Text} from '../../components/catalyst/primitives';
+import {PipelineBoard} from '../../components/domain/pipeline';
+import {usePipelineOpportunities, usePipelines, usePipelineSummary,} from '../../hooks/usePipeline';
+import type {PipelineOpportunity} from '../../types/pipeline';
 
 function formatCurrency(value: number | null | undefined): string {
   if (value === null || value === undefined) {
@@ -106,7 +102,7 @@ export function PipelinePage() {
   if (error !== null) {
     return (
       <Section id="pipeline">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="danger">
             Error: {error.message}
           </Text>
@@ -118,7 +114,7 @@ export function PipelinePage() {
   if (loadingPipelines === true) {
     return (
       <Section id="pipeline">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="secondary">
             Loading pipelines...
           </Text>
@@ -130,7 +126,7 @@ export function PipelinePage() {
   if (pipelines.length === 0) {
     return (
       <Section id="pipeline">
-        <Box className="p-8 text-center">
+        <Box>
           <Stack gap="md" align="center">
             <Text variant="heading4">No Pipelines Found</Text>
             <Text variant="body" color="secondary">
@@ -155,7 +151,6 @@ export function PipelinePage() {
               value={activePipeline?.id ?? ''}
               onChange={(e) => handlePipelineChange(e.target.value)}
               options={pipelineOptions}
-              className="min-w-[200px]"
             />
             <Button variant="secondary" onClick={() => navigate('/pipeline/settings')}>
               Settings
@@ -169,7 +164,7 @@ export function PipelinePage() {
 
       {/* Summary Stats */}
       {summary !== null && (
-        <HStack gap="lg" wrap="wrap" className="mb-4">
+        <HStack gap="lg" wrap="wrap">
           <Stack gap="xs">
             <Text variant="caption" color="secondary">
               Total Pipeline Value
@@ -205,7 +200,6 @@ export function PipelinePage() {
       {/* Approaching Deadlines Alert */}
       {approachingDeadlines.length > 0 && (
         <Box
-          className="px-4 py-3 mb-4 bg-amber-50 rounded-md border border-amber-500"
         >
           <HStack justify="between" align="center">
             <Text variant="bodySmall" color="warning" weight="semibold">

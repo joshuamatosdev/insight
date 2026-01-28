@@ -3,33 +3,27 @@
  * Lists users with their assigned roles and allows role assignment
  */
 
-import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import {Badge, Button, Input, Select, Text,} from '../../components/catalyst/primitives';
+import {SearchIcon} from '../../components/catalyst/primitives/Icon';
 import {
-  Text,
-  Button,
-  Input,
-  Badge,
-  Select,
-} from '../../components/catalyst/primitives';
-import { SearchIcon } from '../../components/catalyst/primitives/Icon';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardBody,
-  Stack,
-  Flex,
-  Box,
-  HStack,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeaderCell,
-  TableCell,
+    Box,
+    Card,
+    CardBody,
+    Flex,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeaderCell,
+    TableRow,
 } from '../../components/catalyst/layout';
-import { fetchUsersWithRoles, fetchRoles, updateUserRole } from '../../services';
-import type { Role, UserWithRoles, AdminPageState } from '../../types';
+import {fetchRoles, fetchUsersWithRoles, updateUserRole} from '../../services';
+import type {AdminPageState, Role, UserWithRoles} from '../../types';
 
 /**
  * Format date for display
@@ -194,7 +188,7 @@ export function UserRolesPage(): React.ReactElement {
   if (pageState === 'loading' && users.length === 0) {
     return (
       <Section id="user-roles-admin">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading users...
           </Text>
@@ -206,7 +200,7 @@ export function UserRolesPage(): React.ReactElement {
   if (pageState === 'error' && users.length === 0) {
     return (
       <Section id="user-roles-admin">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Stack spacing="md" align="center">
             <Text variant="body" color="danger">
               {error ?? 'Failed to load users'}
@@ -225,11 +219,11 @@ export function UserRolesPage(): React.ReactElement {
       <SectionHeader title="User Role Management" />
 
       {/* Search Bar */}
-      <Card variant="filled" className="mb-4">
+      <Card variant="filled">
         <CardBody padding="md">
           <Stack spacing="sm">
             <Flex gap="sm" align="center">
-              <Box className="flex-1">
+              <Box>
                 <Input
                   type="text"
                   value={searchInput}
@@ -263,7 +257,7 @@ export function UserRolesPage(): React.ReactElement {
       </Card>
 
       {error !== null && (
-        <Card variant="outlined" className="mb-4 border-red-500">
+        <Card variant="outlined">
           <CardBody padding="md">
             <Text variant="bodySmall" color="danger">
               {error}
@@ -350,7 +344,7 @@ export function UserRolesPage(): React.ReactElement {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <Flex justify="between" align="center" className="mt-4">
+        <Flex justify="between" align="center">
           <Text variant="bodySmall" color="muted">
             Showing {currentPage * PAGE_SIZE + 1} -{' '}
             {Math.min((currentPage + 1) * PAGE_SIZE, totalUsers)} of {totalUsers} users

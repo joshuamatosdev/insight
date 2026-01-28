@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {beforeEach, describe, expect, it, type Mock, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FinancialDashboardPage } from './FinancialDashboardPage';
+import {FinancialDashboardPage} from './FinancialDashboardPage';
 import * as financialHooks from '../../hooks/useFinancial';
-import type { Invoice, BudgetItem, TenantFinancialSummary } from '../../types/financial.types';
+import type {BudgetItem, Invoice, TenantFinancialSummary} from '../../types/financial.types';
 
 // Mock the hooks
 vi.mock('../../hooks/useFinancial', () => ({

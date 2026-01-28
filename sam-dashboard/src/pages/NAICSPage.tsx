@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { TagIcon } from '../components/catalyst/primitives';
-import { Section, SectionHeader } from '../components/catalyst/layout';
-import { OpportunityList, getNAICSDescription } from '../components/domain';
-import { NAICSPageProps } from './Pages.types';
+import {useMemo} from 'react';
+import {TagIcon} from '../components/catalyst/primitives';
+import {Section, SectionHeader} from '../components/catalyst/layout';
+import {getNAICSDescription, OpportunityList} from '../components/domain';
+import {NAICSPageProps} from './Pages.types';
 
 export function NAICSPage({ naicsCode, opportunities }: NAICSPageProps) {
   const filteredOpportunities = useMemo(() => {

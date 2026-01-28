@@ -18,23 +18,16 @@
  * toast.info('New update available')
  */
 
-import { Transition } from '@headlessui/react'
+import {Transition} from '@headlessui/react'
 import {
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  XCircleIcon,
-  XMarkIcon,
+    CheckCircleIcon,
+    ExclamationTriangleIcon,
+    InformationCircleIcon,
+    XCircleIcon,
+    XMarkIcon,
 } from '@heroicons/react/20/solid'
 import clsx from 'clsx'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
+import {createContext, type ReactNode, useCallback, useContext, useMemo, useState,} from 'react'
 
 // =============================================================================
 // Types

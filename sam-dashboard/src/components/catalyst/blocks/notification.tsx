@@ -1,10 +1,10 @@
-import { Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/20/solid'
+import {Transition} from '@headlessui/react'
+import {XMarkIcon} from '@heroicons/react/20/solid'
 import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
+    CheckCircleIcon,
+    ExclamationCircleIcon,
+    ExclamationTriangleIcon,
+    InformationCircleIcon,
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import type React from 'react'

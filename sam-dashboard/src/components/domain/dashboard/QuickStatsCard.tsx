@@ -1,5 +1,4 @@
-import clsx from 'clsx';
-import { Text } from '../../catalyst/primitives';
+import {Text} from '../../catalyst/primitives';
 
 interface QuickStatsCardProps {
   title: string;
@@ -42,24 +41,19 @@ export function QuickStatsCard({
 
   return (
     <div
-      className={clsx(
-        'rounded-lg bg-white p-6',
-        'ring-1 ring-zinc-950/5',
-        'dark:bg-zinc-900 dark:ring-white/10'
-      )}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
+      <div>
+        <div>
           <Text as="div" variant="bodySmall" weight="medium">
             {title}
           </Text>
-          <Text as="div" className="mt-2 text-3xl font-medium tracking-tight" color="primary">
+          <Text as="div" color="primary">
             {value}
           </Text>
           {(change !== undefined || changeLabel !== undefined) && (
-            <div className="mt-2 flex items-center gap-2">
+            <div>
               {change !== undefined && (
-                <Text as="span" variant="caption" weight="medium" className={getChangeColor()}>
+                <Text as="span" variant="caption" weight="medium">
                   {formatChange()}
                 </Text>
               )}
@@ -72,7 +66,7 @@ export function QuickStatsCard({
           )}
         </div>
         {icon !== undefined && (
-          <div className="text-zinc-400 dark:text-zinc-500">
+          <div>
             {icon}
           </div>
         )}

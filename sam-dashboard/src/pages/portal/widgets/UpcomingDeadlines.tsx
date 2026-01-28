@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
-import { Text, Button } from '../../../components/catalyst/primitives';
+import {useEffect, useState} from 'react';
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Button, Text} from '../../../components/catalyst/primitives';
 
 interface Deadline {
   id: string;
@@ -132,33 +132,27 @@ export function UpcomingDeadlines(): React.ReactElement {
                     key={deadline.id}
                     align="center"
                     gap="sm"
-                    className="p-2 bg-zinc-50 dark:bg-zinc-800 rounded-md"
                   >
                     {/* Icon */}
-                    <Box className="w-9 h-9 rounded-md bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-lg">
+                    <Box>
                       {getTypeIcon(deadline.type)}
                     </Box>
 
                     {/* Details */}
-                    <Stack spacing="0" className="flex-1">
+                    <Stack spacing="0">
                       <Flex align="center" gap="sm">
                         <Text variant="body" weight="semibold">{deadline.title}</Text>
                         <Box
-                          className={`w-2 h-2 rounded-full ${
-                            deadline.priority === 'high' ? 'bg-red-500' :
-                            deadline.priority === 'medium' ? 'bg-amber-500' : 'bg-zinc-500'
-                          }`}
                         />
                       </Flex>
                       <Text variant="caption" color="muted">{deadline.contractNumber}</Text>
                     </Stack>
 
                     {/* Date */}
-                    <Stack spacing="0" className="text-right">
+                    <Stack spacing="0">
                       <Text
                         variant="caption"
                         weight="semibold"
-                        className={daysUntil <= 3 ? 'text-red-500' : 'text-zinc-700 dark:text-zinc-300'}
                       >
                         {daysUntil <= 0 ? 'Today!' : daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}
                       </Text>

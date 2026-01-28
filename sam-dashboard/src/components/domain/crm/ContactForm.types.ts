@@ -1,4 +1,4 @@
-import type { Contact, CreateContactRequest, ContactType, ContactStatus } from '../../../types/crm';
+import type {Contact, ContactStatus, ContactType, CreateContactRequest} from '../../../types/crm';
 
 export interface ContactFormProps {
   contact?: Contact;

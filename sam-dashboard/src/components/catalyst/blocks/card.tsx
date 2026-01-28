@@ -32,7 +32,7 @@
 
 import clsx from 'clsx'
 import type React from 'react'
-import { forwardRef } from 'react'
+import {forwardRef} from 'react'
 
 type CardVariant = 'elevated' | 'outlined' | 'filled'
 type CardPadding = 'none' | 'sm' | 'md' | 'lg'

@@ -2,8 +2,8 @@
  * ComplianceStatusBadge - Pocket-style ring badge for certification and clearance statuses
  */
 
-import clsx from 'clsx';
-import type { ComplianceStatusBadgeProps, CertificationStatus, ClearanceStatus } from './Compliance.types';
+
+import type {CertificationStatus, ClearanceStatus, ComplianceStatusBadgeProps} from './Compliance.types';
 
 /**
  * Pocket-style status colors (muted, not bright)
@@ -74,10 +74,6 @@ export function ComplianceStatusBadge({
 
   return (
     <div
-      className={clsx(
-        colorClass,
-        'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset'
-      )}
     >
       {formatStatusText(status)}
     </div>

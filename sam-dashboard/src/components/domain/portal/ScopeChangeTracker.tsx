@@ -1,8 +1,7 @@
-import type { CSSProperties } from 'react';
-import type { ScopeChangeTrackerProps, ScopeChangeCardProps } from './Portal.types';
-import type { ScopeChange } from '../../../types/portal';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Card, CardBody, Flex, Stack, Box, HStack } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+import type {ScopeChangeCardProps, ScopeChangeTrackerProps} from './Portal.types';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, Flex, HStack, Stack} from '../../catalyst/layout';
 
 /**
  * Individual scope change card.
@@ -117,7 +116,6 @@ function ScopeChangeCard({
 
   return (
     <Card
-      className={className}
       style={cardStyles}
       onClick={handleClick}
       aria-label={`Scope change: ${scopeChange.title}`}
@@ -157,7 +155,7 @@ function ScopeChangeCard({
                 borderRadius: '0.375rem',
               }}
             >
-              <Text variant="caption" weight="semibold" className="mb-1">
+              <Text variant="caption" weight="semibold">
                 Impact Assessment
               </Text>
               <HStack spacing="md">
@@ -198,7 +196,7 @@ function ScopeChangeCard({
           {/* Justification */}
           {scopeChange.justification !== null && scopeChange.justification !== '' && (
             <Box>
-              <Text variant="caption" weight="semibold" className="mb-1">
+              <Text variant="caption" weight="semibold">
                 Justification
               </Text>
               <Text variant="bodySmall" color="muted">
@@ -268,12 +266,11 @@ export function ScopeChangeTracker({
 
   if (scopeChanges.length === 0) {
     return (
-      <Box className={className} style={containerStyles}>
+      <Box style={containerStyles}>
         <Flex
           justify="center"
           align="center"
           direction="column"
-          className="p-8"
         >
           <Text variant="heading5" color="muted">
             No Scope Changes
@@ -287,12 +284,12 @@ export function ScopeChangeTracker({
   }
 
   return (
-    <Box className={className} style={containerStyles}>
+    <Box style={containerStyles}>
       <Stack spacing="lg">
         {/* Pending Changes */}
         {pendingChanges.length > 0 && (
           <Box>
-            <Flex align="center" gap="sm" className="mb-3">
+            <Flex align="center" gap="sm">
               <Text variant="heading5">Pending Review</Text>
               <Badge color="amber">
                 {pendingChanges.length}
@@ -315,7 +312,7 @@ export function ScopeChangeTracker({
         {/* Approved Changes */}
         {approvedChanges.length > 0 && (
           <Box>
-            <Flex align="center" gap="sm" className="mb-3">
+            <Flex align="center" gap="sm">
               <Text variant="heading5">Approved</Text>
               <Badge color="green">
                 {approvedChanges.length}
@@ -336,7 +333,7 @@ export function ScopeChangeTracker({
         {/* Rejected Changes */}
         {rejectedChanges.length > 0 && (
           <Box>
-            <Flex align="center" gap="sm" className="mb-3">
+            <Flex align="center" gap="sm">
               <Text variant="heading5">Rejected</Text>
               <Badge color="red">
                 {rejectedChanges.length}

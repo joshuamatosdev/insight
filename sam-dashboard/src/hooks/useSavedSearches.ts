@@ -1,19 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import type {CreateSavedSearchRequest, SavedSearch, SearchResult, UpdateSavedSearchRequest,} from '../services';
 import {
-  fetchSavedSearches,
-  fetchSavedSearch,
-  createSavedSearch,
-  updateSavedSearch,
-  deleteSavedSearch,
-  executeSavedSearch,
-  setDefaultSearch,
-  duplicateSavedSearch,
-} from '../services';
-import type {
-  SavedSearch,
-  CreateSavedSearchRequest,
-  UpdateSavedSearchRequest,
-  SearchResult,
+    createSavedSearch,
+    deleteSavedSearch,
+    duplicateSavedSearch,
+    executeSavedSearch,
+    fetchSavedSearch,
+    fetchSavedSearches,
+    setDefaultSearch,
+    updateSavedSearch,
 } from '../services';
 
 interface Page<T> {

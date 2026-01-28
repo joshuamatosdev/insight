@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { StatCard } from './StatCard';
-import { StatsGrid } from './StatsGrid';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {StatCard} from './StatCard';
+import {StatsGrid} from './StatsGrid';
 
 describe('StatCard', () => {
   it('renders value correctly', () => {
@@ -27,7 +27,7 @@ describe('StatCard', () => {
 
   it('applies className correctly', () => {
     const { container } = render(
-      <StatCard value={42} label="Total" className="custom-stat" />
+      <StatCard value={42} label="Total" />
     );
     const element = container.querySelector('div');
     expect(element).toHaveClass('custom-stat');

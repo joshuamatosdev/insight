@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react';
-import { GridItemProps } from './Grid.types';
+import {CSSProperties} from 'react';
+import {GridItemProps} from './Grid.types';
 
 export function GridItem({
   colSpan,

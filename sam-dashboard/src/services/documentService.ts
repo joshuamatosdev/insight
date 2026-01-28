@@ -1,18 +1,18 @@
-import type { ApiResult } from './apiClient';
+import type {ApiResult} from './apiClient';
 import type {
-  Document,
-  DocumentFilters,
-  CreateDocumentRequest,
-  UpdateDocumentRequest,
-  DocumentStorageSummary,
-  DocumentStatus,
-  DocumentFolder,
-  CreateFolderRequest,
-  UpdateFolderRequest,
-  DocumentTemplate,
-  TemplateType,
-  CreateTemplateRequest,
-  UpdateTemplateRequest,
+    CreateDocumentRequest,
+    CreateFolderRequest,
+    CreateTemplateRequest,
+    Document,
+    DocumentFilters,
+    DocumentFolder,
+    DocumentStatus,
+    DocumentStorageSummary,
+    DocumentTemplate,
+    TemplateType,
+    UpdateDocumentRequest,
+    UpdateFolderRequest,
+    UpdateTemplateRequest,
 } from '../types/documents';
 
 interface Page<T> {

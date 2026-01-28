@@ -1,25 +1,18 @@
-import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../auth';
+import {ChangeEvent, FormEvent, useCallback, useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {useAuth} from '../auth';
+import {Box, Card, CardBody, CardHeader, Flex, Stack,} from '../components/catalyst/layout';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  Input,
-  FormField,
-  InlineAlert,
-  InlineAlertDescription,
-  AuthLayout,
+    AuthLayout,
+    Button,
+    FormField,
+    InlineAlert,
+    InlineAlertDescription,
+    Input,
+    Text,
 } from '../components/catalyst/primitives';
-import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
-import type { LoginFormState, LoginFormErrors } from './LoginPage.types';
+import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
+import type {LoginFormErrors, LoginFormState} from './LoginPage.types';
 
 /**
  * Validates email format
@@ -118,16 +111,16 @@ export function LoginPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
-          <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
+          <CardHeader>
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
               <Stack spacing="xs" align="center">
                 <Text variant="heading3" color="white" weight="semibold">
                   SAM.gov Dashboard
                 </Text>
-                <Text variant="bodySmall" color="white" className="opacity-80">
+                <Text variant="bodySmall" color="white">
                   Sign in to your account
                 </Text>
               </Stack>
@@ -182,7 +175,6 @@ export function LoginPage(): React.ReactElement {
                   type="submit"
                   variant="primary"
                   fullWidth
-                  className="mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                 >
@@ -197,7 +189,6 @@ export function LoginPage(): React.ReactElement {
         <Text
           variant="caption"
           color="muted"
-          className="text-center mt-4 block"
         >
           Government Contract Intelligence Platform
         </Text>

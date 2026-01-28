@@ -2,9 +2,9 @@
  * ContractStatusBadge - Pocket-style ring badge for contract statuses
  */
 
-import clsx from 'clsx';
-import type { ContractStatusBadgeProps, ContractStatus } from './Contract.types';
-import { getContractStatusLabel } from './Contract.types';
+
+import type {ContractStatus, ContractStatusBadgeProps} from './Contract.types';
+import {getContractStatusLabel} from './Contract.types';
 
 /**
  * Pocket-style status colors (muted, not bright)
@@ -30,11 +30,6 @@ export function ContractStatusBadge({
 
   return (
     <div
-      className={clsx(
-        colorClass,
-        'rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',
-        className
-      )}
     >
       {label}
     </div>

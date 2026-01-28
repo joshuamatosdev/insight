@@ -2,12 +2,14 @@
  * Tests for TenantSettingsPage component
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TenantSettingsPage } from './TenantSettingsPage';
-import type { TenantSettings } from '../../services/tenantAdminService';
-import type { AuthContextType } from '../../auth';
+import {TenantSettingsPage} from './TenantSettingsPage';
+import type {TenantSettings} from '../../services/tenantAdminService';
+// Import mocked functions after vi.mock
+import {fetchTenantSettings, updateTenantSettings} from '../../services/tenantAdminService';
+import type {AuthContextType} from '../../auth';
 
 // Mock the tenant admin service
 vi.mock('../../services/tenantAdminService', () => ({
@@ -30,9 +32,6 @@ vi.mock('../../services/tenantAdminService', () => ({
     { value: 'GBP', label: 'British Pound (GBP)' },
   ],
 }));
-
-// Import mocked functions after vi.mock
-import { fetchTenantSettings, updateTenantSettings } from '../../services/tenantAdminService';
 
 // Mock the useAuth hook
 let mockAuthState: Partial<AuthContextType> = {

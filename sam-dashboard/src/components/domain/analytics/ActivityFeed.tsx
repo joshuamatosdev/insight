@@ -1,8 +1,8 @@
-import { CSSProperties } from 'react';
-import { ActivityFeedProps } from './Analytics.types';
-import { Text, Button, UserIcon } from '../../catalyst/primitives';
-import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../catalyst/layout';
-import { formatEventType } from '../../../types/analytics.types';
+import {CSSProperties} from 'react';
+import {ActivityFeedProps} from './Analytics.types';
+import {Button, Text, UserIcon} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {formatEventType} from '../../../types/analytics.types';
 
 /**
  * Format timestamp for display
@@ -57,7 +57,7 @@ export function ActivityFeed({
 
   if (loading) {
     return (
-      <Card className={className} style={containerStyles}>
+      <Card style={containerStyles}>
         <CardHeader>
           <Text variant="heading5">Recent Activity</Text>
         </CardHeader>
@@ -101,7 +101,7 @@ export function ActivityFeed({
 
   if (activities.length === 0) {
     return (
-      <Card className={className} style={containerStyles}>
+      <Card style={containerStyles}>
         <CardHeader>
           <Text variant="heading5">Recent Activity</Text>
         </CardHeader>
@@ -122,7 +122,7 @@ export function ActivityFeed({
   }
 
   return (
-    <Card className={className} style={containerStyles}>
+    <Card style={containerStyles}>
       <CardHeader>
         <Text variant="heading5">Recent Activity</Text>
       </CardHeader>
@@ -171,7 +171,6 @@ export function ActivityFeed({
                   <Text
                     variant="caption"
                     color="secondary"
-                    className="shrink-0 ml-2"
                   >
                     {formatTimestamp(activity.timestamp)}
                   </Text>

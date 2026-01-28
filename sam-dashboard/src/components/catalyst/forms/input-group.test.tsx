@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import { InputGroup, InputAddon, InputGroupInput } from './input-group'
+import {render, screen} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {InputAddon, InputGroup, InputGroupInput} from './input-group'
 
 describe('InputGroup', () => {
   it('renders input with leading text addon', () => {

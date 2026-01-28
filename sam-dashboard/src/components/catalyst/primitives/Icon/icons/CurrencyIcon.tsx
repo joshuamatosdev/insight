@@ -1,8 +1,8 @@
 /**
  * CurrencyIcon - Dollar/currency related icons
  */
-import { Icon } from '../Icon';
-import type { IconProps } from '../Icon.types';
+import {Icon} from '../Icon';
+import type {IconProps} from '../Icon.types';
 
 export function CurrencyIcon(props: IconProps) {
   return (

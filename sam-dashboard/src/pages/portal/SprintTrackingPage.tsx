@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Text, Button, Badge } from '../../components/catalyst/primitives';
-import { Flex, Stack, Grid, Box, Card, CardBody } from '../../components/catalyst/layout';
-import { SprintBoard, SprintCard } from '../../components/domain/portal';
-import { useSprints, useSprint } from '../../hooks';
-import type { Sprint, SprintTaskStatus, CreateSprintRequest } from '../../types/portal';
+import {useState} from 'react';
+import {Badge, Button, Text} from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Flex, Grid, Stack} from '../../components/catalyst/layout';
+import {SprintBoard, SprintCard} from '../../components/domain/portal';
+import {useSprint, useSprints} from '../../hooks';
+import type {Sprint, SprintTaskStatus} from '../../types/portal';
 
 /**
  * Sprint tracking page with kanban board view.
@@ -67,7 +67,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="min-h-[300px]">
+      <Flex justify="center" align="center">
         <Text variant="body" color="muted">
           Loading sprints...
         </Text>
@@ -77,11 +77,11 @@ export function SprintTrackingPage(): React.ReactElement {
 
   if (error !== null) {
     return (
-      <Box className="p-8 text-center bg-red-50 rounded-lg">
+      <Box>
         <Text variant="body" color="danger">
           Error loading sprints: {error.message}
         </Text>
-        <Button variant="secondary" onClick={refresh} className="mt-3">
+        <Button variant="secondary" onClick={refresh}>
           Retry
         </Button>
       </Box>
@@ -89,7 +89,7 @@ export function SprintTrackingPage(): React.ReactElement {
   }
 
   return (
-    <Stack spacing="lg" className="p-6">
+    <Stack spacing="lg">
       {/* Header */}
       <Flex justify="space-between" align="center">
         <Stack spacing="0">
@@ -115,7 +115,7 @@ export function SprintTrackingPage(): React.ReactElement {
           <Stack spacing="md">
             {/* Active Sprints */}
             <Box>
-              <Flex align="center" gap="sm" className="mb-2">
+              <Flex align="center" gap="sm">
                 <Text variant="bodySmall" weight="semibold">
                   Active
                 </Text>
@@ -142,7 +142,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
             {/* Planning Sprints */}
             <Box>
-              <Flex align="center" gap="sm" className="mb-2">
+              <Flex align="center" gap="sm">
                 <Text variant="bodySmall" weight="semibold">
                   Planning
                 </Text>
@@ -169,7 +169,7 @@ export function SprintTrackingPage(): React.ReactElement {
 
             {/* Completed Sprints */}
             <Box>
-              <Flex align="center" gap="sm" className="mb-2">
+              <Flex align="center" gap="sm">
                 <Text variant="bodySmall" weight="semibold">
                   Completed
                 </Text>
@@ -197,7 +197,7 @@ export function SprintTrackingPage(): React.ReactElement {
         </Box>
 
         {/* Sprint Board (3 columns) */}
-        <Box className="col-span-3">
+        <Box>
           {selectedSprint !== null ? (
             <Card>
               <CardBody>
@@ -213,7 +213,6 @@ export function SprintTrackingPage(): React.ReactElement {
               justify="center"
               align="center"
               direction="column"
-              className="min-h-[400px] bg-zinc-50 rounded-lg"
             >
               <Text variant="heading4" color="muted">
                 Select a Sprint

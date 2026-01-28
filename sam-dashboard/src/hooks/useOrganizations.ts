@@ -1,17 +1,17 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import type {
-  Organization,
-  CreateOrganizationRequest,
-  UpdateOrganizationRequest,
-  OrganizationFilters,
+    CreateOrganizationRequest,
+    Organization,
+    OrganizationFilters,
+    UpdateOrganizationRequest,
 } from '../types/crm';
 import {
-  fetchOrganizations,
-  fetchOrganization,
-  createOrganization as createOrganizationApi,
-  updateOrganization as updateOrganizationApi,
-  deleteOrganization as deleteOrganizationApi,
-  searchOrganizations,
+    createOrganization as createOrganizationApi,
+    deleteOrganization as deleteOrganizationApi,
+    fetchOrganization,
+    fetchOrganizations,
+    searchOrganizations,
+    updateOrganization as updateOrganizationApi,
 } from '../services/crmService';
 
 export interface UseOrganizationsReturn {

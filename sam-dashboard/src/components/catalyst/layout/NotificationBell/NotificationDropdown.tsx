@@ -1,9 +1,6 @@
-import { CSSProperties, useEffect, useRef } from 'react';
-import {
-  NotificationDropdownProps,
-  NotificationItemProps,
-  Notification,
-} from './NotificationBell.types';
+import {useEffect, useRef} from 'react';
+import clsx from 'clsx';
+import {Notification, NotificationDropdownProps, NotificationItemProps,} from './NotificationBell.types';
 
 function formatRelativeTime(dateString: string): string {
   const date = new Date(dateString);
@@ -40,75 +37,20 @@ function getTypeIcon(type: Notification['type']): string {
   }
 }
 
-function getTypeColor(type: Notification['type']): string {
+/** Map notification type to Tailwind background class */
+function getTypeColorClass(type: Notification['type']): string {
   switch (type) {
     case 'ALERT':
-      return '#ef4444';
+      return 'bg-red-500';
     case 'SYSTEM':
-      return '#f59e0b';
+      return 'bg-amber-500';
     case 'INFO':
     default:
-      return '#3b82f6';
+      return 'bg-blue-500';
   }
 }
 
 function NotificationItem({ notification, onMarkAsRead, style }: NotificationItemProps) {
-  const itemStyles: CSSProperties = {
-    display: 'flex',
-    gap: '12px',
-    padding: '12px 16px',
-    cursor: 'pointer',
-    backgroundColor: notification.read === false ? '#fafafa' : 'transparent',
-    borderBottom: '1px solid #e4e4e7',
-    transition: 'background-color 0.15s ease',
-    ...style,
-  };
-
-  const iconContainerStyles: CSSProperties = {
-    width: '32px',
-    height: '32px',
-    borderRadius: '9999px',
-    backgroundColor: getTypeColor(notification.type),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#ffffff',
-    fontWeight: 700,
-    fontSize: '0.75rem',
-    flexShrink: 0,
-  };
-
-  const contentStyles: CSSProperties = {
-    flex: 1,
-    minWidth: 0,
-  };
-
-  const titleStyles: CSSProperties = {
-    fontWeight: notification.read === false
-      ? (600)
-      : (400),
-    fontSize: '0.875rem',
-    color: '#18181b',
-    marginBottom: '4px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  };
-
-  const messageStyles: CSSProperties = {
-    fontSize: '0.75rem',
-    color: '#52525b',
-    marginBottom: '4px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  };
-
-  const timeStyles: CSSProperties = {
-    fontSize: '0.75rem',
-    color: '#71717a',
-  };
-
   const handleClick = () => {
     if (notification.read === false) {
       onMarkAsRead(notification.id);
@@ -126,18 +68,38 @@ function NotificationItem({ notification, onMarkAsRead, style }: NotificationIte
     <div
       role="button"
       tabIndex={0}
-      style={itemStyles}
+      className={clsx(
+        'flex gap-3 px-4 py-3 cursor-pointer border-b border-zinc-200 transition-colors duration-150 hover:bg-zinc-100',
+        notification.read === false ? 'bg-zinc-50' : 'bg-transparent'
+      )}
+      style={style}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       aria-label={`${notification.read === false ? 'Unread' : 'Read'} notification: ${notification.title}`}
     >
-      <div style={iconContainerStyles}>{getTypeIcon(notification.type)}</div>
-      <div style={contentStyles}>
-        <div style={titleStyles}>{notification.title}</div>
+      <div
+        className={clsx(
+          'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0',
+          getTypeColorClass(notification.type)
+        )}
+      >
+        {getTypeIcon(notification.type)}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div
+          className={clsx(
+            'text-sm text-zinc-900 mb-1 overflow-hidden text-ellipsis whitespace-nowrap',
+            notification.read === false ? 'font-semibold' : 'font-normal'
+          )}
+        >
+          {notification.title}
+        </div>
         {notification.message !== null && notification.message.length > 0 ? (
-          <div style={messageStyles}>{notification.message}</div>
+          <div className="text-xs text-zinc-600 mb-1 overflow-hidden text-ellipsis whitespace-nowrap">
+            {notification.message}
+          </div>
         ) : null}
-        <div style={timeStyles}>{formatRelativeTime(notification.createdAt)}</div>
+        <div className="text-xs text-zinc-500">{formatRelativeTime(notification.createdAt)}</div>
       </div>
     </div>
   );
@@ -191,77 +153,22 @@ export function NotificationDropdown({
     return null;
   }
 
-  const dropdownStyles: CSSProperties = {
-    position: 'absolute',
-    top: '100%',
-    right: 0,
-    marginTop: '8px',
-    width: '360px',
-    maxHeight: '480px',
-    backgroundColor: '#ffffff',
-    borderRadius: '0.5rem',
-    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-    border: '1px solid #e4e4e7',
-    overflow: 'hidden',
-    zIndex: '50' as unknown as number,
-    ...style,
-  };
-
-  const headerStyles: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '12px 16px',
-    borderBottom: '1px solid #e4e4e7',
-    backgroundColor: '#ffffff',
-  };
-
-  const titleStyles: CSSProperties = {
-    fontWeight: 600,
-    fontSize: '1rem',
-    color: '#18181b',
-  };
-
-  const markAllButtonStyles: CSSProperties = {
-    background: 'none',
-    border: 'none',
-    color: '#2563eb',
-    fontSize: '0.875rem',
-    cursor: 'pointer',
-    padding: '4px 8px',
-    borderRadius: '0.375rem',
-    transition: 'background-color 0.15s ease',
-  };
-
-  const listStyles: CSSProperties = {
-    maxHeight: '400px',
-    overflowY: 'auto',
-  };
-
-  const emptyStyles: CSSProperties = {
-    padding: '32px 16px',
-    textAlign: 'center',
-    color: '#71717a',
-    fontSize: '0.875rem',
-  };
-
-  const loadingStyles: CSSProperties = {
-    padding: '32px 16px',
-    textAlign: 'center',
-    color: '#71717a',
-    fontSize: '0.875rem',
-  };
-
   const unreadCount = notifications.filter((n) => n.read === false).length;
 
   return (
-    <div ref={dropdownRef} style={dropdownStyles} role="menu" aria-label="Notifications">
-      <div style={headerStyles}>
-        <span style={titleStyles}>Notifications</span>
+    <div
+      ref={dropdownRef}
+      className="absolute top-full right-0 mt-2 w-[360px] max-h-[480px] bg-white rounded-lg shadow-lg border border-zinc-200 overflow-hidden z-50"
+      style={style}
+      role="menu"
+      aria-label="Notifications"
+    >
+      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 bg-white">
+        <span className="font-semibold text-base text-zinc-900">Notifications</span>
         {unreadCount > 0 ? (
           <button
             type="button"
-            style={markAllButtonStyles}
+            className="bg-transparent border-none text-blue-600 text-sm cursor-pointer px-2 py-1 rounded-md transition-colors duration-150 hover:bg-blue-50"
             onClick={onMarkAllAsRead}
             aria-label="Mark all notifications as read"
           >
@@ -269,11 +176,11 @@ export function NotificationDropdown({
           </button>
         ) : null}
       </div>
-      <div style={listStyles}>
+      <div className="max-h-[400px] overflow-y-auto">
         {isLoading ? (
-          <div style={loadingStyles}>Loading notifications...</div>
+          <div className="px-4 py-8 text-center text-zinc-500 text-sm">Loading notifications...</div>
         ) : notifications.length === 0 ? (
-          <div style={emptyStyles}>No notifications</div>
+          <div className="px-4 py-8 text-center text-zinc-500 text-sm">No notifications</div>
         ) : (
           notifications.map((notification) => (
             <NotificationItem

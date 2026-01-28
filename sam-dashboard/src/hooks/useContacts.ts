@@ -1,17 +1,12 @@
-import { useState, useCallback, useEffect } from 'react';
-import type {
-  Contact,
-  CreateContactRequest,
-  UpdateContactRequest,
-  ContactFilters,
-} from '../types/crm';
+import {useCallback, useEffect, useState} from 'react';
+import type {Contact, ContactFilters, CreateContactRequest, UpdateContactRequest,} from '../types/crm';
 import {
-  fetchContacts,
-  fetchContact,
-  createContact as createContactApi,
-  updateContact as updateContactApi,
-  deleteContact as deleteContactApi,
-  searchContacts,
+    createContact as createContactApi,
+    deleteContact as deleteContactApi,
+    fetchContact,
+    fetchContacts,
+    searchContacts,
+    updateContact as updateContactApi,
 } from '../services/crmService';
 
 export interface UseContactsReturn {

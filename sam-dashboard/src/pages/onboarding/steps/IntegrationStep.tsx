@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
-import { Text, Button, Badge } from '../../../components/catalyst/primitives';
-import { OnboardingCard } from '../../../components/domain/onboarding';
+import {useState} from 'react';
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Button, Text} from '../../../components/catalyst/primitives';
+import {OnboardingCard} from '../../../components/domain/onboarding';
 
 interface IntegrationStepProps {
   onNext: () => void;
@@ -80,16 +80,11 @@ export function IntegrationStep({
         {integrations.map((integration) => (
           <Card
             key={integration.id}
-            className={`transition-all duration-200 ${
-              integration.connected
-                ? 'border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
-                : 'border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
-            }`}
           >
             <CardBody>
               <Flex align="center" justify="space-between">
                 <Flex align="center" gap="md">
-                  <Box className="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center text-2xl">
+                  <Box>
                     <Text as="span">{integration.icon}</Text>
                   </Box>
                   <Stack spacing="xs">
@@ -114,7 +109,7 @@ export function IntegrationStep({
         ))}
 
         {connectedCount > 0 && (
-          <Text variant="caption" color="success" className="text-center">
+          <Text variant="caption" color="success">
             {connectedCount} integration(s) connected
           </Text>
         )}

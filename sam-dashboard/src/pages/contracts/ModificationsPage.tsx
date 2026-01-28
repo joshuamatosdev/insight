@@ -1,9 +1,33 @@
-import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select, FormField, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid, GridItem } from '../../components/catalyst/layout';
-import { ModificationTimeline } from '../../components/domain/contracts';
-import { useContract } from '../../hooks/useContracts';
-import type { CreateModificationRequest, ModificationType } from '../../components/domain/contracts';
+import {useCallback, useState} from 'react';
+import {
+    Button,
+    ChevronLeftIcon,
+    FormField,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    Input,
+    PlusIcon,
+    Select,
+    Text
+} from '../../components/catalyst/primitives';
+import {
+    Box,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack
+} from '../../components/catalyst/layout';
+import type {CreateModificationRequest, ModificationType} from '../../components/domain/contracts';
+import {ModificationTimeline} from '../../components/domain/contracts';
+import {useContract} from '../../hooks/useContracts';
 
 export interface ModificationsPageProps {
   contractId: string;
@@ -143,7 +167,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" className="min-h-[400px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading modifications...
           </Text>
@@ -162,7 +186,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
           </InlineAlertDescription>
         </InlineAlert>
         {onBack !== undefined && (
-          <Box className="mt-4">
+          <Box>
             <Button variant="secondary" onClick={onBack}>
               Back
             </Button>
@@ -183,7 +207,6 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                className="mb-2"
               >
                 Back to Contract
               </Button>
@@ -204,7 +227,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
       </SectionHeader>
 
       {showAddForm && (
-        <Card className="mb-6">
+        <Card>
           <Box as="form" onSubmit={handleSubmit}>
             <CardHeader>
               <Text variant="heading4">Create Modification</Text>
@@ -212,7 +235,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
             <CardBody>
               <Stack spacing="lg">
                 <Box>
-                  <Text variant="heading5" className="mb-4">
+                  <Text variant="heading5">
                     Basic Information
                   </Text>
                   <Grid columns={2} gap="md">
@@ -265,7 +288,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 </Box>
 
                 <Box>
-                  <Text variant="heading5" className="mb-4">
+                  <Text variant="heading5">
                     Value Changes
                   </Text>
                   <Grid columns={2} gap="md">
@@ -291,7 +314,7 @@ export function ModificationsPage({ contractId, onBack }: ModificationsPageProps
                 </Box>
 
                 <Box>
-                  <Text variant="heading5" className="mb-4">
+                  <Text variant="heading5">
                     Period of Performance Changes
                   </Text>
                   <Grid columns={2} gap="md">

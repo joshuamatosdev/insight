@@ -2,7 +2,7 @@
  * Types for RoleFormModal component
  */
 
-import type { Role, PermissionsByCategory, RoleFormState, RoleFormErrors } from '../../../types';
+import type {PermissionsByCategory, Role, RoleFormErrors, RoleFormState} from '../../../types';
 
 /**
  * Props for RoleFormModal

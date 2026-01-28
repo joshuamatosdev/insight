@@ -1,5 +1,5 @@
-import { CSSProperties, createElement } from 'react';
-import { ScreenReaderOnlyProps } from './ScreenReaderOnly.types';
+import {createElement, CSSProperties} from 'react';
+import {ScreenReaderOnlyProps} from './ScreenReaderOnly.types';
 
 /**
  * CSS styles that hide content visually but keep it accessible to screen readers.

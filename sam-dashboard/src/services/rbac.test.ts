@@ -2,21 +2,17 @@
  * Tests for RBAC service
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {
-  fetchRoles,
-  fetchRole,
-  createRole,
-  updateRole,
-  deleteRole,
-  fetchPermissions,
-  fetchPermissionCodes,
-  fetchMyPermissions,
-  fetchUsersWithRoles,
-  updateUserRole,
-  removeUserRole,
+    createRole,
+    deleteRole,
+    fetchPermissions,
+    fetchRoles,
+    fetchUsersWithRoles,
+    updateRole,
+    updateUserRole,
 } from './rbac';
-import type { Role, PermissionsByCategory, PaginatedResponse, UserWithRoles } from '../types';
+import type {PaginatedResponse, PermissionsByCategory, Role, UserWithRoles} from '../types';
 
 // Mock fetch
 const mockFetch = vi.fn();

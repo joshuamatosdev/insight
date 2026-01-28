@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {describe, expect, it, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ContactCard } from './ContactCard';
-import type { Contact } from '../../../types/crm';
+import {ContactCard} from './ContactCard';
+import type {Contact} from '../../../types/crm';
 
 const mockContact: Contact = {
   id: '1',

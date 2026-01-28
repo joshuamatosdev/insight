@@ -1,8 +1,9 @@
-import type { CSSProperties } from 'react';
-import type { FeatureRequestCardProps } from './Portal.types';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Card, CardBody, Flex, Stack, Box, HStack } from '../../catalyst/layout';
-import { FeatureVoteButton } from './FeatureVoteButton';
+import type {CSSProperties} from 'react';
+
+import type {FeatureRequestCardProps} from './Portal.types';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, Flex, HStack, Stack} from '../../catalyst/layout';
+import {FeatureVoteButton} from './FeatureVoteButton';
 
 /**
  * Card displaying a feature request with voting functionality.
@@ -117,7 +118,6 @@ export function FeatureRequestCard({
 
   return (
     <Card
-      className={className}
       style={cardStyles}
       onClick={handleClick}
       aria-label={`Feature request: ${featureRequest.title}`}
@@ -133,7 +133,7 @@ export function FeatureRequestCard({
           />
 
           {/* Content */}
-          <Stack spacing="sm" style={{ flex: 1 }}>
+          <Stack spacing="sm">
             {/* Header */}
             <Flex justify="space-between" align="flex-start">
               <Stack spacing="xs">
@@ -161,13 +161,6 @@ export function FeatureRequestCard({
             <Text
               variant="body"
               color="muted"
-              style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-              }}
             >
               {featureRequest.description}
             </Text>
@@ -178,11 +171,6 @@ export function FeatureRequestCard({
                 {featureRequest.tags.map((tag) => (
                   <Box
                     key={tag}
-                    style={{
-                      padding: '0.25rem 0.5rem',
-                      backgroundColor: '#f4f4f5',
-                      borderRadius: '9999px',
-                    }}
                   >
                     <Text variant="caption" color="muted">
                       #{tag}

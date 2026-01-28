@@ -2,35 +2,35 @@
  * ClearancesPage - Security clearances management
  */
 
-import { useState, useCallback } from 'react';
+import {useCallback, useState} from 'react';
 import {
-  Text,
-  Button,
-  Badge,
-  Select,
-  ShieldLockIcon,
-  PlusIcon,
-  RefreshIcon,
+    Badge,
+    Button,
+    PlusIcon,
+    RefreshIcon,
+    Select,
+    ShieldLockIcon,
+    Text,
 } from '../../components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Flex,
-  Grid,
-  GridItem,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../components/catalyst/layout';
-import { ClearanceCard, ClearanceForm } from '../../components/domain/compliance';
-import { useClearances } from '../../hooks';
+import {ClearanceCard, ClearanceForm} from '../../components/domain/compliance';
+import {useClearances} from '../../hooks';
 import type {
-  SecurityClearance,
-  ClearanceLevel,
-  ClearanceFormState,
-  CreateClearanceRequest,
+    ClearanceFormState,
+    ClearanceLevel,
+    CreateClearanceRequest,
+    SecurityClearance,
 } from '../../types/compliance.types';
 
 const LEVEL_FILTER_OPTIONS: Array<{ value: string; label: string }> = [
@@ -246,7 +246,7 @@ export function ClearancesPage(): React.ReactElement {
       <Stack spacing="md">
         {/* Error Display */}
         {(error !== null || loadError !== null) && (
-          <Card variant="outlined" className="border-red-500">
+          <Card variant="outlined">
             <CardBody padding="sm">
               <Text variant="bodySmall" color="danger">
                 {error ?? loadError?.message}
@@ -309,7 +309,7 @@ export function ClearancesPage(): React.ReactElement {
 
         {/* Loading State */}
         {isLoading && showForm === false && (
-          <Flex justify="center" align="center" className="min-h-[200px]">
+          <Flex justify="center" align="center">
             <Text variant="body" color="muted">
               Loading clearances...
             </Text>
@@ -324,10 +324,9 @@ export function ClearancesPage(): React.ReactElement {
                 direction="column"
                 align="center"
                 gap="md"
-                className="p-8"
               >
                 <ShieldLockIcon size="xl" color="muted" />
-                <Text variant="body" color="muted" className="text-center">
+                <Text variant="body" color="muted">
                   No security clearances found.
                 </Text>
                 <Button variant="primary" onClick={handleCreateClick}>

@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import {HTMLAttributes} from 'react';
 
 // 1. Centralize your sizing types
 export type Size = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';

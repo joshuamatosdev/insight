@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react';
-import { TableBodyProps } from './Table.types';
+import {CSSProperties} from 'react';
+import {TableBodyProps} from './Table.types';
 
 export function TableBody({ className, style, children }: TableBodyProps) {
   const bodyStyles: CSSProperties = {

@@ -1,7 +1,7 @@
-import { Stack } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
-import { DocumentCard } from './DocumentCard';
-import type { Document } from '../../../types/documents';
+import {Stack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
+import {DocumentCard} from './DocumentCard';
+import type {Document} from '../../../types/documents';
 
 export interface DocumentListProps {
   documents: Document[];

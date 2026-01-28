@@ -1,8 +1,9 @@
-import { useMemo, CSSProperties } from 'react';
-import { Text, Badge } from '../../catalyst/primitives';
-import { Box, Stack, HStack, Grid, Card, CardBody } from '../../catalyst/layout';
-import { DeliverableCard } from './DeliverableCard';
-import type { DeliverableTrackerProps, ContractDeliverable } from './Contract.types';
+import {CSSProperties, useMemo} from 'react';
+
+import {Badge, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, Grid, HStack, Stack} from '../../catalyst/layout';
+import {DeliverableCard} from './DeliverableCard';
+import type {ContractDeliverable, DeliverableTrackerProps} from './Contract.types';
 
 interface DeliverableStats {
   total: number;
@@ -77,14 +78,7 @@ export function DeliverableTracker({
   if (deliverables.length === 0) {
     return (
       <Box
-        className={className}
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fafafa',
-          borderRadius: '0.5rem',
-          ...trackerStyles,
-        }}
+        style={trackerStyles}
       >
         <Text variant="body" color="muted">
           No deliverables defined for this contract
@@ -94,11 +88,11 @@ export function DeliverableTracker({
   }
 
   return (
-    <Stack spacing="lg" className={className} style={trackerStyles}>
+    <Stack spacing="lg" style={trackerStyles}>
       <Card>
         <CardBody>
           <Grid columns={6} gap="md">
-            <Box style={{ textAlign: 'center' }}>
+            <Box>
               <Text variant="heading3" weight="semibold">
                 {stats.total}
               </Text>
@@ -106,7 +100,7 @@ export function DeliverableTracker({
                 Total
               </Text>
             </Box>
-            <Box style={{ textAlign: 'center' }}>
+            <Box>
               <Text variant="heading3" weight="semibold" color="danger">
                 {stats.overdue}
               </Text>
@@ -114,7 +108,7 @@ export function DeliverableTracker({
                 Overdue
               </Text>
             </Box>
-            <Box style={{ textAlign: 'center' }}>
+            <Box>
               <Text variant="heading3" weight="semibold" color="warning">
                 {stats.dueSoon}
               </Text>
@@ -122,7 +116,7 @@ export function DeliverableTracker({
                 Due Soon
               </Text>
             </Box>
-            <Box style={{ textAlign: 'center' }}>
+            <Box>
               <Text variant="heading3" weight="semibold">
                 {stats.pending + stats.inProgress}
               </Text>
@@ -130,7 +124,7 @@ export function DeliverableTracker({
                 In Progress
               </Text>
             </Box>
-            <Box style={{ textAlign: 'center' }}>
+            <Box>
               <Text variant="heading3" weight="semibold">
                 {stats.submitted}
               </Text>
@@ -138,7 +132,7 @@ export function DeliverableTracker({
                 Submitted
               </Text>
             </Box>
-            <Box style={{ textAlign: 'center' }}>
+            <Box>
               <Text variant="heading3" weight="semibold" color="success">
                 {stats.accepted}
               </Text>
@@ -152,7 +146,7 @@ export function DeliverableTracker({
 
       {overdueDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="sm" align="center" className="mb-3">
+          <HStack spacing="sm" align="center">
             <Text variant="heading5">Overdue</Text>
             <Badge color="red">
               {overdueDeliverables.length}
@@ -172,7 +166,7 @@ export function DeliverableTracker({
 
       {upcomingDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="sm" align="center" className="mb-3">
+          <HStack spacing="sm" align="center">
             <Text variant="heading5">Upcoming</Text>
             <Badge color="cyan">
               {upcomingDeliverables.length}
@@ -192,7 +186,7 @@ export function DeliverableTracker({
 
       {completedDeliverables.length > 0 && (
         <Box>
-          <HStack spacing="sm" align="center" className="mb-3">
+          <HStack spacing="sm" align="center">
             <Text variant="heading5">Completed</Text>
             <Badge color="green">
               {completedDeliverables.length}

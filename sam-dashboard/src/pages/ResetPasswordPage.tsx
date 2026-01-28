@@ -1,29 +1,18 @@
-import { useState, useEffect, useCallback, FormEvent, ChangeEvent } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {ChangeEvent, FormEvent, useCallback, useEffect, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {Box, Card, CardBody, CardHeader, Flex, Stack,} from '../components/catalyst/layout';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  Input,
-  FormField,
-  InlineAlert,
-  InlineAlertDescription,
-  AuthLayout,
+    AuthLayout,
+    Button,
+    FormField,
+    InlineAlert,
+    InlineAlertDescription,
+    Input,
+    Text,
 } from '../components/catalyst/primitives';
-import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
-import { Link } from '../components/catalyst/primitives/link';
-import type {
-  ResetPasswordFormState,
-  ResetPasswordFormErrors,
-  ResetPasswordPageState,
-} from './types';
+import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
+import {Link} from '../components/catalyst/primitives/link';
+import type {ResetPasswordFormErrors, ResetPasswordFormState, ResetPasswordPageState,} from './types';
 
 const API_BASE = '/api/v1';
 
@@ -165,7 +154,7 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'validating':
         return (
           <CardBody padding="lg">
-            <Stack spacing="md" align="center" className="text-center">
+            <Stack spacing="md" align="center">
               <Text variant="heading4">Validating Reset Link...</Text>
               <Text variant="body" color="muted">
                 Please wait while we verify your reset link.
@@ -177,14 +166,14 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'invalid':
         return (
           <CardBody padding="lg">
-            <Stack spacing="md" align="center" className="text-center">
+            <Stack spacing="md" align="center">
               <Text variant="heading4" color="danger">
                 Invalid Reset Link
               </Text>
               <Text variant="body">
                 This password reset link is invalid or has expired. Please request a new one.
               </Text>
-              <Stack spacing="sm" className="w-full">
+              <Stack spacing="sm">
                 <Button
                   variant="primary"
                   onClick={() => navigate('/forgot-password')}
@@ -192,7 +181,7 @@ export function ResetPasswordPage(): React.ReactElement {
                 >
                   Request New Link
                 </Button>
-                <Link href="/login" className="text-blue-600 dark:text-blue-400 text-center block">
+                <Link href="/login">
                   Return to login
                 </Link>
               </Stack>
@@ -203,7 +192,7 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'success':
         return (
           <CardBody padding="lg">
-            <Stack spacing="md" align="center" className="text-center">
+            <Stack spacing="md" align="center">
               <Text variant="heading4" color="success">
                 Password Reset Successful
               </Text>
@@ -224,14 +213,14 @@ export function ResetPasswordPage(): React.ReactElement {
       case 'form':
         return (
           <Box>
-            <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
+            <CardHeader>
               <Flex justify="center" align="center" direction="column" gap="sm">
                 <BuildingCheckIcon size="xl" color="white" />
                 <Stack spacing="xs" align="center">
                   <Text variant="heading3" color="white" weight="semibold">
                     Reset Password
                   </Text>
-                  <Text variant="bodySmall" color="white" className="opacity-80">
+                  <Text variant="bodySmall" color="white">
                     Enter your new password
                   </Text>
                 </Stack>
@@ -282,7 +271,6 @@ export function ResetPasswordPage(): React.ReactElement {
                     type="submit"
                     variant="primary"
                     fullWidth
-                    className="mt-2"
                     isLoading={isLoading}
                     isDisabled={isLoading}
                   >
@@ -298,7 +286,7 @@ export function ResetPasswordPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
           {renderContent()}
         </Card>

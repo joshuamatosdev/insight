@@ -1,7 +1,8 @@
-import type { CSSProperties } from 'react';
-import type { SprintCardProps } from './Portal.types';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, CardFooter, Flex, Stack, Box, HStack } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+
+import type {SprintCardProps} from './Portal.types';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardFooter, CardHeader, Flex, HStack, Stack} from '../../catalyst/layout';
 
 /**
  * Displays sprint information in a card format.
@@ -12,7 +13,6 @@ export function SprintCard({
   onClick,
   onEdit,
   onDelete,
-  className,
   style,
 }: SprintCardProps): React.ReactElement {
   const formatDate = (dateStr: string): string => {
@@ -55,7 +55,6 @@ export function SprintCard({
 
   const cardStyles: CSSProperties = {
     cursor: onClick !== undefined ? 'pointer' : 'default',
-    border: isSelected ? '2px solid #2563eb' : undefined,
     ...style,
   };
 
@@ -81,7 +80,6 @@ export function SprintCard({
 
   return (
     <Card
-      className={className}
       style={cardStyles}
       onClick={handleClick}
       aria-label={`Sprint: ${sprint.name}`}
@@ -101,7 +99,7 @@ export function SprintCard({
       </CardHeader>
       <CardBody>
         {sprint.goal !== null && sprint.goal !== '' && (
-          <Box className="mb-3">
+          <Box>
             <Text variant="bodySmall" color="muted">
               {sprint.goal}
             </Text>
@@ -109,8 +107,8 @@ export function SprintCard({
         )}
 
         {/* Progress Bar */}
-        <Box className="mb-3">
-          <Flex justify="space-between" align="center" className="mb-1">
+        <Box>
+          <Flex justify="space-between" align="center">
             <Text variant="caption" color="muted">
               Progress
             </Text>
@@ -118,62 +116,25 @@ export function SprintCard({
               {completedPercentage}%
             </Text>
           </Flex>
-          <Box
-            style={{
-              height: '6px',
-              backgroundColor: '#e4e4e7',
-              borderRadius: '9999px',
-              overflow: 'hidden',
-            }}
-          >
+          <Box>
             <Box
-              style={{
-                height: '100%',
-                width: `${completedPercentage}%`,
-                backgroundColor: '#10b981',
-                borderRadius: '9999px',
-                transition: 'width 0.3s ease',
-              }}
+              style={{ width: `${completedPercentage}%` }}
             />
           </Box>
         </Box>
 
         {/* Task Summary */}
         <HStack spacing="sm">
-          <Box
-            style={{
-              padding: '0.25rem 0.5rem',
-              backgroundColor: '#f4f4f5',
-              borderRadius: '0.25rem',
-            }}
-          >
+          <Box>
             <Text variant="caption">{tasksByStatus.todo} Todo</Text>
           </Box>
-          <Box
-            style={{
-              padding: '0.25rem 0.5rem',
-              backgroundColor: '#f0f9ff',
-              borderRadius: '0.25rem',
-            }}
-          >
+          <Box>
             <Text variant="caption">{tasksByStatus.inProgress} In Progress</Text>
           </Box>
-          <Box
-            style={{
-              padding: '0.25rem 0.5rem',
-              backgroundColor: '#fffbeb',
-              borderRadius: '0.25rem',
-            }}
-          >
+          <Box>
             <Text variant="caption">{tasksByStatus.inReview} Review</Text>
           </Box>
-          <Box
-            style={{
-              padding: '0.25rem 0.5rem',
-              backgroundColor: '#d1fae5',
-              borderRadius: '0.25rem',
-            }}
-          >
+          <Box>
             <Text variant="caption">{tasksByStatus.done} Done</Text>
           </Box>
         </HStack>

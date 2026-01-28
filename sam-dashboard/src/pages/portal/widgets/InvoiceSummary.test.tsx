@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { InvoiceSummary } from './InvoiceSummary';
+import {describe, expect, it} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
+import {InvoiceSummary} from './InvoiceSummary';
 
 describe('InvoiceSummary', () => {
   describe('Header', () => {

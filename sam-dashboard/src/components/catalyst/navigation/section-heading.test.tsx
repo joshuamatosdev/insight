@@ -1,11 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import {
-  SectionHeading,
-  SectionHeadingTitle,
-  SectionHeadingDescription,
-  SectionHeadingActions,
-} from './section-heading'
+import {render, screen} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {SectionHeading, SectionHeadingActions, SectionHeadingDescription, SectionHeadingTitle,} from './section-heading'
 
 describe('SectionHeading', () => {
   describe('SectionHeading container', () => {

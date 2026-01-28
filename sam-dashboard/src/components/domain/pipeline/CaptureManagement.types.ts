@@ -1,4 +1,4 @@
-import type { PipelineOpportunity, UpdatePipelineOpportunityRequest } from '../../../types/pipeline';
+import type {PipelineOpportunity, UpdatePipelineOpportunityRequest} from '../../../types/pipeline';
 
 export interface CaptureManagementProps {
   opportunity: PipelineOpportunity;

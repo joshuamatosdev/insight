@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FlexProps } from './Flex.types';
+import {FlexProps} from './Flex.types';
 
 const directionMap: Record<string, string> = {
   row: 'flex-row',

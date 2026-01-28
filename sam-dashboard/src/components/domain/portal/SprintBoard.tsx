@@ -1,15 +1,38 @@
-import type { CSSProperties } from 'react';
-import type { SprintBoardProps, SprintTaskCardProps } from './Portal.types';
-import type { SprintTask, SprintTaskStatus } from '../../../types/portal';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Card, CardBody, Flex, Stack, Box, Grid } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
 
-const COLUMN_CONFIG: Array<{ status: SprintTaskStatus; label: string; color: string }> = [
-  { status: 'TODO', label: 'To Do', color: '#a1a1aa' },
-  { status: 'IN_PROGRESS', label: 'In Progress', color: '#0ea5e9' },
-  { status: 'IN_REVIEW', label: 'In Review', color: '#f59e0b' },
-  { status: 'DONE', label: 'Done', color: '#10b981' },
+import type {SprintBoardProps, SprintTaskCardProps} from './Portal.types';
+import type {SprintTask, SprintTaskStatus} from '../../../types/portal';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, Flex, Grid, Stack} from '../../catalyst/layout';
+
+type ColumnStatusConfig = {
+  status: SprintTaskStatus;
+  label: string;
+  dotClass: string;
+};
+
+const COLUMN_CONFIG: ColumnStatusConfig[] = [
+  { status: 'TODO', label: 'To Do', dotClass: 'bg-zinc-400' },
+  { status: 'IN_PROGRESS', label: 'In Progress', dotClass: 'bg-sky-500' },
+  { status: 'IN_REVIEW', label: 'In Review', dotClass: 'bg-amber-500' },
+  { status: 'DONE', label: 'Done', dotClass: 'bg-emerald-500' },
 ];
+
+type PriorityBorderClass = 'border-l-red-500' | 'border-l-amber-500' | 'border-l-sky-500' | 'border-l-zinc-400';
+
+const getPriorityBorderClass = (priority: string): PriorityBorderClass => {
+  switch (priority) {
+    case 'CRITICAL':
+      return 'border-l-red-500';
+    case 'HIGH':
+      return 'border-l-amber-500';
+    case 'MEDIUM':
+      return 'border-l-sky-500';
+    case 'LOW':
+    default:
+      return 'border-l-zinc-400';
+  }
+};
 
 /**
  * Task card for the sprint board.
@@ -18,24 +41,8 @@ function SprintTaskCard({
   task,
   isDragging = false,
   onClick,
-  className,
   style,
 }: SprintTaskCardProps): React.ReactElement {
-  const getPriorityHexColor = (priority: string): string => {
-    switch (priority) {
-      case 'CRITICAL':
-        return '#ef4444';
-      case 'HIGH':
-        return '#f59e0b';
-      case 'MEDIUM':
-        return '#0ea5e9';
-      case 'LOW':
-        return '#a1a1aa';
-      default:
-        return '#a1a1aa';
-    }
-  };
-
   const getPriorityBadgeColor = (
     priority: string
   ): 'red' | 'amber' | 'cyan' | 'zinc' => {
@@ -55,7 +62,6 @@ function SprintTaskCard({
     cursor: 'pointer',
     opacity: isDragging ? 0.7 : 1,
     transform: isDragging ? 'rotate(3deg)' : 'none',
-    borderLeft: `3px solid ${getPriorityHexColor(task.priority)}`,
     ...style,
   };
 
@@ -68,7 +74,6 @@ function SprintTaskCard({
   return (
     <Card
       variant="outlined"
-      className={className}
       style={cardStyles}
       onClick={handleClick}
       aria-label={`Task: ${task.title}`}
@@ -79,13 +84,7 @@ function SprintTaskCard({
             {task.title}
           </Text>
           {task.description !== null && task.description !== '' && (
-            <Text variant="caption" color="muted" style={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-            }}>
+            <Text variant="caption" color="muted">
               {task.description}
             </Text>
           )}
@@ -95,18 +94,9 @@ function SprintTaskCard({
             </Badge>
             {task.assigneeName !== null && (
               <Box
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  backgroundColor: '#dbeafe',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
                 title={task.assigneeName}
               >
-                <Text variant="caption" weight="semibold" className="text-primary">
+                <Text variant="caption" weight="semibold">
                   {task.assigneeName.charAt(0).toUpperCase()}
                 </Text>
               </Box>
@@ -175,9 +165,9 @@ export function SprintBoard({
   };
 
   return (
-    <Box className={className} style={boardStyles}>
+    <Box style={boardStyles}>
       {/* Sprint Header */}
-      <Flex justify="space-between" align="center" className="mb-4">
+      <Flex justify="space-between" align="center">
         <Stack spacing="0">
           <Text variant="heading4">{sprint.name}</Text>
           {sprint.goal !== null && (
@@ -200,12 +190,6 @@ export function SprintBoard({
           return (
             <Box
               key={column.status}
-              style={{
-                backgroundColor: '#fafafa',
-                borderRadius: '0.5rem',
-                padding: '0.75rem',
-                minHeight: '300px',
-              }}
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, column.status)}
             >
@@ -213,16 +197,9 @@ export function SprintBoard({
               <Flex
                 justify="space-between"
                 align="center"
-                className="mb-3"
               >
                 <Flex align="center" gap="sm">
                   <Box
-                    style={{
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      backgroundColor: column.color,
-                    }}
                   />
                   <Text variant="bodySmall" weight="semibold">
                     {column.label}
@@ -254,7 +231,6 @@ export function SprintBoard({
                     variant="ghost"
                     size="sm"
                     onClick={() => handleAddTask(column.status)}
-                    style={{ width: '100%' }}
                   >
                     + Add Task
                   </Button>

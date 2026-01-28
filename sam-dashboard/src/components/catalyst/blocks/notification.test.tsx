@@ -1,14 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import {describe, expect, it, vi} from 'vitest'
 import {
-  Notification,
-  NotificationActions,
-  NotificationContent,
-  NotificationDescription,
-  NotificationDismiss,
-  NotificationIcon,
-  NotificationTitle,
+    Notification,
+    NotificationActions,
+    NotificationContent,
+    NotificationDescription,
+    NotificationDismiss,
+    NotificationIcon,
+    NotificationTitle,
 } from './notification'
 
 describe('Notification', () => {

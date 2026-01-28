@@ -1,28 +1,20 @@
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Box, Card, CardBody, CardHeader, Flex, HStack, Stack,} from '../components/catalyst/layout';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-  HStack,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  Input,
-  FormField,
-  InlineAlert,
-  InlineAlertDescription,
-  AuthLayout,
-  Checkbox,
-  CheckboxField,
+    AuthLayout,
+    Button,
+    Checkbox,
+    CheckboxField,
+    FormField,
+    InlineAlert,
+    InlineAlertDescription,
+    Input,
+    Text,
 } from '../components/catalyst/primitives';
-import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
-import { Link } from '../components/catalyst/primitives/link';
-import type { RegisterFormState, RegisterFormErrors } from './RegisterPage.types';
+import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
+import {Link} from '../components/catalyst/primitives/link';
+import type {RegisterFormErrors, RegisterFormState} from './RegisterPage.types';
 
 const API_BASE = '/api/v1';
 
@@ -186,10 +178,10 @@ export function RegisterPage(): React.ReactElement {
   if (success) {
     return (
       <AuthLayout>
-        <Box className="w-full max-w-md">
+        <Box>
           <Card variant="elevated">
             <CardBody padding="lg">
-              <Stack spacing="md" align="center" className="text-center">
+              <Stack spacing="md" align="center">
                 <Text variant="heading4" color="success">
                   Registration Successful!
                 </Text>
@@ -215,16 +207,16 @@ export function RegisterPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
-          <CardHeader className="bg-blue-600 border-b-0 text-center p-6">
+          <CardHeader>
             <Flex justify="center" align="center" direction="column" gap="sm">
               <BuildingCheckIcon size="xl" color="white" />
               <Stack spacing="xs" align="center">
                 <Text variant="heading3" color="white" weight="semibold">
                   Create Account
                 </Text>
-                <Text variant="bodySmall" color="white" className="opacity-80">
+                <Text variant="bodySmall" color="white">
                   Start your contract intelligence journey
                 </Text>
               </Stack>
@@ -245,7 +237,7 @@ export function RegisterPage(): React.ReactElement {
 
                 {/* Name fields */}
                 <HStack gap="md" align="start">
-                  <Box className="flex-1">
+                  <Box>
                     <FormField
                       label="First Name"
                       required
@@ -262,7 +254,7 @@ export function RegisterPage(): React.ReactElement {
                       />
                     </FormField>
                   </Box>
-                  <Box className="flex-1">
+                  <Box>
                     <FormField
                       label="Last Name"
                       required
@@ -366,7 +358,6 @@ export function RegisterPage(): React.ReactElement {
                   type="submit"
                   variant="primary"
                   fullWidth
-                  className="mt-2"
                   isLoading={isLoading}
                   isDisabled={isLoading}
                 >
@@ -374,9 +365,9 @@ export function RegisterPage(): React.ReactElement {
                 </Button>
 
                 {/* Login link */}
-                <Text variant="bodySmall" className="text-center">
+                <Text variant="bodySmall">
                   Already have an account?{' '}
-                  <Link href="/login" className="text-blue-600 dark:text-blue-400">
+                  <Link href="/login">
                     Sign in
                   </Link>
                 </Text>

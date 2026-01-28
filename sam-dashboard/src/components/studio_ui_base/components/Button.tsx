@@ -1,5 +1,5 @@
-import { Link, LinkProps } from 'react-router-dom'
-import clsx from 'clsx'
+import {Link, LinkProps} from 'react-router-dom'
+
 
 type ButtonAsLink = Omit<LinkProps, 'to'> & {
   invert?: boolean
@@ -28,12 +28,12 @@ export function Button({
       : 'bg-neutral-950 text-white hover:bg-neutral-800',
   )
 
-  let inner = <span className="relative top-px">{children}</span>
+  let inner = <span>{children}</span>
 
   if (typeof props.href === 'undefined') {
     const { href: _, ...buttonProps } = props as ButtonAsButton
     return (
-      <button className={buttonClassName} {...buttonProps}>
+      <button {...buttonProps}>
         {inner}
       </button>
     )
@@ -41,7 +41,7 @@ export function Button({
 
   const { href, ...linkProps } = props as ButtonAsLink
   return (
-    <Link className={buttonClassName} to={href} {...linkProps}>
+    <Link to={href} {...linkProps}>
       {inner}
     </Link>
   )

@@ -1,15 +1,15 @@
-import { useState, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack, Box } from '../../components/catalyst/layout';
-import { Text, Button, Badge } from '../../components/catalyst/primitives';
+import {useCallback, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import {Badge, Button, Text} from '../../components/catalyst/primitives';
 import {
-  CaptureManagement,
-  TeamingPartnerList,
-  ProposalTracker,
-  BidDecisionForm,
+    BidDecisionForm,
+    CaptureManagement,
+    ProposalTracker,
+    TeamingPartnerList,
 } from '../../components/domain/pipeline';
-import { usePipeline, usePipelineOpportunity } from '../../hooks/usePipeline';
-import type { BidDecision, UpdatePipelineOpportunityRequest } from '../../types/pipeline';
+import {usePipeline, usePipelineOpportunity} from '../../hooks/usePipeline';
+import type {BidDecision, UpdatePipelineOpportunityRequest} from '../../types/pipeline';
 
 function formatCurrency(value: number | null): string {
   if (value === null) {
@@ -114,7 +114,7 @@ export function PipelineDetailPage() {
   if (isLoading === true) {
     return (
       <Section id="pipeline-detail">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="secondary">
             Loading...
           </Text>
@@ -126,7 +126,7 @@ export function PipelineDetailPage() {
   if (error !== null) {
     return (
       <Section id="pipeline-detail">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="danger">
             Error: {error.message}
           </Text>
@@ -138,7 +138,7 @@ export function PipelineDetailPage() {
   if (opportunity === null || pipeline === null) {
     return (
       <Section id="pipeline-detail">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="secondary">
             Opportunity not found
           </Text>
@@ -152,7 +152,7 @@ export function PipelineDetailPage() {
   if (showBidDecisionForm === true) {
     return (
       <Section id="pipeline-detail">
-        <Box className="mb-4">
+        <Box>
           <Button variant="ghost" onClick={() => setShowBidDecisionForm(false)}>
             ← Back to Details
           </Button>
@@ -189,7 +189,6 @@ export function PipelineDetailPage() {
       <Stack gap="lg">
         {/* Overview Card */}
         <Box
-          className="p-4 bg-zinc-100 rounded-lg border border-zinc-200"
         >
           <Stack gap="md">
             <HStack justify="between" align="start" wrap="wrap">
@@ -263,7 +262,7 @@ export function PipelineDetailPage() {
                 <Text variant="caption" color="secondary">
                   Decision Notes
                 </Text>
-                <Text variant="bodySmall" className="whitespace-pre-wrap">
+                <Text variant="bodySmall">
                   {opportunity.decisionNotes}
                 </Text>
               </Stack>

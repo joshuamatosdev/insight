@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react';
-import { SidebarNavProps } from './Sidebar.types';
+import {CSSProperties} from 'react';
+import {SidebarNavProps} from './Sidebar.types';
 
 export function SidebarNav({ className, style, children }: SidebarNavProps) {
   const navStyles: CSSProperties = {

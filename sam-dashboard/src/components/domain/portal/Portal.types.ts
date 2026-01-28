@@ -1,14 +1,14 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type {CSSProperties, ReactNode} from 'react';
 import type {
-  Sprint,
-  SprintTask,
-  SprintTaskStatus,
-  FeatureRequest,
-  Message,
-  MessageThread,
-  Milestone,
-  ScopeItem,
-  ScopeChange,
+    FeatureRequest,
+    Message,
+    MessageThread,
+    Milestone,
+    ScopeChange,
+    ScopeItem,
+    Sprint,
+    SprintTask,
+    SprintTaskStatus,
 } from '../../../types/portal';
 
 // ============ Sprint Components ============

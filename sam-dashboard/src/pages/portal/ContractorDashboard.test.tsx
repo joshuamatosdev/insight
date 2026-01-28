@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { ContractorDashboard } from './ContractorDashboard';
+import {describe, expect, it} from 'vitest';
+import {render, screen, waitFor} from '@testing-library/react';
+import {BrowserRouter} from 'react-router-dom';
+import {ContractorDashboard} from './ContractorDashboard';
 
 // Wrapper for routing context
 function renderWithRouter(ui: React.ReactElement): ReturnType<typeof render> {

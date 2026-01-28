@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack, Grid } from '../../components/catalyst/layout';
-import { Input, Select, Button, Text } from '../../components/catalyst/primitives';
-import { DocumentList, FolderTree } from '../../components/domain/documents';
-import { useDocuments, useFolders } from '../../hooks';
-import type { Document, DocumentType, DocumentFolder } from '../../types/documents';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Grid, HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import {Button, Input, Select, Text} from '../../components/catalyst/primitives';
+import {DocumentList, FolderTree} from '../../components/domain/documents';
+import {useDocuments, useFolders} from '../../hooks';
+import type {Document, DocumentFolder, DocumentType} from '../../types/documents';
 
 const DOCUMENT_TYPE_OPTIONS: { value: DocumentType | ''; label: string }[] = [
   { value: '', label: 'All Types' },

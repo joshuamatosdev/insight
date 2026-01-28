@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Stack, HStack, Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout';
-import { Text, Input, Select, Button } from '../../catalyst/primitives';
-import type { OrganizationFormProps, OrganizationFormData, OrganizationFormErrors } from './OrganizationForm.types';
-import type { OrganizationType, OrganizationStatus, BusinessSize, CreateOrganizationRequest } from '../../../types/crm';
+import {useState} from 'react';
+import {Card, CardBody, CardFooter, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import type {OrganizationFormData, OrganizationFormErrors, OrganizationFormProps} from './OrganizationForm.types';
+import type {BusinessSize, CreateOrganizationRequest, OrganizationStatus, OrganizationType} from '../../../types/crm';
 
 const ORG_TYPES: { value: OrganizationType; label: string }[] = [
   { value: 'GOVERNMENT_AGENCY', label: 'Government Agency' },

@@ -1,7 +1,7 @@
-import { CSSProperties } from 'react';
+import {CSSProperties} from 'react';
 import clsx from 'clsx';
-import { SidebarProps } from './Sidebar.types';
-import { ChevronLeftIcon, ChevronRightIcon } from '../../primitives/Icon';
+import {SidebarProps} from './Sidebar.types';
+import {ChevronLeftIcon, ChevronRightIcon} from '../../primitives/Icon';
 
 function formatDimension(value: string | number | undefined): string | undefined {
   if (value === undefined) {

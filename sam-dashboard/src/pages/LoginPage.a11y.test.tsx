@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import { BrowserRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import {render} from '@testing-library/react';
+import {axe, toHaveNoViolations} from 'jest-axe';
+import {BrowserRouter} from 'react-router-dom';
+import {describe, expect, it, vi} from 'vitest';
 
-import { LoginPage } from './LoginPage';
+import {LoginPage} from './LoginPage';
 
 expect.extend(toHaveNoViolations);
 

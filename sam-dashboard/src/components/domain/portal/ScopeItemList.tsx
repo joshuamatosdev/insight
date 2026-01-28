@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import type { CSSProperties } from 'react';
-import type { ScopeItemListProps, ScopeItemRowProps } from './Portal.types';
-import type { ScopeItem } from '../../../types/portal';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import { Flex, Stack, Box, HStack } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+import {useState} from 'react';
+import type {ScopeItemListProps, ScopeItemRowProps} from './Portal.types';
+import type {ScopeItem} from '../../../types/portal';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import {Box, Flex, HStack} from '../../catalyst/layout';
 
 /**
  * Individual scope item row component.
@@ -76,7 +76,6 @@ function ScopeItemRow({
 
   return (
     <Box
-      className={className}
       style={rowStyles}
       onClick={handleClick}
       role={onClick !== undefined ? 'button' : undefined}
@@ -95,7 +94,6 @@ function ScopeItemRow({
             <button
               type="button"
               onClick={handleToggle}
-              className="flex items-center justify-center p-1 bg-transparent border-none cursor-pointer"
               aria-label={isExpanded ? 'Collapse' : 'Expand'}
             >
               <Text variant="body" style={{ transform: isExpanded ? 'rotate(90deg)' : 'none' }}>
@@ -181,7 +179,7 @@ function ScopeItemRow({
               }}
               title={item.assigneeName}
             >
-              <Text variant="caption" weight="semibold" className="text-primary">
+              <Text variant="caption" weight="semibold">
                 {item.assigneeName.charAt(0).toUpperCase()}
               </Text>
             </Box>
@@ -283,11 +281,10 @@ export function ScopeItemList({
 
   if (scopeItems.length === 0) {
     return (
-      <Box className={className} style={containerStyles}>
+      <Box style={containerStyles}>
         <Flex
           justify="center"
           align="center"
-          className="p-8"
         >
           <Text variant="body" color="muted">
             No scope items defined
@@ -298,7 +295,7 @@ export function ScopeItemList({
   }
 
   return (
-    <Box className={className} style={containerStyles}>
+    <Box style={containerStyles}>
       {/* Header */}
       <Box
         style={{

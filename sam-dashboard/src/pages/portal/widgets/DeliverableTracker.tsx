@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
-import { Text, Button } from '../../../components/catalyst/primitives';
+import {useEffect, useState} from 'react';
+
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Button, Text} from '../../../components/catalyst/primitives';
 
 interface Deliverable {
   id: string;
@@ -120,21 +120,16 @@ export function DeliverableTracker(): React.ReactElement {
                 return (
                   <Box
                     key={deliverable.id}
-                    className={clsx(
-                      'p-3 rounded-lg',
-                      isUrgent ? 'bg-red-50 dark:bg-red-900/20' : 'bg-zinc-50 dark:bg-zinc-800'
-                    )}
                   >
                     <Flex justify="space-between" align="flex-start">
-                      <Stack spacing="xs" className="flex-1">
+                      <Stack spacing="xs">
                         <Text variant="body" weight="semibold">{deliverable.title}</Text>
                         <Text variant="caption" color="muted">{deliverable.contractNumber}</Text>
                       </Stack>
-                      <Stack spacing="0" className="text-right">
+                      <Stack spacing="0">
                         <Text
                           variant="caption"
                           weight={isUrgent ? 'semibold' : 'normal'}
-                          className={isUrgent ? 'text-red-500' : 'text-zinc-600 dark:text-zinc-400'}
                         >
                           {daysUntil <= 0 ? 'Overdue!' : `${daysUntil} days left`}
                         </Text>
@@ -143,17 +138,15 @@ export function DeliverableTracker(): React.ReactElement {
                     </Flex>
 
                     {/* Progress Bar */}
-                    <Flex align="center" gap="sm" className="mt-2">
-                      <Box className="flex-1 h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-sm overflow-hidden">
+                    <Flex align="center" gap="sm">
+                      <Box>
                         <Box
-                          className={clsx('h-full', statusClasses.progressBg)}
                           style={{ width: `${deliverable.progressPercent}%` }}
                         />
                       </Box>
                       <Text
                         variant="caption"
                         weight="medium"
-                        className={clsx('min-w-20 text-right', statusClasses.text)}
                       >
                         {getStatusLabel(deliverable.status)}
                       </Text>

@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
-import { Box } from '../layout';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {Box} from '../layout';
 
 interface VirtualListProps<T> {
   items: T[];

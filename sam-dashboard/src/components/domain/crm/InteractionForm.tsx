@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Stack, HStack, Card, CardHeader, CardBody, CardFooter } from '../../catalyst/layout';
-import { Text, Input, Select, Button } from '../../catalyst/primitives';
-import type { Interaction, CreateInteractionRequest, InteractionType, InteractionOutcome } from '../../../types/crm';
+import {useState} from 'react';
+import {Card, CardBody, CardFooter, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import type {CreateInteractionRequest, Interaction, InteractionOutcome, InteractionType} from '../../../types/crm';
 
 export interface InteractionFormProps {
   interaction?: Interaction;

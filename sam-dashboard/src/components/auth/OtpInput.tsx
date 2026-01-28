@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { Flex, Box } from '../../components/catalyst/layout';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {Box, Flex} from '../../components/catalyst/layout';
 
 interface OtpInputProps {
   length?: number;
@@ -111,30 +111,22 @@ export function OtpInput({
     setFocusedIndex(null);
   }, []);
 
-  const getInputStyle = (index: number): React.CSSProperties => {
+  const getInputClasses = (index: number): string => {
     const isFocused = focusedIndex === index;
     const hasValue = value[index] !== undefined && value[index] !== '';
-    
-    return {
-      width: '48px',
-      height: '56px',
-      fontSize: '24px',
-      textAlign: 'center',
-      border: `2px solid ${
-        error === true
-          ? '#ef4444'
-          : isFocused === true
-          ? '#2563eb'
+
+    return clsx(
+      'w-12 h-14 text-2xl text-center rounded-lg outline-none transition-all duration-200',
+      'border-2',
+      disabled === true ? 'bg-zinc-100 dark:bg-zinc-800' : 'bg-white dark:bg-zinc-900',
+      error === true
+        ? 'border-red-500'
+        : isFocused === true
+          ? 'border-blue-600 ring-4 ring-blue-100 dark:ring-blue-900'
           : hasValue === true
-          ? '#a1a1aa'
-          : '#d4d4d8'
-      }`,
-      borderRadius: '8px',
-      outline: 'none',
-      backgroundColor: disabled === true ? '#f4f4f5' : 'white',
-      transition: 'border-color 0.2s, box-shadow 0.2s',
-      boxShadow: isFocused === true ? '0 0 0 3px #dbeafe' : 'none',
-    };
+            ? 'border-zinc-400'
+            : 'border-zinc-300 dark:border-zinc-600'
+    );
   };
 
   return (
@@ -155,7 +147,6 @@ export function OtpInput({
             onFocus={() => handleFocus(index)}
             onBlur={handleBlur}
             disabled={disabled}
-            style={getInputStyle(index)}
             aria-label={`Digit ${index + 1} of ${length}`}
           />
         </Box>

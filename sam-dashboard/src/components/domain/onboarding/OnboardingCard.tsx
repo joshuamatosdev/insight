@@ -1,5 +1,4 @@
-import clsx from 'clsx';
-import { Button } from '../../catalyst';
+import {Button} from '../../catalyst';
 
 interface OnboardingCardProps {
   title: string;
@@ -30,26 +29,26 @@ export function OnboardingCard({
   loading = false,
 }: OnboardingCardProps): React.ReactElement {
   return (
-    <div className="w-full max-w-[700px]">
-      <div className="rounded-lg bg-white shadow-sm ring-1 ring-zinc-950/5 dark:bg-zinc-800/50 dark:ring-white/10">
-        <div className="p-8">
-          <div className="space-y-6">
+    <div>
+      <div>
+        <div>
+          <div>
             {/* Header */}
-            <div className="space-y-2">
-              <h3 className="text-lg font-semibold text-zinc-950 dark:text-white">
+            <div>
+              <h3>
                 {title}
               </h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p>
                 {description}
               </p>
             </div>
 
             {/* Content */}
-            <div className="space-y-4">{children}</div>
+            <div>{children}</div>
 
             {/* Actions */}
-            <div className="flex items-center justify-between pt-4">
-              <div className="flex gap-2">
+            <div>
+              <div>
                 {isFirst === false && onBack !== undefined && (
                   <Button
                     outline

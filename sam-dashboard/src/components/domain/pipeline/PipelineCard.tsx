@@ -1,7 +1,8 @@
-import { Card, CardHeader, CardBody, HStack, Stack } from '../../catalyst/layout';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import type { PipelineCardProps } from './PipelineCard.types';
-import type { BidDecision } from '../../../types/pipeline';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout'
+import {Badge, Button, Text} from '../../catalyst/primitives'
+
+import type {PipelineCardProps} from './PipelineCard.types'
+import type {BidDecision} from '../../../types/pipeline'
 
 function getBidDecisionLabel(decision: BidDecision): string {
   const labels: Record<BidDecision, string> = {
@@ -9,8 +10,8 @@ function getBidDecisionLabel(decision: BidDecision): string {
     BID: 'Bid',
     NO_BID: 'No Bid',
     WATCH: 'Watch',
-  };
-  return labels[decision];
+  }
+  return labels[decision]
 }
 
 function getBidDecisionVariant(decision: BidDecision): 'yellow' | 'green' | 'red' | 'blue' {
@@ -19,47 +20,47 @@ function getBidDecisionVariant(decision: BidDecision): 'yellow' | 'green' | 'red
     BID: 'green',
     NO_BID: 'red',
     WATCH: 'blue',
-  };
-  return variants[decision];
+  }
+  return variants[decision]
 }
 
 function formatCurrency(value: number | null): string {
   if (value === null) {
-    return '-';
+    return '-'
   }
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 0,
-  }).format(value);
+  }).format(value)
 }
 
 function formatDate(dateString: string | null): string {
   if (dateString === null) {
-    return '-';
+    return '-'
   }
   return new Date(dateString).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
-  });
+  })
 }
 
 function isDeadlineApproaching(deadline: string | null): boolean {
   if (deadline === null) {
-    return false;
+    return false
   }
   const daysUntil = Math.ceil(
     (new Date(deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
-  );
-  return daysUntil >= 0 && daysUntil <= 7;
+  )
+  return daysUntil >= 0 && daysUntil <= 7
 }
 
 function isDeadlinePast(deadline: string | null): boolean {
   if (deadline === null) {
-    return false;
+    return false
   }
-  return new Date(deadline).getTime() < Date.now();
+  return new Date(deadline).getTime() < Date.now()
 }
 
 export function PipelineCard({
@@ -72,47 +73,36 @@ export function PipelineCard({
 }: PipelineCardProps) {
   const handleClick = () => {
     if (onClick !== undefined) {
-      onClick(opportunity);
+      onClick(opportunity)
     }
-  };
+  }
 
   const handleEdit = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation()
     if (onEdit !== undefined) {
-      onEdit(opportunity);
+      onEdit(opportunity)
     }
-  };
+  }
 
   const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation()
     if (onDelete !== undefined) {
-      onDelete(opportunity);
+      onDelete(opportunity)
     }
-  };
+  }
 
-  const title = opportunity.internalName ?? opportunity.opportunityTitle ?? 'Untitled';
-  const deadlineApproaching = isDeadlineApproaching(opportunity.responseDeadline);
-  const deadlinePast = isDeadlinePast(opportunity.responseDeadline);
+  const title = opportunity.internalName ?? opportunity.opportunityTitle ?? 'Untitled'
+  const deadlineApproaching = isDeadlineApproaching(opportunity.responseDeadline)
+  const deadlinePast = isDeadlinePast(opportunity.responseDeadline)
 
   return (
     <Card
       onClick={onClick !== undefined ? handleClick : undefined}
-      style={{
-        opacity: isDragging === true ? 0.5 : 1,
-        cursor: onClick !== undefined ? 'pointer' : 'default',
-        borderLeft: `4px solid ${
-          opportunity.decision === 'BID'
-            ? '#10b981'
-            : opportunity.decision === 'NO_BID'
-            ? '#ef4444'
-            : '#e4e4e7'
-        }`,
-      }}
     >
       <CardHeader>
         <Stack gap="xs">
           <HStack justify="between" align="start">
-            <Text variant="bodySmall" weight="semibold" style={{ lineHeight: 1.3 }}>
+            <Text variant="bodySmall" weight="semibold">
               {title}
             </Text>
             <Badge color={getBidDecisionVariant(opportunity.decision)} size="sm">
@@ -177,7 +167,7 @@ export function PipelineCard({
           )}
 
           {showActions === true && (onEdit !== undefined || onDelete !== undefined) && (
-            <HStack justify="end" gap="sm" className="mt-2">
+            <HStack justify="end" gap="sm">
               {onEdit !== undefined && (
                 <Button variant="ghost" size="sm" onClick={handleEdit}>
                   Edit
@@ -193,5 +183,5 @@ export function PipelineCard({
         </Stack>
       </CardBody>
     </Card>
-  );
+  )
 }

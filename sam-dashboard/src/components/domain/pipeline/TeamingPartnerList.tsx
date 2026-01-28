@@ -1,19 +1,19 @@
-import { useMemo } from 'react';
-import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import type { TeamingPartnerListProps } from './TeamingPartnerList.types';
-import type { TeamingPartner } from '../../../types/pipeline';
+import {useMemo} from 'react'
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout'
+import {Badge, Button, Text} from '../../catalyst/primitives'
+import type {TeamingPartnerListProps} from './TeamingPartnerList.types'
+import type {TeamingPartner} from '../../../types/pipeline'
 
 function getStatusVariant(status: TeamingPartner['status']): 'green' | 'yellow' | 'gray' {
   switch (status) {
     case 'ACTIVE':
-      return 'green';
+      return 'green'
     case 'PENDING':
-      return 'yellow';
+      return 'yellow'
     case 'INACTIVE':
-      return 'gray';
+      return 'gray'
     default:
-      return 'gray';
+      return 'gray'
   }
 }
 
@@ -28,11 +28,11 @@ export function TeamingPartnerList({
   // Parse teaming partners from string if no structured partners provided
   const displayPartners = useMemo(() => {
     if (partners.length > 0) {
-      return partners;
+      return partners
     }
 
     if (teamingPartnersString === undefined || teamingPartnersString === null || teamingPartnersString.length === 0) {
-      return [];
+      return []
     }
 
     // Parse comma-separated string into simple partner objects
@@ -41,8 +41,8 @@ export function TeamingPartnerList({
       name: name.trim(),
       role: 'Partner',
       status: 'ACTIVE' as const,
-    }));
-  }, [partners, teamingPartnersString]);
+    }))
+  }, [partners, teamingPartnersString])
 
   return (
     <Card>
@@ -58,32 +58,26 @@ export function TeamingPartnerList({
       </CardHeader>
       <CardBody>
         {isLoading === true && (
-          <Box className="p-4 text-center">
+          <div>
             <Text variant="bodySmall" color="secondary">
               Loading partners...
             </Text>
-          </Box>
+          </div>
         )}
 
         {isLoading === false && displayPartners.length === 0 && (
-          <Box className="p-4 text-center">
+          <div>
             <Text variant="bodySmall" color="secondary">
               No teaming partners added yet
             </Text>
-          </Box>
+          </div>
         )}
 
         {isLoading === false && displayPartners.length > 0 && (
           <Stack gap="sm">
             {displayPartners.map((partner) => (
-              <Box
+              <div
                 key={partner.id}
-                style={{
-                  padding: '0.75rem',
-                  backgroundColor: '#f4f4f5',
-                  borderRadius: '0.375rem',
-                  border: '1px solid #e4e4e7',
-                }}
               >
                 <HStack justify="between" align="center">
                   <Stack gap="xs">
@@ -122,11 +116,11 @@ export function TeamingPartnerList({
                     )}
                   </HStack>
                 </HStack>
-              </Box>
+              </div>
             ))}
           </Stack>
         )}
       </CardBody>
     </Card>
-  );
+  )
 }

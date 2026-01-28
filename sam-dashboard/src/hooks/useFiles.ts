@@ -1,17 +1,17 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import type {FileFolder, FileMetadata} from '../services';
 import {
-  fetchFiles,
-  fetchFile,
-  uploadFile,
-  deleteFile,
-  moveFile,
-  renameFile,
-  fetchFileFolders,
-  createFileFolder,
-  deleteFileFolder,
-  renameFolder,
+    createFileFolder,
+    deleteFile,
+    deleteFileFolder,
+    fetchFile,
+    fetchFileFolders,
+    fetchFiles,
+    moveFile,
+    renameFile,
+    renameFolder,
+    uploadFile,
 } from '../services';
-import type { FileMetadata, FileFolder } from '../services';
 
 export interface UseFilesReturn {
   files: FileMetadata[];

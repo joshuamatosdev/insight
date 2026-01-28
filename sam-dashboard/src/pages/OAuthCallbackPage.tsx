@@ -1,20 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import {
-  Card,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  AuthLayout,
-} from '../components/catalyst/primitives';
-import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
-import { processOAuthCallback } from '../services/oauthService';
-import { useAuth } from '../auth';
+import {useEffect, useRef, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {Box, Card, CardBody, Flex, Stack,} from '../components/catalyst/layout';
+import {AuthLayout, Button, Text,} from '../components/catalyst/primitives';
+import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
+import {processOAuthCallback} from '../services/oauthService';
+import {useAuth} from '../auth';
 
 type CallbackStatus = 'processing' | 'success' | 'error';
 
@@ -95,7 +85,7 @@ export function OAuthCallbackPage(): React.ReactElement {
     switch (status) {
       case 'processing':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4">Completing sign in...</Text>
             <Text variant="body" color="muted">
               Please wait while we authenticate your account.
@@ -105,7 +95,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
       case 'success':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4" color="success">
               Sign in successful!
             </Text>
@@ -117,7 +107,7 @@ export function OAuthCallbackPage(): React.ReactElement {
 
       case 'error':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4" color="danger">
               Sign in failed
             </Text>
@@ -138,11 +128,11 @@ export function OAuthCallbackPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
           <CardBody padding="lg">
-            <Flex justify="center" className="mb-4">
-              <BuildingCheckIcon size="xl" className="text-blue-600 dark:text-blue-400" />
+            <Flex justify="center">
+              <BuildingCheckIcon size="xl" />
             </Flex>
             {renderContent()}
           </CardBody>

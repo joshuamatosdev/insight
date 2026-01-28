@@ -5,8 +5,8 @@
  * Required because React Router doesn't do this automatically.
  */
 
-import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import {useEffect} from 'react'
+import {useLocation} from 'react-router-dom'
 
 export function ScrollToTop() {
   const { pathname } = useLocation()

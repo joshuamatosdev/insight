@@ -1,26 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Stack,
-  HStack,
-  Grid,
-  Card,
-  CardHeader,
-  CardBody,
-} from '@/components/catalyst/layout';
-import {
-  PageHeading,
-  PageHeadingTitle,
-  PageHeadingSection,
-  PageHeadingActions,
-} from '@/components/catalyst/navigation';
-import { Text, Badge, Button } from '@/components/catalyst/primitives';
-import { ContactList, InteractionTimeline, OrganizationForm } from '@/components/domain/crm';
-import { useOrganization } from '@/hooks';
-import { useOrganizationInteractions } from '@/hooks/useInteractions';
-import { fetchContactsByOrganization } from '@/services/crmService';
-import type { OrganizationType, OrganizationStatus, CreateOrganizationRequest, Contact } from '@/types/crm';
+import {useCallback, useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, Card, CardBody, CardHeader, Grid, HStack, Stack,} from '@/components/catalyst/layout';
+import {PageHeading, PageHeadingActions, PageHeadingSection, PageHeadingTitle,} from '@/components/catalyst/navigation';
+import {Badge, Button, Text} from '@/components/catalyst/primitives';
+import {ContactList, InteractionTimeline, OrganizationForm} from '@/components/domain/crm';
+import {useOrganization} from '@/hooks';
+import {useOrganizationInteractions} from '@/hooks/useInteractions';
+import {fetchContactsByOrganization} from '@/services/crmService';
+import type {Contact, CreateOrganizationRequest, OrganizationStatus, OrganizationType} from '@/types/crm';
 
 function getOrgTypeLabel(type: OrganizationType): string {
   const labels: Record<OrganizationType, string> = {

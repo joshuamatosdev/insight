@@ -1,11 +1,11 @@
 /**
  * BudgetCard - Displays a budget item summary with Pocket-style design
  */
-import clsx from 'clsx';
-import { Badge, Button, Progress } from '../../catalyst';
-import { PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
-import type { BudgetCardProps } from './Financial.types';
-import { formatCurrency, formatPercentage, getCategoryLabel } from '../../../services/financialService';
+
+import {Badge, Button, Progress} from '../../catalyst';
+import {PencilIcon, TrashIcon} from '@heroicons/react/20/solid';
+import type {BudgetCardProps} from './Financial.types';
+import {formatCurrency, formatPercentage, getCategoryLabel} from '../../../services/financialService';
 
 export function BudgetCard({
   budget,
@@ -31,14 +31,11 @@ export function BudgetCard({
   };
 
   return (
-    <div className={clsx(
-      'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
-      className
-    )}>
+    <div>
       {/* Header */}
-      <div className="flex items-start justify-between border-b border-border px-6 py-4 dark:border-white/10">
-        <div className="space-y-1">
-          <h3 className="text-base/6 font-semibold text-on-surface">
+      <div>
+        <div>
+          <h3>
             {budget.name}
           </h3>
           <Badge color="zinc">
@@ -51,14 +48,14 @@ export function BudgetCard({
       </div>
 
       {/* Body */}
-      <div className="px-6 py-5 space-y-5">
+      <div>
         {/* Progress */}
         <div>
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm/6 font-medium text-on-surface-muted">
+          <div>
+            <span>
               Utilization
             </span>
-            <span className={clsx('text-sm/6 font-semibold', getStatusTextColor())}>
+            <span>
               {formatPercentage(utilizationPercent)}
             </span>
           </div>
@@ -66,33 +63,28 @@ export function BudgetCard({
         </div>
 
         {/* Budget Details */}
-        <dl className="space-y-3">
-          <div className="flex items-center justify-between">
-            <dt className="text-sm/6 text-on-surface-muted">Budgeted</dt>
-            <dd className="text-sm/6 font-medium text-on-surface">
+        <dl>
+          <div>
+            <dt>Budgeted</dt>
+            <dd>
               {formatCurrency(budget.budgetedAmount)}
             </dd>
           </div>
-          <div className="flex items-center justify-between">
-            <dt className="text-sm/6 text-on-surface-muted">Actual</dt>
-            <dd className="text-sm/6 font-medium text-on-surface">
+          <div>
+            <dt>Actual</dt>
+            <dd>
               {formatCurrency(budget.actualAmount)}
             </dd>
           </div>
-          <div className="flex items-center justify-between">
-            <dt className="text-sm/6 text-on-surface-muted">Committed</dt>
-            <dd className="text-sm/6 font-medium text-on-surface">
+          <div>
+            <dt>Committed</dt>
+            <dd>
               {formatCurrency(budget.committedAmount)}
             </dd>
           </div>
-          <div className="flex items-center justify-between border-t border-border pt-3 dark:border-white/10">
-            <dt className="text-sm/6 font-medium text-on-surface">Remaining</dt>
-            <dd className={clsx(
-              'text-sm/6 font-semibold',
-              budget.remainingBudget < 0
-                ? 'text-danger'
-                : 'text-success'
-            )}>
+          <div>
+            <dt>Remaining</dt>
+            <dd>
               {formatCurrency(budget.remainingBudget)}
             </dd>
           </div>
@@ -100,7 +92,7 @@ export function BudgetCard({
 
         {/* Description */}
         {budget.description !== null && budget.description.length > 0 && (
-          <p className="text-sm/6 text-on-surface-muted">
+          <p>
             {budget.description}
           </p>
         )}
@@ -108,14 +100,14 @@ export function BudgetCard({
 
       {/* Footer */}
       {(onEdit !== undefined || onDelete !== undefined) && (
-        <div className="flex items-center justify-end gap-2 border-t border-border px-6 py-3 dark:border-white/10">
+        <div>
           {onEdit !== undefined && (
             <Button
               plain
               onClick={() => onEdit(budget)}
               aria-label="Edit budget item"
             >
-              <PencilIcon className="size-4" />
+              <PencilIcon />
             </Button>
           )}
           {onDelete !== undefined && (
@@ -124,7 +116,7 @@ export function BudgetCard({
               onClick={() => onDelete(budget.id)}
               aria-label="Delete budget item"
             >
-              <TrashIcon className="size-4 text-danger" />
+              <TrashIcon />
             </Button>
           )}
         </div>

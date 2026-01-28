@@ -1,7 +1,7 @@
-import { Stack } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
-import { InteractionCard } from './InteractionCard';
-import type { Interaction } from '../../../types/crm';
+import {Stack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
+import {InteractionCard} from './InteractionCard';
+import type {Interaction} from '../../../types/crm';
 
 export interface InteractionTimelineProps {
   interactions: Interaction[];

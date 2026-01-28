@@ -2,35 +2,34 @@
  * React Query hooks for Compliance Management
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import type {
-  Certification,
-  SecurityClearance,
-  CertificationType,
-  ClearanceLevel,
-  CreateCertificationRequest,
-  UpdateCertificationRequest,
-  CreateClearanceRequest,
-  UpdateClearanceRequest,
-  SbomInfo,
-  CycloneDxBom,
-  SbomVulnerabilityInfo,
+    Certification,
+    CertificationType,
+    ClearanceLevel,
+    CreateCertificationRequest,
+    CreateClearanceRequest,
+    CycloneDxBom,
+    SbomInfo,
+    SbomVulnerabilityInfo,
+    SecurityClearance,
+    UpdateCertificationRequest,
+    UpdateClearanceRequest,
 } from '../types/compliance.types';
-import type { PaginatedResponse } from '../types/rbac.types';
 import {
-  fetchCertifications,
-  fetchCertification,
-  fetchExpiringCertifications,
-  createCertification,
-  updateCertification,
-  deleteCertification,
-  fetchClearances,
-  fetchExpiringClearances,
-  createClearance,
-  updateClearance,
-  deleteClearance,
-  fetchSbomData,
-  fetchComplianceItems,
+    createCertification,
+    createClearance,
+    deleteCertification,
+    deleteClearance,
+    fetchCertification,
+    fetchCertifications,
+    fetchClearances,
+    fetchComplianceItems,
+    fetchExpiringCertifications,
+    fetchExpiringClearances,
+    fetchSbomData,
+    updateCertification,
+    updateClearance,
 } from '../services/complianceService';
 
 // ==================== Types ====================

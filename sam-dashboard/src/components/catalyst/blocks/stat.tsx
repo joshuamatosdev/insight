@@ -1,6 +1,6 @@
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
+import {ArrowDownIcon, ArrowUpIcon} from '@heroicons/react/20/solid'
 import clsx from 'clsx'
-import React, { forwardRef } from 'react'
+import React, {forwardRef} from 'react'
 
 // Type definitions
 type StatGroupColumns = 1 | 2 | 3 | 4

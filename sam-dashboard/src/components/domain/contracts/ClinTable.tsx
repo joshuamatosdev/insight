@@ -1,16 +1,10 @@
-import { CSSProperties } from 'react';
-import { Text, Button, Badge, PencilIcon } from '../../catalyst/primitives';
-import { Box, Card } from '../../catalyst/layout';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeader,
-  TableCell,
-} from '../../catalyst';
-import type { ClinTableProps, ClinType, PricingType } from './Contract.types';
-import { formatCurrency } from './Contract.types';
+import {CSSProperties} from 'react';
+
+import {Badge, Button, PencilIcon, Text} from '../../catalyst/primitives';
+import {Box, Card} from '../../catalyst/layout';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '../../catalyst';
+import type {ClinTableProps, ClinType, PricingType} from './Contract.types';
+import {formatCurrency} from './Contract.types';
 
 function getClinTypeLabel(type: ClinType): string {
   const labels: Record<ClinType, string> = {
@@ -64,14 +58,7 @@ export function ClinTable({
   if (clins.length === 0) {
     return (
       <Box
-        className={className}
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#fafafa',
-          borderRadius: '0.5rem',
-          ...tableStyles,
-        }}
+        style={tableStyles}
       >
         <Text variant="body" color="muted">
           No CLINs defined for this contract
@@ -99,8 +86,8 @@ export function ClinTable({
   );
 
   return (
-    <Card className={className} style={tableStyles}>
-      <Box style={{ overflowX: 'auto' }}>
+    <Card style={tableStyles}>
+      <Box>
         <Table>
           <TableHead>
             <TableRow>
@@ -108,10 +95,10 @@ export function ClinTable({
               <TableHeader>Description</TableHeader>
               <TableHeader>Type</TableHeader>
               <TableHeader>Pricing</TableHeader>
-              <TableHeader className="text-right">Total Value</TableHeader>
-              <TableHeader className="text-right">Funded</TableHeader>
-              <TableHeader className="text-right">Invoiced</TableHeader>
-              <TableHeader className="text-right">Remaining</TableHeader>
+              <TableHeader>Total Value</TableHeader>
+              <TableHeader>Funded</TableHeader>
+              <TableHeader>Invoiced</TableHeader>
+              <TableHeader>Remaining</TableHeader>
               {onEditClin !== undefined && <TableHeader>Actions</TableHeader>}
             </TableRow>
           </TableHead>
@@ -128,14 +115,9 @@ export function ClinTable({
                     </Text>
                   )}
                 </TableCell>
-                <TableCell style={{ maxWidth: '200px' }}>
+                <TableCell>
                   <Text
                     variant="bodySmall"
-                    style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
                   >
                     {clin.description ?? 'N/A'}
                   </Text>
@@ -150,22 +132,22 @@ export function ClinTable({
                     {getPricingTypeLabel(clin.pricingType)}
                   </Text>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   <Text variant="body" weight="semibold">
                     {formatCurrency(clin.totalValue)}
                   </Text>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   <Text variant="body">
                     {formatCurrency(clin.fundedAmount)}
                   </Text>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   <Text variant="body">
                     {formatCurrency(clin.invoicedAmount)}
                   </Text>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   <Text
                     variant="body"
                     weight="semibold"
@@ -192,33 +174,28 @@ export function ClinTable({
                 )}
               </TableRow>
             ))}
-            <TableRow
-              style={{
-                backgroundColor: '#fafafa',
-                fontWeight: 'bold',
-              }}
-            >
+            <TableRow>
               <TableCell colSpan={4}>
                 <Text variant="body" weight="semibold">
                   Totals
                 </Text>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell>
                 <Text variant="body" weight="semibold">
                   {formatCurrency(totalValue)}
                 </Text>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell>
                 <Text variant="body" weight="semibold">
                   {formatCurrency(totalFunded)}
                 </Text>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell>
                 <Text variant="body" weight="semibold">
                   {formatCurrency(totalInvoiced)}
                 </Text>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell>
                 <Text
                   variant="body"
                   weight="semibold"

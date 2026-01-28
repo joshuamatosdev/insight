@@ -1,20 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import {
-  Card,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  AuthLayout,
-} from '../components/catalyst/primitives';
-import { BuildingCheckIcon } from '../components/catalyst/primitives/Icon';
-import { Link } from '../components/catalyst/primitives/link';
-import type { VerificationStatus, VerifyEmailResult } from './types';
+import {useEffect, useRef, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {Box, Card, CardBody, Flex, Stack,} from '../components/catalyst/layout';
+import {AuthLayout, Button, Text,} from '../components/catalyst/primitives';
+import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
+import {Link} from '../components/catalyst/primitives/link';
+import type {VerificationStatus, VerifyEmailResult} from './types';
 
 const API_BASE = '/api/v1';
 
@@ -85,7 +75,7 @@ export function VerifyEmailPage(): React.ReactElement {
     switch (status) {
       case 'loading':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4">Verifying your email...</Text>
             <Text variant="body" color="muted">
               Please wait while we verify your email address.
@@ -95,7 +85,7 @@ export function VerifyEmailPage(): React.ReactElement {
 
       case 'success':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4" color="success">
               Email Verified!
             </Text>
@@ -114,14 +104,14 @@ export function VerifyEmailPage(): React.ReactElement {
 
       case 'error':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4" color="danger">
               Verification Failed
             </Text>
             <Text variant="body">
               {errorMessage}
             </Text>
-            <Stack spacing="sm" className="w-full">
+            <Stack spacing="sm">
               <Button
                 variant="primary"
                 onClick={() => navigate('/login')}
@@ -131,7 +121,7 @@ export function VerifyEmailPage(): React.ReactElement {
               </Button>
               <Text variant="bodySmall" color="muted">
                 Need a new verification link?{' '}
-                <Link href="/resend-verification" className="text-blue-600 dark:text-blue-400">
+                <Link href="/resend-verification">
                   Resend verification email
                 </Link>
               </Text>
@@ -141,7 +131,7 @@ export function VerifyEmailPage(): React.ReactElement {
 
       case 'no-token':
         return (
-          <Stack spacing="md" align="center" className="text-center">
+          <Stack spacing="md" align="center">
             <Text variant="heading4">No Verification Token</Text>
             <Text variant="body" color="muted">
               No verification token was provided. Please check your email and click the verification link.
@@ -160,11 +150,11 @@ export function VerifyEmailPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
           <CardBody padding="lg">
-            <Flex justify="center" className="mb-4">
-              <BuildingCheckIcon size="xl" className="text-blue-600 dark:text-blue-400" />
+            <Flex justify="center">
+              <BuildingCheckIcon size="xl" />
             </Flex>
             {renderContent()}
           </CardBody>

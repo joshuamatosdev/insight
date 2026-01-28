@@ -1,42 +1,42 @@
 /**
  * InvoiceDetailPage - Single invoice detail view
  */
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Text,
-  Button,
-  Badge,
-  TrashIcon,
-  ChevronLeftIcon,
-  CheckIcon,
-  InlineAlert,
-  InlineAlertDescription,
+    Badge,
+    Button,
+    CheckIcon,
+    ChevronLeftIcon,
+    InlineAlert,
+    InlineAlertDescription,
+    Text,
+    TrashIcon,
 } from '@/components/catalyst/primitives';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '@/components/catalyst/layout';
-import { InvoiceLineItems } from '@/components/domain/financial';
-import { useInvoice } from '@/hooks/useFinancial';
+import {InvoiceLineItems} from '@/components/domain/financial';
+import {useInvoice} from '@/hooks/useFinancial';
 import {
-  submitInvoice,
-  approveInvoice,
-  deleteInvoice,
-  fetchInvoiceLineItems,
-  formatCurrency,
-  formatDate,
-  getStatusColor,
-  getStatusLabel,
+    approveInvoice,
+    deleteInvoice,
+    fetchInvoiceLineItems,
+    formatCurrency,
+    formatDate,
+    getStatusColor,
+    getStatusLabel,
+    submitInvoice,
 } from '@/services/financialService';
-import type { InvoiceLineItem } from '@/types/financial.types';
+import type {InvoiceLineItem} from '@/types/financial.types';
 
 export interface InvoiceDetailPageProps {
   invoiceId: string;
@@ -107,7 +107,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
   if (isLoading) {
     return (
       <Section id="invoice-detail">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading invoice details...
           </Text>
@@ -175,7 +175,7 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
       />
 
       {actionError !== null && (
-        <InlineAlert color="error" className="mb-4">
+        <InlineAlert color="error">
           <InlineAlertDescription>{actionError}</InlineAlertDescription>
         </InlineAlert>
       )}
@@ -321,7 +321,6 @@ export function InvoiceDetailPage({ invoiceId, onBack }: InvoiceDetailPageProps)
                   )}
                   <HStack
                     justify="between"
-                    className="pt-2 border-t border-outline-variant"
                   >
                     <Text variant="body" weight="semibold">
                       Total Amount

@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { Skeleton, SkeletonCircle, SkeletonText } from './skeleton'
+import {render} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {Skeleton, SkeletonCircle, SkeletonText} from './skeleton'
 
 describe('Skeleton', () => {
   describe('Skeleton (base)', () => {

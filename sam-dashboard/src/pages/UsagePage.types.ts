@@ -1,7 +1,7 @@
 /**
  * Types for UsagePage component
  */
-import type { MetricType, SubscriptionTier } from '../types';
+import type {MetricType, SubscriptionTier} from '../types';
 
 /**
  * Props for the UsagePage component

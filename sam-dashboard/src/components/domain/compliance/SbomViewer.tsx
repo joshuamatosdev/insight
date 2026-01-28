@@ -2,31 +2,31 @@
  * SbomViewer - SBOM dependency tree visualization
  */
 
-import { useState, useCallback, useMemo } from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {
-  Text,
-  Button,
-  Input,
-  Badge,
-  RefreshIcon,
-  SearchIcon,
-  ChevronRightIcon,
-  ChevronDownIcon,
+    Badge,
+    Button,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    Input,
+    RefreshIcon,
+    SearchIcon,
+    Text,
 } from '../../catalyst/primitives';
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Section,
-  SectionHeader,
-  Stack,
-  HStack,
-  Box,
-  Flex,
-  Grid,
-  GridItem,
+    Box,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../catalyst/layout';
-import type { SbomViewerProps, SbomComponent, CycloneDxBom } from './Compliance.types';
+import type {SbomComponent, SbomViewerProps} from './Compliance.types';
 
 /**
  * StatCard for SBOM overview
@@ -133,7 +133,6 @@ function ComponentCard({
               <Text
                 variant="caption"
                 color="muted"
-                className="mt-2 ml-7"
               >
                 {component.description}
               </Text>
@@ -252,7 +251,6 @@ export function SbomViewer({
               direction="column"
               align="center"
               gap="md"
-              className="p-8"
             >
               <Text variant="body" color="muted" style={{ textAlign: 'center' }}>
                 SBOM data is not available.
@@ -404,7 +402,6 @@ export function SbomViewer({
                   <Text
                     variant="caption"
                     color="muted"
-                    className="text-center mt-2"
                   >
                     +{components.length - 20} more {type}s
                   </Text>
@@ -417,7 +414,7 @@ export function SbomViewer({
         {filteredComponents.length === 0 && searchQuery.length > 0 && (
           <Card variant="outlined">
             <CardBody>
-              <Flex justify="center" align="center" className="p-6">
+              <Flex justify="center" align="center">
                 <Text variant="body" color="muted">
                   No components found matching "{searchQuery}"
                 </Text>

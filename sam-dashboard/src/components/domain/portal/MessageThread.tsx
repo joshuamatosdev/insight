@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
-import type { CSSProperties } from 'react';
-import type { MessageThreadProps, MessageBubbleProps } from './Portal.types';
-import type { Message } from '../../../types/portal';
-import { Text, Button, Input } from '../../catalyst/primitives';
-import { Flex, Stack, Box } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+import {useEffect, useRef, useState} from 'react';
+
+import type {MessageBubbleProps, MessageThreadProps} from './Portal.types';
+import type {Message} from '../../../types/portal';
+import {Button, Input, Text} from '../../catalyst/primitives';
+import {Box, Flex} from '../../catalyst/layout';
 
 /**
  * Individual message bubble.
@@ -12,8 +13,6 @@ function MessageBubble({
   message,
   isOwn,
   showSender = true,
-  className,
-  style,
 }: MessageBubbleProps): React.ReactElement {
   const formatTime = (dateStr: string): string => {
     try {
@@ -26,44 +25,26 @@ function MessageBubble({
     }
   };
 
-  const bubbleStyles: CSSProperties = {
-    maxWidth: '70%',
-    padding: '0.75rem',
-    borderRadius: '0.5rem',
-    backgroundColor: isOwn ? '#2563eb' : '#f4f4f5',
-    color: isOwn ? 'white' : 'inherit',
-    ...style,
-  };
-
   return (
     <Flex
-      className={`${className} mb-2`}
       justify={isOwn ? 'end' : 'start'}
     >
-      <Box style={bubbleStyles}>
+      <Box>
         {showSender && isOwn === false && (
           <Text
             variant="caption"
             weight="semibold"
-            className="mb-1"
           >
             {message.senderName}
           </Text>
         )}
         <Text
           variant="body"
-          style={{ color: isOwn ? 'white' : 'inherit', whiteSpace: 'pre-wrap' }}
         >
           {message.body}
         </Text>
         <Text
           variant="caption"
-          style={{
-            marginTop: '0.25rem',
-            opacity: 0.7,
-            color: isOwn ? 'white' : '#71717a',
-            textAlign: 'right',
-          }}
         >
           {formatTime(message.createdAt)}
         </Text>
@@ -157,14 +138,9 @@ export function MessageThread({
   };
 
   return (
-    <Box className={className} style={containerStyles}>
+    <Box style={containerStyles}>
       {/* Header */}
-      <Box
-        style={{
-          padding: '0.75rem 1rem',
-          borderBottom: '1px solid #e4e4e7',
-        }}
-      >
+      <Box>
         <Text variant="heading5">{thread.subject}</Text>
         <Text variant="caption" color="muted">
           {thread.participants.map((p) => p.userName).join(', ')}
@@ -172,27 +148,14 @@ export function MessageThread({
       </Box>
 
       {/* Messages */}
-      <Box
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: '1rem',
-        }}
-      >
+      <Box>
         {messageGroups.map((group) => (
           <Box key={group.date}>
             {/* Date Separator */}
             <Flex
               justify="center"
-              style={{ margin: '1rem 0' }}
             >
-              <Box
-                style={{
-                  padding: '0.25rem 0.75rem',
-                  backgroundColor: '#f4f4f5',
-                  borderRadius: '9999px',
-                }}
-              >
+              <Box>
                 <Text variant="caption" color="muted">
                   {formatDate(group.date)}
                 </Text>
@@ -222,14 +185,9 @@ export function MessageThread({
 
       {/* Input */}
       {onSendMessage !== undefined && (
-        <Box
-          style={{
-            padding: '0.75rem 1rem',
-            borderTop: '1px solid #e4e4e7',
-          }}
-        >
+        <Box>
           <Flex gap="sm">
-            <Box style={{ flex: 1 }}>
+            <Box>
               <Input
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}

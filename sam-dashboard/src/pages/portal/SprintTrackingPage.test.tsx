@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {beforeEach, describe, expect, it, type Mock, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SprintTrackingPage } from './SprintTrackingPage';
+import {SprintTrackingPage} from './SprintTrackingPage';
 import * as hooks from '../../hooks/usePortal';
-import type { Sprint, SprintTask } from '../../types/portal';
+import type {Sprint, SprintTask} from '../../types/portal';
 
 // Mock the hooks
 vi.mock('../../hooks/usePortal', () => ({

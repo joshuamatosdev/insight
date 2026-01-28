@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
-import { Text, Button } from '../../../components/catalyst/primitives';
+import {useEffect, useState} from 'react';
+
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Button, Text} from '../../../components/catalyst/primitives';
 
 interface Invoice {
   id: string;
@@ -99,15 +99,15 @@ export function InvoiceSummary(): React.ReactElement {
 
           {/* Summary Cards */}
           <Flex gap="md">
-            <Box className="flex-1 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+            <Box>
               <Text variant="caption" color="muted">Pending</Text>
-              <Text variant="heading4" className="text-amber-500">
+              <Text variant="heading4">
                 {loading === true ? '...' : formatCurrency(totals.pending)}
               </Text>
             </Box>
-            <Box className="flex-1 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+            <Box>
               <Text variant="caption" color="muted">Paid (This Month)</Text>
-              <Text variant="heading4" className="text-emerald-500">
+              <Text variant="heading4">
                 {loading === true ? '...' : formatCurrency(totals.paid)}
               </Text>
             </Box>
@@ -126,17 +126,15 @@ export function InvoiceSummary(): React.ReactElement {
                   key={invoice.id}
                   justify="space-between"
                   align="center"
-                  className="p-2 bg-zinc-50 dark:bg-zinc-800 rounded-md"
                 >
                   <Stack spacing="0">
                     <Text variant="body" weight="medium">{invoice.invoiceNumber}</Text>
                     <Text variant="caption" color="muted">{invoice.contractNumber}</Text>
                   </Stack>
-                  <Stack spacing="0" className="text-right">
+                  <Stack spacing="0">
                     <Text variant="body" weight="semibold">{formatCurrency(invoice.amount)}</Text>
                     <Text
                       variant="caption"
-                      className={clsx('capitalize', getStatusTextClass(invoice.status))}
                     >
                       {invoice.status}
                     </Text>

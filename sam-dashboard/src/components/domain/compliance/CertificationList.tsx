@@ -2,10 +2,10 @@
  * CertificationList - List of certifications with grid layout
  */
 
-import { Text, FileCheckIcon } from '../../catalyst/primitives';
-import { Grid, GridItem, Flex, Card, CardBody } from '../../catalyst/layout';
-import { CertificationCard } from './CertificationCard';
-import type { CertificationListProps } from './Compliance.types';
+import {FileCheckIcon, Text} from '../../catalyst/primitives';
+import {Card, CardBody, Flex, Grid, GridItem} from '../../catalyst/layout';
+import {CertificationCard} from './CertificationCard';
+import type {CertificationListProps} from './Compliance.types';
 
 export function CertificationList({
   certifications,
@@ -33,7 +33,6 @@ export function CertificationList({
             direction="column"
             align="center"
             gap="md"
-            className="p-8"
           >
             <FileCheckIcon size="xl" color="muted" />
             <Text variant="body" color="muted" style={{ textAlign: 'center' }}>

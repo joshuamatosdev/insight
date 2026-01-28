@@ -1,33 +1,23 @@
-import { CSSProperties, useId } from 'react';
-import { SidebarSectionProps } from './Sidebar.types';
+import {useId} from 'react';
+import clsx from 'clsx';
+import {SidebarSectionProps} from './Sidebar.types';
 
 export function SidebarSection({ title, className, style, children }: SidebarSectionProps) {
   const titleId = useId();
   const hasTitle = title !== undefined && title !== null && title.length > 0;
 
-  const sectionStyles: CSSProperties = {
-    padding: '1.5rem 0 0.5rem',
-    ...style,
-  };
-
-  const titleStyles: CSSProperties = {
-    padding: '0 1rem 0.5rem',
-    fontSize: '0.6875rem',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    color: '#9ca3af',
-  };
-
   return (
     <section
-      className={className}
-      style={sectionStyles}
+      className={clsx('pt-6 pb-2', className)}
+      style={style}
       aria-labelledby={hasTitle ? titleId : undefined}
       role="group"
     >
       {hasTitle && (
-        <div id={titleId} style={titleStyles}>
+        <div
+          id={titleId}
+          className="px-4 pb-2 text-[0.6875rem] font-semibold uppercase tracking-wider text-gray-400"
+        >
           {title}
         </div>
       )}

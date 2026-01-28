@@ -1,7 +1,7 @@
-import { OpportunityListProps } from './Opportunity.types';
-import { OpportunityCard } from './OpportunityCard';
-import { Text } from '../../catalyst/primitives';
-import { Stack, Box } from '../../catalyst/layout';
+import {OpportunityListProps} from './Opportunity.types';
+import {OpportunityCard} from './OpportunityCard';
+import {Text} from '../../catalyst/primitives';
+import {Box, Stack} from '../../catalyst/layout';
 
 export function OpportunityList({
   opportunities,
@@ -10,14 +10,7 @@ export function OpportunityList({
 }: OpportunityListProps) {
   if (opportunities.length === 0) {
     return (
-      <Box
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#f0f9ff',
-          borderRadius: '0.5rem',
-        }}
-      >
+      <Box>
         <Text variant="body" color="info">
           {emptyMessage}
         </Text>

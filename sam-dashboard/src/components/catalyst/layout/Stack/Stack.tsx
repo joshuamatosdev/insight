@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { StackProps, HStackProps, SpacingSize } from './Stack.types';
+import {HStackProps, SpacingSize, StackProps} from './Stack.types';
 
 const alignMap: Record<string, string> = {
   start: 'items-start',

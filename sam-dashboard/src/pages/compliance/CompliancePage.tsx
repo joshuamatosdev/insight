@@ -2,34 +2,23 @@
  * CompliancePage - Overview dashboard for compliance management
  */
 
-import { useState, useCallback } from 'react';
+import {useCallback} from 'react';
+import {BellIcon, Button, FileCheckIcon, PlusIcon, ShieldLockIcon, Text,} from '../../components/catalyst/primitives';
 import {
-  Text,
-  Badge,
-  Button,
-  FileCheckIcon,
-  ShieldLockIcon,
-  BellIcon,
-  PlusIcon,
-} from '../../components/catalyst/primitives';
-import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Flex,
-  Grid,
-  GridItem,
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '../../components/catalyst/layout';
-import {
-  CertificationList,
-  ExpirationAlert,
-} from '../../components/domain/compliance';
-import { useComplianceOverview } from '../../hooks';
-import type { Certification, SecurityClearance } from '../../types/compliance.types';
+import {CertificationList, ExpirationAlert,} from '../../components/domain/compliance';
+import {useComplianceOverview} from '../../hooks';
+import type {Certification, SecurityClearance} from '../../types/compliance.types';
 
 interface CompliancePageProps {
   onNavigate?: (section: string) => void;
@@ -57,7 +46,6 @@ function StatCard({
     <Card
       variant="outlined"
       onClick={onClick}
-      className={onClick !== undefined ? 'cursor-pointer' : undefined}
     >
       <CardBody>
         <HStack spacing="md" align="center">
@@ -143,7 +131,7 @@ export function CompliancePage({
   if (isLoading) {
     return (
       <Section id="compliance">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading compliance data...
           </Text>
@@ -161,7 +149,6 @@ export function CompliancePage({
               direction="column"
               align="center"
               gap="md"
-              className="p-8"
             >
               <Text variant="body" color="danger">
                 Error loading compliance data: {error.message}
@@ -252,7 +239,6 @@ export function CompliancePage({
             <Card
               variant="outlined"
               onClick={handleViewCertifications}
-              className="cursor-pointer"
             >
               <CardBody>
                 <Flex direction="column" align="center" gap="sm">
@@ -272,7 +258,6 @@ export function CompliancePage({
             <Card
               variant="outlined"
               onClick={handleViewClearances}
-              className="cursor-pointer"
             >
               <CardBody>
                 <Flex direction="column" align="center" gap="sm">
@@ -292,7 +277,6 @@ export function CompliancePage({
             <Card
               variant="outlined"
               onClick={handleViewSbom}
-              className="cursor-pointer"
             >
               <CardBody>
                 <Flex direction="column" align="center" gap="sm">
@@ -346,10 +330,9 @@ export function CompliancePage({
                 direction="column"
                 align="center"
                 gap="md"
-                className="p-8"
               >
                 <FileCheckIcon size="xl" color="muted" />
-                <Text variant="body" color="muted" className="text-center">
+                <Text variant="body" color="muted">
                   No compliance items configured yet.
                 </Text>
                 <HStack spacing="sm">

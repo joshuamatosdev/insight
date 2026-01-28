@@ -1,7 +1,7 @@
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
+import {ChevronRightIcon, HomeIcon} from '@heroicons/react/20/solid'
 import clsx from 'clsx'
-import React, { forwardRef } from 'react'
-import { Link } from '../primitives/link'
+import React, {forwardRef} from 'react'
+import {Link} from '@/components'
 
 type SeparatorType = 'slash' | 'chevron' | 'arrow'
 

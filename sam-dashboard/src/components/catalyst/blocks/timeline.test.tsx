@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { Timeline, TimelineItem } from './timeline'
+import {render, screen} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {Timeline, TimelineItem} from './timeline'
 
 describe('Timeline', () => {
   it('renders timeline with multiple items', () => {

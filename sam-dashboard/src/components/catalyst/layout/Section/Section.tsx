@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react';
-import { SectionProps } from './Section.types';
+import {CSSProperties} from 'react';
+import {SectionProps} from './Section.types';
 
 export function Section({
   id,

@@ -1,5 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
-import { IconComponentProps, IconSize, IconColor } from './Icon.types';
+import {CSSProperties, ReactNode} from 'react';
+import clsx from 'clsx';
+import {IconComponentProps, IconSize} from './Icon.types';
 
 const sizeMap: Record<IconSize, string> = {
   xs: '12px',
@@ -9,16 +10,17 @@ const sizeMap: Record<IconSize, string> = {
   xl: '32px',
 };
 
-const colorMap: Record<IconColor, string> = {
-  inherit: 'currentColor',
-  primary: '#2563eb',
-  secondary: '#3f3f46',
-  muted: '#71717a',
-  success: '#10b981',
-  warning: '#f59e0b',
-  danger: '#ef4444',
-  info: '#3b82f6',
-  white: '#ffffff',
+/** Map of semantic color presets to Tailwind fill classes */
+const colorClassMap: Record<string, string> = {
+  inherit: 'fill-current',
+  primary: 'fill-blue-600',
+  secondary: 'fill-zinc-700',
+  muted: 'fill-zinc-500',
+  success: 'fill-emerald-500',
+  warning: 'fill-amber-500',
+  danger: 'fill-red-500',
+  info: 'fill-blue-500',
+  white: 'fill-white',
 };
 
 interface IconPropsWithChildren extends Omit<IconComponentProps, 'paths'> {
@@ -26,9 +28,19 @@ interface IconPropsWithChildren extends Omit<IconComponentProps, 'paths'> {
   children?: ReactNode;
 }
 
+/**
+ * Checks if a color value is a Tailwind class name (starts with text-, fill-, or other common prefixes)
+ */
+function isTailwindClass(color: string): boolean {
+  return color.startsWith('text-') ||
+         color.startsWith('fill-') ||
+         color.startsWith('bg-') ||
+         color.startsWith('stroke-');
+}
+
 export function Icon({
   size = 'md',
-  color = 'inherit',
+  color,
   className,
   style,
   viewBox = '0 0 16 16',
@@ -38,11 +50,21 @@ export function Icon({
   ...rest
 }: IconPropsWithChildren) {
   const sizeValue = sizeMap[size];
-  const colorValue = colorMap[color];
+
+  // Determine color class: use provided Tailwind class, mapped preset, or default to fill-current
+  let colorClass = 'fill-current';
+  if (color !== undefined) {
+    if (isTailwindClass(color)) {
+      // If it's a text-* class, convert to fill-* for SVG compatibility
+      colorClass = color.startsWith('text-') ? color.replace('text-', 'fill-') : color;
+    } else if (colorClassMap[color] !== undefined) {
+      colorClass = colorClassMap[color];
+    }
+  }
+
   const iconStyles: CSSProperties = {
     width: sizeValue,
     height: sizeValue,
-    fill: colorValue,
     flexShrink: 0,
     ...style,
   };
@@ -51,7 +73,7 @@ export function Icon({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox={viewBox}
-      className={className}
+      className={clsx(colorClass, className)}
       style={iconStyles}
       aria-hidden="true"
       {...rest}

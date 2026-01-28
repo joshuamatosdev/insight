@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import React, { forwardRef } from 'react'
-import { Button } from './button'
+import React, {forwardRef} from 'react'
+import {Button} from './button'
 
 type ButtonColor = 'dark/zinc' | 'light' | 'dark/white' | 'dark' | 'white' | 'zinc' | 'indigo' | 'cyan' | 'red' | 'orange' | 'amber' | 'yellow' | 'lime' | 'green' | 'emerald' | 'teal' | 'sky' | 'blue' | 'violet' | 'purple' | 'fuchsia' | 'pink' | 'rose'
 

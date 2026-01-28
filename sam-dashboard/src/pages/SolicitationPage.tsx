@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { FileCheckIcon } from '../components/catalyst/primitives';
-import { Section, SectionHeader } from '../components/catalyst/layout';
-import { getOpportunityType, OpportunityList } from '../components/domain';
-import { SolicitationPageProps } from './Pages.types';
+import {useMemo} from 'react';
+import {FileCheckIcon} from '../components/catalyst/primitives';
+import {Section, SectionHeader} from '../components/catalyst/layout';
+import {getOpportunityType, OpportunityList} from '../components/domain';
+import {SolicitationPageProps} from './Pages.types';
 
 export function SolicitationPage({ opportunities }: SolicitationPageProps) {
   const solicitations = useMemo(() => {

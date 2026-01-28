@@ -1,22 +1,11 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Stack,
-  HStack,
-  Card,
-  CardBody,
-} from '@/components/catalyst/layout';
-import {
-  PageHeading,
-  PageHeadingTitle,
-  PageHeadingSection,
-  PageHeadingActions,
-} from '@/components/catalyst/navigation';
-import { Input, Select, Button, Text } from '@/components/catalyst/primitives';
-import { ContactList, ContactForm } from '@/components/domain/crm';
-import { useContacts } from '@/hooks';
-import type { Contact, ContactType, CreateContactRequest } from '@/types/crm';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Box, Card, CardBody, HStack, Stack,} from '@/components/catalyst/layout';
+import {PageHeading, PageHeadingActions, PageHeadingSection, PageHeadingTitle,} from '@/components/catalyst/navigation';
+import {Button, Input, Select, Text} from '@/components/catalyst/primitives';
+import {ContactForm, ContactList} from '@/components/domain/crm';
+import {useContacts} from '@/hooks';
+import type {Contact, ContactType, CreateContactRequest} from '@/types/crm';
 
 const CONTACT_TYPE_OPTIONS: { value: ContactType | ''; label: string }[] = [
   { value: '', label: 'All Types' },

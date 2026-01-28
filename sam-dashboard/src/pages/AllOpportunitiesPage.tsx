@@ -1,14 +1,8 @@
-import { useState, useMemo } from 'react';
-import { ListUlIcon } from '../components/catalyst/primitives';
-import { Section, SectionHeader, HStack } from '../components/catalyst/layout';
-import {
-  Opportunity,
-  OpportunityList,
-  FilterBar,
-  FilterState,
-  SortOption,
-} from '../components/domain';
-import { AllOpportunitiesPageProps } from './Pages.types';
+import {useMemo, useState} from 'react';
+import {ListUlIcon} from '../components/catalyst/primitives';
+import {HStack, Section, SectionHeader} from '../components/catalyst/layout';
+import {FilterBar, FilterState, Opportunity, OpportunityList, SortOption,} from '../components/domain';
+import {AllOpportunitiesPageProps} from './Pages.types';
 
 export function AllOpportunitiesPage({ opportunities }: AllOpportunitiesPageProps) {
   const [filters, setFilters] = useState<FilterState>({

@@ -1,5 +1,5 @@
-import { Stack, Box, Card, CardBody } from '../../components/catalyst/layout';
-import { Text, Button } from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
 
 interface QRCodeDisplayProps {
   qrCodeUrl: string;
@@ -76,16 +76,6 @@ export function QRCodeDisplay({
               Or enter this code manually:
             </Text>
             <Box
-              style={{
-                fontFamily: 'monospace',
-                fontSize: '14px',
-                padding: '0.75rem',
-                backgroundColor: '#f4f4f5',
-                borderRadius: '4px',
-                wordBreak: 'break-all',
-                textAlign: 'center',
-                letterSpacing: '0.1em',
-              }}
             >
               {formattedSecret}
             </Box>
@@ -93,7 +83,6 @@ export function QRCodeDisplay({
               variant="secondary"
               size="sm"
               onClick={handleCopySecret}
-              className="w-full"
             >
               Copy Secret Key
             </Button>

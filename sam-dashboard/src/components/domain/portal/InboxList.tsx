@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
-import type { InboxListProps } from './Portal.types';
-import type { MessageThread } from '../../../types/portal';
-import { Text, Badge } from '../../catalyst/primitives';
-import { Stack, Box, Flex, HStack } from '../../catalyst/layout';
+import type {CSSProperties} from 'react';
+
+import type {InboxListProps} from './Portal.types';
+import {Badge, Text} from '../../catalyst/primitives';
+import {Box, Flex, Stack} from '../../catalyst/layout';
 
 /**
  * Inbox list showing message threads.
@@ -58,8 +58,8 @@ export function InboxList({
 
   if (isLoading) {
     return (
-      <Box className={className} style={containerStyles}>
-        <Flex justify="center" align="center" className="p-8">
+      <Box style={containerStyles}>
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading messages...
           </Text>
@@ -70,12 +70,11 @@ export function InboxList({
 
   if (threads.length === 0) {
     return (
-      <Box className={className} style={containerStyles}>
+      <Box style={containerStyles}>
         <Flex
           justify="center"
           align="center"
           direction="column"
-          className="p-8"
         >
           <Text variant="heading5" color="muted">
             No messages
@@ -89,28 +88,15 @@ export function InboxList({
   }
 
   return (
-    <Box className={className} style={containerStyles}>
+    <Box style={containerStyles}>
       <Stack spacing="0">
         {threads.map((thread) => {
           const isSelected = selectedThreadId === thread.id;
           const hasUnread = thread.unreadCount > 0;
 
-          const threadStyles: CSSProperties = {
-            padding: '0.75rem 1rem',
-            borderBottom: '1px solid #f4f4f5',
-            cursor: 'pointer',
-            backgroundColor: isSelected
-              ? '#dbeafe'
-              : hasUnread
-              ? '#fafafa'
-              : 'transparent',
-            transition: 'background-color 0.2s ease',
-          };
-
           return (
             <Box
               key={thread.id}
-              style={threadStyles}
               onClick={() => onSelectThread(thread.id)}
               role="button"
               tabIndex={0}
@@ -123,17 +109,12 @@ export function InboxList({
               }}
             >
               <Flex justify="space-between" align="flex-start">
-                <Stack spacing="xs" style={{ flex: 1, minWidth: 0 }}>
+                <Stack spacing="xs">
                   {/* Participants & Date */}
                   <Flex justify="space-between" align="center">
                     <Text
                       variant="bodySmall"
                       weight={hasUnread ? 'semibold' : 'normal'}
-                      style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
                     >
                       {thread.participants.map((p) => p.userName).join(', ')}
                     </Text>
@@ -146,11 +127,6 @@ export function InboxList({
                   <Text
                     variant="body"
                     weight={hasUnread ? 'semibold' : 'normal'}
-                    style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
                   >
                     {thread.subject}
                   </Text>
@@ -159,11 +135,6 @@ export function InboxList({
                   <Text
                     variant="bodySmall"
                     color="muted"
-                    style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
                   >
                     {truncateText(thread.lastMessagePreview, 80)}
                   </Text>
@@ -171,7 +142,7 @@ export function InboxList({
 
                 {/* Unread Badge */}
                 {hasUnread && (
-                  <Box className="ml-2">
+                  <Box>
                     <Badge color="blue">
                       {thread.unreadCount}
                     </Badge>

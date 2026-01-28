@@ -1,8 +1,7 @@
-import clsx from 'clsx';
-import { Badge } from '../../catalyst';
-import { ContractStatusBadge } from './ContractStatusBadge';
-import type { ContractCardProps } from './Contract.types';
-import { getContractTypeLabel, formatCurrency, formatDate } from './Contract.types';
+import {Badge} from '../../catalyst';
+import {ContractStatusBadge} from './ContractStatusBadge';
+import type {ContractCardProps} from './Contract.types';
+import {formatCurrency, formatDate, getContractTypeLabel} from './Contract.types';
 
 export function ContractCard({
   contract,
@@ -52,28 +51,22 @@ export function ContractCard({
 
   return (
     <div
-      className={clsx(
-        'rounded-lg bg-surface ring-1 ring-border dark:bg-zinc-800/50 dark:ring-white/10',
-        'mb-4 overflow-hidden',
-        onClick !== undefined && 'cursor-pointer transition-shadow hover:ring-zinc-950/10 dark:hover:ring-white/20',
-        className
-      )}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       tabIndex={onClick !== undefined ? 0 : undefined}
       role={onClick !== undefined ? 'button' : undefined}
     >
-      <div className="p-6">
-        <div className="flex items-start justify-between">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-on-surface truncate mb-1">
+      <div>
+        <div>
+          <div>
+            <h3>
               {contract.title}
             </h3>
-            <p className="text-sm text-on-surface-muted">
+            <p>
               {contract.contractNumber}
             </p>
           </div>
-          <div className="flex gap-2 ml-4">
+          <div>
             <Badge color="blue">
               {getContractTypeLabel(contract.contractType)}
             </Badge>
@@ -81,36 +74,36 @@ export function ContractCard({
           </div>
         </div>
 
-        <dl className="mt-6 grid grid-cols-4 gap-6">
+        <dl>
           <div>
-            <dt className="text-xs text-on-surface-muted">
+            <dt>
               Agency
             </dt>
-            <dd className="mt-1 text-sm font-semibold text-on-surface">
+            <dd>
               {contract.agency ?? 'N/A'}
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-on-surface-muted">
+            <dt>
               Total Value
             </dt>
-            <dd className="mt-1 text-sm font-semibold text-on-surface">
+            <dd>
               {formatCurrency(contract.totalValue)}
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-on-surface-muted">
+            <dt>
               Funded Value
             </dt>
-            <dd className="mt-1 text-sm font-semibold text-on-surface">
+            <dd>
               {formatCurrency(contract.fundedValue)}
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-on-surface-muted">
+            <dt>
               PoP End Date
             </dt>
-            <dd className={clsx('mt-1 text-sm font-semibold', getExpirationColor())}>
+            <dd>
               {formatDate(contract.popEndDate)}
             </dd>
           </div>
@@ -118,24 +111,24 @@ export function ContractCard({
 
         {(contract.contractingOfficerName !== null ||
           contract.programManagerName !== null) && (
-          <div className="mt-6 pt-6 border-t border-border dark:border-white/10">
-            <dl className="grid grid-cols-2 gap-6">
+          <div>
+            <dl>
               {contract.contractingOfficerName !== null && (
                 <div>
-                  <dt className="text-xs text-on-surface-muted">
+                  <dt>
                     Contracting Officer
                   </dt>
-                  <dd className="mt-1 text-sm text-on-surface">
+                  <dd>
                     {contract.contractingOfficerName}
                   </dd>
                 </div>
               )}
               {contract.programManagerName !== null && (
                 <div>
-                  <dt className="text-xs text-on-surface-muted">
+                  <dt>
                     Program Manager
                   </dt>
-                  <dd className="mt-1 text-sm text-on-surface">
+                  <dd>
                     {contract.programManagerName}
                   </dd>
                 </div>

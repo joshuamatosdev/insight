@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from './tabs'
+import {describe, expect, it, vi} from 'vitest'
+import {Tab, TabList, TabPanel, TabPanels, Tabs} from './tabs'
 
 describe('Tabs', () => {
   it('renders tabs with correct initial selection', () => {

@@ -1,6 +1,6 @@
-import { CSSProperties, createContext } from 'react';
+import {createContext, CSSProperties} from 'react';
 import clsx from 'clsx';
-import { TableProps } from './Table.types';
+import {TableProps} from './Table.types';
 
 export interface TableContextValue {
   dense?: boolean;

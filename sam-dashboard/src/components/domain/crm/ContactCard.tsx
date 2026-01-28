@@ -1,7 +1,7 @@
-import { Card, CardHeader, CardBody, HStack, Stack } from '../../catalyst/layout';
-import { Text, Badge, Button } from '../../catalyst/primitives';
-import type { ContactCardProps } from './ContactCard.types';
-import type { ContactType, ContactStatus } from '../../../types/crm';
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Badge, Button, Text} from '../../catalyst/primitives';
+import type {ContactCardProps} from './ContactCard.types';
+import type {ContactStatus, ContactType} from '../../../types/crm';
 
 function getContactTypeLabel(type: ContactType): string {
   const labels: Record<ContactType, string> = {

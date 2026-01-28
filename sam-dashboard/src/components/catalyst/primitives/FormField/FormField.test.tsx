@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { FormField } from './FormField';
-import { Input } from '../input';
+import {describe, expect, it} from 'vitest';
+import {render, screen} from '@testing-library/react';
+import {FormField} from './FormField';
+import {Input} from '../input';
 
 describe('FormField', () => {
   it('renders label associated with input', () => {

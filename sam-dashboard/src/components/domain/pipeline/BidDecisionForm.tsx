@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
-import { Card, CardHeader, CardBody, Stack, HStack, Box } from '../../catalyst/layout';
-import { Text, Button, Input, Select, Textarea, Badge } from '../../catalyst/primitives';
-import type { BidDecisionFormProps, BidDecisionScoreItem } from './BidDecisionForm.types';
-import type { BidDecision } from '../../../types/pipeline';
+import {useMemo, useState} from 'react'
+import {Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout'
+import {Badge, Button, Select, Text, Textarea} from '../../catalyst/primitives'
+import type {BidDecisionFormProps} from './BidDecisionForm.types'
+import type {BidDecision} from '../../../types/pipeline'
 
-const DEFAULT_SCORECARD: Omit<BidDecisionScoreItem, 'score'>[] = [
+const DEFAULT_SCORECARD: Array<{ id: string; category: string; question: string; weight: number }> = [
   { id: '1', category: 'Strategic Fit', question: 'Aligns with company strategic goals', weight: 15 },
   { id: '2', category: 'Strategic Fit', question: 'Builds on existing capabilities', weight: 10 },
   { id: '3', category: 'Customer Relationship', question: 'Existing relationship with customer', weight: 10 },
@@ -15,7 +15,7 @@ const DEFAULT_SCORECARD: Omit<BidDecisionScoreItem, 'score'>[] = [
   { id: '8', category: 'Competition', question: 'Known competitors beatable', weight: 5 },
   { id: '9', category: 'Resources', question: 'Resources available for proposal', weight: 10 },
   { id: '10', category: 'Price', question: 'Can win at target price', weight: 5 },
-];
+]
 
 const SCORE_OPTIONS = [
   { value: '', label: 'Select' },
@@ -25,26 +25,26 @@ const SCORE_OPTIONS = [
   { value: '3', label: '3 - Good' },
   { value: '4', label: '4 - Strong' },
   { value: '5', label: '5 - Excellent' },
-];
+]
 
 function getScoreColor(score: number): 'red' | 'yellow' | 'green' | 'gray' {
   if (score < 40) {
-    return 'red';
+    return 'red'
   }
   if (score < 60) {
-    return 'yellow';
+    return 'yellow'
   }
-  return 'green';
+  return 'green'
 }
 
 function getRecommendation(score: number): { decision: BidDecision; label: string } {
   if (score >= 70) {
-    return { decision: 'BID', label: 'Recommend: BID' };
+    return { decision: 'BID', label: 'Recommend: BID' }
   }
   if (score >= 50) {
-    return { decision: 'WATCH', label: 'Recommend: WATCH / Further Review' };
+    return { decision: 'WATCH', label: 'Recommend: WATCH / Further Review' }
   }
-  return { decision: 'NO_BID', label: 'Recommend: NO BID' };
+  return { decision: 'NO_BID', label: 'Recommend: NO BID' }
 }
 
 export function BidDecisionForm({
@@ -53,32 +53,32 @@ export function BidDecisionForm({
   onCancel,
   isLoading = false,
 }: BidDecisionFormProps) {
-  const [scores, setScores] = useState<Map<string, number>>(new Map());
-  const [notes, setNotes] = useState(opportunity.decisionNotes ?? '');
-  const [selectedDecision, setSelectedDecision] = useState<BidDecision>(opportunity.decision);
-  const [autoMoveStage, setAutoMoveStage] = useState(true);
+  const [scores, setScores] = useState<Map<string, number>>(new Map())
+  const [notes, setNotes] = useState(opportunity.decisionNotes ?? '')
+  const [selectedDecision, setSelectedDecision] = useState<BidDecision>(opportunity.decision)
+  const [autoMoveStage, setAutoMoveStage] = useState(true)
 
   const handleScoreChange = (itemId: string, value: string) => {
-    const newScores = new Map(scores);
+    const newScores = new Map(scores)
     if (value === '') {
-      newScores.delete(itemId);
+      newScores.delete(itemId)
     } else {
-      newScores.set(itemId, parseInt(value, 10));
+      newScores.set(itemId, parseInt(value, 10))
     }
-    setScores(newScores);
-  };
+    setScores(newScores)
+  }
 
   const { totalScore, maxScore, percentage, isComplete } = useMemo(() => {
-    let total = 0;
-    let max = 0;
-    let answeredCount = 0;
+    let total = 0
+    let max = 0
+    let answeredCount = 0
 
     for (const item of DEFAULT_SCORECARD) {
-      const score = scores.get(item.id);
-      max += item.weight * 5; // Max score per item is 5
+      const score = scores.get(item.id)
+      max += item.weight * 5 // Max score per item is 5
       if (score !== undefined) {
-        total += item.weight * score;
-        answeredCount++;
+        total += item.weight * score
+        answeredCount++
       }
     }
 
@@ -87,30 +87,30 @@ export function BidDecisionForm({
       maxScore: max,
       percentage: max > 0 ? Math.round((total / max) * 100) : 0,
       isComplete: answeredCount === DEFAULT_SCORECARD.length,
-    };
-  }, [scores]);
+    }
+  }, [scores])
 
-  const recommendation = useMemo(() => getRecommendation(percentage), [percentage]);
+  const recommendation = useMemo(() => getRecommendation(percentage), [percentage])
 
   const handleSubmit = () => {
-    onSubmit(selectedDecision, notes, autoMoveStage);
-  };
+    onSubmit(selectedDecision, notes, autoMoveStage)
+  }
 
   // Group scorecard by category
   const groupedScorecard = useMemo(() => {
-    const groups = new Map<string, typeof DEFAULT_SCORECARD>();
+    const groups = new Map<string, typeof DEFAULT_SCORECARD>()
 
     for (const item of DEFAULT_SCORECARD) {
-      const existing = groups.get(item.category);
+      const existing = groups.get(item.category)
       if (existing !== undefined) {
-        existing.push(item);
+        existing.push(item)
       } else {
-        groups.set(item.category, [item]);
+        groups.set(item.category, [item])
       }
     }
 
-    return groups;
-  }, []);
+    return groups
+  }, [])
 
   return (
     <Card>
@@ -144,15 +144,15 @@ export function BidDecisionForm({
             </Text>
 
             {Array.from(groupedScorecard.entries()).map(([category, items]) => (
-              <Box key={category}>
-                <Text variant="caption" weight="semibold" color="secondary" className="mb-2">
+              <div key={category}>
+                <Text variant="caption" weight="semibold" color="secondary">
                   {category}
                 </Text>
                 <Stack gap="sm">
                   {items.map((item) => (
                     <HStack key={item.id} justify="between" align="center" gap="md">
-                      <HStack gap="sm" align="center" style={{ flex: 1 }}>
-                        <Text variant="caption" color="secondary" style={{ width: '24px' }}>
+                      <HStack gap="sm" align="center">
+                        <Text variant="caption" color="secondary">
                           {item.weight}%
                         </Text>
                         <Text variant="bodySmall">{item.question}</Text>
@@ -161,24 +161,17 @@ export function BidDecisionForm({
                         value={scores.get(item.id)?.toString() ?? ''}
                         onChange={(e) => handleScoreChange(item.id, e.target.value)}
                         options={SCORE_OPTIONS}
-                        style={{ width: '120px' }}
                       />
                     </HStack>
                   ))}
                 </Stack>
-              </Box>
+              </div>
             ))}
           </Stack>
 
           {/* Summary */}
           {scores.size > 0 && (
-            <Box
-              style={{
-                padding: '1rem',
-                backgroundColor: '#f4f4f5',
-                borderRadius: '0.375rem',
-              }}
-            >
+            <div>
               <HStack justify="between" align="center">
                 <Stack gap="xs">
                   <Text variant="bodySmall" weight="semibold">
@@ -197,7 +190,7 @@ export function BidDecisionForm({
                   </Text>
                 </Stack>
               </HStack>
-            </Box>
+            </div>
           )}
 
           {/* Decision Selection */}
@@ -259,5 +252,5 @@ export function BidDecisionForm({
         </Stack>
       </CardBody>
     </Card>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Section, SectionHeader, Stack } from '../../components/catalyst/layout';
-import { Button, Text } from '../../components/catalyst/primitives';
-import { DocumentUploadForm } from '../../components/domain/documents';
-import { useDocuments } from '../../hooks';
-import type { CreateDocumentRequest } from '../../types/documents';
+import {useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
+import {DocumentUploadForm} from '../../components/domain/documents';
+import {useDocuments} from '../../hooks';
+import type {CreateDocumentRequest} from '../../types/documents';
 
 export function DocumentUploadPage() {
   const navigate = useNavigate();

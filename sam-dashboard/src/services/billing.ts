@@ -1,10 +1,10 @@
 import type {
-  Subscription,
-  PlanDetails,
-  BillingConfig,
-  SubscribeRequest,
-  UpdatePlanRequest,
-  SubscriptionPlan,
+    BillingConfig,
+    PlanDetails,
+    SubscribeRequest,
+    Subscription,
+    SubscriptionPlan,
+    UpdatePlanRequest,
 } from '../types/billing.types';
 
 const API_BASE = '/api/v1/billing';

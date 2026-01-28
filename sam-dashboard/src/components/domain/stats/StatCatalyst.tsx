@@ -5,8 +5,8 @@
  * Shows how to create new components that match Catalyst's design language.
  */
 
-import { Badge, Subheading, Text } from '../../catalyst'
-import { Box } from '../../catalyst/layout'
+import {Badge, Subheading, Text} from '../../catalyst'
+import {Box} from '../../catalyst/layout'
 
 interface StatProps {
   title: string
@@ -23,11 +23,11 @@ export function Stat({ title, value, change, changeType }: StatProps) {
   }
 
   return (
-    <Box className="rounded-xl border border-zinc-950/10 p-6 dark:border-white/10">
+    <Box>
       <Subheading>{title}</Subheading>
-      <Text className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">{value}</Text>
+      <Text>{value}</Text>
       {change !== undefined && change !== null && (
-        <Box className="mt-3">
+        <Box>
           <Badge color={getBadgeColor()}>{change}</Badge>
         </Box>
       )}

@@ -1,7 +1,7 @@
-import { Stack } from '../../catalyst/layout';
-import { Text } from '../../catalyst/primitives';
-import { ContactCard } from './ContactCard';
-import type { Contact } from '../../../types/crm';
+import {Stack} from '../../catalyst/layout';
+import {Text} from '../../catalyst/primitives';
+import {ContactCard} from './ContactCard';
+import type {Contact} from '../../../types/crm';
 
 export interface ContactListProps {
   contacts: Contact[];

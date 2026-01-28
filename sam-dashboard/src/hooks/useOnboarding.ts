@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  OnboardingProgress,
-  StepInfo,
-  getOnboardingProgress,
-  getOnboardingSteps,
-  completeStep as apiCompleteStep,
-  dismissOnboarding as apiDismiss,
+    completeStep as apiCompleteStep,
+    dismissOnboarding as apiDismiss,
+    getOnboardingProgress,
+    getOnboardingSteps,
+    OnboardingProgress,
+    StepInfo,
 } from '../services/onboardingService';
 
 interface UseOnboardingResult {

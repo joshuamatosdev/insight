@@ -1,4 +1,4 @@
-import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import {CSSProperties, HTMLAttributes, ReactNode} from 'react';
 
 export interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, 'style'> {
   id?: string;

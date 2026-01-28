@@ -1,5 +1,5 @@
-import { MetricCardProps } from './Analytics.types';
-import { formatChangePercent } from '../../../types/analytics.types';
+import {MetricCardProps} from './Analytics.types';
+import {formatChangePercent} from '../../../types/analytics.types';
 
 /**
  * MetricCard displays a single metric with optional change indicator.
@@ -27,32 +27,32 @@ export function MetricCard({
 
   if (loading) {
     return (
-      <div className={`rounded-lg bg-surface p-6 shadow dark:bg-zinc-900 ${className}`}>
-        <div className="space-y-3">
-          <div className="h-4 w-3/5 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
-          <div className="h-8 w-2/5 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
+      <div>
+        <div>
+          <div />
+          <div />
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`rounded-lg bg-surface p-6 shadow dark:bg-zinc-900 ${className}`}>
-      <div className="flex items-start justify-between">
-        <div className="space-y-1">
-          <p className="text-sm font-medium text-on-surface-muted">
+    <div>
+      <div>
+        <div>
+          <p>
             {title}
           </p>
-          <p className="text-3xl font-medium tracking-tight text-on-surface">
+          <p>
             {typeof value === 'number' ? value.toLocaleString() : value}
           </p>
           {showChange && (
-            <div className="flex items-center gap-2">
-              <span className={`text-xs font-medium ${getTrendClasses(changePercent)}`}>
+            <div>
+              <span>
                 {formatChangePercent(changePercent)}
               </span>
               {previousValue !== undefined && previousValue !== null && (
-                <span className="text-xs text-on-surface-muted">
+                <span>
                   vs {previousValue.toLocaleString()}
                 </span>
               )}
@@ -60,7 +60,7 @@ export function MetricCard({
           )}
         </div>
         {icon !== undefined && icon !== null && (
-          <div className="text-on-surface-muted">
+          <div>
             {icon}
           </div>
         )}

@@ -1,5 +1,5 @@
-import { OpportunityType, TypeBadgeProps } from './Opportunity.types';
-import { Box } from '../../catalyst/layout';
+import {OpportunityType, TypeBadgeProps} from './Opportunity.types';
+import {Box} from '../../catalyst/layout';
 
 const typeClasses: Record<OpportunityType, string> = {
   'sources-sought': 'text-blue-600 bg-blue-50 ring-blue-500/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/20',
@@ -16,7 +16,7 @@ export function TypeBadge({ type, label, className, style }: TypeBadgeProps) {
   const badgeClasses = `inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset whitespace-nowrap ${typeClasses[type]} ${className || ''}`;
 
   return (
-    <Box as="span" className={badgeClasses} style={style}>
+    <Box as="span" style={style}>
       {displayLabel}
     </Box>
   );

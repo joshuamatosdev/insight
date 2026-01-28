@@ -1,13 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import {
-  InlineAlert,
-  InlineAlertTitle,
-  InlineAlertDescription,
-  InlineAlertActions,
-} from './inline-alert'
-import { CheckCircleIcon } from '@heroicons/react/20/solid'
+import {describe, expect, it, vi} from 'vitest'
+import {InlineAlert, InlineAlertActions, InlineAlertDescription, InlineAlertTitle,} from './inline-alert'
+import {CheckCircleIcon} from '@heroicons/react/20/solid'
 
 describe('InlineAlert', () => {
   it('renders alert with title and description', () => {

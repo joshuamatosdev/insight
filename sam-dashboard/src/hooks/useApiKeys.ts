@@ -1,14 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import type {ApiKey, ApiKeyScope, ApiKeyWithSecret, CreateApiKeyRequest} from '../services';
 import {
-  fetchApiKeys,
-  fetchApiKey,
-  createApiKey,
-  revokeApiKey,
-  regenerateApiKey,
-  updateApiKeyScopes,
-  fetchApiKeyUsage,
+    createApiKey,
+    fetchApiKey,
+    fetchApiKeys,
+    fetchApiKeyUsage,
+    regenerateApiKey,
+    revokeApiKey,
+    updateApiKeyScopes,
 } from '../services';
-import type { ApiKey, ApiKeyWithSecret, ApiKeyScope, CreateApiKeyRequest } from '../services';
 
 export interface UseApiKeysReturn {
   apiKeys: ApiKey[];

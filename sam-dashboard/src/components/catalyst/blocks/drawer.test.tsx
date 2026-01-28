@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
-import { Drawer, DrawerHeader, DrawerBody, DrawerFooter } from './drawer'
+import {describe, expect, it, vi} from 'vitest'
+import {Drawer, DrawerBody, DrawerFooter, DrawerHeader} from './drawer'
 
 describe('Drawer', () => {
   it('does not render when open is false', () => {

@@ -1,22 +1,11 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Stack,
-  HStack,
-  Card,
-  CardBody,
-} from '@/components/catalyst/layout';
-import {
-  PageHeading,
-  PageHeadingTitle,
-  PageHeadingSection,
-  PageHeadingActions,
-} from '@/components/catalyst/navigation';
-import { Input, Select, Button, Text } from '@/components/catalyst/primitives';
-import { OrganizationList, OrganizationForm } from '@/components/domain/crm';
-import { useOrganizations } from '@/hooks';
-import type { Organization, OrganizationType, CreateOrganizationRequest } from '@/types/crm';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Box, Card, CardBody, HStack, Stack,} from '@/components/catalyst/layout';
+import {PageHeading, PageHeadingActions, PageHeadingSection, PageHeadingTitle,} from '@/components/catalyst/navigation';
+import {Button, Input, Select, Text} from '@/components/catalyst/primitives';
+import {OrganizationForm, OrganizationList} from '@/components/domain/crm';
+import {useOrganizations} from '@/hooks';
+import type {CreateOrganizationRequest, Organization, OrganizationType} from '@/types/crm';
 
 const ORG_TYPE_OPTIONS: { value: OrganizationType | ''; label: string }[] = [
   { value: '', label: 'All Types' },

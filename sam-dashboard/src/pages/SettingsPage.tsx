@@ -1,26 +1,26 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Field,
-  Label,
-  Description,
-  FieldGroup,
-  Select,
-  Switch,
-  SwitchField,
-  Button,
-  InlineAlert,
-  Heading,
-  Text,
-  Divider,
+    Button,
+    Description,
+    Divider,
+    Field,
+    FieldGroup,
+    Heading,
+    InlineAlert,
+    Label,
+    Select,
+    Switch,
+    SwitchField,
+    Text,
 } from '../components/catalyst';
-import { Grid, GridItem, Flex, Box } from '../components/catalyst/layout';
-import { useAuth } from '../auth';
+import {Box, Flex, Grid, GridItem} from '../components/catalyst/layout';
+import {useAuth} from '../auth';
 import type {
-  Theme,
-  UserPreferences,
-  UpdatePreferencesRequest,
-  SettingsFormState,
-  SettingsPageProps,
+    SettingsFormState,
+    SettingsPageProps,
+    Theme,
+    UpdatePreferencesRequest,
+    UserPreferences,
 } from './SettingsPage.types';
 
 /**
@@ -99,10 +99,10 @@ function SettingsSection({
   children: React.ReactNode;
 }) {
   return (
-    <Grid columns={3} columnGap="xl" rowGap="lg" className="max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <Grid columns={3} columnGap="xl" rowGap="lg">
       <GridItem>
         <Heading level={2}>{title}</Heading>
-        <Text className="mt-1">{description}</Text>
+        <Text>{description}</Text>
       </GridItem>
       <GridItem colSpan={2}>
         <FieldGroup>{children}</FieldGroup>
@@ -229,24 +229,24 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" className="min-h-[300px]">
+      <Flex justify="center" align="center">
         <Text>Loading preferences...</Text>
       </Flex>
     );
   }
 
   return (
-    <Box className="mx-auto max-w-4xl">
-      <Box className="px-4 py-6 sm:px-6 lg:px-8">
+    <Box>
+      <Box>
         <Heading>Settings</Heading>
-        <Text className="mt-1">
+        <Text>
           Manage your account settings and preferences.
         </Text>
       </Box>
 
       {/* Error message */}
       {error !== null && (
-        <Box className="mx-4 mb-4 sm:mx-6 lg:mx-8">
+        <Box>
           <InlineAlert color="error" onDismiss={() => setError(null)}>
             {error}
           </InlineAlert>
@@ -255,14 +255,14 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
 
       {/* Success message */}
       {successMessage !== null && (
-        <Box className="mx-4 mb-4 sm:mx-6 lg:mx-8">
+        <Box>
           <InlineAlert color="success" onDismiss={() => setSuccessMessage(null)}>
             {successMessage}
           </InlineAlert>
         </Box>
       )}
 
-      <Box className="divide-y divide-border">
+      <Box>
         {/* Appearance Settings */}
         <SettingsSection
           title="Appearance"
@@ -321,7 +321,7 @@ export function SettingsPage({ onSaveSuccess }: SettingsPageProps): React.ReactE
       </Box>
 
       {/* Save Button */}
-      <Flex justify="end" gap="md" className="border-t border-border px-4 py-6 sm:px-6 lg:px-8">
+      <Flex justify="end" gap="md">
         <Button
           onClick={handleSave}
           disabled={isSaving || hasChanges === false}

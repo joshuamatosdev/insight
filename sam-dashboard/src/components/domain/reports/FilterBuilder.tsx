@@ -1,11 +1,7 @@
-import { useState, useMemo } from 'react';
-import type {
-  FilterCondition,
-  FilterOperator,
-  ColumnDefinition,
-} from '../../../types/report.types';
-import { Button, Input, Select, Text, TrashIcon, PlusIcon, IconButton } from '../../catalyst/primitives';
-import { Box, Stack, Flex, Card, CardBody } from '../../catalyst/layout';
+import {useMemo, useState} from 'react';
+import type {ColumnDefinition, FilterCondition, FilterOperator,} from '../../../types/report.types';
+import {Button, IconButton, Input, PlusIcon, Select, Text, TrashIcon} from '../../catalyst/primitives';
+import {Box, Card, CardBody, Flex, Stack} from '../../catalyst/layout';
 
 /**
  * Filter operator options
@@ -99,7 +95,7 @@ export function FilterBuilder({
               <CardBody padding="sm">
                 <Flex gap="sm" align="end">
                   <Box style={{ flex: 1 }}>
-                    <Text variant="caption" color="muted" className="mb-1">
+                    <Text variant="caption" color="muted">
                       Field
                     </Text>
                     <Select
@@ -110,7 +106,7 @@ export function FilterBuilder({
                     />
                   </Box>
                   <Box style={{ flex: 1 }}>
-                    <Text variant="caption" color="muted" className="mb-1">
+                    <Text variant="caption" color="muted">
                       Operator
                     </Text>
                     <Select
@@ -121,7 +117,7 @@ export function FilterBuilder({
                   </Box>
                   {requiresValue(filter.operator) && (
                     <Box style={{ flex: 1 }}>
-                      <Text variant="caption" color="muted" className="mb-1">
+                      <Text variant="caption" color="muted">
                         Value
                       </Text>
                       <Input
@@ -150,7 +146,7 @@ export function FilterBuilder({
         <CardBody padding="sm">
           <Flex gap="sm" align="end">
             <Box style={{ flex: 1 }}>
-              <Text variant="caption" color="muted" className="mb-1">
+              <Text variant="caption" color="muted">
                 Field
               </Text>
               <Select
@@ -161,7 +157,7 @@ export function FilterBuilder({
               />
             </Box>
             <Box style={{ flex: 1 }}>
-              <Text variant="caption" color="muted" className="mb-1">
+              <Text variant="caption" color="muted">
                 Operator
               </Text>
               <Select
@@ -172,7 +168,7 @@ export function FilterBuilder({
             </Box>
             {requiresValue(newFilter.operator ?? 'EQUALS') && (
               <Box style={{ flex: 1 }}>
-                <Text variant="caption" color="muted" className="mb-1">
+                <Text variant="caption" color="muted">
                   Value
                 </Text>
                 <Input

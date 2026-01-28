@@ -1,13 +1,7 @@
-import { useState, useCallback, CSSProperties } from 'react';
-import { Text, Button, Input, Select } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, CardFooter, Grid, HStack, Box } from '../../catalyst/layout';
-import type {
-  ClinFormProps,
-  CreateClinRequest,
-  UpdateClinRequest,
-  ClinType,
-  PricingType,
-} from './Contract.types';
+import {CSSProperties, useCallback, useState} from 'react';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardFooter, CardHeader, Grid, HStack} from '../../catalyst/layout';
+import type {ClinFormProps, ClinType, CreateClinRequest, PricingType, UpdateClinRequest,} from './Contract.types';
 
 const CLIN_TYPES: { value: ClinType; label: string }[] = [
   { value: 'BASE', label: 'Base' },
@@ -174,7 +168,7 @@ export function ClinForm({
   };
 
   return (
-    <Card className={className} style={formStyles}>
+    <Card style={formStyles}>
       <form onSubmit={handleSubmit}>
         <CardHeader>
           <Text variant="heading4">{isEditing ? 'Edit CLIN' : 'Add CLIN'}</Text>
@@ -186,7 +180,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   CLIN Number *
                 </Text>
@@ -202,7 +195,6 @@ export function ClinForm({
                 <Text
                   variant="caption"
                   color="danger"
-                  className="mt-1"
                 >
                   {errors.clinNumber}
                 </Text>
@@ -213,7 +205,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   CLIN Type
                 </Text>
@@ -236,7 +227,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   Description
                 </Text>
@@ -254,7 +244,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   Pricing Type
                 </Text>
@@ -278,7 +267,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   Total Value ($)
                 </Text>
@@ -295,7 +283,6 @@ export function ClinForm({
                 <Text
                   variant="caption"
                   color="danger"
-                  className="mt-1"
                 >
                   {errors.totalValue}
                 </Text>
@@ -306,7 +293,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   Funded Amount ($)
                 </Text>
@@ -323,7 +309,6 @@ export function ClinForm({
                 <Text
                   variant="caption"
                   color="danger"
-                  className="mt-1"
                 >
                   {errors.fundedAmount}
                 </Text>
@@ -335,7 +320,6 @@ export function ClinForm({
                   <Text
                     variant="bodySmall"
                     weight="semibold"
-                    className="mb-1"
                   >
                     Invoiced Amount ($)
                   </Text>
@@ -352,7 +336,6 @@ export function ClinForm({
                   <Text
                     variant="caption"
                     color="danger"
-                    className="mt-1"
                   >
                     {errors.invoicedAmount}
                   </Text>
@@ -364,7 +347,6 @@ export function ClinForm({
                 <Text
                   variant="bodySmall"
                   weight="semibold"
-                  className="mb-1"
                 >
                   Notes
                 </Text>

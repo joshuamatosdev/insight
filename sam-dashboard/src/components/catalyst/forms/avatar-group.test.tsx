@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import { AvatarGroup } from './avatar-group'
-import { Avatar } from '../primitives/avatar'
+import {render, screen} from '@testing-library/react'
+import {describe, expect, it} from 'vitest'
+import {AvatarGroup} from './avatar-group'
+import {Avatar} from '../primitives/avatar'
 
 describe('AvatarGroup Component', () => {
   it('renders multiple avatars', () => {

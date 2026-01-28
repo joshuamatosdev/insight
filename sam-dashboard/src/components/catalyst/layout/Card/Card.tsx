@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { CardProps, CardVariant } from './Card.types';
+import {CardProps, CardVariant} from './Card.types';
 
 /**
  * Card - A container component with variants

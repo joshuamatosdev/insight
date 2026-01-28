@@ -1,4 +1,4 @@
-import type { PermissionItem } from './PermissionItem.types';
+import type {PermissionItem} from './PermissionItem.types';
 
 /**
  * Permission data grouped by category

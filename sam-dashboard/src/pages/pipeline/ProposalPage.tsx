@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Section, SectionHeader, Stack, HStack, Box, Card, CardHeader, CardBody } from '../../components/catalyst/layout';
-import { Text, Button, Badge, Textarea } from '../../components/catalyst/primitives';
-import { ProposalTracker } from '../../components/domain/pipeline';
-import { usePipeline, usePipelineOpportunity } from '../../hooks/usePipeline';
+import {useMemo, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, Card, CardBody, CardHeader, HStack, Section, SectionHeader, Stack} from '../../components/catalyst/layout';
+import {Badge, Button, Text, Textarea} from '../../components/catalyst/primitives';
+import {ProposalTracker} from '../../components/domain/pipeline';
+import {usePipeline, usePipelineOpportunity} from '../../hooks/usePipeline';
 
 interface ProposalSection {
   id: string;
@@ -86,7 +86,7 @@ export function ProposalPage() {
   if (isLoading === true) {
     return (
       <Section id="proposal">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="secondary">
             Loading...
           </Text>
@@ -98,7 +98,7 @@ export function ProposalPage() {
   if (error !== null) {
     return (
       <Section id="proposal">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="danger">
             Error: {error.message}
           </Text>
@@ -110,7 +110,7 @@ export function ProposalPage() {
   if (opportunity === null || pipeline === null) {
     return (
       <Section id="proposal">
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="secondary">
             Opportunity not found
           </Text>
@@ -156,10 +156,8 @@ export function ProposalPage() {
               <Stack gap="xs" align="end">
                 <Text variant="heading4">{progressPercentage}%</Text>
                 <Box
-                  className="w-[200px] h-2 bg-zinc-200 rounded-full overflow-hidden"
                 >
                   <Box
-                    className="h-full bg-emerald-500"
                     style={{ width: `${progressPercentage}%` }}
                   />
                 </Box>
@@ -173,7 +171,7 @@ export function ProposalPage() {
 
         <HStack gap="lg" align="start">
           {/* Section List */}
-          <Card className="flex-none w-[350px]">
+          <Card>
             <CardHeader>
               <Text variant="heading5">Proposal Sections</Text>
             </CardHeader>
@@ -186,11 +184,6 @@ export function ProposalPage() {
                       setSelectedSection(section.id);
                       setSectionContent('');
                     }}
-                    className={`p-3 rounded-md border cursor-pointer ${
-                      selectedSection === section.id
-                        ? 'bg-blue-100 border-blue-600'
-                        : 'bg-white border-zinc-200'
-                    }`}
                   >
                     <HStack justify="between" align="center">
                       <Stack gap="0">
@@ -217,7 +210,7 @@ export function ProposalPage() {
           </Card>
 
           {/* Section Editor */}
-          <Card className="flex-1">
+          <Card>
             <CardHeader>
               <HStack justify="between" align="center">
                 <Text variant="heading5">
@@ -239,7 +232,7 @@ export function ProposalPage() {
             </CardHeader>
             <CardBody>
               {selectedSection === null ? (
-                <Box className="p-8 text-center">
+                <Box>
                   <Text variant="body" color="secondary">
                     Select a section to view or edit its content
                   </Text>
@@ -281,7 +274,7 @@ export function ProposalPage() {
             </HStack>
           </CardHeader>
           <CardBody>
-            <Box className="p-4 text-center">
+            <Box>
               <Text variant="body" color="secondary">
                 Compliance matrix will track RFP requirements against proposal sections.
               </Text>

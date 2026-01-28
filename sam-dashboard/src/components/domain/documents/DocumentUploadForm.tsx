@@ -1,12 +1,7 @@
-import { useState, useRef } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Stack, HStack } from '../../catalyst/layout';
-import { Text, Input, Select, Button } from '../../catalyst/primitives';
-import type {
-  CreateDocumentRequest,
-  DocumentType,
-  DocumentStatus,
-  AccessLevel,
-} from '../../../types/documents';
+import {useRef, useState} from 'react';
+import {Card, CardBody, CardFooter, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import type {AccessLevel, CreateDocumentRequest, DocumentStatus, DocumentType,} from '../../../types/documents';
 
 export interface DocumentUploadFormProps {
   onSubmit: (request: CreateDocumentRequest, file: File | null) => Promise<void>;

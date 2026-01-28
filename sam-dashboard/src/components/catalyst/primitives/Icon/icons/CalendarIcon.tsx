@@ -1,5 +1,5 @@
-import { IconProps } from '../Icon.types';
-import { Icon } from '../Icon';
+import {IconProps} from '../Icon.types';
+import {Icon} from '../Icon';
 
 export function CalendarIcon(props: IconProps) {
   return (

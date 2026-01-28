@@ -1,5 +1,6 @@
-import { CSSProperties, useState, createContext } from 'react';
-import { TableRowProps } from './Table.types';
+import {createContext} from 'react';
+import clsx from 'clsx';
+import {TableRowProps} from './Table.types';
 
 export interface TableRowContextValue {
   href?: string;
@@ -10,22 +11,16 @@ export interface TableRowContextValue {
 export const TableRowContext = createContext<TableRowContextValue>({});
 
 export function TableRow({ isHoverable = true, className, style, children, href, target, title }: TableRowProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const rowStyles: CSSProperties = {
-    backgroundColor: isHoverable && isHovered ? '#fafafa' : 'transparent',
-    transition: '0.15s ease',
-    cursor: href !== undefined ? 'pointer' : undefined,
-    ...style,
-  };
-
   return (
     <TableRowContext.Provider value={{ href, target, title }}>
       <tr
-        className={className}
-        style={rowStyles}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        className={clsx(
+          'transition-colors duration-150',
+          isHoverable === true && 'hover:bg-zinc-50',
+          href !== undefined && 'cursor-pointer',
+          className
+        )}
+        style={style}
       >
         {children}
       </tr>

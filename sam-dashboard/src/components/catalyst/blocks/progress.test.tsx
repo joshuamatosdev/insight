@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { Progress, ProgressWithLabel } from './progress'
+import {describe, expect, it} from 'vitest'
+import {render, screen} from '@testing-library/react'
+import {Progress, ProgressWithLabel} from './progress'
 
 describe('Progress', () => {
   it('renders a progress bar with correct ARIA attributes', () => {

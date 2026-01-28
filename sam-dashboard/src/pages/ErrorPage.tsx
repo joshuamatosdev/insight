@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { Card, CardBody, Flex, Stack, Box } from '../components/catalyst/layout';
-import { Text, Button, Link } from '../components/catalyst/primitives';
+import {useNavigate} from 'react-router-dom';
+import {Box, Card, CardBody, Flex, Stack} from '../components/catalyst/layout';
+import {Button, Link, Text} from '../components/catalyst/primitives';
 
 interface ErrorPageProps {
   code?: '404' | '403' | '500' | '503';
@@ -57,23 +57,19 @@ export function ErrorPage({
     <Flex
       justify="center"
       align="center"
-      className="min-h-screen bg-zinc-100 p-4"
     >
-      <Card variant="elevated" className="max-w-lg w-full">
+      <Card variant="elevated">
         <CardBody padding="xl">
-          <Stack spacing="lg" className="text-center">
+          <Stack spacing="lg">
             {/* Error Code */}
             <Text
               variant="heading1"
-              className={`text-[80px] font-bold leading-none ${
-                code === '404' || code === '503' ? 'text-amber-500' : 'text-red-500'
-              }`}
             >
               {code}
             </Text>
 
             {/* Icon */}
-            <Box className="text-5xl">
+            <Box>
               {content.icon}
             </Box>
 
@@ -100,7 +96,6 @@ export function ErrorPage({
               Need help?{' '}
               <Link
                 href="mailto:support@example.com"
-                className="text-primary"
               >
                 Contact Support
               </Link>

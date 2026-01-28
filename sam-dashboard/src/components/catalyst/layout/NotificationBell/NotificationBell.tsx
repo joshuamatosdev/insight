@@ -1,7 +1,8 @@
-import { CSSProperties, useState, useEffect, useCallback } from 'react';
-import { BellIcon } from '../../primitives/Icon';
-import { NotificationDropdown } from './NotificationDropdown';
-import { NotificationBellProps, Notification } from './NotificationBell.types';
+import {useCallback, useEffect, useState} from 'react';
+import clsx from 'clsx';
+import {BellIcon} from '../../primitives/Icon';
+import {NotificationDropdown} from './NotificationDropdown';
+import {Notification, NotificationBellProps} from './NotificationBell.types';
 
 const API_BASE = '/api';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
@@ -125,47 +126,11 @@ export function NotificationBell({ className, style }: NotificationBellProps) {
     setIsOpen(false);
   };
 
-  const containerStyles: CSSProperties = {
-    position: 'relative',
-    display: 'inline-block',
-    ...style,
-  };
-
-  const buttonStyles: CSSProperties = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: '8px',
-    borderRadius: '0.375rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    transition: 'background-color 0.15s ease',
-  };
-
-  const badgeStyles: CSSProperties = {
-    position: 'absolute',
-    top: '2px',
-    right: '2px',
-    minWidth: '18px',
-    height: '18px',
-    borderRadius: '9999px',
-    backgroundColor: '#ef4444',
-    color: '#ffffff',
-    fontSize: '0.75rem',
-    fontWeight: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 4px',
-  };
-
   return (
-    <div className={className} style={containerStyles}>
+    <div className={clsx('relative inline-block', className)} style={style}>
       <button
         type="button"
-        style={buttonStyles}
+        className="bg-transparent border-none cursor-pointer p-2 rounded-md flex items-center justify-center relative transition-colors duration-150 hover:bg-zinc-100"
         onClick={handleToggle}
         aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
         aria-expanded={isOpen}
@@ -173,7 +138,10 @@ export function NotificationBell({ className, style }: NotificationBellProps) {
       >
         <BellIcon size="md" color="inherit" />
         {unreadCount > 0 ? (
-          <span style={badgeStyles} aria-hidden="true">
+          <span
+            className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center px-1"
+            aria-hidden="true"
+          >
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         ) : null}

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { CardFooterProps } from './Card.types';
+import {CardFooterProps} from './Card.types';
 
 /**
  * CardFooter - Footer section of a Card

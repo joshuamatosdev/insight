@@ -1,4 +1,4 @@
-import type { Organization } from '../../../types/crm';
+import type {Organization} from '../../../types/crm';
 
 export interface OrganizationCardProps {
   organization: Organization;

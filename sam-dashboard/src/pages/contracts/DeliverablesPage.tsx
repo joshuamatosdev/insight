@@ -1,14 +1,37 @@
-import { useState, useCallback } from 'react';
-import { Text, Button, ChevronLeftIcon, PlusIcon, Input, Select, FormField, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '../../components/catalyst/primitives';
-import { Box, Stack, HStack, Flex, Section, SectionHeader, Card, CardHeader, CardBody, CardFooter, Grid, GridItem } from '../../components/catalyst/layout';
-import { DeliverableTracker } from '../../components/domain/contracts';
-import { useContract } from '../../hooks/useContracts';
+import {useCallback, useState} from 'react';
+import {
+    Button,
+    ChevronLeftIcon,
+    FormField,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    Input,
+    PlusIcon,
+    Select,
+    Text
+} from '../../components/catalyst/primitives';
+import {
+    Box,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader
+} from '../../components/catalyst/layout';
 import type {
-  CreateDeliverableRequest,
-  DeliverableStatus,
-  DeliverableType,
-  DeliverableFrequency,
+    CreateDeliverableRequest,
+    DeliverableFrequency,
+    DeliverableStatus,
+    DeliverableType,
 } from '../../components/domain/contracts';
+import {DeliverableTracker} from '../../components/domain/contracts';
+import {useContract} from '../../hooks/useContracts';
 
 export interface DeliverablesPageProps {
   contractId: string;
@@ -139,7 +162,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
   if (isLoading) {
     return (
       <Section>
-        <Flex justify="center" align="center" className="min-h-[400px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading deliverables...
           </Text>
@@ -158,7 +181,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
           </InlineAlertDescription>
         </InlineAlert>
         {onBack !== undefined && (
-          <Box className="mt-4">
+          <Box>
             <Button variant="secondary" onClick={onBack}>
               Back
             </Button>
@@ -179,7 +202,6 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
                 size="sm"
                 leftIcon={<ChevronLeftIcon size="sm" />}
                 onClick={onBack}
-                className="mb-2"
               >
                 Back to Contract
               </Button>
@@ -200,7 +222,7 @@ export function DeliverablesPage({ contractId, onBack }: DeliverablesPageProps) 
       </SectionHeader>
 
       {showAddForm && (
-        <Card className="mb-6">
+        <Card>
           <Box as="form" onSubmit={handleSubmit}>
             <CardHeader>
               <Text variant="heading4">Add Deliverable</Text>

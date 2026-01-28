@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import { Link } from './link'
+import {Link} from './link'
 
 // Text variant classes
 const variantClasses: Record<string, string> = {

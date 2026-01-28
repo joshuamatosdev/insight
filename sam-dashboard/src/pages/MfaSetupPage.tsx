@@ -1,24 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Card,
-  CardBody,
-  Flex,
-  Stack,
-  Box,
-  HStack,
-} from '../components/catalyst/layout';
-import {
-  Text,
-  Button,
-  AuthLayout,
-} from '../components/catalyst/primitives';
-import { BuildingCheckIcon, CheckCircleIcon } from '../components/catalyst/primitives/Icon';
-import { OtpInput } from '../components/auth/OtpInput';
-import { QRCodeDisplay } from '../components/auth/QRCodeDisplay';
-import { BackupCodesDisplay } from '../components/auth/BackupCodesDisplay';
-import { startMfaSetup, verifyMfaSetup } from '../services/mfaService';
-import { useAuth } from '../auth';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Box, Card, CardBody, Flex, HStack, Stack,} from '../components/catalyst/layout';
+import {AuthLayout, Button, Text,} from '../components/catalyst/primitives';
+import {BuildingCheckIcon, CheckCircleIcon} from '../components/catalyst/primitives/Icon';
+import {OtpInput} from '../components/auth/OtpInput';
+import {QRCodeDisplay} from '../components/auth/QRCodeDisplay';
+import {BackupCodesDisplay} from '../components/auth/BackupCodesDisplay';
+import {startMfaSetup, verifyMfaSetup} from '../services/mfaService';
+import {useAuth} from '../auth';
 
 type SetupStep = 'intro' | 'scan' | 'verify' | 'backup' | 'complete';
 
@@ -99,10 +88,10 @@ export function MfaSetupPage(): React.ReactElement {
       case 'intro':
         return (
           <Stack spacing="md">
-            <Text variant="heading4" className="text-center">
+            <Text variant="heading4">
               Set Up Two-Factor Authentication
             </Text>
-            <Text variant="body" color="muted" className="text-center">
+            <Text variant="body" color="muted">
               Add an extra layer of security to your account by requiring a code
               from your authenticator app in addition to your password.
             </Text>
@@ -133,7 +122,7 @@ export function MfaSetupPage(): React.ReactElement {
       case 'scan':
         return (
           <Stack spacing="md">
-            <Text variant="heading4" className="text-center">
+            <Text variant="heading4">
               Scan QR Code
             </Text>
             <QRCodeDisplay
@@ -142,7 +131,7 @@ export function MfaSetupPage(): React.ReactElement {
               onSecretCopied={() => setSecretCopied(true)}
             />
             {secretCopied === true && (
-              <Text variant="caption" color="success" className="text-center">
+              <Text variant="caption" color="success">
                 Secret copied to clipboard
               </Text>
             )}
@@ -159,10 +148,10 @@ export function MfaSetupPage(): React.ReactElement {
       case 'verify':
         return (
           <Stack spacing="md">
-            <Text variant="heading4" className="text-center">
+            <Text variant="heading4">
               Verify Setup
             </Text>
-            <Text variant="body" color="muted" className="text-center">
+            <Text variant="body" color="muted">
               Enter the 6-digit code from your authenticator app to verify setup.
             </Text>
             <OtpInput
@@ -173,7 +162,7 @@ export function MfaSetupPage(): React.ReactElement {
               error={error !== null}
             />
             {error !== null && (
-              <Text variant="caption" color="danger" className="text-center">
+              <Text variant="caption" color="danger">
                 {error}
               </Text>
             )}
@@ -200,7 +189,7 @@ export function MfaSetupPage(): React.ReactElement {
       case 'backup':
         return (
           <Stack spacing="md">
-            <Text variant="heading4" className="text-center">
+            <Text variant="heading4">
               Save Backup Codes
             </Text>
             <BackupCodesDisplay
@@ -221,9 +210,9 @@ export function MfaSetupPage(): React.ReactElement {
 
       case 'complete':
         return (
-          <Stack spacing="md" align="center" className="text-center">
-            <Box className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto">
-              <CheckCircleIcon size="lg" className="text-green-600 dark:text-green-400" />
+          <Stack spacing="md" align="center">
+            <Box>
+              <CheckCircleIcon size="lg" />
             </Box>
             <Text variant="heading4">
               Two-Factor Authentication Enabled
@@ -242,11 +231,11 @@ export function MfaSetupPage(): React.ReactElement {
 
   return (
     <AuthLayout>
-      <Box className="w-full max-w-md">
+      <Box>
         <Card variant="elevated">
           <CardBody padding="lg">
-            <Flex justify="center" className="mb-4">
-              <BuildingCheckIcon size="xl" className="text-blue-600 dark:text-blue-400" />
+            <Flex justify="center">
+              <BuildingCheckIcon size="xl" />
             </Flex>
             {renderStep()}
           </CardBody>

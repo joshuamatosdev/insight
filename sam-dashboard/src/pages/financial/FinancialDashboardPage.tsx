@@ -1,29 +1,33 @@
 /**
  * FinancialDashboardPage - Financial overview and key metrics
  */
-import { useState, useEffect, useCallback } from 'react';
-import { Text, Badge, Button, SpeedometerIcon, RefreshIcon, InlineAlert, InlineAlertTitle, InlineAlertDescription } from '@/components/catalyst/primitives';
+import {useCallback, useEffect, useState} from 'react';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  HStack,
-  Grid,
-  GridItem,
-  Flex,
+    Badge,
+    Button,
+    InlineAlert,
+    InlineAlertDescription,
+    InlineAlertTitle,
+    RefreshIcon,
+    SpeedometerIcon,
+    Text
+} from '@/components/catalyst/primitives';
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Section,
+    SectionHeader,
+    Stack,
 } from '@/components/catalyst/layout';
-import {
-  FinancialSummaryCard,
-  BudgetChart,
-  CostBreakdownChart,
-  InvoiceCard,
-} from '@/components/domain/financial';
-import { StatCard } from '@/components/domain/stats';
-import { useFinancialSummary, useInvoices, useBudgets } from '@/hooks/useFinancial';
-import { formatCurrency, formatCurrencyCompact } from '@/services/financialService';
+import {BudgetChart, CostBreakdownChart, FinancialSummaryCard, InvoiceCard,} from '@/components/domain/financial';
+import {StatCard} from '@/components/domain/stats';
+import {useBudgets, useFinancialSummary, useInvoices} from '@/hooks/useFinancial';
+import {formatCurrency, formatCurrencyCompact} from '@/services/financialService';
 
 export interface FinancialDashboardPageProps {
   onNavigate?: (section: string) => void;
@@ -66,7 +70,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
   if (isLoading && summary === null) {
     return (
       <Section id="financial-dashboard">
-        <Flex justify="center" align="center" className="min-h-[300px]">
+        <Flex justify="center" align="center">
           <Text variant="body" color="muted">
             Loading financial data...
           </Text>
@@ -201,7 +205,6 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                     direction="column"
                     align="center"
                     justify="center"
-                    className="p-4"
                   >
                     <Text variant="body" color="success">
                       No overdue invoices
@@ -217,7 +220,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                       />
                     ))}
                     {invoices.length > 3 && (
-                      <Text variant="bodySmall" color="muted" className="text-center">
+                      <Text variant="bodySmall" color="muted">
                         +{invoices.length - 3} more overdue invoices
                       </Text>
                     )}
@@ -253,7 +256,6 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                     direction="column"
                     align="center"
                     justify="center"
-                    className="p-4"
                   >
                     <Text variant="body" color="success">
                       All budgets on track
@@ -277,7 +279,7 @@ export function FinancialDashboardPage({ onNavigate }: FinancialDashboardPagePro
                       </HStack>
                     ))}
                     {overBudgetItems.length > 5 && (
-                      <Text variant="bodySmall" color="muted" className="text-center">
+                      <Text variant="bodySmall" color="muted">
                         +{overBudgetItems.length - 5} more over-budget items
                       </Text>
                     )}

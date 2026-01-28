@@ -1,4 +1,4 @@
-import { Opportunity } from '../components/domain/opportunity';
+import {Opportunity} from '../components/domain/opportunity';
 
 export function exportToCSV(opportunities: Opportunity[], filename?: string): void {
   const headers = [

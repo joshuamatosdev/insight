@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Stack, Flex, Box, Card, CardBody } from '../../../components/catalyst/layout';
-import { Text, Input, Checkbox, CheckboxField, Badge } from '../../../components/catalyst/primitives';
-import { OnboardingCard } from '../../../components/domain/onboarding';
+import {useState} from 'react';
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Badge, Checkbox, CheckboxField, Input, Text} from '../../../components/catalyst/primitives';
+import {OnboardingCard} from '../../../components/domain/onboarding';
 
 interface NAICSStepProps {
   onNext: () => void;
@@ -60,7 +60,6 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by code or description..."
-            className="mt-1"
           />
         </Box>
 
@@ -72,13 +71,8 @@ export function NAICSStep({ onNext, onBack }: NAICSStepProps): React.ReactElemen
               <Card
                 key={naics.code}
                 onClick={() => toggleCode(naics.code)}
-                className={`cursor-pointer transition-all duration-200 ${
-                  isSelected
-                    ? 'border-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
-                }`}
               >
-                <CardBody className="py-3">
+                <CardBody>
                   <Flex align="center" justify="space-between">
                     <Flex align="center" gap="md">
                       <CheckboxField>

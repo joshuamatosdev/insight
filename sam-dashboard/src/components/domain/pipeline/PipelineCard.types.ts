@@ -1,4 +1,4 @@
-import type { PipelineOpportunity, BidDecision, PipelineStage } from '../../../types/pipeline';
+import type {BidDecision, PipelineOpportunity, PipelineStage} from '../../../types/pipeline';
 
 export interface PipelineCardProps {
   opportunity: PipelineOpportunity;

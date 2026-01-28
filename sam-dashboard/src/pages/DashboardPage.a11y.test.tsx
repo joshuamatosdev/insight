@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import { BrowserRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import {render} from '@testing-library/react';
+import {axe, toHaveNoViolations} from 'jest-axe';
+import {BrowserRouter} from 'react-router-dom';
+import {describe, expect, it, vi} from 'vitest';
 
-import { DashboardPage } from './DashboardPage';
-import type { Opportunity } from '../components/domain/opportunity/Opportunity.types';
+import {DashboardPage} from './DashboardPage';
+import type {Opportunity} from '../components/domain/opportunity/Opportunity.types';
 
 expect.extend(toHaveNoViolations);
 

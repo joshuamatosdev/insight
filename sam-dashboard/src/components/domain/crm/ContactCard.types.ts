@@ -1,4 +1,4 @@
-import type { Contact } from '../../../types/crm';
+import type {Contact} from '../../../types/crm';
 
 export interface ContactCardProps {
   contact: Contact;

@@ -1,33 +1,32 @@
-import { useState, useCallback, useEffect } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import type {
-  Document,
-  CreateDocumentRequest,
-  UpdateDocumentRequest,
-  DocumentFilters,
-  DocumentFolder,
-  CreateFolderRequest,
-  UpdateFolderRequest,
-  DocumentTemplate,
+    CreateDocumentRequest,
+    CreateFolderRequest,
+    Document,
+    DocumentFilters,
+    DocumentFolder,
+    DocumentStatus,
+    DocumentTemplate,
+    UpdateDocumentRequest,
 } from '../types/documents';
 import {
-  fetchDocuments,
-  fetchDocument,
-  createDocument as createDocumentApi,
-  updateDocument as updateDocumentApi,
-  deleteDocument as deleteDocumentApi,
-  searchDocuments,
-  fetchDocumentsByFolder,
-  checkoutDocument as checkoutDocumentApi,
-  updateDocumentStatus as updateDocumentStatusApi,
-  fetchFolders,
-  fetchFolder,
-  fetchChildFolders,
-  createFolder as createFolderApi,
-  deleteFolder as deleteFolderApi,
-  fetchFolderBreadcrumb,
-  fetchTemplates,
+    checkoutDocument as checkoutDocumentApi,
+    createDocument as createDocumentApi,
+    createFolder as createFolderApi,
+    deleteDocument as deleteDocumentApi,
+    deleteFolder as deleteFolderApi,
+    fetchChildFolders,
+    fetchDocument,
+    fetchDocuments,
+    fetchDocumentsByFolder,
+    fetchFolder,
+    fetchFolderBreadcrumb,
+    fetchFolders,
+    fetchTemplates,
+    searchDocuments,
+    updateDocument as updateDocumentApi,
+    updateDocumentStatus as updateDocumentStatusApi,
 } from '../services/documentService';
-import type { DocumentStatus } from '../types/documents';
 
 export interface UseDocumentsReturn {
   documents: Document[];

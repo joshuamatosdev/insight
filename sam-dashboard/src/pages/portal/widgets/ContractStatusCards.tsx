@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import { Card, CardBody, Stack, Flex, Box } from '../../../components/catalyst/layout';
-import { Text, Button } from '../../../components/catalyst/primitives';
+import {useEffect, useState} from 'react';
+
+import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
+import {Button, Text} from '../../../components/catalyst/primitives';
 
 interface Contract {
   id: string;
@@ -118,10 +118,6 @@ export function ContractStatusCards(): React.ReactElement {
                 return (
                   <Box
                     key={contract.id}
-                    className={clsx(
-                      'p-3 bg-zinc-50 dark:bg-zinc-800 rounded-lg border-l-4',
-                      statusClasses.border
-                    )}
                   >
                     <Flex justify="space-between" align="flex-start">
                       <Stack spacing="xs">
@@ -133,11 +129,10 @@ export function ContractStatusCards(): React.ReactElement {
                           <Text variant="caption" color="muted">Ends {contract.endDate}</Text>
                         </Flex>
                       </Stack>
-                      <Box className={clsx('px-2 py-1 rounded', statusClasses.bg)}>
+                      <Box>
                         <Text
                           variant="caption"
                           weight="semibold"
-                          className={clsx('uppercase', statusClasses.text)}
                         >
                           {contract.status}
                         </Text>
@@ -145,14 +140,13 @@ export function ContractStatusCards(): React.ReactElement {
                     </Flex>
 
                     {/* Progress Bar */}
-                    <Box className="mt-2">
-                      <Flex justify="space-between" className="mb-1">
+                    <Box>
+                      <Flex justify="space-between">
                         <Text variant="caption" color="muted">Progress</Text>
                         <Text variant="caption" weight="semibold">{contract.progressPercent}%</Text>
                       </Flex>
-                      <Box className="h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-sm overflow-hidden">
+                      <Box>
                         <Box
-                          className={clsx('h-full', statusClasses.progressBg)}
                           style={{ width: `${contract.progressPercent}%` }}
                         />
                       </Box>

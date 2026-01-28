@@ -1,6 +1,6 @@
 import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
-import React, { Children, cloneElement, isValidElement } from 'react'
+import React, {Children, cloneElement, isValidElement} from 'react'
 
 type ButtonGroupVariant = 'solid' | 'outline'
 type ButtonGroupSize = 'sm' | 'md' | 'lg'

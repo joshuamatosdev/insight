@@ -1,9 +1,9 @@
-import { CSSProperties } from 'react';
-import { OpportunityCardProps, getOpportunityType } from './Opportunity.types';
-import { Text, Button, ExternalLinkIcon } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, HStack, Grid, Box, Stack } from '../../catalyst/layout';
-import { NAICSBadge } from '../naics';
-import { TypeBadge } from './TypeBadge';
+import {CSSProperties} from 'react';
+import {getOpportunityType, OpportunityCardProps} from './Opportunity.types';
+import {Button, ExternalLinkIcon, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, Grid, HStack, Stack} from '../../catalyst/layout';
+import {NAICSBadge} from '../naics';
+import {TypeBadge} from './TypeBadge';
 
 export function OpportunityCard({ opportunity, className, style, extraBadge }: OpportunityCardProps) {
   const formatDate = (dateStr: string | undefined): string => {
@@ -36,7 +36,7 @@ export function OpportunityCard({ opportunity, className, style, extraBadge }: O
   };
 
   return (
-    <Card className={className} style={cardStyles}>
+    <Card style={cardStyles}>
       <CardHeader>
         <HStack justify="between" align="start">
           <Box style={{ flex: 1, minWidth: 0 }}>

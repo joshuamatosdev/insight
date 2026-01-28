@@ -1,5 +1,5 @@
-import { Stack, Box, Card, CardBody, Grid } from '../../components/catalyst/layout';
-import { Text, Button } from '../../components/catalyst/primitives';
+import {Box, Card, CardBody, Grid, Stack} from '../../components/catalyst/layout';
+import {Button, Text} from '../../components/catalyst/primitives';
 
 interface BackupCodesDisplayProps {
   codes: string[];
@@ -57,10 +57,10 @@ export function BackupCodesDisplay({
   return (
     <Stack spacing="md">
       {/* Warning */}
-      <Card variant="bordered" style={{ backgroundColor: '#fffbeb' }}>
+      <Card variant="bordered">
         <CardBody padding="md">
           <Stack spacing="sm">
-            <Text variant="body" style={{ fontWeight: 600, color: '#b45309' }}>
+            <Text variant="body">
               Important: Save these backup codes
             </Text>
             <Text variant="caption" color="muted">
@@ -78,16 +78,8 @@ export function BackupCodesDisplay({
             {codes.map((code, index) => (
               <Box
                 key={code}
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: '14px',
-                  padding: '0.5rem',
-                  backgroundColor: '#fafafa',
-                  borderRadius: '4px',
-                  textAlign: 'center',
-                }}
               >
-                <Text variant="caption" color="muted" className="mr-2">
+                <Text variant="caption" color="muted">
                   {index + 1}.
                 </Text>
                 {code}
@@ -99,10 +91,10 @@ export function BackupCodesDisplay({
 
       {/* Actions */}
       <Grid columns={2} gap="sm">
-        <Button variant="secondary" onClick={handleCopy} className="w-full">
+        <Button variant="secondary" onClick={handleCopy}>
           Copy All
         </Button>
-        <Button variant="secondary" onClick={handleDownload} className="w-full">
+        <Button variant="secondary" onClick={handleDownload}>
           Download
         </Button>
       </Grid>

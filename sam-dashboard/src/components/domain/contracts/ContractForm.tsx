@@ -1,12 +1,12 @@
-import { useState, useCallback, CSSProperties } from 'react';
-import { Text, Button, Input, Select } from '../../catalyst/primitives';
-import { Card, CardHeader, CardBody, CardFooter, Grid, Stack, HStack, Box } from '../../catalyst/layout';
+import {CSSProperties, useCallback, useState} from 'react';
+import {Button, Input, Select, Text} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardFooter, CardHeader, Grid, HStack, Stack} from '../../catalyst/layout';
 import type {
-  ContractFormProps,
-  CreateContractRequest,
-  UpdateContractRequest,
-  ContractType,
-  ContractStatus,
+    ContractFormProps,
+    ContractStatus,
+    ContractType,
+    CreateContractRequest,
+    UpdateContractRequest,
 } from './Contract.types';
 
 const CONTRACT_TYPES: { value: ContractType; label: string }[] = [
@@ -198,7 +198,7 @@ export function ContractForm({
   };
 
   return (
-    <Card className={className} style={formStyles}>
+    <Card style={formStyles}>
       <form onSubmit={handleSubmit}>
         <CardHeader>
           <Text variant="heading4">
@@ -208,13 +208,13 @@ export function ContractForm({
         <CardBody>
           <Stack spacing="lg">
             <Box>
-              <Text variant="heading5" className="mb-4">
+              <Text variant="heading5">
                 Basic Information
               </Text>
               <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="contractNumber">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Contract Number *
                     </Text>
                   </label>
@@ -226,14 +226,14 @@ export function ContractForm({
                     placeholder="e.g., GS-35F-0123X"
                   />
                   {errors.contractNumber !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
+                    <Text variant="caption" color="danger">
                       {errors.contractNumber}
                     </Text>
                   )}
                 </Box>
                 <Box>
                   <label htmlFor="contractType">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Contract Type *
                     </Text>
                   </label>
@@ -252,7 +252,7 @@ export function ContractForm({
                 </Box>
                 <Box style={{ gridColumn: 'span 2' }}>
                   <label htmlFor="title">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Title *
                     </Text>
                   </label>
@@ -264,14 +264,14 @@ export function ContractForm({
                     placeholder="Contract title"
                   />
                   {errors.title !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
+                    <Text variant="caption" color="danger">
                       {errors.title}
                     </Text>
                   )}
                 </Box>
                 <Box style={{ gridColumn: 'span 2' }}>
                   <label htmlFor="description">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Description
                     </Text>
                   </label>
@@ -286,7 +286,7 @@ export function ContractForm({
                 {isEditing && (
                   <Box>
                     <label htmlFor="status">
-                      <Text variant="bodySmall" weight="semibold" className="mb-1">
+                      <Text variant="bodySmall" weight="semibold">
                         Status
                       </Text>
                     </label>
@@ -306,7 +306,7 @@ export function ContractForm({
                 )}
                 <Box>
                   <label htmlFor="agency">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Agency
                     </Text>
                   </label>
@@ -322,13 +322,13 @@ export function ContractForm({
             </Box>
 
             <Box>
-              <Text variant="heading5" className="mb-4">
+              <Text variant="heading5">
                 Period of Performance
               </Text>
               <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="popStartDate">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Start Date
                     </Text>
                   </label>
@@ -342,7 +342,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="popEndDate">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       End Date
                     </Text>
                   </label>
@@ -358,13 +358,13 @@ export function ContractForm({
             </Box>
 
             <Box>
-              <Text variant="heading5" className="mb-4">
+              <Text variant="heading5">
                 Contract Value
               </Text>
               <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="totalValue">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Total Value ($)
                     </Text>
                   </label>
@@ -377,14 +377,14 @@ export function ContractForm({
                     placeholder="0"
                   />
                   {errors.totalValue !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
+                    <Text variant="caption" color="danger">
                       {errors.totalValue}
                     </Text>
                   )}
                 </Box>
                 <Box>
                   <label htmlFor="fundedValue">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Funded Value ($)
                     </Text>
                   </label>
@@ -397,7 +397,7 @@ export function ContractForm({
                     placeholder="0"
                   />
                   {errors.fundedValue !== undefined && (
-                    <Text variant="caption" color="danger" className="mt-1">
+                    <Text variant="caption" color="danger">
                       {errors.fundedValue}
                     </Text>
                   )}
@@ -406,13 +406,13 @@ export function ContractForm({
             </Box>
 
             <Box>
-              <Text variant="heading5" className="mb-4">
+              <Text variant="heading5">
                 Key Contacts
               </Text>
               <Grid columns={2} gap="md">
                 <Box>
                   <label htmlFor="contractingOfficerName">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Contracting Officer Name
                     </Text>
                   </label>
@@ -426,7 +426,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="contractingOfficerEmail">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       Contracting Officer Email
                     </Text>
                   </label>
@@ -441,7 +441,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="corName">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       COR Name
                     </Text>
                   </label>
@@ -455,7 +455,7 @@ export function ContractForm({
                 </Box>
                 <Box>
                   <label htmlFor="corEmail">
-                    <Text variant="bodySmall" weight="semibold" className="mb-1">
+                    <Text variant="bodySmall" weight="semibold">
                       COR Email
                     </Text>
                   </label>

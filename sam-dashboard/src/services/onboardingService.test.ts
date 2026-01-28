@@ -2,15 +2,15 @@
  * Tests for Onboarding Service
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import type {OnboardingProgress, StepInfo} from './onboardingService';
 import {
-  getOnboardingProgress,
-  getOnboardingSteps,
-  completeStep,
-  dismissOnboarding,
-  resetOnboarding,
+    completeStep,
+    dismissOnboarding,
+    getOnboardingProgress,
+    getOnboardingSteps,
+    resetOnboarding,
 } from './onboardingService';
-import type { OnboardingProgress, StepInfo } from './onboardingService';
 
 // Mock fetch
 const mockFetch = vi.fn();

@@ -1,71 +1,6 @@
-import { CSSProperties, useId, cloneElement, isValidElement } from 'react';
-import { FormFieldProps } from './FormField.types';
-
-/** Visually hidden styles for screen reader only text */
-const srOnlyStyles: CSSProperties = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  padding: 0,
-  margin: '-1px',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  whiteSpace: 'nowrap',
-  border: 0,
-};
-
-const containerStyles: CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.25rem',
-};
-
-const labelStyles: CSSProperties = {
-  fontFamily: 'inherit',
-  fontSize: '0.875rem',
-  fontWeight: 500,
-  color: '#3f3f46',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.25rem',
-};
-
-const requiredIndicatorStyles: CSSProperties = {
-  color: '#ef4444',
-  marginLeft: '2px',
-};
-
-const descriptionStyles: CSSProperties = {
-  fontFamily: 'inherit',
-  fontSize: '0.75rem',
-  color: '#71717a',
-  marginTop: '0.25rem',
-};
-
-const errorStyles: CSSProperties = {
-  fontFamily: 'inherit',
-  fontSize: '0.75rem',
-  color: '#ef4444',
-  marginTop: '0.25rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.25rem',
-};
-
-const hintStyles: CSSProperties = {
-  fontFamily: 'inherit',
-  fontSize: '0.75rem',
-  color: '#a1a1aa',
-  marginTop: '0.25rem',
-};
-
-const characterCountStyles: CSSProperties = {
-  fontFamily: 'inherit',
-  fontSize: '0.75rem',
-  color: '#a1a1aa',
-  textAlign: 'right',
-  marginTop: '0.25rem',
-};
+import {cloneElement, isValidElement, useId} from 'react';
+import clsx from 'clsx';
+import {FormFieldProps} from './FormField.types';
 
 /**
  * FormField component wraps form inputs with proper labels, descriptions, and error messages.
@@ -125,30 +60,32 @@ export function FormField({
     characterCount !== undefined && characterCount.current > characterCount.max;
 
   return (
-    <div className={className} style={{ ...containerStyles, ...style }}>
+    <div className={clsx('flex flex-col gap-1', className)} style={style}>
       <label
         htmlFor={fieldId}
-        style={hideLabel ? srOnlyStyles : labelStyles}
+        className={clsx(
+          hideLabel ? 'sr-only' : 'font-medium text-sm text-zinc-700 flex items-center gap-1'
+        )}
       >
         {label}
         {required && (
-          <span style={requiredIndicatorStyles} aria-hidden="true">
+          <span className="text-red-500 ml-0.5" aria-hidden="true">
             *
           </span>
         )}
-        {required && <span style={srOnlyStyles}>(required)</span>}
+        {required && <span className="sr-only">(required)</span>}
       </label>
 
       {enhancedChild}
 
       {hasDescription && (
-        <div id={descriptionId} style={descriptionStyles}>
+        <div id={descriptionId} className="text-xs text-zinc-500 mt-1">
           {description}
         </div>
       )}
 
       {hasHint && (
-        <div id={hintId} style={hintStyles}>
+        <div id={hintId} className="text-xs text-zinc-400 mt-1">
           {hint}
         </div>
       )}
@@ -156,7 +93,7 @@ export function FormField({
       {hasError && (
         <div
           id={errorId}
-          style={errorStyles}
+          className="text-xs text-red-500 mt-1 flex items-center gap-1"
           role="alert"
           aria-live="polite"
         >
@@ -167,16 +104,16 @@ export function FormField({
 
       {characterCount !== undefined && (
         <div
-          style={{
-            ...characterCountStyles,
-            color: isOverLimit ? '#ef4444' : '#a1a1aa',
-          }}
+          className={clsx(
+            'text-xs text-right mt-1',
+            isOverLimit ? 'text-red-500' : 'text-zinc-400'
+          )}
           aria-live="polite"
           aria-atomic="true"
         >
           {characterCount.current}/{characterCount.max}
           {isOverLimit && (
-            <span style={srOnlyStyles}>
+            <span className="sr-only">
               {` characters over limit by ${characterCount.current - characterCount.max}`}
             </span>
           )}

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import React, { forwardRef } from 'react'
-import { XMarkIcon } from '@heroicons/react/20/solid'
+import React, {forwardRef} from 'react'
+import {XMarkIcon} from '@heroicons/react/20/solid'
 
 // Color variant patterns using semantic tokens (dark mode built-in)
 const colors = {

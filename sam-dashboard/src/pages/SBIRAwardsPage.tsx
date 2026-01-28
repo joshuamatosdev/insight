@@ -1,32 +1,19 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Text, Badge, Button, CheckCircleIcon, RefreshIcon, SearchIcon, Input, Select, Link } from '../components/catalyst/primitives';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {
-  Section,
-  SectionHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  HStack,
-  Stack,
-  Box,
-} from '../components/catalyst/layout';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeader,
-  TableCell,
-} from '../components/catalyst';
-import {
-  SbirAward,
-  SbirStats,
-  formatAwardAmount,
-  getAgencyFullName,
-  StatCard,
-  StatsGrid,
-} from '../components/domain';
-import { fetchSbirAwards, fetchSbirStats, triggerSbirGovIngest, searchSbirAwards } from '../services';
+    Badge,
+    Button,
+    CheckCircleIcon,
+    Input,
+    Link,
+    RefreshIcon,
+    SearchIcon,
+    Select,
+    Text
+} from '../components/catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, HStack, Section, SectionHeader, Stack,} from '../components/catalyst/layout';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '../components/catalyst';
+import {formatAwardAmount, getAgencyFullName, SbirAward, SbirStats, StatCard, StatsGrid,} from '../components/domain';
+import {fetchSbirAwards, fetchSbirStats, searchSbirAwards, triggerSbirGovIngest} from '../services';
 
 export function SBIRAwardsPage() {
   const [awards, setAwards] = useState<SbirAward[]>([]);
@@ -102,7 +89,7 @@ export function SBIRAwardsPage() {
     return (
       <Section id="sbir-awards">
         <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg" />} />
-        <Box className="p-8 text-center">
+        <Box>
           <Text variant="body" color="muted">Loading SBIR.gov awards...</Text>
         </Box>
       </Section>
@@ -116,7 +103,7 @@ export function SBIRAwardsPage() {
         <Card>
           <CardBody>
             <Text variant="body" color="danger">Error: {error.message}</Text>
-            <Button onClick={handleIngest} className="mt-4">
+            <Button onClick={handleIngest}>
               Fetch from SBIR.gov
             </Button>
           </CardBody>
@@ -141,7 +128,7 @@ export function SBIRAwardsPage() {
 
       <Card>
         <CardHeader>
-          <HStack justify="between" align="center" className="flex-wrap gap-4">
+          <HStack justify="between" align="center">
             <HStack spacing="sm">
               <Select
                 value={agencyFilter}
@@ -175,7 +162,6 @@ export function SBIRAwardsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-[200px]"
               />
               <Button variant="outline" size="sm" onClick={handleSearch}>
                 <SearchIcon size="sm" />
@@ -194,50 +180,49 @@ export function SBIRAwardsPage() {
           </HStack>
         </CardHeader>
         {successMessage !== null && (
-          <Box className="p-3 bg-success-bg border-b border-success">
+          <Box>
             <Text variant="bodySmall" color="success">{successMessage}</Text>
           </Box>
         )}
         {ingestError !== null && (
-          <Box className="p-3 bg-danger-bg border-b border-danger">
+          <Box>
             <Text variant="bodySmall" color="danger">{ingestError}</Text>
           </Box>
         )}
         <CardBody padding="none">
           {filteredAwards.length === 0 ? (
-            <Box className="p-8 text-center">
+            <Box>
               <Text variant="body" color="muted">
                 No SBIR awards found. Click "Fetch from SBIR.gov" to load data.
               </Text>
             </Box>
           ) : (
-            <Box className="max-h-[600px] overflow-y-auto">
+            <Box>
               <Table striped>
                 <TableHead>
                   <TableRow>
                     <TableHeader>Award</TableHeader>
                     <TableHeader>Firm</TableHeader>
-                    <TableHeader className="text-center">Phase</TableHeader>
-                    <TableHeader className="text-center">Agency</TableHeader>
-                    <TableHeader className="text-right">Amount</TableHeader>
-                    <TableHeader className="text-center">Year</TableHeader>
+                    <TableHeader>Phase</TableHeader>
+                    <TableHeader>Agency</TableHeader>
+                    <TableHeader>Amount</TableHeader>
+                    <TableHeader>Year</TableHeader>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {filteredAwards.map((award) => (
                     <TableRow key={award.id}>
-                      <TableCell className="max-w-xs">
+                      <TableCell>
                         <Link
                           href={award.awardLink !== null && award.awardLink !== undefined && award.awardLink !== '' ? award.awardLink : '#'}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="no-underline"
                         >
-                          <Text variant="bodySmall" className="line-clamp-2">
+                          <Text variant="bodySmall">
                             {award.awardTitle !== null && award.awardTitle !== undefined && award.awardTitle !== '' ? award.awardTitle : 'Untitled'}
                           </Text>
                         </Link>
-                        <HStack spacing="xs" className="mt-1">
+                        <HStack spacing="xs">
                           {award.isSbir === true && <Badge color="cyan">SBIR</Badge>}
                           {award.isSttr === true && <Badge color="green">STTR</Badge>}
                         </HStack>
@@ -248,18 +233,18 @@ export function SBIRAwardsPage() {
                           {award.city}, {award.state}
                         </Text>
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <Badge color="amber">Phase {award.phase}</Badge>
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <Badge color="zinc">{award.agency}</Badge>
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell>
                         <Text variant="bodySmall" weight="semibold">
                           {formatAwardAmount(award.awardAmount)}
                         </Text>
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <Text variant="bodySmall">{award.awardYear || 'N/A'}</Text>
                       </TableCell>
                     </TableRow>
@@ -271,7 +256,7 @@ export function SBIRAwardsPage() {
         </CardBody>
       </Card>
 
-      <Stack gap="xs" align="center" className="mt-4">
+      <Stack gap="xs" align="center">
         <Text variant="caption" color="muted">
           Data source: <Link href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</Link> -
           Small Business Innovation Research / Small Business Technology Transfer

@@ -1,10 +1,10 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import {describe, expect, it, vi} from 'vitest';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FilterBar } from './FilterBar';
-import { SearchInput } from './SearchInput';
-import { SortSelect } from './SortSelect';
-import { FilterState } from './Filters.types';
+import {FilterBar} from './FilterBar';
+import {SearchInput} from './SearchInput';
+import {SortSelect} from './SortSelect';
+import {FilterState} from './Filters.types';
 
 describe('SearchInput', () => {
   it('renders input element', () => {

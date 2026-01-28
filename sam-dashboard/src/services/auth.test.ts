@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { login, register, refreshToken, validateToken } from './auth';
-import type { LoginCredentials, RegisterData } from '../auth/Auth.types';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
+import {login, refreshToken, register, validateToken} from './auth';
+import type {LoginCredentials, RegisterData} from '../auth/Auth.types';
 
 // Test data factories
 const createMockUser = () => ({

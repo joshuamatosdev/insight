@@ -1,8 +1,8 @@
-import { CSSProperties } from 'react';
-import { TopPerformersTableProps } from './Analytics.types';
-import { Text, Badge, UserIcon } from '../../catalyst/primitives';
-import { Box, Stack, HStack, Card, CardHeader, CardBody } from '../../catalyst/layout';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableHeader } from '../../catalyst';
+import {CSSProperties} from 'react';
+import {TopPerformersTableProps} from './Analytics.types';
+import {Badge, Text, UserIcon} from '../../catalyst/primitives';
+import {Box, Card, CardBody, CardHeader, HStack, Stack} from '../../catalyst/layout';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '../../catalyst';
 
 /**
  * TopPerformersTable displays top performers ranked by action count.
@@ -20,7 +20,7 @@ export function TopPerformersTable({
 
   if (loading) {
     return (
-      <Card className={className} style={containerStyles}>
+      <Card style={containerStyles}>
         <CardHeader>
           <Text variant="heading5">{title}</Text>
         </CardHeader>
@@ -63,7 +63,7 @@ export function TopPerformersTable({
 
   if (performers.length === 0) {
     return (
-      <Card className={className} style={containerStyles}>
+      <Card style={containerStyles}>
         <CardHeader>
           <Text variant="heading5">{title}</Text>
         </CardHeader>
@@ -94,7 +94,7 @@ export function TopPerformersTable({
   }
 
   return (
-    <Card className={className} style={containerStyles}>
+    <Card style={containerStyles}>
       <CardHeader>
         <Text variant="heading5">{title}</Text>
       </CardHeader>
@@ -102,9 +102,9 @@ export function TopPerformersTable({
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader className="w-[50px]">Rank</TableHeader>
+              <TableHeader>Rank</TableHeader>
               <TableHeader>User</TableHeader>
-              <TableHeader className="text-right">Actions</TableHeader>
+              <TableHeader>Actions</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -138,7 +138,7 @@ export function TopPerformersTable({
                     </Text>
                   </HStack>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   <Text variant="body" style={{ fontWeight: 600 }}>
                     {performer.actionCount.toLocaleString()}
                   </Text>

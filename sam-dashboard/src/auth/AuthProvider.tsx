@@ -1,13 +1,7 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { AuthContext } from './AuthContext';
-import { login as apiLogin, validateToken } from '../services/auth';
-import type {
-  AuthProviderProps,
-  User,
-  AuthError,
-  AuthContextType,
-  StoredAuthState,
-} from './Auth.types';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {AuthContext} from './AuthContext';
+import {login as apiLogin, validateToken} from '../services/auth';
+import type {AuthContextType, AuthError, AuthProviderProps, StoredAuthState, User,} from './Auth.types';
 
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
