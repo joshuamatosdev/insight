@@ -2,7 +2,8 @@
  * OAuth service for social login integration
  */
 
-const API_BASE = '/api/oauth';
+import {API_BASE} from './apiClient';
+const OAUTH_PATH = `${API_BASE}/oauth`;
 
 export interface OAuthProvider {
     id: string;
@@ -49,7 +50,7 @@ export interface AuthResponse {
  * Get list of enabled OAuth providers
  */
 export async function fetchOAuthProviders(): Promise<OAuthProvidersResponse> {
-    const response = await fetch(`${API_BASE}/providers`);
+    const response = await fetch(`${OAUTH_PATH}/providers`);
 
     if (response.ok === false) {
         throw new Error('Failed to fetch OAuth providers');
@@ -64,7 +65,7 @@ export async function fetchOAuthProviders(): Promise<OAuthProvidersResponse> {
 export async function processOAuthCallback(
     request: OAuthCallbackRequest
 ): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE}/callback`, {
+    const response = await fetch(`${OAUTH_PATH}/callback`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ export async function processOAuthCallback(
  * Get user's linked OAuth connections
  */
 export async function fetchOAuthConnections(token: string): Promise<OAuthConnection[]> {
-    const response = await fetch(`${API_BASE}/connections`, {
+    const response = await fetch(`${OAUTH_PATH}/connections`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -104,7 +105,7 @@ export async function unlinkOAuthProvider(
     token: string,
     provider: string
 ): Promise<void> {
-    const response = await fetch(`${API_BASE}/connections/${provider}`, {
+    const response = await fetch(`${OAUTH_PATH}/connections/${provider}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`,

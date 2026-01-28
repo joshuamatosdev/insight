@@ -1,6 +1,7 @@
 import type {AuthError, LoginCredentials, LoginResponse, RegisterData, User,} from '../auth/Auth.types';
 
-const API_BASE = '/api/auth';
+import {API_BASE} from './apiClient';
+const AUTH_PATH = API_BASE + '/auth';
 
 /**
  * API response wrapper format from backend
@@ -61,7 +62,7 @@ async function parseAuthError(response: Response): Promise<AuthError> {
  * Authenticates user with email and password
  */
 export async function login(credentials: LoginCredentials): Promise<LoginResponse> {
-    const response = await fetch(`${API_BASE}/login`, {
+    const response = await fetch(`${AUTH_PATH}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
  * Registers a new user account
  */
 export async function register(data: RegisterData): Promise<LoginResponse> {
-    const response = await fetch(`${API_BASE}/register`, {
+    const response = await fetch(`${AUTH_PATH}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -109,7 +110,7 @@ export async function register(data: RegisterData): Promise<LoginResponse> {
  * Refreshes the authentication token
  */
 export async function refreshToken(currentRefreshToken: string): Promise<LoginResponse> {
-    const response = await fetch(`${API_BASE}/refresh`, {
+    const response = await fetch(`${AUTH_PATH}/refresh`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

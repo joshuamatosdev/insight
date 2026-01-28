@@ -2,7 +2,8 @@
  * MFA service for multi-factor authentication
  */
 
-const API_BASE = '/api/mfa';
+import {API_BASE} from './apiClient';
+const MFA_PATH = `${API_BASE}/mfa`;
 
 export interface MfaStatus {
     enabled: boolean;
@@ -27,7 +28,7 @@ export interface MfaVerifyRequest {
  * Get MFA status for current user
  */
 export async function fetchMfaStatus(token: string): Promise<MfaStatus> {
-    const response = await fetch(`${API_BASE}/status`, {
+    const response = await fetch(`${MFA_PATH}/status`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -44,7 +45,7 @@ export async function fetchMfaStatus(token: string): Promise<MfaStatus> {
  * Start MFA setup - get secret and QR code
  */
 export async function startMfaSetup(token: string): Promise<MfaSetupResponse> {
-    const response = await fetch(`${API_BASE}/setup`, {
+    const response = await fetch(`${MFA_PATH}/setup`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -66,7 +67,7 @@ export async function verifyMfaSetup(
     token: string,
     code: string
 ): Promise<MfaSetupResponse> {
-    const response = await fetch(`${API_BASE}/verify-setup`, {
+    const response = await fetch(`${MFA_PATH}/verify-setup`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -91,7 +92,7 @@ export async function verifyMfaCode(
     code: string,
     isBackupCode = false
 ): Promise<boolean> {
-    const response = await fetch(`${API_BASE}/verify`, {
+    const response = await fetch(`${MFA_PATH}/verify`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -116,7 +117,7 @@ export async function generateBackupCodes(
     token: string,
     currentCode: string
 ): Promise<string[]> {
-    const response = await fetch(`${API_BASE}/backup-codes`, {
+    const response = await fetch(`${MFA_PATH}/backup-codes`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -141,7 +142,7 @@ export async function disableMfa(
     token: string,
     code: string
 ): Promise<void> {
-    const response = await fetch(`${API_BASE}`, {
+    const response = await fetch(`${MFA_PATH}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`,

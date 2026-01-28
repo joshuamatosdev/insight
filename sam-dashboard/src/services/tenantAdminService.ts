@@ -2,7 +2,8 @@
  * Tenant Admin service for settings and branding
  */
 
-const API_BASE = '/api/admin/tenant';
+import {API_BASE} from './apiClient';
+const TENANT_PATH = `${API_BASE}/admin/tenant`;
 
 export interface TenantSettings {
     id: string;
@@ -40,7 +41,7 @@ export interface TenantBranding {
  * Get tenant settings
  */
 export async function fetchTenantSettings(token: string): Promise<TenantSettings> {
-    const response = await fetch(`${API_BASE}/settings`, {
+    const response = await fetch(`${TENANT_PATH}/settings`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -60,7 +61,7 @@ export async function updateTenantSettings(
     token: string,
     settings: Partial<TenantSettings>
 ): Promise<TenantSettings> {
-    const response = await fetch(`${API_BASE}/settings`, {
+    const response = await fetch(`${TENANT_PATH}/settings`, {
         method: 'PUT',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -81,7 +82,7 @@ export async function updateTenantSettings(
  * Get tenant branding
  */
 export async function fetchTenantBranding(token: string): Promise<TenantBranding> {
-    const response = await fetch(`${API_BASE}/branding`, {
+    const response = await fetch(`${TENANT_PATH}/branding`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -101,7 +102,7 @@ export async function updateTenantBranding(
     token: string,
     branding: Partial<TenantBranding>
 ): Promise<TenantBranding> {
-    const response = await fetch(`${API_BASE}/branding`, {
+    const response = await fetch(`${TENANT_PATH}/branding`, {
         method: 'PUT',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -122,7 +123,7 @@ export async function updateTenantBranding(
  * Get public branding (for login page)
  */
 export async function fetchPublicBranding(): Promise<TenantBranding> {
-    const response = await fetch(`${API_BASE}/branding/public`);
+    const response = await fetch(`${TENANT_PATH}/branding/public`);
 
     if (response.ok === false) {
         throw new Error('Failed to fetch branding');

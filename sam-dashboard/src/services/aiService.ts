@@ -2,7 +2,8 @@
  * AI Analysis service for contract and opportunity intelligence.
  */
 
-const API_BASE = '/api/ai';
+import {API_BASE} from './apiClient';
+const AI_PATH = `${API_BASE}/ai`;
 
 export interface AISummary {
     executiveSummary: string;
@@ -57,7 +58,7 @@ export interface AIProposalSuggestions {
  * Get AI-generated summary of an opportunity.
  */
 export async function getOpportunitySummary(opportunityId: string): Promise<AISummary> {
-    const response = await fetch(`${API_BASE}/opportunities/${opportunityId}/summary`, {
+    const response = await fetch(`${AI_PATH}/opportunities/${opportunityId}/summary`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
         },
@@ -74,7 +75,7 @@ export async function getOpportunitySummary(opportunityId: string): Promise<AISu
  * Get fit score for an opportunity.
  */
 export async function getFitScore(opportunityId: string): Promise<AIFitScore> {
-    const response = await fetch(`${API_BASE}/opportunities/${opportunityId}/fit-score`, {
+    const response = await fetch(`${AI_PATH}/opportunities/${opportunityId}/fit-score`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
         },
@@ -91,7 +92,7 @@ export async function getFitScore(opportunityId: string): Promise<AIFitScore> {
  * Get risk assessment for an opportunity.
  */
 export async function getRiskAssessment(opportunityId: string): Promise<AIRiskAssessment> {
-    const response = await fetch(`${API_BASE}/opportunities/${opportunityId}/risk-assessment`, {
+    const response = await fetch(`${AI_PATH}/opportunities/${opportunityId}/risk-assessment`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
         },
@@ -108,7 +109,7 @@ export async function getRiskAssessment(opportunityId: string): Promise<AIRiskAs
  * Get proposal suggestions for an opportunity.
  */
 export async function getProposalSuggestions(opportunityId: string): Promise<AIProposalSuggestions> {
-    const response = await fetch(`${API_BASE}/opportunities/${opportunityId}/proposal-suggestions`, {
+    const response = await fetch(`${AI_PATH}/opportunities/${opportunityId}/proposal-suggestions`, {
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
         },

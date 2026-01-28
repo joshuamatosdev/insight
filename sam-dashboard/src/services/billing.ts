@@ -7,7 +7,8 @@ import type {
     UpdatePlanRequest,
 } from '../types/billing.types';
 
-const API_BASE = '/api/billing';
+import {API_BASE} from './apiClient';
+const BILLING_PATH = `${API_BASE}/billing`;
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**
@@ -59,7 +60,7 @@ async function authFetch(url: string, options?: RequestInit): Promise<Response> 
  * Fetch current subscription
  */
 export async function fetchSubscription(): Promise<Subscription> {
-    const response = await authFetch(`${API_BASE}/subscription`);
+    const response = await authFetch(`${BILLING_PATH}/subscription`);
     if (response.ok === false) {
         throw new Error(`Failed to fetch subscription: ${response.statusText}`);
     }
@@ -70,7 +71,7 @@ export async function fetchSubscription(): Promise<Subscription> {
  * Fetch available plans
  */
 export async function fetchPlans(): Promise<PlanDetails[]> {
-    const response = await authFetch(`${API_BASE}/plans`);
+    const response = await authFetch(`${BILLING_PATH}/plans`);
     if (response.ok === false) {
         throw new Error(`Failed to fetch plans: ${response.statusText}`);
     }
@@ -81,7 +82,7 @@ export async function fetchPlans(): Promise<PlanDetails[]> {
  * Fetch billing configuration
  */
 export async function fetchBillingConfig(): Promise<BillingConfig> {
-    const response = await authFetch(`${API_BASE}/config`);
+    const response = await authFetch(`${BILLING_PATH}/config`);
     if (response.ok === false) {
         throw new Error(`Failed to fetch billing config: ${response.statusText}`);
     }
@@ -93,7 +94,7 @@ export async function fetchBillingConfig(): Promise<BillingConfig> {
  */
 export async function subscribeToPlan(plan: SubscriptionPlan): Promise<Subscription> {
     const request: SubscribeRequest = {plan};
-    const response = await authFetch(`${API_BASE}/subscribe`, {
+    const response = await authFetch(`${BILLING_PATH}/subscribe`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -108,7 +109,7 @@ export async function subscribeToPlan(plan: SubscriptionPlan): Promise<Subscript
  * Cancel subscription
  */
 export async function cancelSubscription(immediate: boolean = false): Promise<Subscription> {
-    const url = `${API_BASE}/cancel?immediate=${immediate}`;
+    const url = `${BILLING_PATH}/cancel?immediate=${immediate}`;
     const response = await authFetch(url, {
         method: 'POST',
     });
@@ -124,7 +125,7 @@ export async function cancelSubscription(immediate: boolean = false): Promise<Su
  */
 export async function updatePlan(plan: SubscriptionPlan): Promise<Subscription> {
     const request: UpdatePlanRequest = {plan};
-    const response = await authFetch(`${API_BASE}/plan`, {
+    const response = await authFetch(`${BILLING_PATH}/plan`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });

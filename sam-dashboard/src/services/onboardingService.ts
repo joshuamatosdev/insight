@@ -2,7 +2,8 @@
  * Onboarding service for wizard API calls.
  */
 
-const API_BASE = '/api/onboarding';
+import {API_BASE} from './apiClient';
+const ONBOARDING_PATH = `${API_BASE}/onboarding`;
 
 export interface OnboardingProgress {
     id: string;
@@ -75,7 +76,7 @@ export async function completeStep(
     step: number,
     request?: CompleteStepRequest
 ): Promise<OnboardingProgress> {
-    const response = await fetch(`${API_BASE}/step/${step}`, {
+    const response = await fetch(`${ONBOARDING_PATH}/step/${step}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

@@ -2,7 +2,8 @@
  * Enhanced search service with autocomplete and faceted search
  */
 
-const API_BASE = '/api/search';
+import {API_BASE} from './apiClient';
+const SEARCH_PATH = `${API_BASE}/search`;
 
 export interface SearchSuggestion {
     text: string;
@@ -62,7 +63,7 @@ export async function fetchSearchSuggestions(
     limit = 10
 ): Promise<SearchSuggestionResponse> {
     const params = new URLSearchParams({q: query, limit: String(limit)});
-    const response = await fetch(`${API_BASE}/suggestions?${params}`, {
+    const response = await fetch(`${SEARCH_PATH}/suggestions?${params}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -82,7 +83,7 @@ export async function facetedSearch<T>(
     token: string,
     request: FacetedSearchRequest
 ): Promise<FacetedSearchResponse<T>> {
-    const response = await fetch(`${API_BASE}/faceted`, {
+    const response = await fetch(`${SEARCH_PATH}/faceted`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,

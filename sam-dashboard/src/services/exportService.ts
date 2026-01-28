@@ -2,7 +2,8 @@
  * Export service for batch and scheduled exports
  */
 
-const API_BASE = '/api/export';
+import {API_BASE} from './apiClient';
+const EXPORT_PATH = `${API_BASE}/export`;
 
 export type ExportFormat = 'PDF' | 'EXCEL' | 'CSV' | 'JSON';
 
@@ -45,7 +46,7 @@ export async function exportOpportunities(
     token: string,
     request: ExportRequest
 ): Promise<Blob> {
-    const response = await fetch(`${API_BASE}/opportunities`, {
+    const response = await fetch(`${EXPORT_PATH}/opportunities`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +70,7 @@ export async function fetchExportTemplates(
     entityType?: string
 ): Promise<ExportTemplate[]> {
     const params = entityType !== undefined ? `?entityType=${entityType}` : '';
-    const response = await fetch(`${API_BASE}/templates${params}`, {
+    const response = await fetch(`${EXPORT_PATH}/templates${params}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -88,7 +89,7 @@ export async function fetchExportTemplates(
 export async function fetchScheduledExports(
     token: string
 ): Promise<ScheduledExport[]> {
-    const response = await fetch(`${API_BASE}/scheduled`, {
+    const response = await fetch(`${EXPORT_PATH}/scheduled`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -108,7 +109,7 @@ export async function createScheduledExport(
     token: string,
     export_: Omit<ScheduledExport, 'id' | 'lastRunAt' | 'nextRunAt'>
 ): Promise<ScheduledExport> {
-    const response = await fetch(`${API_BASE}/scheduled`, {
+    const response = await fetch(`${EXPORT_PATH}/scheduled`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
