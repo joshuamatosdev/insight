@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // Manual toggle (Light default)
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -9,28 +9,26 @@ module.exports = {
     extend: {
       colors: {
         studio: {
-          black: '#050505',   // Rich black for high contrast
+          black: '#050505',
           white: '#ffffff',
-          gray: '#71717a',    // Zinc-500 equivalent for body text
-          light: '#f4f4f5',   // Zinc-100 for subtle backgrounds
-          border: '#e4e4e7',  // Zinc-200 for borders
+          gray: '#71717a',
+          light: '#f4f4f5',
+          border: '#e4e4e7',
         }
       },
       fontFamily: {
-        // Mapped to your Typekit selections
         sans: ['"basic-sans"', '"unitext"', 'system-ui', 'sans-serif'],
         display: ['"gimlet-display-compressed"', 'sans-serif'],
         accent: ['"itc-avant-garde-gothic-pro"', 'sans-serif'],
       },
       fontSize: {
-        // Massive sizes for the "Studio" headers
         '7xl': ['4.5rem', { lineHeight: '1' }],
         '8xl': ['6rem', { lineHeight: '1' }],
         '9xl': ['8rem', { lineHeight: '1' }],
       },
       letterSpacing: {
         tighter: '-0.04em',
-        widest: '0.1em', // For button uppercase text
+        widest: '0.1em',
       },
       borderRadius: {
         '4xl': '2rem',
@@ -41,7 +39,10 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
+    // STRATEGY CLASS IS CRITICAL: prevents plugin from overriding your custom inputs
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
     require('@tailwindcss/aspect-ratio'),
   ],
 }

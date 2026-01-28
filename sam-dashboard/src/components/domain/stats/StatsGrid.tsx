@@ -1,6 +1,7 @@
-import {StatsGridProps} from './Stats.types';
-
 import {Children, cloneElement, isValidElement, ReactElement} from 'react';
+import clsx from 'clsx';
+
+import {StatsGridProps} from './Stats.types';
 
 const columnConfig = {
   1: 'grid-cols-1',

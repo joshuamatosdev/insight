@@ -4,7 +4,26 @@
 
 @layer base {
   /* =========================================
-     ROOT THEME SCOPE
+     GLOBAL DEFAULTS (Merged from base.css)
+     ========================================= */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-400 rounded-full hover:bg-zinc-500;
+  }
+
+  /* =========================================
+     STUDIO THEME ROOT
      ========================================= */
   [data-theme='studio'] {
     @apply font-sans text-studio-gray antialiased bg-studio-white;
@@ -16,7 +35,7 @@
   }
 
   /* =========================================
-     TYPOGRAPHY: HEADINGS
+     TYPOGRAPHY
      ========================================= */
   [data-theme='studio'] h1,
   [data-theme='studio'] h2,
@@ -31,34 +50,10 @@
   [data-theme='studio'] h3 { @apply text-3xl md:text-5xl; }
   [data-theme='studio'] h4 { @apply text-2xl md:text-3xl; }
 
-  /* =========================================
-     TYPOGRAPHY EXTENSIONS (More HTML coverage)
-     ========================================= */
-  [data-theme='studio'] h5 { @apply font-display font-bold tracking-tighter uppercase mb-4 leading-none text-2xl md:text-3xl text-studio-black dark:text-white; }
-  [data-theme='studio'] h6 { @apply font-display font-bold tracking-tighter uppercase mb-4 leading-none text-xl md:text-2xl text-studio-black dark:text-white; }
-
-  [data-theme='studio'] strong { @apply font-semibold text-studio-black dark:text-white; }
-  [data-theme='studio'] em { @apply italic; }
-  [data-theme='studio'] small { @apply text-sm text-zinc-500 dark:text-zinc-400; }
-  [data-theme='studio'] mark { @apply bg-studio-light px-1 rounded; @apply dark:bg-zinc-800; }
-  [data-theme='studio'] del { @apply line-through text-zinc-500 dark:text-zinc-400; }
-  [data-theme='studio'] ins { @apply underline decoration-studio-border underline-offset-4; }
-
-  [data-theme='studio'] sub,
-  [data-theme='studio'] sup {
-    @apply text-xs;
-  }
-
-  /* =========================================
-     TYPOGRAPHY: BODY & INLINE
-     ========================================= */
   [data-theme='studio'] p {
     @apply font-sans text-lg leading-relaxed mb-6 max-w-[65ch];
   }
 
-  /* =========================================
-     LINKS
-     ========================================= */
   [data-theme='studio'] a {
     @apply font-medium text-studio-black underline decoration-studio-border underline-offset-4 cursor-pointer;
     @apply hover:decoration-studio-black transition-all;
@@ -66,121 +61,18 @@
   }
 
   /* =========================================
-     LISTS
-     ========================================= */
-  [data-theme='studio'] ul { @apply list-disc pl-8 mb-6 max-w-[65ch]; }
-  [data-theme='studio'] ol { @apply list-decimal pl-8 mb-6 max-w-[65ch]; }
-  [data-theme='studio'] li { @apply mb-2; }
-  [data-theme='studio'] li > ul,
-  [data-theme='studio'] li > ol { @apply mt-3 mb-0; }
-
-  /* =========================================
-     CODE / PRE / KBD
-     ========================================= */
-  [data-theme='studio'] code {
-    @apply font-mono text-sm px-2 py-0.5 rounded bg-studio-light text-studio-black;
-    @apply dark:bg-zinc-900 dark:text-zinc-200;
-  }
-
-  [data-theme='studio'] pre {
-    @apply font-mono text-sm p-6 rounded-3xl bg-studio-light border border-studio-border overflow-x-auto mb-6;
-    @apply dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-200;
-  }
-
-  [data-theme='studio'] pre code {
-    @apply p-0 bg-transparent border-0;
-  }
-
-  [data-theme='studio'] kbd {
-    @apply font-mono text-xs px-2 py-1 rounded border border-studio-border bg-white;
-    @apply dark:bg-zinc-950 dark:border-zinc-800 dark:text-zinc-200;
-  }
-
-  /* =========================================
-     TABLES
-     ========================================= */
-  [data-theme='studio'] table {
-    @apply w-full border-collapse text-left mb-10;
-  }
-
-  [data-theme='studio'] caption {
-    @apply text-sm text-zinc-500 mb-3;
-    @apply dark:text-zinc-400;
-  }
-
-  [data-theme='studio'] thead {
-    @apply border-b border-studio-border;
-    @apply dark:border-zinc-800;
-  }
-
-  [data-theme='studio'] th {
-    @apply font-accent text-xs font-bold uppercase tracking-widest text-studio-black py-4;
-    @apply dark:text-white;
-  }
-
-  [data-theme='studio'] td {
-    @apply py-4 border-b border-studio-border text-studio-black;
-    @apply dark:border-zinc-900 dark:text-zinc-200;
-  }
-
-  [data-theme='studio'] tbody tr:hover {
-    @apply bg-studio-light;
-    @apply dark:bg-zinc-900;
-  }
-
-  /* =========================================
-     MEDIA DEFAULTS
-     ========================================= */
-  [data-theme='studio'] img,
-  [data-theme='studio'] video,
-  [data-theme='studio'] svg {
-    @apply max-w-full h-auto;
-  }
-
-  [data-theme='studio'] figure { @apply mb-10; }
-  [data-theme='studio'] figcaption {
-    @apply mt-3 text-sm text-zinc-500;
-    @apply dark:text-zinc-400;
-  }
-
-  /* =========================================
-     DETAILS / SUMMARY
-     ========================================= */
-  [data-theme='studio'] details {
-    @apply border border-studio-border rounded-3xl p-6 mb-6;
-    @apply dark:border-zinc-800;
-  }
-
-  [data-theme='studio'] summary {
-    @apply cursor-pointer font-accent text-xs font-bold uppercase tracking-widest text-studio-black;
-    @apply dark:text-white;
-  }
-
-  /* =========================================
-     LAYOUT PRIMITIVES
-     ========================================= */
-  [data-theme='studio'] hr {
-    @apply border-t border-studio-border my-12;
-    @apply dark:border-zinc-900;
-  }
-
-  [data-theme='studio'] blockquote {
-    @apply border-l-4 border-studio-black pl-8 py-2 my-10 font-display text-3xl text-studio-black;
-    @apply dark:border-white dark:text-white;
-  }
-
-  /* =========================================
-     FORM ELEMENTS
+     FORMS (The Pill Aesthetic)
      ========================================= */
   [data-theme='studio'] label {
     @apply block font-accent text-xs font-bold uppercase tracking-widest text-studio-black mb-2 ml-4;
     @apply dark:text-white;
   }
 
-  /* Inputs (Text-like) */
+  /* We manually target inputs to ensure pills work even with forms plugin installed */
   [data-theme='studio'] input[type='text'],
   [data-theme='studio'] input[type='email'],
   [data-theme='studio'] input[type='password'],
+  [data-theme='studio'] input[type='search'],
   [data-theme='studio'] select,
   [data-theme='studio'] textarea {
     @apply w-full px-6 py-4 rounded-pill border border-studio-border bg-transparent
@@ -194,88 +86,23 @@
   }
 
   /* =========================================
-     FORMS (Broader input coverage + focus-visible)
+     LAYOUT & TABLES
      ========================================= */
-  [data-theme='studio'] input[type='search'],
-  [data-theme='studio'] input[type='tel'],
-  [data-theme='studio'] input[type='url'],
-  [data-theme='studio'] input[type='number'],
-  [data-theme='studio'] input[type='date'],
-  [data-theme='studio'] input[type='time'],
-  [data-theme='studio'] input[type='datetime-local'],
-  [data-theme='studio'] input[type='month'],
-  [data-theme='studio'] input[type='week'] {
-    @apply w-full px-6 py-4 rounded-pill border border-studio-border bg-transparent
-           text-studio-black placeholder-zinc-400 outline-none transition-all;
-    @apply focus:border-studio-black focus:ring-1 focus:ring-studio-black;
-    @apply dark:text-white dark:border-zinc-800 dark:focus:border-white dark:focus:ring-white;
+  [data-theme='studio'] table {
+    @apply w-full border-collapse text-left mb-10;
   }
 
-  /* Buttons: give native <button> a sane default (still allow .btn-* to win) */
-  [data-theme='studio'] button,
-  [data-theme='studio'] input[type='submit'],
-  [data-theme='studio'] input[type='button'],
-  [data-theme='studio'] input[type='reset'] {
-    @apply inline-flex items-center justify-center rounded-pill px-8 py-4
-           font-accent text-sm font-bold uppercase tracking-widest
-           border border-studio-border bg-transparent text-studio-black
-           transition-colors;
-    @apply hover:bg-studio-light;
-    @apply dark:text-white dark:border-zinc-800 dark:hover:bg-zinc-900;
+  [data-theme='studio'] th {
+    @apply font-accent text-xs font-bold uppercase tracking-widest text-studio-black py-4 border-b border-studio-border;
+    @apply dark:text-white dark:border-zinc-800;
   }
 
-  /* Checkbox / Radio: keep them consistent without custom SVGs */
-  [data-theme='studio'] input[type='checkbox'],
-  [data-theme='studio'] input[type='radio'] {
-    @apply align-middle;
-    accent-color: theme(colors.studio.black);
-  }
-  :is(.dark [data-theme='studio']) input[type='checkbox'],
-  :is(.dark [data-theme='studio']) input[type='radio'] {
-    accent-color: white;
-  }
-
-  /* File Input */
-  [data-theme='studio'] input[type='file'] {
-    @apply file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
-           file:text-xs file:font-bold file:uppercase file:bg-studio-black file:text-white
-           hover:file:bg-zinc-800 dark:file:bg-white dark:file:text-black;
-  }
-
-  /* Range / Progress / Meter */
-  [data-theme='studio'] input[type='range'] { @apply w-full; }
-
-  [data-theme='studio'] progress {
-    @apply w-full h-3 rounded-pill overflow-hidden;
-  }
-
-  [data-theme='studio'] meter {
-    @apply w-full h-3;
-  }
-
-  /* Fieldset / Legend */
-  [data-theme='studio'] fieldset {
-    @apply border border-studio-border rounded-3xl p-6 mb-8;
-    @apply dark:border-zinc-800;
-  }
-
-  [data-theme='studio'] legend {
-    @apply px-3 font-accent text-xs font-bold uppercase tracking-widest text-studio-black;
-    @apply dark:text-white;
-  }
-
-  /* Better keyboard focus */
-  [data-theme='studio'] :focus-visible {
-    @apply outline-none ring-2 ring-studio-black ring-offset-2 ring-offset-studio-white;
-  }
-  :is(.dark [data-theme='studio']) :focus-visible {
-    @apply ring-white ring-offset-studio-black;
+  [data-theme='studio'] td {
+    @apply py-4 border-b border-studio-border text-studio-black;
+    @apply dark:border-zinc-900 dark:text-zinc-200;
   }
 }
 
-/* =========================================
-   COMPONENT CLASSES
-   ========================================= */
 @layer components {
   /* Primary Button */
   [data-theme='studio'] .btn-primary {
