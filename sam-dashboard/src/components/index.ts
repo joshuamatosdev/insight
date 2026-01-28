@@ -2,3 +2,4 @@
 export * from './catalyst/primitives';
 export * from './catalyst/layout';
 export * from './domain';
+export * from './auth';
