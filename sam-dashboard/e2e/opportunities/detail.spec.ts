@@ -238,7 +238,7 @@ test.describe('Opportunity Detail Display', () => {
     test.describe('Empty State Display', () => {
         test('should display appropriate message when no opportunities exist', async ({page}) => {
             // Mock empty opportunities response
-            await page.route('**/api/opportunities*', async (route) => {
+            await page.route('**/opportunities*', async (route) => {
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
@@ -259,7 +259,7 @@ test.describe('Opportunity Detail Display', () => {
 
         test('should display specific empty message for type pages', async ({page}) => {
             // Mock empty opportunities response
-            await page.route('**/api/opportunities*', async (route) => {
+            await page.route('**/opportunities*', async (route) => {
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',

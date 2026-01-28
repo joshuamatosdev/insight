@@ -6,19 +6,19 @@
 
 The backend had inconsistent API versioning, causing 404 errors:
 
-- ✅ **Working:** `OpportunityController`, `ContractController`, `AuthController`, `DashboardController`, `OpportunityAlertController` → Used `/api/v1`
+- ✅ **Working:** `OpportunityController`, `ContractController`, `AuthController`, `DashboardController`, `OpportunityAlertController` → Used `/v1`
 - ❌ **Broken:** `IngestController`, `SbirController`, `DocumentController`, `FileController` → Used `/api` without `/v1`
 
-After commits 9cdfc87 and a6ad5d2 changed the frontend to use `/api/v1`, the ingest and SBIR endpoints stopped working.
+After commits 9cdfc87 and a6ad5d2 changed the frontend to use `/`, the ingest and SBIR endpoints stopped working.
 
 ## Solution Implemented
 
 ### Phase 1: Backend Controllers ✅ COMPLETED
 
-Updated all controllers to use `/api/v1` prefix:
+Updated all controllers to use `/` prefix:
 
 1. **IngestController.java** (line 24)
-   - Changed: `@RequestMapping("/api")` → `@RequestMapping("/api/v1")`
+   - Changed: `@RequestMapping("/api")` → `@RequestMapping("/v1")`
    - Affected endpoints:
      - `/ingest`
      - `/opportunities`
@@ -37,7 +37,7 @@ Updated all controllers to use `/api/v1` prefix:
      - `/opportunities/by-state`
 
 2. **SbirController.java** (line 24)
-   - Changed: `@RequestMapping("/api/sbir")` → `@RequestMapping("/sbir")`
+   - Changed: `@RequestMapping("/sbir")` → `@RequestMapping("/sbir")`
    - Affected endpoints:
      - `/sbir/ingest`
      - `/sbir/ingest/{agency}`
@@ -51,20 +51,20 @@ Updated all controllers to use `/api/v1` prefix:
      - `/sbir/config/agencies`
 
 3. **DocumentController.java** (line 31)
-   - Changed: `@RequestMapping("/api/documents")` → `@RequestMapping("/documents")`
+   - Changed: `@RequestMapping("/documents")` → `@RequestMapping("/documents")`
    - Affected endpoints: All document, folder, template, and content library endpoints
 
 4. **FileController.java** (line 41)
-   - Changed: `@RequestMapping("/api/files")` → `@RequestMapping("/files")`
+   - Changed: `@RequestMapping("/files")` → `@RequestMapping("/files")`
    - Affected endpoints: All file upload, download, and management endpoints
 
 ### Phase 2: Backend Tests ✅ COMPLETED
 
-Updated test files to use `/api/v1` endpoints:
+Updated test files to use `/v1` endpoints:
 
 1. **IngestControllerTest.java**
-   - Updated all test URLs from `/api/ingest/*` → `/ingest/*`
-   - Updated all test URLs from `/api/opportunities/*` → `/opportunities/*`
+   - Updated all test URLs from `/ingest/*` → `/ingest/*`
+   - Updated all test URLs from `/opportunities/*` → `/opportunities/*`
    - Lines updated: 63-170
 
 2. **SbirControllerTest.java**
@@ -76,16 +76,16 @@ Updated test files to use `/api/v1` endpoints:
 ### Phase 3: Frontend Services ✅ COMPLETED
 
 1. **documentService.ts** (line 26)
-   - Changed: `const DOCUMENTS_BASE = '/api/documents'` → `const DOCUMENTS_BASE = '/documents'`
+   - Changed: `const DOCUMENTS_BASE = '/documents'` → `const DOCUMENTS_BASE = '/documents'`
 
 2. **fileService.ts**
-   - Already using `apiClient` which has `/api/v1` prefix ✅ No changes needed
+   - Already using `apiClient` which has `/v1` prefix ✅ No changes needed
 
 3. **api.ts**
-   - Already fixed in commit 9cdfc87 to use `/api/v1` ✅ No changes needed
+   - Already fixed in commit 9cdfc87 to use `/v1` ✅ No changes needed
 
 4. **apiClient.ts**
-   - Already fixed in commit a6ad5d2 to use `/api/v1` ✅ No changes needed
+   - Already fixed in commit a6ad5d2 to use `/v1` ✅ No changes needed
 
 ## Verification Required
 
@@ -208,4 +208,4 @@ If issues arise, revert by:
 
 - This fix resolves the 404 errors introduced by commits 9cdfc87 and a6ad5d2
 - All existing endpoints maintain backward compatibility via version prefix
-- Future API changes can use `/api/v2/` without breaking existing clients
+- Future API changes can use `/v2/` without breaking existing clients

@@ -507,7 +507,7 @@
         // Load data from API
         async function loadData() {
             try {
-                const response = await fetch('/api/opportunities');
+                const response = await fetch('/opportunities');
                 opportunities = await response.json();
                 renderDashboard();
                 renderAllSections();
@@ -523,7 +523,7 @@
         // Refresh data
         async function refreshData() {
             try {
-                await fetch('/api/ingest', { method: 'POST' });
+                await fetch('/ingest', { method: 'POST' });
                 await loadData();
                 alert('Data refreshed successfully!');
             } catch (error) {

@@ -52,7 +52,7 @@ All test suites passed with `failures="0" errors="0"`:
 ### Controller Tests
 The controller tests are included in the 716 total tests. The changes to the following controllers are validated:
 
-1. **IngestController** (`@RequestMapping("/api/v1")`)
+1. **IngestController** (`@RequestMapping("/v1")`)
    - All endpoints now use `/` prefix
    - Tests updated to reflect new paths
    - ✅ Verified: 0 failures
@@ -88,20 +88,20 @@ cd sam-dashboard && npx tsc --noEmit
 
 ### Frontend Changes Verified
 1. **documentService.ts**
-   - Changed: `const DOCUMENTS_BASE = '/api/documents'` → `const DOCUMENTS_BASE = '/documents'`
+   - Changed: `const DOCUMENTS_BASE = '/documents'` → `const DOCUMENTS_BASE = '/documents'`
    - ✅ Type checking passed
 
 2. **fileService.ts**
-   - Already using `apiClient` with `/api/v1` prefix
+   - Already using `apiClient` with `/v1` prefix
    - ✅ No changes needed
 
 3. **api.ts**
    - Already fixed in commit 9cdfc87
-   - ✅ Using `/api/v1`
+   - ✅ Using `/v1`
 
 4. **apiClient.ts**
    - Already fixed in commit a6ad5d2
-   - ✅ Using `/api/v1`
+   - ✅ Using `/v1`
 
 ## Summary
 
@@ -122,9 +122,9 @@ All endpoints now consistently use `/` prefix:
 - ✅ Files: `/files` (FIXED)
 
 ### Changes Verified
-1. ✅ Backend controllers updated to use `/api/v1`
+1. ✅ Backend controllers updated to use `/v1`
 2. ✅ Backend tests updated to match new endpoints
-3. ✅ Frontend services updated to use `/api/v1`
+3. ✅ Frontend services updated to use `/v1`
 4. ✅ All 716 backend tests pass
 5. ✅ Frontend type checking passes
 

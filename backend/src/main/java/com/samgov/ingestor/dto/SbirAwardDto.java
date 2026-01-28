@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * DTO for SBIR.gov Award API response.
- * Maps fields from https://api.www.sbir.gov/public/api/awards
+ * Maps fields from https://api.www.sbir.gov/public/awards
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record SbirAwardDto(

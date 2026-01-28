@@ -69,7 +69,6 @@ const PORTAL_CATEGORIES = {
     },
 };
 
-const API_BASE = '/api';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**
@@ -93,7 +92,7 @@ function getAuthToken(): string | null {
  */
 async function fetchPreferences(): Promise<NotificationPreferences> {
     const token = getAuthToken();
-    const response = await fetch(`${API_BASE}/v1/notifications/preferences`, {
+    const response = await fetch(`${API_BASE}/notifications/preferences`, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -114,7 +113,7 @@ async function updatePreferences(
     preferences: Partial<NotificationPreferences>
 ): Promise<NotificationPreferences> {
     const token = getAuthToken();
-    const response = await fetch(`${API_BASE}/v1/notifications/preferences`, {
+    const response = await fetch(`${API_BASE}/notifications/preferences`, {
         method: 'PUT',
         headers: {
             Authorization: `Bearer ${token}`,

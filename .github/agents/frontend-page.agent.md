@@ -98,7 +98,7 @@ export function useResource(): UseResourceReturn {
 ### Service Pattern
 
 ```tsx
-const API_BASE = '/api/v1';
+const API_BASE = '/';
 
 async function authFetch(url: string, options?: RequestInit): Promise<Response> {
   const headers = { ...getAuthHeaders(), ...options?.headers };

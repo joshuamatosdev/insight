@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("CrmController")
 class CrmControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/crm";
+    private static final String BASE_URL = "/crm";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -62,7 +62,7 @@ class CrmControllerTest extends BaseControllerTest {
     // Contact Endpoints
 
     @Nested
-    @DisplayName("GET /api/crm/contacts")
+    @DisplayName("GET /crm/contacts")
     class ListContacts {
 
         @Test
@@ -76,7 +76,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/contacts/{id}")
+    @DisplayName("GET /crm/contacts/{id}")
     class GetContact {
 
         @Test
@@ -89,7 +89,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/contacts/search")
+    @DisplayName("GET /crm/contacts/search")
     class SearchContacts {
 
         @Test
@@ -103,7 +103,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/contacts/government")
+    @DisplayName("GET /crm/contacts/government")
     class GetGovernmentContacts {
 
         @Test
@@ -117,7 +117,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/contacts/followup-needed")
+    @DisplayName("GET /crm/contacts/followup-needed")
     class GetFollowupNeeded {
 
         @Test
@@ -133,7 +133,7 @@ class CrmControllerTest extends BaseControllerTest {
     // Organization Endpoints
 
     @Nested
-    @DisplayName("GET /api/crm/organizations")
+    @DisplayName("GET /crm/organizations")
     class ListOrganizations {
 
         @Test
@@ -147,7 +147,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/organizations/{id}")
+    @DisplayName("GET /crm/organizations/{id}")
     class GetOrganization {
 
         @Test
@@ -160,7 +160,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/organizations/agencies")
+    @DisplayName("GET /crm/organizations/agencies")
     class GetGovernmentAgencies {
 
         @Test
@@ -174,7 +174,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/organizations/competitors")
+    @DisplayName("GET /crm/organizations/competitors")
     class GetCompetitors {
 
         @Test
@@ -190,7 +190,7 @@ class CrmControllerTest extends BaseControllerTest {
     // Interaction Endpoints
 
     @Nested
-    @DisplayName("GET /api/crm/interactions")
+    @DisplayName("GET /crm/interactions")
     class ListInteractions {
 
         @Test
@@ -204,7 +204,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/interactions/{id}")
+    @DisplayName("GET /crm/interactions/{id}")
     class GetInteraction {
 
         @Test
@@ -217,7 +217,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/interactions/followups/pending")
+    @DisplayName("GET /crm/interactions/followups/pending")
     class GetPendingFollowups {
 
         @Test
@@ -231,7 +231,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/interactions/followups/overdue")
+    @DisplayName("GET /crm/interactions/followups/overdue")
     class GetOverdueFollowups {
 
         @Test
@@ -245,7 +245,7 @@ class CrmControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/crm/summary")
+    @DisplayName("GET /crm/summary")
     class GetCrmSummary {
 
         @Test

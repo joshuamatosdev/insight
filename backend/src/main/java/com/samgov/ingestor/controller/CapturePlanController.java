@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/capture-plans")
+@RequestMapping("/capture-plans")
 @RequiredArgsConstructor
 public class CapturePlanController {
 

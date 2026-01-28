@@ -43,7 +43,6 @@ import type {
     SortDirection,
 } from '../types/report.types';
 
-const API_BASE = '/api/v1';
 
 /**
  * Entity type options for the selector

@@ -52,7 +52,7 @@ class UsaSpendingApiClientTest {
     void setUp() {
         properties = new UsaSpendingProperties();
         properties.setEnabled(true);
-        properties.setBaseUrl("https://api.usaspending.gov/api/v2");
+        properties.setBaseUrl("https://api.usaspending.gov/v2");
         properties.setRateLimitMs(100);
         properties.setPageSize(10);
         properties.setMaxResults(100);

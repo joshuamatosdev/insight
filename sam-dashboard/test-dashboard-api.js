@@ -3,7 +3,7 @@
  * Run with: node test-dashboard-api.js
  */
 
-const API_BASE = 'http://localhost:8080/api/v1';
+const API_BASE = 'http://localhost:8080/';
 
 // Get token from localStorage simulation (you'll need to replace this with actual token)
 const TOKEN = 'YOUR_TOKEN_HERE';

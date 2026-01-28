@@ -16,7 +16,6 @@ import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
 import {Link} from '../components/catalyst/primitives/link';
 import type {RegisterFormErrors, RegisterFormState} from './RegisterPage.types';
 
-const API_BASE = '/api/v1';
 
 /**
  * Validates email format

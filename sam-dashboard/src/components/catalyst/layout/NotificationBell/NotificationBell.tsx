@@ -4,7 +4,6 @@ import {BellIcon} from '../../primitives/Icon';
 import {NotificationDropdown} from './NotificationDropdown';
 import {Notification, NotificationBellProps} from './NotificationBell.types';
 
-const API_BASE = '/api';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 function getAuthToken(): string | null {
@@ -50,7 +49,7 @@ export function NotificationBell({className, style}: NotificationBellProps) {
 
     const fetchUnreadCount = useCallback(async () => {
         try {
-            const response = await authFetch(`${API_BASE}/v1/notifications/unread-count`);
+            const response = await authFetch(`${API_BASE}/notifications/unread-count`);
             if (response.ok) {
                 const data = await response.json();
                 setUnreadCount(data.count);
@@ -63,7 +62,7 @@ export function NotificationBell({className, style}: NotificationBellProps) {
     const fetchNotifications = useCallback(async () => {
         setIsLoading(true);
         try {
-            const response = await authFetch(`${API_BASE}/v1/notifications?page=0&size=20`);
+            const response = await authFetch(`${API_BASE}/notifications?page=0&size=20`);
             if (response.ok) {
                 const data = await response.json();
                 setNotifications(data.content ?? []);
@@ -77,7 +76,7 @@ export function NotificationBell({className, style}: NotificationBellProps) {
 
     const markAsRead = useCallback(async (notificationId: string) => {
         try {
-            const response = await authFetch(`${API_BASE}/v1/notifications/${notificationId}/read`, {
+            const response = await authFetch(`${API_BASE}/notifications/${notificationId}/read`, {
                 method: 'PUT',
             });
             if (response.ok) {
@@ -93,7 +92,7 @@ export function NotificationBell({className, style}: NotificationBellProps) {
 
     const markAllAsRead = useCallback(async () => {
         try {
-            const response = await authFetch(`${API_BASE}/v1/notifications/read-all`, {
+            const response = await authFetch(`${API_BASE}/notifications/read-all`, {
                 method: 'PUT',
             });
             if (response.ok) {

@@ -7,6 +7,7 @@
 
 import {useCallback, useEffect, useState} from 'react';
 import {useAuth} from '../auth';
+import {API_BASE} from '../services/apiClient';
 
 /**
  * User role types for the dual-face application
@@ -28,8 +29,6 @@ interface TenantMembership {
     invitedAt: string | null;
     acceptedAt: string | null;
 }
-
-const API_BASE = '/api';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**
@@ -108,7 +107,7 @@ export function useUserRole(): UseUserRoleReturn {
         setError(null);
 
         try {
-            const response = await authFetch(`${API_BASE}/v1/users/me/memberships`);
+            const response = await authFetch(`${API_BASE}/users/me/memberships`);
 
             if (response.ok === false) {
                 // If endpoint doesn't exist or fails, default to INTEL_USER

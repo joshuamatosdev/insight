@@ -94,38 +94,38 @@ Phase 9 implements a comprehensive CRM (Customer Relationship Management) system
 
 ## API Endpoints
 
-### Contacts API (`/api/crm/contacts`)
+### Contacts API (`/crm/contacts`)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/crm/contacts` | List contacts (paginated) |
-| GET | `/api/crm/contacts/:id` | Get contact by ID |
-| POST | `/api/crm/contacts` | Create new contact |
-| PUT | `/api/crm/contacts/:id` | Update contact |
-| DELETE | `/api/crm/contacts/:id` | Delete contact |
-| GET | `/api/crm/contacts/search` | Search contacts |
+| GET | `/crm/contacts` | List contacts (paginated) |
+| GET | `/crm/contacts/:id` | Get contact by ID |
+| POST | `/crm/contacts` | Create new contact |
+| PUT | `/crm/contacts/:id` | Update contact |
+| DELETE | `/crm/contacts/:id` | Delete contact |
+| GET | `/crm/contacts/search` | Search contacts |
 
-### Organizations API (`/api/crm/organizations`)
+### Organizations API (`/crm/organizations`)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/crm/organizations` | List organizations (paginated) |
-| GET | `/api/crm/organizations/:id` | Get organization by ID |
-| POST | `/api/crm/organizations` | Create new organization |
-| PUT | `/api/crm/organizations/:id` | Update organization |
-| DELETE | `/api/crm/organizations/:id` | Delete organization |
-| GET | `/api/crm/organizations/:id/contacts` | Get contacts for organization |
-| GET | `/api/crm/organizations/:id/interactions` | Get interactions for organization |
+| GET | `/crm/organizations` | List organizations (paginated) |
+| GET | `/crm/organizations/:id` | Get organization by ID |
+| POST | `/crm/organizations` | Create new organization |
+| PUT | `/crm/organizations/:id` | Update organization |
+| DELETE | `/crm/organizations/:id` | Delete organization |
+| GET | `/crm/organizations/:id/contacts` | Get contacts for organization |
+| GET | `/crm/organizations/:id/interactions` | Get interactions for organization |
 
-### Interactions API (`/api/crm/interactions`)
+### Interactions API (`/crm/interactions`)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/crm/interactions` | List interactions (paginated) |
-| GET | `/api/crm/interactions/:id` | Get interaction by ID |
-| POST | `/api/crm/interactions` | Create new interaction |
-| PUT | `/api/crm/interactions/:id` | Update interaction |
-| DELETE | `/api/crm/interactions/:id` | Delete interaction |
-| GET | `/api/crm/interactions/followups/upcoming` | Get upcoming follow-ups |
-| PATCH | `/api/crm/interactions/:id/followup/complete` | Mark follow-up complete |
-| GET | `/api/crm/contacts/:id/interactions` | Get interactions for contact |
+| GET | `/crm/interactions` | List interactions (paginated) |
+| GET | `/crm/interactions/:id` | Get interaction by ID |
+| POST | `/crm/interactions` | Create new interaction |
+| PUT | `/crm/interactions/:id` | Update interaction |
+| DELETE | `/crm/interactions/:id` | Delete interaction |
+| GET | `/crm/interactions/followups/upcoming` | Get upcoming follow-ups |
+| PATCH | `/crm/interactions/:id/followup/complete` | Mark follow-up complete |
+| GET | `/crm/contacts/:id/interactions` | Get interactions for contact |
 
 ## Integration Notes
 

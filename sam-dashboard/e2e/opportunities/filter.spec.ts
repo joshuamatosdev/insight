@@ -1,4 +1,5 @@
 import {expect, test} from '@playwright/test';
+//THIS IS WRONG WE DO NOT USE MOCKS
 import {getSbirOpportunities, mockOpportunities, setupOpportunityMocks,} from '../fixtures/opportunities.fixtures';
 
 /**
@@ -65,7 +66,7 @@ test.describe('Opportunity Filtering', () => {
 
         test('should display empty message when no opportunities of type exist', async ({page}) => {
             // Mock empty response for a specific type
-            await page.route('**/api/opportunities*', async (route) => {
+            await page.route('**/opportunities*', async (route) => {
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',

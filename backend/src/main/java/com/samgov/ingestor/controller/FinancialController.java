@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/financial")
+@RequestMapping("/financial")
 public class FinancialController {
 
     private final FinancialService financialService;

@@ -56,7 +56,7 @@ public class SecurityHeadersConfig {
                     "max-age=31536000; includeSubDomains; preload");
                 
                 // Cache control for sensitive data
-                if (request.getServletContext().getContextPath().contains("/api/")) {
+                if (request.getServletContext().getContextPath().contains("/")) {
                     httpResponse.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
                     httpResponse.setHeader("Pragma", "no-cache");
                 }

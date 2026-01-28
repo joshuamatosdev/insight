@@ -43,7 +43,7 @@ public class SbirController {
 
     /**
      * Trigger ingestion of recent SBIR.gov awards.
-     * POST /api/sbir/ingest
+     * POST /sbir/ingest
      */
     @PostMapping("/ingest")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
@@ -72,7 +72,7 @@ public class SbirController {
 
     /**
      * Trigger ingestion for a specific agency and year.
-     * POST /api/sbir/ingest/{agency}?year=2024
+     * POST /sbir/ingest/{agency}?year=2024
      */
     @PostMapping("/ingest/{agency}")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
@@ -146,7 +146,7 @@ public class SbirController {
 
     /**
      * Search SBIR awards by keyword.
-     * GET /api/sbir/awards/search?q=cybersecurity
+     * GET /sbir/awards/search?q=cybersecurity
      */
     @GetMapping("/awards/search")
     public ResponseEntity<List<SbirAward>> searchAwards(@RequestParam String q) {
@@ -158,7 +158,7 @@ public class SbirController {
 
     /**
      * Get SBIR statistics.
-     * GET /api/sbir/stats
+     * GET /sbir/stats
      */
     @GetMapping("/stats")
     public ResponseEntity<SbirStats> getStats() {
@@ -167,7 +167,7 @@ public class SbirController {
 
     /**
      * Get list of agencies with award counts.
-     * GET /api/sbir/agencies
+     * GET /sbir/agencies
      */
     @GetMapping("/agencies")
     public ResponseEntity<Map<String, Long>> getAgencies() {
@@ -184,7 +184,7 @@ public class SbirController {
 
     /**
      * Search SBIR.gov API directly (live, not from database).
-     * GET /api/sbir/search/live?agency=DOD&year=2024
+     * GET /sbir/search/live?agency=DOD&year=2024
      */
     @GetMapping("/search/live")
     public ResponseEntity<Map<String, Object>> searchLive(
@@ -216,7 +216,7 @@ public class SbirController {
 
     /**
      * Search SBIR.gov by company name (live).
-     * GET /api/sbir/search/firm?name=acme
+     * GET /sbir/search/firm?name=acme
      */
     @GetMapping("/search/firm")
     public ResponseEntity<Map<String, Object>> searchByFirm(@RequestParam String name) {
@@ -245,7 +245,7 @@ public class SbirController {
 
     /**
      * Get configured agencies.
-     * GET /api/sbir/config/agencies
+     * GET /sbir/config/agencies
      */
     @GetMapping("/config/agencies")
     public ResponseEntity<List<String>> getConfiguredAgencies() {

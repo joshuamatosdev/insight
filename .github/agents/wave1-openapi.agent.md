@@ -25,7 +25,7 @@ Set up automatic TypeScript type generation from OpenAPI/Swagger annotations on 
 - `sam-dashboard/scripts/generate-api-types.ts`
 
 ### Frontend
-- `sam-dashboard/src/types/api/` (generated types output)
+- `sam-dashboard/src/types/` (generated types output)
 - `sam-dashboard/src/services/api.ts` (type-safe API client)
 
 ## DO NOT TOUCH
@@ -67,7 +67,7 @@ public ResponseEntity<Page<OpportunityDTO>> list(...) {}
 
 ```bash
 # Generate types from running server
-npx openapi-typescript http://localhost:8080/v3/api-docs --output src/types/api/schema.ts
+npx openapi-typescript http://localhost:8080/v3/api-docs --output src/types/schema.ts
 ```
 
 ## Dependencies to Add

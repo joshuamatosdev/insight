@@ -77,7 +77,7 @@ const data = await withRetry(
 );
 
 // Fetch with automatic retry
-const response = await fetchWithRetry('/api/data', {
+const response = await fetchWithRetry('/data', {
   method: 'GET',
 });
 ```

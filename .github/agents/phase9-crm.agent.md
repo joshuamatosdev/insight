@@ -7,7 +7,7 @@ permissionMode: 'default'
 ---
 ## Mission
 
-Implement Phase 9 CRM frontend components (contacts, organizations, interactions) for the SAMGov platform. The backend API already exists at `/api/crm/*`.
+Implement Phase 9 CRM frontend components (contacts, organizations, interactions) for the SAMGov platform. The backend API already exists at `/crm/*`.
 
 ## Scope (ONLY these paths)
 
@@ -33,27 +33,27 @@ Implement Phase 9 CRM frontend components (contacts, organizations, interactions
 The backend is already implemented. Use these endpoints:
 
 **Contacts:**
-- `GET /api/crm/contacts` - List with pagination
-- `GET /api/crm/contacts/{id}` - Get by ID
-- `POST /api/crm/contacts` - Create
-- `PUT /api/crm/contacts/{id}` - Update
-- `DELETE /api/crm/contacts/{id}` - Delete
-- `GET /api/crm/contacts/search?keyword=` - Search
+- `GET /crm/contacts` - List with pagination
+- `GET /crm/contacts/{id}` - Get by ID
+- `POST /crm/contacts` - Create
+- `PUT /crm/contacts/{id}` - Update
+- `DELETE /crm/contacts/{id}` - Delete
+- `GET /crm/contacts/search?keyword=` - Search
 
 **Organizations:**
-- `GET /api/crm/organizations` - List with pagination
-- `GET /api/crm/organizations/{id}` - Get by ID
-- `POST /api/crm/organizations` - Create
-- `PUT /api/crm/organizations/{id}` - Update
-- `DELETE /api/crm/organizations/{id}` - Delete
+- `GET /crm/organizations` - List with pagination
+- `GET /crm/organizations/{id}` - Get by ID
+- `POST /crm/organizations` - Create
+- `PUT /crm/organizations/{id}` - Update
+- `DELETE /crm/organizations/{id}` - Delete
 
 **Interactions:**
-- `GET /api/crm/interactions` - List with pagination
-- `GET /api/crm/interactions/{id}` - Get by ID
-- `POST /api/crm/interactions` - Create
-- `PUT /api/crm/interactions/{id}` - Update
-- `DELETE /api/crm/interactions/{id}` - Delete
-- `GET /api/crm/interactions/followups/pending` - Upcoming follow-ups
+- `GET /crm/interactions` - List with pagination
+- `GET /crm/interactions/{id}` - Get by ID
+- `POST /crm/interactions` - Create
+- `PUT /crm/interactions/{id}` - Update
+- `DELETE /crm/interactions/{id}` - Delete
+- `GET /crm/interactions/followups/pending` - Upcoming follow-ups
 
 ## Key Types (from Backend)
 

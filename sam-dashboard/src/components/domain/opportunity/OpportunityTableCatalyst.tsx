@@ -6,7 +6,7 @@
  * - NO colored badges in cells
  * - Plain text with semantic color classes
  * - Subtle hover states
- * - Dense spacing for cleaner look
+ * - Dense spacing for a cleaner look
  */
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '../../catalyst'
@@ -84,7 +84,7 @@ export function OpportunityTableCatalyst({opportunities, maxRows}: OpportunityTa
                         </TableCell>
                         <TableCell>
                             <Text as="span" variant="bodySmall">
-                                {formatDate(opp.responseDeadLine)}
+                                {formatDate(opp.responseDeadline)}
                             </Text>
                         </TableCell>
                     </TableRow>

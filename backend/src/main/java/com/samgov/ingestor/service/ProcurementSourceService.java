@@ -231,7 +231,7 @@ public class ProcurementSourceService {
                 Opportunity.ContractLevel.FEDERAL,
                 ProcurementSource.SourceType.API,
                 null, null, null,
-                "https://api.usaspending.gov/api/v2/",
+                "https://api.usaspending.gov/v2/",
                 false,
                 "https://www.usaspending.gov/",
                 null, false, null, 24

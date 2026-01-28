@@ -1,6 +1,5 @@
 import {AuditLog, AuditLogPage} from '../types';
 
-const API_BASE = '/api';
 const AUTH_STORAGE_KEY = 'sam_auth_state';
 
 /**

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/analytics")
+@RequestMapping("/analytics")
 public class AnalyticsController {
 
     private final AnalyticsService analyticsService;
@@ -311,12 +311,12 @@ public class AnalyticsController {
         return ResponseEntity.ok(analyticsService.getComplianceSummary(tenantId));
     }
 
-    // ==================== Event Tracking Endpoints (API v1) ====================
+    // ==================== Event Tracking Endpoints ====================
 
     /**
      * GET /analytics/dashboard - Dashboard metrics
      */
-    @GetMapping({"/v1/dashboard", "/dashboard"})
+    @GetMapping("/dashboard")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
     public ResponseEntity<DashboardStatsDto> getDashboardStats() {
         UUID tenantId = TenantContext.getCurrentTenantId();
@@ -326,7 +326,7 @@ public class AnalyticsController {
     /**
      * GET /analytics/metrics - Custom metrics query
      */
-    @GetMapping({"/v1/metrics", "/metrics"})
+    @GetMapping("/metrics")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER')")
     public ResponseEntity<List<MetricDto>> getMetrics(
             @RequestParam List<MetricName> metricNames,
@@ -339,7 +339,7 @@ public class AnalyticsController {
     /**
      * GET /analytics/trends - Trend data for charts
      */
-    @GetMapping({"/v1/trends", "/trends"})
+    @GetMapping("/trends")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
     public ResponseEntity<TrendDataDto> getTrends(
             @RequestParam MetricName metricName,
@@ -352,7 +352,7 @@ public class AnalyticsController {
     /**
      * POST /analytics/track - Track custom event
      */
-    @PostMapping({"/v1/track", "/track"})
+    @PostMapping("/track")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
     public ResponseEntity<AnalyticsEvent> trackEvent(
             @Valid @RequestBody TrackEventRequest request,
@@ -366,7 +366,7 @@ public class AnalyticsController {
     /**
      * GET /analytics/activity - Activity feed
      */
-    @GetMapping({"/v1/activity", "/activity"})
+    @GetMapping("/activity")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
     public ResponseEntity<List<ActivityItemDto>> getActivityFeed(
             @RequestParam(defaultValue = "20") int limit) {
@@ -377,7 +377,7 @@ public class AnalyticsController {
     /**
      * GET /analytics/top-performers - Top performers
      */
-    @GetMapping({"/v1/top-performers", "/top-performers"})
+    @GetMapping("/top-performers")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER')")
     public ResponseEntity<List<TopPerformerDto>> getTopPerformers(
             @RequestParam(defaultValue = "10") int limit) {
@@ -388,7 +388,7 @@ public class AnalyticsController {
     /**
      * GET /analytics/events - Recent events (paginated)
      */
-    @GetMapping({"/v1/events", "/events"})
+    @GetMapping("/events")
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER')")
     public ResponseEntity<Page<AnalyticsEvent>> getEvents(Pageable pageable) {
         UUID tenantId = TenantContext.getCurrentTenantId();

@@ -3,7 +3,6 @@ import {Card, CardBody, Flex, Grid, GridItem, Section, SectionHeader, Stack,} fr
 import {Badge, Button, InlineAlert, InlineAlertDescription, Text,} from '../components/catalyst/primitives';
 import type {PermissionsByCategory, Role, RolesPageState} from './types';
 
-const API_BASE = '/api/v1';
 
 /**
  * Get auth token from localStorage

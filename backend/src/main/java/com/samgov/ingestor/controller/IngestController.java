@@ -21,7 +21,7 @@ import java.util.Map;
  * REST controller for manual ingestion triggers and opportunity queries.
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 @PreAuthorize("isAuthenticated()")
 public class IngestController {
 
@@ -139,7 +139,7 @@ public class IngestController {
 
     /**
      * Shortcut endpoint for Sources Sought opportunities.
-     * GET /api/sources-sought
+     * GET /sources-sought
      */
     @GetMapping("/sources-sought")
     public ResponseEntity<Map<String, Object>> searchSourcesSought() {
@@ -148,7 +148,7 @@ public class IngestController {
 
     /**
      * Triggers SBIR/STTR-only ingestion.
-     * POST /api/ingest/sbir
+     * POST /ingest/sbir
      *
      * @return Status message with SBIR ingestion results
      */
@@ -210,7 +210,7 @@ public class IngestController {
 
     /**
      * Returns SBIR/STTR opportunities from the database.
-     * GET /api/opportunities/sbir
+     * GET /opportunities/sbir
      *
      * @param phase Optional phase filter (I, II, III)
      * @return List of SBIR opportunities
@@ -233,7 +233,7 @@ public class IngestController {
 
     /**
      * Search SAM.gov directly for SBIR/STTR opportunities.
-     * GET /api/search/sbir
+     * GET /search/sbir
      *
      * @return Live SBIR/STTR results from SAM.gov API
      */
@@ -272,7 +272,7 @@ public class IngestController {
 
     /**
      * Triggers USAspending.gov data ingestion.
-     * POST /api/ingest/usa-spending
+     * POST /ingest/usa-spending
      *
      * @return Status message with ingestion results
      */
@@ -304,7 +304,7 @@ public class IngestController {
 
     /**
      * Triggers USAspending.gov ingestion for a specific NAICS code.
-     * POST /api/ingest/usa-spending/naics/{naicsCode}
+     * POST /ingest/usa-spending/naics/{naicsCode}
      *
      * @param naicsCode NAICS code to filter by
      * @return Status message with ingestion results
@@ -338,7 +338,7 @@ public class IngestController {
 
     /**
      * Get USAspending integration statistics.
-     * GET /api/ingest/usa-spending/stats
+     * GET /ingest/usa-spending/stats
      */
     @GetMapping("/ingest/usa-spending/stats")
     public ResponseEntity<Map<String, Object>> getUsaSpendingStats() {
@@ -356,7 +356,7 @@ public class IngestController {
 
     /**
      * Triggers batch geocoding of opportunities.
-     * POST /api/ingest/geocode
+     * POST /ingest/geocode
      *
      * @param limit Maximum number of opportunities to geocode (default 100)
      * @return Status message with geocoding results
@@ -388,7 +388,7 @@ public class IngestController {
 
     /**
      * Get geocoding statistics.
-     * GET /api/ingest/geocode/stats
+     * GET /ingest/geocode/stats
      */
     @GetMapping("/ingest/geocode/stats")
     public ResponseEntity<Map<String, Object>> getGeocodingStats() {
@@ -404,7 +404,7 @@ public class IngestController {
 
     /**
      * Get geocoded opportunities for map display.
-     * GET /api/opportunities/geocoded
+     * GET /opportunities/geocoded
      */
     @GetMapping("/opportunities/geocoded")
     public ResponseEntity<List<Opportunity>> getGeocodedOpportunities() {
@@ -416,7 +416,7 @@ public class IngestController {
 
     /**
      * Get opportunity counts by state (FIPS code).
-     * GET /api/opportunities/by-state
+     * GET /opportunities/by-state
      */
     @GetMapping("/opportunities/by-state")
     public ResponseEntity<Map<String, Object>> getOpportunitiesByState() {

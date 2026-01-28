@@ -6,6 +6,7 @@
 
 import {useCallback, useEffect, useState} from 'react';
 import {useAuth} from '../auth';
+import {API_BASE} from '../services/apiClient';
 
 /**
  * Theme options for user preferences
@@ -35,8 +36,6 @@ export interface UpdatePreferencesRequest {
     timezone?: string;
     language?: string;
 }
-
-const API_BASE = '/api';
 
 /**
  * Hook return type
@@ -76,7 +75,7 @@ export function useUserPreferences(): UseUserPreferencesReturn {
         setError(null);
 
         try {
-            const response = await fetch(`${API_BASE}/v1/preferences`, {
+            const response = await fetch(`${API_BASE}/preferences`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -105,7 +104,7 @@ export function useUserPreferences(): UseUserPreferencesReturn {
                 throw new Error('Not authenticated');
             }
 
-            const response = await fetch(`${API_BASE}/v1/preferences`, {
+            const response = await fetch(`${API_BASE}/preferences`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,

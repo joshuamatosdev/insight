@@ -20,7 +20,7 @@ FROM node:20-alpine AS build
 
 # Build arguments
 ARG BUILD_ENV=production
-ARG VITE_API_URL=/api
+ARG VITE_API_URL=/
 
 WORKDIR /app
 

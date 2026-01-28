@@ -6,7 +6,6 @@ import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
 import {Link} from '../components/catalyst/primitives/link';
 import type {VerificationStatus, VerifyEmailResult} from './types';
 
-const API_BASE = '/api/v1';
 
 /**
  * Verify email token with the API

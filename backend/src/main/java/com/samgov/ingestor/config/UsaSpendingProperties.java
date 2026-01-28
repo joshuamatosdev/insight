@@ -21,7 +21,7 @@ public class UsaSpendingProperties {
     private boolean enabled = true;
 
     @NotBlank(message = "USAspending base URL is required")
-    private String baseUrl = "https://api.usaspending.gov/api/v2";
+    private String baseUrl = "https://api.usaspending.gov/v2";
 
     @Min(value = 0, message = "Rate limit cannot be negative")
     private long rateLimitMs = 500;

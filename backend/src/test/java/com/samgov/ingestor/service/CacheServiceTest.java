@@ -287,7 +287,7 @@ class CacheServiceTest {
         @DisplayName("should cache API response")
         void shouldCacheApiResponse() {
             // Given
-            String endpoint = "/api/opportunities";
+            String endpoint = "/opportunities";
             String response = "{\"count\": 100}";
 
             // When
@@ -303,7 +303,7 @@ class CacheServiceTest {
         @DisplayName("should evict API response from cache")
         void shouldEvictApiResponse() {
             // Given
-            String endpoint = "/api/opportunities";
+            String endpoint = "/opportunities";
             cacheService.cacheApiResponse(testTenantId, endpoint, "response");
             assertThat(cacheService.getCachedApiResponse(testTenantId, endpoint)).isPresent();
 
@@ -360,12 +360,12 @@ class CacheServiceTest {
             OpportunityDto opportunity = createTestOpportunityDto("opp-clear", "To Clear");
             cacheService.cacheOpportunity(testTenantId, opportunity);
             cacheService.cacheUserSession(testUserId, "session-data");
-            cacheService.cacheApiResponse(testTenantId, "/api/test", "response");
+            cacheService.cacheApiResponse(testTenantId, "/test", "response");
 
             // Verify all are cached
             assertThat(cacheService.getCachedOpportunity(testTenantId, "opp-clear")).isPresent();
             assertThat(cacheService.getCachedUserSession(testUserId)).isPresent();
-            assertThat(cacheService.getCachedApiResponse(testTenantId, "/api/test")).isPresent();
+            assertThat(cacheService.getCachedApiResponse(testTenantId, "/test")).isPresent();
 
             // When
             cacheService.clearAllCaches();
@@ -373,7 +373,7 @@ class CacheServiceTest {
             // Then
             assertThat(cacheService.getCachedOpportunity(testTenantId, "opp-clear")).isEmpty();
             assertThat(cacheService.getCachedUserSession(testUserId)).isEmpty();
-            assertThat(cacheService.getCachedApiResponse(testTenantId, "/api/test")).isEmpty();
+            assertThat(cacheService.getCachedApiResponse(testTenantId, "/test")).isEmpty();
         }
     }
 }

@@ -14,6 +14,6 @@
         - Collect results from all threads and save them to the DB.
 
 2.  **Controller:**
-    - `POST /api/ingest`: Triggers `runIngestion()` manually.
+    - `POST /ingest`: Triggers `runIngestion()` manually.
 
 **Output:** `IngestionService.java` (with Virtual Thread logic) and `IngestController.java`.

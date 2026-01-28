@@ -14,7 +14,6 @@ import {BuildingCheckIcon} from '../components/catalyst/primitives/Icon';
 import {Link} from '../components/catalyst/primitives/link';
 import type {ResetPasswordFormErrors, ResetPasswordFormState, ResetPasswordPageState,} from './types';
 
-const API_BASE = '/api/v1';
 
 /**
  * Validates password strength
