@@ -189,8 +189,8 @@ export function CaptureManagement({
               <Text variant="caption" weight="semibold">Probability of Win (%)</Text>
               <Input
                 type="number"
-                min="0"
-                max="100"
+                min={0}
+                max={100}
                 value={formData.probabilityOfWin}
                 onChange={(e) => handleChange('probabilityOfWin', e.target.value)}
                 placeholder="0-100"
