@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { Badge, Button } from '../../catalyst';
 import { DocumentTextIcon, PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 import type { InvoiceCardProps } from './Financial.types';
+import type { InvoiceStatus } from '../../../types/financial.types';
 import {
   formatCurrency,
   formatDate,
@@ -13,7 +14,7 @@ import {
 } from '../../../services/financialService';
 
 // Map status colors to Catalyst badge colors
-function getBadgeColor(status: string): 'green' | 'yellow' | 'red' | 'zinc' {
+function getBadgeColor(status: InvoiceStatus): 'green' | 'yellow' | 'red' | 'zinc' {
   const colorMap: Record<string, 'green' | 'yellow' | 'red' | 'zinc'> = {
     success: 'green',
     warning: 'yellow',
