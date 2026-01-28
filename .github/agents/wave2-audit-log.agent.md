@@ -94,9 +94,9 @@ public OpportunityDTO update(UUID id, UpdateRequest request) {
 
 ## API Endpoints
 
-- `GET /api/v1/audit-logs` - List audit logs (admin only)
-- `GET /api/v1/audit-logs/entity/{type}/{id}` - Get logs for entity
-- `GET /api/v1/audit-logs/user/{userId}` - Get logs by user
+- `GET /audit-logs` - List audit logs (admin only)
+- `GET /audit-logs/entity/{type}/{id}` - Get logs for entity
+- `GET /audit-logs/user/{userId}` - Get logs by user
 
 ## Verification
 

@@ -20,8 +20,8 @@ Implemented enhanced search functionality with autocomplete, faceted search, and
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/search/suggestions?q=` | Get autocomplete suggestions |
-| POST | `/api/v1/search/faceted` | Perform faceted search |
+| GET | `/search/suggestions?q=` | Get autocomplete suggestions |
+| POST | `/search/faceted` | Perform faceted search |
 
 ## Features
 

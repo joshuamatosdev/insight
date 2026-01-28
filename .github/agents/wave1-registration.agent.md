@@ -61,9 +61,9 @@ Implement a complete user registration flow with email verification and automati
 
 ## API Endpoints
 
-- `POST /api/v1/auth/register` - Register new user
-- `POST /api/v1/auth/verify-email` - Verify email token
-- `POST /api/v1/auth/resend-verification` - Resend verification email
+- `POST /auth/register` - Register new user
+- `POST /auth/verify-email` - Verify email token
+- `POST /auth/resend-verification` - Resend verification email
 
 ## Verification
 

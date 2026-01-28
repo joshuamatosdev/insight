@@ -29,11 +29,11 @@ Multi-step onboarding wizard for new tenant setup.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/onboarding/progress` | Get current progress |
-| GET | `/api/v1/onboarding/steps` | Get step metadata |
-| PUT | `/api/v1/onboarding/step/{step}` | Complete a step |
-| POST | `/api/v1/onboarding/dismiss` | Dismiss wizard |
-| POST | `/api/v1/onboarding/reset` | Reset progress |
+| GET | `/onboarding/progress` | Get current progress |
+| GET | `/onboarding/steps` | Get step metadata |
+| PUT | `/onboarding/step/{step}` | Complete a step |
+| POST | `/onboarding/dismiss` | Dismiss wizard |
+| POST | `/onboarding/reset` | Reset progress |
 
 ## Onboarding Steps
 

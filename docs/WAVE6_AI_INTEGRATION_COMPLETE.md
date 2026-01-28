@@ -21,10 +21,10 @@ OpenAI-powered contract and opportunity analysis features.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/ai/opportunities/{id}/summary` | AI-generated summary |
-| GET | `/api/v1/ai/opportunities/{id}/fit-score` | Company fit scoring |
-| GET | `/api/v1/ai/opportunities/{id}/risk-assessment` | Risk identification |
-| GET | `/api/v1/ai/opportunities/{id}/proposal-suggestions` | Proposal suggestions |
+| GET | `/ai/opportunities/{id}/summary` | AI-generated summary |
+| GET | `/ai/opportunities/{id}/fit-score` | Company fit scoring |
+| GET | `/ai/opportunities/{id}/risk-assessment` | Risk identification |
+| GET | `/ai/opportunities/{id}/proposal-suggestions` | Proposal suggestions |
 
 ## Features
 

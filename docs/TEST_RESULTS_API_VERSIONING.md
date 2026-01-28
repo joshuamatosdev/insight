@@ -53,22 +53,22 @@ All test suites passed with `failures="0" errors="0"`:
 The controller tests are included in the 716 total tests. The changes to the following controllers are validated:
 
 1. **IngestController** (`@RequestMapping("/api/v1")`)
-   - All endpoints now use `/api/v1/` prefix
+   - All endpoints now use `/` prefix
    - Tests updated to reflect new paths
    - ✅ Verified: 0 failures
 
-2. **SbirController** (`@RequestMapping("/api/v1/sbir")`)
-   - All endpoints now use `/api/v1/sbir/` prefix
+2. **SbirController** (`@RequestMapping("/sbir")`)
+   - All endpoints now use `/sbir/` prefix
    - Tests already using correct paths
    - ✅ Verified: 0 failures
 
-3. **DocumentController** (`@RequestMapping("/api/v1/documents")`)
-   - All endpoints now use `/api/v1/documents/` prefix
+3. **DocumentController** (`@RequestMapping("/documents")`)
+   - All endpoints now use `/documents/` prefix
    - Tests already using correct paths
    - ✅ Verified: 0 failures
 
-4. **FileController** (`@RequestMapping("/api/v1/files")`)
-   - All endpoints now use `/api/v1/files/` prefix
+4. **FileController** (`@RequestMapping("/files")`)
+   - All endpoints now use `/files/` prefix
    - ✅ Verified: 0 failures
 
 ### Database Warnings (Normal)
@@ -88,7 +88,7 @@ cd sam-dashboard && npx tsc --noEmit
 
 ### Frontend Changes Verified
 1. **documentService.ts**
-   - Changed: `const DOCUMENTS_BASE = '/api/documents'` → `const DOCUMENTS_BASE = '/api/v1/documents'`
+   - Changed: `const DOCUMENTS_BASE = '/api/documents'` → `const DOCUMENTS_BASE = '/documents'`
    - ✅ Type checking passed
 
 2. **fileService.ts**
@@ -111,15 +111,15 @@ cd sam-dashboard && npx tsc --noEmit
 - Zero failures, zero errors
 
 ### ✅ API Versioning Consistency Achieved
-All endpoints now consistently use `/api/v1/` prefix:
-- ✅ Opportunities: `/api/v1/opportunities`
-- ✅ Contracts: `/api/v1/contracts`
-- ✅ Auth: `/api/v1/auth`
-- ✅ Dashboard: `/api/v1/dashboards`
-- ✅ Ingest: `/api/v1/ingest` (FIXED)
-- ✅ SBIR: `/api/v1/sbir` (FIXED)
-- ✅ Documents: `/api/v1/documents` (FIXED)
-- ✅ Files: `/api/v1/files` (FIXED)
+All endpoints now consistently use `/` prefix:
+- ✅ Opportunities: `/opportunities`
+- ✅ Contracts: `/contracts`
+- ✅ Auth: `/auth`
+- ✅ Dashboard: `/dashboards`
+- ✅ Ingest: `/ingest` (FIXED)
+- ✅ SBIR: `/sbir` (FIXED)
+- ✅ Documents: `/documents` (FIXED)
+- ✅ Files: `/files` (FIXED)
 
 ### Changes Verified
 1. ✅ Backend controllers updated to use `/api/v1`
@@ -143,4 +143,4 @@ The API versioning fix is complete and all automated tests pass. The code is rea
 - Staging deployment
 - Production deployment
 
-No regressions detected. All endpoints maintain consistent `/api/v1/` versioning.
+No regressions detected. All endpoints maintain consistent `/` versioning.

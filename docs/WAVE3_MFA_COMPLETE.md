@@ -27,12 +27,12 @@ Implemented TOTP-based multi-factor authentication with backup codes for account
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/mfa/status` | Get MFA status |
-| POST | `/api/v1/mfa/setup` | Start MFA setup (returns QR) |
-| POST | `/api/v1/mfa/verify-setup` | Complete setup with TOTP |
-| POST | `/api/v1/mfa/verify` | Verify code during login |
-| POST | `/api/v1/mfa/backup-codes` | Generate new backup codes |
-| DELETE | `/api/v1/mfa` | Disable MFA |
+| GET | `/mfa/status` | Get MFA status |
+| POST | `/mfa/setup` | Start MFA setup (returns QR) |
+| POST | `/mfa/verify-setup` | Complete setup with TOTP |
+| POST | `/mfa/verify` | Verify code during login |
+| POST | `/mfa/backup-codes` | Generate new backup codes |
+| DELETE | `/mfa` | Disable MFA |
 
 ## Routes to Add to App.tsx
 

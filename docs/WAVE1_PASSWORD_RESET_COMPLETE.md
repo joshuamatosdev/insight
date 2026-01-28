@@ -27,18 +27,18 @@ import { ResetPasswordPage } from './pages/ResetPasswordPage';
 2. User enters email on `/forgot-password`
 3. Backend sends email with reset link (if account exists)
 4. User clicks link → `/reset-password?token=...`
-5. Page validates token via `/api/v1/auth/validate-reset-token`
+5. Page validates token via `/auth/validate-reset-token`
 6. If valid, user enters new password
-7. Form submits to `/api/v1/auth/reset-password`
+7. Form submits to `/auth/reset-password`
 8. On success, user redirected to login
 
 ## API Endpoints Used (already implemented)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/auth/forgot-password` | Request reset link |
-| GET | `/api/v1/auth/validate-reset-token?token=...` | Validate token |
-| POST | `/api/v1/auth/reset-password` | Reset password |
+| POST | `/auth/forgot-password` | Request reset link |
+| GET | `/auth/validate-reset-token?token=...` | Validate token |
+| POST | `/auth/reset-password` | Reset password |
 
 ## States Handled
 

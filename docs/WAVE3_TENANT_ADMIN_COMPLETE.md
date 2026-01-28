@@ -24,11 +24,11 @@ Implemented tenant administration features including settings, branding, and sec
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/admin/tenant/settings` | Get tenant settings |
-| PUT | `/api/v1/admin/tenant/settings` | Update tenant settings |
-| GET | `/api/v1/admin/tenant/branding` | Get tenant branding |
-| PUT | `/api/v1/admin/tenant/branding` | Update tenant branding |
-| GET | `/api/v1/admin/tenant/branding/public` | Get public branding |
+| GET | `/admin/tenant/settings` | Get tenant settings |
+| PUT | `/admin/tenant/settings` | Update tenant settings |
+| GET | `/admin/tenant/branding` | Get tenant branding |
+| PUT | `/admin/tenant/branding` | Update tenant branding |
+| GET | `/admin/tenant/branding/public` | Get public branding |
 
 ## Routes to Add to App.tsx
 

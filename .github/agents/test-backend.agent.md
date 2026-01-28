@@ -32,10 +32,10 @@ class ResourceControllerTest extends BaseControllerTest {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    private static final String BASE_URL = "/api/v1/resources";
+    private static final String BASE_URL = "/resources";
 
     @Nested
-    @DisplayName("GET /api/v1/resources")
+    @DisplayName("GET /resources")
     class ListResources {
         @Test
         @WithMockUser
@@ -54,7 +54,7 @@ class ResourceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/resources/{id}")
+    @DisplayName("GET /resources/{id}")
     class GetById {
         @Test
         @WithMockUser

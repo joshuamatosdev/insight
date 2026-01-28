@@ -25,11 +25,11 @@ Implemented OAuth2/OIDC login integration with support for Google, Microsoft, an
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/oauth/providers` | Get enabled OAuth providers |
-| POST | `/api/v1/oauth/callback` | Process OAuth callback |
-| GET | `/api/v1/oauth/connections` | Get user's linked connections |
-| POST | `/api/v1/oauth/link` | Link a new provider |
-| DELETE | `/api/v1/oauth/connections/{provider}` | Unlink a provider |
+| GET | `/oauth/providers` | Get enabled OAuth providers |
+| POST | `/oauth/callback` | Process OAuth callback |
+| GET | `/oauth/connections` | Get user's linked connections |
+| POST | `/oauth/link` | Link a new provider |
+| DELETE | `/oauth/connections/{provider}` | Unlink a provider |
 
 ## Routes to Add to App.tsx
 

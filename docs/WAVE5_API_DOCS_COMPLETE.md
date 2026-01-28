@@ -60,7 +60,7 @@ JWT Bearer token authentication documented
   "error": "VALIDATION_ERROR",
   "message": "Validation failed",
   "timestamp": "2024-01-15T10:30:00Z",
-  "path": "/api/v1/opportunities",
+  "path": "/opportunities",
   "fieldErrors": [
     {
       "field": "email",

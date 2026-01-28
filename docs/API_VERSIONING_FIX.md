@@ -20,42 +20,42 @@ Updated all controllers to use `/api/v1` prefix:
 1. **IngestController.java** (line 24)
    - Changed: `@RequestMapping("/api")` → `@RequestMapping("/api/v1")`
    - Affected endpoints:
-     - `/api/v1/ingest`
-     - `/api/v1/opportunities`
-     - `/api/v1/search`
-     - `/api/v1/sources-sought`
-     - `/api/v1/ingest/sbir`
-     - `/api/v1/ingest/full`
-     - `/api/v1/opportunities/sbir`
-     - `/api/v1/search/sbir`
-     - `/api/v1/ingest/usa-spending`
-     - `/api/v1/ingest/usa-spending/naics/{naicsCode}`
-     - `/api/v1/ingest/usa-spending/stats`
-     - `/api/v1/ingest/geocode`
-     - `/api/v1/ingest/geocode/stats`
-     - `/api/v1/opportunities/geocoded`
-     - `/api/v1/opportunities/by-state`
+     - `/ingest`
+     - `/opportunities`
+     - `/search`
+     - `/sources-sought`
+     - `/ingest/sbir`
+     - `/ingest/full`
+     - `/opportunities/sbir`
+     - `/search/sbir`
+     - `/ingest/usa-spending`
+     - `/ingest/usa-spending/naics/{naicsCode}`
+     - `/ingest/usa-spending/stats`
+     - `/ingest/geocode`
+     - `/ingest/geocode/stats`
+     - `/opportunities/geocoded`
+     - `/opportunities/by-state`
 
 2. **SbirController.java** (line 24)
-   - Changed: `@RequestMapping("/api/sbir")` → `@RequestMapping("/api/v1/sbir")`
+   - Changed: `@RequestMapping("/api/sbir")` → `@RequestMapping("/sbir")`
    - Affected endpoints:
-     - `/api/v1/sbir/ingest`
-     - `/api/v1/sbir/ingest/{agency}`
-     - `/api/v1/sbir/awards`
-     - `/api/v1/sbir/awards/recent`
-     - `/api/v1/sbir/awards/search`
-     - `/api/v1/sbir/stats`
-     - `/api/v1/sbir/agencies`
-     - `/api/v1/sbir/search/live`
-     - `/api/v1/sbir/search/firm`
-     - `/api/v1/sbir/config/agencies`
+     - `/sbir/ingest`
+     - `/sbir/ingest/{agency}`
+     - `/sbir/awards`
+     - `/sbir/awards/recent`
+     - `/sbir/awards/search`
+     - `/sbir/stats`
+     - `/sbir/agencies`
+     - `/sbir/search/live`
+     - `/sbir/search/firm`
+     - `/sbir/config/agencies`
 
 3. **DocumentController.java** (line 31)
-   - Changed: `@RequestMapping("/api/documents")` → `@RequestMapping("/api/v1/documents")`
+   - Changed: `@RequestMapping("/api/documents")` → `@RequestMapping("/documents")`
    - Affected endpoints: All document, folder, template, and content library endpoints
 
 4. **FileController.java** (line 41)
-   - Changed: `@RequestMapping("/api/files")` → `@RequestMapping("/api/v1/files")`
+   - Changed: `@RequestMapping("/api/files")` → `@RequestMapping("/files")`
    - Affected endpoints: All file upload, download, and management endpoints
 
 ### Phase 2: Backend Tests ✅ COMPLETED
@@ -63,20 +63,20 @@ Updated all controllers to use `/api/v1` prefix:
 Updated test files to use `/api/v1` endpoints:
 
 1. **IngestControllerTest.java**
-   - Updated all test URLs from `/api/ingest/*` → `/api/v1/ingest/*`
-   - Updated all test URLs from `/api/opportunities/*` → `/api/v1/opportunities/*`
+   - Updated all test URLs from `/api/ingest/*` → `/ingest/*`
+   - Updated all test URLs from `/api/opportunities/*` → `/opportunities/*`
    - Lines updated: 63-170
 
 2. **SbirControllerTest.java**
-   - Already using `/api/v1/sbir` (line 20) ✅ No changes needed
+   - Already using `/sbir` (line 20) ✅ No changes needed
 
 3. **DocumentControllerTest.java**
-   - Already using `/api/v1/documents` (line 24) ✅ No changes needed
+   - Already using `/documents` (line 24) ✅ No changes needed
 
 ### Phase 3: Frontend Services ✅ COMPLETED
 
 1. **documentService.ts** (line 26)
-   - Changed: `const DOCUMENTS_BASE = '/api/documents'` → `const DOCUMENTS_BASE = '/api/v1/documents'`
+   - Changed: `const DOCUMENTS_BASE = '/api/documents'` → `const DOCUMENTS_BASE = '/documents'`
 
 2. **fileService.ts**
    - Already using `apiClient` which has `/api/v1` prefix ✅ No changes needed
@@ -116,22 +116,22 @@ npm test            # Unit tests
 2. **Verify endpoints with curl**
    ```bash
    # Opportunities (should work)
-   curl -i http://localhost:8080/api/v1/opportunities
+   curl -i http://localhost:8080/opportunities
 
    # Contracts (should work)
-   curl -i http://localhost:8080/api/v1/contracts/active
+   curl -i http://localhost:8080/contracts/active
 
    # Ingest (fixed - should work now)
-   curl -i -X POST http://localhost:8080/api/v1/ingest
+   curl -i -X POST http://localhost:8080/ingest
 
    # SBIR (fixed - should work now)
-   curl -i http://localhost:8080/api/v1/sbir/stats
+   curl -i http://localhost:8080/sbir/stats
 
    # Documents (fixed - should work now)
-   curl -i http://localhost:8080/api/v1/documents
+   curl -i http://localhost:8080/documents
 
    # Files (fixed - should work now)
-   curl -i http://localhost:8080/api/v1/files
+   curl -i http://localhost:8080/files
    ```
 
 3. **Verify frontend loads data**
@@ -148,15 +148,15 @@ npm test            # Unit tests
 
 ## Expected Outcome
 
-All endpoints now consistently use `/api/v1/` prefix:
+All endpoints now consistently use `/` prefix:
 
-- ✅ Opportunities: `/api/v1/opportunities` - Working
-- ✅ Contracts: `/api/v1/contracts` - Working
-- ✅ Auth: `/api/v1/auth` - Working
-- ✅ Ingest: `/api/v1/ingest` - Fixed (was broken)
-- ✅ SBIR: `/api/v1/sbir` - Fixed (was broken)
-- ✅ Documents: `/api/v1/documents` - Fixed (was broken)
-- ✅ Files: `/api/v1/files` - Fixed (was broken)
+- ✅ Opportunities: `/opportunities` - Working
+- ✅ Contracts: `/contracts` - Working
+- ✅ Auth: `/auth` - Working
+- ✅ Ingest: `/ingest` - Fixed (was broken)
+- ✅ SBIR: `/sbir` - Fixed (was broken)
+- ✅ Documents: `/documents` - Fixed (was broken)
+- ✅ Files: `/files` - Fixed (was broken)
 
 ## Files Modified
 
@@ -190,10 +190,10 @@ If issues arise, revert by:
 
 ## Benefits
 
-1. **Consistency**: All API endpoints now use the same `/api/v1/` prefix
+1. **Consistency**: All API endpoints now use the same `/` prefix
 2. **Future-proof**: Version prefix enables API evolution without breaking changes
 3. **Industry standard**: Follows RESTful API versioning best practices
-4. **Frontend alignment**: Frontend already expects `/api/v1/` after recent fixes
+4. **Frontend alignment**: Frontend already expects `/` after recent fixes
 
 ## Next Steps
 

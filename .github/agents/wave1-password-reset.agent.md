@@ -64,9 +64,9 @@ Implement complete password reset flow with email tokens, expiration, and secure
 
 ## API Endpoints
 
-- `POST /api/v1/auth/forgot-password` - Request reset email
-- `GET /api/v1/auth/reset-password/validate/{token}` - Validate token
-- `POST /api/v1/auth/reset-password` - Set new password
+- `POST /auth/forgot-password` - Request reset email
+- `GET /auth/reset-password/validate/{token}` - Validate token
+- `POST /auth/reset-password` - Set new password
 
 ## Security Requirements
 

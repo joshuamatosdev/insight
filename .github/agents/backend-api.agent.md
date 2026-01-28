@@ -27,7 +27,7 @@ Create and maintain Java REST API controllers and DTOs for the SAMGov platform f
 ```java
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/resources")
+@RequestMapping("/resources")
 @RequiredArgsConstructor
 @Validated
 public class ResourceController {

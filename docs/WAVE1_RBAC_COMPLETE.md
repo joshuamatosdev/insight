@@ -19,10 +19,10 @@ Enhanced the existing Role-Based Access Control (RBAC) system with a proper Perm
 
 | Method | Endpoint | Description | Access |
 |--------|----------|-------------|--------|
-| GET | `/api/v1/permissions` | Get all permissions by category | Admin |
-| GET | `/api/v1/permissions/codes` | Get all permission codes | Admin |
-| GET | `/api/v1/permissions/me` | Get current user's permissions | Authenticated |
-| GET | `/api/v1/permissions/check/{code}` | Check if user has permission | Authenticated |
+| GET | `/permissions` | Get all permissions by category | Admin |
+| GET | `/permissions/codes` | Get all permission codes | Admin |
+| GET | `/permissions/me` | Get current user's permissions | Authenticated |
+| GET | `/permissions/check/{code}` | Check if user has permission | Authenticated |
 
 ## Permission Format
 
@@ -78,7 +78,7 @@ public void someMethod(UUID userId, UUID tenantId) {
 
 ```typescript
 // Fetch user's permissions
-const response = await fetch('/api/v1/permissions/me', {
+const response = await fetch('/permissions/me', {
   headers: { Authorization: `Bearer ${token}` }
 });
 const permissions = await response.json() as Set<string>;

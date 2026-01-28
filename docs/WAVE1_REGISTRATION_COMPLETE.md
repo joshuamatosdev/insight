@@ -17,8 +17,8 @@
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/auth/verify-email` | Verify email with token |
-| POST | `/api/v1/auth/resend-verification` | Resend verification email |
+| POST | `/auth/verify-email` | Verify email with token |
+| POST | `/auth/resend-verification` | Resend verification email |
 
 ## Routes to Add to App.tsx
 
@@ -56,7 +56,7 @@ app:
 2. Backend creates user (status: PENDING, emailVerified: false)
 3. Backend creates verification token and sends email via EmailService
 4. User clicks link in email → `/verify-email?token=...`
-5. Frontend calls POST `/api/v1/auth/verify-email`
+5. Frontend calls POST `/auth/verify-email`
 6. Backend validates token, marks email verified, activates user
 7. User redirected to login
 

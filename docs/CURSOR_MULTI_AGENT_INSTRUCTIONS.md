@@ -240,13 +240,13 @@ files_to_create:
   - src/main/java/com/samgov/ingestor/dto/UpdateContactRequest.java
   - src/main/java/com/samgov/ingestor/dto/ContactSearchRequest.java
 endpoints:
-  - GET /api/v1/contacts (list with pagination)
-  - GET /api/v1/contacts/{id}
-  - POST /api/v1/contacts
-  - PUT /api/v1/contacts/{id}
-  - DELETE /api/v1/contacts/{id}
-  - GET /api/v1/contacts/{id}/interactions
-  - GET /api/v1/contacts/search
+  - GET /contacts (list with pagination)
+  - GET /contacts/{id}
+  - POST /contacts
+  - PUT /contacts/{id}
+  - DELETE /contacts/{id}
+  - GET /contacts/{id}/interactions
+  - GET /contacts/search
 output: docs/WAVE2_CRM_CONTACT_API_COMPLETE.md
 ```
 
@@ -259,13 +259,13 @@ files_to_create:
   - src/main/java/com/samgov/ingestor/dto/CreateOrganizationRequest.java
   - src/main/java/com/samgov/ingestor/dto/UpdateOrganizationRequest.java
 endpoints:
-  - GET /api/v1/organizations (list with pagination)
-  - GET /api/v1/organizations/{id}
-  - POST /api/v1/organizations
-  - PUT /api/v1/organizations/{id}
-  - DELETE /api/v1/organizations/{id}
-  - GET /api/v1/organizations/{id}/contacts
-  - GET /api/v1/organizations/{id}/children
+  - GET /organizations (list with pagination)
+  - GET /organizations/{id}
+  - POST /organizations
+  - PUT /organizations/{id}
+  - DELETE /organizations/{id}
+  - GET /organizations/{id}/contacts
+  - GET /organizations/{id}/children
 output: docs/WAVE2_CRM_ORG_API_COMPLETE.md
 ```
 
@@ -278,12 +278,12 @@ files_to_create:
   - src/main/java/com/samgov/ingestor/dto/CreateInteractionRequest.java
   - src/main/java/com/samgov/ingestor/dto/UpdateInteractionRequest.java
 endpoints:
-  - GET /api/v1/interactions (list with pagination)
-  - GET /api/v1/interactions/{id}
-  - POST /api/v1/interactions
-  - PUT /api/v1/interactions/{id}
-  - DELETE /api/v1/interactions/{id}
-  - GET /api/v1/interactions/upcoming
+  - GET /interactions (list with pagination)
+  - GET /interactions/{id}
+  - POST /interactions
+  - PUT /interactions/{id}
+  - DELETE /interactions/{id}
+  - GET /interactions/upcoming
 output: docs/WAVE2_CRM_INTERACTION_API_COMPLETE.md
 ```
 
@@ -462,15 +462,15 @@ files_to_create:
   - src/main/java/com/samgov/ingestor/dto/UploadDocumentRequest.java
   - src/main/java/com/samgov/ingestor/dto/DocumentTemplateDTO.java
 endpoints:
-  - GET /api/v1/documents
-  - GET /api/v1/documents/{id}
-  - POST /api/v1/documents/upload
-  - PUT /api/v1/documents/{id}
-  - DELETE /api/v1/documents/{id}
-  - GET /api/v1/documents/{id}/download
-  - GET /api/v1/documents/{id}/versions
-  - GET /api/v1/document-templates
-  - POST /api/v1/document-templates
+  - GET /documents
+  - GET /documents/{id}
+  - POST /documents/upload
+  - PUT /documents/{id}
+  - DELETE /documents/{id}
+  - GET /documents/{id}/download
+  - GET /documents/{id}/versions
+  - GET /document-templates
+  - POST /document-templates
 output: docs/WAVE2_DOC_API_COMPLETE.md
 ```
 

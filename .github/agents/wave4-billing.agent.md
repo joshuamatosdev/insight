@@ -96,10 +96,10 @@ public enum SubscriptionPlan {
 
 ## API Endpoints
 
-- `GET /api/v1/billing/subscription` - Current subscription
-- `POST /api/v1/billing/checkout` - Create checkout session
-- `POST /api/v1/billing/portal` - Create customer portal session
-- `GET /api/v1/billing/invoices` - List invoices
+- `GET /billing/subscription` - Current subscription
+- `POST /billing/checkout` - Create checkout session
+- `POST /billing/portal` - Create customer portal session
+- `GET /billing/invoices` - List invoices
 - `POST /webhooks/stripe` - Stripe webhook endpoint
 
 ## Verification

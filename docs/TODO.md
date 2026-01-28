@@ -58,7 +58,7 @@ Create `src/pages/RegisterPage.tsx` at `/register`:
 Already implemented in `src/services/auth.ts`:
 ```typescript
 export async function register(data: RegisterData): Promise<LoginResponse>
-// POST /api/v1/auth/register
+// POST /auth/register
 ```
 
 #### Acceptance Criteria
@@ -71,41 +71,34 @@ export async function register(data: RegisterData): Promise<LoginResponse>
 
 ---
 
-### 2. OpenAPI Type Generation
-**Priority: Medium | Estimate: 2-4 hours**
+### 2. ✅ OpenAPI Type-Safe Client - COMPLETED
+**Status: ✅ Phase 1 Complete | Priority: Medium**
 
-Replace manually-written TypeScript types with auto-generated types from backend's OpenAPI spec.
+Type-safe API client using `openapi-fetch` with automatic type inference from OpenAPI spec.
 
-#### Problem
-- Frontend types manually written in `src/auth/Auth.types.ts`, `src/services/auth.ts`
-- API response format (snake_case, wrapped in `{success, data}`) differs from frontend
-- Risk of types drifting out of sync
+#### ✅ Completed
+1. [x] Add Springdoc OpenAPI to backend (`build.gradle`)
+2. [x] Configure OpenAPI annotations on controllers/DTOs
+3. [x] Verify spec generation at `/v3/api-docs`
+4. [x] Add `openapi-typescript` to frontend
+5. [x] Add `openapi-fetch` to frontend
+6. [x] Create type-safe apiClient with OpenAPI integration
+7. [x] Maintain backward compatibility with legacy methods
+8. [x] All tests passing
+9. [x] Create migration documentation
 
-#### Implementation Steps
-1. [ ] Add Springdoc OpenAPI to backend (`build.gradle`)
-2. [ ] Configure OpenAPI annotations on controllers/DTOs
-3. [ ] Verify spec generation at `/v3/api-docs`
-4. [ ] Add `openapi-typescript` to frontend
-5. [ ] Add npm script: `"generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/types/api.d.ts"`
-6. [ ] Replace manual types with generated types
-7. [ ] Add to CI/CD pipeline
+#### 📚 Documentation
+- [Implementation Status](../sam-dashboard/docs/OPENAPI_IMPLEMENTATION_STATUS.md)
+- [Migration Guide](../sam-dashboard/docs/API_CLIENT_MIGRATION.md)
+- [Usage Examples](../sam-dashboard/docs/API_CLIENT_EXAMPLE.md)
 
-#### Backend Changes
-```xml
-<!-- build.gradle -->
-implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-```
+#### 🎯 Next Phase: Service Migration (18 files)
+- [ ] Migrate 14 service files from legacy methods to type-safe client
+- [ ] Migrate 4 legacy api.ts consumers
+- [ ] Delete legacy api.ts file
+- [ ] Remove legacy methods from apiClient.ts
 
-#### Frontend Changes
-```json
-// package.json
-{
-  "scripts": {
-    "generate:types": "openapi-typescript http://localhost:8080/v3/api-docs -o src/types/api.d.ts",
-    "prebuild": "npm run generate:types"
-  }
-}
-```
+**Note**: Existing services continue to work with legacy methods during gradual migration.
 
 ---
 

@@ -92,13 +92,13 @@ public class Alert {
 
 ## API Endpoints
 
-- `GET /api/v1/alerts` - List user's alerts
-- `PUT /api/v1/alerts/{id}/read` - Mark as read
-- `DELETE /api/v1/alerts/{id}` - Dismiss alert
-- `GET /api/v1/alert-rules` - List user's rules
-- `POST /api/v1/alert-rules` - Create rule
-- `PUT /api/v1/alert-rules/{id}` - Update rule
-- `DELETE /api/v1/alert-rules/{id}` - Delete rule
+- `GET /alerts` - List user's alerts
+- `PUT /alerts/{id}/read` - Mark as read
+- `DELETE /alerts/{id}` - Dismiss alert
+- `GET /alert-rules` - List user's rules
+- `POST /alert-rules` - Create rule
+- `PUT /alert-rules/{id}` - Update rule
+- `DELETE /alert-rules/{id}` - Delete rule
 
 ## Verification
 

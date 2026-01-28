@@ -100,9 +100,9 @@ public class OnboardingProgress {
 
 ## API Endpoints
 
-- `GET /api/v1/onboarding/progress` - Get progress
-- `PUT /api/v1/onboarding/step/{step}` - Complete step
-- `POST /api/v1/onboarding/dismiss` - Dismiss onboarding
+- `GET /onboarding/progress` - Get progress
+- `PUT /onboarding/step/{step}` - Complete step
+- `POST /onboarding/dismiss` - Dismiss onboarding
 
 ## Verification
 

@@ -64,13 +64,13 @@ Create admin UI for managing roles, permissions, and user-role assignments.
 
 ## API Endpoints
 
-- `GET /api/v1/roles` - List roles
-- `POST /api/v1/roles` - Create role
-- `PUT /api/v1/roles/{id}` - Update role
-- `DELETE /api/v1/roles/{id}` - Delete role
-- `GET /api/v1/permissions` - List permissions
-- `POST /api/v1/users/{id}/roles` - Assign role
-- `DELETE /api/v1/users/{id}/roles/{roleId}` - Remove role
+- `GET /roles` - List roles
+- `POST /roles` - Create role
+- `PUT /roles/{id}` - Update role
+- `DELETE /roles/{id}` - Delete role
+- `GET /permissions` - List permissions
+- `POST /users/{id}/roles` - Assign role
+- `DELETE /users/{id}/roles/{roleId}` - Remove role
 
 ## Routes to Document
 

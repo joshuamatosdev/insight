@@ -95,9 +95,9 @@ public class UserPreference {
 
 ## API Endpoints
 
-- `GET /api/v1/users/me/preferences` - Get preferences
-- `PUT /api/v1/users/me/preferences` - Update preferences
-- `PUT /api/v1/users/me/preferences/{key}` - Update single preference
+- `GET /users/me/preferences` - Get preferences
+- `PUT /users/me/preferences` - Update preferences
+- `PUT /users/me/preferences/{key}` - Update single preference
 
 ## Verification
 

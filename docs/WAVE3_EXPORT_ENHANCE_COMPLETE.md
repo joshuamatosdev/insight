@@ -22,10 +22,10 @@ Implemented enhanced export functionality with batch exports, templates, and sch
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/export/opportunities` | Export opportunities |
-| GET | `/api/v1/export/templates` | Get export templates |
-| GET | `/api/v1/export/scheduled` | Get scheduled exports |
-| POST | `/api/v1/export/scheduled` | Create scheduled export |
+| POST | `/export/opportunities` | Export opportunities |
+| GET | `/export/templates` | Get export templates |
+| GET | `/export/scheduled` | Get scheduled exports |
+| POST | `/export/scheduled` | Create scheduled export |
 
 ## Export Formats
 

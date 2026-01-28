@@ -90,11 +90,11 @@ public enum NotificationType {
 
 ## API Endpoints
 
-- `GET /api/v1/notifications` - List notifications (paginated)
-- `GET /api/v1/notifications/unread-count` - Get unread count
-- `PUT /api/v1/notifications/{id}/read` - Mark as read
-- `PUT /api/v1/notifications/read-all` - Mark all as read
-- `DELETE /api/v1/notifications/{id}` - Delete notification
+- `GET /notifications` - List notifications (paginated)
+- `GET /notifications/unread-count` - Get unread count
+- `PUT /notifications/{id}/read` - Mark as read
+- `PUT /notifications/read-all` - Mark all as read
+- `DELETE /notifications/{id}` - Delete notification
 
 ## Verification
 

@@ -46,7 +46,7 @@ class MyControllerTest extends BaseControllerTest {
         var entity = createTestEntity();
 
         // When: Make request
-        mockMvc.perform(get("/api/v1/resource/{id}", entity.getId())
+        mockMvc.perform(get("/resource/{id}", entity.getId())
                 .header("X-Tenant-Id", testTenantId))
             // Then: Assert response
             .andExpect(status().isOk())

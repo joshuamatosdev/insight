@@ -86,11 +86,11 @@ public class MfaBackupCode {
 
 ## API Endpoints
 
-- `POST /api/v1/mfa/setup` - Start MFA setup (returns secret + QR)
-- `POST /api/v1/mfa/verify-setup` - Complete setup with TOTP
-- `POST /api/v1/mfa/verify` - Verify TOTP during login
-- `POST /api/v1/mfa/backup-codes` - Generate new backup codes
-- `DELETE /api/v1/mfa` - Disable MFA
+- `POST /mfa/setup` - Start MFA setup (returns secret + QR)
+- `POST /mfa/verify-setup` - Complete setup with TOTP
+- `POST /mfa/verify` - Verify TOTP during login
+- `POST /mfa/backup-codes` - Generate new backup codes
+- `DELETE /mfa` - Disable MFA
 
 ## Verification
 

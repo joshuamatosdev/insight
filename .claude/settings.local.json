@@ -20,7 +20,9 @@
       "mcp__plugin_serena_serena__list_memories",
       "mcp__plugin_serena_serena__check_onboarding_performed",
       "mcp__plugin_serena_serena__think_about_collected_information",
-      "mcp__plugin_serena_serena__execute_shell_command"
+      "mcp__plugin_serena_serena__execute_shell_command",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs"
     ],
     "deny": []
   }
