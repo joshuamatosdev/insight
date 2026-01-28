@@ -1,4 +1,4 @@
-import {createFileRoute, Outlet, redirect, useNavigate} from '@tanstack/react-router';
+import {createFileRoute, Outlet, redirect, useLocation, useNavigate} from '@tanstack/react-router';
 import {useMemo, useState} from 'react';
 import {useAuth} from '@/auth';
 import {useOpportunities} from '@/hooks';
@@ -8,6 +8,7 @@ import {
     getOpportunityType,
     isSbirOpportunity,
     LogoutIcon,
+    MapIcon,
     RefreshIcon,
     Text,
 } from '@/components';
@@ -20,7 +21,12 @@ import {
     StackedLayout,
     ThemeToggleCompact,
 } from '@components/catalyst';
-import {AuthenticatedSidebar, SidebarIcon} from './components/-AuthenticatedSidebar';
+import {ContractIntelSidebar} from './components/-ContractIntelSidebar';
+import {PortalSidebar} from './components/-PortalSidebar';
+
+export function SidebarIcon({children}: {children: React.ReactNode}) {
+    return <span data-slot="icon">{children}</span>;
+}
 
 export const Route = createFileRoute('/_authenticated')({
     beforeLoad: ({context, location}) => {
@@ -39,9 +45,19 @@ export const Route = createFileRoute('/_authenticated')({
 function AuthenticatedLayout() {
     const {user, logout} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const {opportunities, ingest} = useOpportunities();
     const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
     const [naicsExpanded, setNaicsExpanded] = useState(false);
+
+    // Route detection for context switching
+    const contractIntelRoutes = ['/', '/opportunities', '/naics', '/pipeline', '/crm', '/alerts', '/sbir'];
+
+    const isContractIntelRoute = contractIntelRoutes.some(
+        (route) => location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+
+    const isPortalRoute = !isContractIntelRoute;
 
     // Calculate counts for sidebar
     const counts = useMemo(() => {
@@ -110,6 +126,10 @@ function AuthenticatedLayout() {
                     </NavbarSection>
                     <NavbarSpacer/>
                     <NavbarSection>
+                        <NavbarItem href={isPortalRoute ? '/' : '/portal'} current={isPortalRoute}>
+                            <MapIcon size="sm"/>
+                            <Text>Portal</Text>
+                        </NavbarItem>
                         <NavbarItem onClick={handleRefresh}>
                             <RefreshIcon size="sm"/>
                         </NavbarItem>
@@ -124,16 +144,23 @@ function AuthenticatedLayout() {
                 </Navbar>
             }
             desktopSidebar={
-                <AuthenticatedSidebar
-                    user={user}
-                    counts={counts}
-                    naicsExpanded={naicsExpanded}
-                    setNaicsExpanded={setNaicsExpanded}
-                    naicsGroups={naicsGroups}
-                    handleRefresh={handleRefresh}
-                    handleExport={handleExport}
-                    handleLogout={handleLogout}
-                />
+                isPortalRoute ? (
+                    <PortalSidebar
+                        handleRefresh={handleRefresh}
+                        handleExport={handleExport}
+                        handleLogout={handleLogout}
+                    />
+                ) : (
+                    <ContractIntelSidebar
+                        counts={counts}
+                        naicsExpanded={naicsExpanded}
+                        setNaicsExpanded={setNaicsExpanded}
+                        naicsGroups={naicsGroups}
+                        handleRefresh={handleRefresh}
+                        handleExport={handleExport}
+                        handleLogout={handleLogout}
+                    />
+                )
             }
             fullWidth
         >

@@ -1,31 +1,31 @@
 import {Opportunity} from '../components/domain';
 
 export interface AllOpportunitiesPageProps {
-  opportunities: Opportunity[];
+    opportunities: Opportunity[];
 }
 
 export interface DashboardPageProps {
-  opportunities: Opportunity[];
-  onNavigate: (section: string) => void;
+    opportunities: Opportunity[];
+    onNavigate: (section: string) => void;
 }
 
 export interface NAICSPageProps {
-  naicsCode: string;
-  opportunities: Opportunity[];
+    naicsCode: string;
+    opportunities: Opportunity[];
 }
 
 export interface PresolicationPageProps {
-  opportunities: Opportunity[];
+    opportunities: Opportunity[];
 }
 
 export interface SBIRPageProps {
-  opportunities: Opportunity[];
+    opportunities: Opportunity[];
 }
 
 export interface SolicitationPageProps {
-  opportunities: Opportunity[];
+    opportunities: Opportunity[];
 }
 
 export interface SourcesSoughtPageProps {
-  opportunities: Opportunity[];
+    opportunities: Opportunity[];
 }

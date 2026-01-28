@@ -10,16 +10,16 @@ import './styles/globals.css';
 const rootElement = document.getElementById('root');
 
 if (rootElement === null) {
-  throw new Error('Root element not found. Ensure index.html contains <div id="root"></div>');
+    throw new Error('Root element not found. Ensure index.html contains <div id="root"></div>');
 }
 
 createRoot(rootElement).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <SectorProvider>
-        <App />
-      </SectorProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  </StrictMode>
+    <StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <SectorProvider>
+                <App/>
+            </SectorProvider>
+            <ReactQueryDevtools initialIsOpen={false}/>
+        </QueryClientProvider>
+    </StrictMode>
 );

@@ -3,10 +3,10 @@ import {useOpportunities} from '@/hooks';
 import {AllOpportunitiesPage} from '@/pages';
 
 export const Route = createFileRoute('/_authenticated/opportunities')({
-  component: OpportunitiesRoute,
+    component: OpportunitiesRoute,
 });
 
 function OpportunitiesRoute() {
-  const {opportunities} = useOpportunities();
-  return <AllOpportunitiesPage opportunities={opportunities} />;
+    const {opportunities} = useOpportunities();
+    return <AllOpportunitiesPage opportunities={opportunities}/>;
 }

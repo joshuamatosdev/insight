@@ -3,10 +3,10 @@ import {useOpportunities} from '@/hooks';
 import {SBIRPage} from '@/pages';
 
 export const Route = createFileRoute('/_authenticated/sbir/')({
-  component: SbirRoute,
+    component: SbirRoute,
 });
 
 function SbirRoute() {
-  const {opportunities} = useOpportunities();
-  return <SBIRPage opportunities={opportunities} />;
+    const {opportunities} = useOpportunities();
+    return <SBIRPage opportunities={opportunities}/>;
 }

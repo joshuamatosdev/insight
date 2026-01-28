@@ -1,2 +1,2 @@
-export { StepProgress } from './StepProgress';
-export { OnboardingCard } from './OnboardingCard';
+export {StepProgress} from './StepProgress';
+export {OnboardingCard} from './OnboardingCard';

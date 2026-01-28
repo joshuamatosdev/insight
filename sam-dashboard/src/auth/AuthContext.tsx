@@ -5,23 +5,23 @@ import type {AuthContextType} from './Auth.types';
  * Default context value for unauthenticated state
  */
 const defaultContextValue: AuthContextType = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  isLoading: true,
-  error: null,
-  login: async () => {
-    throw new Error('AuthProvider not found');
-  },
-  logout: () => {
-    throw new Error('AuthProvider not found');
-  },
-  clearError: () => {
-    throw new Error('AuthProvider not found');
-  },
-  setAuthData: () => {
-    throw new Error('AuthProvider not found');
-  },
+    user: null,
+    token: null,
+    isAuthenticated: false,
+    isLoading: true,
+    error: null,
+    login: async () => {
+        throw new Error('AuthProvider not found');
+    },
+    logout: () => {
+        throw new Error('AuthProvider not found');
+    },
+    clearError: () => {
+        throw new Error('AuthProvider not found');
+    },
+    setAuthData: () => {
+        throw new Error('AuthProvider not found');
+    },
 };
 
 /**
@@ -34,13 +34,13 @@ export const AuthContext = createContext<AuthContextType>(defaultContextValue);
  * @throws Error if used outside AuthProvider
  */
 export function useAuth(): AuthContextType {
-  const context = useContext(AuthContext);
+    const context = useContext(AuthContext);
 
-  if (context === defaultContextValue) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+    if (context === defaultContextValue) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
 
-  return context;
+    return context;
 }
 
 export default AuthContext;

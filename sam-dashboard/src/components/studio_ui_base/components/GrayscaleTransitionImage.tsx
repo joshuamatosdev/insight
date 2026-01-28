@@ -7,27 +7,27 @@ import {motion, useMotionTemplate, useScroll, useTransform,} from 'framer-motion
 const MotionImage = motion(Image)
 
 export function GrayscaleTransitionImage(
-  props: Pick<
-    ImageProps,
-    'src' | 'quality' | 'className' | 'sizes' | 'priority'
-  > & { alt?: string },
+    props: Pick<
+        ImageProps,
+        'src' | 'quality' | 'className' | 'sizes' | 'priority'
+    > & { alt?: string },
 ) {
-  let ref = useRef<React.ElementRef<'div'>>(null)
-  let { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 65%', 'end 35%'],
-  })
-  let grayscale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0, 1])
-  let filter = useMotionTemplate`grayscale(${grayscale})`
+    let ref = useRef<React.ElementRef<'div'>>(null)
+    let {scrollYProgress} = useScroll({
+        target: ref,
+        offset: ['start 65%', 'end 35%'],
+    })
+    let grayscale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0, 1])
+    let filter = useMotionTemplate`grayscale(${grayscale})`
 
-  return (
-    <div ref={ref}>
-      <MotionImage alt="" style={{ filter } as any} {...props} />
-      <div
-        aria-hidden="true"
-      >
-        <Image alt="" {...props} />
-      </div>
-    </div>
-  )
+    return (
+        <div ref={ref}>
+            <MotionImage alt="" style={{filter} as any} {...props} />
+            <div
+                aria-hidden="true"
+            >
+                <Image alt="" {...props} />
+            </div>
+        </div>
+    )
 }

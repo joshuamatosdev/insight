@@ -1,1 +1,1 @@
-export { RootFrame } from './RootFrame';
+export {RootFrame} from './RootFrame';

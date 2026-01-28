@@ -4,312 +4,312 @@ import {afterEach, describe, expect, it, vi} from 'vitest'
 import {Tooltip} from './tooltip'
 
 describe('Tooltip', () => {
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-  it('renders trigger element', () => {
-    render(
-      <Tooltip content="Delete this item">
-        <button type="button">Delete</button>
-      </Tooltip>
-    )
-
-    expect(screen.getByRole('button', { name: 'Delete' })).toBeDefined()
-  })
-
-  it('does not show tooltip content initially', () => {
-    render(
-      <Tooltip content="Delete this item">
-        <button type="button">Delete</button>
-      </Tooltip>
-    )
-
-    expect(screen.queryByText('Delete this item')).toBeNull()
-  })
-
-  it('shows tooltip on hover', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <Tooltip content="Helpful information">
-        <button type="button">Info</button>
-      </Tooltip>
-    )
-
-    const trigger = screen.getByRole('button', { name: 'Info' })
-    await user.hover(trigger)
-
-    await waitFor(() => {
-      expect(screen.getByText('Helpful information')).toBeDefined()
+    afterEach(() => {
+        vi.useRealTimers()
     })
-  })
+    it('renders trigger element', () => {
+        render(
+            <Tooltip content="Delete this item">
+                <button type="button">Delete</button>
+            </Tooltip>
+        )
 
-  it('hides tooltip on mouse leave', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <Tooltip content="Helpful information">
-        <button type="button">Info</button>
-      </Tooltip>
-    )
-
-    const trigger = screen.getByRole('button', { name: 'Info' })
-
-    await user.hover(trigger)
-    await waitFor(() => {
-      expect(screen.getByText('Helpful information')).toBeDefined()
+        expect(screen.getByRole('button', {name: 'Delete'})).toBeDefined()
     })
 
-    await user.unhover(trigger)
-    await waitFor(() => {
-      expect(screen.queryByText('Helpful information')).toBeNull()
-    })
-  })
+    it('does not show tooltip content initially', () => {
+        render(
+            <Tooltip content="Delete this item">
+                <button type="button">Delete</button>
+            </Tooltip>
+        )
 
-  it('shows tooltip on focus', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <Tooltip content="Keyboard accessible">
-        <button type="button">Focus me</button>
-      </Tooltip>
-    )
-
-    const trigger = screen.getByRole('button', { name: 'Focus me' })
-    await user.tab()
-
-    await waitFor(() => {
-      expect(screen.getByText('Keyboard accessible')).toBeDefined()
-    })
-  })
-
-  it('hides tooltip on blur', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <>
-        <Tooltip content="Keyboard accessible">
-          <button type="button">Focus me</button>
-        </Tooltip>
-        <button type="button">Other button</button>
-      </>
-    )
-
-    await user.tab()
-    await waitFor(() => {
-      expect(screen.getByText('Keyboard accessible')).toBeDefined()
+        expect(screen.queryByText('Delete this item')).toBeNull()
     })
 
-    await user.tab()
-    await waitFor(() => {
-      expect(screen.queryByText('Keyboard accessible')).toBeNull()
+    it('shows tooltip on hover', async () => {
+        const user = userEvent.setup()
+
+        render(
+            <Tooltip content="Helpful information">
+                <button type="button">Info</button>
+            </Tooltip>
+        )
+
+        const trigger = screen.getByRole('button', {name: 'Info'})
+        await user.hover(trigger)
+
+        await waitFor(() => {
+            expect(screen.getByText('Helpful information')).toBeDefined()
+        })
     })
-  })
 
-  it('supports top position', async () => {
-    const user = userEvent.setup()
+    it('hides tooltip on mouse leave', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Positioned top" position="top">
-        <button type="button">Top</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Helpful information">
+                <button type="button">Info</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Top' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Info'})
 
-    await waitFor(() => {
-      const tooltip = screen.getByText('Positioned top')
-      expect(tooltip).toBeDefined()
+        await user.hover(trigger)
+        await waitFor(() => {
+            expect(screen.getByText('Helpful information')).toBeDefined()
+        })
+
+        await user.unhover(trigger)
+        await waitFor(() => {
+            expect(screen.queryByText('Helpful information')).toBeNull()
+        })
     })
-  })
 
-  it('supports bottom position', async () => {
-    const user = userEvent.setup()
+    it('shows tooltip on focus', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Positioned bottom" position="bottom">
-        <button type="button">Bottom</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Keyboard accessible">
+                <button type="button">Focus me</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Bottom' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Focus me'})
+        await user.tab()
 
-    await waitFor(() => {
-      const tooltip = screen.getByText('Positioned bottom')
-      expect(tooltip).toBeDefined()
+        await waitFor(() => {
+            expect(screen.getByText('Keyboard accessible')).toBeDefined()
+        })
     })
-  })
 
-  it('supports left position', async () => {
-    const user = userEvent.setup()
+    it('hides tooltip on blur', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Positioned left" position="left">
-        <button type="button">Left</button>
-      </Tooltip>
-    )
+        render(
+            <>
+                <Tooltip content="Keyboard accessible">
+                    <button type="button">Focus me</button>
+                </Tooltip>
+                <button type="button">Other button</button>
+            </>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Left' })
-    await user.hover(trigger)
+        await user.tab()
+        await waitFor(() => {
+            expect(screen.getByText('Keyboard accessible')).toBeDefined()
+        })
 
-    await waitFor(() => {
-      const tooltip = screen.getByText('Positioned left')
-      expect(tooltip).toBeDefined()
+        await user.tab()
+        await waitFor(() => {
+            expect(screen.queryByText('Keyboard accessible')).toBeNull()
+        })
     })
-  })
 
-  it('supports right position', async () => {
-    const user = userEvent.setup()
+    it('supports top position', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Positioned right" position="right">
-        <button type="button">Right</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Positioned top" position="top">
+                <button type="button">Top</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Right' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Top'})
+        await user.hover(trigger)
 
-    await waitFor(() => {
-      const tooltip = screen.getByText('Positioned right')
-      expect(tooltip).toBeDefined()
+        await waitFor(() => {
+            const tooltip = screen.getByText('Positioned top')
+            expect(tooltip).toBeDefined()
+        })
     })
-  })
 
-  it('defaults to top position when not specified', async () => {
-    const user = userEvent.setup()
+    it('supports bottom position', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Default position">
-        <button type="button">Default</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Positioned bottom" position="bottom">
+                <button type="button">Bottom</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Default' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Bottom'})
+        await user.hover(trigger)
 
-    await waitFor(() => {
-      const tooltip = screen.getByText('Default position')
-      expect(tooltip).toBeDefined()
+        await waitFor(() => {
+            const tooltip = screen.getByText('Positioned bottom')
+            expect(tooltip).toBeDefined()
+        })
     })
-  })
 
-  it('supports custom delay', async () => {
-    const user = userEvent.setup()
+    it('supports left position', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Delayed tooltip" delay={50}>
-        <button type="button">Delay</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Positioned left" position="left">
+                <button type="button">Left</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Delay' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Left'})
+        await user.hover(trigger)
 
-    // Should not appear immediately
-    expect(screen.queryByText('Delayed tooltip')).toBeNull()
-
-    // Wait for the delay to pass
-    await waitFor(() => {
-      expect(screen.getByText('Delayed tooltip')).toBeDefined()
-    }, { timeout: 200 })
-  })
-
-  it('applies custom className to tooltip', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <Tooltip content="Custom class" className="custom-tooltip">
-        <button type="button">Custom</button>
-      </Tooltip>
-    )
-
-    const trigger = screen.getByRole('button', { name: 'Custom' })
-    await user.hover(trigger)
-
-    await waitFor(() => {
-      const tooltip = screen.getByRole('tooltip')
-      expect(tooltip).toHaveClass('custom-tooltip')
+        await waitFor(() => {
+            const tooltip = screen.getByText('Positioned left')
+            expect(tooltip).toBeDefined()
+        })
     })
-  })
 
-  it('has proper aria attributes for accessibility', async () => {
-    const user = userEvent.setup()
+    it('supports right position', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Accessible tooltip">
-        <button type="button">Accessible</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Positioned right" position="right">
+                <button type="button">Right</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Accessible' })
+        const trigger = screen.getByRole('button', {name: 'Right'})
+        await user.hover(trigger)
 
-    // Check aria-describedby is set when tooltip shows
-    await user.hover(trigger)
-
-    await waitFor(() => {
-      const tooltip = screen.getByRole('tooltip')
-      expect(tooltip).toBeDefined()
-      expect(tooltip.id).toBeTruthy()
+        await waitFor(() => {
+            const tooltip = screen.getByText('Positioned right')
+            expect(tooltip).toBeDefined()
+        })
     })
-  })
 
-  it('tooltip has role="tooltip"', async () => {
-    const user = userEvent.setup()
+    it('defaults to top position when not specified', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Role tooltip">
-        <button type="button">Role</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content="Default position">
+                <button type="button">Default</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Role' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Default'})
+        await user.hover(trigger)
 
-    await waitFor(() => {
-      const tooltip = screen.getByRole('tooltip')
-      expect(tooltip).toBeDefined()
-      expect(tooltip.textContent).toContain('Role tooltip')
+        await waitFor(() => {
+            const tooltip = screen.getByText('Default position')
+            expect(tooltip).toBeDefined()
+        })
     })
-  })
 
-  it('works with non-button triggers', async () => {
-    const user = userEvent.setup()
+    it('supports custom delay', async () => {
+        const user = userEvent.setup()
 
-    render(
-      <Tooltip content="Icon tooltip">
+        render(
+            <Tooltip content="Delayed tooltip" delay={50}>
+                <button type="button">Delay</button>
+            </Tooltip>
+        )
+
+        const trigger = screen.getByRole('button', {name: 'Delay'})
+        await user.hover(trigger)
+
+        // Should not appear immediately
+        expect(screen.queryByText('Delayed tooltip')).toBeNull()
+
+        // Wait for the delay to pass
+        await waitFor(() => {
+            expect(screen.getByText('Delayed tooltip')).toBeDefined()
+        }, {timeout: 200})
+    })
+
+    it('applies custom className to tooltip', async () => {
+        const user = userEvent.setup()
+
+        render(
+            <Tooltip content="Custom class" className="custom-tooltip">
+                <button type="button">Custom</button>
+            </Tooltip>
+        )
+
+        const trigger = screen.getByRole('button', {name: 'Custom'})
+        await user.hover(trigger)
+
+        await waitFor(() => {
+            const tooltip = screen.getByRole('tooltip')
+            expect(tooltip).toHaveClass('custom-tooltip')
+        })
+    })
+
+    it('has proper aria attributes for accessibility', async () => {
+        const user = userEvent.setup()
+
+        render(
+            <Tooltip content="Accessible tooltip">
+                <button type="button">Accessible</button>
+            </Tooltip>
+        )
+
+        const trigger = screen.getByRole('button', {name: 'Accessible'})
+
+        // Check aria-describedby is set when tooltip shows
+        await user.hover(trigger)
+
+        await waitFor(() => {
+            const tooltip = screen.getByRole('tooltip')
+            expect(tooltip).toBeDefined()
+            expect(tooltip.id).toBeTruthy()
+        })
+    })
+
+    it('tooltip has role="tooltip"', async () => {
+        const user = userEvent.setup()
+
+        render(
+            <Tooltip content="Role tooltip">
+                <button type="button">Role</button>
+            </Tooltip>
+        )
+
+        const trigger = screen.getByRole('button', {name: 'Role'})
+        await user.hover(trigger)
+
+        await waitFor(() => {
+            const tooltip = screen.getByRole('tooltip')
+            expect(tooltip).toBeDefined()
+            expect(tooltip.textContent).toContain('Role tooltip')
+        })
+    })
+
+    it('works with non-button triggers', async () => {
+        const user = userEvent.setup()
+
+        render(
+            <Tooltip content="Icon tooltip">
         <span role="img" aria-label="Info icon">
           ℹ️
         </span>
-      </Tooltip>
-    )
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('img', { name: 'Info icon' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('img', {name: 'Info icon'})
+        await user.hover(trigger)
 
-    await waitFor(() => {
-      expect(screen.getByText('Icon tooltip')).toBeDefined()
+        await waitFor(() => {
+            expect(screen.getByText('Icon tooltip')).toBeDefined()
+        })
     })
-  })
 
-  it('handles long content properly', async () => {
-    const user = userEvent.setup()
-    const longContent =
-      'This is a very long tooltip content that should wrap appropriately and maintain readability'
+    it('handles long content properly', async () => {
+        const user = userEvent.setup()
+        const longContent =
+            'This is a very long tooltip content that should wrap appropriately and maintain readability'
 
-    render(
-      <Tooltip content={longContent}>
-        <button type="button">Long</button>
-      </Tooltip>
-    )
+        render(
+            <Tooltip content={longContent}>
+                <button type="button">Long</button>
+            </Tooltip>
+        )
 
-    const trigger = screen.getByRole('button', { name: 'Long' })
-    await user.hover(trigger)
+        const trigger = screen.getByRole('button', {name: 'Long'})
+        await user.hover(trigger)
 
-    await waitFor(() => {
-      expect(screen.getByText(longContent)).toBeDefined()
+        await waitFor(() => {
+            expect(screen.getByText(longContent)).toBeDefined()
+        })
     })
-  })
 })

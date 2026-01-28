@@ -4,13 +4,13 @@
 // Additional Sidebar components (Body, Footer, Item, etc.) exported here
 
 export {
-  SidebarBody,
-  SidebarFooter,
-  SidebarDivider,
-  SidebarSpacer,
-  SidebarHeading,
-  SidebarItem,
-  SidebarLabel,
+    SidebarBody,
+    SidebarFooter,
+    SidebarDivider,
+    SidebarSpacer,
+    SidebarHeading,
+    SidebarItem,
+    SidebarLabel,
 } from './sidebar'
 
 export * from './breadcrumbs'

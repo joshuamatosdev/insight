@@ -38,147 +38,147 @@ type CardVariant = 'elevated' | 'outlined' | 'filled'
 type CardPadding = 'none' | 'sm' | 'md' | 'lg'
 
 interface CardProps extends React.ComponentPropsWithoutRef<'div'> {
-  variant?: CardVariant
-  padding?: CardPadding
-  edgeToEdgeMobile?: boolean
+    variant?: CardVariant
+    padding?: CardPadding
+    edgeToEdgeMobile?: boolean
 }
 
 const paddingClasses: Record<CardPadding, string> = {
-  none: '',
-  sm: 'px-4 py-4 sm:p-4',
-  md: 'px-4 py-5 sm:p-6',
-  lg: 'px-4 py-6 sm:p-8',
+    none: '',
+    sm: 'px-4 py-4 sm:p-4',
+    md: 'px-4 py-5 sm:p-6',
+    lg: 'px-4 py-6 sm:p-8',
 }
 
 const variantClasses: Record<CardVariant, string> = {
-  elevated:
-    'bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10',
-  outlined: 'bg-white border border-gray-200 dark:bg-gray-800/50 dark:border-white/10',
-  filled: 'bg-gray-50 dark:bg-gray-800/50',
+    elevated:
+        'bg-white shadow-sm dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10',
+    outlined: 'bg-white border border-gray-200 dark:bg-gray-800/50 dark:border-white/10',
+    filled: 'bg-gray-50 dark:bg-gray-800/50',
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ variant = 'elevated', padding = 'md', edgeToEdgeMobile = false, className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        {...props}
-        className={clsx(
-          'overflow-hidden',
-          edgeToEdgeMobile ? 'sm:rounded-lg' : 'rounded-lg',
-          variantClasses[variant],
-          paddingClasses[padding],
-          className
-        )}
-      >
-        {children}
-      </div>
-    )
-  }
+    ({variant = 'elevated', padding = 'md', edgeToEdgeMobile = false, className, children, ...props}, ref) => {
+        return (
+            <div
+                ref={ref}
+                {...props}
+                className={clsx(
+                    'overflow-hidden',
+                    edgeToEdgeMobile ? 'sm:rounded-lg' : 'rounded-lg',
+                    variantClasses[variant],
+                    paddingClasses[padding],
+                    className
+                )}
+            >
+                {children}
+            </div>
+        )
+    }
 )
 
 Card.displayName = 'Card'
 
 interface CardHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
-  divider?: boolean
+    divider?: boolean
 }
 
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ divider = false, className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        {...props}
-        className={clsx(
-          'px-4 py-5 sm:px-6',
-          divider && 'border-b border-gray-200 dark:border-white/10',
-          className
-        )}
-      >
-        {children}
-      </div>
-    )
-  }
+    ({divider = false, className, children, ...props}, ref) => {
+        return (
+            <div
+                ref={ref}
+                {...props}
+                className={clsx(
+                    'px-4 py-5 sm:px-6',
+                    divider && 'border-b border-gray-200 dark:border-white/10',
+                    className
+                )}
+            >
+                {children}
+            </div>
+        )
+    }
 )
 
 CardHeader.displayName = 'CardHeader'
 
 export const CardTitle = forwardRef<HTMLHeadingElement, React.ComponentPropsWithoutRef<'h3'>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <h3
-        ref={ref}
-        {...props}
-        className={clsx('text-lg/6 font-semibold text-zinc-950 sm:text-base/6 dark:text-white', className)}
-      />
-    )
-  }
+    ({className, ...props}, ref) => {
+        return (
+            <h3
+                ref={ref}
+                {...props}
+                className={clsx('text-lg/6 font-semibold text-zinc-950 sm:text-base/6 dark:text-white', className)}
+            />
+        )
+    }
 )
 
 CardTitle.displayName = 'CardTitle'
 
 export const CardDescription = forwardRef<HTMLParagraphElement, React.ComponentPropsWithoutRef<'p'>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <p
-        ref={ref}
-        {...props}
-        className={clsx('mt-1 text-sm/6 text-zinc-500 dark:text-zinc-400', className)}
-      />
-    )
-  }
+    ({className, ...props}, ref) => {
+        return (
+            <p
+                ref={ref}
+                {...props}
+                className={clsx('mt-1 text-sm/6 text-zinc-500 dark:text-zinc-400', className)}
+            />
+        )
+    }
 )
 
 CardDescription.displayName = 'CardDescription'
 
 interface CardBodyProps extends React.ComponentPropsWithoutRef<'div'> {
-  divider?: boolean
-  variant?: 'default' | 'gray'
+    divider?: boolean
+    variant?: 'default' | 'gray'
 }
 
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
-  ({ divider = false, variant = 'default', className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        {...props}
-        className={clsx(
-          'px-4 py-5 sm:p-6',
-          divider && 'border-t border-gray-200 dark:border-white/10',
-          variant === 'gray' && 'bg-gray-50 dark:bg-gray-800/50',
-          className
-        )}
-      >
-        {children}
-      </div>
-    )
-  }
+    ({divider = false, variant = 'default', className, children, ...props}, ref) => {
+        return (
+            <div
+                ref={ref}
+                {...props}
+                className={clsx(
+                    'px-4 py-5 sm:p-6',
+                    divider && 'border-t border-gray-200 dark:border-white/10',
+                    variant === 'gray' && 'bg-gray-50 dark:bg-gray-800/50',
+                    className
+                )}
+            >
+                {children}
+            </div>
+        )
+    }
 )
 
 CardBody.displayName = 'CardBody'
 
 interface CardFooterProps extends React.ComponentPropsWithoutRef<'div'> {
-  divider?: boolean
-  variant?: 'default' | 'gray'
+    divider?: boolean
+    variant?: 'default' | 'gray'
 }
 
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
-  ({ divider = false, variant = 'default', className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        {...props}
-        className={clsx(
-          'px-4 py-4 sm:px-6',
-          divider && 'border-t border-gray-200 dark:border-white/10',
-          variant === 'gray' && 'bg-gray-50 dark:bg-gray-800/50',
-          className
-        )}
-      >
-        {children}
-      </div>
-    )
-  }
+    ({divider = false, variant = 'default', className, children, ...props}, ref) => {
+        return (
+            <div
+                ref={ref}
+                {...props}
+                className={clsx(
+                    'px-4 py-4 sm:px-6',
+                    divider && 'border-t border-gray-200 dark:border-white/10',
+                    variant === 'gray' && 'bg-gray-50 dark:bg-gray-800/50',
+                    className
+                )}
+            >
+                {children}
+            </div>
+        )
+    }
 )
 
 CardFooter.displayName = 'CardFooter'

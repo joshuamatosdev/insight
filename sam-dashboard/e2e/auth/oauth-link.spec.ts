@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/test-fixtures';
+import {expect, test} from '../fixtures/test-fixtures';
 
 /**
  * OAuth Account Linking E2E Tests
@@ -7,124 +7,124 @@ import { test, expect } from '../fixtures/test-fixtures';
  */
 
 test.describe('OAuth Account Linking', () => {
-  test.beforeEach(async ({ authenticatedPage }) => {
-    const { page } = authenticatedPage;
-    await page.goto('/settings/security');
-    await page.waitForLoadState('networkidle');
-  });
-
-  test.describe('Linked Accounts Display', () => {
-    test('should display linked accounts section', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      await expect(
-        page.getByText(/linked accounts|connected accounts|social/i)
-      ).toBeVisible({ timeout: 10000 });
+    test.beforeEach(async ({authenticatedPage}) => {
+        const {page} = authenticatedPage;
+        await page.goto('/settings/security');
+        await page.waitForLoadState('networkidle');
     });
 
-    test('should display Google link option', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('Linked Accounts Display', () => {
+        test('should display linked accounts section', async ({
+                                                                  authenticatedPage,
+                                                              }) => {
+            const {page} = authenticatedPage;
 
-      await expect(
-        page.getByText(/google/i)
-      ).toBeVisible({ timeout: 10000 });
+            await expect(
+                page.getByText(/linked accounts|connected accounts|social/i)
+            ).toBeVisible({timeout: 10000});
+        });
+
+        test('should display Google link option', async ({
+                                                             authenticatedPage,
+                                                         }) => {
+            const {page} = authenticatedPage;
+
+            await expect(
+                page.getByText(/google/i)
+            ).toBeVisible({timeout: 10000});
+        });
+
+        test('should display Microsoft link option', async ({
+                                                                authenticatedPage,
+                                                            }) => {
+            const {page} = authenticatedPage;
+
+            await expect(
+                page.getByText(/microsoft/i)
+            ).toBeVisible({timeout: 10000});
+        });
     });
 
-    test('should display Microsoft link option', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('Link Account', () => {
+        test('should display link button for unlinked accounts', async ({
+                                                                            authenticatedPage,
+                                                                        }) => {
+            const {page} = authenticatedPage;
 
-      await expect(
-        page.getByText(/microsoft/i)
-      ).toBeVisible({ timeout: 10000 });
-    });
-  });
+            const linkButton = page.getByRole('button', {name: /link|connect/i});
 
-  test.describe('Link Account', () => {
-    test('should display link button for unlinked accounts', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+            if (await linkButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await expect(linkButton).toBeVisible();
+            }
+        });
 
-      const linkButton = page.getByRole('button', { name: /link|connect/i });
+        test('should initiate OAuth flow on link', async ({
+                                                              authenticatedPage,
+                                                          }) => {
+            const {page} = authenticatedPage;
 
-      if (await linkButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await expect(linkButton).toBeVisible();
-      }
-    });
+            const linkGoogleButton = page.getByRole('button', {name: /link google|connect google/i});
 
-    test('should initiate OAuth flow on link', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+            if (await linkGoogleButton.isVisible({timeout: 5000}).catch(() => false)) {
+                const [popup] = await Promise.all([
+                    page.waitForEvent('popup', {timeout: 5000}).catch(() => null),
+                    linkGoogleButton.click(),
+                ]);
 
-      const linkGoogleButton = page.getByRole('button', { name: /link google|connect google/i });
-
-      if (await linkGoogleButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        const [popup] = await Promise.all([
-          page.waitForEvent('popup', { timeout: 5000 }).catch(() => null),
-          linkGoogleButton.click(),
-        ]);
-
-        if (popup !== null) {
-          await expect(popup).toHaveURL(/accounts\.google\.com/);
-          await popup.close();
-        }
-      }
-    });
-  });
-
-  test.describe('Unlink Account', () => {
-    test('should display unlink button for linked accounts', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      const unlinkButton = page.getByRole('button', { name: /unlink|disconnect/i });
-
-      if (await unlinkButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await expect(unlinkButton).toBeVisible();
-      }
+                if (popup !== null) {
+                    await expect(popup).toHaveURL(/accounts\.google\.com/);
+                    await popup.close();
+                }
+            }
+        });
     });
 
-    test('should confirm before unlinking', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('Unlink Account', () => {
+        test('should display unlink button for linked accounts', async ({
+                                                                            authenticatedPage,
+                                                                        }) => {
+            const {page} = authenticatedPage;
 
-      const unlinkButton = page.getByRole('button', { name: /unlink|disconnect/i }).first();
+            const unlinkButton = page.getByRole('button', {name: /unlink|disconnect/i});
 
-      if (await unlinkButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await unlinkButton.click();
+            if (await unlinkButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await expect(unlinkButton).toBeVisible();
+            }
+        });
 
-        await expect(
-          page.getByText(/confirm|are you sure/i)
-        ).toBeVisible({ timeout: 5000 });
-      }
+        test('should confirm before unlinking', async ({
+                                                           authenticatedPage,
+                                                       }) => {
+            const {page} = authenticatedPage;
+
+            const unlinkButton = page.getByRole('button', {name: /unlink|disconnect/i}).first();
+
+            if (await unlinkButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await unlinkButton.click();
+
+                await expect(
+                    page.getByText(/confirm|are you sure/i)
+                ).toBeVisible({timeout: 5000});
+            }
+        });
+
+        test('should prevent unlinking last auth method', async ({
+                                                                     authenticatedPage,
+                                                                 }) => {
+            const {page} = authenticatedPage;
+
+            // If only one auth method, unlink should be disabled or show warning
+            const unlinkButton = page.getByRole('button', {name: /unlink/i}).first();
+
+            if (await unlinkButton.isVisible({timeout: 3000}).catch(() => false)) {
+                await unlinkButton.click();
+
+                // May show warning about last auth method
+                const warning = page.getByText(/cannot|last|only/i);
+                if (await warning.isVisible({timeout: 3000}).catch(() => false)) {
+                    await expect(warning).toBeVisible();
+                }
+            }
+        });
     });
-
-    test('should prevent unlinking last auth method', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      // If only one auth method, unlink should be disabled or show warning
-      const unlinkButton = page.getByRole('button', { name: /unlink/i }).first();
-
-      if (await unlinkButton.isVisible({ timeout: 3000 }).catch(() => false)) {
-        await unlinkButton.click();
-
-        // May show warning about last auth method
-        const warning = page.getByText(/cannot|last|only/i);
-        if (await warning.isVisible({ timeout: 3000 }).catch(() => false)) {
-          await expect(warning).toBeVisible();
-        }
-      }
-    });
-  });
 });

@@ -1,436 +1,439 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {act, renderHook, waitFor} from '@testing-library/react';
 import {useOpportunities} from './useOpportunities';
-import * as api from '../services/api';
+import * as api from '../services/opportunityService';
 import {Opportunity} from '../components/domain/opportunity';
 
 // Mock the API module
-vi.mock('../services/api', () => ({
-  fetchOpportunities: vi.fn(),
-  triggerIngest: vi.fn(),
+vi.mock('../services/opportunityService', () => ({
+    fetchOpportunities: vi.fn(),
+    triggerIngest: vi.fn(),
 }));
 
 // Mock opportunity data factory
 function createMockOpportunity(overrides: Partial<Opportunity> = {}): Opportunity {
-  return {
-    id: '1',
-    title: 'Test Opportunity',
-    solicitationNumber: 'SOL-001',
-    type: 'Solicitation',
-    naicsCode: '541512',
-    postedDate: '2024-01-15',
-    responseDeadLine: '2024-12-31',
-    url: 'https://sam.gov/opp/1',
-    sbirPhase: null,
-    isSbir: false,
-    isSttr: false,
-    source: 'SAM.gov',
-    ...overrides,
-  };
+    return {
+        id: '1',
+        title: 'Test Opportunity',
+        solicitationNumber: 'SOL-001',
+        type: 'Solicitation',
+        naicsCode: '541512',
+        postedDate: '2024-01-15',
+        responseDeadLine: '2024-12-31',
+        url: 'https://sam.gov/opp/1',
+        sbirPhase: null,
+        isSbir: false,
+        isSttr: false,
+        source: 'SAM.gov',
+        ...overrides,
+    };
 }
 
 describe('useOpportunities', () => {
-  const mockOpportunities: Opportunity[] = [
-    createMockOpportunity({ id: '1', title: 'Opportunity 1' }),
-    createMockOpportunity({ id: '2', title: 'Opportunity 2' }),
-    createMockOpportunity({ id: '3', title: 'Opportunity 3' }),
-  ];
+    const mockOpportunities: Opportunity[] = [
+        createMockOpportunity({id: '1', title: 'Opportunity 1'}),
+        createMockOpportunity({id: '2', title: 'Opportunity 2'}),
+        createMockOpportunity({id: '3', title: 'Opportunity 3'}),
+    ];
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
-
-  describe('Initial State', () => {
-    it('should return loading state initially', () => {
-      vi.mocked(api.fetchOpportunities).mockImplementation(
-        () => new Promise(() => {}) // Never resolves to keep loading state
-      );
-
-      const { result } = renderHook(() => useOpportunities());
-
-      expect(result.current.isLoading).toBe(true);
-      expect(result.current.opportunities).toEqual([]);
-      expect(result.current.error).toBe(null);
+    beforeEach(() => {
+        vi.clearAllMocks();
     });
 
-    it('should have empty opportunities array initially', () => {
-      vi.mocked(api.fetchOpportunities).mockImplementation(
-        () => new Promise(() => {})
-      );
-
-      const { result } = renderHook(() => useOpportunities());
-
-      expect(result.current.opportunities).toEqual([]);
+    afterEach(() => {
+        vi.resetAllMocks();
     });
 
-    it('should have null error initially', () => {
-      vi.mocked(api.fetchOpportunities).mockImplementation(
-        () => new Promise(() => {})
-      );
+    describe('Initial State', () => {
+        it('should return loading state initially', () => {
+            vi.mocked(api.fetchOpportunities).mockImplementation(
+                () => new Promise(() => {
+                }) // Never resolves to keep loading state
+            );
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      expect(result.current.error).toBe(null);
-    });
-  });
+            expect(result.current.isLoading).toBe(true);
+            expect(result.current.opportunities).toEqual([]);
+            expect(result.current.error).toBe(null);
+        });
 
-  describe('Fetch Opportunities on Mount', () => {
-    it('should fetch opportunities on mount', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+        it('should have empty opportunities array initially', () => {
+            vi.mocked(api.fetchOpportunities).mockImplementation(
+                () => new Promise(() => {
+                })
+            );
 
-      renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(api.fetchOpportunities).toHaveBeenCalledTimes(1);
-      });
-    });
+            expect(result.current.opportunities).toEqual([]);
+        });
 
-    it('should return opportunities after successful fetch', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+        it('should have null error initially', () => {
+            vi.mocked(api.fetchOpportunities).mockImplementation(
+                () => new Promise(() => {
+                })
+            );
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.opportunities).toEqual(mockOpportunities);
-      });
-    });
-
-    it('should set loading to false after fetch completes', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-    });
-  });
-
-  describe('Error Handling', () => {
-    it('should handle fetch errors', async () => {
-      const errorMessage = 'Network error';
-      vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error(errorMessage));
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.error).not.toBe(null);
-        expect(result.current.error?.message).toBe(errorMessage);
-      });
+            expect(result.current.error).toBe(null);
+        });
     });
 
-    it('should set loading to false on error', async () => {
-      vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error('Failed'));
+    describe('Fetch Opportunities on Mount', () => {
+        it('should fetch opportunities on mount', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
+            await waitFor(() => {
+                expect(api.fetchOpportunities).toHaveBeenCalledTimes(1);
+            });
+        });
+
+        it('should return opportunities after successful fetch', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.opportunities).toEqual(mockOpportunities);
+            });
+        });
+
+        it('should set loading to false after fetch completes', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+        });
     });
 
-    it('should keep opportunities empty on error', async () => {
-      vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error('Failed'));
+    describe('Error Handling', () => {
+        it('should handle fetch errors', async () => {
+            const errorMessage = 'Network error';
+            vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error(errorMessage));
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.opportunities).toEqual([]);
-      });
+            await waitFor(() => {
+                expect(result.current.error).not.toBe(null);
+                expect(result.current.error?.message).toBe(errorMessage);
+            });
+        });
+
+        it('should set loading to false on error', async () => {
+            vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error('Failed'));
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+        });
+
+        it('should keep opportunities empty on error', async () => {
+            vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error('Failed'));
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.opportunities).toEqual([]);
+            });
+        });
+
+        it('should wrap non-Error objects in Error', async () => {
+            vi.mocked(api.fetchOpportunities).mockRejectedValue('string error');
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.error).not.toBe(null);
+                expect(result.current.error?.message).toBe('Failed to fetch opportunities');
+            });
+        });
     });
 
-    it('should wrap non-Error objects in Error', async () => {
-      vi.mocked(api.fetchOpportunities).mockRejectedValue('string error');
+    describe('Refresh Function', () => {
+        it('should provide a refresh function', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.error).not.toBe(null);
-        expect(result.current.error?.message).toBe('Failed to fetch opportunities');
-      });
-    });
-  });
+            await waitFor(() => {
+                expect(typeof result.current.refresh).toBe('function');
+            });
+        });
 
-  describe('Refresh Function', () => {
-    it('should provide a refresh function', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+        it('should re-fetch opportunities when refresh is called', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(typeof result.current.refresh).toBe('function');
-      });
-    });
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
 
-    it('should re-fetch opportunities when refresh is called', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            // Clear the call count and call refresh
+            vi.mocked(api.fetchOpportunities).mockClear();
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            await act(async () => {
+                await result.current.refresh();
+            });
 
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
+            expect(api.fetchOpportunities).toHaveBeenCalledTimes(1);
+        });
 
-      // Clear the call count and call refresh
-      vi.mocked(api.fetchOpportunities).mockClear();
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+        it('should update opportunities with new data on refresh', async () => {
+            const initialData = [createMockOpportunity({id: '1', title: 'Initial'})];
+            const refreshedData = [
+                createMockOpportunity({id: '1', title: 'Initial'}),
+                createMockOpportunity({id: '2', title: 'New'}),
+            ];
 
-      await act(async () => {
-        await result.current.refresh();
-      });
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(initialData);
 
-      expect(api.fetchOpportunities).toHaveBeenCalledTimes(1);
-    });
+            const {result} = renderHook(() => useOpportunities());
 
-    it('should update opportunities with new data on refresh', async () => {
-      const initialData = [createMockOpportunity({ id: '1', title: 'Initial' })];
-      const refreshedData = [
-        createMockOpportunity({ id: '1', title: 'Initial' }),
-        createMockOpportunity({ id: '2', title: 'New' }),
-      ];
+            await waitFor(() => {
+                expect(result.current.opportunities).toEqual(initialData);
+            });
 
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(initialData);
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(refreshedData);
 
-      const { result } = renderHook(() => useOpportunities());
+            await act(async () => {
+                await result.current.refresh();
+            });
 
-      await waitFor(() => {
-        expect(result.current.opportunities).toEqual(initialData);
-      });
+            expect(result.current.opportunities).toEqual(refreshedData);
+        });
 
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(refreshedData);
+        it('should set loading state during refresh', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      await act(async () => {
-        await result.current.refresh();
-      });
+            const {result} = renderHook(() => useOpportunities());
 
-      expect(result.current.opportunities).toEqual(refreshedData);
-    });
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
 
-    it('should set loading state during refresh', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            // Make the next call slow
+            let resolvePromise: (value: Opportunity[]) => void;
+            vi.mocked(api.fetchOpportunities).mockImplementation(
+                () =>
+                    new Promise((resolve) => {
+                        resolvePromise = resolve;
+                    })
+            );
 
-      const { result } = renderHook(() => useOpportunities());
+            act(() => {
+                result.current.refresh();
+            });
 
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
+            // Should be loading during refresh
+            expect(result.current.isLoading).toBe(true);
 
-      // Make the next call slow
-      let resolvePromise: (value: Opportunity[]) => void;
-      vi.mocked(api.fetchOpportunities).mockImplementation(
-        () =>
-          new Promise((resolve) => {
-            resolvePromise = resolve;
-          })
-      );
+            // Resolve and verify loading is false
+            await act(async () => {
+                resolvePromise(mockOpportunities);
+            });
 
-      act(() => {
-        result.current.refresh();
-      });
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+        });
 
-      // Should be loading during refresh
-      expect(result.current.isLoading).toBe(true);
+        it('should clear previous error on refresh', async () => {
+            vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error('Initial error'));
 
-      // Resolve and verify loading is false
-      await act(async () => {
-        resolvePromise(mockOpportunities);
-      });
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-    });
+            await waitFor(() => {
+                expect(result.current.error).not.toBe(null);
+            });
 
-    it('should clear previous error on refresh', async () => {
-      vi.mocked(api.fetchOpportunities).mockRejectedValue(new Error('Initial error'));
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            await act(async () => {
+                await result.current.refresh();
+            });
 
-      await waitFor(() => {
-        expect(result.current.error).not.toBe(null);
-      });
-
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-
-      await act(async () => {
-        await result.current.refresh();
-      });
-
-      expect(result.current.error).toBe(null);
-    });
-  });
-
-  describe('Ingest Function', () => {
-    it('should provide an ingest function', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(typeof result.current.ingest).toBe('function');
-      });
+            expect(result.current.error).toBe(null);
+        });
     });
 
-    it('should call triggerIngest API when ingest is called', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-      vi.mocked(api.triggerIngest).mockResolvedValue(undefined);
+    describe('Ingest Function', () => {
+        it('should provide an ingest function', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
+            await waitFor(() => {
+                expect(typeof result.current.ingest).toBe('function');
+            });
+        });
 
-      await act(async () => {
-        await result.current.ingest();
-      });
+        it('should call triggerIngest API when ingest is called', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            vi.mocked(api.triggerIngest).mockResolvedValue(undefined);
 
-      expect(api.triggerIngest).toHaveBeenCalledTimes(1);
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            await act(async () => {
+                await result.current.ingest();
+            });
+
+            expect(api.triggerIngest).toHaveBeenCalledTimes(1);
+        });
+
+        it('should refresh opportunities after successful ingest', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            vi.mocked(api.triggerIngest).mockResolvedValue(undefined);
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            vi.mocked(api.fetchOpportunities).mockClear();
+
+            await act(async () => {
+                await result.current.ingest();
+            });
+
+            // fetchOpportunities should be called again after ingest
+            expect(api.fetchOpportunities).toHaveBeenCalledTimes(1);
+        });
+
+        it('should set loading state during ingest', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+
+            let resolveIngest: () => void;
+            vi.mocked(api.triggerIngest).mockImplementation(
+                () =>
+                    new Promise((resolve) => {
+                        resolveIngest = resolve;
+                    })
+            );
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            act(() => {
+                result.current.ingest();
+            });
+
+            expect(result.current.isLoading).toBe(true);
+
+            // Resolve ingest and the subsequent fetch
+            await act(async () => {
+                resolveIngest();
+            });
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+        });
+
+        it('should handle ingest errors', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            vi.mocked(api.triggerIngest).mockRejectedValue(new Error('Ingest failed'));
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            await act(async () => {
+                await result.current.ingest();
+            });
+
+            expect(result.current.error).not.toBe(null);
+            expect(result.current.error?.message).toBe('Ingest failed');
+        });
+
+        it('should wrap non-Error ingest errors', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            vi.mocked(api.triggerIngest).mockRejectedValue('string error');
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            await act(async () => {
+                await result.current.ingest();
+            });
+
+            expect(result.current.error?.message).toBe('Failed to ingest data');
+        });
+
+        it('should set loading to false on ingest error', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
+            vi.mocked(api.triggerIngest).mockRejectedValue(new Error('Ingest failed'));
+
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            await act(async () => {
+                await result.current.ingest();
+            });
+
+            expect(result.current.isLoading).toBe(false);
+        });
     });
 
-    it('should refresh opportunities after successful ingest', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-      vi.mocked(api.triggerIngest).mockResolvedValue(undefined);
+    describe('Return Type', () => {
+        it('should return all expected properties', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      const { result } = renderHook(() => useOpportunities());
+            const {result} = renderHook(() => useOpportunities());
 
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
 
-      vi.mocked(api.fetchOpportunities).mockClear();
+            expect(result.current).toHaveProperty('opportunities');
+            expect(result.current).toHaveProperty('isLoading');
+            expect(result.current).toHaveProperty('error');
+            expect(result.current).toHaveProperty('refresh');
+            expect(result.current).toHaveProperty('ingest');
+        });
 
-      await act(async () => {
-        await result.current.ingest();
-      });
+        it('should have correct types for return values', async () => {
+            vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
 
-      // fetchOpportunities should be called again after ingest
-      expect(api.fetchOpportunities).toHaveBeenCalledTimes(1);
+            const {result} = renderHook(() => useOpportunities());
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            expect(Array.isArray(result.current.opportunities)).toBe(true);
+            expect(typeof result.current.isLoading).toBe('boolean');
+            expect(
+                result.current.error === null || result.current.error instanceof Error
+            ).toBe(true);
+            expect(typeof result.current.refresh).toBe('function');
+            expect(typeof result.current.ingest).toBe('function');
+        });
     });
-
-    it('should set loading state during ingest', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-
-      let resolveIngest: () => void;
-      vi.mocked(api.triggerIngest).mockImplementation(
-        () =>
-          new Promise((resolve) => {
-            resolveIngest = resolve;
-          })
-      );
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      act(() => {
-        result.current.ingest();
-      });
-
-      expect(result.current.isLoading).toBe(true);
-
-      // Resolve ingest and the subsequent fetch
-      await act(async () => {
-        resolveIngest();
-      });
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-    });
-
-    it('should handle ingest errors', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-      vi.mocked(api.triggerIngest).mockRejectedValue(new Error('Ingest failed'));
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      await act(async () => {
-        await result.current.ingest();
-      });
-
-      expect(result.current.error).not.toBe(null);
-      expect(result.current.error?.message).toBe('Ingest failed');
-    });
-
-    it('should wrap non-Error ingest errors', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-      vi.mocked(api.triggerIngest).mockRejectedValue('string error');
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      await act(async () => {
-        await result.current.ingest();
-      });
-
-      expect(result.current.error?.message).toBe('Failed to ingest data');
-    });
-
-    it('should set loading to false on ingest error', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-      vi.mocked(api.triggerIngest).mockRejectedValue(new Error('Ingest failed'));
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      await act(async () => {
-        await result.current.ingest();
-      });
-
-      expect(result.current.isLoading).toBe(false);
-    });
-  });
-
-  describe('Return Type', () => {
-    it('should return all expected properties', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      expect(result.current).toHaveProperty('opportunities');
-      expect(result.current).toHaveProperty('isLoading');
-      expect(result.current).toHaveProperty('error');
-      expect(result.current).toHaveProperty('refresh');
-      expect(result.current).toHaveProperty('ingest');
-    });
-
-    it('should have correct types for return values', async () => {
-      vi.mocked(api.fetchOpportunities).mockResolvedValue(mockOpportunities);
-
-      const { result } = renderHook(() => useOpportunities());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      expect(Array.isArray(result.current.opportunities)).toBe(true);
-      expect(typeof result.current.isLoading).toBe('boolean');
-      expect(
-        result.current.error === null || result.current.error instanceof Error
-      ).toBe(true);
-      expect(typeof result.current.refresh).toBe('function');
-      expect(typeof result.current.ingest).toBe('function');
-    });
-  });
 });

@@ -3,10 +3,10 @@ import {useOpportunities} from '@/hooks';
 import {SourcesSoughtPage} from '@/pages';
 
 export const Route = createFileRoute('/_authenticated/opportunities/sources-sought')({
-  component: SourcesSoughtRoute,
+    component: SourcesSoughtRoute,
 });
 
 function SourcesSoughtRoute() {
-  const {opportunities} = useOpportunities();
-  return <SourcesSoughtPage opportunities={opportunities} />;
+    const {opportunities} = useOpportunities();
+    return <SourcesSoughtPage opportunities={opportunities}/>;
 }

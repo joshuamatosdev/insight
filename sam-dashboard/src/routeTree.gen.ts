@@ -18,7 +18,6 @@ import { Route as PublicRegisterRouteImport } from './routes/_public/register'
 import { Route as PublicLoginRouteImport } from './routes/_public/login'
 import { Route as PublicForgotPasswordRouteImport } from './routes/_public/forgot-password'
 import { Route as AuthenticatedUsageRouteImport } from './routes/_authenticated/usage'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedPipelineRouteImport } from './routes/_authenticated/pipeline'
 import { Route as AuthenticatedOpportunitiesRouteImport } from './routes/_authenticated/opportunities'
 import { Route as AuthenticatedMfaSetupRouteImport } from './routes/_authenticated/mfa-setup'
@@ -27,6 +26,7 @@ import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedAuditLogRouteImport } from './routes/_authenticated/audit-log'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
+import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedSbirIndexRouteImport } from './routes/_authenticated/sbir/index'
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedPortalIndexRouteImport } from './routes/_authenticated/portal/index'
@@ -34,6 +34,7 @@ import { Route as AuthenticatedFinancialIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedContractsIndexRouteImport } from './routes/_authenticated/contracts/index'
 import { Route as AuthenticatedComplianceIndexRouteImport } from './routes/_authenticated/compliance/index'
 import { Route as PublicOauthCallbackRouteImport } from './routes/_public/oauth/callback'
+import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSbirAwardsRouteImport } from './routes/_authenticated/sbir/awards'
 import { Route as AuthenticatedReportsBuilderRouteImport } from './routes/_authenticated/reports/builder'
 import { Route as AuthenticatedPortalSprintsRouteImport } from './routes/_authenticated/portal/sprints'
@@ -106,11 +107,6 @@ const AuthenticatedUsageRoute = AuthenticatedUsageRouteImport.update({
   path: '/usage',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
 const AuthenticatedPipelineRoute = AuthenticatedPipelineRouteImport.update({
   id: '/pipeline',
   path: '/pipeline',
@@ -152,6 +148,12 @@ const AuthenticatedAlertsRoute = AuthenticatedAlertsRouteImport.update({
   path: '/alerts',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedSettingsIndexRoute =
+  AuthenticatedSettingsIndexRouteImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedSbirIndexRoute = AuthenticatedSbirIndexRouteImport.update({
   id: '/sbir/',
   path: '/sbir/',
@@ -192,6 +194,12 @@ const PublicOauthCallbackRoute = PublicOauthCallbackRouteImport.update({
   path: '/oauth/callback',
   getParentRoute: () => PublicRoute,
 } as any)
+const AuthenticatedSettingsNotificationsRoute =
+  AuthenticatedSettingsNotificationsRouteImport.update({
+    id: '/settings/notifications',
+    path: '/settings/notifications',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedSbirAwardsRoute = AuthenticatedSbirAwardsRouteImport.update({
   id: '/sbir/awards',
   path: '/sbir/awards',
@@ -369,7 +377,6 @@ export interface FileRoutesByFullPath {
   '/mfa-setup': typeof AuthenticatedMfaSetupRoute
   '/opportunities': typeof AuthenticatedOpportunitiesRouteWithChildren
   '/pipeline': typeof AuthenticatedPipelineRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/usage': typeof AuthenticatedUsageRoute
   '/forgot-password': typeof PublicForgotPasswordRoute
   '/login': typeof PublicLoginRoute
@@ -398,6 +405,7 @@ export interface FileRoutesByFullPath {
   '/portal/sprints': typeof AuthenticatedPortalSprintsRoute
   '/reports/builder': typeof AuthenticatedReportsBuilderRoute
   '/sbir/awards': typeof AuthenticatedSbirAwardsRoute
+  '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/oauth/callback': typeof PublicOauthCallbackRoute
   '/compliance/': typeof AuthenticatedComplianceIndexRoute
   '/contracts/': typeof AuthenticatedContractsIndexRoute
@@ -405,6 +413,7 @@ export interface FileRoutesByFullPath {
   '/portal/': typeof AuthenticatedPortalIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
   '/sbir/': typeof AuthenticatedSbirIndexRoute
+  '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/compliance/certifications/$certificationId': typeof AuthenticatedComplianceCertificationsCertificationIdRoute
   '/financial/budgets/$budgetId': typeof AuthenticatedFinancialBudgetsBudgetIdRoute
   '/financial/invoices/$invoiceId': typeof AuthenticatedFinancialInvoicesInvoiceIdRoute
@@ -422,7 +431,6 @@ export interface FileRoutesByTo {
   '/mfa-setup': typeof AuthenticatedMfaSetupRoute
   '/opportunities': typeof AuthenticatedOpportunitiesRouteWithChildren
   '/pipeline': typeof AuthenticatedPipelineRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/usage': typeof AuthenticatedUsageRoute
   '/forgot-password': typeof PublicForgotPasswordRoute
   '/login': typeof PublicLoginRoute
@@ -451,6 +459,7 @@ export interface FileRoutesByTo {
   '/portal/sprints': typeof AuthenticatedPortalSprintsRoute
   '/reports/builder': typeof AuthenticatedReportsBuilderRoute
   '/sbir/awards': typeof AuthenticatedSbirAwardsRoute
+  '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/oauth/callback': typeof PublicOauthCallbackRoute
   '/compliance': typeof AuthenticatedComplianceIndexRoute
   '/contracts': typeof AuthenticatedContractsIndexRoute
@@ -458,6 +467,7 @@ export interface FileRoutesByTo {
   '/portal': typeof AuthenticatedPortalIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/sbir': typeof AuthenticatedSbirIndexRoute
+  '/settings': typeof AuthenticatedSettingsIndexRoute
   '/compliance/certifications/$certificationId': typeof AuthenticatedComplianceCertificationsCertificationIdRoute
   '/financial/budgets/$budgetId': typeof AuthenticatedFinancialBudgetsBudgetIdRoute
   '/financial/invoices/$invoiceId': typeof AuthenticatedFinancialInvoicesInvoiceIdRoute
@@ -477,7 +487,6 @@ export interface FileRoutesById {
   '/_authenticated/mfa-setup': typeof AuthenticatedMfaSetupRoute
   '/_authenticated/opportunities': typeof AuthenticatedOpportunitiesRouteWithChildren
   '/_authenticated/pipeline': typeof AuthenticatedPipelineRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/usage': typeof AuthenticatedUsageRoute
   '/_public/forgot-password': typeof PublicForgotPasswordRoute
   '/_public/login': typeof PublicLoginRoute
@@ -507,6 +516,7 @@ export interface FileRoutesById {
   '/_authenticated/portal/sprints': typeof AuthenticatedPortalSprintsRoute
   '/_authenticated/reports/builder': typeof AuthenticatedReportsBuilderRoute
   '/_authenticated/sbir/awards': typeof AuthenticatedSbirAwardsRoute
+  '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_public/oauth/callback': typeof PublicOauthCallbackRoute
   '/_authenticated/compliance/': typeof AuthenticatedComplianceIndexRoute
   '/_authenticated/contracts/': typeof AuthenticatedContractsIndexRoute
@@ -514,6 +524,7 @@ export interface FileRoutesById {
   '/_authenticated/portal/': typeof AuthenticatedPortalIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/sbir/': typeof AuthenticatedSbirIndexRoute
+  '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/compliance/certifications/$certificationId': typeof AuthenticatedComplianceCertificationsCertificationIdRoute
   '/_authenticated/financial/budgets/$budgetId': typeof AuthenticatedFinancialBudgetsBudgetIdRoute
   '/_authenticated/financial/invoices/$invoiceId': typeof AuthenticatedFinancialInvoicesInvoiceIdRoute
@@ -533,7 +544,6 @@ export interface FileRouteTypes {
     | '/mfa-setup'
     | '/opportunities'
     | '/pipeline'
-    | '/settings'
     | '/usage'
     | '/forgot-password'
     | '/login'
@@ -562,6 +572,7 @@ export interface FileRouteTypes {
     | '/portal/sprints'
     | '/reports/builder'
     | '/sbir/awards'
+    | '/settings/notifications'
     | '/oauth/callback'
     | '/compliance/'
     | '/contracts/'
@@ -569,6 +580,7 @@ export interface FileRouteTypes {
     | '/portal/'
     | '/reports/'
     | '/sbir/'
+    | '/settings/'
     | '/compliance/certifications/$certificationId'
     | '/financial/budgets/$budgetId'
     | '/financial/invoices/$invoiceId'
@@ -586,7 +598,6 @@ export interface FileRouteTypes {
     | '/mfa-setup'
     | '/opportunities'
     | '/pipeline'
-    | '/settings'
     | '/usage'
     | '/forgot-password'
     | '/login'
@@ -615,6 +626,7 @@ export interface FileRouteTypes {
     | '/portal/sprints'
     | '/reports/builder'
     | '/sbir/awards'
+    | '/settings/notifications'
     | '/oauth/callback'
     | '/compliance'
     | '/contracts'
@@ -622,6 +634,7 @@ export interface FileRouteTypes {
     | '/portal'
     | '/reports'
     | '/sbir'
+    | '/settings'
     | '/compliance/certifications/$certificationId'
     | '/financial/budgets/$budgetId'
     | '/financial/invoices/$invoiceId'
@@ -640,7 +653,6 @@ export interface FileRouteTypes {
     | '/_authenticated/mfa-setup'
     | '/_authenticated/opportunities'
     | '/_authenticated/pipeline'
-    | '/_authenticated/settings'
     | '/_authenticated/usage'
     | '/_public/forgot-password'
     | '/_public/login'
@@ -670,6 +682,7 @@ export interface FileRouteTypes {
     | '/_authenticated/portal/sprints'
     | '/_authenticated/reports/builder'
     | '/_authenticated/sbir/awards'
+    | '/_authenticated/settings/notifications'
     | '/_public/oauth/callback'
     | '/_authenticated/compliance/'
     | '/_authenticated/contracts/'
@@ -677,6 +690,7 @@ export interface FileRouteTypes {
     | '/_authenticated/portal/'
     | '/_authenticated/reports/'
     | '/_authenticated/sbir/'
+    | '/_authenticated/settings/'
     | '/_authenticated/compliance/certifications/$certificationId'
     | '/_authenticated/financial/budgets/$budgetId'
     | '/_authenticated/financial/invoices/$invoiceId'
@@ -755,13 +769,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsageRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/pipeline': {
       id: '/_authenticated/pipeline'
       path: '/pipeline'
@@ -818,6 +825,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAlertsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings/': {
+      id: '/_authenticated/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/sbir/': {
       id: '/_authenticated/sbir/'
       path: '/sbir'
@@ -866,6 +880,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/oauth/callback'
       preLoaderRoute: typeof PublicOauthCallbackRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_authenticated/settings/notifications': {
+      id: '/_authenticated/settings/notifications'
+      path: '/settings/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/sbir/awards': {
       id: '/_authenticated/sbir/awards'
@@ -1098,7 +1119,6 @@ interface AuthenticatedRouteChildren {
   AuthenticatedMfaSetupRoute: typeof AuthenticatedMfaSetupRoute
   AuthenticatedOpportunitiesRoute: typeof AuthenticatedOpportunitiesRouteWithChildren
   AuthenticatedPipelineRoute: typeof AuthenticatedPipelineRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedUsageRoute: typeof AuthenticatedUsageRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAdminPermissionsRoute: typeof AuthenticatedAdminPermissionsRoute
@@ -1119,12 +1139,14 @@ interface AuthenticatedRouteChildren {
   AuthenticatedPortalSprintsRoute: typeof AuthenticatedPortalSprintsRoute
   AuthenticatedReportsBuilderRoute: typeof AuthenticatedReportsBuilderRoute
   AuthenticatedSbirAwardsRoute: typeof AuthenticatedSbirAwardsRoute
+  AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
   AuthenticatedComplianceIndexRoute: typeof AuthenticatedComplianceIndexRoute
   AuthenticatedContractsIndexRoute: typeof AuthenticatedContractsIndexRoute
   AuthenticatedFinancialIndexRoute: typeof AuthenticatedFinancialIndexRoute
   AuthenticatedPortalIndexRoute: typeof AuthenticatedPortalIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedSbirIndexRoute: typeof AuthenticatedSbirIndexRoute
+  AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
   AuthenticatedComplianceCertificationsCertificationIdRoute: typeof AuthenticatedComplianceCertificationsCertificationIdRoute
   AuthenticatedFinancialBudgetsBudgetIdRoute: typeof AuthenticatedFinancialBudgetsBudgetIdRoute
   AuthenticatedFinancialInvoicesInvoiceIdRoute: typeof AuthenticatedFinancialInvoicesInvoiceIdRoute
@@ -1142,7 +1164,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedMfaSetupRoute: AuthenticatedMfaSetupRoute,
   AuthenticatedOpportunitiesRoute: AuthenticatedOpportunitiesRouteWithChildren,
   AuthenticatedPipelineRoute: AuthenticatedPipelineRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedUsageRoute: AuthenticatedUsageRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedAdminPermissionsRoute: AuthenticatedAdminPermissionsRoute,
@@ -1164,12 +1185,15 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedPortalSprintsRoute: AuthenticatedPortalSprintsRoute,
   AuthenticatedReportsBuilderRoute: AuthenticatedReportsBuilderRoute,
   AuthenticatedSbirAwardsRoute: AuthenticatedSbirAwardsRoute,
+  AuthenticatedSettingsNotificationsRoute:
+    AuthenticatedSettingsNotificationsRoute,
   AuthenticatedComplianceIndexRoute: AuthenticatedComplianceIndexRoute,
   AuthenticatedContractsIndexRoute: AuthenticatedContractsIndexRoute,
   AuthenticatedFinancialIndexRoute: AuthenticatedFinancialIndexRoute,
   AuthenticatedPortalIndexRoute: AuthenticatedPortalIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedSbirIndexRoute: AuthenticatedSbirIndexRoute,
+  AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
   AuthenticatedComplianceCertificationsCertificationIdRoute:
     AuthenticatedComplianceCertificationsCertificationIdRoute,
   AuthenticatedFinancialBudgetsBudgetIdRoute:

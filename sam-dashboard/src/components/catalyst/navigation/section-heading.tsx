@@ -4,13 +4,13 @@ import clsx from 'clsx'
 type HeadingLevel = 'h2' | 'h3' | 'h4'
 
 type SectionHeadingProps = {
-  level?: HeadingLevel
-  border?: boolean
-  children: React.ReactNode
+    level?: HeadingLevel
+    border?: boolean
+    children: React.ReactNode
 } & Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>
 
 type SectionHeadingTitleProps = {
-  level?: HeadingLevel
+    level?: HeadingLevel
 } & React.ComponentPropsWithoutRef<'h2' | 'h3' | 'h4'>
 
 type SectionHeadingDescriptionProps = React.ComponentPropsWithoutRef<'p'>
@@ -48,24 +48,24 @@ type SectionHeadingActionsProps = React.ComponentPropsWithoutRef<'div'>
  * </SectionHeading>
  */
 export function SectionHeading({
-  level = 'h3',
-  border = true,
-  className,
-  children,
-  ...props
-}: SectionHeadingProps) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        border && 'border-b border-gray-200 pb-5 dark:border-white/10',
-        !border && 'pb-5'
-      )}
-    >
-      {children}
-    </div>
-  )
+                                   level = 'h3',
+                                   border = true,
+                                   className,
+                                   children,
+                                   ...props
+                               }: SectionHeadingProps) {
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                border && 'border-b border-gray-200 pb-5 dark:border-white/10',
+                !border && 'pb-5'
+            )}
+        >
+            {children}
+        </div>
+    )
 }
 
 /**
@@ -73,21 +73,21 @@ export function SectionHeading({
  * Smaller scale than PageHeading, suitable for subsections
  */
 export function SectionHeadingTitle({
-  level = 'h3',
-  className,
-  ...props
-}: SectionHeadingTitleProps) {
-  const Element = level
+                                        level = 'h3',
+                                        className,
+                                        ...props
+                                    }: SectionHeadingTitleProps) {
+    const Element = level
 
-  return (
-    <Element
-      {...props}
-      className={clsx(
-        className,
-        'text-base font-semibold text-gray-900 dark:text-white'
-      )}
-    />
-  )
+    return (
+        <Element
+            {...props}
+            className={clsx(
+                className,
+                'text-base font-semibold text-gray-900 dark:text-white'
+            )}
+        />
+    )
 }
 
 /**
@@ -95,18 +95,18 @@ export function SectionHeadingTitle({
  * Displayed below the title with muted styling
  */
 export function SectionHeadingDescription({
-  className,
-  ...props
-}: SectionHeadingDescriptionProps) {
-  return (
-    <p
-      {...props}
-      className={clsx(
-        className,
-        'mt-2 max-w-4xl text-sm text-gray-500 dark:text-gray-400'
-      )}
-    />
-  )
+                                              className,
+                                              ...props
+                                          }: SectionHeadingDescriptionProps) {
+    return (
+        <p
+            {...props}
+            className={clsx(
+                className,
+                'mt-2 max-w-4xl text-sm text-gray-500 dark:text-gray-400'
+            )}
+        />
+    )
 }
 
 /**
@@ -114,16 +114,16 @@ export function SectionHeadingDescription({
  * Typically used with Button components on the right side
  */
 export function SectionHeadingActions({
-  className,
-  ...props
-}: SectionHeadingActionsProps) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        'mt-3 flex sm:mt-0 sm:ml-4'
-      )}
-    />
-  )
+                                          className,
+                                          ...props
+                                      }: SectionHeadingActionsProps) {
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                'mt-3 flex sm:mt-0 sm:ml-4'
+            )}
+        />
+    )
 }

@@ -14,160 +14,160 @@ import {ContractForm, ContractList} from '../../components/domain/contracts';
 import {useContracts, useCreateContract} from '../../hooks/useContracts';
 
 export interface ContractsPageProps {
-  onContractSelect?: (contractId: string) => void;
+    onContractSelect?: (contractId: string) => void;
 }
 
-export function ContractsPage({ onContractSelect }: ContractsPageProps) {
-  const {
-    contracts,
-    isLoading,
-    error,
-    pagination,
-    setPage,
-    refresh,
-    search,
-  } = useContracts();
-  const { createContractAction, isCreating } = useCreateContract();
+export function ContractsPage({onContractSelect}: ContractsPageProps) {
+    const {
+        contracts,
+        isLoading,
+        error,
+        pagination,
+        setPage,
+        refresh,
+        search,
+    } = useContracts();
+    const {createContractAction, isCreating} = useCreateContract();
 
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+    const [showCreateForm, setShowCreateForm] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
-  const handleContractClick = useCallback(
-    (contract: Contract) => {
-      if (onContractSelect !== undefined) {
-        onContractSelect(contract.id);
-      }
-    },
-    [onContractSelect]
-  );
-
-  const handleSearch = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(event.target.value);
-    },
-    []
-  );
-
-  const handleSearchSubmit = useCallback(
-    (event: React.FormEvent) => {
-      event.preventDefault();
-      search(searchTerm);
-    },
-    [search, searchTerm]
-  );
-
-  const handleCreateContract = useCallback(
-    async (data: CreateContractRequest | UpdateContractRequest) => {
-      // For new contracts, we need CreateContractRequest which has required fields
-      const createData = data as CreateContractRequest;
-      const result = await createContractAction(createData);
-      if (result !== null) {
-        setShowCreateForm(false);
-        refresh();
-        if (onContractSelect !== undefined) {
-          onContractSelect(result.id);
-        }
-      }
-    },
-    [createContractAction, onContractSelect, refresh]
-  );
-
-  const handleCancelCreate = useCallback(() => {
-    setShowCreateForm(false);
-  }, []);
-
-  if (showCreateForm) {
-    return (
-      <Section>
-        <ContractForm
-          onSubmit={handleCreateContract}
-          onCancel={handleCancelCreate}
-          isLoading={isCreating}
-        />
-      </Section>
+    const handleContractClick = useCallback(
+        (contract: Contract) => {
+            if (onContractSelect !== undefined) {
+                onContractSelect(contract.id);
+            }
+        },
+        [onContractSelect]
     );
-  }
 
-  return (
-    <Section>
-      <SectionHeader>
-        <HStack justify="between" align="center">
-          <Text variant="heading3">Contracts</Text>
-          <Button
-            variant="primary"
-            leftIcon={<PlusIcon size="sm" />}
-            onClick={() => setShowCreateForm(true)}
-          >
-            New Contract
-          </Button>
-        </HStack>
-      </SectionHeader>
+    const handleSearch = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setSearchTerm(event.target.value);
+        },
+        []
+    );
 
-      <Box>
-        <Box as="form" onSubmit={handleSearchSubmit}>
-          <HStack spacing="sm">
-            <Input
-              placeholder="Search contracts..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <Button type="submit" variant="secondary">
-              Search
-            </Button>
-          </HStack>
-        </Box>
-      </Box>
+    const handleSearchSubmit = useCallback(
+        (event: React.FormEvent) => {
+            event.preventDefault();
+            search(searchTerm);
+        },
+        [search, searchTerm]
+    );
 
-      {isLoading && (
-        <Flex justify="center" align="center">
-          <Text variant="body" color="muted">
-            Loading contracts...
-          </Text>
-        </Flex>
-      )}
+    const handleCreateContract = useCallback(
+        async (data: CreateContractRequest | UpdateContractRequest) => {
+            // For new contracts, we need CreateContractRequest which has required fields
+            const createData = data as CreateContractRequest;
+            const result = await createContractAction(createData);
+            if (result !== null) {
+                setShowCreateForm(false);
+                refresh();
+                if (onContractSelect !== undefined) {
+                    onContractSelect(result.id);
+                }
+            }
+        },
+        [createContractAction, onContractSelect, refresh]
+    );
 
-      {error !== null && (
-        <InlineAlert color="error">
-          <InlineAlertTitle>Error</InlineAlertTitle>
-          <InlineAlertDescription>{error.message}</InlineAlertDescription>
-        </InlineAlert>
-      )}
+    const handleCancelCreate = useCallback(() => {
+        setShowCreateForm(false);
+    }, []);
 
-      {isLoading === false && error === null && (
-        <Stack spacing="md">
-          <ContractList
-            contracts={contracts}
-            onContractClick={handleContractClick}
-            emptyMessage="No contracts found. Create your first contract to get started."
-          />
+    if (showCreateForm) {
+        return (
+            <Section>
+                <ContractForm
+                    onSubmit={handleCreateContract}
+                    onCancel={handleCancelCreate}
+                    isLoading={isCreating}
+                />
+            </Section>
+        );
+    }
 
-          {pagination.totalPages > 1 && (
-            <HStack justify="center" spacing="sm">
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={pagination.page === 0}
-                onClick={() => setPage(pagination.page - 1)}
-              >
-                Previous
-              </Button>
-              <Text variant="body">
-                Page {pagination.page + 1} of {pagination.totalPages}
-              </Text>
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={pagination.page >= pagination.totalPages - 1}
-                onClick={() => setPage(pagination.page + 1)}
-              >
-                Next
-              </Button>
-            </HStack>
-          )}
-        </Stack>
-      )}
-    </Section>
-  );
+    return (
+        <Section>
+            <SectionHeader>
+                <HStack justify="between" align="center">
+                    <Text variant="heading3">Contracts</Text>
+                    <Button
+                        variant="primary"
+                        leftIcon={<PlusIcon size="sm"/>}
+                        onClick={() => setShowCreateForm(true)}
+                    >
+                        New Contract
+                    </Button>
+                </HStack>
+            </SectionHeader>
+
+            <Box>
+                <Box as="form" onSubmit={handleSearchSubmit}>
+                    <HStack spacing="sm">
+                        <Input
+                            placeholder="Search contracts..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                        <Button type="submit" variant="secondary">
+                            Search
+                        </Button>
+                    </HStack>
+                </Box>
+            </Box>
+
+            {isLoading && (
+                <Flex justify="center" align="center">
+                    <Text variant="body" color="muted">
+                        Loading contracts...
+                    </Text>
+                </Flex>
+            )}
+
+            {error !== null && (
+                <InlineAlert color="error">
+                    <InlineAlertTitle>Error</InlineAlertTitle>
+                    <InlineAlertDescription>{error.message}</InlineAlertDescription>
+                </InlineAlert>
+            )}
+
+            {isLoading === false && error === null && (
+                <Stack spacing="md">
+                    <ContractList
+                        contracts={contracts}
+                        onContractClick={handleContractClick}
+                        emptyMessage="No contracts found. Create your first contract to get started."
+                    />
+
+                    {pagination.totalPages > 1 && (
+                        <HStack justify="center" spacing="sm">
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                disabled={pagination.page === 0}
+                                onClick={() => setPage(pagination.page - 1)}
+                            >
+                                Previous
+                            </Button>
+                            <Text variant="body">
+                                Page {pagination.page + 1} of {pagination.totalPages}
+                            </Text>
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                disabled={pagination.page >= pagination.totalPages - 1}
+                                onClick={() => setPage(pagination.page + 1)}
+                            >
+                                Next
+                            </Button>
+                        </HStack>
+                    )}
+                </Stack>
+            )}
+        </Section>
+    );
 }
 
 export default ContractsPage;

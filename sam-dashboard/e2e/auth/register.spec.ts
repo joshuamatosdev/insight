@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/test-fixtures';
+import {expect, test} from '../fixtures/test-fixtures';
 
 /**
  * Registration Page E2E Tests
@@ -35,57 +35,57 @@ import { test, expect } from '../fixtures/test-fixtures';
  */
 
 test.describe('Registration Page', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/register');
-  });
+    test.beforeEach(async ({page}) => {
+        await page.goto('/register');
+    });
 
-  test.skip('should display registration form', async ({ page }) => {
-    // TODO: Implement test
-    // - Verify all form fields are visible
-    // - Verify submit button is visible
-    await expect(page).toHaveTitle(/register|sign up|create account/i);
-  });
+    test.skip('should display registration form', async ({page}) => {
+        // TODO: Implement test
+        // - Verify all form fields are visible
+        // - Verify submit button is visible
+        await expect(page).toHaveTitle(/register|sign up|create account/i);
+    });
 
-  test.skip('should register successfully with valid data', async ({ page }) => {
-    // TODO: Implement test
-    // Fill in registration form
-    // Submit and verify success
-  });
+    test.skip('should register successfully with valid data', async ({page}) => {
+        // TODO: Implement test
+        // Fill in registration form
+        // Submit and verify success
+    });
 
-  test.skip('should show validation errors for empty fields', async ({ page }) => {
-    // TODO: Implement test
-    // await page.getByRole('button', { name: /register|sign up|create/i }).click();
-    // Verify validation messages for required fields
-  });
+    test.skip('should show validation errors for empty fields', async ({page}) => {
+        // TODO: Implement test
+        // await page.getByRole('button', { name: /register|sign up|create/i }).click();
+        // Verify validation messages for required fields
+    });
 
-  test.skip('should validate email format', async ({ page }) => {
-    // TODO: Implement test
-    // await page.getByLabel(/email/i).fill('invalid-email');
-    // Verify email validation error
-  });
+    test.skip('should validate email format', async ({page}) => {
+        // TODO: Implement test
+        // await page.getByLabel(/email/i).fill('invalid-email');
+        // Verify email validation error
+    });
 
-  test.skip('should validate password requirements', async ({ page }) => {
-    // TODO: Implement test
-    // await page.getByLabel(/password/i).first().fill('weak');
-    // Verify password validation error
-  });
+    test.skip('should validate password requirements', async ({page}) => {
+        // TODO: Implement test
+        // await page.getByLabel(/password/i).first().fill('weak');
+        // Verify password validation error
+    });
 
-  test.skip('should validate password confirmation match', async ({ page }) => {
-    // TODO: Implement test
-    // await page.getByLabel(/password/i).first().fill('StrongPass123!');
-    // await page.getByLabel(/confirm password/i).fill('DifferentPass123!');
-    // Verify mismatch error
-  });
+    test.skip('should validate password confirmation match', async ({page}) => {
+        // TODO: Implement test
+        // await page.getByLabel(/password/i).first().fill('StrongPass123!');
+        // await page.getByLabel(/confirm password/i).fill('DifferentPass123!');
+        // Verify mismatch error
+    });
 
-  test.skip('should show error for duplicate email', async ({ page }) => {
-    // TODO: Implement test
-    // Attempt registration with existing email
-    // Verify duplicate email error message
-  });
+    test.skip('should show error for duplicate email', async ({page}) => {
+        // TODO: Implement test
+        // Attempt registration with existing email
+        // Verify duplicate email error message
+    });
 
-  test.skip('should navigate to login page', async ({ page }) => {
-    // TODO: Implement test
-    // await page.getByRole('link', { name: /sign in|log in|already have/i }).click();
-    // await expect(page).toHaveURL(/login/);
-  });
+    test.skip('should navigate to login page', async ({page}) => {
+        // TODO: Implement test
+        // await page.getByRole('link', { name: /sign in|log in|already have/i }).click();
+        // await expect(page).toHaveURL(/login/);
+    });
 });

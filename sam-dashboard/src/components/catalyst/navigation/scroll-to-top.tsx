@@ -1,19 +1,18 @@
 /**
- * ScrollToTop component for React Router
- * 
+ * ScrollToTop component for TanStack Router
+ *
  * Scrolls to top of page on route change.
- * Required because React Router doesn't do this automatically.
  */
 
 import {useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation} from '@tanstack/react-router'
 
 export function ScrollToTop() {
-  const { pathname } = useLocation()
+    const location = useLocation()
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [location.pathname])
 
-  return null
+    return null
 }

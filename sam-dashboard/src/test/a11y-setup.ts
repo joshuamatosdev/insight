@@ -5,4 +5,4 @@ import {expect} from 'vitest';
 expect.extend(toHaveNoViolations);
 
 // Export for use in test files
-export { axe } from 'jest-axe';
+export {axe} from 'jest-axe';

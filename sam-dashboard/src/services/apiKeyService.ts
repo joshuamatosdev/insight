@@ -1,104 +1,136 @@
+/**
+ * API Key Service - Type-safe using openapi-fetch
+ */
+
 import {apiClient} from './apiClient';
 
 export type ApiKeyScope = 'READ' | 'WRITE' | 'ADMIN';
 
 export interface ApiKey {
-  id: string;
-  name: string;
-  prefix: string;
-  scopes: ApiKeyScope[];
-  expiresAt: string | null;
-  lastUsedAt: string | null;
-  usageCount: number;
-  ipWhitelist: string[] | null;
-  createdAt: string;
-  createdById: string;
-  createdByName: string;
-  isActive: boolean;
+    id: string;
+    name: string;
+    prefix: string;
+    scopes: ApiKeyScope[];
+    expiresAt: string | null;
+    lastUsedAt: string | null;
+    usageCount: number;
+    ipWhitelist: string[] | null;
+    createdAt: string;
+    createdById: string;
+    createdByName: string;
+    isActive: boolean;
 }
 
 export interface ApiKeyWithSecret extends ApiKey {
-  key: string;
+    key: string;
 }
 
 export interface CreateApiKeyRequest {
-  name: string;
-  scopes: ApiKeyScope[];
-  expiresAt?: string;
-  ipWhitelist?: string[];
+    name: string;
+    scopes: ApiKeyScope[];
+    expiresAt?: string;
+    ipWhitelist?: string[];
 }
 
-const API_KEY_BASE = '/api-keys';
-
 export async function fetchApiKeys(): Promise<ApiKey[]> {
-  const response = await apiClient.get<ApiKey[]>(API_KEY_BASE);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/api-keys');
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as ApiKey[];
 }
 
 export async function fetchApiKey(id: string): Promise<ApiKey> {
-  const response = await apiClient.get<ApiKey>(`${API_KEY_BASE}/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/api-keys/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as ApiKey;
 }
 
 export async function createApiKey(data: CreateApiKeyRequest): Promise<ApiKeyWithSecret> {
-  const response = await apiClient.post<ApiKeyWithSecret, CreateApiKeyRequest>(API_KEY_BASE, data);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data: responseData, error} = await apiClient.POST('/api-keys', {
+        body: data,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return responseData as ApiKeyWithSecret;
 }
 
 export async function revokeApiKey(id: string): Promise<void> {
-  const response = await apiClient.delete<void>(`${API_KEY_BASE}/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
+    const {error} = await apiClient.POST('/api-keys/{id}/revoke', {
+        params: {path: {id}},
+        body: {},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
 }
 
 export async function regenerateApiKey(id: string): Promise<ApiKeyWithSecret> {
-  const response = await apiClient.post<ApiKeyWithSecret, Record<string, never>>(`${API_KEY_BASE}/${id}/regenerate`, {});
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.POST('/api-keys/{id}/regenerate', {
+        params: {path: {id}},
+        body: {},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as ApiKeyWithSecret;
 }
 
 export async function updateApiKeyScopes(id: string, scopes: ApiKeyScope[]): Promise<ApiKey> {
-  const response = await apiClient.patch<ApiKey, { scopes: ApiKeyScope[] }>(`${API_KEY_BASE}/${id}/scopes`, { scopes });
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PATCH('/api-keys/{id}', {
+        params: {path: {id}},
+        body: {scopes},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as ApiKey;
 }
 
 export async function updateApiKeyIpWhitelist(
-  id: string,
-  ipWhitelist: string[]
+    id: string,
+    ipWhitelist: string[]
 ): Promise<ApiKey> {
-  const response = await apiClient.patch<ApiKey, { ipWhitelist: string[] }>(`${API_KEY_BASE}/${id}/ip-whitelist`, { ipWhitelist });
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PATCH('/api-keys/{id}', {
+        params: {path: {id}},
+        body: {ipWhitelist},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as ApiKey;
 }
 
 export async function fetchApiKeyUsage(
-  id: string,
-  startDate: string,
-  endDate: string
-): Promise<{ date: string; count: number }[]> {
-  const params = new URLSearchParams();
-  params.set('startDate', startDate);
-  params.set('endDate', endDate);
-  const response = await apiClient.get<{ date: string; count: number }[]>(`${API_KEY_BASE}/${id}/usage?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    id: string,
+    startDate: string,
+    endDate: string
+): Promise<{date: string; count: number}[]> {
+    const {data, error} = await apiClient.GET('/api-keys/{id}/usage', {
+        params: {path: {id}, query: {startDate, endDate}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as {date: string; count: number}[];
 }

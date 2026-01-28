@@ -3,17 +3,17 @@ import {useCallback, useEffect, useRef} from 'react';
 export type AnnouncePoliteness = 'polite' | 'assertive';
 
 export interface UseAnnounceOptions {
-  /** Default politeness level (default: 'polite') */
-  defaultPoliteness?: AnnouncePoliteness;
-  /** Delay in ms before clearing the announcement (default: 1000) */
-  clearDelay?: number;
+    /** Default politeness level (default: 'polite') */
+    defaultPoliteness?: AnnouncePoliteness;
+    /** Delay in ms before clearing the announcement (default: 1000) */
+    clearDelay?: number;
 }
 
 export interface UseAnnounceReturn {
-  /** Announce a message to screen readers */
-  announce: (message: string, politeness?: AnnouncePoliteness) => void;
-  /** Clear the current announcement */
-  clear: () => void;
+    /** Announce a message to screen readers */
+    announce: (message: string, politeness?: AnnouncePoliteness) => void;
+    /** Clear the current announcement */
+    clear: () => void;
 }
 
 // Singleton containers for live regions (shared across all hooks)
@@ -25,21 +25,21 @@ let instanceCount = 0;
  * Creates or returns the singleton live region container for the given politeness level.
  */
 function getOrCreateContainer(politeness: AnnouncePoliteness): HTMLDivElement {
-  const isPolite = politeness === 'polite';
-  const existingContainer = isPolite ? politeContainer : assertiveContainer;
+    const isPolite = politeness === 'polite';
+    const existingContainer = isPolite ? politeContainer : assertiveContainer;
 
-  if (existingContainer !== null) {
-    return existingContainer;
-  }
+    if (existingContainer !== null) {
+        return existingContainer;
+    }
 
-  const container = document.createElement('div');
-  container.setAttribute('role', 'status');
-  container.setAttribute('aria-live', politeness);
-  container.setAttribute('aria-atomic', 'true');
-  container.setAttribute('aria-relevant', 'additions text');
+    const container = document.createElement('div');
+    container.setAttribute('role', 'status');
+    container.setAttribute('aria-live', politeness);
+    container.setAttribute('aria-atomic', 'true');
+    container.setAttribute('aria-relevant', 'additions text');
 
-  // Visually hidden styles
-  container.style.cssText = `
+    // Visually hidden styles
+    container.style.cssText = `
     position: absolute;
     width: 1px;
     height: 1px;
@@ -51,30 +51,30 @@ function getOrCreateContainer(politeness: AnnouncePoliteness): HTMLDivElement {
     border: 0;
   `;
 
-  container.id = `sr-announcer-${politeness}`;
-  document.body.appendChild(container);
+    container.id = `sr-announcer-${politeness}`;
+    document.body.appendChild(container);
 
-  if (isPolite) {
-    politeContainer = container;
-  } else {
-    assertiveContainer = container;
-  }
+    if (isPolite) {
+        politeContainer = container;
+    } else {
+        assertiveContainer = container;
+    }
 
-  return container;
+    return container;
 }
 
 /**
  * Cleans up the live region containers when no more hooks are using them.
  */
 function cleanupContainers(): void {
-  if (politeContainer !== null) {
-    politeContainer.remove();
-    politeContainer = null;
-  }
-  if (assertiveContainer !== null) {
-    assertiveContainer.remove();
-    assertiveContainer = null;
-  }
+    if (politeContainer !== null) {
+        politeContainer.remove();
+        politeContainer = null;
+    }
+    if (assertiveContainer !== null) {
+        assertiveContainer.remove();
+        assertiveContainer = null;
+    }
 }
 
 /**
@@ -102,72 +102,72 @@ function cleanupContainers(): void {
  * ```
  */
 export function useAnnounce(options: UseAnnounceOptions = {}): UseAnnounceReturn {
-  const { defaultPoliteness = 'polite', clearDelay = 1000 } = options;
-  const timeoutRef = useRef<number | null>(null);
+    const {defaultPoliteness = 'polite', clearDelay = 1000} = options;
+    const timeoutRef = useRef<number | null>(null);
 
-  // Track instance count for cleanup
-  useEffect(() => {
-    instanceCount += 1;
+    // Track instance count for cleanup
+    useEffect(() => {
+        instanceCount += 1;
 
-    return () => {
-      instanceCount -= 1;
-      if (instanceCount === 0) {
-        cleanupContainers();
-      }
-    };
-  }, []);
+        return () => {
+            instanceCount -= 1;
+            if (instanceCount === 0) {
+                cleanupContainers();
+            }
+        };
+    }, []);
 
-  const clear = useCallback(() => {
-    if (timeoutRef.current !== null) {
-      window.clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
+    const clear = useCallback(() => {
+        if (timeoutRef.current !== null) {
+            window.clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
 
-    if (politeContainer !== null) {
-      politeContainer.textContent = '';
-    }
-    if (assertiveContainer !== null) {
-      assertiveContainer.textContent = '';
-    }
-  }, []);
+        if (politeContainer !== null) {
+            politeContainer.textContent = '';
+        }
+        if (assertiveContainer !== null) {
+            assertiveContainer.textContent = '';
+        }
+    }, []);
 
-  const announce = useCallback(
-    (message: string, politeness: AnnouncePoliteness = defaultPoliteness) => {
-      // Clear any pending timeout
-      if (timeoutRef.current !== null) {
-        window.clearTimeout(timeoutRef.current);
-      }
+    const announce = useCallback(
+        (message: string, politeness: AnnouncePoliteness = defaultPoliteness) => {
+            // Clear any pending timeout
+            if (timeoutRef.current !== null) {
+                window.clearTimeout(timeoutRef.current);
+            }
 
-      const container = getOrCreateContainer(politeness);
+            const container = getOrCreateContainer(politeness);
 
-      // Clear the container first, then set the new message
-      // This ensures the screen reader announces the new message even if it's the same
-      container.textContent = '';
+            // Clear the container first, then set the new message
+            // This ensures the screen reader announces the new message even if it's the same
+            container.textContent = '';
 
-      // Use requestAnimationFrame to ensure the DOM update is processed
-      requestAnimationFrame(() => {
-        container.textContent = message;
-      });
+            // Use requestAnimationFrame to ensure the DOM update is processed
+            requestAnimationFrame(() => {
+                container.textContent = message;
+            });
 
-      // Set timeout to clear the announcement
-      timeoutRef.current = window.setTimeout(() => {
-        container.textContent = '';
-        timeoutRef.current = null;
-      }, clearDelay);
-    },
-    [defaultPoliteness, clearDelay]
-  );
+            // Set timeout to clear the announcement
+            timeoutRef.current = window.setTimeout(() => {
+                container.textContent = '';
+                timeoutRef.current = null;
+            }, clearDelay);
+        },
+        [defaultPoliteness, clearDelay]
+    );
 
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current !== null) {
-        window.clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current !== null) {
+                window.clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
-  return { announce, clear };
+    return {announce, clear};
 }
 
 export default useAnnounce;

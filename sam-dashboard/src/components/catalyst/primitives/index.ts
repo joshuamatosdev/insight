@@ -14,7 +14,7 @@ export * from './divider'
 export * from './heading'
 export * from './inline-alert'
 // Note: InputGroup is exported from forms/input-group to avoid conflict
-export { Input } from './input'
+export {Input} from './input'
 export * from './link'
 export * from './radio'
 export * from './select'

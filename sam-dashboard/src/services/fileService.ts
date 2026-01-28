@@ -1,166 +1,198 @@
+/**
+ * File Service - Type-safe using openapi-fetch (with legacy upload/download)
+ */
+
+import {upload, getBlob} from './apiClient';
 import {apiClient} from './apiClient';
 
 export interface FileMetadata {
-  id: string;
-  filename: string;
-  originalFilename: string;
-  contentType: string;
-  size: number;
-  folderId: string | null;
-  folderPath: string | null;
-  uploadedById: string;
-  uploadedByName: string;
-  createdAt: string;
-  updatedAt: string;
-  downloadUrl: string | null;
+    id: string;
+    filename: string;
+    originalFilename: string;
+    contentType: string;
+    size: number;
+    folderId: string | null;
+    folderPath: string | null;
+    uploadedById: string;
+    uploadedByName: string;
+    createdAt: string;
+    updatedAt: string;
+    downloadUrl: string | null;
 }
 
 export interface FileFolder {
-  id: string;
-  name: string;
-  parentId: string | null;
-  path: string;
-  createdAt: string;
-  updatedAt: string;
+    id: string;
+    name: string;
+    parentId: string | null;
+    path: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface CreateFolderRequest {
-  name: string;
-  parentId?: string;
+    name: string;
+    parentId?: string;
 }
 
 export interface UploadResponse {
-  file: FileMetadata;
-  presignedUrl?: string;
+    file: FileMetadata;
+    presignedUrl?: string;
 }
 
-const FILE_BASE = '/files';
-
+// File upload uses legacy method for FormData/progress tracking
 export async function uploadFile(
-  file: File,
-  folderId?: string,
-  onProgress?: (progress: number) => void
+    file: File,
+    folderId?: string,
+    onProgress?: (progress: number) => void
 ): Promise<FileMetadata> {
-  const formData = new FormData();
-  formData.append('file', file);
-  if (folderId !== undefined) {
-    formData.append('folderId', folderId);
-  }
+    const formData = new FormData();
+    formData.append('file', file);
+    if (folderId !== undefined) {
+        formData.append('folderId', folderId);
+    }
 
-  const response = await apiClient.upload<FileMetadata>(`${FILE_BASE}/upload`, formData, onProgress);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const response = await upload<FileMetadata>('/files/upload', formData, onProgress);
+    if (response.success === false) {
+        throw new Error(response.error.message);
+    }
+    return response.data;
 }
 
+// File download uses legacy method for Blob handling
 export async function downloadFile(id: string): Promise<Blob> {
-  const response = await apiClient.getBlob(`${FILE_BASE}/${id}/download`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const response = await getBlob(`/files/${id}/download`);
+    if (response.success === false) {
+        throw new Error(response.error.message);
+    }
+    return response.data;
 }
 
 export async function getPresignedUrl(id: string): Promise<string> {
-  const response = await apiClient.get<{ url: string }>(`${FILE_BASE}/${id}/presigned-url`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data.url;
+    const {data, error} = await apiClient.GET('/files/{id}/presigned-url', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return (data as {url: string}).url;
 }
 
 export async function fetchFiles(folderId?: string): Promise<FileMetadata[]> {
-  const params = new URLSearchParams();
-  if (folderId !== undefined) {
-    params.set('folderId', folderId);
-  }
-  const query = params.toString();
-  const url = query !== '' ? `${FILE_BASE}?${query}` : FILE_BASE;
-  const response = await apiClient.get<FileMetadata[]>(url);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const queryParams: Record<string, string> = {};
+    if (folderId !== undefined) {
+        queryParams.folderId = folderId;
+    }
+
+    const {data, error} = await apiClient.GET('/files', {
+        params: {query: queryParams},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as FileMetadata[];
 }
 
 export async function fetchFile(id: string): Promise<FileMetadata> {
-  const response = await apiClient.get<FileMetadata>(`${FILE_BASE}/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/files/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as FileMetadata;
 }
 
 export async function deleteFile(id: string): Promise<void> {
-  const response = await apiClient.delete<void>(`${FILE_BASE}/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
+    const {error} = await apiClient.DELETE('/files/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
 }
 
 export async function moveFile(id: string, targetFolderId: string | null): Promise<FileMetadata> {
-  const response = await apiClient.patch<FileMetadata, { targetFolderId: string | null }>(
-    `${FILE_BASE}/${id}/move`,
-    { targetFolderId }
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PATCH('/files/{id}/move', {
+        params: {path: {id}},
+        body: {targetFolderId},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as FileMetadata;
 }
 
 export async function renameFile(id: string, newName: string): Promise<FileMetadata> {
-  const response = await apiClient.patch<FileMetadata, { filename: string }>(
-    `${FILE_BASE}/${id}/rename`,
-    { filename: newName }
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PATCH('/files/{id}/rename', {
+        params: {path: {id}},
+        body: {filename: newName},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as FileMetadata;
 }
 
 // Folder operations
 export async function fetchFolders(parentId?: string): Promise<FileFolder[]> {
-  const params = new URLSearchParams();
-  if (parentId !== undefined) {
-    params.set('parentId', parentId);
-  }
-  const query = params.toString();
-  const url = query !== '' ? `${FILE_BASE}/folders?${query}` : `${FILE_BASE}/folders`;
-  const response = await apiClient.get<FileFolder[]>(url);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const queryParams: Record<string, string> = {};
+    if (parentId !== undefined) {
+        queryParams.parentId = parentId;
+    }
+
+    const {data, error} = await apiClient.GET('/files/folders', {
+        params: {query: queryParams},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as FileFolder[];
 }
 
 export async function createFolder(data: CreateFolderRequest): Promise<FileFolder> {
-  const response = await apiClient.post<FileFolder, CreateFolderRequest>(
-    `${FILE_BASE}/folders`,
-    data
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data: responseData, error} = await apiClient.POST('/files/folders', {
+        body: data,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return responseData as FileFolder;
 }
 
 export async function deleteFolder(id: string): Promise<void> {
-  const response = await apiClient.delete<void>(`${FILE_BASE}/folders/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
+    const {error} = await apiClient.DELETE('/files/folders/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
 }
 
 export async function renameFolder(id: string, newName: string): Promise<FileFolder> {
-  const response = await apiClient.patch<FileFolder, { name: string }>(
-    `${FILE_BASE}/folders/${id}/rename`,
-    { name: newName }
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PATCH('/files/folders/{id}/rename', {
+        params: {path: {id}},
+        body: {name: newName},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as FileFolder;
 }

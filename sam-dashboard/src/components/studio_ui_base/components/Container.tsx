@@ -1,22 +1,20 @@
-
-
 type ContainerProps<T extends React.ElementType> = {
-  as?: T
-  className?: string
-  children: React.ReactNode
+    as?: T
+    className?: string
+    children: React.ReactNode
 }
 
 export function Container<T extends React.ElementType = 'div'>({
-  as,
-  className,
-  children,
-}: Omit<React.ComponentPropsWithoutRef<T>, keyof ContainerProps<T>> &
-  ContainerProps<T>) {
-  let Component = as ?? 'div'
+                                                                   as,
+                                                                   className,
+                                                                   children,
+                                                               }: Omit<React.ComponentPropsWithoutRef<T>, keyof ContainerProps<T>> &
+    ContainerProps<T>) {
+    let Component = as ?? 'div'
 
-  return (
-    <Component>
-      <div>{children}</div>
-    </Component>
-  )
+    return (
+        <Component>
+            <div>{children}</div>
+        </Component>
+    )
 }

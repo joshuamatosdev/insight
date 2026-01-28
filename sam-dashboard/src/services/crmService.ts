@@ -1,3 +1,7 @@
+/**
+ * CRM Service - Type-safe using openapi-fetch
+ */
+
 import {apiClient} from './apiClient';
 import type {
     Contact,
@@ -16,353 +20,395 @@ import type {
 } from '../types/crm';
 
 interface Page<T> {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
+    content: T[];
+    totalElements: number;
+    totalPages: number;
+    size: number;
+    number: number;
 }
-
-const CRM_BASE = '/crm';
 
 // ============ Contacts ============
 
 export async function fetchContacts(
-  page: number = 0,
-  size: number = 20,
-  filters?: ContactFilters
+    page: number = 0,
+    size: number = 20,
+    filters?: ContactFilters
 ): Promise<Page<Contact>> {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const queryParams: Record<string, string | number> = {page, size};
 
-  if (filters?.search !== undefined && filters.search !== '') {
-    params.set('search', filters.search);
-  }
-  if (filters?.contactType !== undefined) {
-    params.set('contactType', filters.contactType);
-  }
-  if (filters?.status !== undefined) {
-    params.set('status', filters.status);
-  }
-  if (filters?.organizationId !== undefined) {
-    params.set('organizationId', filters.organizationId);
-  }
+    if (filters?.search !== undefined && filters.search !== '') {
+        queryParams.search = filters.search;
+    }
+    if (filters?.contactType !== undefined) {
+        queryParams.contactType = filters.contactType;
+    }
+    if (filters?.status !== undefined) {
+        queryParams.status = filters.status;
+    }
+    if (filters?.organizationId !== undefined) {
+        queryParams.organizationId = filters.organizationId;
+    }
 
-  const response = await apiClient.get<Page<Contact>>(`${CRM_BASE}/contacts?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/contacts', {
+        params: {query: queryParams},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Contact>;
 }
 
 export async function fetchContact(id: string): Promise<Contact> {
-  const response = await apiClient.get<Contact>(`${CRM_BASE}/contacts/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/contacts/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Contact;
 }
 
 export async function createContact(request: CreateContactRequest): Promise<Contact> {
-  const response = await apiClient.post<Contact, CreateContactRequest>(`${CRM_BASE}/contacts`, request);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.POST('/crm/contacts', {
+        body: request,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Contact;
 }
 
 export async function updateContact(id: string, request: UpdateContactRequest): Promise<Contact> {
-  const response = await apiClient.put<Contact, UpdateContactRequest>(`${CRM_BASE}/contacts/${id}`, request);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PUT('/crm/contacts/{id}', {
+        params: {path: {id}},
+        body: request,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Contact;
 }
 
 export async function deleteContact(id: string): Promise<void> {
-  const response = await apiClient.delete<void>(`${CRM_BASE}/contacts/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
+    const {error} = await apiClient.DELETE('/crm/contacts/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
 }
 
 export async function searchContacts(keyword: string, page: number = 0, size: number = 20): Promise<Page<Contact>> {
-  const params = new URLSearchParams();
-  params.set('keyword', keyword);
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const {data, error} = await apiClient.GET('/crm/contacts/search', {
+        params: {query: {keyword, page, size}},
+    });
 
-  const response = await apiClient.get<Page<Contact>>(`${CRM_BASE}/contacts/search?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Contact>;
 }
 
 export async function fetchContactsByOrganization(
-  organizationId: string,
-  page: number = 0,
-  size: number = 20
+    organizationId: string,
+    page: number = 0,
+    size: number = 20
 ): Promise<Page<Contact>> {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const {data, error} = await apiClient.GET('/crm/organizations/{organizationId}/contacts', {
+        params: {path: {organizationId}, query: {page, size}},
+    });
 
-  const response = await apiClient.get<Page<Contact>>(
-    `${CRM_BASE}/organizations/${organizationId}/contacts?${params.toString()}`
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Contact>;
 }
 
 // ============ Organizations ============
 
 export async function fetchOrganizations(
-  page: number = 0,
-  size: number = 20,
-  filters?: OrganizationFilters
+    page: number = 0,
+    size: number = 20,
+    filters?: OrganizationFilters
 ): Promise<Page<Organization>> {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const queryParams: Record<string, string | number> = {page, size};
 
-  if (filters?.search !== undefined && filters.search !== '') {
-    params.set('search', filters.search);
-  }
-  if (filters?.organizationType !== undefined) {
-    params.set('organizationType', filters.organizationType);
-  }
-  if (filters?.status !== undefined) {
-    params.set('status', filters.status);
-  }
-  if (filters?.businessSize !== undefined) {
-    params.set('businessSize', filters.businessSize);
-  }
+    if (filters?.search !== undefined && filters.search !== '') {
+        queryParams.search = filters.search;
+    }
+    if (filters?.organizationType !== undefined) {
+        queryParams.organizationType = filters.organizationType;
+    }
+    if (filters?.status !== undefined) {
+        queryParams.status = filters.status;
+    }
+    if (filters?.businessSize !== undefined) {
+        queryParams.businessSize = filters.businessSize;
+    }
 
-  const response = await apiClient.get<Page<Organization>>(`${CRM_BASE}/organizations?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/organizations', {
+        params: {query: queryParams},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Organization>;
 }
 
 export async function fetchOrganization(id: string): Promise<Organization> {
-  const response = await apiClient.get<Organization>(`${CRM_BASE}/organizations/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/organizations/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Organization;
 }
 
 export async function createOrganization(request: CreateOrganizationRequest): Promise<Organization> {
-  const response = await apiClient.post<Organization, CreateOrganizationRequest>(
-    `${CRM_BASE}/organizations`,
-    request
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.POST('/crm/organizations', {
+        body: request,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Organization;
 }
 
 export async function updateOrganization(id: string, request: UpdateOrganizationRequest): Promise<Organization> {
-  const response = await apiClient.put<Organization, UpdateOrganizationRequest>(
-    `${CRM_BASE}/organizations/${id}`,
-    request
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PUT('/crm/organizations/{id}', {
+        params: {path: {id}},
+        body: request,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Organization;
 }
 
 export async function deleteOrganization(id: string): Promise<void> {
-  const response = await apiClient.delete<void>(`${CRM_BASE}/organizations/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
+    const {error} = await apiClient.DELETE('/crm/organizations/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
 }
 
 export async function searchOrganizations(
-  keyword: string,
-  page: number = 0,
-  size: number = 20
+    keyword: string,
+    page: number = 0,
+    size: number = 20
 ): Promise<Page<Organization>> {
-  const params = new URLSearchParams();
-  params.set('keyword', keyword);
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const {data, error} = await apiClient.GET('/crm/organizations/search', {
+        params: {query: {keyword, page, size}},
+    });
 
-  const response = await apiClient.get<Page<Organization>>(`${CRM_BASE}/organizations/search?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Organization>;
 }
 
 // ============ Interactions ============
 
 export async function fetchInteractions(
-  page: number = 0,
-  size: number = 20,
-  filters?: InteractionFilters
+    page: number = 0,
+    size: number = 20,
+    filters?: InteractionFilters
 ): Promise<Page<Interaction>> {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const queryParams: Record<string, string | number | boolean> = {page, size};
 
-  if (filters?.search !== undefined && filters.search !== '') {
-    params.set('search', filters.search);
-  }
-  if (filters?.interactionType !== undefined) {
-    params.set('interactionType', filters.interactionType);
-  }
-  if (filters?.outcome !== undefined) {
-    params.set('outcome', filters.outcome);
-  }
-  if (filters?.contactId !== undefined) {
-    params.set('contactId', filters.contactId);
-  }
-  if (filters?.organizationId !== undefined) {
-    params.set('organizationId', filters.organizationId);
-  }
-  if (filters?.followUpRequired !== undefined) {
-    params.set('followUpRequired', filters.followUpRequired.toString());
-  }
-  if (filters?.startDate !== undefined) {
-    params.set('startDate', filters.startDate);
-  }
-  if (filters?.endDate !== undefined) {
-    params.set('endDate', filters.endDate);
-  }
+    if (filters?.search !== undefined && filters.search !== '') {
+        queryParams.search = filters.search;
+    }
+    if (filters?.interactionType !== undefined) {
+        queryParams.interactionType = filters.interactionType;
+    }
+    if (filters?.outcome !== undefined) {
+        queryParams.outcome = filters.outcome;
+    }
+    if (filters?.contactId !== undefined) {
+        queryParams.contactId = filters.contactId;
+    }
+    if (filters?.organizationId !== undefined) {
+        queryParams.organizationId = filters.organizationId;
+    }
+    if (filters?.followUpRequired !== undefined) {
+        queryParams.followUpRequired = filters.followUpRequired;
+    }
+    if (filters?.startDate !== undefined) {
+        queryParams.startDate = filters.startDate;
+    }
+    if (filters?.endDate !== undefined) {
+        queryParams.endDate = filters.endDate;
+    }
 
-  const response = await apiClient.get<Page<Interaction>>(`${CRM_BASE}/interactions?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/interactions', {
+        params: {query: queryParams},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Interaction>;
 }
 
 export async function fetchInteraction(id: string): Promise<Interaction> {
-  const response = await apiClient.get<Interaction>(`${CRM_BASE}/interactions/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/interactions/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Interaction;
 }
 
 export async function createInteraction(request: CreateInteractionRequest): Promise<Interaction> {
-  const response = await apiClient.post<Interaction, CreateInteractionRequest>(`${CRM_BASE}/interactions`, request);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.POST('/crm/interactions', {
+        body: request,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Interaction;
 }
 
 export async function updateInteraction(id: string, request: UpdateInteractionRequest): Promise<Interaction> {
-  const response = await apiClient.put<Interaction, UpdateInteractionRequest>(
-    `${CRM_BASE}/interactions/${id}`,
-    request
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PUT('/crm/interactions/{id}', {
+        params: {path: {id}},
+        body: request,
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Interaction;
 }
 
 export async function deleteInteraction(id: string): Promise<void> {
-  const response = await apiClient.delete<void>(`${CRM_BASE}/interactions/${id}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
+    const {error} = await apiClient.DELETE('/crm/interactions/{id}', {
+        params: {path: {id}},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
 }
 
 export async function fetchInteractionsByContact(
-  contactId: string,
-  page: number = 0,
-  size: number = 20
+    contactId: string,
+    page: number = 0,
+    size: number = 20
 ): Promise<Page<Interaction>> {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const {data, error} = await apiClient.GET('/crm/contacts/{contactId}/interactions', {
+        params: {path: {contactId}, query: {page, size}},
+    });
 
-  const response = await apiClient.get<Page<Interaction>>(
-    `${CRM_BASE}/contacts/${contactId}/interactions?${params.toString()}`
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Interaction>;
 }
 
 export async function fetchInteractionsByOrganization(
-  organizationId: string,
-  page: number = 0,
-  size: number = 20
+    organizationId: string,
+    page: number = 0,
+    size: number = 20
 ): Promise<Page<Interaction>> {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
-  params.set('size', size.toString());
+    const {data, error} = await apiClient.GET('/crm/organizations/{organizationId}/interactions', {
+        params: {path: {organizationId}, query: {page, size}},
+    });
 
-  const response = await apiClient.get<Page<Interaction>>(
-    `${CRM_BASE}/organizations/${organizationId}/interactions?${params.toString()}`
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Page<Interaction>;
 }
 
 export async function fetchUpcomingFollowups(): Promise<UpcomingFollowup[]> {
-  const response = await apiClient.get<UpcomingFollowup[]>(`${CRM_BASE}/interactions/followups/upcoming`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/interactions/followups/upcoming');
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as UpcomingFollowup[];
 }
 
 export async function markFollowupComplete(interactionId: string): Promise<Interaction> {
-  const response = await apiClient.patch<Interaction, Record<string, never>>(
-    `${CRM_BASE}/interactions/${interactionId}/followup/complete`,
-    {}
-  );
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.PATCH('/crm/interactions/{interactionId}/followup/complete', {
+        params: {path: {interactionId}},
+        body: {},
+    });
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Interaction;
 }
 
 // ============ Recent Activity ============
 
 export async function fetchRecentActivity(limit: number = 10): Promise<Interaction[]> {
-  const params = new URLSearchParams();
-  params.set('limit', limit.toString());
+    const {data, error} = await apiClient.GET('/crm/activity/recent', {
+        params: {query: {limit}},
+    });
 
-  const response = await apiClient.get<Interaction[]>(`${CRM_BASE}/activity/recent?${params.toString()}`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as Interaction[];
 }
 
 // ============ Statistics ============
 
 export interface CrmStats {
-  totalContacts: number;
-  totalOrganizations: number;
-  totalInteractions: number;
-  pendingFollowups: number;
-  overdueFollowups: number;
-  recentInteractions: number;
+    totalContacts: number;
+    totalOrganizations: number;
+    totalInteractions: number;
+    pendingFollowups: number;
+    overdueFollowups: number;
+    recentInteractions: number;
 }
 
 export async function fetchCrmStats(): Promise<CrmStats> {
-  const response = await apiClient.get<CrmStats>(`${CRM_BASE}/stats`);
-  if (response.success === false) {
-    throw new Error(response.error.message);
-  }
-  return response.data;
+    const {data, error} = await apiClient.GET('/crm/stats');
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data as CrmStats;
 }

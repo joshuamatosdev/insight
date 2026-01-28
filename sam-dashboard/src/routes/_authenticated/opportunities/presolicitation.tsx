@@ -3,10 +3,10 @@ import {useOpportunities} from '@/hooks';
 import {PresolicationPage} from '@/pages';
 
 export const Route = createFileRoute('/_authenticated/opportunities/presolicitation')({
-  component: PresolicationRoute,
+    component: PresolicationRoute,
 });
 
 function PresolicationRoute() {
-  const {opportunities} = useOpportunities();
-  return <PresolicationPage opportunities={opportunities} />;
+    const {opportunities} = useOpportunities();
+    return <PresolicationPage opportunities={opportunities}/>;
 }

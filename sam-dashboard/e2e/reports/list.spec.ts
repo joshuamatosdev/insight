@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/test-fixtures';
+import {expect, test} from '../fixtures/test-fixtures';
 
 /**
  * Report List E2E Tests
@@ -7,172 +7,172 @@ import { test, expect } from '../fixtures/test-fixtures';
  */
 
 test.describe('Report List', () => {
-  test.beforeEach(async ({ authenticatedPage }) => {
-    const { page } = authenticatedPage;
-    await page.goto('/reports');
-    await page.waitForLoadState('networkidle');
-  });
-
-  test.describe('List Display', () => {
-    test('should display reports list page', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      await expect(
-        page.getByRole('heading', { name: /reports/i })
-      ).toBeVisible({ timeout: 10000 });
+    test.beforeEach(async ({authenticatedPage}) => {
+        const {page} = authenticatedPage;
+        await page.goto('/reports');
+        await page.waitForLoadState('networkidle');
     });
 
-    test('should display saved reports', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('List Display', () => {
+        test('should display reports list page', async ({
+                                                            authenticatedPage,
+                                                        }) => {
+            const {page} = authenticatedPage;
 
-      const reportItems = page.locator('[data-testid="report-item"]');
+            await expect(
+                page.getByRole('heading', {name: /reports/i})
+            ).toBeVisible({timeout: 10000});
+        });
 
-      // Should show reports or empty state
-      const hasReports = await reportItems.count() > 0;
-      const hasEmptyState = await page.getByText(/no reports|create your first/i)
-        .isVisible().catch(() => false);
+        test('should display saved reports', async ({
+                                                        authenticatedPage,
+                                                    }) => {
+            const {page} = authenticatedPage;
 
-      expect(hasReports || hasEmptyState).toBe(true);
+            const reportItems = page.locator('[data-testid="report-item"]');
+
+            // Should show reports or empty state
+            const hasReports = await reportItems.count() > 0;
+            const hasEmptyState = await page.getByText(/no reports|create your first/i)
+                .isVisible().catch(() => false);
+
+            expect(hasReports || hasEmptyState).toBe(true);
+        });
+
+        test('should display create report button', async ({
+                                                               authenticatedPage,
+                                                           }) => {
+            const {page} = authenticatedPage;
+
+            await expect(
+                page.getByRole('button', {name: /create|new/i})
+                    .or(page.getByRole('link', {name: /create|new/i}))
+            ).toBeVisible({timeout: 10000});
+        });
     });
 
-    test('should display create report button', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('Run Report', () => {
+        test('should display run button for reports', async ({
+                                                                 authenticatedPage,
+                                                             }) => {
+            const {page} = authenticatedPage;
 
-      await expect(
-        page.getByRole('button', { name: /create|new/i })
-          .or(page.getByRole('link', { name: /create|new/i }))
-      ).toBeVisible({ timeout: 10000 });
-    });
-  });
+            const reportItem = page.locator('[data-testid="report-item"]').first();
 
-  test.describe('Run Report', () => {
-    test('should display run button for reports', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+            if (await reportItem.isVisible({timeout: 5000}).catch(() => false)) {
+                await expect(
+                    reportItem.getByRole('button', {name: /run|execute/i})
+                ).toBeVisible();
+            }
+        });
 
-      const reportItem = page.locator('[data-testid="report-item"]').first();
+        test('should run saved report', async ({
+                                                   authenticatedPage,
+                                               }) => {
+            const {page} = authenticatedPage;
 
-      if (await reportItem.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await expect(
-          reportItem.getByRole('button', { name: /run|execute/i })
-        ).toBeVisible();
-      }
-    });
+            const runButton = page.getByRole('button', {name: /run/i}).first();
 
-    test('should run saved report', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+            if (await runButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await runButton.click();
 
-      const runButton = page.getByRole('button', { name: /run/i }).first();
-
-      if (await runButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await runButton.click();
-
-        // Results should appear
-        await expect(
-          page.locator('[data-testid="report-results"]')
-            .or(page.getByRole('table'))
-        ).toBeVisible({ timeout: 15000 });
-      }
-    });
-  });
-
-  test.describe('Export Report', () => {
-    test('should display export options', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      const exportButton = page.getByRole('button', { name: /export|download/i }).first();
-
-      if (await exportButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await exportButton.click();
-
-        // Export options should appear
-        await expect(
-          page.getByText(/csv|pdf|excel/i)
-        ).toBeVisible({ timeout: 5000 });
-      }
+                // Results should appear
+                await expect(
+                    page.locator('[data-testid="report-results"]')
+                        .or(page.getByRole('table'))
+                ).toBeVisible({timeout: 15000});
+            }
+        });
     });
 
-    test('should export report as CSV', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('Export Report', () => {
+        test('should display export options', async ({
+                                                         authenticatedPage,
+                                                     }) => {
+            const {page} = authenticatedPage;
 
-      const exportButton = page.getByRole('button', { name: /export/i }).first();
+            const exportButton = page.getByRole('button', {name: /export|download/i}).first();
 
-      if (await exportButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await exportButton.click();
+            if (await exportButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await exportButton.click();
 
-        const csvOption = page.getByRole('button', { name: /csv/i })
-          .or(page.getByText(/csv/i));
+                // Export options should appear
+                await expect(
+                    page.getByText(/csv|pdf|excel/i)
+                ).toBeVisible({timeout: 5000});
+            }
+        });
 
-        if (await csvOption.isVisible({ timeout: 3000 }).catch(() => false)) {
-          await csvOption.click();
-        }
-      }
+        test('should export report as CSV', async ({
+                                                       authenticatedPage,
+                                                   }) => {
+            const {page} = authenticatedPage;
+
+            const exportButton = page.getByRole('button', {name: /export/i}).first();
+
+            if (await exportButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await exportButton.click();
+
+                const csvOption = page.getByRole('button', {name: /csv/i})
+                    .or(page.getByText(/csv/i));
+
+                if (await csvOption.isVisible({timeout: 3000}).catch(() => false)) {
+                    await csvOption.click();
+                }
+            }
+        });
+
+        test('should export report as PDF', async ({
+                                                       authenticatedPage,
+                                                   }) => {
+            const {page} = authenticatedPage;
+
+            const exportButton = page.getByRole('button', {name: /export/i}).first();
+
+            if (await exportButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await exportButton.click();
+
+                const pdfOption = page.getByRole('button', {name: /pdf/i})
+                    .or(page.getByText(/pdf/i));
+
+                if (await pdfOption.isVisible({timeout: 3000}).catch(() => false)) {
+                    await pdfOption.click();
+                }
+            }
+        });
     });
 
-    test('should export report as PDF', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
+    test.describe('Report Actions', () => {
+        test('should edit saved report', async ({
+                                                    authenticatedPage,
+                                                }) => {
+            const {page} = authenticatedPage;
 
-      const exportButton = page.getByRole('button', { name: /export/i }).first();
+            const editButton = page.getByRole('button', {name: /edit/i}).first();
 
-      if (await exportButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await exportButton.click();
+            if (await editButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await editButton.click();
 
-        const pdfOption = page.getByRole('button', { name: /pdf/i })
-          .or(page.getByText(/pdf/i));
+                // Should navigate to builder
+                await expect(page).toHaveURL(/builder|edit/);
+            }
+        });
 
-        if (await pdfOption.isVisible({ timeout: 3000 }).catch(() => false)) {
-          await pdfOption.click();
-        }
-      }
+        test('should delete saved report', async ({
+                                                      authenticatedPage,
+                                                  }) => {
+            const {page} = authenticatedPage;
+
+            const deleteButton = page.getByRole('button', {name: /delete/i}).first();
+
+            if (await deleteButton.isVisible({timeout: 5000}).catch(() => false)) {
+                await deleteButton.click();
+
+                // Confirmation should appear
+                await expect(
+                    page.getByText(/confirm|are you sure/i)
+                ).toBeVisible({timeout: 5000});
+            }
+        });
     });
-  });
-
-  test.describe('Report Actions', () => {
-    test('should edit saved report', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      const editButton = page.getByRole('button', { name: /edit/i }).first();
-
-      if (await editButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await editButton.click();
-
-        // Should navigate to builder
-        await expect(page).toHaveURL(/builder|edit/);
-      }
-    });
-
-    test('should delete saved report', async ({
-      authenticatedPage,
-    }) => {
-      const { page } = authenticatedPage;
-
-      const deleteButton = page.getByRole('button', { name: /delete/i }).first();
-
-      if (await deleteButton.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await deleteButton.click();
-
-        // Confirmation should appear
-        await expect(
-          page.getByText(/confirm|are you sure/i)
-        ).toBeVisible({ timeout: 5000 });
-      }
-    });
-  });
 });

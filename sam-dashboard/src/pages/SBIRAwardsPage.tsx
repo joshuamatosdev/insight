@@ -16,254 +16,255 @@ import {formatAwardAmount, getAgencyFullName, SbirAward, SbirStats, StatCard, St
 import {fetchSbirAwards, fetchSbirStats, searchSbirAwards, triggerSbirGovIngest} from '../services';
 
 export function SBIRAwardsPage() {
-  const [awards, setAwards] = useState<SbirAward[]>([]);
-  const [stats, setStats] = useState<SbirStats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isIngesting, setIsIngesting] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [agencyFilter, setAgencyFilter] = useState<string>('');
-  const [phaseFilter, setPhaseFilter] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [ingestError, setIngestError] = useState<string | null>(null);
+    const [awards, setAwards] = useState<SbirAward[]>([]);
+    const [stats, setStats] = useState<SbirStats | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isIngesting, setIsIngesting] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
+    const [agencyFilter, setAgencyFilter] = useState<string>('');
+    const [phaseFilter, setPhaseFilter] = useState<string>('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [ingestError, setIngestError] = useState<string | null>(null);
 
-  const loadData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const [awardsData, statsData] = await Promise.all([
-        fetchSbirAwards(agencyFilter || undefined, phaseFilter || undefined),
-        fetchSbirStats(),
-      ]);
-      setAwards(awardsData);
-      setStats(statsData);
-    } catch (e) {
-      setError(e instanceof Error ? e : new Error('Failed to load data'));
-    } finally {
-      setIsLoading(false);
+    const loadData = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            const [awardsData, statsData] = await Promise.all([
+                fetchSbirAwards(agencyFilter || undefined, phaseFilter || undefined),
+                fetchSbirStats(),
+            ]);
+            setAwards(awardsData);
+            setStats(statsData);
+        } catch (e) {
+            setError(e instanceof Error ? e : new Error('Failed to load data'));
+        } finally {
+            setIsLoading(false);
+        }
+    }, [agencyFilter, phaseFilter]);
+
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
+
+    const handleIngest = async () => {
+        try {
+            setIsIngesting(true);
+            setSuccessMessage(null);
+            setIngestError(null);
+            await triggerSbirGovIngest();
+            await loadData();
+            setSuccessMessage('SBIR.gov data ingested successfully!');
+            // Auto-clear success message after 5 seconds
+            setTimeout(() => setSuccessMessage(null), 5000);
+        } catch {
+            setIngestError('Failed to ingest SBIR.gov data');
+        } finally {
+            setIsIngesting(false);
+        }
+    };
+
+    const handleSearch = async () => {
+        if (!searchQuery.trim()) {
+            loadData();
+            return;
+        }
+        try {
+            setIsLoading(true);
+            const results = await searchSbirAwards(searchQuery);
+            setAwards(results);
+        } catch (e) {
+            setError(e instanceof Error ? e : new Error('Search failed'));
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const filteredAwards = useMemo(() => {
+        return awards;
+    }, [awards]);
+
+    if (isLoading && awards.length === 0) {
+        return (
+            <Section id="sbir-awards">
+                <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg"/>}/>
+                <Box>
+                    <Text variant="body" color="muted">Loading SBIR.gov awards...</Text>
+                </Box>
+            </Section>
+        );
     }
-  }, [agencyFilter, phaseFilter]);
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const handleIngest = async () => {
-    try {
-      setIsIngesting(true);
-      setSuccessMessage(null);
-      setIngestError(null);
-      await triggerSbirGovIngest();
-      await loadData();
-      setSuccessMessage('SBIR.gov data ingested successfully!');
-      // Auto-clear success message after 5 seconds
-      setTimeout(() => setSuccessMessage(null), 5000);
-    } catch {
-      setIngestError('Failed to ingest SBIR.gov data');
-    } finally {
-      setIsIngesting(false);
+    if (error !== null && awards.length === 0) {
+        return (
+            <Section id="sbir-awards">
+                <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg"/>}/>
+                <Card>
+                    <CardBody>
+                        <Text variant="body" color="danger">Error: {error.message}</Text>
+                        <Button onClick={handleIngest}>
+                            Fetch from SBIR.gov
+                        </Button>
+                    </CardBody>
+                </Card>
+            </Section>
+        );
     }
-  };
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) {
-      loadData();
-      return;
-    }
-    try {
-      setIsLoading(true);
-      const results = await searchSbirAwards(searchQuery);
-      setAwards(results);
-    } catch (e) {
-      setError(e instanceof Error ? e : new Error('Search failed'));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const filteredAwards = useMemo(() => {
-    return awards;
-  }, [awards]);
-
-  if (isLoading && awards.length === 0) {
     return (
-      <Section id="sbir-awards">
-        <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg" />} />
-        <Box>
-          <Text variant="body" color="muted">Loading SBIR.gov awards...</Text>
-        </Box>
-      </Section>
-    );
-  }
+        <Section id="sbir-awards">
+            <SectionHeader title="SBIR.gov Awards Database" icon={<CheckCircleIcon size="lg"/>}/>
 
-  if (error !== null && awards.length === 0) {
-    return (
-      <Section id="sbir-awards">
-        <SectionHeader title="SBIR.gov Awards" icon={<CheckCircleIcon size="lg" />} />
-        <Card>
-          <CardBody>
-            <Text variant="body" color="danger">Error: {error.message}</Text>
-            <Button onClick={handleIngest}>
-              Fetch from SBIR.gov
-            </Button>
-          </CardBody>
-        </Card>
-      </Section>
-    );
-  }
+            {stats !== null && (
+                <StatsGrid columns={5}>
+                    <StatCard value={stats.totalAwards} label="Total Awards"/>
+                    <StatCard value={stats.sbirCount} label="SBIR"/>
+                    <StatCard value={stats.sttrCount} label="STTR"/>
+                    <StatCard value={stats.agencies.length} label="Agencies"/>
+                    <StatCard value={stats.phases.length} label="Phases"/>
+                </StatsGrid>
+            )}
 
-  return (
-    <Section id="sbir-awards">
-      <SectionHeader title="SBIR.gov Awards Database" icon={<CheckCircleIcon size="lg" />} />
-
-      {stats !== null && (
-        <StatsGrid columns={5}>
-          <StatCard value={stats.totalAwards} label="Total Awards" />
-          <StatCard value={stats.sbirCount} label="SBIR" />
-          <StatCard value={stats.sttrCount} label="STTR" />
-          <StatCard value={stats.agencies.length} label="Agencies" />
-          <StatCard value={stats.phases.length} label="Phases" />
-        </StatsGrid>
-      )}
-
-      <Card>
-        <CardHeader>
-          <HStack justify="between" align="center">
-            <HStack spacing="sm">
-              <Select
-                value={agencyFilter}
-                onChange={(e) => setAgencyFilter(e.target.value)}
-                aria-label="Filter by agency"
-                options={[
-                  { value: '', label: 'All Agencies' },
-                  ...(stats?.agencies ?? []).map((a) => ({
-                    value: a,
-                    label: `${a} - ${getAgencyFullName(a)}`,
-                  })),
-                ]}
-              />
-              <Select
-                value={phaseFilter}
-                onChange={(e) => setPhaseFilter(e.target.value)}
-                aria-label="Filter by phase"
-                options={[
-                  { value: '', label: 'All Phases' },
-                  ...(stats?.phases ?? []).map((p) => ({
-                    value: p,
-                    label: `Phase ${p}`,
-                  })),
-                ]}
-              />
-            </HStack>
-
-            <HStack spacing="sm">
-              <Input
-                placeholder="Search keywords..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              />
-              <Button variant="outline" size="sm" onClick={handleSearch}>
-                <SearchIcon size="sm" />
-              </Button>
-            </HStack>
-
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleIngest}
-              disabled={isIngesting}
-              leftIcon={<RefreshIcon size="sm" />}
-            >
-              {isIngesting ? 'Fetching...' : 'Fetch from SBIR.gov'}
-            </Button>
-          </HStack>
-        </CardHeader>
-        {successMessage !== null && (
-          <Box>
-            <Text variant="bodySmall" color="success">{successMessage}</Text>
-          </Box>
-        )}
-        {ingestError !== null && (
-          <Box>
-            <Text variant="bodySmall" color="danger">{ingestError}</Text>
-          </Box>
-        )}
-        <CardBody padding="none">
-          {filteredAwards.length === 0 ? (
-            <Box>
-              <Text variant="body" color="muted">
-                No SBIR awards found. Click "Fetch from SBIR.gov" to load data.
-              </Text>
-            </Box>
-          ) : (
-            <Box>
-              <Table striped>
-                <TableHead>
-                  <TableRow>
-                    <TableHeader>Award</TableHeader>
-                    <TableHeader>Firm</TableHeader>
-                    <TableHeader>Phase</TableHeader>
-                    <TableHeader>Agency</TableHeader>
-                    <TableHeader>Amount</TableHeader>
-                    <TableHeader>Year</TableHeader>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredAwards.map((award) => (
-                    <TableRow key={award.id}>
-                      <TableCell>
-                        <Link
-                          href={award.awardLink !== null && award.awardLink !== undefined && award.awardLink !== '' ? award.awardLink : '#'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Text variant="bodySmall">
-                            {award.awardTitle !== null && award.awardTitle !== undefined && award.awardTitle !== '' ? award.awardTitle : 'Untitled'}
-                          </Text>
-                        </Link>
-                        <HStack spacing="xs">
-                          {award.isSbir === true && <Badge color="cyan">SBIR</Badge>}
-                          {award.isSttr === true && <Badge color="green">STTR</Badge>}
+            <Card>
+                <CardHeader>
+                    <HStack justify="between" align="center">
+                        <HStack spacing="sm">
+                            <Select
+                                value={agencyFilter}
+                                onChange={(e) => setAgencyFilter(e.target.value)}
+                                aria-label="Filter by agency"
+                                options={[
+                                    {value: '', label: 'All Agencies'},
+                                    ...(stats?.agencies ?? []).map((a) => ({
+                                        value: a,
+                                        label: `${a} - ${getAgencyFullName(a)}`,
+                                    })),
+                                ]}
+                            />
+                            <Select
+                                value={phaseFilter}
+                                onChange={(e) => setPhaseFilter(e.target.value)}
+                                aria-label="Filter by phase"
+                                options={[
+                                    {value: '', label: 'All Phases'},
+                                    ...(stats?.phases ?? []).map((p) => ({
+                                        value: p,
+                                        label: `Phase ${p}`,
+                                    })),
+                                ]}
+                            />
                         </HStack>
-                      </TableCell>
-                      <TableCell>
-                        <Text variant="bodySmall">{award.firm || 'N/A'}</Text>
-                        <Text variant="caption" color="muted">
-                          {award.city}, {award.state}
-                        </Text>
-                      </TableCell>
-                      <TableCell>
-                        <Badge color="amber">Phase {award.phase}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge color="zinc">{award.agency}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Text variant="bodySmall" weight="semibold">
-                          {formatAwardAmount(award.awardAmount)}
-                        </Text>
-                      </TableCell>
-                      <TableCell>
-                        <Text variant="bodySmall">{award.awardYear || 'N/A'}</Text>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          )}
-        </CardBody>
-      </Card>
 
-      <Stack gap="xs" align="center">
-        <Text variant="caption" color="muted">
-          Data source: <Link href="https://www.sbir.gov" target="_blank" rel="noopener noreferrer">SBIR.gov</Link> -
-          Small Business Innovation Research / Small Business Technology Transfer
-        </Text>
-      </Stack>
-    </Section>
-  );
+                        <HStack spacing="sm">
+                            <Input
+                                placeholder="Search keywords..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                            />
+                            <Button variant="outline" size="sm" onClick={handleSearch}>
+                                <SearchIcon size="sm"/>
+                            </Button>
+                        </HStack>
+
+                        <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={handleIngest}
+                            disabled={isIngesting}
+                            leftIcon={<RefreshIcon size="sm"/>}
+                        >
+                            {isIngesting ? 'Fetching...' : 'Fetch from SBIR.gov'}
+                        </Button>
+                    </HStack>
+                </CardHeader>
+                {successMessage !== null && (
+                    <Box>
+                        <Text variant="bodySmall" color="success">{successMessage}</Text>
+                    </Box>
+                )}
+                {ingestError !== null && (
+                    <Box>
+                        <Text variant="bodySmall" color="danger">{ingestError}</Text>
+                    </Box>
+                )}
+                <CardBody padding="none">
+                    {filteredAwards.length === 0 ? (
+                        <Box>
+                            <Text variant="body" color="muted">
+                                No SBIR awards found. Click "Fetch from SBIR.gov" to load data.
+                            </Text>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <Table striped>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableHeader>Award</TableHeader>
+                                        <TableHeader>Firm</TableHeader>
+                                        <TableHeader>Phase</TableHeader>
+                                        <TableHeader>Agency</TableHeader>
+                                        <TableHeader>Amount</TableHeader>
+                                        <TableHeader>Year</TableHeader>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {filteredAwards.map((award) => (
+                                        <TableRow key={award.id}>
+                                            <TableCell>
+                                                <Link
+                                                    href={award.awardLink !== null && award.awardLink !== undefined && award.awardLink !== '' ? award.awardLink : '#'}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <Text variant="bodySmall">
+                                                        {award.awardTitle !== null && award.awardTitle !== undefined && award.awardTitle !== '' ? award.awardTitle : 'Untitled'}
+                                                    </Text>
+                                                </Link>
+                                                <HStack spacing="xs">
+                                                    {award.isSbir === true && <Badge color="cyan">SBIR</Badge>}
+                                                    {award.isSttr === true && <Badge color="green">STTR</Badge>}
+                                                </HStack>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Text variant="bodySmall">{award.firm || 'N/A'}</Text>
+                                                <Text variant="caption" color="muted">
+                                                    {award.city}, {award.state}
+                                                </Text>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge color="amber">Phase {award.phase}</Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge color="zinc">{award.agency}</Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Text variant="bodySmall" weight="semibold">
+                                                    {formatAwardAmount(award.awardAmount)}
+                                                </Text>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Text variant="bodySmall">{award.awardYear || 'N/A'}</Text>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
+                    )}
+                </CardBody>
+            </Card>
+
+            <Stack gap="xs" align="center">
+                <Text variant="caption" color="muted">
+                    Data source: <Link href="https://www.sbir.gov" target="_blank"
+                                       rel="noopener noreferrer">SBIR.gov</Link> -
+                    Small Business Innovation Research / Small Business Technology Transfer
+                </Text>
+            </Stack>
+        </Section>
+    );
 }
 
 export default SBIRAwardsPage;

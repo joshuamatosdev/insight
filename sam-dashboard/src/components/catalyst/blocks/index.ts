@@ -6,8 +6,8 @@
 // NOTE: Table components exported here use Catalyst/Headless UI patterns (TableHeader)
 //       Layout/Table uses SAMGov patterns (TableHeaderCell) - both are available
 
-export { CardTitle, CardDescription } from './card'
-export { TableHeader } from './table'
+export {CardTitle, CardDescription} from './card'
+export {TableHeader} from './table'
 export * from './combobox'
 export * from './data-table'
 export * from './description-list'

@@ -26,21 +26,21 @@ import React from 'react'
  * ```
  */
 export function PageHeading({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        'lg:flex lg:items-center lg:justify-between'
-      )}
-    >
-      {children}
-    </div>
-  )
+                                className,
+                                children,
+                                ...props
+                            }: React.ComponentPropsWithoutRef<'div'>) {
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                'lg:flex lg:items-center lg:justify-between'
+            )}
+        >
+            {children}
+        </div>
+    )
 }
 
 /**
@@ -50,22 +50,22 @@ export function PageHeading({
  * Responsive sizing: larger on desktop, smaller on mobile.
  */
 export function PageHeadingTitle({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'h1'>) {
-  return (
-    <h1
-      {...props}
-      className={clsx(
-        className,
-        'text-2xl/7 font-bold text-zinc-900 sm:truncate sm:text-3xl sm:tracking-tight',
-        'dark:text-white'
-      )}
-    >
-      {children}
-    </h1>
-  )
+                                     className,
+                                     children,
+                                     ...props
+                                 }: React.ComponentPropsWithoutRef<'h1'>) {
+    return (
+        <h1
+            {...props}
+            className={clsx(
+                className,
+                'text-2xl/7 font-bold text-zinc-900 sm:truncate sm:text-3xl sm:tracking-tight',
+                'dark:text-white'
+            )}
+        >
+            {children}
+        </h1>
+    )
 }
 
 /**
@@ -75,22 +75,22 @@ export function PageHeadingTitle({
  * Appears below the title with appropriate spacing.
  */
 export function PageHeadingDescription({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'p'>) {
-  return (
-    <p
-      {...props}
-      className={clsx(
-        className,
-        'mt-2 text-sm text-zinc-500',
-        'dark:text-zinc-400'
-      )}
-    >
-      {children}
-    </p>
-  )
+                                           className,
+                                           children,
+                                           ...props
+                                       }: React.ComponentPropsWithoutRef<'p'>) {
+    return (
+        <p
+            {...props}
+            className={clsx(
+                className,
+                'mt-2 text-sm text-zinc-500',
+                'dark:text-zinc-400'
+            )}
+        >
+            {children}
+        </p>
+    )
 }
 
 /**
@@ -100,21 +100,21 @@ export function PageHeadingDescription({
  * Provides consistent spacing between multiple buttons.
  */
 export function PageHeadingActions({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        'mt-5 flex gap-3 lg:mt-0 lg:ml-4'
-      )}
-    >
-      {children}
-    </div>
-  )
+                                       className,
+                                       children,
+                                       ...props
+                                   }: React.ComponentPropsWithoutRef<'div'>) {
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                'mt-5 flex gap-3 lg:mt-0 lg:ml-4'
+            )}
+        >
+            {children}
+        </div>
+    )
 }
 
 /**
@@ -134,21 +134,21 @@ export function PageHeadingActions({
  * ```
  */
 export function PageHeadingMeta({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        'mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6'
-      )}
-    >
-      {children}
-    </div>
-  )
+                                    className,
+                                    children,
+                                    ...props
+                                }: React.ComponentPropsWithoutRef<'div'>) {
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                'mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6'
+            )}
+        >
+            {children}
+        </div>
+    )
 }
 
 /**
@@ -158,34 +158,34 @@ export function PageHeadingMeta({
  * Icons are automatically sized and colored appropriately.
  */
 export function PageHeadingMetaItem({
-  className,
-  icon: Icon,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'> & {
-  icon?: React.ComponentType<React.ComponentPropsWithoutRef<'svg'>>
+                                        className,
+                                        icon: Icon,
+                                        children,
+                                        ...props
+                                    }: React.ComponentPropsWithoutRef<'div'> & {
+    icon?: React.ComponentType<React.ComponentPropsWithoutRef<'svg'>>
 }) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        'mt-2 flex items-center text-sm text-zinc-500',
-        'dark:text-zinc-400'
-      )}
-    >
-      {Icon !== undefined && Icon !== null && (
-        <Icon
-          aria-hidden="true"
-          className={clsx(
-            'mr-1.5 size-5 shrink-0 text-zinc-400',
-            'dark:text-zinc-500'
-          )}
-        />
-      )}
-      {children}
-    </div>
-  )
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                'mt-2 flex items-center text-sm text-zinc-500',
+                'dark:text-zinc-400'
+            )}
+        >
+            {Icon !== undefined && Icon !== null && (
+                <Icon
+                    aria-hidden="true"
+                    className={clsx(
+                        'mr-1.5 size-5 shrink-0 text-zinc-400',
+                        'dark:text-zinc-500'
+                    )}
+                />
+            )}
+            {children}
+        </div>
+    )
 }
 
 /**
@@ -195,19 +195,19 @@ export function PageHeadingMetaItem({
  * Provides flex-grow to allow actions to align right.
  */
 export function PageHeadingSection({
-  className,
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        className,
-        'min-w-0 flex-1'
-      )}
-    >
-      {children}
-    </div>
-  )
+                                       className,
+                                       children,
+                                       ...props
+                                   }: React.ComponentPropsWithoutRef<'div'>) {
+    return (
+        <div
+            {...props}
+            className={clsx(
+                className,
+                'min-w-0 flex-1'
+            )}
+        >
+            {children}
+        </div>
+    )
 }

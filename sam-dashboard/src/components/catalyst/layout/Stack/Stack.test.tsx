@@ -4,95 +4,95 @@ import {Stack} from './Stack';
 import {HStack} from './HStack';
 
 describe('Stack', () => {
-  it('renders children correctly', () => {
-    render(<Stack>Content</Stack>);
-    expect(screen.getByText('Content')).toBeInTheDocument();
-  });
+    it('renders children correctly', () => {
+        render(<Stack>Content</Stack>);
+        expect(screen.getByText('Content')).toBeInTheDocument();
+    });
 
-  it('renders as a div element', () => {
-    render(<Stack data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.tagName).toBe('DIV');
-  });
+    it('renders as a div element', () => {
+        render(<Stack data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.tagName).toBe('DIV');
+    });
 
-  it('applies flex and flex-col classes', () => {
-    render(<Stack data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.className).toContain('flex');
-    expect(element.className).toContain('flex-col');
-  });
+    it('applies flex and flex-col classes', () => {
+        render(<Stack data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.className).toContain('flex');
+        expect(element.className).toContain('flex-col');
+    });
 
-  it('applies default spacing class', () => {
-    render(<Stack data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.className).toContain('gap-4');
-  });
+    it('applies default spacing class', () => {
+        render(<Stack data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.className).toContain('gap-4');
+    });
 
-  it('applies custom gap with number via inline style', () => {
-    render(<Stack gap={8} data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element).toHaveStyle({ gap: '2rem' });
-  });
+    it('applies custom gap with number via inline style', () => {
+        render(<Stack gap={8} data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element).toHaveStyle({gap: '2rem'});
+    });
 
-  it('applies custom spacing with semantic size', () => {
-    render(<Stack spacing="xl" data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.className).toContain('gap-8');
-  });
+    it('applies custom spacing with semantic size', () => {
+        render(<Stack spacing="xl" data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.className).toContain('gap-8');
+    });
 
-  it('applies align class correctly', () => {
-    render(<Stack align="center" data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.className).toContain('items-center');
-  });
+    it('applies align class correctly', () => {
+        render(<Stack align="center" data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.className).toContain('items-center');
+    });
 
-  it('applies className correctly', () => {
-    render(<Stack className="custom-stack" data-testid="stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.className).toContain('custom-stack');
-  });
+    it('applies className correctly', () => {
+        render(<Stack className="custom-stack" data-testid="stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.className).toContain('custom-stack');
+    });
 
-  it('passes through additional HTML attributes', () => {
-    render(<Stack data-testid="stack" id="my-stack">Content</Stack>);
-    const element = screen.getByTestId('stack');
-    expect(element.id).toBe('my-stack');
-  });
+    it('passes through additional HTML attributes', () => {
+        render(<Stack data-testid="stack" id="my-stack">Content</Stack>);
+        const element = screen.getByTestId('stack');
+        expect(element.id).toBe('my-stack');
+    });
 });
 
 describe('HStack', () => {
-  it('renders children correctly', () => {
-    render(<HStack>Content</HStack>);
-    expect(screen.getByText('Content')).toBeInTheDocument();
-  });
+    it('renders children correctly', () => {
+        render(<HStack>Content</HStack>);
+        expect(screen.getByText('Content')).toBeInTheDocument();
+    });
 
-  it('renders as a div element', () => {
-    render(<HStack data-testid="hstack">Content</HStack>);
-    const element = screen.getByTestId('hstack');
-    expect(element.tagName).toBe('DIV');
-  });
+    it('renders as a div element', () => {
+        render(<HStack data-testid="hstack">Content</HStack>);
+        const element = screen.getByTestId('hstack');
+        expect(element.tagName).toBe('DIV');
+    });
 
-  it('applies flex and flex-row classes', () => {
-    render(<HStack data-testid="hstack">Content</HStack>);
-    const element = screen.getByTestId('hstack');
-    expect(element.className).toContain('flex');
-    expect(element.className).toContain('flex-row');
-  });
+    it('applies flex and flex-row classes', () => {
+        render(<HStack data-testid="hstack">Content</HStack>);
+        const element = screen.getByTestId('hstack');
+        expect(element.className).toContain('flex');
+        expect(element.className).toContain('flex-row');
+    });
 
-  it('applies justify class correctly', () => {
-    render(<HStack justify="between" data-testid="hstack">Content</HStack>);
-    const element = screen.getByTestId('hstack');
-    expect(element.className).toContain('justify-between');
-  });
+    it('applies justify class correctly', () => {
+        render(<HStack justify="between" data-testid="hstack">Content</HStack>);
+        const element = screen.getByTestId('hstack');
+        expect(element.className).toContain('justify-between');
+    });
 
-  it('applies center alignment by default', () => {
-    render(<HStack data-testid="hstack">Content</HStack>);
-    const element = screen.getByTestId('hstack');
-    expect(element.className).toContain('items-center');
-  });
+    it('applies center alignment by default', () => {
+        render(<HStack data-testid="hstack">Content</HStack>);
+        const element = screen.getByTestId('hstack');
+        expect(element.className).toContain('items-center');
+    });
 
-  it('passes through additional HTML attributes', () => {
-    render(<HStack data-testid="hstack" id="my-hstack">Content</HStack>);
-    const element = screen.getByTestId('hstack');
-    expect(element.id).toBe('my-hstack');
-  });
+    it('passes through additional HTML attributes', () => {
+        render(<HStack data-testid="hstack" id="my-hstack">Content</HStack>);
+        const element = screen.getByTestId('hstack');
+        expect(element.id).toBe('my-hstack');
+    });
 });

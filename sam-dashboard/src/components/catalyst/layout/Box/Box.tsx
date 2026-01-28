@@ -8,14 +8,14 @@ import {BoxProps} from './Box.types';
  * Tailwind classes and inline styles are encapsulated here.
  */
 export const Box = forwardRef<HTMLDivElement, BoxProps>(function Box(
-  { children, className, style, as: Element = 'div', ...rest },
-  ref
+    {children, className, style, as: Element = 'div', ...rest},
+    ref
 ) {
-  return (
-    <Element ref={ref} className={className} style={style} {...rest}>
-      {children}
-    </Element>
-  );
+    return (
+        <Element ref={ref} className={className} style={style} {...rest}>
+            {children}
+        </Element>
+    );
 });
 
 export default Box;
