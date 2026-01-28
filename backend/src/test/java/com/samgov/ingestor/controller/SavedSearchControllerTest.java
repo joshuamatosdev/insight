@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SavedSearchController")
 class SavedSearchControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/saved-searches";
+    private static final String BASE_URL = "/saved-searches";
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +47,7 @@ class SavedSearchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/saved-searches")
+    @DisplayName("GET /saved-searches")
     class GetSavedSearches {
 
         @Test
@@ -61,7 +61,7 @@ class SavedSearchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/saved-searches/{id}")
+    @DisplayName("GET /saved-searches/{id}")
     class GetSavedSearchById {
 
         @Test
@@ -74,7 +74,7 @@ class SavedSearchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/saved-searches")
+    @DisplayName("POST /saved-searches")
     class CreateSavedSearch {
 
         @Test
@@ -87,7 +87,7 @@ class SavedSearchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/saved-searches/{id}")
+    @DisplayName("DELETE /saved-searches/{id}")
     class DeleteSavedSearch {
 
         @Test

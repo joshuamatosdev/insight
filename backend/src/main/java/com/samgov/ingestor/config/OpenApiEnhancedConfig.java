@@ -87,7 +87,7 @@ public class OpenApiEnhancedConfig {
                   "error": "ERROR_CODE",
                   "message": "Human-readable message",
                   "timestamp": "2024-01-15T10:30:00Z",
-                  "path": "/api/v1/resource"
+                  "path": "/resource"
                 }
                 ```
 
@@ -165,7 +165,7 @@ public class OpenApiEnhancedConfig {
             .addProperty("error", new Schema<String>().type("string").example("NOT_FOUND"))
             .addProperty("message", new Schema<String>().type("string").example("Resource not found"))
             .addProperty("timestamp", new Schema<String>().type("string").format("date-time"))
-            .addProperty("path", new Schema<String>().type("string").example("/api/v1/opportunities/123"));
+            .addProperty("path", new Schema<String>().type("string").example("/opportunities/123"));
     }
 
     @SuppressWarnings("rawtypes")

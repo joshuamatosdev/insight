@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("LaborRateController")
 class LaborRateControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/labor-rates";
+    private static final String BASE_URL = "/labor-rates";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class LaborRateControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/labor-rates")
+    @DisplayName("GET /labor-rates")
     class GetLaborRates {
 
         @Test
@@ -53,7 +53,7 @@ class LaborRateControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/labor-rates/{id}")
+    @DisplayName("GET /labor-rates/{id}")
     class GetLaborRateById {
 
         @Test
@@ -66,7 +66,7 @@ class LaborRateControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/labor-rates")
+    @DisplayName("POST /labor-rates")
     class CreateLaborRate {
 
         @Test
@@ -79,7 +79,7 @@ class LaborRateControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/labor-rates/{id}")
+    @DisplayName("DELETE /labor-rates/{id}")
     class DeleteLaborRate {
 
         @Test

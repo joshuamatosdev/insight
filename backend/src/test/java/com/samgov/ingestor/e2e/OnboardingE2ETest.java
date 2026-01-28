@@ -26,8 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Onboarding E2E Tests")
 class OnboardingE2ETest extends BaseControllerTest {
 
-    private static final String AUTH_URL = "/api/v1/auth";
-    private static final String ONBOARDING_URL = "/api/v1/onboarding";
+    private static final String AUTH_URL = "/auth";
+    private static final String ONBOARDING_URL = "/onboarding";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -349,7 +349,7 @@ class OnboardingE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should resend verification email")
         void should_ResendVerificationEmail() throws Exception {
-            mockMvc.perform(post("/api/v1/email-verification/resend")
+            mockMvc.perform(post("/email-verification/resend")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"email\":\"" + testUser.getEmail() + "\"}"))
                 .andExpect(status().isOk());
@@ -358,7 +358,7 @@ class OnboardingE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should handle invalid verification token")
         void should_HandleInvalidVerificationToken() throws Exception {
-            mockMvc.perform(get("/api/v1/email-verification/verify")
+            mockMvc.perform(get("/email-verification/verify")
                     .param("token", "invalid-token")
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("UserController")
 class UserControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/users";
+    private static final String BASE_URL = "/users";
 
     @Autowired
     private UserRepository userRepository;
@@ -118,7 +118,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/users/me")
+    @DisplayName("GET /users/me")
     class GetCurrentUser {
 
         @Test
@@ -150,7 +150,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/users/me/memberships")
+    @DisplayName("GET /users/me/memberships")
     class GetCurrentUserMemberships {
 
         @Test
@@ -178,7 +178,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/users/{id}")
+    @DisplayName("GET /users/{id}")
     class GetUserById {
 
         @Test
@@ -219,7 +219,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/users")
+    @DisplayName("POST /users")
     class CreateUser {
 
         @Test
@@ -292,7 +292,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/users/{id}/activate")
+    @DisplayName("POST /users/{id}/activate")
     class ActivateUser {
 
         @Test
@@ -332,7 +332,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/users/{id}/suspend")
+    @DisplayName("POST /users/{id}/suspend")
     class SuspendUser {
 
         @Test
@@ -362,7 +362,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/users/me/default-tenant")
+    @DisplayName("PUT /users/me/default-tenant")
     class SetDefaultTenant {
 
         @Test
@@ -418,7 +418,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/users/{id}/memberships")
+    @DisplayName("GET /users/{id}/memberships")
     class GetUserMemberships {
 
         @Test
@@ -453,7 +453,7 @@ class UserControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/users/invite")
+    @DisplayName("POST /users/invite")
     class InviteUser {
 
         @Test

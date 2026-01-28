@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("UserPreferenceController")
 class UserPreferenceControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/user-preferences";
+    private static final String BASE_URL = "/user-preferences";
 
     @Autowired
     private UserRepository userRepository;
@@ -46,7 +46,7 @@ class UserPreferenceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/user-preferences")
+    @DisplayName("GET /user-preferences")
     class GetPreferences {
 
         @Test
@@ -59,7 +59,7 @@ class UserPreferenceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/user-preferences")
+    @DisplayName("PUT /user-preferences")
     class UpdatePreferences {
 
         @Test
@@ -72,7 +72,7 @@ class UserPreferenceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/user-preferences/notification")
+    @DisplayName("GET /user-preferences/notification")
     class GetNotificationPreferences {
 
         @Test
@@ -85,7 +85,7 @@ class UserPreferenceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/user-preferences/notification")
+    @DisplayName("PUT /user-preferences/notification")
     class UpdateNotificationPreferences {
 
         @Test

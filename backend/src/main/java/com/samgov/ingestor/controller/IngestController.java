@@ -47,7 +47,7 @@ public class IngestController {
 
     /**
      * Manually triggers the ingestion process.
-     * POST /api/ingest
+     * POST /ingest
      *
      * @return Status message with ingestion results
      */
@@ -80,10 +80,10 @@ public class IngestController {
 
     /**
      * Search SAM.gov directly for opportunities by type.
-     * GET /api/search?ptype=r (Sources Sought)
-     * GET /api/search?ptype=o (Original/Solicitation)
-     * GET /api/search?ptype=k (Combined Synopsis/Solicitation)
-     * GET /api/search?ptype=p (Presolicitation)
+     * GET /search?ptype=r (Sources Sought)
+     * GET /search?ptype=o (Original/Solicitation)
+     * GET /search?ptype=k (Combined Synopsis/Solicitation)
+     * GET /search?ptype=p (Presolicitation)
      *
      * @param ptype Procurement type filter
      * @param naics Optional specific NAICS code (searches all configured if omitted)
@@ -179,7 +179,7 @@ public class IngestController {
 
     /**
      * Triggers full ingestion (regular + SBIR/STTR).
-     * POST /api/ingest/full
+     * POST /ingest/full
      *
      * @return Status message with full ingestion results
      */

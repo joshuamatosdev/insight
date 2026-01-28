@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Pipeline E2E Tests")
 class PipelineE2ETest extends BaseControllerTest {
 
-    private static final String PIPELINE_URL = "/api/v1/pipeline";
-    private static final String ALERTS_URL = "/api/v1/alerts";
-    private static final String SAVED_SEARCHES_URL = "/api/v1/saved-searches";
+    private static final String PIPELINE_URL = "/pipeline";
+    private static final String ALERTS_URL = "/alerts";
+    private static final String SAVED_SEARCHES_URL = "/saved-searches";
 
     @Autowired
     private OpportunityRepository opportunityRepository;
@@ -336,7 +336,7 @@ class PipelineE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list opportunity matches")
         void should_ListOpportunityMatches() throws Exception {
-            performGet("/api/v1/opportunity-matches")
+            performGet("/opportunity-matches")
                 .andExpect(status().isOk());
         }
 
@@ -345,7 +345,7 @@ class PipelineE2ETest extends BaseControllerTest {
         void should_CalculateMatchScoreForOpportunity() throws Exception {
             Opportunity opp = createTestOpportunity("Match Score Opp", "NEW");
 
-            performGet("/api/v1/opportunity-matches/" + opp.getId() + "/score")
+            performGet("/opportunity-matches/" + opp.getId() + "/score")
                 .andExpect(status().isOk());
         }
     }
@@ -357,28 +357,28 @@ class PipelineE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should retrieve dashboard stats")
         void should_RetrieveDashboardStats() throws Exception {
-            performGet("/api/v1/dashboard/stats")
+            performGet("/dashboard/stats")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should retrieve pipeline widget data")
         void should_RetrievePipelineWidgetData() throws Exception {
-            performGet("/api/v1/dashboard/widgets/pipeline")
+            performGet("/dashboard/widgets/pipeline")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should retrieve upcoming deadlines widget")
         void should_RetrieveUpcomingDeadlinesWidget() throws Exception {
-            performGet("/api/v1/dashboard/widgets/deadlines")
+            performGet("/dashboard/widgets/deadlines")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should retrieve recent activity widget")
         void should_RetrieveRecentActivityWidget() throws Exception {
-            performGet("/api/v1/dashboard/widgets/activity")
+            performGet("/dashboard/widgets/activity")
                 .andExpect(status().isOk());
         }
     }

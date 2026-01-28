@@ -17,10 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SbirController")
 class SbirControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/sbir";
+    private static final String BASE_URL = "/sbir";
 
     @Nested
-    @DisplayName("GET /api/v1/sbir/opportunities")
+    @DisplayName("GET /sbir/opportunities")
     class GetSbirOpportunities {
 
         @Test
@@ -34,7 +34,7 @@ class SbirControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sbir/opportunities/{id}")
+    @DisplayName("GET /sbir/opportunities/{id}")
     class GetSbirOpportunityById {
 
         @Test
@@ -47,7 +47,7 @@ class SbirControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sbir/agencies")
+    @DisplayName("GET /sbir/agencies")
     class GetAgencies {
 
         @Test
@@ -61,7 +61,7 @@ class SbirControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/sbir/ingest")
+    @DisplayName("POST /sbir/ingest")
     class TriggerIngestion {
 
         @Test

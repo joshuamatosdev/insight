@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("NotificationController")
 class NotificationControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/notifications";
+    private static final String BASE_URL = "/notifications";
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +47,7 @@ class NotificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/notifications")
+    @DisplayName("GET /notifications")
     class GetNotifications {
 
         @Test
@@ -61,7 +61,7 @@ class NotificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/notifications/unread")
+    @DisplayName("GET /notifications/unread")
     class GetUnreadNotifications {
 
         @Test
@@ -74,7 +74,7 @@ class NotificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/notifications/{id}/read")
+    @DisplayName("POST /notifications/{id}/read")
     class MarkAsRead {
 
         @Test
@@ -87,7 +87,7 @@ class NotificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/notifications/read-all")
+    @DisplayName("POST /notifications/read-all")
     class MarkAllAsRead {
 
         @Test
@@ -100,7 +100,7 @@ class NotificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/notifications/preferences")
+    @DisplayName("GET /notifications/preferences")
     class GetPreferences {
 
         @Test

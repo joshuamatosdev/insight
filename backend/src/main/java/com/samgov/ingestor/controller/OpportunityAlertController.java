@@ -28,7 +28,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/opportunity-alerts")
+@RequestMapping("/opportunity-alerts")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class OpportunityAlertController {
@@ -37,7 +37,7 @@ public class OpportunityAlertController {
 
     /**
      * List all opportunity alerts for the current user.
-     * GET /api/v1/opportunity-alerts
+     * GET /opportunity-alerts
      */
     @GetMapping
     public ResponseEntity<Page<OpportunityAlertDto>> listAlerts(
@@ -51,7 +51,7 @@ public class OpportunityAlertController {
 
     /**
      * Get a specific opportunity alert by ID.
-     * GET /api/v1/opportunity-alerts/{id}
+     * GET /opportunity-alerts/{id}
      */
     @GetMapping("/{id}")
     public ResponseEntity<OpportunityAlertDto> getAlert(@PathVariable UUID id) {
@@ -61,7 +61,7 @@ public class OpportunityAlertController {
 
     /**
      * Create a new opportunity alert.
-     * POST /api/v1/opportunity-alerts
+     * POST /opportunity-alerts
      */
     @PostMapping
     public ResponseEntity<OpportunityAlertDto> createAlert(
@@ -73,7 +73,7 @@ public class OpportunityAlertController {
 
     /**
      * Update an existing opportunity alert.
-     * PUT /api/v1/opportunity-alerts/{id}
+     * PUT /opportunity-alerts/{id}
      */
     @PutMapping("/{id}")
     public ResponseEntity<OpportunityAlertDto> updateAlert(
@@ -86,7 +86,7 @@ public class OpportunityAlertController {
 
     /**
      * Delete an opportunity alert.
-     * DELETE /api/v1/opportunity-alerts/{id}
+     * DELETE /opportunity-alerts/{id}
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAlert(@PathVariable UUID id) {
@@ -96,7 +96,7 @@ public class OpportunityAlertController {
 
     /**
      * Toggle the enabled status of an alert.
-     * POST /api/v1/opportunity-alerts/{id}/toggle
+     * POST /opportunity-alerts/{id}/toggle
      */
     @PostMapping("/{id}/toggle")
     public ResponseEntity<OpportunityAlertDto> toggleAlert(@PathVariable UUID id) {

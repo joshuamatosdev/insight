@@ -17,7 +17,7 @@ import java.util.UUID;
  * Admin-only endpoints for managing data sources.
  */
 @RestController
-@RequestMapping("/api/v1/procurement-sources")
+@RequestMapping("/procurement-sources")
 @PreAuthorize("isAuthenticated()")
 public class ProcurementSourceController {
 

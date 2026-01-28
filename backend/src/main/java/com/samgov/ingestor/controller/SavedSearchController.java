@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/saved-searches")
+@RequestMapping("/saved-searches")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class SavedSearchController {

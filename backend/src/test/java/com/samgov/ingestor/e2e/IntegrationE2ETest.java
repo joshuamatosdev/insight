@@ -57,7 +57,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list API keys")
         void shouldListApiKeys() throws Exception {
-            performGet("/api/v1/api-keys")
+            performGet("/api-keys")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -71,7 +71,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "permissions", java.util.List.of("read:opportunities", "read:contracts")
             );
 
-            performPost("/api/v1/api-keys", request)
+            performPost("/api-keys", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test API Key"))
                 .andExpect(jsonPath("$.key").isNotEmpty());
@@ -86,13 +86,13 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "description", "Key to be revoked"
             );
 
-            String response = performPost("/api/v1/api-keys", createRequest)
+            String response = performPost("/api-keys", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
             String keyId = objectMapper.readTree(response).get("id").asText();
 
-            performDelete("/api/v1/api-keys/" + keyId)
+            performDelete("/api-keys/" + keyId)
                 .andExpect(status().isNoContent());
         }
     }
@@ -104,7 +104,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list webhooks")
         void shouldListWebhooks() throws Exception {
-            performGet("/api/v1/webhooks")
+            performGet("/webhooks")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -119,7 +119,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            performPost("/api/v1/webhooks", webhook)
+            performPost("/webhooks", webhook)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test Webhook"));
         }
@@ -134,7 +134,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            String response = performPost("/api/v1/webhooks", createRequest)
+            String response = performPost("/webhooks", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
@@ -144,7 +144,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", false
             );
 
-            performPut("/api/v1/webhooks/" + webhookId, update)
+            performPut("/webhooks/" + webhookId, update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.enabled").value(false));
         }
@@ -159,13 +159,13 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            String response = performPost("/api/v1/webhooks", createRequest)
+            String response = performPost("/webhooks", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
             String webhookId = objectMapper.readTree(response).get("id").asText();
 
-            performPost("/api/v1/webhooks/" + webhookId + "/test")
+            performPost("/webhooks/" + webhookId + "/test")
                 .andExpect(status().isOk());
         }
     }
@@ -177,7 +177,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list contacts")
         void shouldListContacts() throws Exception {
-            performGet("/api/v1/crm/contacts")
+            performGet("/crm/contacts")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -193,7 +193,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "company", "Test Company"
             );
 
-            performPost("/api/v1/crm/contacts", contact)
+            performPost("/crm/contacts", contact)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName").value("E2E"));
         }
@@ -201,7 +201,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list organizations")
         void shouldListOrganizations() throws Exception {
-            performGet("/api/v1/crm/organizations")
+            performGet("/crm/organizations")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -215,7 +215,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "website", "https://e2e-org.example.gov"
             );
 
-            performPost("/api/v1/crm/organizations", org)
+            performPost("/crm/organizations", org)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test Organization"));
         }
@@ -223,7 +223,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list interactions")
         void shouldListInteractions() throws Exception {
-            performGet("/api/v1/crm/interactions")
+            performGet("/crm/interactions")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -236,7 +236,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list procurement sources")
         void shouldListProcurementSources() throws Exception {
-            performGet("/api/v1/procurement-sources")
+            performGet("/procurement-sources")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -251,7 +251,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            performPost("/api/v1/procurement-sources", source)
+            performPost("/procurement-sources", source)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test Portal"));
         }
@@ -266,13 +266,13 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            String response = performPost("/api/v1/procurement-sources", createRequest)
+            String response = performPost("/procurement-sources", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
             String sourceId = objectMapper.readTree(response).get("id").asText();
 
-            performPatch("/api/v1/procurement-sources/" + sourceId + "/toggle")
+            performPatch("/procurement-sources/" + sourceId + "/toggle")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.enabled").value(false));
         }
@@ -285,7 +285,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list SBIR awards")
         void shouldListSbirAwards() throws Exception {
-            performGet("/api/v1/sbir/awards")
+            performGet("/sbir/awards")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -293,7 +293,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should search SBIR opportunities")
         void shouldSearchSbirOpportunities() throws Exception {
-            performGet("/api/v1/sbir/search?keyword=software")
+            performGet("/sbir/search?keyword=software")
                 .andExpect(status().isOk());
         }
     }
@@ -305,14 +305,14 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get ingest status")
         void shouldGetIngestStatus() throws Exception {
-            performGet("/api/v1/ingest/status")
+            performGet("/ingest/status")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should trigger manual ingest")
         void shouldTriggerManualIngest() throws Exception {
-            performPost("/api/v1/ingest/trigger")
+            performPost("/ingest/trigger")
                 .andExpect(status().isAccepted());
         }
     }
@@ -324,7 +324,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get opportunity matches")
         void shouldGetOpportunityMatches() throws Exception {
-            performGet("/api/v1/opportunity-matches")
+            performGet("/opportunity-matches")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -333,7 +333,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @DisplayName("should get match score for opportunity")
         void shouldGetMatchScore() throws Exception {
             // This requires an actual opportunity ID
-            performGet("/api/v1/opportunity-matches/calculate")
+            performGet("/opportunity-matches/calculate")
                 .andExpect(status().isOk());
         }
     }
@@ -345,7 +345,7 @@ class IntegrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list opportunity alerts")
         void shouldListOpportunityAlerts() throws Exception {
-            performGet("/api/v1/opportunity-alerts")
+            performGet("/opportunity-alerts")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -361,7 +361,7 @@ class IntegrationE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            performPost("/api/v1/opportunity-alerts", alert)
+            performPost("/opportunity-alerts", alert)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E NAICS Alert"));
         }

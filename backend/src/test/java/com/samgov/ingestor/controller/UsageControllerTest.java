@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("UsageController")
 class UsageControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/usage";
+    private static final String BASE_URL = "/usage";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -38,7 +38,7 @@ class UsageControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/usage")
+    @DisplayName("GET /usage")
     class GetUsage {
 
         @Test
@@ -51,7 +51,7 @@ class UsageControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/usage/api-calls")
+    @DisplayName("GET /usage/api-calls")
     class GetApiCallUsage {
 
         @Test
@@ -64,7 +64,7 @@ class UsageControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/usage/storage")
+    @DisplayName("GET /usage/storage")
     class GetStorageUsage {
 
         @Test
@@ -77,7 +77,7 @@ class UsageControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/usage/limits")
+    @DisplayName("GET /usage/limits")
     class GetLimits {
 
         @Test

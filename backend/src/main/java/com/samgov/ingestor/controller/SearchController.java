@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * Controller for enhanced search functionality
  */
 @RestController
-@RequestMapping("/api/v1/search")
+@RequestMapping("/search")
 @RequiredArgsConstructor
 public class SearchController {
 

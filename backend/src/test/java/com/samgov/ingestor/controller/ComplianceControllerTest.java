@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ComplianceController")
 class ComplianceControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/compliance";
+    private static final String BASE_URL = "/compliance";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/summary")
+    @DisplayName("GET /compliance/summary")
     class GetComplianceSummary {
 
         @Test
@@ -54,7 +54,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     // Certification Tests
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/certifications")
+    @DisplayName("GET /compliance/certifications")
     class GetCertifications {
 
         @Test
@@ -68,7 +68,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/certifications/active")
+    @DisplayName("GET /compliance/certifications/active")
     class GetActiveCertifications {
 
         @Test
@@ -82,7 +82,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/certifications/expiring")
+    @DisplayName("GET /compliance/certifications/expiring")
     class GetExpiringCertifications {
 
         @Test
@@ -96,7 +96,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/certifications/{certId}")
+    @DisplayName("GET /compliance/certifications/{certId}")
     class GetCertification {
 
         @Test
@@ -111,7 +111,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     // Clearance Tests
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/clearances")
+    @DisplayName("GET /compliance/clearances")
     class GetClearances {
 
         @Test
@@ -125,7 +125,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/clearances/active")
+    @DisplayName("GET /compliance/clearances/active")
     class GetActiveClearances {
 
         @Test
@@ -139,7 +139,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/clearances/facility")
+    @DisplayName("GET /compliance/clearances/facility")
     class GetFacilityClearance {
 
         @Test
@@ -154,7 +154,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     // Compliance Item Tests
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/items")
+    @DisplayName("GET /compliance/items")
     class GetComplianceItems {
 
         @Test
@@ -168,7 +168,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/items/pending")
+    @DisplayName("GET /compliance/items/pending")
     class GetPendingItems {
 
         @Test
@@ -182,7 +182,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/items/overdue")
+    @DisplayName("GET /compliance/items/overdue")
     class GetOverdueItems {
 
         @Test
@@ -196,7 +196,7 @@ class ComplianceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/compliance/items/{itemId}")
+    @DisplayName("GET /compliance/items/{itemId}")
     class GetComplianceItem {
 
         @Test

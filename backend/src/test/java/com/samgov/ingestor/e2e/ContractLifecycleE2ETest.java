@@ -85,7 +85,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "type", "LABOR"
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/clins", clin)
+            performPost("/contracts/" + testContract.getId() + "/clins", clin)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.clinNumber").value("0001"));
         }
@@ -103,7 +103,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 .totalAmount(new BigDecimal("10000"))
                 .build());
 
-            performGet("/api/v1/contracts/" + testContract.getId() + "/clins")
+            performGet("/contracts/" + testContract.getId() + "/clins")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
@@ -126,7 +126,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "quantity", 150
             );
 
-            performPut("/api/v1/contracts/" + testContract.getId() + "/clins/" + clin.getId(), update)
+            performPut("/contracts/" + testContract.getId() + "/clins/" + clin.getId(), update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description").value("Updated Description"));
         }
@@ -143,7 +143,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 .totalAmount(new BigDecimal("10000"))
                 .build());
 
-            performDelete("/api/v1/contracts/" + testContract.getId() + "/clins/" + clin.getId())
+            performDelete("/contracts/" + testContract.getId() + "/clins/" + clin.getId())
                 .andExpect(status().isNoContent());
         }
     }
@@ -162,7 +162,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "effectiveDate", LocalDate.now().toString()
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/modifications", mod)
+            performPost("/contracts/" + testContract.getId() + "/modifications", mod)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.modNumber").value("P00001"));
         }
@@ -170,7 +170,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list modifications")
         void shouldListModifications() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/modifications")
+            performGet("/contracts/" + testContract.getId() + "/modifications")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -186,13 +186,13 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "effectiveDate", LocalDate.now().toString()
             );
 
-            String response = performPost("/api/v1/contracts/" + testContract.getId() + "/modifications", createRequest)
+            String response = performPost("/contracts/" + testContract.getId() + "/modifications", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
             String modId = objectMapper.readTree(response).get("id").asText();
 
-            performGet("/api/v1/contracts/" + testContract.getId() + "/modifications/" + modId)
+            performGet("/contracts/" + testContract.getId() + "/modifications/" + modId)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.modNumber").value("P00002"));
         }
@@ -213,7 +213,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "status", "NOT_STARTED"
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/tasks", task)
+            performPost("/contracts/" + testContract.getId() + "/tasks", task)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Develop Feature X"));
         }
@@ -221,7 +221,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list tasks")
         void shouldListTasks() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/tasks")
+            performGet("/contracts/" + testContract.getId() + "/tasks")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -237,7 +237,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "status", "NOT_STARTED"
             );
 
-            String response = performPost("/api/v1/contracts/" + testContract.getId() + "/tasks", createRequest)
+            String response = performPost("/contracts/" + testContract.getId() + "/tasks", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
@@ -245,7 +245,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
 
             Map<String, Object> update = Map.of("status", "IN_PROGRESS");
 
-            performPatch("/api/v1/contracts/" + testContract.getId() + "/tasks/" + taskId, update)
+            performPatch("/contracts/" + testContract.getId() + "/tasks/" + taskId, update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("IN_PROGRESS"));
         }
@@ -263,7 +263,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "reason", "Contract work completed successfully"
             );
 
-            performPatch("/api/v1/contracts/" + testContract.getId() + "/status", transition)
+            performPatch("/contracts/" + testContract.getId() + "/status", transition)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("COMPLETED"));
         }
@@ -271,7 +271,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get contract timeline")
         void shouldGetContractTimeline() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/timeline")
+            performGet("/contracts/" + testContract.getId() + "/timeline")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -279,7 +279,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get contract summary")
         void shouldGetContractSummary() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/summary")
+            performGet("/contracts/" + testContract.getId() + "/summary")
                 .andExpect(status().isOk());
         }
     }
@@ -291,7 +291,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list team members")
         void shouldListTeamMembers() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/team")
+            performGet("/contracts/" + testContract.getId() + "/team")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -304,7 +304,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "role", "PROJECT_MANAGER"
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/team", member)
+            performPost("/contracts/" + testContract.getId() + "/team", member)
                 .andExpect(status().isCreated());
         }
 
@@ -317,10 +317,10 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "role", "TEAM_MEMBER"
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/team", member)
+            performPost("/contracts/" + testContract.getId() + "/team", member)
                 .andExpect(status().isCreated());
 
-            performDelete("/api/v1/contracts/" + testContract.getId() + "/team/" + testUserId)
+            performDelete("/contracts/" + testContract.getId() + "/team/" + testUserId)
                 .andExpect(status().isNoContent());
         }
     }
@@ -332,7 +332,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list contract documents")
         void shouldListContractDocuments() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/documents")
+            performGet("/contracts/" + testContract.getId() + "/documents")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -346,7 +346,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "url", "https://documents.example.com/award-123.pdf"
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/documents", doc)
+            performPost("/contracts/" + testContract.getId() + "/documents", doc)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Contract Award Document"));
         }
@@ -359,7 +359,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list option years")
         void shouldListOptionYears() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/option-years")
+            performGet("/contracts/" + testContract.getId() + "/option-years")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -375,7 +375,7 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "status", "NOT_EXERCISED"
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/option-years", optionYear)
+            performPost("/contracts/" + testContract.getId() + "/option-years", optionYear)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.yearNumber").value(1));
         }
@@ -392,13 +392,13 @@ class ContractLifecycleE2ETest extends BaseControllerTest {
                 "status", "NOT_EXERCISED"
             );
 
-            String response = performPost("/api/v1/contracts/" + testContract.getId() + "/option-years", optionYear)
+            String response = performPost("/contracts/" + testContract.getId() + "/option-years", optionYear)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
             String optionId = objectMapper.readTree(response).get("id").asText();
 
-            performPatch("/api/v1/contracts/" + testContract.getId() + "/option-years/" + optionId + "/exercise")
+            performPatch("/contracts/" + testContract.getId() + "/option-years/" + optionId + "/exercise")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("EXERCISED"));
         }

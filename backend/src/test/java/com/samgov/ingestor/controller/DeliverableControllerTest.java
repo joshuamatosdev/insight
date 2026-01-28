@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("DeliverableController")
 class DeliverableControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/deliverables";
+    private static final String BASE_URL = "/deliverables";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class DeliverableControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/deliverables")
+    @DisplayName("GET /deliverables")
     class GetDeliverables {
 
         @Test
@@ -53,7 +53,7 @@ class DeliverableControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/deliverables/{id}")
+    @DisplayName("GET /deliverables/{id}")
     class GetDeliverableById {
 
         @Test
@@ -66,7 +66,7 @@ class DeliverableControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/deliverables/contract/{contractId}")
+    @DisplayName("GET /deliverables/contract/{contractId}")
     class GetDeliverablesByContract {
 
         @Test
@@ -79,7 +79,7 @@ class DeliverableControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/deliverables/upcoming")
+    @DisplayName("GET /deliverables/upcoming")
     class GetUpcomingDeliverables {
 
         @Test
@@ -92,7 +92,7 @@ class DeliverableControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/deliverables")
+    @DisplayName("POST /deliverables")
     class CreateDeliverable {
 
         @Test

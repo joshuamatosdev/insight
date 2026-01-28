@@ -58,7 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser(roles = {"USER", "TENANT_ADMIN"})
 class PipelineControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/pipelines";
+    private static final String BASE_URL = "/pipelines";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -142,7 +142,7 @@ class PipelineControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/pipelines - Create Pipeline")
+    @DisplayName("POST /pipelines - Create Pipeline")
     class CreatePipeline {
 
         @Test
@@ -211,7 +211,7 @@ class PipelineControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/pipelines - List Pipelines")
+    @DisplayName("GET /pipelines - List Pipelines")
     class ListPipelines {
 
         @Test
@@ -263,7 +263,7 @@ class PipelineControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/pipelines/{id} - Get Pipeline")
+    @DisplayName("GET /pipelines/{id} - Get Pipeline")
     class GetPipeline {
 
         @Test
@@ -290,7 +290,7 @@ class PipelineControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/pipelines/{id} - Update Pipeline")
+    @DisplayName("PUT /pipelines/{id} - Update Pipeline")
     class UpdatePipeline {
 
         @Test
@@ -313,7 +313,7 @@ class PipelineControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/pipelines/{id} - Delete Pipeline")
+    @DisplayName("DELETE /pipelines/{id} - Delete Pipeline")
     class DeletePipeline {
 
         @Test
@@ -344,7 +344,7 @@ class PipelineControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/pipelines/{id}/set-default - Set Default Pipeline")
+    @DisplayName("POST /pipelines/{id}/set-default - Set Default Pipeline")
     class SetDefaultPipeline {
 
         @Test

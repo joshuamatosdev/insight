@@ -18,7 +18,7 @@ import java.util.UUID;
  * REST controller for AI-powered analysis features.
  */
 @RestController
-@RequestMapping("/api/v1/ai")
+@RequestMapping("/ai")
 @RequiredArgsConstructor
 @Tag(name = "AI Analysis", description = "AI-powered contract and opportunity analysis")
 public class AIAnalysisController {

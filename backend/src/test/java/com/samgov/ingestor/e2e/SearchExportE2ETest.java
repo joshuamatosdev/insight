@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Search & Export E2E Tests")
 class SearchExportE2ETest extends BaseControllerTest {
 
-    private static final String SEARCH_URL = "/api/v1/search";
-    private static final String EXPORT_URL = "/api/v1/export";
+    private static final String SEARCH_URL = "/search";
+    private static final String EXPORT_URL = "/export";
 
     @Autowired
     private OpportunityRepository opportunityRepository;

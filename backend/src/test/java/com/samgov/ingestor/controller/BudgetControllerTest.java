@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("BudgetController")
 class BudgetControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/budgets";
+    private static final String BASE_URL = "/budgets";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class BudgetControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/budgets")
+    @DisplayName("GET /budgets")
     class GetBudgets {
 
         @Test
@@ -53,7 +53,7 @@ class BudgetControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/budgets/{id}")
+    @DisplayName("GET /budgets/{id}")
     class GetBudgetById {
 
         @Test
@@ -66,7 +66,7 @@ class BudgetControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/budgets")
+    @DisplayName("POST /budgets")
     class CreateBudget {
 
         @Test

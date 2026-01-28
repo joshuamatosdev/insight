@@ -20,7 +20,7 @@ import java.util.UUID;
  * REST API for AI-powered opportunity matching.
  */
 @RestController
-@RequestMapping("/api/v1/matches")
+@RequestMapping("/matches")
 @PreAuthorize("isAuthenticated()")
 public class OpportunityMatchController {
 

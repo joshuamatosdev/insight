@@ -24,9 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("User Management E2E Tests")
 class UserManagementE2ETest extends BaseControllerTest {
 
-    private static final String USERS_URL = "/api/v1/users";
-    private static final String USER_PREFS_URL = "/api/v1/user-preferences";
-    private static final String NOTIFICATIONS_URL = "/api/v1/notifications";
+    private static final String USERS_URL = "/users";
+    private static final String USER_PREFS_URL = "/user-preferences";
+    private static final String NOTIFICATIONS_URL = "/notifications";
 
     @Autowired
     private TenantRepository tenantRepository;

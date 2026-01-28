@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Authentication E2E Tests")
 class AuthE2ETest extends BaseControllerTest {
 
-    private static final String AUTH_BASE = "/api/v1/auth";
+    private static final String AUTH_BASE = "/auth";
     private static final String VALID_PASSWORD = "SecurePass123!";
 
     @Autowired
@@ -81,7 +81,7 @@ class AuthE2ETest extends BaseControllerTest {
             assertThat(loginAccessToken).isNotEmpty();
 
             // Step 3: Access protected endpoint with token
-            mockMvc.perform(get("/api/v1/users/me")
+            mockMvc.perform(get("/users/me")
                     .header("Authorization", "Bearer " + loginAccessToken)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -161,7 +161,7 @@ class AuthE2ETest extends BaseControllerTest {
                 .get("accessToken").asText();
 
             // Step 3: Verify new token works for protected resources
-            mockMvc.perform(get("/api/v1/users/me")
+            mockMvc.perform(get("/users/me")
                     .header("Authorization", "Bearer " + newAccessToken)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -274,7 +274,7 @@ class AuthE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should deny access to protected resources without token")
         void should_DenyAccess_WithoutToken() throws Exception {
-            mockMvc.perform(get("/api/v1/users/me")
+            mockMvc.perform(get("/users/me")
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
         }
@@ -282,7 +282,7 @@ class AuthE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should deny access with invalid token")
         void should_DenyAccess_WithInvalidToken() throws Exception {
-            mockMvc.perform(get("/api/v1/users/me")
+            mockMvc.perform(get("/users/me")
                     .header("Authorization", "Bearer invalid.token.here")
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
@@ -308,7 +308,7 @@ class AuthE2ETest extends BaseControllerTest {
                 .get("accessToken").asText();
 
             // Access protected resource
-            mockMvc.perform(get("/api/v1/users/me")
+            mockMvc.perform(get("/users/me")
                     .header("Authorization", "Bearer " + accessToken)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

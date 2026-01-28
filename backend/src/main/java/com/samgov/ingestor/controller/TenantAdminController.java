@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/admin/tenant")
+@RequestMapping("/admin/tenant")
 @RequiredArgsConstructor
 public class TenantAdminController {
 

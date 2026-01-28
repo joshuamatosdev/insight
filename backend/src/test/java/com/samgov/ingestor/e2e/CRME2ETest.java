@@ -22,9 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("CRM E2E Tests")
 class CRME2ETest extends BaseControllerTest {
 
-    private static final String CONTACTS_URL = "/api/v1/contacts";
-    private static final String ORGANIZATIONS_URL = "/api/v1/organizations";
-    private static final String INTERACTIONS_URL = "/api/v1/interactions";
+    private static final String CONTACTS_URL = "/contacts";
+    private static final String ORGANIZATIONS_URL = "/organizations";
+    private static final String INTERACTIONS_URL = "/interactions";
 
     @Autowired
     private TenantRepository tenantRepository;

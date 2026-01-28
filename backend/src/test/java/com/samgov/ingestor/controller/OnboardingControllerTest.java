@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("OnboardingController")
 class OnboardingControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/onboarding";
+    private static final String BASE_URL = "/onboarding";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -40,7 +40,7 @@ class OnboardingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/onboarding/progress")
+    @DisplayName("GET /onboarding/progress")
     class GetProgress {
 
         @Test
@@ -53,7 +53,7 @@ class OnboardingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/onboarding/steps")
+    @DisplayName("GET /onboarding/steps")
     class GetSteps {
 
         @Test
@@ -67,7 +67,7 @@ class OnboardingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/onboarding/step/{step}")
+    @DisplayName("PUT /onboarding/step/{step}")
     class CompleteStep {
 
         @Test
@@ -88,7 +88,7 @@ class OnboardingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/onboarding/dismiss")
+    @DisplayName("POST /onboarding/dismiss")
     class Dismiss {
 
         @Test
@@ -101,7 +101,7 @@ class OnboardingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/onboarding/reset")
+    @DisplayName("POST /onboarding/reset")
     class Reset {
 
         @Test

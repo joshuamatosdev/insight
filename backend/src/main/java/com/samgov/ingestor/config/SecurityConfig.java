@@ -110,14 +110,14 @@ public class SecurityConfig {
  *             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
  *             .authorizeHttpRequests(auth -> auth
  *                 .requestMatchers(
- *                     "/api/v1/auth/**",
- *                     "/api/v1/public/**",
- *                     "/api/v1/invitations/token/**",
- *                     "/api/v1/invitations/accept",
- *                     "/api/v1/billing/webhook",
- *                     "/api/v1/billing/config",
- *                     "/api/v1/billing/plans",
- *                     "/api/v1/sbom/**",
+ *                     "/auth/**",
+ *                     "/public/**",
+ *                     "/invitations/token/**",
+ *                     "/invitations/accept",
+ *                     "/billing/webhook",
+ *                     "/billing/config",
+ *                     "/billing/plans",
+ *                     "/sbom/**",
  *                     "/actuator/health",
  *                     "/actuator/info",
  *                     "/actuator/sbom/**",

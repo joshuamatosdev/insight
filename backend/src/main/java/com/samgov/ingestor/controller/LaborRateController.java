@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/labor-rates")
+@RequestMapping("/labor-rates")
 @PreAuthorize("isAuthenticated()")
 public class LaborRateController {
 

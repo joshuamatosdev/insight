@@ -28,7 +28,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/invitations")
+@RequestMapping("/invitations")
 @RequiredArgsConstructor
 public class InvitationController {
 

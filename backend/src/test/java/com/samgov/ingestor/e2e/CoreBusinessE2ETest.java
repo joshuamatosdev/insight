@@ -81,7 +81,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                     .build());
             }
 
-            performGet("/api/v1/opportunities?page=0&size=3")
+            performGet("/opportunities?page=0&size=3")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(3)))
@@ -102,7 +102,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 .responseDeadLine(LocalDate.now().plusDays(30))
                 .build());
 
-            performGet("/api/v1/opportunities?search=" + uniqueTitle)
+            performGet("/opportunities?search=" + uniqueTitle)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].title").value(uniqueTitle));
         }
@@ -120,7 +120,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 .responseDeadLine(LocalDate.now().plusDays(30))
                 .build());
 
-            performGet("/api/v1/opportunities/" + opp.getId())
+            performGet("/opportunities/" + opp.getId())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Specific Opportunity"));
         }
@@ -128,7 +128,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should return 404 for non-existent opportunity")
         void shouldReturn404ForNonExistent() throws Exception {
-            performGet("/api/v1/opportunities/non-existent-id")
+            performGet("/opportunities/non-existent-id")
                 .andExpect(status().isNotFound());
         }
 
@@ -145,7 +145,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 .responseDeadLine(LocalDate.now().plusDays(30))
                 .build());
 
-            performGet("/api/v1/opportunities?naicsCode=541511")
+            performGet("/opportunities?naicsCode=541511")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[*].naicsCode", everyItem(equalTo("541511"))));
         }
@@ -168,7 +168,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 "totalValue", 100000
             );
 
-            performPost("/api/v1/contracts", request)
+            performPost("/contracts", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("E2E Test Contract"))
                 .andExpect(jsonPath("$.id").isNotEmpty());
@@ -187,7 +187,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 .totalValue(new BigDecimal("50000"))
                 .build());
 
-            performGet("/api/v1/contracts")
+            performGet("/contracts")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -210,7 +210,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 "status", "ACTIVE"
             );
 
-            performPut("/api/v1/contracts/" + contract.getId(), update)
+            performPut("/contracts/" + contract.getId(), update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Updated Title"));
         }
@@ -228,10 +228,10 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 .totalValue(new BigDecimal("50000"))
                 .build());
 
-            performDelete("/api/v1/contracts/" + contract.getId())
+            performDelete("/contracts/" + contract.getId())
                 .andExpect(status().isNoContent());
 
-            performGet("/api/v1/contracts/" + contract.getId())
+            performGet("/contracts/" + contract.getId())
                 .andExpect(status().isNotFound());
         }
     }
@@ -248,7 +248,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 "description", "Test pipeline for E2E"
             );
 
-            performPost("/api/v1/pipelines", request)
+            performPost("/pipelines", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test Pipeline"));
         }
@@ -261,7 +261,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 .tenantId(testTenantId)
                 .build());
 
-            performGet("/api/v1/pipelines")
+            performGet("/pipelines")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -289,14 +289,14 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 "notes", "Interesting opportunity"
             );
 
-            performPost("/api/v1/saved-opportunities", request)
+            performPost("/saved-opportunities", request)
                 .andExpect(status().isCreated());
         }
 
         @Test
         @DisplayName("should list saved opportunities")
         void shouldListSavedOpportunities() throws Exception {
-            performGet("/api/v1/saved-opportunities")
+            performGet("/saved-opportunities")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -315,7 +315,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
                 "filters", Map.of("naicsCode", "541512")
             );
 
-            performPost("/api/v1/saved-searches", request)
+            performPost("/saved-searches", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("IT Opportunities"));
         }
@@ -323,7 +323,7 @@ class CoreBusinessE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list saved searches")
         void shouldListSavedSearches() throws Exception {
-            performGet("/api/v1/saved-searches")
+            performGet("/saved-searches")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }

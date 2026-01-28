@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ReportController")
 class ReportControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/reports";
+    private static final String BASE_URL = "/reports";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class ReportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/reports")
+    @DisplayName("GET /reports")
     class GetReports {
 
         @Test
@@ -53,7 +53,7 @@ class ReportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/reports/{id}")
+    @DisplayName("GET /reports/{id}")
     class GetReportById {
 
         @Test
@@ -66,7 +66,7 @@ class ReportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/reports/generate")
+    @DisplayName("POST /reports/generate")
     class GenerateReport {
 
         @Test
@@ -79,7 +79,7 @@ class ReportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/reports/{id}/download")
+    @DisplayName("GET /reports/{id}/download")
     class DownloadReport {
 
         @Test

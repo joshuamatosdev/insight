@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("RoleController")
 class RoleControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/roles";
+    private static final String BASE_URL = "/roles";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class RoleControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/roles")
+    @DisplayName("GET /roles")
     class GetRoles {
 
         @Test
@@ -53,7 +53,7 @@ class RoleControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/roles/{id}")
+    @DisplayName("GET /roles/{id}")
     class GetRoleById {
 
         @Test
@@ -66,7 +66,7 @@ class RoleControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/roles")
+    @DisplayName("POST /roles")
     class CreateRole {
 
         @Test
@@ -79,7 +79,7 @@ class RoleControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/roles/{id}")
+    @DisplayName("DELETE /roles/{id}")
     class DeleteRole {
 
         @Test

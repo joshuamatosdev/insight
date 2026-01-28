@@ -60,7 +60,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "lastName", "User"
             );
 
-            performPost("/api/v1/auth/register", request)
+            performPost("/auth/register", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty())
@@ -88,7 +88,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "lastName", "User"
             );
 
-            performPost("/api/v1/auth/register", request)
+            performPost("/auth/register", request)
                 .andExpect(status().isBadRequest());
         }
 
@@ -102,7 +102,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "lastName", "User"
             );
 
-            performPost("/api/v1/auth/register", request)
+            performPost("/auth/register", request)
                 .andExpect(status().isBadRequest());
         }
 
@@ -116,7 +116,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "lastName", "User"
             );
 
-            performPost("/api/v1/auth/register", request)
+            performPost("/auth/register", request)
                 .andExpect(status().isBadRequest());
         }
     }
@@ -149,7 +149,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "password", testPassword
             );
 
-            performPost("/api/v1/auth/login", request)
+            performPost("/auth/login", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty())
@@ -164,7 +164,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "password", "WrongPassword123!"
             );
 
-            performPost("/api/v1/auth/login", request)
+            performPost("/auth/login", request)
                 .andExpect(status().isUnauthorized());
         }
 
@@ -176,7 +176,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "password", testPassword
             );
 
-            performPost("/api/v1/auth/login", request)
+            performPost("/auth/login", request)
                 .andExpect(status().isUnauthorized());
         }
 
@@ -188,7 +188,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "password", testPassword
             );
 
-            performPost("/api/v1/auth/login", request)
+            performPost("/auth/login", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").isNotEmpty());
         }
@@ -212,7 +212,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
 
             Map<String, Object> request = Map.of("email", email);
 
-            performPost("/api/v1/auth/forgot-password", request)
+            performPost("/auth/forgot-password", request)
                 .andExpect(status().isOk());
         }
 
@@ -224,7 +224,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
             );
 
             // Should return success even for non-existent email (security)
-            performPost("/api/v1/auth/forgot-password", request)
+            performPost("/auth/forgot-password", request)
                 .andExpect(status().isOk());
         }
 
@@ -236,7 +236,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "newPassword", "NewSecurePass123!"
             );
 
-            performPost("/api/v1/auth/reset-password", request)
+            performPost("/auth/reset-password", request)
                 .andExpect(status().isBadRequest());
         }
     }
@@ -248,7 +248,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should reject refresh without token")
         void shouldRejectRefreshWithoutToken() throws Exception {
-            performPost("/api/v1/auth/refresh")
+            performPost("/auth/refresh")
                 .andExpect(status().isBadRequest());
         }
     }
@@ -260,7 +260,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should reject invalid verification token")
         void shouldRejectInvalidVerificationToken() throws Exception {
-            performGet("/api/v1/auth/verify-email?token=invalid-token")
+            performGet("/auth/verify-email?token=invalid-token")
                 .andExpect(status().isBadRequest());
         }
 
@@ -271,7 +271,7 @@ class AuthSecurityE2ETest extends BaseControllerTest {
                 "email", "nonexistent@example.com"
             );
 
-            performPost("/api/v1/auth/resend-verification", request)
+            performPost("/auth/resend-verification", request)
                 .andExpect(status().isNotFound());
         }
     }

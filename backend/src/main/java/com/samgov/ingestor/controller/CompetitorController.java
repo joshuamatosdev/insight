@@ -19,7 +19,7 @@ import java.util.UUID;
  * REST API for competitive intelligence management.
  */
 @RestController
-@RequestMapping("/api/v1/competitors")
+@RequestMapping("/competitors")
 @PreAuthorize("isAuthenticated()")
 public class CompetitorController {
 

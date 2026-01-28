@@ -14,10 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SbomController")
 class SbomControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/sbom";
+    private static final String BASE_URL = "/sbom";
 
     @Nested
-    @DisplayName("GET /api/v1/sbom")
+    @DisplayName("GET /sbom")
     class GetSbom {
 
         @Test
@@ -30,7 +30,7 @@ class SbomControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sbom/dependencies")
+    @DisplayName("GET /sbom/dependencies")
     class GetDependencies {
 
         @Test
@@ -43,7 +43,7 @@ class SbomControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sbom/vulnerabilities")
+    @DisplayName("GET /sbom/vulnerabilities")
     class GetVulnerabilities {
 
         @Test

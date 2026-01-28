@@ -57,8 +57,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("MilestoneController")
 class MilestoneControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/milestones";
-    private static final String CONTRACTS_URL = "/api/v1/contracts";
+    private static final String BASE_URL = "/milestones";
+    private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired
     private ContractRepository contractRepository;
@@ -163,7 +163,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/milestones")
+    @DisplayName("POST /milestones")
     @WithMockUser(roles = "USER")
     class CreateMilestone {
 
@@ -233,7 +233,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/milestones/{id}")
+    @DisplayName("GET /milestones/{id}")
     @WithMockUser(roles = "USER")
     class GetMilestone {
 
@@ -265,7 +265,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/{contractId}/milestones")
+    @DisplayName("GET /contracts/{contractId}/milestones")
     @WithMockUser(roles = "USER")
     class GetMilestonesForContract {
 
@@ -290,7 +290,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/milestones/{id}")
+    @DisplayName("PUT /milestones/{id}")
     @WithMockUser(roles = "USER")
     class UpdateMilestone {
 
@@ -324,7 +324,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/milestones/{id}")
+    @DisplayName("DELETE /milestones/{id}")
     @WithMockUser(roles = "USER")
     class DeleteMilestone {
 
@@ -350,7 +350,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PATCH /api/v1/milestones/{id}/complete")
+    @DisplayName("PATCH /milestones/{id}/complete")
     @WithMockUser(roles = "USER")
     class CompleteMilestone {
 
@@ -379,7 +379,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     class CriticalPathEndpoint {
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/milestones/critical-path - should return critical path")
+        @DisplayName("GET /contracts/{id}/milestones/critical-path - should return critical path")
         void shouldReturnCriticalPath() throws Exception {
             // Given - create milestones on critical path
             CreateMilestoneRequest m1Request = new CreateMilestoneRequest(
@@ -420,7 +420,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     class UpcomingOverdueEndpoints {
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/milestones/upcoming - should return upcoming milestones")
+        @DisplayName("GET /contracts/{id}/milestones/upcoming - should return upcoming milestones")
         void shouldReturnUpcomingMilestones() throws Exception {
             // Given
             performPost(BASE_URL, createRequest("Upcoming", LocalDate.now().plusDays(7)))
@@ -438,7 +438,7 @@ class MilestoneControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/milestones/overdue - should return overdue milestones")
+        @DisplayName("GET /contracts/{id}/milestones/overdue - should return overdue milestones")
         void shouldReturnOverdueMilestones() throws Exception {
             // Given - create overdue milestone
             performPost(BASE_URL, createRequest("Overdue", LocalDate.now().minusDays(5)))
@@ -461,7 +461,7 @@ class MilestoneControllerTest extends BaseControllerTest {
     class DependencyManagementEndpoints {
 
         @Test
-        @DisplayName("POST /api/v1/milestones/{id}/dependencies - should add dependency")
+        @DisplayName("POST /milestones/{id}/dependencies - should add dependency")
         void shouldAddDependency() throws Exception {
             // Given
             MvcResult predecessorResult = performPost(BASE_URL, createRequest("Predecessor", LocalDate.now().plusMonths(1)))
@@ -488,7 +488,7 @@ class MilestoneControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("DELETE /api/v1/milestones/{id}/dependencies/{predecessorId} - should remove dependency")
+        @DisplayName("DELETE /milestones/{id}/dependencies/{predecessorId} - should remove dependency")
         void shouldRemoveDependency() throws Exception {
             // Given - create with dependency
             MvcResult predecessorResult = performPost(BASE_URL, createRequest("Predecessor", LocalDate.now().plusMonths(1)))

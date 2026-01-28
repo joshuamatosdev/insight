@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
  * class MyControllerTest extends BaseControllerTest {
  *     @Test
  *     void shouldDoSomething() throws Exception {
- *         performGet("/api/v1/resource")
+ *         performGet("/resource")
  *             .andExpect(status().isOk());
  *     }
  * }

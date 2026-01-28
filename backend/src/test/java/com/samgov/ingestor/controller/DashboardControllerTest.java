@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("DashboardController")
 class DashboardControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/dashboards";
+    private static final String BASE_URL = "/dashboards";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -61,7 +61,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards")
+    @DisplayName("GET /dashboards")
     class GetDashboards {
 
         @Test
@@ -75,7 +75,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards/{id}")
+    @DisplayName("GET /dashboards/{id}")
     class GetDashboardById {
 
         @Test
@@ -88,7 +88,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/dashboards/default")
+    @DisplayName("GET /dashboards/default")
     class GetDefaultDashboard {
 
         @Test
@@ -101,7 +101,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/dashboards")
+    @DisplayName("POST /dashboards")
     class CreateDashboard {
 
         @Test
@@ -114,7 +114,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/dashboards/{id}/widgets")
+    @DisplayName("POST /dashboards/{id}/widgets")
     class AddWidget {
 
         @Test
@@ -127,7 +127,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/dashboards/{id}")
+    @DisplayName("DELETE /dashboards/{id}")
     class DeleteDashboard {
 
         @Test
@@ -140,7 +140,7 @@ class DashboardControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/dashboards/widgets/{widgetId}")
+    @DisplayName("DELETE /dashboards/widgets/{widgetId}")
     class DeleteWidget {
 
         @Test

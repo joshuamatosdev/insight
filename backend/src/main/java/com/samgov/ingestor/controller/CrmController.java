@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/crm")
+@RequestMapping("/crm")
 public class CrmController {
 
     private final CrmService crmService;

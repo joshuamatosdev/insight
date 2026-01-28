@@ -26,7 +26,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/saved-opportunities")
+@RequestMapping("/saved-opportunities")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class SavedOpportunityController {

@@ -14,10 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("EmailVerificationController")
 class EmailVerificationControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/auth/email";
+    private static final String BASE_URL = "/auth/email";
 
     @Nested
-    @DisplayName("GET /api/v1/auth/email/verify")
+    @DisplayName("GET /auth/email/verify")
     class VerifyEmail {
 
         @Test
@@ -43,7 +43,7 @@ class EmailVerificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/auth/email/resend")
+    @DisplayName("POST /auth/email/resend")
     class ResendVerification {
 
         @Test

@@ -35,7 +35,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/scope")
+@RequestMapping("/scope")
 @RequiredArgsConstructor
 public class ScopeController {
 

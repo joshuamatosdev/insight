@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/content-library")
+@RequestMapping("/content-library")
 @PreAuthorize("isAuthenticated()")
 public class ContentLibraryController {
 

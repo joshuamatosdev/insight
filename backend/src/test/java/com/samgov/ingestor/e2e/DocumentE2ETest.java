@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Document & AI Analysis E2E Tests")
 class DocumentE2ETest extends BaseControllerTest {
 
-    private static final String DOCUMENTS_URL = "/api/v1/documents";
-    private static final String AI_URL = "/api/v1/ai";
-    private static final String CONTENT_LIBRARY_URL = "/api/v1/content-library";
+    private static final String DOCUMENTS_URL = "/documents";
+    private static final String AI_URL = "/ai";
+    private static final String CONTENT_LIBRARY_URL = "/content-library";
 
     @Autowired
     private TenantRepository tenantRepository;

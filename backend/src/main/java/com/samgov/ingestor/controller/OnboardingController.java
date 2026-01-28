@@ -22,7 +22,7 @@ import java.util.UUID;
  * REST controller for onboarding wizard operations.
  */
 @RestController
-@RequestMapping("/api/v1/onboarding")
+@RequestMapping("/onboarding")
 @RequiredArgsConstructor
 @Tag(name = "Onboarding", description = "Tenant onboarding wizard")
 public class OnboardingController {

@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/billing")
+@RequestMapping("/billing")
 @RequiredArgsConstructor
 public class BillingController {
 

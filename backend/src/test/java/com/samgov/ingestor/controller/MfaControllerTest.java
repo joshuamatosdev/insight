@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("MfaController")
 class MfaControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/mfa";
+    private static final String BASE_URL = "/mfa";
 
     @Autowired
     private UserRepository userRepository;
@@ -49,7 +49,7 @@ class MfaControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/mfa/status")
+    @DisplayName("GET /mfa/status")
     class GetMfaStatus {
 
         @Test
@@ -72,7 +72,7 @@ class MfaControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/mfa/setup")
+    @DisplayName("POST /mfa/setup")
     class StartMfaSetup {
 
         @Test
@@ -85,7 +85,7 @@ class MfaControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/mfa/verify-setup")
+    @DisplayName("POST /mfa/verify-setup")
     class VerifyMfaSetup {
 
         @Test
@@ -110,7 +110,7 @@ class MfaControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/mfa/verify")
+    @DisplayName("POST /mfa/verify")
     class VerifyMfaCode {
 
         @Test
@@ -127,7 +127,7 @@ class MfaControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/mfa/backup-codes")
+    @DisplayName("POST /mfa/backup-codes")
     class GenerateBackupCodes {
 
         @Test
@@ -142,7 +142,7 @@ class MfaControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/mfa")
+    @DisplayName("DELETE /mfa")
     class DisableMfa {
 
         @Test

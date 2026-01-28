@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/sessions")
+@RequestMapping("/sessions")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class SessionController {

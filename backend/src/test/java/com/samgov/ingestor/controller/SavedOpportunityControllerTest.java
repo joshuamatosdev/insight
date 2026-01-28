@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 class SavedOpportunityControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/saved-opportunities";
+    private static final String BASE_URL = "/saved-opportunities";
 
     @Autowired
     private OpportunityRepository opportunityRepository;

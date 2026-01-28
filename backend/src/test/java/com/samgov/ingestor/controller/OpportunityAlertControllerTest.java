@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("OpportunityAlertController")
 class OpportunityAlertControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/opportunity-alerts";
+    private static final String BASE_URL = "/opportunity-alerts";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -60,7 +60,7 @@ class OpportunityAlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/opportunity-alerts")
+    @DisplayName("GET /opportunity-alerts")
     class GetAlerts {
 
         @Test
@@ -74,7 +74,7 @@ class OpportunityAlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/opportunity-alerts/{id}")
+    @DisplayName("GET /opportunity-alerts/{id}")
     class GetAlertById {
 
         @Test
@@ -87,7 +87,7 @@ class OpportunityAlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/opportunity-alerts")
+    @DisplayName("POST /opportunity-alerts")
     class CreateAlert {
 
         @Test
@@ -100,7 +100,7 @@ class OpportunityAlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/opportunity-alerts/{id}")
+    @DisplayName("DELETE /opportunity-alerts/{id}")
     class DeleteAlert {
 
         @Test

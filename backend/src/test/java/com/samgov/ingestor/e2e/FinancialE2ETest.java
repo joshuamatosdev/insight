@@ -85,7 +85,7 @@ class FinancialE2ETest extends BaseControllerTest {
                 "status", "DRAFT"
             );
 
-            performPost("/api/v1/invoices", request)
+            performPost("/invoices", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.invoiceNumber").value(startsWith("INV-")));
         }
@@ -93,7 +93,7 @@ class FinancialE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list invoices")
         void shouldListInvoices() throws Exception {
-            performGet("/api/v1/invoices")
+            performGet("/invoices")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -101,7 +101,7 @@ class FinancialE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list invoices by contract")
         void shouldListInvoicesByContract() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/invoices")
+            performGet("/contracts/" + testContract.getId() + "/invoices")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -123,7 +123,7 @@ class FinancialE2ETest extends BaseControllerTest {
                 "status", "SUBMITTED"
             );
 
-            performPatch("/api/v1/invoices/" + invoice.getId() + "/status", update)
+            performPatch("/invoices/" + invoice.getId() + "/status", update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("SUBMITTED"));
         }
@@ -148,7 +148,7 @@ class FinancialE2ETest extends BaseControllerTest {
                 "amount", 6000
             );
 
-            performPost("/api/v1/invoices/" + invoice.getId() + "/line-items", lineItem)
+            performPost("/invoices/" + invoice.getId() + "/line-items", lineItem)
                 .andExpect(status().isCreated());
         }
     }
@@ -160,7 +160,7 @@ class FinancialE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get contract budget")
         void shouldGetContractBudget() throws Exception {
-            performGet("/api/v1/contracts/" + testContract.getId() + "/budget")
+            performGet("/contracts/" + testContract.getId() + "/budget")
                 .andExpect(status().isOk());
         }
 
@@ -174,14 +174,14 @@ class FinancialE2ETest extends BaseControllerTest {
                 "fiscalYear", 2024
             );
 
-            performPost("/api/v1/contracts/" + testContract.getId() + "/budget/items", budgetItem)
+            performPost("/contracts/" + testContract.getId() + "/budget/items", budgetItem)
                 .andExpect(status().isCreated());
         }
 
         @Test
         @DisplayName("should get budget summary")
         void shouldGetBudgetSummary() throws Exception {
-            performGet("/api/v1/budgets/summary")
+            performGet("/budgets/summary")
                 .andExpect(status().isOk());
         }
     }
@@ -193,7 +193,7 @@ class FinancialE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list labor rates")
         void shouldListLaborRates() throws Exception {
-            performGet("/api/v1/labor-rates")
+            performGet("/labor-rates")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -207,7 +207,7 @@ class FinancialE2ETest extends BaseControllerTest {
                 "effectiveDate", LocalDate.now().toString()
             );
 
-            performPost("/api/v1/labor-rates", rate)
+            performPost("/labor-rates", rate)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.laborCategory").value("Senior Software Developer"));
         }
@@ -222,7 +222,7 @@ class FinancialE2ETest extends BaseControllerTest {
                 "effectiveDate", LocalDate.now().toString()
             );
 
-            String response = performPost("/api/v1/labor-rates", createRequest)
+            String response = performPost("/labor-rates", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
@@ -232,7 +232,7 @@ class FinancialE2ETest extends BaseControllerTest {
                 "hourlyRate", 125
             );
 
-            performPut("/api/v1/labor-rates/" + rateId, update)
+            performPut("/labor-rates/" + rateId, update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.hourlyRate").value(125));
         }
@@ -245,21 +245,21 @@ class FinancialE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get financial summary")
         void shouldGetFinancialSummary() throws Exception {
-            performGet("/api/v1/financial/summary")
+            performGet("/financial/summary")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get revenue by contract")
         void shouldGetRevenueByContract() throws Exception {
-            performGet("/api/v1/financial/revenue-by-contract")
+            performGet("/financial/revenue-by-contract")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get cash flow forecast")
         void shouldGetCashFlowForecast() throws Exception {
-            performGet("/api/v1/financial/cash-flow-forecast")
+            performGet("/financial/cash-flow-forecast")
                 .andExpect(status().isOk());
         }
     }

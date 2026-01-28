@@ -38,7 +38,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/pipelines")
+@RequestMapping("/pipelines")
 @RequiredArgsConstructor
 public class PipelineController {
 

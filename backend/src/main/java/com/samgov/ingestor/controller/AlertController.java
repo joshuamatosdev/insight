@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/alerts")
+@RequestMapping("/alerts")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class AlertController {

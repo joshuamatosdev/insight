@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SessionController")
 class SessionControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/sessions";
+    private static final String BASE_URL = "/sessions";
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +47,7 @@ class SessionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sessions")
+    @DisplayName("GET /sessions")
     class GetSessions {
 
         @Test
@@ -61,7 +61,7 @@ class SessionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sessions/current")
+    @DisplayName("GET /sessions/current")
     class GetCurrentSession {
 
         @Test
@@ -74,7 +74,7 @@ class SessionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/sessions/{id}")
+    @DisplayName("DELETE /sessions/{id}")
     class RevokeSession {
 
         @Test
@@ -87,7 +87,7 @@ class SessionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/sessions/all")
+    @DisplayName("DELETE /sessions/all")
     class RevokeAllSessions {
 
         @Test

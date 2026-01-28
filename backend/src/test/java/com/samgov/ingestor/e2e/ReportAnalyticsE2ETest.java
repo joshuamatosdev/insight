@@ -22,10 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Report & Analytics E2E Tests")
 class ReportAnalyticsE2ETest extends BaseControllerTest {
 
-    private static final String REPORTS_URL = "/api/v1/reports";
-    private static final String REPORT_DEFS_URL = "/api/v1/report-definitions";
-    private static final String ANALYTICS_URL = "/api/v1/analytics";
-    private static final String DASHBOARD_URL = "/api/v1/dashboard";
+    private static final String REPORTS_URL = "/reports";
+    private static final String REPORT_DEFS_URL = "/report-definitions";
+    private static final String ANALYTICS_URL = "/analytics";
+    private static final String DASHBOARD_URL = "/dashboard";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -360,21 +360,21 @@ class ReportAnalyticsE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should retrieve billing summary")
         void should_RetrieveBillingSummary() throws Exception {
-            performGet("/api/v1/billing/summary")
+            performGet("/billing/summary")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should retrieve usage history")
         void should_RetrieveUsageHistory() throws Exception {
-            performGet("/api/v1/billing/usage-history?months=6")
+            performGet("/billing/usage-history?months=6")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should retrieve invoice history")
         void should_RetrieveInvoiceHistory() throws Exception {
-            performGet("/api/v1/billing/invoices")
+            performGet("/billing/invoices")
                 .andExpect(status().isOk());
         }
     }

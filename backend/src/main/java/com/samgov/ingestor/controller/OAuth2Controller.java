@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/oauth")
+@RequestMapping("/oauth")
 @RequiredArgsConstructor
 @Validated
 public class OAuth2Controller {

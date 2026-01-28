@@ -28,12 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Security E2E Tests")
 class SecurityE2ETest extends BaseControllerTest {
 
-    private static final String AUTH_URL = "/api/v1/auth";
-    private static final String MFA_URL = "/api/v1/mfa";
-    private static final String API_KEYS_URL = "/api/v1/api-keys";
-    private static final String SESSIONS_URL = "/api/v1/sessions";
-    private static final String PERMISSIONS_URL = "/api/v1/permissions";
-    private static final String OAUTH_URL = "/api/v1/oauth2";
+    private static final String AUTH_URL = "/auth";
+    private static final String MFA_URL = "/mfa";
+    private static final String API_KEYS_URL = "/api-keys";
+    private static final String SESSIONS_URL = "/sessions";
+    private static final String PERMISSIONS_URL = "/permissions";
+    private static final String OAUTH_URL = "/oauth2";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -289,7 +289,7 @@ class SecurityE2ETest extends BaseControllerTest {
         void should_ListUserRoles() throws Exception {
             String token = getAccessToken();
 
-            mockMvc.perform(get("/api/v1/roles")
+            mockMvc.perform(get("/roles")
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -327,7 +327,7 @@ class SecurityE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should include security headers in response")
         void should_IncludeSecurityHeaders() throws Exception {
-            mockMvc.perform(get("/api/v1/auth/status")
+            mockMvc.perform(get("/auth/status")
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(header().exists("X-Content-Type-Options"))
                 .andExpect(header().exists("X-Frame-Options"));
@@ -343,7 +343,7 @@ class SecurityE2ETest extends BaseControllerTest {
         void should_AllowNormalRequestRate() throws Exception {
             // Make a few requests - should all succeed
             for (int i = 0; i < 5; i++) {
-                mockMvc.perform(get("/api/v1/auth/status")
+                mockMvc.perform(get("/auth/status")
                         .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
             }
@@ -359,7 +359,7 @@ class SecurityE2ETest extends BaseControllerTest {
         void should_RetrieveAuditLogs() throws Exception {
             String token = getAccessToken();
 
-            mockMvc.perform(get("/api/v1/audit")
+            mockMvc.perform(get("/audit")
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -370,7 +370,7 @@ class SecurityE2ETest extends BaseControllerTest {
         void should_FilterAuditLogsByAction() throws Exception {
             String token = getAccessToken();
 
-            mockMvc.perform(get("/api/v1/audit?action=LOGIN")
+            mockMvc.perform(get("/audit?action=LOGIN")
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -384,7 +384,7 @@ class SecurityE2ETest extends BaseControllerTest {
             String from = java.time.LocalDate.now().minusDays(7).toString();
             String to = java.time.LocalDate.now().toString();
 
-            mockMvc.perform(get("/api/v1/audit?from=" + from + "&to=" + to)
+            mockMvc.perform(get("/audit?from=" + from + "&to=" + to)
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

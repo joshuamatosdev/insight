@@ -60,8 +60,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SprintController")
 class SprintControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/sprints";
-    private static final String CONTRACTS_URL = "/api/v1/contracts";
+    private static final String BASE_URL = "/sprints";
+    private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired
     private ContractRepository contractRepository;
@@ -163,7 +163,7 @@ class SprintControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/sprints")
+    @DisplayName("POST /sprints")
     @WithMockUser(roles = "SPRINT_MANAGER")
     class CreateSprint {
 
@@ -232,7 +232,7 @@ class SprintControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/sprints/{id}")
+    @DisplayName("GET /sprints/{id}")
     @WithMockUser(roles = "SPRINT_MANAGER")
     class GetSprint {
 
@@ -265,7 +265,7 @@ class SprintControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/{contractId}/sprints")
+    @DisplayName("GET /contracts/{contractId}/sprints")
     @WithMockUser(roles = "SPRINT_MANAGER")
     class GetSprintsForContract {
 
@@ -297,7 +297,7 @@ class SprintControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/{contractId}/sprints/active")
+    @DisplayName("GET /contracts/{contractId}/sprints/active")
     @WithMockUser(roles = "SPRINT_MANAGER")
     class GetActiveSprint {
 
@@ -337,7 +337,7 @@ class SprintControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/sprints/{id}")
+    @DisplayName("PUT /sprints/{id}")
     @WithMockUser(roles = "SPRINT_MANAGER")
     class UpdateSprint {
 
@@ -381,7 +381,7 @@ class SprintControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/sprints/{id}")
+    @DisplayName("DELETE /sprints/{id}")
     @WithMockUser(roles = "SPRINT_MANAGER")
     class DeleteSprint {
 
@@ -424,7 +424,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PATCH /api/v1/sprints/{id}/start - should start planned sprint")
+        @DisplayName("PATCH /sprints/{id}/start - should start planned sprint")
         void shouldStartPlannedSprint() throws Exception {
             // When/Then
             performPatch(BASE_URL + "/" + sprintId + "/start")
@@ -434,7 +434,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PATCH /api/v1/sprints/{id}/complete - should complete active sprint")
+        @DisplayName("PATCH /sprints/{id}/complete - should complete active sprint")
         void shouldCompleteActiveSprint() throws Exception {
             // Given - start the sprint first
             performPatch(BASE_URL + "/" + sprintId + "/start")
@@ -486,7 +486,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("POST /api/v1/sprints/{id}/tasks - should add task to sprint")
+        @DisplayName("POST /sprints/{id}/tasks - should add task to sprint")
         void shouldAddTaskToSprint() throws Exception {
             // Given
             CreateTaskRequest taskRequest = new CreateTaskRequest(
@@ -508,7 +508,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/sprints/{id}/tasks - should return all tasks")
+        @DisplayName("GET /sprints/{id}/tasks - should return all tasks")
         void shouldReturnAllTasks() throws Exception {
             // Given - create tasks
             CreateTaskRequest task1 = new CreateTaskRequest(
@@ -530,7 +530,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/sprints/{id}/tasks?status=TODO - should filter tasks by status")
+        @DisplayName("GET /sprints/{id}/tasks?status=TODO - should filter tasks by status")
         void shouldFilterTasksByStatus() throws Exception {
             // Given
             performPost(BASE_URL + "/" + sprintId + "/tasks",
@@ -550,7 +550,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PUT /api/v1/sprints/{sprintId}/tasks/{taskId} - should update task")
+        @DisplayName("PUT /sprints/{sprintId}/tasks/{taskId} - should update task")
         void shouldUpdateTask() throws Exception {
             // Given - create a task
             MvcResult createResult = performPost(BASE_URL + "/" + sprintId + "/tasks",
@@ -579,7 +579,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PATCH /api/v1/sprints/{sprintId}/tasks/{taskId}/move - should move task to status")
+        @DisplayName("PATCH /sprints/{sprintId}/tasks/{taskId}/move - should move task to status")
         void shouldMoveTaskToStatus() throws Exception {
             // Given
             MvcResult createResult = performPost(BASE_URL + "/" + sprintId + "/tasks",
@@ -599,7 +599,7 @@ class SprintControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("DELETE /api/v1/sprints/{sprintId}/tasks/{taskId} - should delete task")
+        @DisplayName("DELETE /sprints/{sprintId}/tasks/{taskId} - should delete task")
         void shouldDeleteTask() throws Exception {
             // Given
             MvcResult createResult = performPost(BASE_URL + "/" + sprintId + "/tasks",
@@ -627,7 +627,7 @@ class SprintControllerTest extends BaseControllerTest {
     class SprintSummaryEndpoint {
 
         @Test
-        @DisplayName("GET /api/v1/sprints/{id}/summary - should return sprint summary")
+        @DisplayName("GET /sprints/{id}/summary - should return sprint summary")
         void shouldReturnSprintSummary() throws Exception {
             // Given - create sprint with tasks
             MvcResult createResult = performPost(BASE_URL, createSprintRequest("Summary Sprint"))

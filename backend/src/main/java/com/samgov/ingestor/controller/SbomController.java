@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/sbom")
+@RequestMapping("/sbom")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
 public class SbomController {
 
@@ -37,8 +37,8 @@ public class SbomController {
         info.put("application", "samgov-ingestor");
         info.put("sbomVersion", "1.0");
         info.put("formats", Map.of(
-            "cyclonedx", "/api/v1/sbom/cyclonedx",
-            "spdx", "/api/v1/sbom/spdx"
+            "cyclonedx", "/sbom/cyclonedx",
+            "spdx", "/sbom/spdx"
         ));
         info.put("cyclonedxAvailable", isResourceAvailable(CYCLONEDX_PATH));
         info.put("spdxAvailable", isResourceAvailable(SPDX_PATH));

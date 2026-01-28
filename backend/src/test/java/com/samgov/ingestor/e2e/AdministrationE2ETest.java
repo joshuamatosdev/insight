@@ -60,7 +60,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get current tenant")
         void shouldGetCurrentTenant() throws Exception {
-            performGet("/api/v1/tenants/current")
+            performGet("/tenants/current")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(testTenantId.toString()));
         }
@@ -72,7 +72,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "name", "Updated Tenant Name"
             );
 
-            performPut("/api/v1/tenants/" + testTenantId, update)
+            performPut("/tenants/" + testTenantId, update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Updated Tenant Name"));
         }
@@ -80,7 +80,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list tenant members")
         void shouldListTenantMembers() throws Exception {
-            performGet("/api/v1/tenants/" + testTenantId + "/members")
+            performGet("/tenants/" + testTenantId + "/members")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -93,7 +93,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list users")
         void shouldListUsers() throws Exception {
-            performGet("/api/v1/users")
+            performGet("/users")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(greaterThanOrEqualTo(1))));
@@ -102,7 +102,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get user by ID")
         void shouldGetUserById() throws Exception {
-            performGet("/api/v1/users/" + adminUser.getId())
+            performGet("/users/" + adminUser.getId())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value(adminUser.getEmail()));
         }
@@ -115,7 +115,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "lastName", "UpdatedLast"
             );
 
-            performPut("/api/v1/users/" + adminUser.getId(), update)
+            performPut("/users/" + adminUser.getId(), update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("UpdatedFirst"));
         }
@@ -123,7 +123,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get current user profile")
         void shouldGetCurrentUserProfile() throws Exception {
-            performGet("/api/v1/users/me")
+            performGet("/users/me")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(adminUser.getId().toString()));
         }
@@ -140,7 +140,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 .status(User.UserStatus.ACTIVE)
                 .build());
 
-            performPatch("/api/v1/users/" + toDeactivate.getId() + "/deactivate")
+            performPatch("/users/" + toDeactivate.getId() + "/deactivate")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("SUSPENDED"));
         }
@@ -153,7 +153,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list roles")
         void shouldListRoles() throws Exception {
-            performGet("/api/v1/roles")
+            performGet("/roles")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -167,7 +167,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "permissions", "read:opportunities,write:contracts"
             );
 
-            performPost("/api/v1/roles", request)
+            performPost("/roles", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value(startsWith("E2E_TEST_ROLE_")));
         }
@@ -185,7 +185,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "description", "Updated Description"
             );
 
-            performPut("/api/v1/roles/" + role.getId(), update)
+            performPut("/roles/" + role.getId(), update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description").value("Updated Description"));
         }
@@ -199,7 +199,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 .tenantId(testTenantId)
                 .build());
 
-            performDelete("/api/v1/roles/" + role.getId())
+            performDelete("/roles/" + role.getId())
                 .andExpect(status().isNoContent());
         }
     }
@@ -217,7 +217,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "lastName", "User"
             );
 
-            performPost("/api/v1/invitations", request)
+            performPost("/invitations", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value(startsWith("invite-")));
         }
@@ -225,7 +225,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list pending invitations")
         void shouldListPendingInvitations() throws Exception {
-            performGet("/api/v1/invitations")
+            performGet("/invitations")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -239,7 +239,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "lastName", "User"
             );
 
-            performPost("/api/v1/invitations", request)
+            performPost("/invitations", request)
                 .andExpect(status().isBadRequest());
         }
     }
@@ -251,7 +251,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get tenant settings")
         void shouldGetTenantSettings() throws Exception {
-            performGet("/api/v1/admin/tenant/settings")
+            performGet("/admin/tenant/settings")
                 .andExpect(status().isOk());
         }
 
@@ -263,14 +263,14 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "dateFormat", "MM/dd/yyyy"
             );
 
-            performPut("/api/v1/admin/tenant/settings", settings)
+            performPut("/admin/tenant/settings", settings)
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get tenant branding")
         void shouldGetTenantBranding() throws Exception {
-            performGet("/api/v1/admin/tenant/branding")
+            performGet("/admin/tenant/branding")
                 .andExpect(status().isOk());
         }
 
@@ -282,7 +282,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "primaryColor", "#336699"
             );
 
-            performPut("/api/v1/admin/tenant/branding", branding)
+            performPut("/admin/tenant/branding", branding)
                 .andExpect(status().isOk());
         }
     }
@@ -294,7 +294,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get onboarding progress")
         void shouldGetOnboardingProgress() throws Exception {
-            performGet("/api/v1/onboarding/progress")
+            performGet("/onboarding/progress")
                 .andExpect(status().isOk());
         }
 
@@ -306,7 +306,7 @@ class AdministrationE2ETest extends BaseControllerTest {
                 "companyProfileComplete", true
             );
 
-            performPut("/api/v1/onboarding/progress", update)
+            performPut("/onboarding/progress", update)
                 .andExpect(status().isOk());
         }
     }
@@ -318,7 +318,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list audit logs")
         void shouldListAuditLogs() throws Exception {
-            performGet("/api/v1/audit-logs")
+            performGet("/audit-logs")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -326,7 +326,7 @@ class AdministrationE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should filter audit logs by action")
         void shouldFilterAuditLogsByAction() throws Exception {
-            performGet("/api/v1/audit-logs?action=LOGIN")
+            performGet("/audit-logs?action=LOGIN")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }

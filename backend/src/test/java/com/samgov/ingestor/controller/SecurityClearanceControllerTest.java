@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SecurityClearanceController")
 class SecurityClearanceControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/security-clearances";
+    private static final String BASE_URL = "/security-clearances";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class SecurityClearanceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/security-clearances")
+    @DisplayName("GET /security-clearances")
     class GetClearances {
 
         @Test
@@ -53,7 +53,7 @@ class SecurityClearanceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/security-clearances/{id}")
+    @DisplayName("GET /security-clearances/{id}")
     class GetClearanceById {
 
         @Test
@@ -66,7 +66,7 @@ class SecurityClearanceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/security-clearances")
+    @DisplayName("POST /security-clearances")
     class CreateClearance {
 
         @Test
@@ -79,7 +79,7 @@ class SecurityClearanceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/security-clearances/{id}")
+    @DisplayName("DELETE /security-clearances/{id}")
     class DeleteClearance {
 
         @Test

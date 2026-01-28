@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("CertificationController")
 class CertificationControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/certifications";
+    private static final String BASE_URL = "/certifications";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -60,7 +60,7 @@ class CertificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/certifications")
+    @DisplayName("GET /certifications")
     class GetCertifications {
 
         @Test
@@ -83,7 +83,7 @@ class CertificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/certifications/{id}")
+    @DisplayName("GET /certifications/{id}")
     class GetCertificationById {
 
         @Test
@@ -96,7 +96,7 @@ class CertificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/certifications/expiring")
+    @DisplayName("GET /certifications/expiring")
     class GetExpiringCertifications {
 
         @Test
@@ -110,7 +110,7 @@ class CertificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/certifications")
+    @DisplayName("POST /certifications")
     class CreateCertification {
 
         @Test
@@ -123,7 +123,7 @@ class CertificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/certifications/{id}")
+    @DisplayName("DELETE /certifications/{id}")
     class DeleteCertification {
 
         @Test
@@ -136,7 +136,7 @@ class CertificationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/certifications/types")
+    @DisplayName("GET /certifications/types")
     class GetCertificationTypes {
 
         @Test

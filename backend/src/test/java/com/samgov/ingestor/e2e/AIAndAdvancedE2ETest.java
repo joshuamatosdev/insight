@@ -73,28 +73,28 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get AI summary for opportunity")
         void shouldGetAISummaryForOpportunity() throws Exception {
-            performGet("/api/v1/ai/opportunities/" + testOpportunity.getId() + "/summary")
+            performGet("/ai/opportunities/" + testOpportunity.getId() + "/summary")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get AI fit score for opportunity")
         void shouldGetAIFitScoreForOpportunity() throws Exception {
-            performGet("/api/v1/ai/opportunities/" + testOpportunity.getId() + "/fit-score")
+            performGet("/ai/opportunities/" + testOpportunity.getId() + "/fit-score")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get AI risk assessment for opportunity")
         void shouldGetAIRiskAssessmentForOpportunity() throws Exception {
-            performGet("/api/v1/ai/opportunities/" + testOpportunity.getId() + "/risk-assessment")
+            performGet("/ai/opportunities/" + testOpportunity.getId() + "/risk-assessment")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get AI proposal suggestions")
         void shouldGetAIProposalSuggestions() throws Exception {
-            performGet("/api/v1/ai/opportunities/" + testOpportunity.getId() + "/proposal-suggestions")
+            performGet("/ai/opportunities/" + testOpportunity.getId() + "/proposal-suggestions")
                 .andExpect(status().isOk());
         }
 
@@ -106,14 +106,14 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
                 "prompt", "What are the key requirements?"
             );
 
-            performPost("/api/v1/ai/analyze", request)
+            performPost("/ai/analyze", request)
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should return 404 for non-existent opportunity")
         void shouldReturn404ForNonExistentOpportunity() throws Exception {
-            performGet("/api/v1/ai/opportunities/non-existent-id/summary")
+            performGet("/ai/opportunities/non-existent-id/summary")
                 .andExpect(status().isNotFound());
         }
     }
@@ -125,21 +125,21 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get billing overview")
         void shouldGetBillingOverview() throws Exception {
-            performGet("/api/v1/billing")
+            performGet("/billing")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get current subscription")
         void shouldGetCurrentSubscription() throws Exception {
-            performGet("/api/v1/billing/subscription")
+            performGet("/billing/subscription")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should list available plans")
         void shouldListAvailablePlans() throws Exception {
-            performGet("/api/v1/billing/plans")
+            performGet("/billing/plans")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -147,7 +147,7 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list invoices")
         void shouldListBillingInvoices() throws Exception {
-            performGet("/api/v1/billing/invoices")
+            performGet("/billing/invoices")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -155,7 +155,7 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get payment methods")
         void shouldGetPaymentMethods() throws Exception {
-            performGet("/api/v1/billing/payment-methods")
+            performGet("/billing/payment-methods")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -168,7 +168,7 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
                 "billingCycle", "ANNUAL"
             );
 
-            performPut("/api/v1/billing/subscription", update)
+            performPut("/billing/subscription", update)
                 .andExpect(status().isOk());
         }
 
@@ -181,7 +181,7 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
                 "isDefault", true
             );
 
-            performPost("/api/v1/billing/payment-methods", paymentMethod)
+            performPost("/billing/payment-methods", paymentMethod)
                 .andExpect(status().isCreated());
         }
     }
@@ -193,49 +193,49 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get usage summary")
         void shouldGetUsageSummary() throws Exception {
-            performGet("/api/v1/usage")
+            performGet("/usage")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get usage by feature")
         void shouldGetUsageByFeature() throws Exception {
-            performGet("/api/v1/usage/by-feature")
+            performGet("/usage/by-feature")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get usage history")
         void shouldGetUsageHistory() throws Exception {
-            performGet("/api/v1/usage/history?period=MONTH")
+            performGet("/usage/history?period=MONTH")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get API usage")
         void shouldGetApiUsage() throws Exception {
-            performGet("/api/v1/usage/api")
+            performGet("/usage/api")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get storage usage")
         void shouldGetStorageUsage() throws Exception {
-            performGet("/api/v1/usage/storage")
+            performGet("/usage/storage")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get user activity")
         void shouldGetUserActivity() throws Exception {
-            performGet("/api/v1/usage/activity")
+            performGet("/usage/activity")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should export usage report")
         void shouldExportUsageReport() throws Exception {
-            performGet("/api/v1/usage/export?format=CSV")
+            performGet("/usage/export?format=CSV")
                 .andExpect(status().isOk());
         }
     }
@@ -247,7 +247,7 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get user preferences")
         void shouldGetUserPreferences() throws Exception {
-            performGet("/api/v1/users/me/preferences")
+            performGet("/users/me/preferences")
                 .andExpect(status().isOk());
         }
 
@@ -263,7 +263,7 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
                 "pushNotifications", false
             );
 
-            performPut("/api/v1/users/me/preferences", preferences)
+            performPut("/users/me/preferences", preferences)
                 .andExpect(status().isOk());
         }
 
@@ -277,14 +277,14 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
                 "dailyDigest", true
             );
 
-            performPut("/api/v1/users/me/preferences/notifications", notifications)
+            performPut("/users/me/preferences/notifications", notifications)
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get dashboard preferences")
         void shouldGetDashboardPreferences() throws Exception {
-            performGet("/api/v1/users/me/preferences/dashboard")
+            performGet("/users/me/preferences/dashboard")
                 .andExpect(status().isOk());
         }
 
@@ -297,14 +297,14 @@ class AIAndAdvancedE2ETest extends BaseControllerTest {
                 "showQuickStats", true
             );
 
-            performPut("/api/v1/users/me/preferences/dashboard", dashboardPrefs)
+            performPut("/users/me/preferences/dashboard", dashboardPrefs)
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should reset preferences to default")
         void shouldResetPreferencesToDefault() throws Exception {
-            performPost("/api/v1/users/me/preferences/reset")
+            performPost("/users/me/preferences/reset")
                 .andExpect(status().isOk());
         }
     }

@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("TenantAdminController")
 class TenantAdminControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/tenant-admin";
+    private static final String BASE_URL = "/tenant-admin";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -38,7 +38,7 @@ class TenantAdminControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenant-admin/settings")
+    @DisplayName("GET /tenant-admin/settings")
     class GetSettings {
 
         @Test
@@ -51,7 +51,7 @@ class TenantAdminControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/tenant-admin/settings")
+    @DisplayName("PUT /tenant-admin/settings")
     class UpdateSettings {
 
         @Test
@@ -64,7 +64,7 @@ class TenantAdminControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenant-admin/branding")
+    @DisplayName("GET /tenant-admin/branding")
     class GetBranding {
 
         @Test
@@ -77,7 +77,7 @@ class TenantAdminControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/tenant-admin/branding")
+    @DisplayName("PUT /tenant-admin/branding")
     class UpdateBranding {
 
         @Test
@@ -90,7 +90,7 @@ class TenantAdminControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenant-admin/usage")
+    @DisplayName("GET /tenant-admin/usage")
     class GetUsage {
 
         @Test

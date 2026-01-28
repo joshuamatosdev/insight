@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Contract E2E Tests")
 class ContractE2ETest extends BaseControllerTest {
 
-    private static final String CONTRACTS_URL = "/api/v1/contracts";
-    private static final String INVOICES_URL = "/api/v1/invoices";
+    private static final String CONTRACTS_URL = "/contracts";
+    private static final String INVOICES_URL = "/invoices";
 
     @Autowired
     private ContractRepository contractRepository;

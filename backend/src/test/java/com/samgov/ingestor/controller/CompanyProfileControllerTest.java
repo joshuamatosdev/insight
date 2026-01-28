@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("CompanyProfileController")
 class CompanyProfileControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/company-profile";
+    private static final String BASE_URL = "/company-profile";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -59,7 +59,7 @@ class CompanyProfileControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/company-profile")
+    @DisplayName("GET /company-profile")
     class GetProfile {
 
         @Test
@@ -72,7 +72,7 @@ class CompanyProfileControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/company-profile")
+    @DisplayName("POST /company-profile")
     class CreateOrUpdateProfile {
 
         @Test
@@ -85,7 +85,7 @@ class CompanyProfileControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/company-profile/lookup/uei/{uei}")
+    @DisplayName("GET /company-profile/lookup/uei/{uei}")
     class GetProfileByUei {
 
         @Test

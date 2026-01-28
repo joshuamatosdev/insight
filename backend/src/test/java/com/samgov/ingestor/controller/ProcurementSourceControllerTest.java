@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ProcurementSourceController")
 class ProcurementSourceControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/procurement-sources";
+    private static final String BASE_URL = "/procurement-sources";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class ProcurementSourceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/procurement-sources")
+    @DisplayName("GET /procurement-sources")
     class GetSources {
 
         @Test
@@ -53,7 +53,7 @@ class ProcurementSourceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/procurement-sources/{id}")
+    @DisplayName("GET /procurement-sources/{id}")
     class GetSourceById {
 
         @Test
@@ -66,7 +66,7 @@ class ProcurementSourceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/procurement-sources/active")
+    @DisplayName("GET /procurement-sources/active")
     class GetActiveSources {
 
         @Test
@@ -80,7 +80,7 @@ class ProcurementSourceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/procurement-sources")
+    @DisplayName("POST /procurement-sources")
     class CreateSource {
 
         @Test

@@ -19,10 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SearchController")
 class SearchControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/search";
+    private static final String BASE_URL = "/search";
 
     @Nested
-    @DisplayName("GET /api/v1/search/suggestions")
+    @DisplayName("GET /search/suggestions")
     class GetSuggestions {
 
         @Test
@@ -51,7 +51,7 @@ class SearchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/search/faceted")
+    @DisplayName("POST /search/faceted")
     class FacetedSearch {
 
         @Test

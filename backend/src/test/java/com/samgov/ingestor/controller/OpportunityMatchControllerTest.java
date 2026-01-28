@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("OpportunityMatchController")
 class OpportunityMatchControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/opportunity-matches";
+    private static final String BASE_URL = "/opportunity-matches";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class OpportunityMatchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/opportunity-matches")
+    @DisplayName("GET /opportunity-matches")
     class GetMatches {
 
         @Test
@@ -53,7 +53,7 @@ class OpportunityMatchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/opportunity-matches/top")
+    @DisplayName("GET /opportunity-matches/top")
     class GetTopMatches {
 
         @Test
@@ -67,7 +67,7 @@ class OpportunityMatchControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/opportunity-matches/refresh")
+    @DisplayName("POST /opportunity-matches/refresh")
     class RefreshMatches {
 
         @Test

@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("AIAnalysisController")
 class AIAnalysisControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/ai";
+    private static final String BASE_URL = "/ai";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -44,7 +44,7 @@ class AIAnalysisControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ai/opportunities/{id}/summary")
+    @DisplayName("GET /ai/opportunities/{id}/summary")
     class GetOpportunitySummary {
 
         @Test
@@ -57,7 +57,7 @@ class AIAnalysisControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ai/opportunities/{id}/fit-score")
+    @DisplayName("GET /ai/opportunities/{id}/fit-score")
     class GetFitScore {
 
         @Test
@@ -70,7 +70,7 @@ class AIAnalysisControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ai/opportunities/{id}/risk-assessment")
+    @DisplayName("GET /ai/opportunities/{id}/risk-assessment")
     class GetRiskAssessment {
 
         @Test
@@ -83,7 +83,7 @@ class AIAnalysisControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ai/opportunities/{id}/proposal-suggestions")
+    @DisplayName("GET /ai/opportunities/{id}/proposal-suggestions")
     class GetProposalSuggestions {
 
         @Test

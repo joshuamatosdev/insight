@@ -16,7 +16,7 @@ import java.util.UUID;
  * REST API for company profile management.
  */
 @RestController
-@RequestMapping("/api/v1/company-profile")
+@RequestMapping("/company-profile")
 @PreAuthorize("isAuthenticated()")
 public class CompanyProfileController {
 

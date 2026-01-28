@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/notifications")
+@RequestMapping("/notifications")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class NotificationController {

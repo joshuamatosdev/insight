@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ApiKeyController")
 class ApiKeyControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/api-keys";
+    private static final String BASE_URL = "/api-keys";
 
     @Autowired
     private ApiKeyRepository apiKeyRepository;
@@ -68,7 +68,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/api-keys")
+    @DisplayName("GET /api-keys")
     class GetApiKeys {
 
         @Test
@@ -91,7 +91,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/api-keys/{id}")
+    @DisplayName("GET /api-keys/{id}")
     class GetApiKeyById {
 
         @Test
@@ -104,7 +104,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/api-keys/my-keys")
+    @DisplayName("GET /api-keys/my-keys")
     class GetMyApiKeys {
 
         @Test
@@ -118,7 +118,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/api-keys")
+    @DisplayName("POST /api-keys")
     class CreateApiKey {
 
         @Test
@@ -131,7 +131,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/api-keys/expiring")
+    @DisplayName("GET /api-keys/expiring")
     class GetExpiringKeys {
 
         @Test
@@ -144,7 +144,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/api-keys/stats")
+    @DisplayName("GET /api-keys/stats")
     class GetApiKeyStats {
 
         @Test
@@ -157,7 +157,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/api-keys/{id}/revoke")
+    @DisplayName("POST /api-keys/{id}/revoke")
     class RevokeApiKey {
 
         @Test
@@ -170,7 +170,7 @@ class ApiKeyControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/api-keys/validate")
+    @DisplayName("POST /api-keys/validate")
     class ValidateApiKey {
 
         @Test

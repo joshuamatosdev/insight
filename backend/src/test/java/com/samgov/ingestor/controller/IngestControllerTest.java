@@ -14,10 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("IngestController")
 class IngestControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/ingest";
+    private static final String BASE_URL = "/ingest";
 
     @Nested
-    @DisplayName("POST /api/v1/ingest/sam")
+    @DisplayName("POST /ingest/sam")
     class IngestSam {
 
         @Test
@@ -30,7 +30,7 @@ class IngestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ingest/status")
+    @DisplayName("GET /ingest/status")
     class GetIngestionStatus {
 
         @Test
@@ -43,7 +43,7 @@ class IngestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ingest/history")
+    @DisplayName("GET /ingest/history")
     class GetIngestionHistory {
 
         @Test
@@ -60,14 +60,14 @@ class IngestControllerTest extends BaseControllerTest {
     // ============================================
 
     @Nested
-    @DisplayName("POST /api/v1/ingest/usa-spending")
+    @DisplayName("POST /ingest/usa-spending")
     class IngestUsaSpending {
 
         @Test
         @DisplayName("should trigger USAspending ingestion for super admin")
         @WithMockUser(username = "superadmin", roles = {"SUPER_ADMIN"})
         void should_TriggerUsaSpendingIngestion() throws Exception {
-            performPost("/api/v1/ingest/usa-spending")
+            performPost("/ingest/usa-spending")
                 .andExpect(status().isOk());
         }
 
@@ -75,20 +75,20 @@ class IngestControllerTest extends BaseControllerTest {
         @DisplayName("should reject non-super-admin users")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_RejectNonSuperAdmin() throws Exception {
-            performPost("/api/v1/ingest/usa-spending")
+            performPost("/ingest/usa-spending")
                 .andExpect(status().isForbidden());
         }
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ingest/usa-spending/stats")
+    @DisplayName("GET /ingest/usa-spending/stats")
     class GetUsaSpendingStats {
 
         @Test
         @DisplayName("should return USAspending statistics")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_ReturnStats() throws Exception {
-            performGet("/api/v1/ingest/usa-spending/stats")
+            performGet("/ingest/usa-spending/stats")
                 .andExpect(status().isOk());
         }
     }
@@ -98,14 +98,14 @@ class IngestControllerTest extends BaseControllerTest {
     // ============================================
 
     @Nested
-    @DisplayName("POST /api/v1/ingest/geocode")
+    @DisplayName("POST /ingest/geocode")
     class TriggerGeocoding {
 
         @Test
         @DisplayName("should trigger geocoding for super admin")
         @WithMockUser(username = "superadmin", roles = {"SUPER_ADMIN"})
         void should_TriggerGeocoding() throws Exception {
-            performPost("/api/v1/ingest/geocode")
+            performPost("/ingest/geocode")
                 .andExpect(status().isOk());
         }
 
@@ -113,7 +113,7 @@ class IngestControllerTest extends BaseControllerTest {
         @DisplayName("should accept limit parameter")
         @WithMockUser(username = "superadmin", roles = {"SUPER_ADMIN"})
         void should_AcceptLimitParameter() throws Exception {
-            performPost("/api/v1/ingest/geocode?limit=50")
+            performPost("/ingest/geocode?limit=50")
                 .andExpect(status().isOk());
         }
 
@@ -121,20 +121,20 @@ class IngestControllerTest extends BaseControllerTest {
         @DisplayName("should reject non-super-admin users")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_RejectNonSuperAdmin() throws Exception {
-            performPost("/api/v1/ingest/geocode")
+            performPost("/ingest/geocode")
                 .andExpect(status().isForbidden());
         }
     }
 
     @Nested
-    @DisplayName("GET /api/v1/ingest/geocode/stats")
+    @DisplayName("GET /ingest/geocode/stats")
     class GetGeocodingStats {
 
         @Test
         @DisplayName("should return geocoding statistics")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_ReturnGeocodingStats() throws Exception {
-            performGet("/api/v1/ingest/geocode/stats")
+            performGet("/ingest/geocode/stats")
                 .andExpect(status().isOk());
         }
     }
@@ -144,27 +144,27 @@ class IngestControllerTest extends BaseControllerTest {
     // ============================================
 
     @Nested
-    @DisplayName("GET /api/v1/opportunities/geocoded")
+    @DisplayName("GET /opportunities/geocoded")
     class GetGeocodedOpportunities {
 
         @Test
         @DisplayName("should return geocoded opportunities")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_ReturnGeocodedOpportunities() throws Exception {
-            performGet("/api/v1/opportunities/geocoded")
+            performGet("/opportunities/geocoded")
                 .andExpect(status().isOk());
         }
     }
 
     @Nested
-    @DisplayName("GET /api/v1/opportunities/by-state")
+    @DisplayName("GET /opportunities/by-state")
     class GetOpportunitiesByState {
 
         @Test
         @DisplayName("should return opportunity counts by state")
         @WithMockUser(username = "user", roles = {"USER"})
         void should_ReturnOpportunitiesByState() throws Exception {
-            performGet("/api/v1/opportunities/by-state")
+            performGet("/opportunities/by-state")
                 .andExpect(status().isOk());
         }
     }

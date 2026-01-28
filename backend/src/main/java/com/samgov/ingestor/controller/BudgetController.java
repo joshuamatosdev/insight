@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/budgets")
+@RequestMapping("/budgets")
 @PreAuthorize("isAuthenticated()")
 public class BudgetController {
 

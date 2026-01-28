@@ -30,8 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Opportunity E2E Tests")
 class OpportunityE2ETest extends BaseControllerTest {
 
-    private static final String OPPORTUNITIES_URL = "/api/v1/opportunities";
-    private static final String SAVED_OPPORTUNITIES_URL = "/api/v1/saved-opportunities";
+    private static final String OPPORTUNITIES_URL = "/opportunities";
+    private static final String SAVED_OPPORTUNITIES_URL = "/saved-opportunities";
 
     @Autowired
     private OpportunityRepository opportunityRepository;

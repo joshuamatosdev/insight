@@ -21,7 +21,7 @@ import java.util.UUID;
  * Controller for enhanced export functionality
  */
 @RestController
-@RequestMapping("/api/v1/export")
+@RequestMapping("/export")
 @RequiredArgsConstructor
 public class ExportController {
 

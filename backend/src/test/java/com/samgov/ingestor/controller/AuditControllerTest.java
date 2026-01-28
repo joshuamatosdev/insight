@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("AuditController")
 class AuditControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/audit";
+    private static final String BASE_URL = "/audit";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class AuditControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/audit")
+    @DisplayName("GET /audit")
     class GetAuditLogs {
 
         @Test
@@ -53,7 +53,7 @@ class AuditControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/audit/{id}")
+    @DisplayName("GET /audit/{id}")
     class GetAuditLogById {
 
         @Test
@@ -66,7 +66,7 @@ class AuditControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/audit/entity/{entityType}/{entityId}")
+    @DisplayName("GET /audit/entity/{entityType}/{entityId}")
     class GetAuditLogsByEntity {
 
         @Test

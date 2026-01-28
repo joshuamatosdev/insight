@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ExportController")
 class ExportControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/export";
+    private static final String BASE_URL = "/export";
 
     @Autowired
     private UserRepository userRepository;
@@ -50,7 +50,7 @@ class ExportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/export/opportunities")
+    @DisplayName("POST /export/opportunities")
     class ExportOpportunities {
 
         @Test
@@ -79,7 +79,7 @@ class ExportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/export/templates")
+    @DisplayName("GET /export/templates")
     class GetTemplates {
 
         @Test
@@ -102,7 +102,7 @@ class ExportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/export/scheduled")
+    @DisplayName("GET /export/scheduled")
     class GetScheduledExports {
 
         @Test
@@ -116,7 +116,7 @@ class ExportControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/export/scheduled")
+    @DisplayName("POST /export/scheduled")
     class CreateScheduledExport {
 
         @Test

@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ContentLibraryController")
 class ContentLibraryControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/content-library";
+    private static final String BASE_URL = "/content-library";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class ContentLibraryControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/content-library")
+    @DisplayName("GET /content-library")
     class GetContentItems {
 
         @Test
@@ -53,7 +53,7 @@ class ContentLibraryControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/content-library/{id}")
+    @DisplayName("GET /content-library/{id}")
     class GetContentItemById {
 
         @Test
@@ -66,7 +66,7 @@ class ContentLibraryControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/content-library/search")
+    @DisplayName("GET /content-library/search")
     class SearchContent {
 
         @Test
@@ -79,7 +79,7 @@ class ContentLibraryControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/content-library")
+    @DisplayName("POST /content-library")
     class CreateContentItem {
 
         @Test

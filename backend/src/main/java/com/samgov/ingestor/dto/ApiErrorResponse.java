@@ -29,7 +29,7 @@ public class ApiErrorResponse {
     @Schema(description = "Timestamp of the error", example = "2024-01-15T10:30:00Z")
     private Instant timestamp;
 
-    @Schema(description = "Request path that caused the error", example = "/api/v1/opportunities")
+    @Schema(description = "Request path that caused the error", example = "/opportunities")
     private String path;
 
     @Schema(description = "Detailed validation errors (for validation failures)")

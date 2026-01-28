@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Tenant E2E Tests")
 class TenantE2ETest extends BaseControllerTest {
 
-    private static final String TENANTS_URL = "/api/v1/tenants";
-    private static final String TENANT_ADMIN_URL = "/api/v1/tenant-admin";
+    private static final String TENANTS_URL = "/tenants";
+    private static final String TENANT_ADMIN_URL = "/tenant-admin";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -224,7 +224,7 @@ class TenantE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list pending invitations")
         void should_ListPendingInvitations() throws Exception {
-            performGet("/api/v1/invitations")
+            performGet("/invitations")
                 .andExpect(status().isOk());
         }
 
@@ -237,7 +237,7 @@ class TenantE2ETest extends BaseControllerTest {
                 "message", "Welcome to our team!"
             );
 
-            performPost("/api/v1/invitations", inviteRequest)
+            performPost("/invitations", inviteRequest)
                 .andExpect(status().isCreated());
         }
 
@@ -250,7 +250,7 @@ class TenantE2ETest extends BaseControllerTest {
                 "role", "MEMBER"
             );
 
-            performPost("/api/v1/invitations", inviteRequest)
+            performPost("/invitations", inviteRequest)
                 .andExpect(status().isCreated());
         }
 
@@ -264,11 +264,11 @@ class TenantE2ETest extends BaseControllerTest {
             );
 
             // First invitation should succeed
-            performPost("/api/v1/invitations", inviteRequest)
+            performPost("/invitations", inviteRequest)
                 .andExpect(status().isCreated());
 
             // Second invitation to same email should fail
-            performPost("/api/v1/invitations", inviteRequest)
+            performPost("/invitations", inviteRequest)
                 .andExpect(status().isBadRequest());
         }
     }

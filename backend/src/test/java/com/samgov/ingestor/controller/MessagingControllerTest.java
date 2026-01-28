@@ -53,9 +53,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("MessagingController")
 class MessagingControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/messages";
-    private static final String THREADS_URL = "/api/v1/threads";
-    private static final String CONTRACTS_URL = "/api/v1/contracts";
+    private static final String BASE_URL = "/messages";
+    private static final String THREADS_URL = "/threads";
+    private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired
     private ContractRepository contractRepository;
@@ -176,7 +176,7 @@ class MessagingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/messages")
+    @DisplayName("POST /messages")
     @WithMockUser(roles = "USER")
     class SendMessage {
 
@@ -228,7 +228,7 @@ class MessagingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/threads/{threadId}/messages")
+    @DisplayName("POST /threads/{threadId}/messages")
     @WithMockUser(roles = "USER")
     class ReplyToThread {
 
@@ -268,7 +268,7 @@ class MessagingControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/messages/{id}")
+    @DisplayName("GET /messages/{id}")
     @WithMockUser(roles = "USER")
     class GetMessage {
 
@@ -304,7 +304,7 @@ class MessagingControllerTest extends BaseControllerTest {
     class MarkAsReadEndpoints {
 
         @Test
-        @DisplayName("PATCH /api/v1/messages/{id}/read - should mark message as read")
+        @DisplayName("PATCH /messages/{id}/read - should mark message as read")
         void shouldMarkMessageAsRead() throws Exception {
             // Given - send message
             MvcResult createResult = performPost(BASE_URL, createMessageRequest("Subject", "Body"))
@@ -329,7 +329,7 @@ class MessagingControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PATCH /api/v1/threads/{threadId}/read - should mark all messages in thread as read")
+        @DisplayName("PATCH /threads/{threadId}/read - should mark all messages in thread as read")
         void shouldMarkThreadAsRead() throws Exception {
             // Given - send multiple messages
             MvcResult createResult = performPost(BASE_URL, createMessageRequest("Subject", "Message 1"))
@@ -374,7 +374,7 @@ class MessagingControllerTest extends BaseControllerTest {
     class UnreadCountEndpoints {
 
         @Test
-        @DisplayName("GET /api/v1/messages/unread/count - should return total unread count")
+        @DisplayName("GET /messages/unread/count - should return total unread count")
         void shouldReturnTotalUnreadCount() throws Exception {
             // Given - send messages to recipient
             performPost(BASE_URL, createMessageRequest("Msg 1", "Body 1"))
@@ -398,7 +398,7 @@ class MessagingControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/messages/unread/count - should return unread count for contract")
+        @DisplayName("GET /contracts/{id}/messages/unread/count - should return unread count for contract")
         void shouldReturnUnreadCountForContract() throws Exception {
             // Given - send messages
             performPost(BASE_URL, createMessageRequest("Msg 1", "Body 1"))
@@ -426,7 +426,7 @@ class MessagingControllerTest extends BaseControllerTest {
     class ThreadListingEndpoints {
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/threads - should return threads for contract")
+        @DisplayName("GET /contracts/{id}/threads - should return threads for contract")
         void shouldReturnThreadsForContract() throws Exception {
             // Given - create threads
             performPost(BASE_URL, createMessageRequest("Thread 1", "Body 1"))
@@ -448,7 +448,7 @@ class MessagingControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/threads/{id} - should return thread details")
+        @DisplayName("GET /threads/{id} - should return thread details")
         void shouldReturnThreadDetails() throws Exception {
             // Given
             MvcResult createResult = performPost(BASE_URL, createMessageRequest("Thread Subject", "Body"))
@@ -471,7 +471,7 @@ class MessagingControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/threads/{id}/messages - should return messages in thread")
+        @DisplayName("GET /threads/{id}/messages - should return messages in thread")
         void shouldReturnMessagesInThread() throws Exception {
             // Given
             MvcResult createResult = performPost(BASE_URL, createMessageRequest("Subject", "Message 1"))

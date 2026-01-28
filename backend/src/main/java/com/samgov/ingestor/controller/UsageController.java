@@ -25,7 +25,7 @@ import java.util.UUID;
  * Provides APIs for viewing current usage, historical usage, and usage limits.
  */
 @RestController
-@RequestMapping("/api/v1/usage")
+@RequestMapping("/usage")
 @RequiredArgsConstructor
 @Tag(name = "Usage", description = "Usage tracking and metered billing APIs")
 public class UsageController {

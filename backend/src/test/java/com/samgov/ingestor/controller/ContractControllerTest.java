@@ -61,7 +61,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ContractController")
 class ContractControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/contracts";
+    private static final String BASE_URL = "/contracts";
 
     @Autowired
     private ContractRepository contractRepository;
@@ -183,7 +183,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/contracts")
+    @DisplayName("POST /contracts")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class CreateContract {
 
@@ -287,7 +287,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts")
+    @DisplayName("GET /contracts")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class GetContracts {
 
@@ -353,7 +353,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/{id}")
+    @DisplayName("GET /contracts/{id}")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class GetContractById {
 
@@ -383,7 +383,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/search")
+    @DisplayName("GET /contracts/search")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class SearchContracts {
 
@@ -418,7 +418,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/expiring")
+    @DisplayName("GET /contracts/expiring")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class ExpiringContracts {
 
@@ -450,7 +450,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/contracts/{id}")
+    @DisplayName("PUT /contracts/{id}")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class UpdateContract {
 
@@ -497,7 +497,7 @@ class ContractControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PATCH /api/v1/contracts/{id}/status")
+    @DisplayName("PATCH /contracts/{id}/status")
     @WithMockUser(roles = "CONTRACT_MANAGER")
     class UpdateContractStatus {
 
@@ -560,7 +560,7 @@ class ContractControllerTest extends BaseControllerTest {
     class ContractClins {
 
         @Test
-        @DisplayName("POST /api/v1/contracts/{id}/clins - should add CLIN")
+        @DisplayName("POST /contracts/{id}/clins - should add CLIN")
         void shouldAddClin() throws Exception {
             // Given
             Contract contract = createTestContract("CLIN-2024-0001");
@@ -588,7 +588,7 @@ class ContractControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/clins - should return CLINs")
+        @DisplayName("GET /contracts/{id}/clins - should return CLINs")
         void shouldReturnClins() throws Exception {
             // Given
             Contract contract = createTestContract("CLIN-2024-0002");
@@ -626,7 +626,7 @@ class ContractControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PUT /api/v1/contracts/{id}/clins/{clinId} - should update CLIN")
+        @DisplayName("PUT /contracts/{id}/clins/{clinId} - should update CLIN")
         void shouldUpdateClin() throws Exception {
             // Given
             Contract contract = createTestContract("CLIN-2024-0003");
@@ -666,7 +666,7 @@ class ContractControllerTest extends BaseControllerTest {
     class ContractSummary {
 
         @Test
-        @DisplayName("GET /api/v1/contracts/{id}/summary - should return contract summary")
+        @DisplayName("GET /contracts/{id}/summary - should return contract summary")
         void shouldReturnContractSummary() throws Exception {
             // Given
             Contract contract = createTestContract("SUM-2024-0001");

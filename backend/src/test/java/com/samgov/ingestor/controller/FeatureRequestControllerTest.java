@@ -57,8 +57,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("FeatureRequestController")
 class FeatureRequestControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/feature-requests";
-    private static final String CONTRACTS_URL = "/api/v1/contracts";
+    private static final String BASE_URL = "/feature-requests";
+    private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired
     private ContractRepository contractRepository;
@@ -192,7 +192,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/feature-requests")
+    @DisplayName("POST /feature-requests")
     @WithMockUser(roles = "USER")
     class CreateFeatureRequest {
 
@@ -250,7 +250,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/feature-requests/{id}")
+    @DisplayName("GET /feature-requests/{id}")
     @WithMockUser(roles = "USER")
     class GetFeatureRequest {
 
@@ -282,7 +282,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/{contractId}/feature-requests")
+    @DisplayName("GET /contracts/{contractId}/feature-requests")
     @WithMockUser(roles = "USER")
     class GetFeatureRequestsForContract {
 
@@ -346,7 +346,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/contracts/{contractId}/feature-requests/top-voted")
+    @DisplayName("GET /contracts/{contractId}/feature-requests/top-voted")
     @WithMockUser(roles = "USER")
     class GetTopVotedFeatureRequests {
 
@@ -380,7 +380,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/feature-requests/{id}")
+    @DisplayName("PUT /feature-requests/{id}")
     @WithMockUser(roles = "USER")
     class UpdateFeatureRequest {
 
@@ -413,7 +413,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/feature-requests/{id}")
+    @DisplayName("DELETE /feature-requests/{id}")
     @WithMockUser(roles = "USER")
     class DeleteFeatureRequest {
 
@@ -456,7 +456,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("POST /api/v1/feature-requests/{id}/vote - should add vote")
+        @DisplayName("POST /feature-requests/{id}/vote - should add vote")
         void shouldAddVote() throws Exception {
             // When/Then
             performPost(BASE_URL + "/" + featureId + "/vote")
@@ -466,7 +466,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("DELETE /api/v1/feature-requests/{id}/vote - should remove vote")
+        @DisplayName("DELETE /feature-requests/{id}/vote - should remove vote")
         void shouldRemoveVote() throws Exception {
             // Given - vote first
             performPost(BASE_URL + "/" + featureId + "/vote")
@@ -517,7 +517,7 @@ class FeatureRequestControllerTest extends BaseControllerTest {
         }
 
         @Test
-        @DisplayName("PATCH /api/v1/feature-requests/{id}/status - should update status when admin")
+        @DisplayName("PATCH /feature-requests/{id}/status - should update status when admin")
         @WithMockUser(roles = "ADMIN")
         void shouldUpdateStatusWhenAdmin() throws Exception {
             // Set admin user context

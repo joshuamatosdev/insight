@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("DocumentController")
 class DocumentControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/documents";
+    private static final String BASE_URL = "/documents";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents")
+    @DisplayName("GET /documents")
     class GetDocuments {
 
         @Test
@@ -53,7 +53,7 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}")
+    @DisplayName("GET /documents/{id}")
     class GetDocumentById {
 
         @Test
@@ -66,7 +66,7 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/documents/{id}/download")
+    @DisplayName("GET /documents/{id}/download")
     class DownloadDocument {
 
         @Test
@@ -79,7 +79,7 @@ class DocumentControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/documents/{id}")
+    @DisplayName("DELETE /documents/{id}")
     class DeleteDocument {
 
         @Test

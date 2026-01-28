@@ -15,10 +15,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("OAuth2Controller")
 class OAuth2ControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/oauth2";
+    private static final String BASE_URL = "/oauth2";
 
     @Nested
-    @DisplayName("GET /api/v1/oauth2/providers")
+    @DisplayName("GET /oauth2/providers")
     class GetProviders {
 
         @Test
@@ -31,7 +31,7 @@ class OAuth2ControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/oauth2/connections")
+    @DisplayName("GET /oauth2/connections")
     class GetConnections {
 
         @Test
@@ -45,7 +45,7 @@ class OAuth2ControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/oauth2/connections/{provider}")
+    @DisplayName("DELETE /oauth2/connections/{provider}")
     class DisconnectProvider {
 
         @Test

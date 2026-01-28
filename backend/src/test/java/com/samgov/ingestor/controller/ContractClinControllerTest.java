@@ -64,7 +64,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Contract CLINs, Modifications, and Options")
 class ContractClinControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/contracts";
+    private static final String BASE_URL = "/contracts";
 
     @Autowired
     private ContractRepository contractRepository;

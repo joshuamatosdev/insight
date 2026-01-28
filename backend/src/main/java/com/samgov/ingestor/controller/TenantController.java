@@ -27,7 +27,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/tenants")
+@RequestMapping("/tenants")
 @RequiredArgsConstructor
 public class TenantController {
 

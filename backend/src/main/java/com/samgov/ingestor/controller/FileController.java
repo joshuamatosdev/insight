@@ -38,7 +38,7 @@ import java.util.UUID;
  * - File listing, search, and deletion
  */
 @RestController
-@RequestMapping("/api/v1/files")
+@RequestMapping("/files")
 @Validated
 @Tag(name = "Files", description = "File storage and management endpoints")
 public class FileController {

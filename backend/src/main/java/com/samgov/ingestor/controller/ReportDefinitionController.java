@@ -24,7 +24,7 @@ import java.util.UUID;
  * REST controller for custom report definitions with drag-and-drop column configuration.
  */
 @RestController
-@RequestMapping("/api/v1/report-definitions")
+@RequestMapping("/report-definitions")
 @PreAuthorize("isAuthenticated()")
 public class ReportDefinitionController {
 

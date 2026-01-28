@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("TenantController")
 class TenantControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/tenants";
+    private static final String BASE_URL = "/tenants";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -121,7 +121,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/tenants")
+    @DisplayName("POST /tenants")
     class CreateTenant {
 
         @Test
@@ -211,7 +211,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenants/{id}")
+    @DisplayName("GET /tenants/{id}")
     class GetTenantById {
 
         @Test
@@ -270,7 +270,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenants/slug/{slug}")
+    @DisplayName("GET /tenants/slug/{slug}")
     class GetTenantBySlug {
 
         @Test
@@ -295,7 +295,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenants")
+    @DisplayName("GET /tenants")
     class GetAllTenants {
 
         @Test
@@ -330,7 +330,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/tenants/{id}")
+    @DisplayName("PUT /tenants/{id}")
     class UpdateTenant {
 
         @Test
@@ -393,7 +393,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/tenants/{id}/suspend")
+    @DisplayName("POST /tenants/{id}/suspend")
     class SuspendTenant {
 
         @Test
@@ -423,7 +423,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/tenants/{id}/activate")
+    @DisplayName("POST /tenants/{id}/activate")
     class ActivateTenant {
 
         @Test
@@ -457,7 +457,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("PUT /api/v1/tenants/{id}/subscription")
+    @DisplayName("PUT /tenants/{id}/subscription")
     class UpdateSubscriptionTier {
 
         @Test
@@ -509,7 +509,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenants/{id}/users")
+    @DisplayName("GET /tenants/{id}/users")
     class GetTenantUsers {
 
         @Test
@@ -556,7 +556,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/tenants/{id}/memberships")
+    @DisplayName("GET /tenants/{id}/memberships")
     class GetTenantMemberships {
 
         @Test
@@ -583,7 +583,7 @@ class TenantControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/tenants/{tenantId}/users/{userId}")
+    @DisplayName("DELETE /tenants/{tenantId}/users/{userId}")
     class RemoveUserFromTenant {
 
         @Test

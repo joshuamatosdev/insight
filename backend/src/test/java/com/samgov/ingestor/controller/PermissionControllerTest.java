@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("PermissionController")
 class PermissionControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/permissions";
+    private static final String BASE_URL = "/permissions";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class PermissionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/permissions")
+    @DisplayName("GET /permissions")
     class GetPermissions {
 
         @Test
@@ -53,7 +53,7 @@ class PermissionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/permissions/{id}")
+    @DisplayName("GET /permissions/{id}")
     class GetPermissionById {
 
         @Test
@@ -66,7 +66,7 @@ class PermissionControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/permissions/categories")
+    @DisplayName("GET /permissions/categories")
     class GetCategories {
 
         @Test

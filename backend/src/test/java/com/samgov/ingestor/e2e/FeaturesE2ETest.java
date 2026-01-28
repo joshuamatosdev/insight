@@ -75,7 +75,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get search suggestions")
         void shouldGetSearchSuggestions() throws Exception {
-            performGet("/api/v1/search/suggestions?query=software")
+            performGet("/search/suggestions?query=software")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.suggestions").isArray());
         }
@@ -89,7 +89,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "size", 10
             );
 
-            performPost("/api/v1/search/faceted", request)
+            performPost("/search/faceted", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.facets").exists());
@@ -105,7 +105,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "size", 10
             );
 
-            performPost("/api/v1/search/faceted", request)
+            performPost("/search/faceted", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -128,14 +128,14 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "ids", oppIds
             );
 
-            performPost("/api/v1/export/opportunities", request)
+            performPost("/export/opportunities", request)
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should list export templates")
         void shouldListExportTemplates() throws Exception {
-            performGet("/api/v1/export/templates")
+            performGet("/export/templates")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -143,7 +143,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list scheduled exports")
         void shouldListScheduledExports() throws Exception {
-            performGet("/api/v1/export/scheduled")
+            performGet("/export/scheduled")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -160,7 +160,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "recipients", List.of("export@example.com")
             );
 
-            performPost("/api/v1/export/scheduled", request)
+            performPost("/export/scheduled", request)
                 .andExpect(status().isCreated());
         }
     }
@@ -172,7 +172,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list report definitions")
         void shouldListReportDefinitions() throws Exception {
-            performGet("/api/v1/reports/definitions")
+            performGet("/reports/definitions")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -186,7 +186,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "reportType", "OPPORTUNITIES"
             );
 
-            performPost("/api/v1/reports/definitions", request)
+            performPost("/reports/definitions", request)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test Report"));
         }
@@ -194,14 +194,14 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should generate pipeline report")
         void shouldGeneratePipelineReport() throws Exception {
-            performGet("/api/v1/reports/pipeline")
+            performGet("/reports/pipeline")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should generate opportunity report")
         void shouldGenerateOpportunityReport() throws Exception {
-            performGet("/api/v1/reports/opportunities")
+            performGet("/reports/opportunities")
                 .andExpect(status().isOk());
         }
     }
@@ -213,21 +213,21 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get analytics overview")
         void shouldGetAnalyticsOverview() throws Exception {
-            performGet("/api/v1/analytics/overview")
+            performGet("/analytics/overview")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get opportunity trends")
         void shouldGetOpportunityTrends() throws Exception {
-            performGet("/api/v1/analytics/opportunities/trends?period=MONTH")
+            performGet("/analytics/opportunities/trends?period=MONTH")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get pipeline analytics")
         void shouldGetPipelineAnalytics() throws Exception {
-            performGet("/api/v1/analytics/pipeline")
+            performGet("/analytics/pipeline")
                 .andExpect(status().isOk());
         }
 
@@ -240,7 +240,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "metadata", Map.of("source", "e2e-test")
             );
 
-            performPost("/api/v1/analytics/events", event)
+            performPost("/analytics/events", event)
                 .andExpect(status().isCreated());
         }
     }
@@ -252,21 +252,21 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get dashboard data")
         void shouldGetDashboardData() throws Exception {
-            performGet("/api/v1/dashboard")
+            performGet("/dashboard")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get dashboard stats")
         void shouldGetDashboardStats() throws Exception {
-            performGet("/api/v1/dashboard/stats")
+            performGet("/dashboard/stats")
                 .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("should get dashboard widgets")
         void shouldGetDashboardWidgets() throws Exception {
-            performGet("/api/v1/dashboard/widgets")
+            performGet("/dashboard/widgets")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -280,7 +280,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "settings", Map.of("showChart", true)
             );
 
-            performPost("/api/v1/dashboard/widgets", config)
+            performPost("/dashboard/widgets", config)
                 .andExpect(status().isCreated());
         }
     }
@@ -292,7 +292,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list notifications")
         void shouldListNotifications() throws Exception {
-            performGet("/api/v1/notifications")
+            performGet("/notifications")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -300,7 +300,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get unread notification count")
         void shouldGetUnreadNotificationCount() throws Exception {
-            performGet("/api/v1/notifications/unread-count")
+            performGet("/notifications/unread-count")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.count").isNumber());
         }
@@ -310,7 +310,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         void shouldMarkNotificationAsRead() throws Exception {
             // This would need an actual notification to mark as read
             // For now, test the endpoint exists
-            performPatch("/api/v1/notifications/mark-all-read")
+            performPatch("/notifications/mark-all-read")
                 .andExpect(status().isOk());
         }
     }
@@ -322,7 +322,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list alerts")
         void shouldListAlerts() throws Exception {
-            performGet("/api/v1/alerts")
+            performGet("/alerts")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
         }
@@ -337,7 +337,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            performPost("/api/v1/alerts", alert)
+            performPost("/alerts", alert)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("E2E Test Alert"));
         }
@@ -353,7 +353,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "enabled", true
             );
 
-            String response = performPost("/api/v1/alerts", createRequest)
+            String response = performPost("/alerts", createRequest)
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
@@ -365,7 +365,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "enabled", false
             );
 
-            performPut("/api/v1/alerts/" + alertId, update)
+            performPut("/alerts/" + alertId, update)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Updated Alert Name"));
         }
@@ -378,7 +378,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should get company profile")
         void shouldGetCompanyProfile() throws Exception {
-            performGet("/api/v1/company-profile")
+            performGet("/company-profile")
                 .andExpect(status().isOk());
         }
 
@@ -391,7 +391,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "cageCode", "E2ETC"
             );
 
-            performPut("/api/v1/company-profile", profile)
+            performPut("/company-profile", profile)
                 .andExpect(status().isOk());
         }
     }
@@ -403,7 +403,7 @@ class FeaturesE2ETest extends BaseControllerTest {
         @Test
         @DisplayName("should list certifications")
         void shouldListCertifications() throws Exception {
-            performGet("/api/v1/certifications")
+            performGet("/certifications")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
         }
@@ -417,7 +417,7 @@ class FeaturesE2ETest extends BaseControllerTest {
                 "expirationDate", LocalDate.now().plusYears(1).toString()
             );
 
-            performPost("/api/v1/certifications", cert)
+            performPost("/certifications", cert)
                 .andExpect(status().isCreated());
         }
     }

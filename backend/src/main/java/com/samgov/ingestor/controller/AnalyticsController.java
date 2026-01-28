@@ -314,7 +314,7 @@ public class AnalyticsController {
     // ==================== Event Tracking Endpoints (API v1) ====================
 
     /**
-     * GET /api/v1/analytics/dashboard - Dashboard metrics
+     * GET /analytics/dashboard - Dashboard metrics
      */
     @GetMapping({"/v1/dashboard", "/dashboard"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
@@ -324,7 +324,7 @@ public class AnalyticsController {
     }
 
     /**
-     * GET /api/v1/analytics/metrics - Custom metrics query
+     * GET /analytics/metrics - Custom metrics query
      */
     @GetMapping({"/v1/metrics", "/metrics"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER')")
@@ -337,7 +337,7 @@ public class AnalyticsController {
     }
 
     /**
-     * GET /api/v1/analytics/trends - Trend data for charts
+     * GET /analytics/trends - Trend data for charts
      */
     @GetMapping({"/v1/trends", "/trends"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
@@ -350,7 +350,7 @@ public class AnalyticsController {
     }
 
     /**
-     * POST /api/v1/analytics/track - Track custom event
+     * POST /analytics/track - Track custom event
      */
     @PostMapping({"/v1/track", "/track"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
@@ -364,7 +364,7 @@ public class AnalyticsController {
     }
 
     /**
-     * GET /api/v1/analytics/activity - Activity feed
+     * GET /analytics/activity - Activity feed
      */
     @GetMapping({"/v1/activity", "/activity"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER', 'USER')")
@@ -375,7 +375,7 @@ public class AnalyticsController {
     }
 
     /**
-     * GET /api/v1/analytics/top-performers - Top performers
+     * GET /analytics/top-performers - Top performers
      */
     @GetMapping({"/v1/top-performers", "/top-performers"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER', 'BD_MANAGER')")
@@ -386,7 +386,7 @@ public class AnalyticsController {
     }
 
     /**
-     * GET /api/v1/analytics/events - Recent events (paginated)
+     * GET /analytics/events - Recent events (paginated)
      */
     @GetMapping({"/v1/events", "/events"})
     @PreAuthorize("hasAnyRole('ADMIN', 'FINANCE_MANAGER', 'CONTRACT_MANAGER')")

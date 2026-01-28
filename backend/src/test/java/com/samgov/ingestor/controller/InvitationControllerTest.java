@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("InvitationController")
 class InvitationControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/invitations";
+    private static final String BASE_URL = "/invitations";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class InvitationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/invitations")
+    @DisplayName("GET /invitations")
     class GetInvitations {
 
         @Test
@@ -53,7 +53,7 @@ class InvitationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/invitations")
+    @DisplayName("POST /invitations")
     class CreateInvitation {
 
         @Test
@@ -66,7 +66,7 @@ class InvitationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/invitations/validate")
+    @DisplayName("GET /invitations/validate")
     class ValidateInvitation {
 
         @Test
@@ -82,7 +82,7 @@ class InvitationControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/invitations/{id}")
+    @DisplayName("DELETE /invitations/{id}")
     class CancelInvitation {
 
         @Test

@@ -42,7 +42,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/contracts")
+@RequestMapping("/contracts")
 @RequiredArgsConstructor
 public class ContractController {
 

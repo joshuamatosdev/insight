@@ -23,11 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Compliance E2E Tests")
 class ComplianceE2ETest extends BaseControllerTest {
 
-    private static final String CERTIFICATIONS_URL = "/api/v1/certifications";
-    private static final String CLEARANCES_URL = "/api/v1/security-clearances";
-    private static final String CMMC_URL = "/api/v1/cmmc";
-    private static final String SBOM_URL = "/api/v1/sbom";
-    private static final String COMPLIANCE_URL = "/api/v1/compliance";
+    private static final String CERTIFICATIONS_URL = "/certifications";
+    private static final String CLEARANCES_URL = "/security-clearances";
+    private static final String CMMC_URL = "/cmmc";
+    private static final String SBOM_URL = "/sbom";
+    private static final String COMPLIANCE_URL = "/compliance";
 
     @Autowired
     private TenantRepository tenantRepository;

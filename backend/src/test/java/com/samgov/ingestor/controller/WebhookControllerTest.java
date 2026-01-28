@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("WebhookController")
 class WebhookControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/webhooks";
+    private static final String BASE_URL = "/webhooks";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -39,7 +39,7 @@ class WebhookControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/webhooks")
+    @DisplayName("GET /webhooks")
     class GetWebhooks {
 
         @Test
@@ -53,7 +53,7 @@ class WebhookControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/webhooks/{id}")
+    @DisplayName("GET /webhooks/{id}")
     class GetWebhookById {
 
         @Test
@@ -66,7 +66,7 @@ class WebhookControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/webhooks")
+    @DisplayName("POST /webhooks")
     class CreateWebhook {
 
         @Test
@@ -79,7 +79,7 @@ class WebhookControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/webhooks/{id}")
+    @DisplayName("DELETE /webhooks/{id}")
     class DeleteWebhook {
 
         @Test
@@ -92,7 +92,7 @@ class WebhookControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/webhooks/{id}/test")
+    @DisplayName("POST /webhooks/{id}/test")
     class TestWebhook {
 
         @Test
@@ -105,7 +105,7 @@ class WebhookControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/webhooks/events")
+    @DisplayName("GET /webhooks/events")
     class GetEvents {
 
         @Test

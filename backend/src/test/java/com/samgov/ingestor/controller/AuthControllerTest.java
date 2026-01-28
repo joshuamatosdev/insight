@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("AuthController")
 class AuthControllerTest extends BaseControllerTest {
 
-    private static final String AUTH_BASE_URL = "/api/v1/auth";
+    private static final String AUTH_BASE_URL = "/auth";
     private static final String LOGIN_URL = AUTH_BASE_URL + "/login";
     private static final String REGISTER_URL = AUTH_BASE_URL + "/register";
     private static final String REFRESH_URL = AUTH_BASE_URL + "/refresh";
@@ -60,7 +60,7 @@ class AuthControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/auth/login")
+    @DisplayName("POST /auth/login")
     class LoginEndpoint {
 
         @Test
@@ -204,7 +204,7 @@ class AuthControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/auth/register")
+    @DisplayName("POST /auth/register")
     class RegisterEndpoint {
 
         @Test
@@ -363,7 +363,7 @@ class AuthControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/auth/refresh")
+    @DisplayName("POST /auth/refresh")
     class RefreshTokenEndpoint {
 
         @Test
@@ -436,7 +436,7 @@ class AuthControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/auth/forgot-password")
+    @DisplayName("POST /auth/forgot-password")
     class ForgotPasswordEndpoint {
 
         @Test
@@ -509,7 +509,7 @@ class AuthControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/auth/reset-password")
+    @DisplayName("POST /auth/reset-password")
     class ResetPasswordEndpoint {
 
         @Test
@@ -579,7 +579,7 @@ class AuthControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/auth/validate-reset-token")
+    @DisplayName("GET /auth/validate-reset-token")
     class ValidateResetTokenEndpoint {
 
         @Test

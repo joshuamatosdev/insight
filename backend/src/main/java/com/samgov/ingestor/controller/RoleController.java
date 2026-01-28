@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/roles")
+@RequestMapping("/roles")
 @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'TENANT_ADMIN')")
 public class RoleController {
 

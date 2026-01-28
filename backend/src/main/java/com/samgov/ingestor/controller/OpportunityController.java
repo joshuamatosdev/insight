@@ -31,7 +31,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/opportunities")
+@RequestMapping("/opportunities")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 @Validated

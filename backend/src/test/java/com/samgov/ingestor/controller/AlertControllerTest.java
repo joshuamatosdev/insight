@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("AlertController")
 class AlertControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/alerts";
+    private static final String BASE_URL = "/alerts";
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +47,7 @@ class AlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/alerts")
+    @DisplayName("GET /alerts")
     class GetMyAlerts {
 
         @Test
@@ -70,7 +70,7 @@ class AlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/alerts/unread")
+    @DisplayName("GET /alerts/unread")
     class GetUnreadAlerts {
 
         @Test
@@ -84,7 +84,7 @@ class AlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/alerts/count")
+    @DisplayName("GET /alerts/count")
     class GetUnreadCount {
 
         @Test
@@ -98,7 +98,7 @@ class AlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/alerts/{id}/read")
+    @DisplayName("POST /alerts/{id}/read")
     class MarkAsRead {
 
         @Test
@@ -111,7 +111,7 @@ class AlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /api/v1/alerts/read-all")
+    @DisplayName("POST /alerts/read-all")
     class MarkAllAsRead {
 
         @Test
@@ -125,7 +125,7 @@ class AlertControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /api/v1/alerts/{id}")
+    @DisplayName("DELETE /alerts/{id}")
     class DismissAlert {
 
         @Test

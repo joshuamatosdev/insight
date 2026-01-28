@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("FinancialController")
 class FinancialControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/api/v1/financials";
+    private static final String BASE_URL = "/financials";
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -38,7 +38,7 @@ class FinancialControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/financials/summary")
+    @DisplayName("GET /financials/summary")
     class GetFinancialSummary {
 
         @Test
@@ -51,7 +51,7 @@ class FinancialControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/financials/contract/{contractId}")
+    @DisplayName("GET /financials/contract/{contractId}")
     class GetContractFinancials {
 
         @Test
@@ -64,7 +64,7 @@ class FinancialControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /api/v1/financials/revenue")
+    @DisplayName("GET /financials/revenue")
     class GetRevenue {
 
         @Test

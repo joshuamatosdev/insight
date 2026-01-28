@@ -21,7 +21,7 @@ import java.util.Map;
  * REST controller for SBIR.gov data - awards, solicitations, and ingestion.
  */
 @RestController
-@RequestMapping("/api/v1/sbir")
+@RequestMapping("/sbir")
 @PreAuthorize("isAuthenticated()")
 public class SbirController {
 
@@ -108,7 +108,7 @@ public class SbirController {
 
     /**
      * Get all SBIR awards from database.
-     * GET /api/sbir/awards
+     * GET /sbir/awards
      */
     @GetMapping("/awards")
     public ResponseEntity<List<SbirAward>> getAllAwards(
@@ -134,7 +134,7 @@ public class SbirController {
 
     /**
      * Get recent SBIR awards (last 2 years).
-     * GET /api/sbir/awards/recent
+     * GET /sbir/awards/recent
      */
     @GetMapping("/awards/recent")
     public ResponseEntity<List<SbirAward>> getRecentAwards() {
