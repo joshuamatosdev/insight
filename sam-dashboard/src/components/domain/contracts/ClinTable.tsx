@@ -227,7 +227,7 @@ export function ClinTable({
                   {formatCurrency(totalRemaining)}
                 </Text>
               </TableCell>
-              {onEditClin !== undefined && <TableCell />}
+              {onEditClin !== undefined && <TableCell>{' '}</TableCell>}
             </TableRow>
           </TableBody>
         </Table>

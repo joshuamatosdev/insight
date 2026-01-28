@@ -122,7 +122,7 @@ export function InvoiceLineItems({
               <TableCell className="text-right font-semibold text-on-surface">
                 {formatCurrency(totalAmount)}
               </TableCell>
-              {onDeleteItem !== undefined && <TableCell />}
+              {onDeleteItem !== undefined && <TableCell>{' '}</TableCell>}
             </TableRow>
           </TableBody>
         </Table>

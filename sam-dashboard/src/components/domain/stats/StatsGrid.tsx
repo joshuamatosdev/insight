@@ -43,7 +43,7 @@ export function StatsGrid({ children, columns = 4, className }: StatsGridProps &
     }
 
     // Clone child and merge className
-    return cloneElement(child as ReactElement, {
+    return cloneElement(child as ReactElement<{ className?: string }>, {
       className: clsx((child.props as { className?: string }).className, borderClass),
     });
   });

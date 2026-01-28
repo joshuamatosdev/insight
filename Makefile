@@ -21,9 +21,12 @@ BACKEND_PORT := 8081
 FRONTEND_PORT := 3000
 
 # Docker Compose files
-COMPOSE_FILE := docker-compose.yml
-COMPOSE_DEV_FILE := docker-compose.override.yml
-COMPOSE_PROD_FILE := docker-compose.prod.yml
+COMPOSE_FILE := docker/docker-compose.yml
+COMPOSE_DEV_FILE := docker/docker-compose.override.yml
+COMPOSE_PROD_FILE := docker/docker-compose.prod.yml
+
+# Docker compose command with file path
+DC := docker-compose -f docker/docker-compose.yml-f $(COMPOSE_FILE)
 
 # Environment variables for local development
 export REDIS_HOST := localhost
@@ -70,13 +73,13 @@ setup: ## First-time setup: copy .env, install deps, start services
 	@if command -v ./backend/gradlew > /dev/null 2>&1; then cd backend && cd backend && ./gradlew dependencies --quiet; else echo "Skipping Gradle (no gradlew)"; fi
 	cd sam-dashboard && npm install
 	@echo "$(GREEN)Starting infrastructure services...$(NC)"
-	docker-compose up -d postgres redis elasticsearch localstack
+	docker-compose -f docker/docker-compose.ymlup -d postgres redis elasticsearch localstack
 	@echo "$(CYAN)Waiting for services to be healthy...$(NC)"
 	@sleep 8
 	@echo "$(CYAN)Initializing S3 buckets...$(NC)"
-	@docker-compose exec -T localstack awslocal s3 mb s3://samgov-documents 2>/dev/null || true
-	@docker-compose exec -T localstack awslocal s3 mb s3://samgov-attachments 2>/dev/null || true
-	@docker-compose exec -T localstack awslocal s3 mb s3://samgov-exports 2>/dev/null || true
+	@docker-compose -f docker/docker-compose.ymlexec -T localstack awslocal s3 mb s3://samgov-documents 2>/dev/null || true
+	@docker-compose -f docker/docker-compose.ymlexec -T localstack awslocal s3 mb s3://samgov-attachments 2>/dev/null || true
+	@docker-compose -f docker/docker-compose.ymlexec -T localstack awslocal s3 mb s3://samgov-exports 2>/dev/null || true
 	@echo ""
 	@echo "$(GREEN)Setup complete!$(NC)"
 	@echo ""
@@ -110,7 +113,7 @@ start-all: start ## Alias for 'start'
 .PHONY: infra
 infra: ## Start infrastructure only (Postgres, Redis, Elasticsearch, LocalStack/S3)
 	@echo "$(GREEN)Starting infrastructure services...$(NC)"
-	docker-compose up -d postgres redis elasticsearch localstack
+	docker-compose -f docker/docker-compose.ymlup -d postgres redis elasticsearch localstack
 	@echo "$(GREEN)Infrastructure running (including S3 via LocalStack).$(NC)"
 
 .PHONY: start-backend
@@ -143,7 +146,7 @@ stop: ## Stop all services (local + Docker)
 	@-pkill -f "gradlew bootRun" 2>/dev/null || true
 	@-pkill -f "vite" 2>/dev/null || true
 	@-pkill -f "node.*sam-dashboard" 2>/dev/null || true
-	docker-compose stop
+	docker-compose -f docker/docker-compose.ymlstop
 	@echo "$(GREEN)All services stopped.$(NC)"
 
 .PHONY: stop-local
@@ -187,25 +190,25 @@ logs-frontend-local: ## Tail frontend logs
 .PHONY: up
 up: ## Start all services in Docker
 	@echo "$(GREEN)Starting Insight services in Docker...$(NC)"
-	docker-compose up -d
+	docker-compose -f docker/docker-compose.ymlup -d
 	@echo "$(GREEN)Services started. Run 'make logs' to view logs.$(NC)"
 
 .PHONY: up-build
 up-build: ## Start all services and rebuild images
 	@echo "$(GREEN)Building and starting Insight services...$(NC)"
-	docker-compose up -d --build
+	docker-compose -f docker/docker-compose.ymlup -d --build
 	@echo "$(GREEN)Services started. Run 'make logs' to view logs.$(NC)"
 
 .PHONY: down
 down: ## Stop all Docker services
 	@echo "$(YELLOW)Stopping Docker services...$(NC)"
-	docker-compose down
+	docker-compose -f docker/docker-compose.ymldown
 	@echo "$(GREEN)Docker services stopped.$(NC)"
 
 .PHONY: down-v
 down-v: ## Stop Docker services and remove volumes
 	@echo "$(RED)Stopping services and removing volumes...$(NC)"
-	docker-compose down -v
+	docker-compose -f docker/docker-compose.ymldown -v
 	@echo "$(GREEN)Services stopped and volumes removed.$(NC)"
 
 # =============================================================================
@@ -214,19 +217,19 @@ down-v: ## Stop Docker services and remove volumes
 
 .PHONY: logs
 logs: ## View Docker logs (all services)
-	docker-compose logs -f
+	docker-compose -f docker/docker-compose.ymllogs -f
 
 .PHONY: logs-backend
 logs-backend: ## View Docker backend logs
-	docker-compose logs -f backend
+	docker-compose -f docker/docker-compose.ymllogs -f backend
 
 .PHONY: logs-frontend
 logs-frontend: ## View Docker frontend logs
-	docker-compose logs -f frontend
+	docker-compose -f docker/docker-compose.ymllogs -f frontend
 
 .PHONY: logs-db
 logs-db: ## View database service logs
-	docker-compose logs -f postgres redis elasticsearch
+	docker-compose -f docker/docker-compose.ymllogs -f postgres redis elasticsearch
 
 # =============================================================================
 # STATUS
@@ -234,13 +237,13 @@ logs-db: ## View database service logs
 
 .PHONY: ps
 ps: ## Show Docker container status
-	docker-compose ps
+	docker-compose -f docker/docker-compose.ymlps
 
 .PHONY: status
 status: ## Show all service status
 	@echo ""
 	@echo "$(CYAN)Docker Services:$(NC)"
-	@docker-compose ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null || docker-compose ps
+	@docker-compose -f docker/docker-compose.ymlps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null || docker-compose -f docker/docker-compose.ymlps
 	@echo ""
 	@echo "$(CYAN)Local Processes:$(NC)"
 	@pgrep -f "gradlew bootRun" > /dev/null && echo "  Backend:  Running" || echo "  Backend:  Not running"
@@ -308,11 +311,11 @@ build-frontend: ## Build frontend (production)
 
 .PHONY: db-shell
 db-shell: ## Open PostgreSQL shell
-	docker-compose exec postgres psql -U dev_user -d sam_opportunities
+	docker-compose -f docker/docker-compose.ymlexec postgres psql -U dev_user -d sam_opportunities
 
 .PHONY: redis-shell
 redis-shell: ## Open Redis CLI
-	docker-compose exec redis redis-cli
+	docker-compose -f docker/docker-compose.ymlexec redis redis-cli
 
 # =============================================================================
 # S3 / LOCALSTACK
@@ -321,28 +324,28 @@ redis-shell: ## Open Redis CLI
 .PHONY: s3-init
 s3-init: ## Initialize S3 buckets in LocalStack
 	@echo "$(GREEN)Initializing S3 buckets...$(NC)"
-	docker-compose exec localstack sh -c '/etc/localstack/init/ready.d/init-s3.sh' || \
-	docker-compose exec localstack awslocal s3 mb s3://samgov-documents && \
-	docker-compose exec localstack awslocal s3 mb s3://samgov-attachments && \
-	docker-compose exec localstack awslocal s3 mb s3://samgov-exports
+	docker-compose -f docker/docker-compose.ymlexec localstack sh -c '/etc/localstack/init/ready.d/init-s3.sh' || \
+	docker-compose -f docker/docker-compose.ymlexec localstack awslocal s3 mb s3://samgov-documents && \
+	docker-compose -f docker/docker-compose.ymlexec localstack awslocal s3 mb s3://samgov-attachments && \
+	docker-compose -f docker/docker-compose.ymlexec localstack awslocal s3 mb s3://samgov-exports
 	@echo "$(GREEN)S3 buckets initialized.$(NC)"
 
 .PHONY: s3-list
 s3-list: ## List S3 buckets
-	docker-compose exec localstack awslocal s3 ls
+	docker-compose -f docker/docker-compose.ymlexec localstack awslocal s3 ls
 
 .PHONY: s3-shell
 s3-shell: ## Open shell in LocalStack container
-	docker-compose exec localstack bash
+	docker-compose -f docker/docker-compose.ymlexec localstack bash
 
 .PHONY: db-reset
 db-reset: ## Reset database (WARNING: destroys all data)
 	@echo "$(RED)WARNING: This will destroy all database data!$(NC)"
 	@read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ]
-	docker-compose stop postgres
-	docker-compose rm -f postgres
+	docker-compose -f docker/docker-compose.ymlstop postgres
+	docker-compose -f docker/docker-compose.ymlrm -f postgres
 	docker volume rm samgov_pg-data 2>/dev/null || true
-	docker-compose up -d postgres
+	docker-compose -f docker/docker-compose.ymlup -d postgres
 	@echo "$(GREEN)Database reset complete.$(NC)"
 
 # =============================================================================
@@ -352,7 +355,7 @@ db-reset: ## Reset database (WARNING: destroys all data)
 .PHONY: clean
 clean: stop ## Stop all services and clean up
 	@echo "$(YELLOW)Cleaning up...$(NC)"
-	docker-compose down --remove-orphans
+	docker-compose -f docker/docker-compose.ymldown --remove-orphans
 	rm -rf logs/*.log
 	@echo "$(GREEN)Cleanup complete.$(NC)"
 
@@ -360,7 +363,7 @@ clean: stop ## Stop all services and clean up
 clean-all: ## Remove everything (containers, volumes, node_modules)
 	@echo "$(RED)WARNING: This will remove all containers, volumes, and node_modules!$(NC)"
 	@read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ]
-	docker-compose down -v --remove-orphans
+	docker-compose -f docker/docker-compose.ymldown -v --remove-orphans
 	rm -rf sam-dashboard/node_modules
 	rm -rf logs
 	cd backend && ./gradlew clean

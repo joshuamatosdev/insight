@@ -92,24 +92,16 @@ function ScopeItemRow({
         <Flex align="center" gap="sm" style={{ flex: 1 }}>
           {/* Expand/Collapse button */}
           {hasChildren && (
-            <Box
-              as="button"
+            <button
+              type="button"
               onClick={handleToggle}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '0.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              className="flex items-center justify-center p-1 bg-transparent border-none cursor-pointer"
               aria-label={isExpanded ? 'Collapse' : 'Expand'}
             >
               <Text variant="body" style={{ transform: isExpanded ? 'rotate(90deg)' : 'none' }}>
                 ▶
               </Text>
-            </Box>
+            </button>
           )}
           {hasChildren === false && <Box style={{ width: '24px' }} />}
 

@@ -80,25 +80,14 @@ export function MessageComposer({
             >
               Message
             </Text>
-            <Box
-              as="textarea"
+            <textarea
               value={body}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={isLoading}
               aria-label="Message body"
-              style={{
-                width: '100%',
-                minHeight: '150px',
-                padding: '0.75rem',
-                borderRadius: '0.375rem',
-                border: '1px solid #d4d4d8',
-                fontSize: '1rem',
-                fontFamily: 'inherit',
-                resize: 'vertical',
-                outline: 'none',
-              }}
+              className="w-full min-h-[150px] p-3 rounded-md border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-base font-inherit resize-y outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
             <Text variant="caption" color="muted" className="mt-1">
               Press Ctrl+Enter to send
@@ -107,7 +96,7 @@ export function MessageComposer({
         </Stack>
       </CardBody>
       <CardFooter>
-        <Flex justify="flex-end" gap="sm">
+        <Flex justify="end" gap="sm">
           {onCancel !== undefined && (
             <Button
               variant="secondary"

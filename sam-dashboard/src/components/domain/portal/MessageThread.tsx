@@ -38,7 +38,7 @@ function MessageBubble({
   return (
     <Flex
       className={`${className} mb-2`}
-      justify={isOwn ? 'flex-end' : 'flex-start'}
+      justify={isOwn ? 'end' : 'start'}
     >
       <Box style={bubbleStyles}>
         {showSender && isOwn === false && (

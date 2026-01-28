@@ -261,25 +261,19 @@ export function ScopeTrackerPage(): React.ReactElement {
                   <Text variant="bodySmall" color="muted">
                     Status:
                   </Text>
-                  <Box
-                    as="select"
+                  <select
                     value={statusFilter}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setStatusFilter(e.target.value as ScopeItemStatus | 'ALL')
                     }
-                    style={{
-                      padding: '0.5rem 0.75rem',
-                      borderRadius: '0.375rem',
-                      border: '1px solid #d4d4d8',
-                      fontSize: '0.875rem',
-                    }}
+                    className="px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm"
                   >
                     <option value="ALL">All Statuses</option>
                     <option value="ACTIVE">Active</option>
                     <option value="COMPLETED">Completed</option>
                     <option value="ON_HOLD">On Hold</option>
                     <option value="REMOVED">Removed</option>
-                  </Box>
+                  </select>
                 </Flex>
               </Flex>
             </CardBody>

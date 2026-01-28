@@ -225,8 +225,7 @@ export function DeliverableCard({
               <Select
                 value={deliverable.status}
                 onChange={handleStatusChange}
-                size="sm"
-                style={{ minWidth: '150px' }}
+                className="min-w-[150px] text-sm"
               >
                 {STATUS_OPTIONS.map((status) => (
                   <option key={status} value={status}>

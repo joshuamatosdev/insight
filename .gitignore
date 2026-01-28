@@ -163,3 +163,12 @@ scripts/dist/
 # Windows artifacts
 nul
 null
+
+# Build output
+bin/
+
+# Orchestration deps
+orchestration/node_modules/
+
+# Docker volumes
+pg-data/

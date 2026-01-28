@@ -24,7 +24,7 @@ export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
   divider?: boolean;
 }
 
-export interface CardBodyProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
+export interface CardBodyProps extends HTMLAttributes<HTMLDivElement> {
   padding?: CardPadding;
   className?: string;
   children: ReactNode;
