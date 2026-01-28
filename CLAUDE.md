@@ -16,6 +16,92 @@ Government & Commercial Contract Intelligence Platform
 
 ---
 
+## BUSINESS CONTEXT & DUAL NATURE
+
+### Relationship to DoctrineOneLabs
+
+Insight (insight.doctrineone.us) is the contract intelligence platform for **DoctrineOne Labs**, a defense-focused software consultancy based in Austin, Texas.
+
+**DoctrineOne Mission**: "Startup Speed with Government Rigor"
+- **Core Business**: Fixed-price software development for federal, state, and local government
+- **Target Market**: Defense contractors, government agencies, regulated organizations
+- **Differentiators**: Audit-ready compliance, no subcontracting, source code delivery, lean senior teams
+
+### The Two Faces of Insight
+
+Insight serves **two distinct user groups** with **two distinct purposes**:
+
+#### Face One: Contracting Intelligence (Opportunity Discovery)
+**Who Uses It**: DoctrineOne team + future paid subscribers (contractors seeking opportunities)
+
+**Purpose**: Find and qualify government contracting opportunities
+
+**Key Features**:
+- Multi-source data ingestion (SAM.gov, SBIR.gov, USAspending.gov)
+- Geographic intelligence with interactive map
+- Full-text search with Elasticsearch
+- Advanced filtering (NAICS, agency, set-aside types, clearances)
+- Dashboard analytics (pipeline funnel, agency distribution, deadline timeline)
+- Alerts & notifications (new matches, approaching deadlines)
+- Pipeline management
+- Saved searches and CSV export
+
+**Business Model**:
+- Internal use for DoctrineOne's own business development
+- Future: Multi-tenant SaaS offering to other contractors
+
+#### Face Two: Contractor Onboarding & Portal (Contract Execution)
+**Who Uses It**: DoctrineOne's clients (contractors who have been onboarded)
+
+**Purpose**: Manage active contract execution, deliverables, compliance, and communication
+
+**Entry Methods**:
+1. Client submits contact form on DoctrineOneLabs flagship site
+2. Self-registration at insight.doctrineone.us
+3. Manual onboarding by DoctrineOne team
+
+**Key Features**:
+- Multi-step onboarding wizard (company profile, certifications, team setup)
+- Contractor dashboard (active contracts, invoices, deadlines, deliverables)
+- Sprint tracking with Kanban board
+- SBOM tracking (CycloneDX/SPDX compliance)
+- Milestone timeline
+- Scope tracking (prevent scope creep)
+- Client-contractor messaging
+- Feature request management
+- Progress monitoring
+
+**Critical Planned Feature** (NOT YET IMPLEMENTED):
+- **AI-Assisted Contract Intake**: Upload/paste contract → AI analyzes → auto-generates intake forms → pre-fills data
+
+### Target Personas
+
+When designing features, consider which persona is the end user:
+
+| Persona | Role | Face Used | Key Needs |
+|---------|------|-----------|-----------|
+| **DoctrineOne BD Team** | Business development | Face One | Find opportunities matching capabilities |
+| **Defense Contract Procurer** | Federal DoD officer | Face Two (Client) | Track deliverables, compliance, milestones |
+| **State Procurement Officer** | State purchasing manager | Face Two (Client) | Monitor progress, scope, invoices |
+| **Local Government Manager** | City/county director | Face Two (Client) | Transparency, budget tracking, simple UI |
+| **Future Contractor Subscribers** | Other contractors | Face One | Opportunity discovery (paid service) |
+
+### Design Implications
+
+**When Adding Features, Ask:**
+1. **Which face does this serve?** (Intelligence or Portal)
+2. **Who is the end user?** (DoctrineOne team, client, or both)
+3. **What business problem does it solve?** (Find opportunities or manage contracts)
+4. **Does it need multi-tenant isolation?** (Portal features = yes, internal tools = no)
+
+**Examples**:
+- Adding a new data source (FPDS) → Face One (Intelligence)
+- Adding invoice tracking → Face Two (Portal)
+- AI contract analysis → Face Two (Onboarding)
+- Pipeline funnel visualization → Face One (Intelligence)
+
+---
+
 ## CRITICAL: TDD (TEST-DRIVEN DEVELOPMENT) MANDATORY
 
 ### The TDD Workflow (Red-Green-Refactor)
@@ -472,23 +558,62 @@ src/
 
 ## MEMORY: KEY DECISIONS & PATTERNS
 
-### Workflow
+### Workflows
 
+#### Face One: Opportunity Discovery Workflow
 ```
-Find → Qualify → Pursue → Propose → Award → Execute → Invoice/Close
+Find → Filter → Analyze → Save → Alert → Qualify → Pursue
 ```
+
+**Stages**:
+1. **Find**: Ingest from SAM.gov, SBIR.gov, USAspending.gov
+2. **Filter**: NAICS, agency, set-aside, geography, clearances
+3. **Analyze**: Dashboard analytics, fit scoring, risk assessment
+4. **Save**: Save to personal lists, create alerts
+5. **Alert**: Notify on new matches, approaching deadlines
+6. **Qualify**: Bid/no-bid decision support (planned)
+7. **Pursue**: Capture management, proposal development (planned)
+
+#### Face Two: Contract Execution Workflow
+```
+Onboard → Scope → Sprint → Track → Deliver → Invoice → Close
+```
+
+**Stages**:
+1. **Onboard**: Multi-step wizard (company, certs, team, integrations)
+2. **Scope**: Define deliverables, milestones, requirements
+3. **Sprint**: Agile sprint planning and execution (Kanban board)
+4. **Track**: Monitor progress, deadlines, scope changes
+5. **Deliver**: Deliverable submission and approval
+6. **Invoice**: Invoice generation and payment tracking
+7. **Close**: Contract closeout and retrospective
 
 ### Core Entities
 
-- Company Profile (UEI, CAGE, certifications)
-- Opportunity (sources, deadlines, Q&A)
-- Solicitation/RFP (sections, clauses, requirements)
-- Bid/Proposal (versions, artifacts, approvals)
-- Contract (CLINs, mods, deliverables)
-- Tasks/Deliverables
-- Contacts/Organizations
-- Finance Objects
-- Compliance Artifacts
+#### Face One: Intelligence Entities
+- **Opportunity** (sources, deadlines, Q&A, NAICS, agency, set-aside)
+- **Saved Search** (user-defined filters, alert rules)
+- **Alert** (new matches, deadline approaching, status changes)
+- **Pipeline Stage** (custom stages for tracking opportunities)
+- **Organization Match** (company profile matching with opportunities)
+
+#### Face Two: Portal Entities
+- **Company Profile** (UEI, CAGE, certifications, capabilities)
+- **Contract** (active contracts with CLINs, mods, deliverables)
+- **Sprint** (agile sprint with tasks and status)
+- **Task/Deliverable** (work items with progress tracking)
+- **SBOM** (Software Bill of Materials for compliance)
+- **Milestone** (contract milestones with deadlines)
+- **Scope Item** (scope tracking to prevent scope creep)
+- **Invoice** (billing and payment tracking)
+- **Feature Request** (client-facing feature voting)
+- **Message** (client-contractor communication)
+
+#### Shared Entities
+- **User** (authentication, roles, permissions)
+- **Tenant** (multi-tenant isolation for both faces)
+- **Notification** (system-wide notifications)
+- **Audit Log** (activity tracking across both faces)
 
 ### Architecture
 
