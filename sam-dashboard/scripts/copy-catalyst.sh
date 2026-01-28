@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to copy Catalyst UI components and adapt for Vite/React Router
+# Script to copy Catalyst UI components and adapt for Vite/TanStack Router
 
 CATALYST_SRC="C:/Projects/tailwind-ui/catalyst-ui-kit/catalyst-ui-kit/demo/typescript/src"
 DEST="C:/Projects/SAMGov/sam-dashboard/src"
@@ -42,13 +42,13 @@ for comp in "${COMPONENTS[@]}"; do
 done
 
 echo ""
-echo "=== Adapting for React Router ==="
+echo "=== Adapting for TanStack Router ==="
 
-# Replace next/link with react-router-dom Link
+# Replace next/link with TanStack Router Link
 find "$DEST/components/catalyst" -name "*.tsx" -exec sed -i \
-  -e "s|from 'next/link'|from 'react-router-dom'|g" \
-  -e "s|import Link from 'next/link'|import { Link } from 'react-router-dom'|g" \
-  -e "s|import NextLink from 'next/link'|import { Link } from 'react-router-dom'|g" \
+  -e "s|from 'next/link'|from '@tanstack/react-router'|g" \
+  -e "s|import Link from 'next/link'|import { Link } from '@tanstack/react-router'|g" \
+  -e "s|import NextLink from 'next/link'|import { Link } from '@tanstack/react-router'|g" \
   {} \;
 
 echo ""
