@@ -50,14 +50,61 @@ function AuthenticatedLayout() {
     const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
     const [naicsExpanded, setNaicsExpanded] = useState(false);
 
-    // Route detection for context switching
-    const contractIntelRoutes = ['/', '/opportunities', '/naics', '/pipeline', '/crm', '/alerts', '/sbir'];
+    // Route detection for context switching using explicit route metadata
+    type RouteContext = 'intelligence' | 'portal' | 'system';
 
-    const isContractIntelRoute = contractIntelRoutes.some(
-        (route) => location.pathname === route || location.pathname.startsWith(route + '/')
-    );
+    const routeMetadata: Record<string, RouteContext> = {
+        '/': 'intelligence',
+        '/opportunities': 'intelligence',
+        '/naics': 'intelligence',
+        '/pipeline': 'intelligence',
+        '/crm': 'intelligence',
+        '/alerts': 'intelligence',
+        '/sbir': 'intelligence',
+        '/search': 'intelligence',
+        '/saved-searches': 'intelligence',
+        '/portal': 'portal',
+        '/contracts': 'portal',
+        '/financial': 'portal',
+        '/compliance': 'portal',
+        '/deliverables': 'portal',
+        '/milestones': 'portal',
+        '/messages': 'portal',
+        '/sprints': 'portal',
+        '/scope': 'portal',
+        '/feature-requests': 'portal',
+        '/onboarding': 'portal',
+        '/analytics': 'system',
+        '/reports': 'system',
+        '/documents': 'system',
+        '/admin': 'system',
+        '/settings': 'system',
+        '/notifications': 'system',
+        '/billing': 'system',
+        '/usage': 'system',
+    };
 
-    const isPortalRoute = !isContractIntelRoute;
+    // Determine current route context
+    const getCurrentRouteContext = (pathname: string): RouteContext => {
+        // Check exact match first
+        if (routeMetadata[pathname] !== undefined) {
+            return routeMetadata[pathname];
+        }
+
+        // Check prefix match (e.g., /opportunities/123 matches /opportunities)
+        for (const [route, context] of Object.entries(routeMetadata)) {
+            if (pathname.startsWith(route + '/')) {
+                return context;
+            }
+        }
+
+        // Default to intelligence for unknown routes
+        return 'intelligence';
+    };
+
+    const currentContext = getCurrentRouteContext(location.pathname);
+    const isContractIntelRoute = currentContext === 'intelligence';
+    const isPortalRoute = currentContext === 'portal';
 
     // Calculate counts for sidebar
     const counts = useMemo(() => {
@@ -128,7 +175,7 @@ function AuthenticatedLayout() {
                     <NavbarSection>
                         <NavbarItem href={isPortalRoute ? '/' : '/portal'} current={isPortalRoute}>
                             <MapIcon size="sm"/>
-                            <Text>Portal</Text>
+                            <Text>{isPortalRoute ? 'Contract Intelligence' : 'Portal'}</Text>
                         </NavbarItem>
                         <NavbarItem onClick={handleRefresh}>
                             <RefreshIcon size="sm"/>
