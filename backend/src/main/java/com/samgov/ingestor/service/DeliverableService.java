@@ -186,17 +186,8 @@ public class DeliverableService {
             daysUntilDue = ChronoUnit.DAYS.between(LocalDate.now(), deliverable.getDueDate());
         }
 
-        // Calculate progress percentage based on status
-        Double progressPercentage = switch (deliverable.getStatus()) {
-            case PENDING -> 0.0;
-            case IN_PROGRESS -> 50.0;
-            case SUBMITTED -> 75.0;
-            case UNDER_REVIEW -> 80.0;
-            case REVISION_REQUIRED -> 60.0;
-            case ACCEPTED -> 100.0;
-            case REJECTED -> 0.0;
-            case WAIVED -> 100.0;
-        };
+        // Calculate progress percentage based on ScopeItems
+        Double progressPercentage = calculateProgressFromScopeItems(deliverable);
 
         String ownerName = deliverable.getOwner() != null ?
                 deliverable.getOwner().getFirstName() + " " + deliverable.getOwner().getLastName() : null;
@@ -208,5 +199,35 @@ public class DeliverableService {
                 deliverable.getFrequency(), deliverable.getDueDate(), deliverable.getSubmittedDate(),
                 deliverable.getAcceptedDate(), deliverable.getStatus(), daysUntilDue, progressPercentage,
                 ownerId, ownerName, deliverable.getNotes(), deliverable.getCreatedAt());
+    }
+
+    /**
+     * Calculate progress percentage based on linked ScopeItems.
+     * If no ScopeItems are linked, falls back to status-based defaults.
+     *
+     * @param deliverable the deliverable to calculate progress for
+     * @return progress percentage (0.0 to 100.0)
+     */
+    private Double calculateProgressFromScopeItems(ContractDeliverable deliverable) {
+        List<ScopeItem> items = deliverable.getScopeItems();
+
+        if (items == null || items.isEmpty()) {
+            // Fallback: No scope items linked - use status-based defaults
+            return switch (deliverable.getStatus()) {
+                case ACCEPTED, WAIVED -> 100.0;
+                case SUBMITTED, UNDER_REVIEW -> 100.0; // Functionally complete
+                default -> 0.0;
+            };
+        }
+
+        // Real calculation: (Completed Items / Total Items) * 100
+        long completedCount = items.stream()
+                .filter(item -> item.getStatus() == ScopeItem.ScopeStatus.COMPLETED)
+                .count();
+
+        double progress = (double) completedCount / items.size() * 100.0;
+
+        // Round to 1 decimal place
+        return Math.round(progress * 10.0) / 10.0;
     }
 }

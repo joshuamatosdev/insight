@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -21,6 +22,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -109,6 +112,11 @@ public class ContractDeliverable {
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
+
+    // Related scope items for progress calculation
+    @OneToMany(mappedBy = "deliverable", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<ScopeItem> scopeItems = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
