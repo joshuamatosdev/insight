@@ -1,4 +1,4 @@
-export {ContractorDashboard} from './ContractorDashboard';
+export {ClientDashboard} from './ClientDashboard';
 export {SprintTrackingPage} from './SprintTrackingPage';
 export {FeatureRequestsPage} from './FeatureRequestsPage';
 export {MessagingPage} from './MessagingPage';

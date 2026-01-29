@@ -11,6 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Organization entity used in both Face One (Contract Intelligence) and Face Two (Portal).
+ *
+ * <p><strong>Face One (Contract Intelligence):</strong> Tracks government agencies,
+ * competitors, teaming partners, prospects, and vendors. Used by DoctrineOne Labs for
+ * business development, market intelligence, and teaming arrangements.</p>
+ *
+ * <p><strong>Face Two (Portal):</strong> Tracks client organizations, prime contractors,
+ * subcontractors, and vendors involved in contract execution.</p>
+ *
+ * <p>Multi-tenant: tenant_id isolates organizations between different contexts.</p>
+ *
+ * @see OrganizationType for which types belong to which system
+ */
 @Entity
 @Table(name = "organizations", indexes = {
     @Index(name = "idx_org_tenant", columnList = "tenant_id"),
@@ -25,6 +39,28 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Organization {
 
+    /**
+     * Organization types used across both systems.
+     *
+     * <p><strong>Face One (Contract Intelligence):</strong>
+     * <ul>
+     *   <li>GOVERNMENT_AGENCY - Federal/state agencies for BD targeting</li>
+     *   <li>GOVERNMENT_OFFICE - Specific offices within agencies</li>
+     *   <li>COMPETITOR - Competing contractors (market intelligence)</li>
+     *   <li>PROSPECT - Potential clients</li>
+     *   <li>TEAMING_PARTNER - Partners for teaming on bids</li>
+     * </ul>
+     *
+     * <p><strong>Face Two (Portal):</strong>
+     * <ul>
+     *   <li>CUSTOMER - Client organizations (those who hired DoctrineOne Labs)</li>
+     *   <li>PRIME_CONTRACTOR - Prime on client's contract</li>
+     *   <li>SUBCONTRACTOR - Subs on client's contract</li>
+     *   <li>VENDOR - Vendors for client projects</li>
+     * </ul>
+     *
+     * <p><strong>Shared:</strong> TEAMING_PARTNER, VENDOR (used in both contexts)</p>
+     */
     public enum OrganizationType {
         GOVERNMENT_AGENCY,
         GOVERNMENT_OFFICE,

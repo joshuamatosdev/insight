@@ -1,6 +1,7 @@
 package com.samgov.ingestor.controller;
 
 import com.samgov.ingestor.dto.FacetedSearchRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.samgov.ingestor.dto.FacetedSearchResponse;
 import com.samgov.ingestor.dto.SearchSuggestionDTO;
 import com.samgov.ingestor.service.SearchEnhancementService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/search")
 @RequiredArgsConstructor
+@Tag(name = "Search (Face One)", description = "Face One (Contract Intelligence): Enhanced Elasticsearch search with facets, suggestions, and autocomplete for opportunity discovery.")
 public class SearchController {
 
     private final SearchEnhancementService searchService;

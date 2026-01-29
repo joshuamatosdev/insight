@@ -8,8 +8,17 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
- * AI-powered opportunity matching scores.
- * Links opportunities to tenant company profiles with match scores.
+ * AI-powered opportunity matching scores for Face One (Contract Intelligence).
+ *
+ * <p>Links opportunities to DoctrineOne Labs' organizational profiles with AI-generated
+ * match scores. Used by the Contract Intelligence system to help DoctrineOne Labs identify
+ * the best government contracts to pursue.</p>
+ *
+ * <p><strong>System Context:</strong> Face One (Contract Intelligence) - Internal tool for
+ * DoctrineOne Labs business development team.</p>
+ *
+ * <p><strong>Note on Multi-Tenant:</strong> Uses tenant_id for future scalability, but
+ * currently serves single-tenant internal use (DoctrineOne Labs only).</p>
  */
 @Data
 @NoArgsConstructor

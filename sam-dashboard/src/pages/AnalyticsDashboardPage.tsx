@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback} from 'react';
 import {Button, Text,} from '../components/catalyst/primitives';
 import {RefreshIcon, SpeedometerIcon,} from '../components/catalyst/primitives/Icon';
 import {
@@ -14,133 +14,7 @@ import {
 } from '../components/catalyst/layout';
 import {ActivityFeed, MetricCard, TopPerformersTable, TrendChart,} from '../components/domain';
 import {StatsGrid} from '../components/domain/stats';
-import {ActivityItem, DashboardStats, TopPerformer, TrendPoint,} from '../types/analytics.types';
-
-/**
- * Mock data for development - replace with API calls
- */
-const mockDashboardStats: DashboardStats = {
-    opportunitiesViewed: 1247,
-    opportunitiesSaved: 89,
-    pipelineValue: 4500000,
-    winRate: 35.2,
-    activeUsers: 24,
-    recentActivity: 156,
-    eventCounts: {
-        OPPORTUNITY_VIEWED: 1247,
-        OPPORTUNITY_SAVED: 89,
-        SEARCH_PERFORMED: 342,
-        REPORT_GENERATED: 28,
-        DOCUMENT_DOWNLOADED: 67,
-    },
-    viewsTrend: [
-        {date: '2026-01-01', value: 42},
-        {date: '2026-01-02', value: 38},
-        {date: '2026-01-03', value: 45},
-        {date: '2026-01-04', value: 51},
-        {date: '2026-01-05', value: 48},
-        {date: '2026-01-06', value: 39},
-        {date: '2026-01-07', value: 55},
-        {date: '2026-01-08', value: 62},
-        {date: '2026-01-09', value: 58},
-        {date: '2026-01-10', value: 67},
-        {date: '2026-01-11', value: 71},
-        {date: '2026-01-12', value: 65},
-        {date: '2026-01-13', value: 73},
-        {date: '2026-01-14', value: 78},
-    ],
-};
-
-const mockActivities: ActivityItem[] = [
-    {
-        id: '1',
-        userId: 'user-1',
-        userName: 'John Smith',
-        eventType: 'OPPORTUNITY_SAVED',
-        entityType: 'OPPORTUNITY',
-        entityId: 'OPP-2026-001',
-        description: 'Saved opportunity to pipeline',
-        timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '2',
-        userId: 'user-2',
-        userName: 'Jane Doe',
-        eventType: 'REPORT_GENERATED',
-        entityType: 'REPORT',
-        entityId: 'RPT-456',
-        description: 'Generated pipeline report',
-        timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '3',
-        userId: 'user-3',
-        userName: 'Bob Wilson',
-        eventType: 'OPPORTUNITY_VIEWED',
-        entityType: 'OPPORTUNITY',
-        entityId: 'OPP-2026-002',
-        description: 'Viewed opportunity details',
-        timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '4',
-        userId: 'user-1',
-        userName: 'John Smith',
-        eventType: 'PIPELINE_OPPORTUNITY_MOVED',
-        entityType: 'PIPELINE_OPPORTUNITY',
-        entityId: 'PO-789',
-        description: 'Moved to Qualified stage',
-        timestamp: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '5',
-        userId: 'user-4',
-        userName: 'Alice Brown',
-        eventType: 'DOCUMENT_UPLOADED',
-        entityType: 'DOCUMENT',
-        entityId: 'DOC-123',
-        description: 'Uploaded proposal draft',
-        timestamp: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '6',
-        userId: 'user-2',
-        userName: 'Jane Doe',
-        eventType: 'SEARCH_PERFORMED',
-        entityType: 'SEARCH',
-        entityId: null,
-        description: 'Searched for IT services contracts',
-        timestamp: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '7',
-        userId: 'user-5',
-        userName: 'Charlie Davis',
-        eventType: 'CONTRACT_CREATED',
-        entityType: 'CONTRACT',
-        entityId: 'CTR-2026-001',
-        description: 'Created new contract record',
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-        id: '8',
-        userId: 'user-3',
-        userName: 'Bob Wilson',
-        eventType: 'BID_DECISION_MADE',
-        entityType: 'PIPELINE_OPPORTUNITY',
-        entityId: 'PO-456',
-        description: 'Decided to bid - Go',
-        timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-    },
-];
-
-const mockTopPerformers: TopPerformer[] = [
-    {userId: 'user-1', userName: 'John Smith', actionCount: 342, value: 0},
-    {userId: 'user-2', userName: 'Jane Doe', actionCount: 287, value: 0},
-    {userId: 'user-3', userName: 'Bob Wilson', actionCount: 234, value: 0},
-    {userId: 'user-4', userName: 'Alice Brown', actionCount: 198, value: 0},
-    {userId: 'user-5', userName: 'Charlie Davis', actionCount: 156, value: 0},
-];
+import {useAnalyticsDashboard} from '../hooks/useAnalytics';
 
 /**
  * Format currency value
@@ -156,40 +30,19 @@ function formatCurrency(value: number): string {
 }
 
 export function AnalyticsDashboardPage() {
-    const [stats, setStats] = useState<DashboardStats | null>(null);
-    const [activities, setActivities] = useState<ActivityItem[]>([]);
-    const [performers, setPerformers] = useState<TopPerformer[]>([]);
-    const [trendData, setTrendData] = useState<TrendPoint[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    const loadDashboardData = useCallback(async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-            // TODO: Replace with actual API calls
-            // const response = await fetchDashboardStats();
-            await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API delay
-            setStats(mockDashboardStats);
-            setActivities(mockActivities);
-            setPerformers(mockTopPerformers);
-            setTrendData(mockDashboardStats.viewsTrend);
-        } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : 'Failed to load dashboard data';
-            setError(errorMessage);
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        void loadDashboardData();
-    }, [loadDashboardData]);
+    const {
+        stats,
+        activities,
+        performers,
+        trendData,
+        isLoading,
+        error,
+        refresh,
+    } = useAnalyticsDashboard();
 
     const handleRefresh = useCallback(() => {
-        void loadDashboardData();
-    }, [loadDashboardData]);
+        void refresh();
+    }, [refresh]);
 
     const handleLoadMoreActivities = useCallback(() => {
         // TODO: Implement pagination
@@ -213,7 +66,7 @@ export function AnalyticsDashboardPage() {
                     <CardBody>
                         <Stack spacing="md">
                             <Text variant="body" color="danger">
-                                {error}
+                                {error.message}
                             </Text>
                             <Button variant="outline" size="sm" onClick={handleRefresh}>
                                 Retry

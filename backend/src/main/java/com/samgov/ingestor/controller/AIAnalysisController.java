@@ -20,7 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/ai")
 @RequiredArgsConstructor
-@Tag(name = "AI Analysis", description = "AI-powered contract and opportunity analysis")
+@Tag(name = "AI Analysis", description = "AI-powered analysis. Currently: Face One (opportunity summaries). Future: Face Two (contract intake analysis).")
 public class AIAnalysisController {
 
     private final AIAnalysisService aiAnalysisService;

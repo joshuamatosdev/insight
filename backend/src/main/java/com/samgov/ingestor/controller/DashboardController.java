@@ -2,6 +2,7 @@ package com.samgov.ingestor.controller;
 
 import com.samgov.ingestor.config.TenantContext;
 import com.samgov.ingestor.service.DashboardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.samgov.ingestor.service.DashboardService.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/dashboards")
 @PreAuthorize("isAuthenticated()")
+@Tag(name = "Dashboards (System)", description = "System-level: Custom dashboard management. Used in both Face One (Contract Intelligence) and Face Two (Portal) for creating custom analytics dashboards.")
 public class DashboardController {
 
     private final DashboardService dashboardService;

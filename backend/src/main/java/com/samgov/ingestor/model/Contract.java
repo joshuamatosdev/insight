@@ -28,6 +28,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Active contract entity for Face Two (Portal).
+ *
+ * <p>Represents contracts that DoctrineOne Labs is fulfilling for clients.
+ * Clients use the Portal to track deliverables, milestones, and progress
+ * on these contracts.</p>
+ *
+ * <p><strong>DO NOT confuse with opportunities (Face One)</strong> which are
+ * potential contracts DoctrineOne Labs may bid on. Those are tracked in the
+ * Contract Intelligence system, not the Portal.</p>
+ *
+ * <p>Multi-tenant: Each contract belongs to a specific tenant (client organization).</p>
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

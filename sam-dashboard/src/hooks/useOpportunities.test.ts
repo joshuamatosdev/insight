@@ -2,32 +2,14 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {act, renderHook, waitFor} from '@testing-library/react';
 import {useOpportunities} from './useOpportunities';
 import * as api from '../services/opportunityService';
-import {Opportunity} from '../components/domain/opportunity';
+import {createMockOpportunity} from '../test-utils/factories';
+import type {Opportunity} from '../components/domain/opportunity';
 
 // Mock the API module
 vi.mock('../services/opportunityService', () => ({
     fetchOpportunities: vi.fn(),
     triggerIngest: vi.fn(),
 }));
-
-// Mock opportunity data factory
-function createMockOpportunity(overrides: Partial<Opportunity> = {}): Opportunity {
-    return {
-        id: '1',
-        title: 'Test Opportunity',
-        solicitationNumber: 'SOL-001',
-        type: 'Solicitation',
-        naicsCode: '541512',
-        postedDate: '2024-01-15',
-        responseDeadLine: '2024-12-31',
-        url: 'https://sam.gov/opp/1',
-        sbirPhase: null,
-        isSbir: false,
-        isSttr: false,
-        source: 'SAM.gov',
-        ...overrides,
-    };
-}
 
 describe('useOpportunities', () => {
     const mockOpportunities: Opportunity[] = [
@@ -190,8 +172,8 @@ describe('useOpportunities', () => {
         });
 
         it('should update opportunities with new data on refresh', async () => {
-            const initialData = [createMockOpportunity({id: '1', title: 'Initial'})];
-            const refreshedData = [
+            const initialData: Opportunity[] = [createMockOpportunity({id: '1', title: 'Initial'})];
+            const refreshedData: Opportunity[] = [
                 createMockOpportunity({id: '1', title: 'Initial'}),
                 createMockOpportunity({id: '2', title: 'New'}),
             ];
@@ -232,7 +214,7 @@ describe('useOpportunities', () => {
             );
 
             act(() => {
-                result.current.refresh();
+                void result.current.refresh();
             });
 
             // Should be loading during refresh
@@ -333,7 +315,7 @@ describe('useOpportunities', () => {
             });
 
             act(() => {
-                result.current.ingest();
+                void result.current.ingest();
             });
 
             expect(result.current.isLoading).toBe(true);

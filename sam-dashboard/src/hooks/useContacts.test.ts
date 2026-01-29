@@ -2,55 +2,20 @@ import {beforeEach, describe, expect, it, vi} from 'vitest';
 import {act, renderHook, waitFor} from '@testing-library/react';
 import {useContacts} from './useContacts';
 import * as crmService from '../services/crmService';
+import {createMockContact} from '../test-utils/factories';
+import type {Contact} from '../types/crm';
 
 vi.mock('../services/crmService');
 
-const mockContacts = [
-    {
+const mockContacts: Contact[] = [
+    createMockContact({
         id: '1',
         firstName: 'John',
         lastName: 'Doe',
-        contactType: 'GOVERNMENT_CUSTOMER' as const,
-        status: 'ACTIVE' as const,
+        contactType: 'GOVERNMENT_CUSTOMER',
+        status: 'ACTIVE',
         email: 'john@example.com',
-        jobTitle: null,
-        department: null,
-        phoneWork: null,
-        phoneMobile: null,
-        organizationName: null,
-        organizationId: null,
-        middleName: null,
-        prefix: null,
-        suffix: null,
-        nickname: null,
-        roleDescription: null,
-        emailSecondary: null,
-        phoneFax: null,
-        addressLine1: null,
-        addressLine2: null,
-        city: null,
-        state: null,
-        postalCode: null,
-        country: null,
-        linkedinUrl: null,
-        website: null,
-        preferredContactMethod: null,
-        bestTimeToContact: null,
-        timezone: null,
-        tags: null,
-        notes: null,
-        relationshipScore: null,
-        lastContactDate: null,
-        nextFollowupDate: null,
-        followupNotes: null,
-        source: null,
-        referralSource: null,
-        photoUrl: null,
-        ownerId: null,
-        ownerName: null,
-        createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z',
-    },
+    }),
 ];
 
 describe('useContacts', () => {
@@ -112,7 +77,7 @@ describe('useContacts', () => {
     });
 
     it('should create contact', async () => {
-        const newContact = {...mockContacts[0], id: '2', firstName: 'Jane'};
+        const newContact: Contact = createMockContact({id: '2', firstName: 'Jane'});
         vi.mocked(crmService.createContact).mockResolvedValue(newContact);
 
         const {result} = renderHook(() => useContacts());
@@ -121,7 +86,7 @@ describe('useContacts', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        let createdContact;
+        let createdContact: Contact | undefined;
         await act(async () => {
             createdContact = await result.current.create({
                 firstName: 'Jane',

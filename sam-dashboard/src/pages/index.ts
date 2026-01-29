@@ -71,7 +71,7 @@ export {
     InteractionsPage,
 } from './crm';
 export {
-    ContractorDashboard,
+    ClientDashboard,
     SprintTrackingPage,
     FeatureRequestsPage,
     MessagingPage,

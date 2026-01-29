@@ -5,6 +5,7 @@ import {ContractStatusCards} from './widgets/ContractStatusCards';
 import {InvoiceSummary} from './widgets/InvoiceSummary';
 import {DeliverableTracker} from './widgets/DeliverableTracker';
 import {UpcomingDeadlines} from './widgets/UpcomingDeadlines';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 interface DashboardMetrics {
     activeContracts: number;
@@ -14,9 +15,10 @@ interface DashboardMetrics {
 }
 
 /**
- * Contractor portal dashboard with key metrics and widgets.
+ * Face Two (Portal) - Client dashboard for tracking contracts DoctrineOne Labs is fulfilling.
+ * Displays key metrics and widgets for client contract portfolio overview.
  */
-export function ContractorDashboard(): React.ReactElement {
+export function ClientDashboard(): React.ReactElement {
     const [metrics, setMetrics] = useState<DashboardMetrics>({
         activeContracts: 0,
         pendingInvoices: 0,
@@ -56,41 +58,41 @@ export function ContractorDashboard(): React.ReactElement {
             {/* Header */}
             <Flex justify="space-between" align="center">
                 <Stack spacing="0">
-                    <Text variant="heading2">Contractor Dashboard</Text>
+                    <Text variant="heading2">{PORTAL_LABELS.DASHBOARD_TITLE}</Text>
                     <Text variant="body" color="muted">
-                        Welcome back! Here's your contract portfolio overview.
+                        {PORTAL_LABELS.DASHBOARD_WELCOME}
                     </Text>
                 </Stack>
                 <Flex gap="sm">
-                    <Button variant="secondary">Export Report</Button>
-                    <Button variant="primary">New Submission</Button>
+                    <Button variant="secondary">{PORTAL_LABELS.EXPORT_REPORT_BUTTON}</Button>
+                    <Button variant="primary">{PORTAL_LABELS.NEW_SUBMISSION_BUTTON}</Button>
                 </Flex>
             </Flex>
 
             {/* Quick Stats */}
             <Grid columns={4} gap="md">
                 <QuickStat
-                    title="Active Contracts"
+                    title={PORTAL_LABELS.ACTIVE_CONTRACTS}
                     value={metrics.activeContracts.toString()}
                     icon="📋"
                     loading={loading}
                 />
                 <QuickStat
-                    title="Pending Invoices"
+                    title={PORTAL_LABELS.PENDING_INVOICES}
                     value={metrics.pendingInvoices.toString()}
                     icon="💰"
                     color="#f59e0b"
                     loading={loading}
                 />
                 <QuickStat
-                    title="Upcoming Deadlines"
+                    title={PORTAL_LABELS.UPCOMING_DEADLINES}
                     value={metrics.upcomingDeadlines.toString()}
                     icon="📅"
                     color="#ef4444"
                     loading={loading}
                 />
                 <QuickStat
-                    title="Total Contract Value"
+                    title={PORTAL_LABELS.TOTAL_CONTRACT_VALUE}
                     value={formatCurrency(metrics.totalContractValue)}
                     icon="💵"
                     color="#10b981"
@@ -159,4 +161,4 @@ function QuickStat({title, value, icon, color, className, loading}: QuickStatPro
     );
 }
 
-export default ContractorDashboard;
+export default ClientDashboard;

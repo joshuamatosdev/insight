@@ -9,8 +9,17 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 /**
- * Company profile for tenant organization.
- * Contains key information for opportunity matching and compliance.
+ * Company profile for Face One (Contract Intelligence).
+ *
+ * <p>Represents DoctrineOne Labs' organizational profile, including capabilities,
+ * certifications, NAICS codes, past performance, and security clearances. Used by
+ * the AI matching engine to score opportunities against DoctrineOne Labs' strengths.</p>
+ *
+ * <p><strong>System Context:</strong> Face One (Contract Intelligence) - Internal tool.
+ * Used ONLY for opportunity matching and bid/no-bid decisions.</p>
+ *
+ * <p><strong>Not used in Face Two (Portal):</strong> Portal clients don't need this level
+ * of capability profiling; they only track contract execution.</p>
  */
 @Data
 @NoArgsConstructor

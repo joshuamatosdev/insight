@@ -1,13 +1,14 @@
 import {describe, expect, it} from 'vitest';
 import {render, screen, waitFor} from '@testing-library/react';
 import {DeliverableTracker} from './DeliverableTracker';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 describe('DeliverableTracker', () => {
     describe('Header', () => {
         it('should render the widget title', () => {
             render(<DeliverableTracker/>);
 
-            expect(screen.getByText('Deliverable Tracker')).toBeInTheDocument();
+            expect(screen.getByText(PORTAL_LABELS.DELIVERABLE_TRACKER)).toBeInTheDocument();
         });
 
         it('should render View All button', () => {

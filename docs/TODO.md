@@ -102,35 +102,35 @@ Type-safe API client using `openapi-fetch` with automatic type inference from Op
 
 ---
 
-## Contractor Portal Vision
+## Client Portal Vision
 
-Transform the dashboard into a full contractor command center that guides users from discovery through contract execution.
+Transform the portal into a full client command center that enables DoctrineOne Labs' clients to track contracts DoctrineOne Labs is fulfilling for them.
 
 ### User Journey
 
 ```
-Discovery → Signup → Onboarding → Contract Setup → Portal Access
+Discovery → Contract → Onboard → Track → Collaborate → Close
 ```
 
-### Phase 1: Discovery & Signup
-1. Contractor arrives at site
-2. Sees value proposition
-3. Creates account, begins onboarding
+### Phase 1: Discovery & Contract
+1. Client discovers DoctrineOne Labs via brochure site (C:\Projects\MasterBluePrint)
+2. Client contracts with DoctrineOne Labs (using contract vehicle or other contract type)
+3. DoctrineOne Labs accepts the contract and sends Portal invitation email
 
 ### Phase 2: Onboarding & Contract Setup
 
 #### Option A: AI-Assisted Contract Analysis (Recommended)
-- [ ] User pastes existing contract/RFP
+- [ ] Client uploads/pastes contract WITH DoctrineOne Labs
 - [ ] AI (OpenAI) analyzes document and determines:
   - Contract type (SBIR, Federal, State, City/Local)
   - Required compliance frameworks
-  - Key deliverables and milestones
-  - Data requirements
-- [ ] Auto-generate input fields based on detected requirements
-- [ ] Pre-fill known information from analysis
+  - DoctrineOne Labs' deliverables and milestones
+  - Data requirements DoctrineOne Labs must meet
+- [ ] Auto-generate intake form fields based on detected requirements
+- [ ] Pre-fill known information from analysis (what DoctrineOne Labs must deliver)
 
 #### Option B: Manual Entry
-- [ ] User selects contract type manually
+- [ ] Client selects contract type manually
 - [ ] Step-by-step guided form for specific contract type
 - [ ] Contextual help and examples
 
@@ -147,26 +147,26 @@ Discovery → Signup → Onboarding → Contract Setup → Portal Access
 - [ ] Reach out based on preference (email, phone, video)
 - [ ] Communication preferences stored
 
-### Phase 5: Portal Access (Post-Contract)
+### Phase 3: Portal Access (Post-Contract)
 
-#### Tracking & Visibility
-- [ ] **SBOM Tracking** - Software Bill of Materials dashboard
-- [ ] **Progress Dashboard** - Overall contract health
-- [ ] **Sprint Tracking** - Current and upcoming sprints
-- [ ] **Feature Tracking** - Requested features and status
-- [ ] **Milestone Timeline** - Visual timeline of deliverables
+#### Tracking & Visibility (Client tracks DoctrineOne Labs' work)
+- [ ] **SBOM Tracking** - Software Bill of Materials for DoctrineOne Labs' deliverables
+- [ ] **Progress Dashboard** - Overall contract health (DoctrineOne Labs' progress)
+- [ ] **Sprint Tracking** - View DoctrineOne Labs' current and upcoming sprints
+- [ ] **Feature Tracking** - Track DoctrineOne Labs' deliverable features and status
+- [ ] **Milestone Timeline** - Visual timeline of DoctrineOne Labs' delivery milestones
 
-#### Communication Hub
-- [ ] **Chatbot** - AI-powered assistant for quick questions
-- [ ] **Inbox/Messages** - Direct communication with team
-- [ ] **Status Updates** - Automated notifications
-- [ ] **Feature Adjustment Requests** - Submit and track changes
+#### Communication Hub (Client ↔ DoctrineOne Labs)
+- [ ] **Chatbot** - AI-powered assistant for quick questions about contract status
+- [ ] **Inbox/Messages** - Direct communication with DoctrineOne Labs team
+- [ ] **Status Updates** - Automated notifications about DoctrineOne Labs' progress
+- [ ] **Feature Adjustment Requests** - Client submits change requests; DoctrineOne Labs responds
 
-#### AI-Powered Scope Management
+#### AI-Powered Scope Management (Prevent scope creep on client's contract with DoctrineOne Labs)
 - [ ] Automatic scope analysis via OpenAI
-- [ ] Flag potential scope creep
+- [ ] Flag potential scope creep (requests outside original contract)
 - [ ] Suggest clarifications needed
-- [ ] Track requirements vs. delivered
+- [ ] Track requirements vs. delivered by DoctrineOne Labs
 
 ### Common Integration Patterns
 
@@ -206,13 +206,13 @@ Discovery → Signup → Onboarding → Contract Setup → Portal Access
 - [ ] Export to PowerPoint/PDF
 
 ### New Entities Required
-- `ContractorProfile` - Company info, preferences, history
-- `Contract` - Contract details, type, requirements
-- `Onboarding` - Onboarding workflow state
-- `Sprint` - Sprint planning and tracking
-- `Feature` - Feature requests and status
-- `Message` - Communication inbox
-- `Report` - Generated reports and briefings
+- `ClientProfile` - Client's company info, preferences, history
+- `Contract` - Contract details DoctrineOne Labs is fulfilling, type, requirements
+- `Onboarding` - Client onboarding workflow state
+- `Sprint` - DoctrineOne Labs' sprint planning and tracking (visible to client)
+- `Feature` - Client's feature requests and DoctrineOne Labs' delivery status
+- `Message` - Communication between client and DoctrineOne Labs
+- `Report` - Generated reports and briefings about contract execution
 
 ---
 

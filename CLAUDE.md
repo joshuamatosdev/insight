@@ -20,21 +20,25 @@ Government & Commercial Contract Intelligence Platform
 
 ### Relationship to DoctrineOneLabs
 
-Insight (insight.doctrineone.us) is the contract intelligence platform for **DoctrineOne Labs**, a defense-focused software consultancy based in Austin, Texas.
+**DoctrineOne Labs** is a software development consultancy serving Federal, DoD, State, local/city governments, and commercial clients. The company's brochure/marketing site is located at `C:\Projects\MasterBluePrint`.
 
-**DoctrineOne Mission**: "Startup Speed with Government Rigor"
-- **Core Business**: Fixed-price software development for federal, state, and local government
-- **Target Market**: Defense contractors, government agencies, regulated organizations
+This repository (`C:\Projects\SAMGov`) contains **two distinct systems**:
+1. **Contract Intelligence** - Internal tool for DoctrineOne Labs to find and bid on government contracts
+2. **Portal** - Client-facing tool for DoctrineOne Labs' clients to track contracts that DoctrineOne Labs is fulfilling
+
+**DoctrineOne Labs Mission**: "Startup Speed with Government Rigor"
+- **Core Business**: Software development for federal, state, local government, and commercial clients
+- **Primary Focus**: Federal/DoD and State government contracts
 - **Differentiators**: Audit-ready compliance, no subcontracting, source code delivery, lean senior teams
 
-### The Two Faces of Insight
+### The Two Systems
 
-Insight serves **two distinct user groups** with **two distinct purposes**:
+This repository contains **two distinct systems** serving different user groups:
 
-#### Face One: Contracting Intelligence (Opportunity Discovery)
-**Who Uses It**: DoctrineOne team + future paid subscribers (contractors seeking opportunities)
+#### System 1: Contract Intelligence (Internal Tool)
+**Who Uses It**: DoctrineOne Labs internal team (business development, capture management)
 
-**Purpose**: Find and qualify government contracting opportunities
+**Purpose**: Help DoctrineOne Labs FIND and BID on government contracts
 
 **Key Features**:
 - Multi-source data ingestion (SAM.gov, SBIR.gov, USAspending.gov)
@@ -43,33 +47,38 @@ Insight serves **two distinct user groups** with **two distinct purposes**:
 - Advanced filtering (NAICS, agency, set-aside types, clearances)
 - Dashboard analytics (pipeline funnel, agency distribution, deadline timeline)
 - Alerts & notifications (new matches, approaching deadlines)
-- Pipeline management
+- Pipeline management (track opportunities through bid stages)
 - Saved searches and CSV export
+- Bid/no-bid decision support
+- Proposal tracking
 
-**Business Model**:
-- Internal use for DoctrineOne's own business development
-- Future: Multi-tenant SaaS offering to other contractors
+**Future Plans**:
+- Will eventually be split into a separate site from the Portal
+- Currently integrated in same codebase for development efficiency
 
-#### Face Two: Contractor Onboarding & Portal (Contract Execution)
-**Who Uses It**: DoctrineOne's clients (contractors who have been onboarded)
+#### System 2: Portal (Client-Facing Tool)
+**Who Uses It**: DoctrineOne Labs' CLIENTS (government agencies, companies that hired DoctrineOne Labs)
 
-**Purpose**: Manage active contract execution, deliverables, compliance, and communication
+**Purpose**: Track contracts that DoctrineOne Labs is FULFILLING for the client
 
-**Entry Methods**:
-1. Client submits contact form on DoctrineOneLabs flagship site
-2. Self-registration at insight.doctrineone.us
-3. Manual onboarding by DoctrineOne team
+**Client Entry Flow**:
+1. Client discovers DoctrineOne Labs via brochure site (`C:\Projects\MasterBluePrint`)
+2. Client contracts with DoctrineOne Labs (using contract vehicle or other contract type)
+3. DoctrineOne Labs accepts the contract
+4. Client receives email with Portal login instructions
+5. Client logs into Portal to track project progress
 
 **Key Features**:
-- Multi-step onboarding wizard (company profile, certifications, team setup)
-- Contractor dashboard (active contracts, invoices, deadlines, deliverables)
-- Sprint tracking with Kanban board
-- SBOM tracking (CycloneDX/SPDX compliance)
-- Milestone timeline
-- Scope tracking (prevent scope creep)
-- Client-contractor messaging
-- Feature request management
-- Progress monitoring
+- Multi-step onboarding wizard (capture client information, certifications, team setup)
+- **Contract upload/paste** - Client uploads their contract with DoctrineOne Labs; system extracts information
+- Client dashboard (track DoctrineOne Labs' deliverables, invoices, deadlines)
+- Sprint tracking with Kanban board (see DoctrineOne Labs' progress)
+- SBOM tracking (CycloneDX/SPDX compliance for deliverables)
+- Milestone timeline (track DoctrineOne Labs' delivery milestones)
+- Scope tracking (prevent scope creep on the contract)
+- Client-DoctrineOne Labs messaging
+- Feature request management (clients can request features)
+- Progress monitoring (see what DoctrineOne Labs is working on)
 
 **Critical Planned Feature** (NOT YET IMPLEMENTED):
 - **AI-Assisted Contract Intake**: Upload/paste contract → AI analyzes → auto-generates intake forms → pre-fills data
@@ -78,27 +87,30 @@ Insight serves **two distinct user groups** with **two distinct purposes**:
 
 When designing features, consider which persona is the end user:
 
-| Persona | Role | Face Used | Key Needs |
-|---------|------|-----------|-----------|
-| **DoctrineOne BD Team** | Business development | Face One | Find opportunities matching capabilities |
-| **Defense Contract Procurer** | Federal DoD officer | Face Two (Client) | Track deliverables, compliance, milestones |
-| **State Procurement Officer** | State purchasing manager | Face Two (Client) | Monitor progress, scope, invoices |
-| **Local Government Manager** | City/county director | Face Two (Client) | Transparency, budget tracking, simple UI |
-| **Future Contractor Subscribers** | Other contractors | Face One | Opportunity discovery (paid service) |
+| Persona | Role | System Used | Key Needs |
+|---------|------|-------------|-----------|
+| **DoctrineOne Labs BD Team** | Business development (internal) | Contract Intelligence | Find government contracts to bid on |
+| **DoctrineOne Labs Capture Manager** | Proposal/capture management (internal) | Contract Intelligence | Track opportunities through bid pipeline |
+| **Federal Agency Project Manager** | Government client | Portal | Track DoctrineOne Labs' deliverables and milestones |
+| **State Government CTO** | State client | Portal | Monitor DoctrineOne Labs' progress and compliance |
+| **Commercial Client PM** | Commercial client | Portal | Track contract execution and feature delivery |
+| **City IT Director** | Local government client | Portal | Transparency, budget tracking, SBOM compliance |
 
 ### Design Implications
 
 **When Adding Features, Ask:**
-1. **Which face does this serve?** (Intelligence or Portal)
-2. **Who is the end user?** (DoctrineOne team, client, or both)
-3. **What business problem does it solve?** (Find opportunities or manage contracts)
+1. **Which system does this serve?** (Contract Intelligence or Portal)
+2. **Who is the end user?** (DoctrineOne Labs internal team OR DoctrineOne Labs' client)
+3. **What business problem does it solve?** (Find contracts to bid on OR manage contracts DoctrineOne Labs is fulfilling)
 4. **Does it need multi-tenant isolation?** (Portal features = yes, internal tools = no)
 
 **Examples**:
-- Adding a new data source (FPDS) → Face One (Intelligence)
-- Adding invoice tracking → Face Two (Portal)
-- AI contract analysis → Face Two (Onboarding)
-- Pipeline funnel visualization → Face One (Intelligence)
+- Adding FPDS data source → Contract Intelligence (helps DoctrineOne Labs find opportunities)
+- Adding invoice tracking → Portal (client tracks invoices for work DoctrineOne Labs is doing)
+- AI contract analysis → Portal (client uploads their contract with DoctrineOne Labs)
+- Pipeline funnel visualization → Contract Intelligence (DoctrineOne Labs tracks bid pipeline)
+- Sprint board → Portal (client sees DoctrineOne Labs' sprint progress)
+- Opportunity alerts → Contract Intelligence (DoctrineOne Labs gets notified of new RFPs)
 
 ---
 
@@ -346,6 +358,177 @@ These rules **prevent runtime errors** that would otherwise crash the applicatio
 
 ---
 
+## OPENAPI GENERATED TYPES
+
+**Critical:** ALWAYS use OpenAPI-generated types when dealing with API requests and responses.
+
+### Type Generation Workflow
+
+The frontend uses `openapi-typescript` to generate TypeScript types from the backend's OpenAPI specification:
+
+```bash
+# Generate types from backend OpenAPI spec
+npm run generate:types
+```
+
+This creates `src/types/api.generated.ts` with:
+- Request DTOs
+- Response DTOs
+- Path parameters
+- Query parameters
+- Request bodies
+
+### Rules
+
+| Rule | Requirement |
+|------|-------------|
+| **API calls** | MUST use types from `api.generated.ts` |
+| **Manual types** | NEVER manually define API request/response types |
+| **Backend changes** | Run `npm run generate:types` after backend DTO changes |
+| **Type imports** | Import from `@/types/api.generated` |
+
+### Type-Safe API Client
+
+Use `openapi-fetch` for automatic type inference:
+
+```typescript
+// ❌ BAD - Manual types, no type safety
+interface OpportunityResponse {
+  id: string;
+  title: string;
+  // ... manually defined
+}
+
+async function getOpportunity(id: string): Promise<OpportunityResponse> {
+  const response = await fetch(`/api/opportunities/${id}`);
+  return response.json(); // No type checking!
+}
+
+// ✅ GOOD - OpenAPI generated types with automatic inference
+import { apiClient } from '@/services/apiClient';
+
+async function getOpportunity(id: string) {
+  const { data, error } = await apiClient.GET('/opportunities/{id}', {
+    params: { path: { id } }
+  });
+
+  // data is automatically typed as components['schemas']['OpportunityResponse']
+  // error is automatically typed
+  // TypeScript catches mismatched parameters at compile time
+
+  if (error !== undefined) {
+    throw new Error(error.message);
+  }
+
+  return data; // Fully typed
+}
+```
+
+### Benefits
+
+- **Compile-time safety**: TypeScript catches API contract violations
+- **Automatic updates**: Backend changes flow to frontend via regeneration
+- **No drift**: Types always match actual backend DTOs
+- **IDE autocomplete**: Full IntelliSense for API paths, params, and responses
+- **Refactoring confidence**: Rename a DTO field, get compile errors everywhere it's used
+
+### When Backend DTOs Change
+
+1. Backend developer updates DTO (e.g., adds `progressPercentage` field)
+2. Backend developer restarts server (OpenAPI spec regenerates)
+3. Frontend developer runs `npm run generate:types`
+4. TypeScript compilation shows all places needing updates
+5. Frontend developer updates code with new field
+6. No runtime surprises
+
+### Example: Adding a Field
+
+**Backend** (`DeliverableService.java`):
+```java
+public record DeliverableResponse(
+    UUID id,
+    String title,
+    DeliverableStatus status,
+    Double progressPercentage  // NEW FIELD
+) {}
+```
+
+**Frontend workflow**:
+```bash
+# 1. Regenerate types
+npm run generate:types
+
+# 2. TypeScript now knows about progressPercentage
+# 3. Update components using deliverable data
+```
+
+**Component**:
+```typescript
+// Type automatically includes progressPercentage
+const { data } = await apiClient.GET('/portal/deliverables/{id}', {
+  params: { path: { id: deliverableId } }
+});
+
+// TypeScript knows data.progressPercentage exists
+console.log(data.progressPercentage); // ✅ Type-safe
+```
+
+---
+
+## API VERSIONING
+
+**Critical:** This codebase does NOT use API versioning. All endpoints use `/api/` without version numbers.
+
+### Rules
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `/api/v1/opportunities` | `/api/opportunities` |
+| `/api/v1/contracts` | `/api/contracts` |
+| `@RequestMapping("/api/v1")` | `@RequestMapping("/api")` |
+| `apiClient.GET('/api/v1/opportunities')` | `apiClient.GET('/api/opportunities')` |
+
+### Backend (Spring Boot)
+
+**Controller annotations must NOT include version numbers:**
+
+```java
+// ❌ BAD - Do not use versioning
+@RestController
+@RequestMapping("/api/v1/opportunities")
+public class OpportunityController { }
+
+// ✅ GOOD - No version in path
+@RestController
+@RequestMapping("/api/opportunities")
+public class OpportunityController { }
+```
+
+### Frontend (TypeScript)
+
+**API calls must NOT include version numbers:**
+
+```typescript
+// ❌ BAD - Do not use versioning
+const { data } = await apiClient.GET('/api/v1/opportunities');
+
+// ✅ GOOD - No version in path
+const { data } = await apiClient.GET('/api/opportunities');
+```
+
+### Rationale
+
+- **Simplicity**: No version management complexity
+- **Single codebase**: Not maintaining multiple API versions
+- **Breaking changes**: Handled through coordinated backend/frontend deployments
+- **Future**: If versioning becomes necessary, will be added strategically
+
+### Migration Note
+
+This codebase previously used `/api/v1/` paths but was migrated to `/api/` for simplicity. If you encounter any `/api/v1/` references, they should be updated to `/api/`.
+
+---
+
 ## FILE ORGANIZATION RULES
 
 ### Standard Rules (Domain, Pages, Services, Hooks)
@@ -365,6 +548,35 @@ These rules **prevent runtime errors** that would otherwise crash the applicatio
 | **Colocated types** | TypeScript types defined inline in component file |
 | **Class composition** | Use `clsx()` for conditional Tailwind classes |
 | **Direct imports** | Import directly from component file (e.g., `from '@/components/catalyst/dialog'`) |
+
+### Import Path Rules
+
+**Critical:** ALWAYS use absolute path aliases (`@/`) instead of relative paths.
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `import { OpportunityCard } from '../components/domain/opportunity'` | `import { OpportunityCard } from '@/components/domain/opportunity'` |
+| `import { apiClient } from '../../services/apiClient'` | `import { apiClient } from '@/services/apiClient'` |
+| `import type { Opportunity } from '../../../types/api.generated'` | `import type { Opportunity } from '@/types/api.generated'` |
+| `import { useAuth } from './hooks/useAuth'` | `import { useAuth } from '@/hooks/useAuth'` |
+
+**Benefits**:
+- No path calculation (`../../../` confusion)
+- Refactoring-safe (moving files doesn't break imports)
+- Consistent across codebase
+- Easier to read and understand
+
+**Path Alias Configuration**:
+The `@/` alias is configured in `tsconfig.json` and maps to `src/`:
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
 
 ### Frontend Folder Structure
 
@@ -603,6 +815,10 @@ All components must meet accessibility standards:
 | `any` | ❌ | Specific type |
 | `data!` | ❌ | `if (data !== null) { data }` |
 | `arr[0].x` | ❌ | `const a = arr[0]; if (a) { a.x }` |
+| `import from '../components'` | ❌ | `import from '@/components'` (use `@/` alias) |
+| `/api/v1/` paths | ❌ | `/api/` (no versioning) |
+| Manual API types | ❌ | Use OpenAPI generated types |
+| `fetch()` for APIs | ❌ | Use `apiClient` with OpenAPI types |
 | Line > 120 | ⚠ | Break lines |
 | Complexity > 15 | ⚠ | Extract functions |
 
@@ -621,6 +837,7 @@ npm run lint         # Run linter
 npm run lint:fix     # Fix lint issues
 npx tsc --noEmit     # Type check
 npm test             # Run tests
+npm run generate:types  # Generate TypeScript types from backend OpenAPI spec
 ```
 
 ### Backend (Java/Gradle)
@@ -701,6 +918,61 @@ screen.getByRole('button', { name: /submit/i });
 
 **ESLint enforced:** `strict-architecture/no-hardcoded-test-strings`
 
+### CRITICAL: No Mock Data in Frontend Tests
+
+**Philosophy:** Frontend tests must use REAL API calls to the backend, NOT mock data.
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| Mock data in frontend tests | Real API calls to backend |
+| `vi.mock('../services/api')` in unit tests | Integration tests with running backend |
+| Fake/stub responses | Actual HTTP requests |
+| In-memory test data | Database-backed responses |
+
+**Rationale:**
+
+1. **Integration Testing**: Frontend tests verify the ENTIRE stack (frontend → network → backend → database)
+2. **Real-World Validation**: Catch serialization, auth, CORS, and data format issues
+3. **Contract Verification**: Ensure frontend and backend stay in sync
+4. **No False Positives**: Tests pass only when the full system works
+
+**Example:**
+
+```typescript
+// ❌ BAD - Mocking the service
+vi.mock('@/services/analyticsService');
+vi.spyOn(analyticsService, 'fetchDashboardStats').mockResolvedValue(mockData);
+
+// ✅ GOOD - Real API call (backend must be running)
+// No mocks - test makes actual HTTP request to backend
+const { result } = renderHook(() => useAnalyticsDashboard());
+await waitFor(() => result.current.isLoading === false);
+expect(result.current.stats).toBeDefined(); // Real data from backend
+```
+
+**Test Environment Requirements:**
+
+- Backend must be running during frontend tests
+- Database must be seeded with test data
+- Tests use real HTTP client, not mocks
+- Auth tokens must be valid and functional
+
+**Exceptions:**
+
+- External third-party APIs (Stripe, AWS, etc.) MAY be mocked
+- Network failure simulations MAY use mocks
+- But internal backend APIs must NEVER be mocked
+
+**When to Mock:**
+
+| Scenario | Mock? | Why |
+|----------|-------|-----|
+| Internal backend API | ❌ NO | Test the real integration |
+| External payment API (Stripe) | ✅ YES | Don't charge real money in tests |
+| Network timeout simulation | ✅ YES | Can't reliably trigger real timeouts |
+| Database queries | ❌ NO | Use test database with real queries |
+| Authentication | ❌ NO | Use real auth flow with test credentials |
+
 ### Test File Location
 
 ```
@@ -727,60 +999,64 @@ src/
 
 ### Workflows
 
-#### Face One: Opportunity Discovery Workflow
+#### Contract Intelligence Workflow (Internal)
 ```
-Find → Filter → Analyze → Save → Alert → Qualify → Pursue
+Find → Filter → Analyze → Save → Alert → Qualify → Pursue → Bid
 ```
 
+**Purpose**: Help DoctrineOne Labs find and bid on government contracts
+
 **Stages**:
-1. **Find**: Ingest from SAM.gov, SBIR.gov, USAspending.gov
+1. **Find**: Ingest opportunities from SAM.gov, SBIR.gov, USAspending.gov
 2. **Filter**: NAICS, agency, set-aside, geography, clearances
 3. **Analyze**: Dashboard analytics, fit scoring, risk assessment
-4. **Save**: Save to personal lists, create alerts
-5. **Alert**: Notify on new matches, approaching deadlines
+4. **Save**: Save opportunities to pipeline, create alerts
+5. **Alert**: Notify DoctrineOne Labs team of new matches, approaching deadlines
 6. **Qualify**: Bid/no-bid decision support (planned)
-7. **Pursue**: Capture management, proposal development (planned)
+7. **Pursue**: Capture management, teaming, proposal development (planned)
+8. **Bid**: Submit proposal, track award status
 
-#### Face Two: Contract Execution Workflow
+#### Portal Workflow (Client-Facing)
 ```
-Onboard → Scope → Sprint → Track → Deliver → Invoice → Close
+Discover → Contract → Onboard → Track → Collaborate → Close
 ```
+
+**Purpose**: Client tracks contracts DoctrineOne Labs is fulfilling
 
 **Stages**:
-1. **Onboard**: Multi-step wizard (company, certs, team, integrations)
-2. **Scope**: Define deliverables, milestones, requirements
-3. **Sprint**: Agile sprint planning and execution (Kanban board)
-4. **Track**: Monitor progress, deadlines, scope changes
-5. **Deliver**: Deliverable submission and approval
-6. **Invoice**: Invoice generation and payment tracking
-7. **Close**: Contract closeout and retrospective
+1. **Discover**: Client finds DoctrineOne Labs via brochure site (`C:\Projects\MasterBluePrint`)
+2. **Contract**: Client contracts with DoctrineOne Labs, receives Portal invitation email
+3. **Onboard**: Client onboards to Portal, uploads contract, DoctrineOne Labs extracts info
+4. **Track**: Client monitors DoctrineOne Labs' deliverables, milestones, sprints, SBOMs
+5. **Collaborate**: Client communicates with DoctrineOne Labs, requests features, reviews scope changes
+6. **Close**: Contract completion, retrospective, final deliverables
 
 ### Core Entities
 
-#### Face One: Intelligence Entities
+#### Contract Intelligence Entities (Internal)
 - **Opportunity** (sources, deadlines, Q&A, NAICS, agency, set-aside)
-- **Saved Search** (user-defined filters, alert rules)
+- **Saved Search** (DoctrineOne Labs user-defined filters, alert rules)
 - **Alert** (new matches, deadline approaching, status changes)
-- **Pipeline Stage** (custom stages for tracking opportunities)
-- **Organization Match** (company profile matching with opportunities)
+- **Pipeline Stage** (custom stages for tracking opportunities DoctrineOne Labs is pursuing)
+- **Organization Match** (DoctrineOne Labs profile matching with opportunities)
 
-#### Face Two: Portal Entities
-- **Company Profile** (UEI, CAGE, certifications, capabilities)
-- **Contract** (active contracts with CLINs, mods, deliverables)
-- **Sprint** (agile sprint with tasks and status)
-- **Task/Deliverable** (work items with progress tracking)
-- **SBOM** (Software Bill of Materials for compliance)
-- **Milestone** (contract milestones with deadlines)
-- **Scope Item** (scope tracking to prevent scope creep)
-- **Invoice** (billing and payment tracking)
-- **Feature Request** (client-facing feature voting)
-- **Message** (client-contractor communication)
+#### Portal Entities (Client-Facing)
+- **Client Profile** (client's organization info, certifications, contact info)
+- **Contract** (contracts DoctrineOne Labs is fulfilling, with CLINs, mods, deliverables)
+- **Sprint** (DoctrineOne Labs' agile sprints with tasks and status - client can view)
+- **Task/Deliverable** (work items DoctrineOne Labs is completing)
+- **SBOM** (Software Bill of Materials for deliverables DoctrineOne Labs provides)
+- **Milestone** (contract milestones DoctrineOne Labs must hit)
+- **Scope Item** (scope tracking to prevent scope creep on client's contract)
+- **Invoice** (invoices DoctrineOne Labs sends to client)
+- **Feature Request** (client requests features for their project)
+- **Message** (communication between client and DoctrineOne Labs team)
 
 #### Shared Entities
-- **User** (authentication, roles, permissions)
-- **Tenant** (multi-tenant isolation for both faces)
+- **User** (authentication, roles, permissions for both DoctrineOne Labs staff and clients)
+- **Tenant** (multi-tenant isolation for Portal; Contract Intelligence is single-tenant internal)
 - **Notification** (system-wide notifications)
-- **Audit Log** (activity tracking across both faces)
+- **Audit Log** (activity tracking across both systems)
 
 ### Architecture
 

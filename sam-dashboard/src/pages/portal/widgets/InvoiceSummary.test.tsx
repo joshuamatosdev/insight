@@ -1,13 +1,14 @@
 import {describe, expect, it} from 'vitest';
 import {render, screen, waitFor} from '@testing-library/react';
 import {InvoiceSummary} from './InvoiceSummary';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 describe('InvoiceSummary', () => {
     describe('Header', () => {
         it('should render the widget title', () => {
             render(<InvoiceSummary/>);
 
-            expect(screen.getByText('Invoice Summary')).toBeInTheDocument();
+            expect(screen.getByText(PORTAL_LABELS.INVOICE_SUMMARY)).toBeInTheDocument();
         });
 
         it('should render Create Invoice button', () => {

@@ -1,32 +1,21 @@
 /**
- * Compliance Service - Type-safe using openapi-fetch
+ * Face Two (Portal) - Compliance Service
+ * Handles certifications, clearances, and SBOM tracking for client contracts.
+ *
+ * REFACTORED: Uses openapi-fetch with proper type inference (no manual type assertions)
+ * All types are automatically inferred from the OpenAPI spec.
  */
 
 import {apiClient} from './apiClient';
-import type {
-    Certification,
-    CertificationStatus,
-    CertificationType,
-    ClearanceLevel,
-    ClearanceStatus,
-    CreateCertificationRequest,
-    CreateClearanceRequest,
-    CycloneDxBom,
-    SbomInfo,
-    SbomVulnerabilityInfo,
-    SecurityClearance,
-    UpdateCertificationRequest,
-    UpdateClearanceRequest,
-} from '../types/compliance.types';
-import type {PaginatedResponse} from '../types/financial.types';
+import type {GetResponse, PostResponse, PutResponse, PostRequestBody, PutRequestBody} from '../types/openapi-helpers';
 
 // ==================== Certification API ====================
 
 export async function fetchCertifications(
     page: number = 0,
     size: number = 20,
-    type?: CertificationType
-): Promise<PaginatedResponse<Certification>> {
+    type?: string
+): Promise<GetResponse<'/portal/certifications'>> {
     const queryParams: Record<string, string | number> = {page, size};
     if (type !== undefined) {
         queryParams.type = type;
@@ -40,11 +29,12 @@ export async function fetchCertifications(
         throw new Error(String(error));
     }
 
-    return data as PaginatedResponse<Certification>;
+    // No type assertion needed - data is automatically typed from OpenAPI spec!
+    return data;
 }
 
-export async function fetchCertification(id: string): Promise<Certification> {
-    const {data, error} = await apiClient.GET('/certifications/{id}', {
+export async function fetchCertification(id: string): Promise<GetResponse<'/portal/certifications/{id}'>> {
+    const {data, error} = await apiClient.GET('/portal/certifications/{id}', {
         params: {path: {id}},
     });
 
@@ -52,13 +42,13 @@ export async function fetchCertification(id: string): Promise<Certification> {
         throw new Error(String(error));
     }
 
-    return data as Certification;
+    return data;
 }
 
 export async function fetchExpiringCertifications(
     daysAhead: number = 30
-): Promise<Certification[]> {
-    const {data, error} = await apiClient.GET('/certifications/expiring', {
+): Promise<GetResponse<'/portal/certifications/expiring'>> {
+    const {data, error} = await apiClient.GET('/portal/certifications/expiring', {
         params: {query: {daysAhead}},
     });
 
@@ -66,12 +56,12 @@ export async function fetchExpiringCertifications(
         throw new Error(String(error));
     }
 
-    return data as Certification[];
+    return data;
 }
 
 export async function createCertification(
-    request: CreateCertificationRequest
-): Promise<Certification> {
+    request: PostRequestBody<'/portal/certifications'>
+): Promise<PostResponse<'/portal/certifications'>> {
     const {data, error} = await apiClient.POST('/portal/certifications', {
         body: request,
     });
@@ -80,14 +70,14 @@ export async function createCertification(
         throw new Error(String(error));
     }
 
-    return data as Certification;
+    return data;
 }
 
 export async function updateCertification(
     id: string,
-    request: UpdateCertificationRequest
-): Promise<Certification> {
-    const {data, error} = await apiClient.PUT('/certifications/{id}', {
+    request: PutRequestBody<'/portal/certifications/{id}'>
+): Promise<PutResponse<'/portal/certifications/{id}'>> {
+    const {data, error} = await apiClient.PUT('/portal/certifications/{id}', {
         params: {path: {id}},
         body: request,
     });
@@ -96,14 +86,14 @@ export async function updateCertification(
         throw new Error(String(error));
     }
 
-    return data as Certification;
+    return data;
 }
 
 export async function updateCertificationStatus(
     id: string,
-    status: CertificationStatus
+    status: string
 ): Promise<void> {
-    const {error} = await apiClient.POST('/certifications/{id}/status', {
+    const {error} = await apiClient.POST('/portal/certifications/{id}/status', {
         params: {path: {id}, query: {status}},
         body: {},
     });
@@ -114,7 +104,7 @@ export async function updateCertificationStatus(
 }
 
 export async function deleteCertification(id: string): Promise<void> {
-    const {error} = await apiClient.DELETE('/certifications/{id}', {
+    const {error} = await apiClient.DELETE('/portal/certifications/{id}', {
         params: {path: {id}},
     });
 
@@ -123,14 +113,14 @@ export async function deleteCertification(id: string): Promise<void> {
     }
 }
 
-export async function fetchCertificationTypes(): Promise<CertificationType[]> {
-    const {data, error} = await apiClient.GET('/certifications/types');
+export async function fetchCertificationTypes(): Promise<GetResponse<'/portal/certifications/types'>> {
+    const {data, error} = await apiClient.GET('/portal/certifications/types');
 
     if (error !== undefined) {
         throw new Error(String(error));
     }
 
-    return data as CertificationType[];
+    return data;
 }
 
 // ==================== Security Clearance API ====================
@@ -138,8 +128,8 @@ export async function fetchCertificationTypes(): Promise<CertificationType[]> {
 export async function fetchClearances(
     page: number = 0,
     size: number = 20,
-    level?: ClearanceLevel
-): Promise<PaginatedResponse<SecurityClearance>> {
+    level?: string
+): Promise<GetResponse<'/portal/clearances'>> {
     const queryParams: Record<string, string | number> = {page, size};
     if (level !== undefined) {
         queryParams.level = level;
@@ -153,11 +143,11 @@ export async function fetchClearances(
         throw new Error(String(error));
     }
 
-    return data as PaginatedResponse<SecurityClearance>;
+    return data;
 }
 
-export async function fetchClearanceByUser(userId: string): Promise<SecurityClearance> {
-    const {data, error} = await apiClient.GET('/clearances/user/{userId}', {
+export async function fetchClearanceByUser(userId: string): Promise<GetResponse<'/portal/clearances/user/{userId}'>> {
+    const {data, error} = await apiClient.GET('/portal/clearances/user/{userId}', {
         params: {path: {userId}},
     });
 
@@ -165,11 +155,13 @@ export async function fetchClearanceByUser(userId: string): Promise<SecurityClea
         throw new Error(String(error));
     }
 
-    return data as SecurityClearance;
+    return data;
 }
 
-export async function fetchExpiringClearances(daysAhead: number = 90): Promise<SecurityClearance[]> {
-    const {data, error} = await apiClient.GET('/clearances/expiring', {
+export async function fetchExpiringClearances(
+    daysAhead: number = 90
+): Promise<GetResponse<'/portal/clearances/expiring'>> {
+    const {data, error} = await apiClient.GET('/portal/clearances/expiring', {
         params: {query: {daysAhead}},
     });
 
@@ -177,13 +169,13 @@ export async function fetchExpiringClearances(daysAhead: number = 90): Promise<S
         throw new Error(String(error));
     }
 
-    return data as SecurityClearance[];
+    return data;
 }
 
 export async function fetchClearancesByMinLevel(
-    minLevel: ClearanceLevel
-): Promise<SecurityClearance[]> {
-    const {data, error} = await apiClient.GET('/clearances/level/{minLevel}', {
+    minLevel: string
+): Promise<GetResponse<'/portal/clearances/level/{minLevel}'>> {
+    const {data, error} = await apiClient.GET('/portal/clearances/level/{minLevel}', {
         params: {path: {minLevel}},
     });
 
@@ -191,10 +183,12 @@ export async function fetchClearancesByMinLevel(
         throw new Error(String(error));
     }
 
-    return data as SecurityClearance[];
+    return data;
 }
 
-export async function createClearance(request: CreateClearanceRequest): Promise<SecurityClearance> {
+export async function createClearance(
+    request: PostRequestBody<'/portal/clearances'>
+): Promise<PostResponse<'/portal/clearances'>> {
     const {data, error} = await apiClient.POST('/portal/clearances', {
         body: request,
     });
@@ -203,14 +197,14 @@ export async function createClearance(request: CreateClearanceRequest): Promise<
         throw new Error(String(error));
     }
 
-    return data as SecurityClearance;
+    return data;
 }
 
 export async function updateClearance(
     id: string,
-    request: UpdateClearanceRequest
-): Promise<SecurityClearance> {
-    const {data, error} = await apiClient.PUT('/clearances/{id}', {
+    request: PutRequestBody<'/portal/clearances/{id}'>
+): Promise<PutResponse<'/portal/clearances/{id}'>> {
+    const {data, error} = await apiClient.PUT('/portal/clearances/{id}', {
         params: {path: {id}},
         body: request,
     });
@@ -219,11 +213,11 @@ export async function updateClearance(
         throw new Error(String(error));
     }
 
-    return data as SecurityClearance;
+    return data;
 }
 
-export async function updateClearanceStatus(id: string, status: ClearanceStatus): Promise<void> {
-    const {error} = await apiClient.POST('/clearances/{id}/status', {
+export async function updateClearanceStatus(id: string, status: string): Promise<void> {
+    const {error} = await apiClient.POST('/portal/clearances/{id}/status', {
         params: {path: {id}, query: {status}},
         body: {},
     });
@@ -234,7 +228,7 @@ export async function updateClearanceStatus(id: string, status: ClearanceStatus)
 }
 
 export async function deleteClearance(id: string): Promise<void> {
-    const {error} = await apiClient.DELETE('/clearances/{id}', {
+    const {error} = await apiClient.DELETE('/portal/clearances/{id}', {
         params: {path: {id}},
     });
 
@@ -243,40 +237,8 @@ export async function deleteClearance(id: string): Promise<void> {
     }
 }
 
-export async function fetchClearanceLevels(): Promise<ClearanceLevel[]> {
-    const {data, error} = await apiClient.GET('/clearances/levels');
-
-    if (error !== undefined) {
-        throw new Error(String(error));
-    }
-
-    return data as ClearanceLevel[];
-}
-
-// ==================== SBOM API ====================
-
-export async function fetchSbomInfo(): Promise<SbomInfo> {
-    const {data, error} = await apiClient.GET('/portal/sbom');
-
-    if (error !== undefined) {
-        throw new Error(String(error));
-    }
-
-    return data as SbomInfo;
-}
-
-export async function fetchCycloneDxSbom(): Promise<CycloneDxBom> {
-    const {data, error} = await apiClient.GET('/sbom/cyclonedx');
-
-    if (error !== undefined) {
-        throw new Error(String(error));
-    }
-
-    return data as CycloneDxBom;
-}
-
-export async function fetchSpdxSbom(): Promise<unknown> {
-    const {data, error} = await apiClient.GET('/sbom/spdx');
+export async function fetchClearanceLevels(): Promise<GetResponse<'/portal/clearances/levels'>> {
+    const {data, error} = await apiClient.GET('/portal/clearances/levels');
 
     if (error !== undefined) {
         throw new Error(String(error));
@@ -285,24 +247,51 @@ export async function fetchSpdxSbom(): Promise<unknown> {
     return data;
 }
 
-export async function fetchSbomVulnerabilities(): Promise<SbomVulnerabilityInfo> {
-    const {data, error} = await apiClient.GET('/sbom/vulnerabilities');
+// ==================== SBOM API ====================
+
+export async function fetchSbomInfo(): Promise<GetResponse<'/portal/sbom'>> {
+    const {data, error} = await apiClient.GET('/portal/sbom');
 
     if (error !== undefined) {
         throw new Error(String(error));
     }
 
-    return data as SbomVulnerabilityInfo;
+    return data;
+}
+
+export async function fetchCycloneDxSbom(): Promise<GetResponse<'/portal/sbom/cyclonedx'>> {
+    const {data, error} = await apiClient.GET('/portal/sbom/cyclonedx');
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data;
+}
+
+export async function fetchSpdxSbom(): Promise<GetResponse<'/portal/sbom/spdx'>> {
+    const {data, error} = await apiClient.GET('/portal/sbom/spdx');
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data;
+}
+
+export async function fetchSbomVulnerabilities(): Promise<GetResponse<'/portal/sbom/vulnerabilities'>> {
+    const {data, error} = await apiClient.GET('/portal/sbom/vulnerabilities');
+
+    if (error !== undefined) {
+        throw new Error(String(error));
+    }
+
+    return data;
 }
 
 // ==================== Compliance Overview ====================
 
-export async function fetchComplianceItems(): Promise<{
-    certifications: Certification[];
-    clearances: SecurityClearance[];
-    expiringCertifications: Certification[];
-    expiringClearances: SecurityClearance[];
-}> {
+export async function fetchComplianceItems() {
     // Fetch all data in parallel
     const [certifications, clearances, expiringCertifications, expiringClearances] =
         await Promise.all([
@@ -320,15 +309,11 @@ export async function fetchComplianceItems(): Promise<{
     };
 }
 
-export async function fetchSbomData(): Promise<{
-    info: SbomInfo;
-    bom: CycloneDxBom | null;
-    vulnerabilities: SbomVulnerabilityInfo | null;
-}> {
+export async function fetchSbomData() {
     const info = await fetchSbomInfo();
 
-    let bom: CycloneDxBom | null = null;
-    let vulnerabilities: SbomVulnerabilityInfo | null = null;
+    let bom: GetResponse<'/portal/sbom/cyclonedx'> | null = null;
+    let vulnerabilities: GetResponse<'/portal/sbom/vulnerabilities'> | null = null;
 
     if (info.cyclonedxAvailable) {
         try {

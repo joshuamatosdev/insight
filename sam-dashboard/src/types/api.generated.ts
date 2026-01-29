@@ -68,81 +68,33 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/sprints/{sprintId}/tasks/{taskId}": {
+    "/teaming/partners/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put: operations["updateTask"];
+        get: operations["getPartner"];
+        put: operations["updatePartner"];
         post?: never;
-        delete: operations["deleteTask"];
+        delete: operations["deletePartner"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/sprints/{sprintId}/tasks/{taskId}/status": {
+    "/teaming/agreements/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put: operations["moveTask"];
+        get: operations["getAgreement"];
+        put: operations["updateAgreement"];
         post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sprints/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSprint"];
-        put: operations["updateSprint"];
-        post?: never;
-        delete: operations["deleteSprint"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/scope/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getScopeItem"];
-        put: operations["updateScopeItem"];
-        post?: never;
-        delete: operations["deleteScopeItem"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/scope/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateStatus"];
-        post?: never;
-        delete?: never;
+        delete: operations["deleteAgreement"];
         options?: never;
         head?: never;
         patch?: never;
@@ -228,6 +180,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/proposals/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getProposal"];
+        put: operations["updateProposal"];
+        post?: never;
+        delete: operations["deleteProposal"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/preferences": {
         parameters: {
             query?: never;
@@ -239,6 +207,454 @@ export interface paths {
         put: operations["updatePreferences"];
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{sprintId}/tasks/{taskId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateTask"];
+        post?: never;
+        delete: operations["deleteTask"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{sprintId}/tasks/{taskId}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["moveTask"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSprint"];
+        put: operations["updateSprint"];
+        post?: never;
+        delete: operations["deleteSprint"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getScopeItem"];
+        put: operations["updateScopeItem"];
+        post?: never;
+        delete: operations["deleteScopeItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateStatus"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMilestone"];
+        put: operations["updateMilestone"];
+        post?: never;
+        delete: operations["deleteMilestone"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateStatus_1"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["markAsRead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/threads/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["markThreadAsRead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/labor-rates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLaborRate"];
+        put: operations["updateLaborRate"];
+        post?: never;
+        delete: operations["deleteLaborRate"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLaborRate_1"];
+        put: operations["updateLaborRate_1"];
+        post?: never;
+        delete: operations["deleteLaborRate_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/{invoiceId}/line-items/{lineItemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateLineItem"];
+        post?: never;
+        delete: operations["deleteLineItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoice_1"];
+        put: operations["updateInvoice"];
+        post?: never;
+        delete: operations["deleteInvoice_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/{budgetItemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetItem"];
+        put: operations["updateBudgetItem"];
+        post?: never;
+        delete: operations["deleteBudgetItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getFeatureRequest"];
+        put: operations["updateFeatureRequest"];
+        post?: never;
+        delete: operations["deleteFeatureRequest"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateStatus_2"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/{id}/admin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateAdminFields"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDocument"];
+        put: operations["updateDocument"];
+        post?: never;
+        delete: operations["deleteDocument"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTemplate"];
+        put: operations["updateTemplate"];
+        post?: never;
+        delete: operations["deleteTemplate"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/folders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getFolder"];
+        put: operations["updateFolder"];
+        post?: never;
+        delete: operations["deleteFolder"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentLibraryItem"];
+        put: operations["updateContentLibraryItem"];
+        post?: never;
+        delete: operations["deleteContentLibraryItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deliverables/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDeliverable"];
+        put: operations["updateDeliverable"];
+        post?: never;
+        delete: operations["deleteDeliverable"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/items/{itemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getComplianceItem"];
+        put: operations["updateComplianceItem"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/clearances/{clearanceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getClearance"];
+        put: operations["updateClearance"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/certifications/{certId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCertification"];
+        put: operations["updateCertification"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/clearances/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateClearance_1"];
+        post?: never;
+        delete: operations["deleteClearance"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/certifications/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCertification_1"];
+        put: operations["updateCertification_1"];
+        post?: never;
+        delete: operations["deleteCertification"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetItem_1"];
+        put: operations["updateBudgetItem_1"];
+        post?: never;
+        delete: operations["deleteBudgetItem_1"];
         options?: never;
         head?: never;
         patch?: never;
@@ -320,7 +736,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["markAsRead"];
+        put: operations["markAsRead_1"];
         post?: never;
         delete?: never;
         options?: never;
@@ -339,534 +755,6 @@ export interface paths {
         put: operations["markAllAsRead"];
         post?: never;
         delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMilestone"];
-        put: operations["updateMilestone"];
-        post?: never;
-        delete: operations["deleteMilestone"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateStatus_1"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["markAsRead_1"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/threads/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["markThreadAsRead"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/labor-rates/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getLaborRate"];
-        put: operations["updateLaborRate"];
-        post?: never;
-        delete: operations["deleteLaborRate"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getFeatureRequest"];
-        put: operations["updateFeatureRequest"];
-        post?: never;
-        delete: operations["deleteFeatureRequest"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateStatus_2"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/{id}/admin": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateAdminFields"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/deliverables/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDeliverable"];
-        put: operations["updateDeliverable"];
-        post?: never;
-        delete: operations["deleteDeliverable"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContract"];
-        put: operations["updateContract"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/{contractId}/clins/{clinId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateClin"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/content-library/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContent"];
-        put: operations["updateContent"];
-        post?: never;
-        delete: operations["deleteContent"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/items/{itemId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getComplianceItem"];
-        put: operations["updateComplianceItem"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/clearances/{clearanceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getClearance"];
-        put: operations["updateClearance"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/certifications/{certId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCertification"];
-        put: operations["updateCertification"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/competitors/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCompetitor"];
-        put: operations["updateCompetitor"];
-        post?: never;
-        delete: operations["deleteCompetitor"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/clearances/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateClearance_1"];
-        post?: never;
-        delete: operations["deleteClearance"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/certifications/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCertification_1"];
-        put: operations["updateCertification_1"];
-        post?: never;
-        delete: operations["deleteCertification"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/budgets/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetItem"];
-        put: operations["updateBudgetItem"];
-        post?: never;
-        delete: operations["deleteBudgetItem"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/plan": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updatePlan"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/admin/tenant/settings": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSettings"];
-        put: operations["updateSettings"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/admin/tenant/branding": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBranding"];
-        put: operations["updateBranding"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getPartner"];
-        put: operations["updatePartner"];
-        post?: never;
-        delete: operations["deletePartner"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAgreement"];
-        put: operations["updateAgreement"];
-        post?: never;
-        delete: operations["deleteAgreement"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getProposal"];
-        put: operations["updateProposal"];
-        post?: never;
-        delete: operations["deleteProposal"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getLaborRate_1"];
-        put: operations["updateLaborRate_1"];
-        post?: never;
-        delete: operations["deleteLaborRate_1"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/{invoiceId}/line-items/{lineItemId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: operations["updateLineItem"];
-        post?: never;
-        delete: operations["deleteLineItem"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoice_1"];
-        put: operations["updateInvoice"];
-        post?: never;
-        delete: operations["deleteInvoice_1"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/{budgetItemId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetItem_1"];
-        put: operations["updateBudgetItem_1"];
-        post?: never;
-        delete: operations["deleteBudgetItem_1"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDocument"];
-        put: operations["updateDocument"];
-        post?: never;
-        delete: operations["deleteDocument"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/templates/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTemplate"];
-        put: operations["updateTemplate"];
-        post?: never;
-        delete: operations["deleteTemplate"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/folders/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getFolder"];
-        put: operations["updateFolder"];
-        post?: never;
-        delete: operations["deleteFolder"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentLibraryItem"];
-        put: operations["updateContentLibraryItem"];
-        post?: never;
-        delete: operations["deleteContentLibraryItem"];
         options?: never;
         head?: never;
         patch?: never;
@@ -920,6 +808,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/contracts/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContract"];
+        put: operations["updateContract"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contracts/{contractId}/clins/{clinId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updateClin"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-library/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContent"];
+        put: operations["updateContent"];
+        post?: never;
+        delete: operations["deleteContent"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/competitors/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCompetitor"];
+        put: operations["updateCompetitor"];
+        post?: never;
+        delete: operations["deleteCompetitor"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/capture-plans/{planId}/actions/{actionId}": {
         parameters: {
             query?: never;
@@ -944,9 +896,25 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getPlan"];
-        put: operations["updatePlan_1"];
+        put: operations["updatePlan"];
         post?: never;
         delete: operations["deletePlan"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/billing/plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["updatePlan_1"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -995,6 +963,38 @@ export interface paths {
         put: operations["updateWidget"];
         post?: never;
         delete: operations["deleteWidget_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/tenant/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSettings"];
+        put: operations["updateSettings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/tenant/branding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBranding"];
+        put: operations["updateBranding"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1176,39 +1176,39 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/sprints": {
+    "/teaming/partners": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getSprints"];
+        get: operations["getPartners"];
         put?: never;
-        post: operations["createSprint"];
+        post: operations["createPartner"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/sprints/{id}/tasks": {
+    "/teaming/agreements": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getSprintTasks"];
+        get: operations["getAgreements"];
         put?: never;
-        post: operations["addTask"];
+        post: operations["createAgreement"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/sprints/{id}/start": {
+    "/teaming/agreements/{id}/sign-nda": {
         parameters: {
             query?: never;
             header?: never;
@@ -1217,14 +1217,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["startSprint"];
+        post: operations["signNda"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/sprints/{id}/complete": {
+    "/teaming/agreements/{id}/activate": {
         parameters: {
             query?: never;
             header?: never;
@@ -1233,7 +1233,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["completeSprint"];
+        post: operations["activateAgreement"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1256,7 +1256,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope": {
+    "/sbir/ingest": {
         parameters: {
             query?: never;
             header?: never;
@@ -1265,14 +1265,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["createScopeItem"];
+        post: operations["ingestAwards"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/scope/{scopeItemId}/changes": {
+    "/sbir/ingest/{agency}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1281,55 +1281,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["requestChange"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/scope/changes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getScopeChanges"];
-        put?: never;
-        post: operations["requestContractChange"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/scope/changes/{id}/reject": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["rejectChange"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/scope/changes/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["approveChange"];
+        post: operations["ingestByAgency"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1480,6 +1432,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/proposals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getProposals"];
+        put?: never;
+        post: operations["createProposal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/{id}/version": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["incrementVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["submitProposal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/procurement-sources": {
         parameters: {
             query?: never;
@@ -1538,6 +1538,822 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["initializeDefaults"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSprints"];
+        put?: never;
+        post: operations["createSprint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{id}/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSprintTasks"];
+        put?: never;
+        post: operations["addTask"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{id}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["startSprint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{id}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["completeSprint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createScopeItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-changes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getScopeChanges"];
+        put?: never;
+        post: operations["requestChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-changes/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rejectChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-changes/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["approveChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-changes/scope-item/{scopeItemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["requestChangeForScopeItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMilestones"];
+        put?: never;
+        post: operations["createMilestone"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/{id}/dependencies/{dependsOnId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["addDependency"];
+        delete: operations["removeDependency"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/{id}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["completeMilestone"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["sendMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/threads/{id}/reply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["replyToThread"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/labor-rates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLaborRates"];
+        put?: never;
+        post: operations["createLaborRate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoices"];
+        put?: never;
+        post: operations["createInvoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["submitInvoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rejectInvoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/{id}/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["markPaid"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["approveInvoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listLaborRates"];
+        put?: never;
+        post: operations["createLaborRate_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listInvoices"];
+        put?: never;
+        post: operations["createInvoice_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/{invoiceId}/line-items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoiceLineItems"];
+        put?: never;
+        post: operations["addLineItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["submitInvoice_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["updateInvoiceStatus"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/{id}/payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContractBudget"];
+        put?: never;
+        post: operations["createBudgetItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getFeatureRequests"];
+        put?: never;
+        post: operations["createFeatureRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/{id}/vote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["vote"];
+        delete: operations["unvote"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listDocuments"];
+        put?: never;
+        post: operations["createDocument"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["updateDocumentStatus"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/{id}/checkout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["checkoutDocument"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/{id}/checkin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["checkinDocument"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listTemplates"];
+        put?: never;
+        post: operations["createTemplate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/{id}/use": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordTemplateUsage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/{id}/set-default": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["setDefaultTemplate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["approveTemplate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/folders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getRootFolders"];
+        put?: never;
+        post: operations["createFolder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listContentLibrary"];
+        put?: never;
+        post: operations["createContentLibraryItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/{id}/win": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordContentWin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/{id}/use": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordContentUsage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/{id}/loss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordContentLoss"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["approveContentLibraryItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deliverables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDeliverables"];
+        put?: never;
+        post: operations["createDeliverable"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getComplianceItems"];
+        put?: never;
+        post: operations["createComplianceItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/clearances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getClearances"];
+        put?: never;
+        post: operations["createClearance"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/certifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCertifications"];
+        put?: never;
+        post: operations["createCertification"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/clearances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getClearances_1"];
+        put?: never;
+        post: operations["createClearance_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/certifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCertifications_1"];
+        put?: never;
+        post: operations["createCertification_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetItems"];
+        put?: never;
+        post: operations["createBudgetItem_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets/{id}/expense": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordExpense"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1776,54 +2592,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/milestones": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMilestones"];
-        put?: never;
-        post: operations["createMilestone"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/{id}/dependencies/{dependsOnId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["addDependency"];
-        delete: operations["removeDependency"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/{id}/complete": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["completeMilestone"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/mfa/verify": {
         parameters: {
             query?: never;
@@ -1888,38 +2656,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/messages": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["sendMessage"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/threads/{id}/reply": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["replyToThread"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/matches/{matchId}/feedback": {
         parameters: {
             query?: never;
@@ -1962,102 +2698,6 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["calculateAllMatches"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/labor-rates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getLaborRates"];
-        put?: never;
-        post: operations["createLaborRate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoices"];
-        put?: never;
-        post: operations["createInvoice"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/{id}/submit": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["submitInvoice"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/{id}/reject": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["rejectInvoice"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/{id}/pay": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["markPaid"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["approveInvoice"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2112,23 +2752,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/feature-requests": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getFeatureRequests"];
-        put?: never;
-        post: operations["createFeatureRequest"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/{id}/vote": {
+    "/files/upload": {
         parameters: {
             query?: never;
             header?: never;
@@ -2137,8 +2761,52 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["vote"];
-        delete: operations["unvote"];
+        /**
+         * Upload a file directly
+         * @description Upload a file directly to S3. Best for files under 10MB.
+         */
+        post: operations["uploadFile"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/files/upload/{fileId}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm presigned upload
+         * @description Confirm that a presigned upload has completed successfully
+         */
+        post: operations["confirmUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/files/upload/presigned": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Initiate a presigned upload
+         * @description Get a presigned URL for uploading large files directly to S3
+         */
+        post: operations["initiatePresignedUpload"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -2176,22 +2844,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/deliverables": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDeliverables"];
-        put?: never;
-        post: operations["createDeliverable"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/dashboards": {
         parameters: {
             query?: never;
@@ -2218,6 +2870,70 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["addWidget"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/crm/organizations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listOrganizations"];
+        put?: never;
+        post: operations["createOrganization"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/crm/interactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listInteractions"];
+        put?: never;
+        post: operations["createInteraction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/crm/interactions/{id}/complete-followup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["completeFollowup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/crm/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listContacts"];
+        put?: never;
+        post: operations["createContact"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2368,54 +3084,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/compliance/items": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getComplianceItems"];
-        put?: never;
-        post: operations["createComplianceItem"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/clearances": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getClearances"];
-        put?: never;
-        post: operations["createClearance"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/certifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCertifications"];
-        put?: never;
-        post: operations["createCertification"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/competitors": {
         parameters: {
             query?: never;
@@ -2423,7 +3091,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getCompetitors"];
+        get: operations["getCompetitors_1"];
         put?: never;
         post: operations["createCompetitor"];
         delete?: never;
@@ -2448,55 +3116,39 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/clearances": {
+    "/capture-plans": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getClearances_1"];
+        get: operations["getPlans"];
         put?: never;
-        post: operations["createClearance_1"];
+        post: operations["createPlan"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/certifications": {
+    "/capture-plans/{planId}/actions": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getCertifications_1"];
+        get: operations["getActions"];
         put?: never;
-        post: operations["createCertification_1"];
+        post: operations["createAction"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/budgets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetItems"];
-        put?: never;
-        post: operations["createBudgetItem"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/budgets/{id}/expense": {
+    "/capture-plans/{planId}/actions/{actionId}/complete": {
         parameters: {
             query?: never;
             header?: never;
@@ -2505,7 +3157,23 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["recordExpense"];
+        post: operations["completeAction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/capture-plans/{id}/bid-decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["recordBidDecision"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2672,6 +3340,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/ingest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["triggerIngestion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/usa-spending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["triggerUsaSpendingIngestion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/usa-spending/naics/{naicsCode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["triggerUsaSpendingByNaics"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/sbir": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["triggerSbirIngestion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/geocode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["triggerGeocoding"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/full": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["triggerFullIngestion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api-keys": {
         parameters: {
             query?: never;
@@ -2736,802 +3500,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/alerts/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["markAsRead_2"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/alerts/read-all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["markAllAsRead_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getPartners"];
-        put?: never;
-        post: operations["createPartner"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAgreements"];
-        put?: never;
-        post: operations["createAgreement"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/{id}/sign-nda": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["signNda"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/{id}/activate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["activateAgreement"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/ingest": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["ingestAwards"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/ingest/{agency}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["ingestByAgency"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getProposals"];
-        put?: never;
-        post: operations["createProposal"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/{id}/version": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["incrementVersion"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/{id}/submit": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["submitProposal"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["triggerIngestion"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/usa-spending": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["triggerUsaSpendingIngestion"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/usa-spending/naics/{naicsCode}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["triggerUsaSpendingByNaics"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/sbir": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["triggerSbirIngestion"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/geocode": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["triggerGeocoding"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/full": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["triggerFullIngestion"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listLaborRates"];
-        put?: never;
-        post: operations["createLaborRate_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listInvoices"];
-        put?: never;
-        post: operations["createInvoice_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/{invoiceId}/line-items": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoiceLineItems"];
-        put?: never;
-        post: operations["addLineItem"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/{id}/submit": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["submitInvoice_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["updateInvoiceStatus"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/{id}/payment": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["recordPayment"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContractBudget"];
-        put?: never;
-        post: operations["createBudgetItem_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/files/upload": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Upload a file directly
-         * @description Upload a file directly to S3. Best for files under 10MB.
-         */
-        post: operations["uploadFile"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/files/upload/{fileId}/confirm": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Confirm presigned upload
-         * @description Confirm that a presigned upload has completed successfully
-         */
-        post: operations["confirmUpload"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/files/upload/presigned": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Initiate a presigned upload
-         * @description Get a presigned URL for uploading large files directly to S3
-         */
-        post: operations["initiatePresignedUpload"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listDocuments"];
-        put?: never;
-        post: operations["createDocument"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["updateDocumentStatus"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/{id}/checkout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["checkoutDocument"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/{id}/checkin": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["checkinDocument"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/templates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listTemplates"];
-        put?: never;
-        post: operations["createTemplate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/templates/{id}/use": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["recordTemplateUsage"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/templates/{id}/set-default": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["setDefaultTemplate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/templates/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["approveTemplate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/folders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getRootFolders"];
-        put?: never;
-        post: operations["createFolder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listContentLibrary"];
-        put?: never;
-        post: operations["createContentLibraryItem"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/{id}/win": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["recordContentWin"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/{id}/use": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["recordContentUsage"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/{id}/loss": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["recordContentLoss"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["approveContentLibraryItem"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/crm/organizations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listOrganizations"];
-        put?: never;
-        post: operations["createOrganization"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/crm/interactions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listInteractions"];
-        put?: never;
-        post: operations["createInteraction"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/crm/interactions/{id}/complete-followup": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["completeFollowup"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/crm/contacts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listContacts"];
-        put?: never;
-        post: operations["createContact"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/capture-plans": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getPlans"];
-        put?: never;
-        post: operations["createPlan"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/capture-plans/{planId}/actions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActions"];
-        put?: never;
-        post: operations["createAction"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/capture-plans/{planId}/actions/{actionId}/complete": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["completeAction"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/capture-plans/{id}/bid-decision": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["recordBidDecision"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/analytics/track": {
         parameters: {
             query?: never;
@@ -3542,22 +3510,6 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["trackEvent"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/track": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["trackEvent_1"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3708,6 +3660,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/alerts/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["markAsRead_2"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/alerts/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["markAllAsRead_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateStatus_3"];
+        trace?: never;
+    };
+    "/portal/labor-rates/{id}/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["setActive"];
+        trace?: never;
+    };
+    "/portal/deliverables/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateStatus_4"];
+        trace?: never;
+    };
+    "/portal/compliance/items/{itemId}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateComplianceItemStatus"];
+        trace?: never;
+    };
+    "/portal/clearances/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateStatus_5"];
+        trace?: never;
+    };
+    "/portal/certifications/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateStatus_6"];
+        trace?: never;
+    };
     "/pipelines/{pipelineId}/opportunities/{id}": {
         parameters: {
             query?: never;
@@ -3738,38 +3818,6 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["updateMatchStatus"];
-        trace?: never;
-    };
-    "/labor-rates/{id}/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["setActive"];
-        trace?: never;
-    };
-    "/deliverables/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateStatus_3"];
         trace?: never;
     };
     "/contracts/{contractId}/status": {
@@ -3804,22 +3852,6 @@ export interface paths {
         patch: operations["updateDeliverableStatus"];
         trace?: never;
     };
-    "/compliance/items/{itemId}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateComplianceItemStatus"];
-        trace?: never;
-    };
     "/competitors/{id}/deactivate": {
         parameters: {
             query?: never;
@@ -3834,54 +3866,6 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["deactivateCompetitor"];
-        trace?: never;
-    };
-    "/clearances/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateStatus_4"];
-        trace?: never;
-    };
-    "/certifications/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateStatus_5"];
-        trace?: never;
-    };
-    "/proposals/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateStatus_6"];
         trace?: never;
     };
     "/capture-plans/{id}/pwin": {
@@ -4200,14 +4184,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/sprints/{id}/summary": {
+    "/teaming/partners/small-business": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getSprintSummary"];
+        get: operations["getSmallBusinessPartners"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4216,14 +4200,142 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/sprints/active": {
+    "/teaming/partners/search": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getActiveSprint"];
+        get: operations["searchPartners"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/partners/naics/{naicsCode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getByNaicsCode"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/partners/capability/{capability}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getByCapability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/partners/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActivePartners"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/agreements/pending-nda": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getPendingNda"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/agreements/partner/{partnerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getAgreementsByPartner"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/agreements/opportunity/{opportunityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getAgreementsByOpportunity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/agreements/expiring-soon": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringSoon"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teaming/agreements/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveAgreements"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4280,14 +4392,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/{parentId}/children": {
+    "/sbir/stats": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getChildren"];
+        get: operations["getStats_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4296,14 +4408,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/contract/{contractId}": {
+    "/sbir/search/live": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getScopeItems"];
+        get: operations["searchLive"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4312,14 +4424,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/contract/{contractId}/tree": {
+    "/sbir/search/firm": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getWbsTree"];
+        get: operations["searchByFirm"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4328,14 +4440,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/contract/{contractId}/summary": {
+    "/sbir/config/agencies": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getScopeSummary"];
+        get: operations["getConfiguredAgencies"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4344,14 +4456,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/contract/{contractId}/root": {
+    "/sbir/awards": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getRootItems"];
+        get: operations["getAllAwards"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4360,14 +4472,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/contract/{contractId}/paginated": {
+    "/sbir/awards/search": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getScopeItemsPaginated"];
+        get: operations["searchAwards"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4376,14 +4488,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/changes/{id}": {
+    "/sbir/awards/recent": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getScopeChange"];
+        get: operations["getRecentAwards"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4392,78 +4504,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/scope/changes/pending": {
+    "/sbir/agencies": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getPendingChanges"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbom": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSbomInfo"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbom/vulnerabilities": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getVulnerabilities"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbom/spdx": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSpdxSbom"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbom/cyclonedx": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCycloneDxSbom"];
+        get: operations["getAgencies"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4648,6 +4696,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/proposals/status/{status}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getByStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/opportunity/{opportunityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getByOpportunity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/manager/{managerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getByManager"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/due-soon": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDueSoon"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/count/{status}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["countByStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveProposals"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/procurement-sources/types": {
         parameters: {
             query?: never;
@@ -4752,6 +4896,1670 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getActiveSources"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/{id}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSprintSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sprints/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveSprint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/{parentId}/children": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getChildren"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getScopeItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/contract/{contractId}/tree": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getWbsTree"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/contract/{contractId}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getScopeSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/contract/{contractId}/root": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getRootItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-items/contract/{contractId}/paginated": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getScopeItemsPaginated"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-changes/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getScopeChange"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/scope-changes/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getPendingChanges"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sbom": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSbomInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sbom/vulnerabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getVulnerabilities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sbom/spdx": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSpdxSbom"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/sbom/cyclonedx": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCycloneDxSbom"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/upcoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUpcomingMilestones"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/overdue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverdueMilestones"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMilestonesByContract"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/contract/{contractId}/timeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMilestoneTimeline"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/contract/{contractId}/paged": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMilestonesByContractPaged"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/milestones/contract/{contractId}/critical-path": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCriticalPath"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/unread-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUnreadCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/threads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getThreads"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/threads/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getThread"];
+        put?: never;
+        post?: never;
+        delete: operations["deleteThread"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/threads/{id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMessages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/messages/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchMessages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/labor-rates/contract-vehicles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDistinctContractVehicles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/labor-rates/contract-vehicle/{vehicle}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLaborRatesByContractVehicle"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/labor-rates/category/{category}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLaborRatesByCategory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/labor-rates/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDistinctCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoice"];
+        put?: never;
+        post?: never;
+        delete: operations["deleteInvoice"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/overdue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverdueInvoices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/invoices/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoicesByContract"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/tenant/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTenantFinancialSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchLaborRates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates/effective": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getEffectiveRate"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContractLaborRates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLaborCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/labor-rates/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveLaborRates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/unpaid": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUnpaidInvoices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/status/{status}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoicesByStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/overdue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverdueInvoices_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/date-range": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoicesByDateRange"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/invoices/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getInvoicesByContract_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContractFinancialSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/summary/category/{category}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetSummaryByCategory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/paged": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContractBudgetPaged"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/over-budget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverBudgetItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/fiscal-year/{fiscalYear}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetByFiscalYear"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/financial/contracts/{contractId}/budget/category/{category}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetByCategory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/{id}/voted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["hasVoted"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/voted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMyVotedRequests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/top": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTopVoted"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchFeatureRequests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/feature-requests/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMyFeatureRequests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDocumentVersions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/type/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTemplatesByType"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchTemplates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/templates/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTemplateCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/storage-summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getStorageSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchDocuments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/opportunity/{opportunityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDocumentsByOpportunity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/folders/{id}/children": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getChildFolders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/folders/{id}/breadcrumb": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getFolderBreadcrumb"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/folders/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchFolders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/folder/{folderId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDocumentsByFolder"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringDocuments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDocumentsByContract"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentVersions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/type/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentByType"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentLibrarySummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchContentLibrary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/most-used": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMostUsedContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/highest-win-rate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getHighestWinRateContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/documents/content-library/categories/{category}/subcategories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentSubCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deliverables/upcoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUpcomingDeliverables"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deliverables/statuses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDeliverableStatuses"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deliverables/overdue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverdueDeliverables"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deliverables/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDeliverablesByContract"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/deadlines/upcoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUpcomingDeadlines"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getComplianceSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/items/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getPendingComplianceItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/items/overdue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverdueComplianceItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/items/non-compliant": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getNonCompliantItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/items/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getComplianceItemsByContract"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/clearances/personnel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActivePersonnelClearances"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/clearances/facility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getFacilityClearance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/clearances/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringClearances"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/clearances/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveClearances"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/certifications/small-business": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSmallBusinessCertifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/certifications/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringCertifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/compliance/certifications/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveCertifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/clearances/user/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getClearanceByUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/clearances/levels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getClearanceLevels"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/clearances/level/{minLevel}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getClearancesAtLevelOrAbove"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/clearances/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringClearances_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/certifications/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCertificationTypes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/certifications/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringCertifications_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets/over-budget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverBudgetItems_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets/contract/{contractId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetItemsByContract"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets/contract/{contractId}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContractBudgetSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/portal/budgets/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBudgetCategories"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5007,7 +6815,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getByNaicsCode"];
+        get: operations["getByNaicsCode_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5175,103 +6983,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getUnreadCount"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/upcoming": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUpcomingMilestones"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/overdue": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverdueMilestones"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMilestonesByContract"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/contract/{contractId}/timeline": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMilestoneTimeline"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/contract/{contractId}/paged": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMilestonesByContractPaged"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/milestones/contract/{contractId}/critical-path": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCriticalPath"];
+        get: operations["getUnreadCount_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5288,86 +7000,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getMfaStatus"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/unread-count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUnreadCount_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/threads": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getThreads"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/threads/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getThread"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteThread"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/threads/{id}/messages": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMessages"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/messages/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchMessages"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5456,134 +7088,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/labor-rates/contract-vehicles": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDistinctContractVehicles"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/labor-rates/contract-vehicle/{vehicle}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getLaborRatesByContractVehicle"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/labor-rates/category/{category}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getLaborRatesByCategory"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/labor-rates/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDistinctCategories"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoice"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteInvoice"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/overdue": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverdueInvoices"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/invoices/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoicesByContract"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/invitations/token/{token}": {
         parameters: {
             query?: never;
@@ -5608,1958 +7112,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getPendingInvitations"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/{id}/voted": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["hasVoted"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/voted": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMyVotedRequests"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/top": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTopVoted"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchFeatureRequests"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/feature-requests/mine": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMyFeatureRequests"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/export/templates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTemplates"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/deliverables/upcoming": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUpcomingDeliverables"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/deliverables/statuses": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDeliverableStatuses"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/deliverables/overdue": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverdueDeliverables"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/deliverables/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDeliverablesByContract"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dashboards/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDashboard"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteDashboard"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dashboards/default": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDefaultDashboard"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/{contractId}/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContractSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/{contractId}/deliverables/overdue": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverdueDeliverables_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchContracts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/options/approaching-deadlines": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getApproachingOptionDeadlines"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringContracts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/contracts/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveContracts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/content-library/types": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentTypes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/content-library/templates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTemplates_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/content-library/most-used": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMostUsed"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getComplianceSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/items/pending": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getPendingComplianceItems"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/items/overdue": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverdueComplianceItems"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/items/non-compliant": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getNonCompliantItems"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/items/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getComplianceItemsByContract"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/clearances/personnel": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActivePersonnelClearances"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/clearances/facility": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getFacilityClearance"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/clearances/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringClearances"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/clearances/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveClearances"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/certifications/small-business": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSmallBusinessCertifications"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/certifications/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringCertifications"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/compliance/certifications/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveCertifications"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/competitors/top/winrate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTopCompetitorsByWinRate"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/competitors/top/value": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTopCompetitorsByValue"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/competitors/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCompetitorStats"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/competitors/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchCompetitors"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/competitors/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveCompetitors"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/company-profile/lookup/uei/{uei}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getProfileByUei"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/clearances/user/{userId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getClearanceByUser"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/clearances/levels": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getClearanceLevels"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/clearances/level/{minLevel}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getClearancesAtLevelOrAbove"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/clearances/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringClearances_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/certifications/types": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCertificationTypes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/certifications/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringCertifications_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/budgets/over-budget": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverBudgetItems"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/budgets/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetItemsByContract"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/budgets/contract/{contractId}/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContractBudgetSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/budgets/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetCategories"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/subscription": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getCurrentSubscription"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/plans": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAvailablePlans"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/billing/config": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBillingConfig"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/validate-reset-token": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["validateResetToken"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/audit/user/{userId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUserAuditLogs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/audit/tenant/{tenantId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTenantAuditLogs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/audit/tenant/{tenantId}/range": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTenantAuditLogsByDateRange"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/audit/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMyAuditLogs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/audit/entity/{entityType}/{entityId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getEntityAuditLogs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api-keys/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getApiKey"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api-keys/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getStats_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api-keys/my-keys": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMyApiKeys"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api-keys/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringKeys"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/alerts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMyAlerts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/alerts/unread": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUnreadAlerts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/alerts/count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUnreadCount_2"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ai/opportunities/{id}/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AI summary
-         * @description Generate an AI-powered summary of an opportunity
-         */
-        get: operations["getOpportunitySummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ai/opportunities/{id}/risk-assessment": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Assess risks
-         * @description Identify potential risks in an opportunity
-         */
-        get: operations["getRiskAssessment"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ai/opportunities/{id}/proposal-suggestions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get proposal suggestions
-         * @description Generate AI suggestions for proposal development
-         */
-        get: operations["getProposalSuggestions"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ai/opportunities/{id}/fit-score": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Calculate fit score
-         * @description Calculate how well an opportunity fits your company profile
-         */
-        get: operations["getFitScore"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/admin/tenant/branding/public": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getPublicBranding"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners/small-business": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSmallBusinessPartners"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchPartners"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners/naics/{naicsCode}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getByNaicsCode_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners/capability/{capability}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getByCapability"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/partners/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActivePartners"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/pending-nda": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getPendingNda"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/partner/{partnerId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAgreementsByPartner"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/opportunity/{opportunityId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAgreementsByOpportunity"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/expiring-soon": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringSoon"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/teaming/agreements/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveAgreements"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sources-sought": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchSourcesSought"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchOpportunities_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/search/sbir": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchSbirOpportunities"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getStats_2"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/search/live": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchLive"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/search/firm": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchByFirm"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/config/agencies": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getConfiguredAgencies"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/awards": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllAwards"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/awards/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchAwards"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/awards/recent": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getRecentAwards"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/sbir/agencies": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAgencies"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/status/{status}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getByStatus"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/opportunity/{opportunityId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getByOpportunity"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/manager/{managerId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getByManager"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/due-soon": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDueSoon"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/count/{status}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["countByStatus"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/proposals/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveProposals"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/opportunities": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllOpportunities"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/opportunities/sbir": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSbirOpportunities"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/opportunities/geocoded": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getGeocodedOpportunities"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/opportunities/by-state": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOpportunitiesByState"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/usa-spending/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUsaSpendingStats"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingest/geocode/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getGeocodingStats"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/tenant/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTenantFinancialSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchLaborRates"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates/effective": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getEffectiveRate"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContractLaborRates"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getLaborCategories"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/labor-rates/active": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActiveLaborRates"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/unpaid": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUnpaidInvoices"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/status/{status}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoicesByStatus"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/overdue": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverdueInvoices_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/date-range": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoicesByDateRange"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/invoices/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getInvoicesByContract_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContractFinancialSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/summary/category/{category}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetSummaryByCategory"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/paged": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContractBudgetPaged"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/over-budget": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getOverBudgetItems_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/fiscal-year/{fiscalYear}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetByFiscalYear"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/financial/contracts/{contractId}/budget/category/{category}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getBudgetByCategory"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7623,7 +7175,7 @@ export interface paths {
          * Get storage summary
          * @description Get storage usage summary for the current tenant
          */
-        get: operations["getStorageSummary"];
+        get: operations["getStorageSummary_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7712,14 +7264,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/documents/{id}/versions": {
+    "/export/templates": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getDocumentVersions"];
+        get: operations["getTemplates"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7728,318 +7280,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/documents/templates/type/{type}": {
+    "/dashboards/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getTemplatesByType"];
+        get: operations["getDashboard"];
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["deleteDashboard"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/documents/templates/search": {
+    "/dashboards/default": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["searchTemplates"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/templates/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTemplateCategories"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/storage-summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getStorageSummary_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchDocuments"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/opportunity/{opportunityId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDocumentsByOpportunity"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/folders/{id}/children": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getChildFolders"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/folders/{id}/breadcrumb": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getFolderBreadcrumb"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/folders/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchFolders"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/folder/{folderId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDocumentsByFolder"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/expiring": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getExpiringDocuments"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/contract/{contractId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDocumentsByContract"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/{id}/versions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentVersions"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/type/{type}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentByType"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentLibrarySummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["searchContentLibrary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/most-used": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMostUsedContent"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/highest-win-rate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getHighestWinRateContent"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentCategories"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/documents/content-library/categories/{category}/subcategories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getContentSubCategories"];
+        get: operations["getDefaultDashboard"];
         put?: never;
         post?: never;
         delete?: never;
@@ -8135,7 +7399,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getCompetitors_1"];
+        get: operations["getCompetitors"];
         put?: never;
         post?: never;
         delete?: never;
@@ -8384,6 +7648,246 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/contracts/{contractId}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContractSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contracts/{contractId}/deliverables/overdue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOverdueDeliverables_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contracts/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchContracts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contracts/options/approaching-deadlines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getApproachingOptionDeadlines"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contracts/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringContracts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/contracts/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveContracts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-library/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getContentTypes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-library/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTemplates_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/content-library/most-used": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMostUsed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/competitors/top/winrate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTopCompetitorsByWinRate"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/competitors/top/value": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTopCompetitorsByValue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/competitors/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCompetitorStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/competitors/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchCompetitors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/competitors/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActiveCompetitors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/company-profile/lookup/uei/{uei}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getProfileByUei"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/capture-plans/{planId}/actions/pending": {
         parameters: {
             query?: never;
@@ -8544,6 +8048,342 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/billing/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getCurrentSubscription"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/billing/plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getAvailablePlans"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/billing/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBillingConfig"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/validate-reset-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["validateResetToken"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/user/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUserAuditLogs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/tenant/{tenantId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTenantAuditLogs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/tenant/{tenantId}/range": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTenantAuditLogsByDateRange"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMyAuditLogs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/audit/entity/{entityType}/{entityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getEntityAuditLogs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sources-sought": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchSourcesSought"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchOpportunities_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/search/sbir": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["searchSbirOpportunities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/opportunities/sbir": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSbirOpportunities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/opportunities/geocoded": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getGeocodedOpportunities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/opportunities/by-state": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOpportunitiesByState"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/usa-spending/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUsaSpendingStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest/geocode/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getGeocodingStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getApiKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getStats_2"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/my-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMyApiKeys"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api-keys/expiring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getExpiringKeys"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/analytics/trends": {
         parameters: {
             query?: never;
@@ -8560,22 +8400,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/analytics/trends": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTrends_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/analytics/top-performers": {
         parameters: {
             query?: never;
@@ -8584,150 +8408,6 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getTopPerformers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/top-performers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getTopPerformers_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/metrics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMetrics_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/metrics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getMetrics_2"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/events": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getEvents"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/events": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getEvents_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/dashboard": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDashboardStats_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/dashboard": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getDashboardStats_2"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/activity": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActivityFeed_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/analytics/activity": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getActivityFeed_2"];
         put?: never;
         post?: never;
         delete?: never;
@@ -8864,6 +8544,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/analytics/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMetrics_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/analytics/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getEvents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/analytics/dashboards/type/{type}": {
         parameters: {
             query?: never;
@@ -8904,6 +8616,182 @@ export interface paths {
             cookie?: never;
         };
         get: operations["getFavoriteDashboards"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/analytics/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDashboardStats_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/analytics/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getActivityFeed_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getMyAlerts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/alerts/unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUnreadAlerts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/alerts/count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUnreadCount_2"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ai/opportunities/{id}/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AI summary
+         * @description Generate an AI-powered summary of an opportunity
+         */
+        get: operations["getOpportunitySummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ai/opportunities/{id}/risk-assessment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Assess risks
+         * @description Identify potential risks in an opportunity
+         */
+        get: operations["getRiskAssessment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ai/opportunities/{id}/proposal-suggestions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get proposal suggestions
+         * @description Generate AI suggestions for proposal development
+         */
+        get: operations["getProposalSuggestions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ai/opportunities/{id}/fit-score": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Calculate fit score
+         * @description Calculate how well an opportunity fits your company profile
+         */
+        get: operations["getFitScore"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/tenant/branding/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getPublicBranding"];
         put?: never;
         post?: never;
         delete?: never;
@@ -9057,9 +8945,7 @@ export interface paths {
         trace?: never;
     };
 }
-
 export type webhooks = Record<string, never>;
-
 export interface components {
     schemas: {
         CreateWebhookRequest: {
@@ -9155,1333 +9041,6 @@ export interface components {
         SubscriptionTierRequest: {
             /** @enum {string} */
             tier?: "FREE" | "PRO" | "ENTERPRISE";
-        };
-        UpdateTaskRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            storyPoints?: number;
-            /** Format: uuid */
-            assigneeId?: string;
-            /** Format: date-time */
-            dueDate?: string;
-            labels?: string;
-        };
-        SprintTaskDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            sprintId?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            storyPoints?: number;
-            /** Format: int32 */
-            position?: number;
-            /** Format: uuid */
-            assigneeId?: string;
-            assigneeName?: string;
-            /** Format: date-time */
-            dueDate?: string;
-            labels?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateSprintRequest: {
-            name?: string;
-            description?: string;
-            goal?: string;
-            /** Format: date */
-            startDate?: string;
-            /** Format: date */
-            endDate?: string;
-        };
-        SprintDto: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            goal?: string;
-            /** @enum {string} */
-            status?: "PLANNING" | "ACTIVE" | "COMPLETED" | "CANCELLED";
-            /** Format: date */
-            startDate?: string;
-            /** Format: date */
-            endDate?: string;
-            tasks?: components["schemas"]["SprintTaskDto"][];
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateScopeItemRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            itemType?: "PHASE" | "TASK" | "SUBTASK" | "MILESTONE" | "DELIVERABLE" | "WORK_PACKAGE";
-            /** Format: int32 */
-            priority?: number;
-            estimatedHours?: number;
-            actualHours?: number;
-            remainingHours?: number;
-            estimatedCost?: number;
-            actualCost?: number;
-            /** Format: int32 */
-            percentComplete?: number;
-            /** Format: date */
-            plannedStartDate?: string;
-            /** Format: date */
-            plannedEndDate?: string;
-            /** Format: date */
-            actualStartDate?: string;
-            /** Format: date */
-            actualEndDate?: string;
-            /** Format: uuid */
-            assignedToId?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            /** Format: uuid */
-            clinId?: string;
-            /** Format: uuid */
-            deliverableId?: string;
-            acceptanceCriteria?: string;
-            laborCategory?: string;
-            notes?: string;
-            isBillable?: boolean;
-            isMilestone?: boolean;
-        };
-        ScopeItemDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            /** Format: uuid */
-            parentId?: string;
-            wbsCode?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            itemType?: "PHASE" | "TASK" | "SUBTASK" | "MILESTONE" | "DELIVERABLE" | "WORK_PACKAGE";
-            /** @enum {string} */
-            status?: "PENDING" | "ACTIVE" | "COMPLETED" | "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "CANCELLED" | "DEFERRED";
-            /** Format: int32 */
-            sortOrder?: number;
-            /** Format: int32 */
-            priority?: number;
-            estimatedHours?: number;
-            actualHours?: number;
-            remainingHours?: number;
-            estimatedCost?: number;
-            actualCost?: number;
-            /** Format: int32 */
-            percentComplete?: number;
-            /** Format: date */
-            plannedStartDate?: string;
-            /** Format: date */
-            plannedEndDate?: string;
-            /** Format: date */
-            actualStartDate?: string;
-            /** Format: date */
-            actualEndDate?: string;
-            /** Format: uuid */
-            assignedToId?: string;
-            assignedToName?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            ownerName?: string;
-            /** Format: uuid */
-            clinId?: string;
-            clinNumber?: string;
-            /** Format: uuid */
-            deliverableId?: string;
-            deliverableTitle?: string;
-            acceptanceCriteria?: string;
-            laborCategory?: string;
-            notes?: string;
-            isBillable?: boolean;
-            isMilestone?: boolean;
-            isOverdue?: boolean;
-            isBehindSchedule?: boolean;
-            isOverBudget?: boolean;
-            /** Format: int32 */
-            level?: number;
-            /** Format: int64 */
-            childCount?: number;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        OpportunitySearchRequest: {
-            keyword?: string;
-            naicsCode?: string;
-            agency?: string;
-            setAsideType?: string;
-            type?: string;
-            isSbir?: boolean;
-            isSttr?: boolean;
-            sbirOrSttr?: boolean;
-            phase?: string;
-            state?: string;
-            /** Format: date */
-            postedDateFrom?: string;
-            /** Format: date */
-            postedDateTo?: string;
-            /** Format: date */
-            responseDeadlineFrom?: string;
-            /** Format: date */
-            responseDeadlineTo?: string;
-            /** @enum {string} */
-            status?: "ACTIVE" | "CLOSED" | "CANCELLED" | "AWARDED" | "ARCHIVED";
-            activeOnly?: boolean;
-        };
-        UpdateSavedSearchRequest: {
-            name?: string;
-            description?: string;
-            searchCriteria?: components["schemas"]["OpportunitySearchRequest"];
-            alertEnabled?: boolean;
-            /** @enum {string} */
-            alertFrequency?: "INSTANT" | "DAILY" | "WEEKLY";
-        };
-        SavedSearchDto: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            searchCriteria?: components["schemas"]["OpportunitySearchRequest"];
-            alertEnabled?: boolean;
-            /** @enum {string} */
-            alertFrequency?: "INSTANT" | "DAILY" | "WEEKLY";
-            isDefault?: boolean;
-            /** Format: int32 */
-            lastResultCount?: number;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateNotesRequest: {
-            notes?: string;
-            tags?: string;
-        };
-        OpportunityDto: {
-            id?: string;
-            title?: string;
-            solicitationNumber?: string;
-            description?: string;
-            /** Format: date */
-            postedDate?: string;
-            /** Format: date */
-            responseDeadline?: string;
-            /** Format: date */
-            archiveDate?: string;
-            naicsCode?: string;
-            naicsDescription?: string;
-            pscCode?: string;
-            type?: string;
-            typeDescription?: string;
-            url?: string;
-            agency?: string;
-            agencyCode?: string;
-            subAgency?: string;
-            office?: string;
-            setAsideType?: string;
-            setAsideDescription?: string;
-            placeOfPerformanceCity?: string;
-            placeOfPerformanceState?: string;
-            placeOfPerformanceCountry?: string;
-            placeOfPerformanceZip?: string;
-            awardAmount?: number;
-            estimatedValueLow?: number;
-            estimatedValueHigh?: number;
-            contractType?: string;
-            contractNumber?: string;
-            incumbentContractor?: string;
-            isRecoveryAct?: boolean;
-            sbirPhase?: string;
-            isSbir?: boolean;
-            isSttr?: boolean;
-            primaryContactName?: string;
-            primaryContactEmail?: string;
-            primaryContactPhone?: string;
-            secondaryContactName?: string;
-            secondaryContactEmail?: string;
-            source?: string;
-            /** @enum {string} */
-            status?: "ACTIVE" | "CLOSED" | "CANCELLED" | "AWARDED" | "ARCHIVED";
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            isPastDeadline?: boolean;
-            isClosingSoon?: boolean;
-            /** Format: int64 */
-            daysUntilDeadline?: number;
-        };
-        SavedOpportunityDto: {
-            /** Format: uuid */
-            id?: string;
-            opportunity?: components["schemas"]["OpportunityDto"];
-            notes?: string;
-            tags?: string;
-            /** Format: date-time */
-            savedAt?: string;
-        };
-        CreateRoleRequest: {
-            name: string;
-            description?: string;
-            permissions?: string[];
-            isSystemRole?: boolean;
-        };
-        RoleResponse: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            permissions?: string[];
-            isSystemRole?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        CreateReportRequest: {
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            reportType?: "PIPELINE_SUMMARY" | "PIPELINE_BY_STAGE" | "PIPELINE_BY_VALUE" | "PIPELINE_FORECAST" | "WIN_LOSS_ANALYSIS" | "WIN_RATE_BY_AGENCY" | "WIN_RATE_BY_NAICS" | "WIN_RATE_BY_SET_ASIDE" | "CONTRACT_PORTFOLIO" | "CONTRACT_PERFORMANCE" | "CONTRACT_EXPIRING" | "CONTRACT_VALUE_SUMMARY" | "REVENUE_FORECAST" | "BACKLOG_REPORT" | "AR_AGING" | "INVOICE_STATUS" | "BUDGET_VARIANCE" | "BURN_RATE" | "CERTIFICATION_STATUS" | "EXPIRING_CERTIFICATIONS" | "CLEARANCE_STATUS" | "COMPLIANCE_OVERVIEW" | "USER_ACTIVITY" | "OPPORTUNITY_ACTIVITY" | "BD_ACTIVITY" | "CUSTOM";
-            queryConfig?: string;
-            /** @enum {string} */
-            format?: "HTML" | "PDF" | "EXCEL" | "CSV" | "JSON";
-            isScheduled?: boolean;
-            /** @enum {string} */
-            frequency?: "DAILY" | "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "QUARTERLY" | "ANNUALLY" | "CUSTOM";
-            recipients?: string;
-        };
-        ReportResponse: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            reportType?: "PIPELINE_SUMMARY" | "PIPELINE_BY_STAGE" | "PIPELINE_BY_VALUE" | "PIPELINE_FORECAST" | "WIN_LOSS_ANALYSIS" | "WIN_RATE_BY_AGENCY" | "WIN_RATE_BY_NAICS" | "WIN_RATE_BY_SET_ASIDE" | "CONTRACT_PORTFOLIO" | "CONTRACT_PERFORMANCE" | "CONTRACT_EXPIRING" | "CONTRACT_VALUE_SUMMARY" | "REVENUE_FORECAST" | "BACKLOG_REPORT" | "AR_AGING" | "INVOICE_STATUS" | "BUDGET_VARIANCE" | "BURN_RATE" | "CERTIFICATION_STATUS" | "EXPIRING_CERTIFICATIONS" | "CLEARANCE_STATUS" | "COMPLIANCE_OVERVIEW" | "USER_ACTIVITY" | "OPPORTUNITY_ACTIVITY" | "BD_ACTIVITY" | "CUSTOM";
-            queryConfig?: string;
-            /** @enum {string} */
-            format?: "HTML" | "PDF" | "EXCEL" | "CSV" | "JSON";
-            isScheduled?: boolean;
-            /** @enum {string} */
-            frequency?: "DAILY" | "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "QUARTERLY" | "ANNUALLY" | "CUSTOM";
-            recipients?: string;
-            /** Format: date-time */
-            lastRunAt?: string;
-            /** Format: int32 */
-            runCount?: number;
-            createdByName?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        ColumnDefinition: {
-            field?: string;
-            label?: string;
-            /** Format: int32 */
-            width?: number;
-            visible?: boolean;
-        };
-        FilterCondition: {
-            field?: string;
-            operator?: string;
-            value?: string;
-        };
-        UpdateReportRequest: {
-            name?: string;
-            description?: string;
-            columns?: components["schemas"]["ColumnDefinition"][];
-            filters?: components["schemas"]["FilterCondition"][];
-            sortBy?: string;
-            /** @enum {string} */
-            sortDirection?: "ASC" | "DESC";
-            isPublic?: boolean;
-        };
-        ReportDefinitionResponse: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            entityType?: "OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET";
-            columns?: components["schemas"]["ColumnDefinition"][];
-            filters?: components["schemas"]["FilterCondition"][];
-            sortBy?: string;
-            /** @enum {string} */
-            sortDirection?: "ASC" | "DESC";
-            isPublic?: boolean;
-            /** Format: int32 */
-            runCount?: number;
-            /** Format: date-time */
-            lastRunAt?: string;
-            createdByName?: string;
-            /** Format: uuid */
-            createdById?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdatePreferencesRequest: {
-            /** @enum {string} */
-            theme?: "LIGHT" | "DARK" | "SYSTEM";
-            emailNotifications?: boolean;
-            dashboardLayout?: string;
-            timezone?: string;
-            language?: string;
-        };
-        UserPreferenceDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            userId?: string;
-            /** @enum {string} */
-            theme?: "LIGHT" | "DARK" | "SYSTEM";
-            emailNotifications?: boolean;
-            dashboardLayout?: string;
-            timezone?: string;
-            language?: string;
-        };
-        UpdatePipelineRequest: {
-            name?: string;
-            description?: string;
-        };
-        PipelineDto: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            isDefault?: boolean;
-            isArchived?: boolean;
-            stages?: components["schemas"]["StageDto"][];
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        StageDto: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            /** Format: int32 */
-            position?: number;
-            color?: string;
-            /** @enum {string} */
-            stageType?: "INITIAL" | "IN_PROGRESS" | "WON" | "LOST";
-            /** Format: int32 */
-            probability?: number;
-        };
-        UpdateStageRequest: {
-            name?: string;
-            description?: string;
-            color?: string;
-            /** @enum {string} */
-            stageType?: "INITIAL" | "IN_PROGRESS" | "WON" | "LOST";
-            /** Format: int32 */
-            probability?: number;
-        };
-        UpdateOpportunityAlertRequest: {
-            name?: string;
-            description?: string;
-            naicsCodes?: string[];
-            keywords?: string[];
-            minValue?: number;
-            maxValue?: number;
-            enabled?: boolean;
-        };
-        OpportunityAlertDto: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            naicsCodes?: string[];
-            keywords?: string[];
-            minValue?: number;
-            maxValue?: number;
-            enabled?: boolean;
-            /** Format: date-time */
-            lastCheckedAt?: string;
-            /** Format: int32 */
-            lastMatchCount?: number;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        CompleteStepRequest: {
-            /** @description Whether to skip this step */
-            skipped?: boolean;
-            /** @description Step-specific data (JSON) */
-            data?: string;
-        };
-        /** @description Onboarding progress information */
-        OnboardingStepDTO: {
-            /**
-             * Format: uuid
-             * @description Progress ID
-             */
-            id?: string;
-            /**
-             * Format: uuid
-             * @description Tenant ID
-             */
-            tenantId?: string;
-            /**
-             * Format: int32
-             * @description Current step number (1-5)
-             */
-            currentStep?: number;
-            /** @description Step 1: Company profile complete */
-            companyProfileComplete?: boolean;
-            /** @description Step 2: Certifications complete */
-            certificationsComplete?: boolean;
-            /** @description Step 3: NAICS codes complete */
-            naicsComplete?: boolean;
-            /** @description Step 4: Team invitations complete */
-            teamInviteComplete?: boolean;
-            /** @description Step 5: Integrations complete */
-            integrationComplete?: boolean;
-            /** @description User dismissed onboarding */
-            dismissed?: boolean;
-            /**
-             * Format: int32
-             * @description Completion percentage (0-100)
-             */
-            completionPercentage?: number;
-            /** @description All required steps complete */
-            complete?: boolean;
-            /**
-             * Format: date-time
-             * @description When onboarding started
-             */
-            startedAt?: string;
-            /**
-             * Format: date-time
-             * @description When onboarding completed
-             */
-            completedAt?: string;
-        };
-        NotificationDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            userId?: string;
-            /** @enum {string} */
-            type?: "ALERT" | "SYSTEM" | "INFO";
-            title?: string;
-            message?: string;
-            read?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        MarkAllReadResponse: {
-            /** Format: int32 */
-            markedCount?: number;
-        };
-        UpdateMilestoneRequest: {
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            milestoneType?: "KICKOFF" | "DESIGN_REVIEW" | "DEVELOPMENT" | "TESTING" | "DELIVERY" | "ACCEPTANCE" | "PAYMENT" | "REPORTING" | "REVIEW" | "PHASE_GATE" | "COMPLETION" | "OTHER";
-            /** Format: date */
-            plannedStartDate?: string;
-            /** Format: date */
-            plannedEndDate?: string;
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            actualStartDate?: string;
-            /** Format: date */
-            actualEndDate?: string;
-            /** Format: int32 */
-            percentComplete?: number;
-            isCriticalPath?: boolean;
-            paymentAmount?: number;
-            isPaymentMilestone?: boolean;
-            /** Format: uuid */
-            ownerId?: string;
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            sortOrder?: number;
-            notes?: string;
-        };
-        MilestoneDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "COMPLETED" | "CANCELLED" | "AT_RISK" | "DELAYED";
-            /** @enum {string} */
-            milestoneType?: "KICKOFF" | "DESIGN_REVIEW" | "DEVELOPMENT" | "TESTING" | "DELIVERY" | "ACCEPTANCE" | "PAYMENT" | "REPORTING" | "REVIEW" | "PHASE_GATE" | "COMPLETION" | "OTHER";
-            /** Format: date */
-            plannedStartDate?: string;
-            /** Format: date */
-            plannedEndDate?: string;
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            actualStartDate?: string;
-            /** Format: date */
-            actualEndDate?: string;
-            /** Format: date */
-            completedDate?: string;
-            /** Format: int32 */
-            percentComplete?: number;
-            isCriticalPath?: boolean;
-            paymentAmount?: number;
-            isPaymentMilestone?: boolean;
-            /** Format: uuid */
-            ownerId?: string;
-            ownerName?: string;
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            sortOrder?: number;
-            /** Format: uuid */
-            deliverableId?: string;
-            deliverableTitle?: string;
-            dependencyIds?: string[];
-            dependentIds?: string[];
-            notes?: string;
-            completionNotes?: string;
-            isOverdue?: boolean;
-            isDueSoon?: boolean;
-            canStart?: boolean;
-            /** Format: int64 */
-            daysUntilDue?: number;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        StatusUpdateRequest: {
-            /** @enum {string} */
-            status?: "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "COMPLETED" | "CANCELLED" | "AT_RISK" | "DELAYED";
-        };
-        CreateLaborRateRequest: {
-            /** Format: uuid */
-            contractId?: string;
-            laborCategory?: string;
-            laborCategoryDescription?: string;
-            /** Format: int32 */
-            minYearsExperience?: number;
-            /** Format: int32 */
-            maxYearsExperience?: number;
-            educationRequirement?: string;
-            baseRate?: number;
-            fringeRate?: number;
-            overheadRate?: number;
-            gaRate?: number;
-            feeRate?: number;
-            billingRate?: number;
-            rateType?: string;
-            /** Format: date */
-            effectiveDate?: string;
-            /** Format: date */
-            endDate?: string;
-            /** Format: int32 */
-            fiscalYear?: number;
-            notes?: string;
-        };
-        LaborRateResponse: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            laborCategory?: string;
-            laborCategoryDescription?: string;
-            /** Format: int32 */
-            minYearsExperience?: number;
-            /** Format: int32 */
-            maxYearsExperience?: number;
-            educationRequirement?: string;
-            baseRate?: number;
-            fringeRate?: number;
-            overheadRate?: number;
-            gaRate?: number;
-            feeRate?: number;
-            fullyBurdenedRate?: number;
-            billingRate?: number;
-            rateType?: string;
-            /** Format: date */
-            effectiveDate?: string;
-            /** Format: date */
-            endDate?: string;
-            /** Format: int32 */
-            fiscalYear?: number;
-            notes?: string;
-            isActive?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        UpdateFeatureRequestRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            category?: "OPPORTUNITIES" | "CONTRACTS" | "PROPOSALS" | "COMPLIANCE" | "REPORTING" | "INTEGRATIONS" | "UI_UX" | "SECURITY" | "PERFORMANCE" | "OTHER";
-        };
-        FeatureRequestDto: {
-            /** Format: uuid */
-            id?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "SUBMITTED" | "UNDER_REVIEW" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DECLINED" | "DUPLICATE";
-            /** @enum {string} */
-            category?: "OPPORTUNITIES" | "CONTRACTS" | "PROPOSALS" | "COMPLIANCE" | "REPORTING" | "INTEGRATIONS" | "UI_UX" | "SECURITY" | "PERFORMANCE" | "OTHER";
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            voteCount?: number;
-            hasVoted?: boolean;
-            /** Format: uuid */
-            submittedById?: string;
-            submittedByName?: string;
-            adminNotes?: string;
-            targetRelease?: string;
-            /** Format: date-time */
-            completedAt?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateAdminFieldsRequest: {
-            adminNotes?: string;
-            targetRelease?: string;
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-        };
-        CreateDeliverableRequest: {
-            /** Format: uuid */
-            contractId?: string;
-            cdrlNumber?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            deliverableType?: "REPORT" | "DATA" | "SOFTWARE" | "DOCUMENTATION" | "HARDWARE" | "SERVICES" | "MILESTONE" | "STATUS_REPORT" | "FINANCIAL_REPORT" | "TECHNICAL_REPORT" | "OTHER";
-            /** @enum {string} */
-            frequency?: "ONE_TIME" | "DAILY" | "WEEKLY" | "BI_WEEKLY" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            submittedDate?: string;
-            /** Format: date */
-            acceptedDate?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            notes?: string;
-        };
-        DeliverableResponse: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            cdrlNumber?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            deliverableType?: "REPORT" | "DATA" | "SOFTWARE" | "DOCUMENTATION" | "HARDWARE" | "SERVICES" | "MILESTONE" | "STATUS_REPORT" | "FINANCIAL_REPORT" | "TECHNICAL_REPORT" | "OTHER";
-            /** @enum {string} */
-            frequency?: "ONE_TIME" | "DAILY" | "WEEKLY" | "BI_WEEKLY" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            submittedDate?: string;
-            /** Format: date */
-            acceptedDate?: string;
-            /** @enum {string} */
-            status?: "PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED";
-            /** Format: int64 */
-            daysUntilDue?: number;
-            /** Format: uuid */
-            ownerId?: string;
-            ownerName?: string;
-            notes?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        UpdateContractRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "DRAFT" | "AWARDED" | "PENDING_SIGNATURE" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "TERMINATED" | "CANCELLED" | "CLOSED";
-            agency?: string;
-            /** Format: date */
-            popStartDate?: string;
-            /** Format: date */
-            popEndDate?: string;
-            totalValue?: number;
-            fundedValue?: number;
-            contractingOfficerName?: string;
-            contractingOfficerEmail?: string;
-            corName?: string;
-            corEmail?: string;
-            /** Format: uuid */
-            programManagerId?: string;
-            /** Format: uuid */
-            contractManagerId?: string;
-            internalNotes?: string;
-        };
-        ContractDto: {
-            /** Format: uuid */
-            id?: string;
-            contractNumber?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            contractType?: "FIRM_FIXED_PRICE" | "TIME_AND_MATERIALS" | "COST_PLUS_FIXED_FEE" | "COST_PLUS_INCENTIVE_FEE" | "COST_PLUS_AWARD_FEE" | "COST_REIMBURSEMENT" | "INDEFINITE_DELIVERY" | "BLANKET_PURCHASE_AGREEMENT" | "BASIC_ORDERING_AGREEMENT" | "TASK_ORDER" | "DELIVERY_ORDER" | "GRANT" | "COOPERATIVE_AGREEMENT" | "OTHER";
-            /** @enum {string} */
-            status?: "DRAFT" | "AWARDED" | "PENDING_SIGNATURE" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "TERMINATED" | "CANCELLED" | "CLOSED";
-            /** Format: uuid */
-            parentContractId?: string;
-            opportunityId?: string;
-            agency?: string;
-            agencyCode?: string;
-            subAgency?: string;
-            office?: string;
-            /** Format: date */
-            popStartDate?: string;
-            /** Format: date */
-            popEndDate?: string;
-            /** Format: date */
-            basePeriodEndDate?: string;
-            /** Format: date */
-            finalOptionEndDate?: string;
-            baseValue?: number;
-            totalValue?: number;
-            ceilingValue?: number;
-            fundedValue?: number;
-            naicsCode?: string;
-            pscCode?: string;
-            placeOfPerformanceCity?: string;
-            placeOfPerformanceState?: string;
-            placeOfPerformanceCountry?: string;
-            contractingOfficerName?: string;
-            contractingOfficerEmail?: string;
-            corName?: string;
-            corEmail?: string;
-            primeContractor?: string;
-            isSubcontract?: boolean;
-            contractVehicle?: string;
-            setAsideType?: string;
-            requiresClearance?: boolean;
-            clearanceLevel?: string;
-            /** Format: uuid */
-            programManagerId?: string;
-            programManagerName?: string;
-            /** Format: uuid */
-            contractManagerId?: string;
-            contractManagerName?: string;
-            /** Format: date */
-            awardDate?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateClinRequest: {
-            description?: string;
-            totalValue?: number;
-            fundedAmount?: number;
-            invoicedAmount?: number;
-            notes?: string;
-        };
-        ClinDto: {
-            /** Format: uuid */
-            id?: string;
-            clinNumber?: string;
-            description?: string;
-            /** @enum {string} */
-            clinType?: "BASE" | "OPTION" | "DATA" | "SERVICES" | "SUPPLIES" | "OTHER";
-            /** @enum {string} */
-            pricingType?: "FIRM_FIXED_PRICE" | "TIME_AND_MATERIALS" | "LABOR_HOUR" | "COST_PLUS_FIXED_FEE" | "COST_PLUS_INCENTIVE_FEE" | "COST_REIMBURSEMENT";
-            unitOfIssue?: string;
-            quantity?: number;
-            unitPrice?: number;
-            totalValue?: number;
-            fundedAmount?: number;
-            obligatedAmount?: number;
-            invoicedAmount?: number;
-            remainingFunds?: number;
-            naicsCode?: string;
-            pscCode?: string;
-            isOption?: boolean;
-            /** Format: int32 */
-            optionPeriod?: number;
-            notes?: string;
-        };
-        CreateContentRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            contentType?: "PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER";
-            content?: string;
-            tags?: string;
-            keywords?: string;
-            category?: string;
-            subCategory?: string;
-            naicsCodes?: string;
-            pscCodes?: string;
-        };
-        ContentResponse: {
-            /** Format: uuid */
-            id?: string;
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            contentType?: "PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER";
-            content?: string;
-            tags?: string[];
-            keywords?: string[];
-            category?: string;
-            subCategory?: string;
-            /** Format: int32 */
-            usageCount?: number;
-            /** Format: date-time */
-            lastUsedAt?: string;
-            /** Format: int32 */
-            wordCount?: number;
-            /** Format: int32 */
-            qualityScore?: number;
-            createdByName?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateComplianceItemRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "PENDING" | "IN_PROGRESS" | "COMPLIANT" | "NON_COMPLIANT" | "REMEDIATION_REQUIRED" | "UNDER_REVIEW" | "NOT_APPLICABLE" | "WAIVED";
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: date */
-            dueDate?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            evidenceUrl?: string;
-            evidenceNotes?: string;
-            remediationPlan?: string;
-            /** Format: date */
-            remediationDeadline?: string;
-            notes?: string;
-        };
-        ComplianceItemDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            /** @enum {string} */
-            complianceType?: "FAR_CLAUSE" | "DFARS_CLAUSE" | "AGENCY_CLAUSE" | "CMMC" | "NIST_800_171" | "NIST_800_53" | "FEDRAMP" | "ITAR" | "EAR" | "PERSONNEL_CLEARANCE" | "FACILITY_CLEARANCE" | "CUI_HANDLING" | "SMALL_BUSINESS_REPORTING" | "SUBCONTRACTING_PLAN" | "COST_ACCOUNTING" | "INCURRED_COST" | "OCI" | "LOBBYING_DISCLOSURE" | "ETHICS_TRAINING" | "SERVICE_CONTRACT_ACT" | "DAVIS_BACON" | "AFFIRMATIVE_ACTION" | "INSURANCE" | "BONDING" | "SECTION_889" | "BUY_AMERICAN" | "TRADE_AGREEMENTS" | "OTHER";
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "PENDING" | "IN_PROGRESS" | "COMPLIANT" | "NON_COMPLIANT" | "REMEDIATION_REQUIRED" | "UNDER_REVIEW" | "NOT_APPLICABLE" | "WAIVED";
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            completedDate?: string;
-            /** Format: date */
-            lastReviewDate?: string;
-            /** Format: date */
-            nextReviewDate?: string;
-            /** @enum {string} */
-            frequency?: "ONE_TIME" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
-            clauseNumber?: string;
-            clauseTitle?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            ownerName?: string;
-            evidenceRequired?: boolean;
-            evidenceUrl?: string;
-            evidenceNotes?: string;
-            verificationMethod?: string;
-            verifiedBy?: string;
-            /** Format: date */
-            verificationDate?: string;
-            remediationPlan?: string;
-            /** Format: date */
-            remediationDeadline?: string;
-            notes?: string;
-            isOverdue?: boolean;
-            isDueSoon?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateClearanceRequest: {
-            /** @enum {string} */
-            status?: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
-            /** Format: date */
-            expirationDate?: string;
-            /** Format: date */
-            reinvestigationDate?: string;
-            polygraphType?: string;
-            /** Format: date */
-            polygraphDate?: string;
-            sciAccess?: boolean;
-            sciPrograms?: string;
-            notes?: string;
-        };
-        ClearanceDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            userId?: string;
-            userName?: string;
-            entityName?: string;
-            /** @enum {string} */
-            clearanceType?: "PERSONNEL" | "FACILITY" | "INTERIM_PERSONNEL" | "INTERIM_FACILITY";
-            /** @enum {string} */
-            clearanceLevel?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
-            /** @enum {string} */
-            status?: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
-            /** Format: date */
-            investigationDate?: string;
-            /** Format: date */
-            grantDate?: string;
-            /** Format: date */
-            expirationDate?: string;
-            /** Format: date */
-            reinvestigationDate?: string;
-            polygraphType?: string;
-            /** Format: date */
-            polygraphDate?: string;
-            sponsoringAgency?: string;
-            caseNumber?: string;
-            cageCode?: string;
-            facilityAddress?: string;
-            fsoName?: string;
-            fsoEmail?: string;
-            fsoPhone?: string;
-            sciAccess?: boolean;
-            sciPrograms?: string;
-            sapAccess?: boolean;
-            notes?: string;
-            isExpiringSoon?: boolean;
-            needsReinvestigation?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        UpdateCertificationRequest: {
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
-            /** Format: date */
-            expirationDate?: string;
-            /** Format: date */
-            renewalDate?: string;
-            documentUrl?: string;
-            notes?: string;
-        };
-        CertificationDto: {
-            /** Format: uuid */
-            id?: string;
-            /** @enum {string} */
-            certificationType?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
-            certificateNumber?: string;
-            issuingAgency?: string;
-            /** Format: date */
-            issueDate?: string;
-            /** Format: date */
-            expirationDate?: string;
-            /** Format: date */
-            renewalDate?: string;
-            naicsCode?: string;
-            sizeStandard?: string;
-            uei?: string;
-            cageCode?: string;
-            /** Format: date */
-            samRegistrationDate?: string;
-            /** Format: date */
-            samExpirationDate?: string;
-            /** Format: date */
-            eightAEntryDate?: string;
-            /** Format: date */
-            eightAGraduationDate?: string;
-            /** Format: date */
-            hubzoneCertificationDate?: string;
-            documentUrl?: string;
-            notes?: string;
-            /** Format: int64 */
-            daysUntilExpiration?: number;
-            isExpiringSoon?: boolean;
-            isExpired?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        CreateCompetitorRequest: {
-            name?: string;
-            uei?: string;
-            cageCode?: string;
-            website?: string;
-            headquartersLocation?: string;
-            /** Format: int32 */
-            employeeCount?: number;
-            estimatedRevenue?: number;
-            primaryNaicsCodes?: string;
-            keyCustomers?: string;
-            contractVehicles?: string;
-            certifications?: string;
-            strengths?: string;
-            weaknesses?: string;
-            winThemes?: string;
-            notes?: string;
-        };
-        CompetitorResponse: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            uei?: string;
-            cageCode?: string;
-            website?: string;
-            headquartersLocation?: string;
-            /** Format: int32 */
-            employeeCount?: number;
-            estimatedRevenue?: number;
-            primaryNaicsCodes?: string;
-            keyCustomers?: string;
-            contractVehicles?: string;
-            certifications?: string;
-            strengths?: string;
-            weaknesses?: string;
-            winThemes?: string;
-            notes?: string;
-            totalContractValue?: number;
-            /** Format: int32 */
-            contractCount?: number;
-            averageContractValue?: number;
-            winRate?: number;
-            isActive?: boolean;
-            /** Format: date-time */
-            lastActivityDate?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        CreateClearanceRequest: {
-            /** Format: uuid */
-            userId?: string;
-            /** @enum {string} */
-            clearanceLevel?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
-            /** @enum {string} */
-            clearanceType?: "PERSONNEL" | "FACILITY" | "INTERIM_PERSONNEL" | "INTERIM_FACILITY";
-            /** Format: date */
-            investigationDate?: string;
-            /** Format: date */
-            grantDate?: string;
-            /** Format: date */
-            expirationDate?: string;
-            polygraphType?: string;
-            /** Format: date */
-            polygraphDate?: string;
-            sponsoringAgency?: string;
-            notes?: string;
-        };
-        ClearanceResponse: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            userId?: string;
-            userName?: string;
-            /** @enum {string} */
-            clearanceLevel?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
-            /** @enum {string} */
-            clearanceType?: "PERSONNEL" | "FACILITY" | "INTERIM_PERSONNEL" | "INTERIM_FACILITY";
-            /** @enum {string} */
-            status?: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
-            /** Format: date */
-            investigationDate?: string;
-            /** Format: date */
-            grantDate?: string;
-            /** Format: date */
-            expirationDate?: string;
-            /** Format: int64 */
-            daysUntilExpiration?: number;
-            polygraphType?: string;
-            /** Format: date */
-            polygraphDate?: string;
-            sponsoringAgency?: string;
-            notes?: string;
-        };
-        CreateCertificationRequest: {
-            /** @enum {string} */
-            type?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
-            name?: string;
-            issuingAuthority?: string;
-            certificationNumber?: string;
-            /** Format: date */
-            issueDate?: string;
-            /** Format: date */
-            expirationDate?: string;
-            documentUrl?: string;
-            notes?: string;
-        };
-        CertificationResponse: {
-            /** Format: uuid */
-            id?: string;
-            /** @enum {string} */
-            type?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
-            name?: string;
-            issuingAuthority?: string;
-            certificationNumber?: string;
-            /** Format: date */
-            issueDate?: string;
-            /** Format: date */
-            expirationDate?: string;
-            /** @enum {string} */
-            status?: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
-            /** Format: int64 */
-            daysUntilExpiration?: number;
-            documentUrl?: string;
-            notes?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        CreateBudgetItemRequest: {
-            /** Format: uuid */
-            contractId?: string;
-            /** Format: uuid */
-            clinId?: string;
-            /** @enum {string} */
-            category?: "DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER";
-            name?: string;
-            description?: string;
-            budgetedAmount?: number;
-            actualAmount?: number;
-            /** Format: date */
-            periodStart?: string;
-            /** Format: date */
-            periodEnd?: string;
-            /** Format: int32 */
-            fiscalYear?: number;
-            notes?: string;
-        };
-        BudgetItemResponse: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            /** Format: uuid */
-            clinId?: string;
-            clinNumber?: string;
-            /** @enum {string} */
-            category?: "DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER";
-            name?: string;
-            description?: string;
-            budgetedAmount?: number;
-            actualAmount?: number;
-            variance?: number;
-            variancePercent?: number;
-            /** Format: date */
-            periodStart?: string;
-            /** Format: date */
-            periodEnd?: string;
-            /** Format: int32 */
-            fiscalYear?: number;
-            notes?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        UpdatePlanRequest: {
-            /** @enum {string} */
-            plan?: "FREE" | "STARTER" | "PROFESSIONAL" | "ENTERPRISE";
-        };
-        SubscriptionDto: {
-            /** Format: uuid */
-            id?: string;
-            /** @enum {string} */
-            plan?: "FREE" | "STARTER" | "PROFESSIONAL" | "ENTERPRISE";
-            /** @enum {string} */
-            status?: "ACTIVE" | "CANCELED" | "PAST_DUE" | "TRIALING" | "UNPAID" | "INCOMPLETE" | "INCOMPLETE_EXPIRED" | "PAUSED";
-            /** Format: date-time */
-            currentPeriodStart?: string;
-            /** Format: date-time */
-            currentPeriodEnd?: string;
-            cancelAtPeriodEnd?: boolean;
-            /** Format: date-time */
-            canceledAt?: string;
-            /** Format: date-time */
-            trialStart?: string;
-            /** Format: date-time */
-            trialEnd?: string;
-        };
-        TenantSettingsDTO: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            tenantId?: string;
-            timezone: string;
-            dateFormat: string;
-            currency: string;
-            mfaRequired?: boolean;
-            /** Format: int32 */
-            sessionTimeoutMinutes?: number;
-            /** Format: int32 */
-            passwordExpiryDays?: number;
-            ssoEnabled?: boolean;
-            ssoProvider?: string;
-            ssoConfig?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        TenantBrandingDTO: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            tenantId?: string;
-            logoUrl?: string;
-            faviconUrl?: string;
-            primaryColor?: string;
-            secondaryColor?: string;
-            accentColor?: string;
-            companyName?: string;
-            supportEmail?: string;
-            supportPhone?: string;
-            customCss?: string;
-            loginMessage?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
         };
         TeammingPartner: {
             /** Format: uuid */
@@ -10799,6 +9358,547 @@ export interface components {
             updatedAt?: string;
             fullName?: string;
         };
+        OpportunitySearchRequest: {
+            keyword?: string;
+            naicsCode?: string;
+            agency?: string;
+            setAsideType?: string;
+            type?: string;
+            isSbir?: boolean;
+            isSttr?: boolean;
+            sbirOrSttr?: boolean;
+            phase?: string;
+            state?: string;
+            /** Format: date */
+            postedDateFrom?: string;
+            /** Format: date */
+            postedDateTo?: string;
+            /** Format: date */
+            responseDeadlineFrom?: string;
+            /** Format: date */
+            responseDeadlineTo?: string;
+            /** @enum {string} */
+            status?: "ACTIVE" | "CLOSED" | "CANCELLED" | "AWARDED" | "ARCHIVED";
+            activeOnly?: boolean;
+        };
+        UpdateSavedSearchRequest: {
+            name?: string;
+            description?: string;
+            searchCriteria?: components["schemas"]["OpportunitySearchRequest"];
+            alertEnabled?: boolean;
+            /** @enum {string} */
+            alertFrequency?: "INSTANT" | "DAILY" | "WEEKLY";
+        };
+        SavedSearchDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            searchCriteria?: components["schemas"]["OpportunitySearchRequest"];
+            alertEnabled?: boolean;
+            /** @enum {string} */
+            alertFrequency?: "INSTANT" | "DAILY" | "WEEKLY";
+            isDefault?: boolean;
+            /** Format: int32 */
+            lastResultCount?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateNotesRequest: {
+            notes?: string;
+            tags?: string;
+        };
+        OpportunityDto: {
+            id?: string;
+            title?: string;
+            solicitationNumber?: string;
+            description?: string;
+            /** Format: date */
+            postedDate?: string;
+            /** Format: date */
+            responseDeadline?: string;
+            /** Format: date */
+            archiveDate?: string;
+            naicsCode?: string;
+            naicsDescription?: string;
+            pscCode?: string;
+            type?: string;
+            typeDescription?: string;
+            url?: string;
+            agency?: string;
+            agencyCode?: string;
+            subAgency?: string;
+            office?: string;
+            setAsideType?: string;
+            setAsideDescription?: string;
+            placeOfPerformanceCity?: string;
+            placeOfPerformanceState?: string;
+            placeOfPerformanceCountry?: string;
+            placeOfPerformanceZip?: string;
+            awardAmount?: number;
+            estimatedValueLow?: number;
+            estimatedValueHigh?: number;
+            contractType?: string;
+            contractNumber?: string;
+            incumbentContractor?: string;
+            isRecoveryAct?: boolean;
+            sbirPhase?: string;
+            isSbir?: boolean;
+            isSttr?: boolean;
+            primaryContactName?: string;
+            primaryContactEmail?: string;
+            primaryContactPhone?: string;
+            secondaryContactName?: string;
+            secondaryContactEmail?: string;
+            source?: string;
+            /** @enum {string} */
+            status?: "ACTIVE" | "CLOSED" | "CANCELLED" | "AWARDED" | "ARCHIVED";
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            isPastDeadline?: boolean;
+            isClosingSoon?: boolean;
+            /** Format: int64 */
+            daysUntilDeadline?: number;
+        };
+        SavedOpportunityDto: {
+            /** Format: uuid */
+            id?: string;
+            opportunity?: components["schemas"]["OpportunityDto"];
+            notes?: string;
+            tags?: string;
+            /** Format: date-time */
+            savedAt?: string;
+        };
+        CreateRoleRequest: {
+            name: string;
+            description?: string;
+            permissions?: string[];
+            isSystemRole?: boolean;
+        };
+        RoleResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            permissions?: string[];
+            isSystemRole?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        CreateReportRequest: {
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            reportType?: "PIPELINE_SUMMARY" | "PIPELINE_BY_STAGE" | "PIPELINE_BY_VALUE" | "PIPELINE_FORECAST" | "WIN_LOSS_ANALYSIS" | "WIN_RATE_BY_AGENCY" | "WIN_RATE_BY_NAICS" | "WIN_RATE_BY_SET_ASIDE" | "CONTRACT_PORTFOLIO" | "CONTRACT_PERFORMANCE" | "CONTRACT_EXPIRING" | "CONTRACT_VALUE_SUMMARY" | "REVENUE_FORECAST" | "BACKLOG_REPORT" | "AR_AGING" | "INVOICE_STATUS" | "BUDGET_VARIANCE" | "BURN_RATE" | "CERTIFICATION_STATUS" | "EXPIRING_CERTIFICATIONS" | "CLEARANCE_STATUS" | "COMPLIANCE_OVERVIEW" | "USER_ACTIVITY" | "OPPORTUNITY_ACTIVITY" | "BD_ACTIVITY" | "CUSTOM";
+            queryConfig?: string;
+            /** @enum {string} */
+            format?: "HTML" | "PDF" | "EXCEL" | "CSV" | "JSON";
+            isScheduled?: boolean;
+            /** @enum {string} */
+            frequency?: "DAILY" | "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "QUARTERLY" | "ANNUALLY" | "CUSTOM";
+            recipients?: string;
+        };
+        ReportResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            reportType?: "PIPELINE_SUMMARY" | "PIPELINE_BY_STAGE" | "PIPELINE_BY_VALUE" | "PIPELINE_FORECAST" | "WIN_LOSS_ANALYSIS" | "WIN_RATE_BY_AGENCY" | "WIN_RATE_BY_NAICS" | "WIN_RATE_BY_SET_ASIDE" | "CONTRACT_PORTFOLIO" | "CONTRACT_PERFORMANCE" | "CONTRACT_EXPIRING" | "CONTRACT_VALUE_SUMMARY" | "REVENUE_FORECAST" | "BACKLOG_REPORT" | "AR_AGING" | "INVOICE_STATUS" | "BUDGET_VARIANCE" | "BURN_RATE" | "CERTIFICATION_STATUS" | "EXPIRING_CERTIFICATIONS" | "CLEARANCE_STATUS" | "COMPLIANCE_OVERVIEW" | "USER_ACTIVITY" | "OPPORTUNITY_ACTIVITY" | "BD_ACTIVITY" | "CUSTOM";
+            queryConfig?: string;
+            /** @enum {string} */
+            format?: "HTML" | "PDF" | "EXCEL" | "CSV" | "JSON";
+            isScheduled?: boolean;
+            /** @enum {string} */
+            frequency?: "DAILY" | "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "QUARTERLY" | "ANNUALLY" | "CUSTOM";
+            recipients?: string;
+            /** Format: date-time */
+            lastRunAt?: string;
+            /** Format: int32 */
+            runCount?: number;
+            createdByName?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        ColumnDefinition: {
+            field?: string;
+            label?: string;
+            /** Format: int32 */
+            width?: number;
+            visible?: boolean;
+        };
+        FilterCondition: {
+            field?: string;
+            operator?: string;
+            value?: string;
+        };
+        UpdateReportRequest: {
+            name?: string;
+            description?: string;
+            columns?: components["schemas"]["ColumnDefinition"][];
+            filters?: components["schemas"]["FilterCondition"][];
+            sortBy?: string;
+            /** @enum {string} */
+            sortDirection?: "ASC" | "DESC";
+            isPublic?: boolean;
+        };
+        ReportDefinitionResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            entityType?: "OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET";
+            columns?: components["schemas"]["ColumnDefinition"][];
+            filters?: components["schemas"]["FilterCondition"][];
+            sortBy?: string;
+            /** @enum {string} */
+            sortDirection?: "ASC" | "DESC";
+            isPublic?: boolean;
+            /** Format: int32 */
+            runCount?: number;
+            /** Format: date-time */
+            lastRunAt?: string;
+            createdByName?: string;
+            /** Format: uuid */
+            createdById?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdatePreferencesRequest: {
+            /** @enum {string} */
+            theme?: "LIGHT" | "DARK" | "SYSTEM";
+            emailNotifications?: boolean;
+            dashboardLayout?: string;
+            timezone?: string;
+            language?: string;
+        };
+        UserPreferenceDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            userId?: string;
+            /** @enum {string} */
+            theme?: "LIGHT" | "DARK" | "SYSTEM";
+            emailNotifications?: boolean;
+            dashboardLayout?: string;
+            timezone?: string;
+            language?: string;
+        };
+        UpdateTaskRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: int32 */
+            storyPoints?: number;
+            /** Format: uuid */
+            assigneeId?: string;
+            /** Format: date-time */
+            dueDate?: string;
+            labels?: string;
+        };
+        SprintTaskDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            sprintId?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: int32 */
+            storyPoints?: number;
+            /** Format: int32 */
+            position?: number;
+            /** Format: uuid */
+            assigneeId?: string;
+            assigneeName?: string;
+            /** Format: date-time */
+            dueDate?: string;
+            labels?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateSprintRequest: {
+            name?: string;
+            description?: string;
+            goal?: string;
+            /** Format: date */
+            startDate?: string;
+            /** Format: date */
+            endDate?: string;
+        };
+        SprintDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            goal?: string;
+            /** @enum {string} */
+            status?: "PLANNING" | "ACTIVE" | "COMPLETED" | "CANCELLED";
+            /** Format: date */
+            startDate?: string;
+            /** Format: date */
+            endDate?: string;
+            tasks?: components["schemas"]["SprintTaskDto"][];
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateScopeItemRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            itemType?: "PHASE" | "TASK" | "SUBTASK" | "MILESTONE" | "DELIVERABLE" | "WORK_PACKAGE";
+            /** Format: int32 */
+            priority?: number;
+            estimatedHours?: number;
+            actualHours?: number;
+            remainingHours?: number;
+            estimatedCost?: number;
+            actualCost?: number;
+            /** Format: int32 */
+            percentComplete?: number;
+            /** Format: date */
+            plannedStartDate?: string;
+            /** Format: date */
+            plannedEndDate?: string;
+            /** Format: date */
+            actualStartDate?: string;
+            /** Format: date */
+            actualEndDate?: string;
+            /** Format: uuid */
+            assignedToId?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            /** Format: uuid */
+            clinId?: string;
+            /** Format: uuid */
+            deliverableId?: string;
+            acceptanceCriteria?: string;
+            laborCategory?: string;
+            notes?: string;
+            isBillable?: boolean;
+            isMilestone?: boolean;
+        };
+        ScopeItemDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            /** Format: uuid */
+            parentId?: string;
+            wbsCode?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            itemType?: "PHASE" | "TASK" | "SUBTASK" | "MILESTONE" | "DELIVERABLE" | "WORK_PACKAGE";
+            /** @enum {string} */
+            status?: "PENDING" | "ACTIVE" | "COMPLETED" | "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "CANCELLED" | "DEFERRED";
+            /** Format: int32 */
+            sortOrder?: number;
+            /** Format: int32 */
+            priority?: number;
+            estimatedHours?: number;
+            actualHours?: number;
+            remainingHours?: number;
+            estimatedCost?: number;
+            actualCost?: number;
+            /** Format: int32 */
+            percentComplete?: number;
+            /** Format: date */
+            plannedStartDate?: string;
+            /** Format: date */
+            plannedEndDate?: string;
+            /** Format: date */
+            actualStartDate?: string;
+            /** Format: date */
+            actualEndDate?: string;
+            /** Format: uuid */
+            assignedToId?: string;
+            assignedToName?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            ownerName?: string;
+            /** Format: uuid */
+            clinId?: string;
+            clinNumber?: string;
+            /** Format: uuid */
+            deliverableId?: string;
+            deliverableTitle?: string;
+            acceptanceCriteria?: string;
+            laborCategory?: string;
+            notes?: string;
+            isBillable?: boolean;
+            isMilestone?: boolean;
+            isOverdue?: boolean;
+            isBehindSchedule?: boolean;
+            isOverBudget?: boolean;
+            /** Format: int32 */
+            level?: number;
+            /** Format: int64 */
+            childCount?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateMilestoneRequest: {
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            milestoneType?: "KICKOFF" | "DESIGN_REVIEW" | "DEVELOPMENT" | "TESTING" | "DELIVERY" | "ACCEPTANCE" | "PAYMENT" | "REPORTING" | "REVIEW" | "PHASE_GATE" | "COMPLETION" | "OTHER";
+            /** Format: date */
+            plannedStartDate?: string;
+            /** Format: date */
+            plannedEndDate?: string;
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            actualStartDate?: string;
+            /** Format: date */
+            actualEndDate?: string;
+            /** Format: int32 */
+            percentComplete?: number;
+            isCriticalPath?: boolean;
+            paymentAmount?: number;
+            isPaymentMilestone?: boolean;
+            /** Format: uuid */
+            ownerId?: string;
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: int32 */
+            sortOrder?: number;
+            notes?: string;
+        };
+        MilestoneDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "COMPLETED" | "CANCELLED" | "AT_RISK" | "DELAYED";
+            /** @enum {string} */
+            milestoneType?: "KICKOFF" | "DESIGN_REVIEW" | "DEVELOPMENT" | "TESTING" | "DELIVERY" | "ACCEPTANCE" | "PAYMENT" | "REPORTING" | "REVIEW" | "PHASE_GATE" | "COMPLETION" | "OTHER";
+            /** Format: date */
+            plannedStartDate?: string;
+            /** Format: date */
+            plannedEndDate?: string;
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            actualStartDate?: string;
+            /** Format: date */
+            actualEndDate?: string;
+            /** Format: date */
+            completedDate?: string;
+            /** Format: int32 */
+            percentComplete?: number;
+            isCriticalPath?: boolean;
+            paymentAmount?: number;
+            isPaymentMilestone?: boolean;
+            /** Format: uuid */
+            ownerId?: string;
+            ownerName?: string;
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: int32 */
+            sortOrder?: number;
+            /** Format: uuid */
+            deliverableId?: string;
+            deliverableTitle?: string;
+            dependencyIds?: string[];
+            dependentIds?: string[];
+            notes?: string;
+            completionNotes?: string;
+            isOverdue?: boolean;
+            isDueSoon?: boolean;
+            canStart?: boolean;
+            /** Format: int64 */
+            daysUntilDue?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        StatusUpdateRequest: {
+            /** @enum {string} */
+            status?: "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "COMPLETED" | "CANCELLED" | "AT_RISK" | "DELAYED";
+        };
+        CreateLaborRateRequest: {
+            /** Format: uuid */
+            contractId?: string;
+            laborCategory?: string;
+            laborCategoryDescription?: string;
+            /** Format: int32 */
+            minYearsExperience?: number;
+            /** Format: int32 */
+            maxYearsExperience?: number;
+            educationRequirement?: string;
+            baseRate?: number;
+            fringeRate?: number;
+            overheadRate?: number;
+            gaRate?: number;
+            feeRate?: number;
+            billingRate?: number;
+            rateType?: string;
+            /** Format: date */
+            effectiveDate?: string;
+            /** Format: date */
+            endDate?: string;
+            /** Format: int32 */
+            fiscalYear?: number;
+            notes?: string;
+        };
+        LaborRateResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            laborCategory?: string;
+            laborCategoryDescription?: string;
+            /** Format: int32 */
+            minYearsExperience?: number;
+            /** Format: int32 */
+            maxYearsExperience?: number;
+            educationRequirement?: string;
+            baseRate?: number;
+            fringeRate?: number;
+            overheadRate?: number;
+            gaRate?: number;
+            feeRate?: number;
+            fullyBurdenedRate?: number;
+            billingRate?: number;
+            rateType?: string;
+            /** Format: date */
+            effectiveDate?: string;
+            /** Format: date */
+            endDate?: string;
+            /** Format: int32 */
+            fiscalYear?: number;
+            notes?: string;
+            isActive?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+        };
         UpdateLaborRateRequest: {
             baseRate?: number;
             fringeRate?: number;
@@ -10936,6 +10036,7 @@ export interface components {
             /** Format: int32 */
             copiesRequired?: number;
             notes?: string;
+            scopeItems?: components["schemas"]["ScopeItem"][];
             /** Format: date-time */
             createdAt?: string;
             /** Format: date-time */
@@ -11038,6 +10139,121 @@ export interface components {
             /** Format: date-time */
             updatedAt?: string;
         };
+        ScopeChange: {
+            /** Format: uuid */
+            id?: string;
+            contract?: components["schemas"]["Contract"];
+            scopeItem?: components["schemas"]["ScopeItem"];
+            changeNumber?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            changeType?: "ADD" | "MODIFY" | "REMOVE" | "ADDITION" | "MODIFICATION" | "DELETION" | "REBASELINE" | "CLARIFICATION" | "CORRECTION" | "DESCOPE";
+            /** @enum {string} */
+            status?: "PENDING" | "APPROVED" | "REJECTED" | "DRAFT" | "PENDING_APPROVAL" | "UNDER_REVIEW" | "IMPLEMENTED" | "WITHDRAWN" | "ON_HOLD";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            hoursImpact?: number;
+            costImpact?: number;
+            /** Format: int32 */
+            scheduleImpactDays?: number;
+            impactAnalysis?: string;
+            impactAssessment?: string;
+            justification?: string;
+            businessCase?: string;
+            previousEstimatedHours?: number;
+            newEstimatedHours?: number;
+            previousEstimatedCost?: number;
+            newEstimatedCost?: number;
+            /** Format: date */
+            previousEndDate?: string;
+            /** Format: date */
+            newEndDate?: string;
+            requestedBy?: components["schemas"]["User"];
+            /** Format: date */
+            requestedDate?: string;
+            requestorName?: string;
+            requestorEmail?: string;
+            reviewedBy?: components["schemas"]["User"];
+            /** Format: date */
+            reviewedDate?: string;
+            /** Format: date-time */
+            reviewedAt?: string;
+            reviewComments?: string;
+            approvedBy?: components["schemas"]["User"];
+            /** Format: date */
+            approvedDate?: string;
+            approvalComments?: string;
+            rejectionReason?: string;
+            /** Format: date */
+            implementationDate?: string;
+            implementationNotes?: string;
+            modification?: components["schemas"]["ContractModification"];
+            externalReference?: string;
+            internalNotes?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            pending?: boolean;
+            approved?: boolean;
+            rejected?: boolean;
+        };
+        ScopeItem: {
+            /** Format: uuid */
+            id?: string;
+            tenant?: components["schemas"]["Tenant"];
+            contract?: components["schemas"]["Contract"];
+            parent?: components["schemas"]["ScopeItem"];
+            children?: components["schemas"]["ScopeItem"][];
+            wbsCode?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            itemType?: "PHASE" | "TASK" | "SUBTASK" | "MILESTONE" | "DELIVERABLE" | "WORK_PACKAGE";
+            /** @enum {string} */
+            status?: "PENDING" | "ACTIVE" | "COMPLETED" | "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "CANCELLED" | "DEFERRED";
+            /** Format: int32 */
+            sortOrder?: number;
+            /** Format: int32 */
+            priority?: number;
+            estimatedHours?: number;
+            actualHours?: number;
+            remainingHours?: number;
+            estimatedCost?: number;
+            actualCost?: number;
+            /** Format: int32 */
+            percentComplete?: number;
+            /** Format: date */
+            plannedStartDate?: string;
+            /** Format: date */
+            plannedEndDate?: string;
+            /** Format: date */
+            actualStartDate?: string;
+            /** Format: date */
+            actualEndDate?: string;
+            assignedTo?: components["schemas"]["User"];
+            owner?: components["schemas"]["User"];
+            clin?: components["schemas"]["ContractClin"];
+            deliverable?: components["schemas"]["ContractDeliverable"];
+            acceptanceCriteria?: string;
+            laborCategory?: string;
+            notes?: string;
+            isBillable?: boolean;
+            isMilestone?: boolean;
+            scopeChanges?: components["schemas"]["ScopeChange"][];
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            /** Format: int32 */
+            level?: number;
+            overBudget?: boolean;
+            overdue?: boolean;
+            behindSchedule?: boolean;
+            varianceCost?: number;
+            varianceHours?: number;
+        };
         UpdateLineItemRequest: {
             description?: string;
             hours?: number;
@@ -11087,8 +10303,8 @@ export interface components {
             createdAt?: string;
             /** Format: date-time */
             updatedAt?: string;
-            overdue?: boolean;
             balance?: number;
+            overdue?: boolean;
             /** Format: int64 */
             daysOutstanding?: number;
         };
@@ -11172,6 +10388,44 @@ export interface components {
             overBudget?: boolean;
             remainingBudget?: number;
             variance?: number;
+        };
+        UpdateFeatureRequestRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            category?: "OPPORTUNITIES" | "CONTRACTS" | "PROPOSALS" | "COMPLIANCE" | "REPORTING" | "INTEGRATIONS" | "UI_UX" | "SECURITY" | "PERFORMANCE" | "OTHER";
+        };
+        FeatureRequestDto: {
+            /** Format: uuid */
+            id?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "SUBMITTED" | "UNDER_REVIEW" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DECLINED" | "DUPLICATE";
+            /** @enum {string} */
+            category?: "OPPORTUNITIES" | "CONTRACTS" | "PROPOSALS" | "COMPLIANCE" | "REPORTING" | "INTEGRATIONS" | "UI_UX" | "SECURITY" | "PERFORMANCE" | "OTHER";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: int32 */
+            voteCount?: number;
+            hasVoted?: boolean;
+            /** Format: uuid */
+            submittedById?: string;
+            submittedByName?: string;
+            adminNotes?: string;
+            targetRelease?: string;
+            /** Format: date-time */
+            completedAt?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateAdminFieldsRequest: {
+            adminNotes?: string;
+            targetRelease?: string;
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
         };
         UpdateDocumentRequest: {
             /** Format: uuid */
@@ -11408,6 +10662,495 @@ export interface components {
             /** Format: double */
             winRate?: number;
         };
+        CreateDeliverableRequest: {
+            /** Format: uuid */
+            contractId?: string;
+            cdrlNumber?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            deliverableType?: "REPORT" | "DATA" | "SOFTWARE" | "DOCUMENTATION" | "HARDWARE" | "SERVICES" | "MILESTONE" | "STATUS_REPORT" | "FINANCIAL_REPORT" | "TECHNICAL_REPORT" | "OTHER";
+            /** @enum {string} */
+            frequency?: "ONE_TIME" | "DAILY" | "WEEKLY" | "BI_WEEKLY" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            submittedDate?: string;
+            /** Format: date */
+            acceptedDate?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            notes?: string;
+        };
+        DeliverableResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            cdrlNumber?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            deliverableType?: "REPORT" | "DATA" | "SOFTWARE" | "DOCUMENTATION" | "HARDWARE" | "SERVICES" | "MILESTONE" | "STATUS_REPORT" | "FINANCIAL_REPORT" | "TECHNICAL_REPORT" | "OTHER";
+            /** @enum {string} */
+            frequency?: "ONE_TIME" | "DAILY" | "WEEKLY" | "BI_WEEKLY" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            submittedDate?: string;
+            /** Format: date */
+            acceptedDate?: string;
+            /** @enum {string} */
+            status?: "PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED";
+            /** Format: int64 */
+            daysUntilDue?: number;
+            /** Format: double */
+            progressPercentage?: number;
+            /** Format: uuid */
+            ownerId?: string;
+            ownerName?: string;
+            notes?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        UpdateComplianceItemRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "PENDING" | "IN_PROGRESS" | "COMPLIANT" | "NON_COMPLIANT" | "REMEDIATION_REQUIRED" | "UNDER_REVIEW" | "NOT_APPLICABLE" | "WAIVED";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: date */
+            dueDate?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            evidenceUrl?: string;
+            evidenceNotes?: string;
+            remediationPlan?: string;
+            /** Format: date */
+            remediationDeadline?: string;
+            notes?: string;
+        };
+        ComplianceItemDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            /** @enum {string} */
+            complianceType?: "FAR_CLAUSE" | "DFARS_CLAUSE" | "AGENCY_CLAUSE" | "CMMC" | "NIST_800_171" | "NIST_800_53" | "FEDRAMP" | "ITAR" | "EAR" | "PERSONNEL_CLEARANCE" | "FACILITY_CLEARANCE" | "CUI_HANDLING" | "SMALL_BUSINESS_REPORTING" | "SUBCONTRACTING_PLAN" | "COST_ACCOUNTING" | "INCURRED_COST" | "OCI" | "LOBBYING_DISCLOSURE" | "ETHICS_TRAINING" | "SERVICE_CONTRACT_ACT" | "DAVIS_BACON" | "AFFIRMATIVE_ACTION" | "INSURANCE" | "BONDING" | "SECTION_889" | "BUY_AMERICAN" | "TRADE_AGREEMENTS" | "OTHER";
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "PENDING" | "IN_PROGRESS" | "COMPLIANT" | "NON_COMPLIANT" | "REMEDIATION_REQUIRED" | "UNDER_REVIEW" | "NOT_APPLICABLE" | "WAIVED";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            completedDate?: string;
+            /** Format: date */
+            lastReviewDate?: string;
+            /** Format: date */
+            nextReviewDate?: string;
+            /** @enum {string} */
+            frequency?: "ONE_TIME" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
+            clauseNumber?: string;
+            clauseTitle?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            ownerName?: string;
+            evidenceRequired?: boolean;
+            evidenceUrl?: string;
+            evidenceNotes?: string;
+            verificationMethod?: string;
+            verifiedBy?: string;
+            /** Format: date */
+            verificationDate?: string;
+            remediationPlan?: string;
+            /** Format: date */
+            remediationDeadline?: string;
+            notes?: string;
+            isOverdue?: boolean;
+            isDueSoon?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateClearanceRequest: {
+            /** @enum {string} */
+            status?: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
+            /** Format: date */
+            expirationDate?: string;
+            /** Format: date */
+            reinvestigationDate?: string;
+            polygraphType?: string;
+            /** Format: date */
+            polygraphDate?: string;
+            sciAccess?: boolean;
+            sciPrograms?: string;
+            notes?: string;
+        };
+        ClearanceDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            userId?: string;
+            userName?: string;
+            entityName?: string;
+            /** @enum {string} */
+            clearanceType?: "PERSONNEL" | "FACILITY" | "INTERIM_PERSONNEL" | "INTERIM_FACILITY";
+            /** @enum {string} */
+            clearanceLevel?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
+            /** @enum {string} */
+            status?: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
+            /** Format: date */
+            investigationDate?: string;
+            /** Format: date */
+            grantDate?: string;
+            /** Format: date */
+            expirationDate?: string;
+            /** Format: date */
+            reinvestigationDate?: string;
+            polygraphType?: string;
+            /** Format: date */
+            polygraphDate?: string;
+            sponsoringAgency?: string;
+            caseNumber?: string;
+            cageCode?: string;
+            facilityAddress?: string;
+            fsoName?: string;
+            fsoEmail?: string;
+            fsoPhone?: string;
+            sciAccess?: boolean;
+            sciPrograms?: string;
+            sapAccess?: boolean;
+            notes?: string;
+            isExpiringSoon?: boolean;
+            needsReinvestigation?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateCertificationRequest: {
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
+            /** Format: date */
+            expirationDate?: string;
+            /** Format: date */
+            renewalDate?: string;
+            documentUrl?: string;
+            notes?: string;
+        };
+        CertificationDto: {
+            /** Format: uuid */
+            id?: string;
+            /** @enum {string} */
+            certificationType?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
+            certificateNumber?: string;
+            issuingAgency?: string;
+            /** Format: date */
+            issueDate?: string;
+            /** Format: date */
+            expirationDate?: string;
+            /** Format: date */
+            renewalDate?: string;
+            naicsCode?: string;
+            sizeStandard?: string;
+            uei?: string;
+            cageCode?: string;
+            /** Format: date */
+            samRegistrationDate?: string;
+            /** Format: date */
+            samExpirationDate?: string;
+            /** Format: date */
+            eightAEntryDate?: string;
+            /** Format: date */
+            eightAGraduationDate?: string;
+            /** Format: date */
+            hubzoneCertificationDate?: string;
+            documentUrl?: string;
+            notes?: string;
+            /** Format: int64 */
+            daysUntilExpiration?: number;
+            isExpiringSoon?: boolean;
+            isExpired?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        CreateClearanceRequest: {
+            /** Format: uuid */
+            userId?: string;
+            /** @enum {string} */
+            clearanceLevel?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
+            /** @enum {string} */
+            clearanceType?: "PERSONNEL" | "FACILITY" | "INTERIM_PERSONNEL" | "INTERIM_FACILITY";
+            /** Format: date */
+            investigationDate?: string;
+            /** Format: date */
+            grantDate?: string;
+            /** Format: date */
+            expirationDate?: string;
+            polygraphType?: string;
+            /** Format: date */
+            polygraphDate?: string;
+            sponsoringAgency?: string;
+            notes?: string;
+        };
+        ClearanceResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            userId?: string;
+            userName?: string;
+            /** @enum {string} */
+            clearanceLevel?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
+            /** @enum {string} */
+            clearanceType?: "PERSONNEL" | "FACILITY" | "INTERIM_PERSONNEL" | "INTERIM_FACILITY";
+            /** @enum {string} */
+            status?: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
+            /** Format: date */
+            investigationDate?: string;
+            /** Format: date */
+            grantDate?: string;
+            /** Format: date */
+            expirationDate?: string;
+            /** Format: int64 */
+            daysUntilExpiration?: number;
+            polygraphType?: string;
+            /** Format: date */
+            polygraphDate?: string;
+            sponsoringAgency?: string;
+            notes?: string;
+        };
+        CreateCertificationRequest: {
+            /** @enum {string} */
+            type?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
+            name?: string;
+            issuingAuthority?: string;
+            certificationNumber?: string;
+            /** Format: date */
+            issueDate?: string;
+            /** Format: date */
+            expirationDate?: string;
+            documentUrl?: string;
+            notes?: string;
+        };
+        CertificationResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** @enum {string} */
+            type?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
+            name?: string;
+            issuingAuthority?: string;
+            certificationNumber?: string;
+            /** Format: date */
+            issueDate?: string;
+            /** Format: date */
+            expirationDate?: string;
+            /** @enum {string} */
+            status?: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
+            /** Format: int64 */
+            daysUntilExpiration?: number;
+            documentUrl?: string;
+            notes?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        CreateBudgetItemRequest: {
+            /** Format: uuid */
+            contractId?: string;
+            /** Format: uuid */
+            clinId?: string;
+            /** @enum {string} */
+            category?: "DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER";
+            name?: string;
+            description?: string;
+            budgetedAmount?: number;
+            actualAmount?: number;
+            /** Format: date */
+            periodStart?: string;
+            /** Format: date */
+            periodEnd?: string;
+            /** Format: int32 */
+            fiscalYear?: number;
+            notes?: string;
+        };
+        BudgetItemResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            /** Format: uuid */
+            clinId?: string;
+            clinNumber?: string;
+            /** @enum {string} */
+            category?: "DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER";
+            name?: string;
+            description?: string;
+            budgetedAmount?: number;
+            actualAmount?: number;
+            variance?: number;
+            variancePercent?: number;
+            /** Format: date */
+            periodStart?: string;
+            /** Format: date */
+            periodEnd?: string;
+            /** Format: int32 */
+            fiscalYear?: number;
+            notes?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        UpdatePipelineRequest: {
+            name?: string;
+            description?: string;
+        };
+        PipelineDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            isDefault?: boolean;
+            isArchived?: boolean;
+            stages?: components["schemas"]["StageDto"][];
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        StageDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            /** Format: int32 */
+            position?: number;
+            color?: string;
+            /** @enum {string} */
+            stageType?: "INITIAL" | "IN_PROGRESS" | "WON" | "LOST";
+            /** Format: int32 */
+            probability?: number;
+        };
+        UpdateStageRequest: {
+            name?: string;
+            description?: string;
+            color?: string;
+            /** @enum {string} */
+            stageType?: "INITIAL" | "IN_PROGRESS" | "WON" | "LOST";
+            /** Format: int32 */
+            probability?: number;
+        };
+        UpdateOpportunityAlertRequest: {
+            name?: string;
+            description?: string;
+            naicsCodes?: string[];
+            keywords?: string[];
+            minValue?: number;
+            maxValue?: number;
+            enabled?: boolean;
+        };
+        OpportunityAlertDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            naicsCodes?: string[];
+            keywords?: string[];
+            minValue?: number;
+            maxValue?: number;
+            enabled?: boolean;
+            /** Format: date-time */
+            lastCheckedAt?: string;
+            /** Format: int32 */
+            lastMatchCount?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        CompleteStepRequest: {
+            /** @description Whether to skip this step */
+            skipped?: boolean;
+            /** @description Step-specific data (JSON) */
+            data?: string;
+        };
+        /** @description Onboarding progress information */
+        OnboardingStepDTO: {
+            /**
+             * Format: uuid
+             * @description Progress ID
+             */
+            id?: string;
+            /**
+             * Format: uuid
+             * @description Tenant ID
+             */
+            tenantId?: string;
+            /**
+             * Format: int32
+             * @description Current step number (1-5)
+             */
+            currentStep?: number;
+            /** @description Step 1: Company profile complete */
+            companyProfileComplete?: boolean;
+            /** @description Step 2: Certifications complete */
+            certificationsComplete?: boolean;
+            /** @description Step 3: NAICS codes complete */
+            naicsComplete?: boolean;
+            /** @description Step 4: Team invitations complete */
+            teamInviteComplete?: boolean;
+            /** @description Step 5: Integrations complete */
+            integrationComplete?: boolean;
+            /** @description User dismissed onboarding */
+            dismissed?: boolean;
+            /**
+             * Format: int32
+             * @description Completion percentage (0-100)
+             */
+            completionPercentage?: number;
+            /** @description All required steps complete */
+            complete?: boolean;
+            /**
+             * Format: date-time
+             * @description When onboarding started
+             */
+            startedAt?: string;
+            /**
+             * Format: date-time
+             * @description When onboarding completed
+             */
+            completedAt?: string;
+        };
+        NotificationDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            userId?: string;
+            /** @enum {string} */
+            type?: "ALERT" | "SYSTEM" | "INFO";
+            title?: string;
+            message?: string;
+            read?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        MarkAllReadResponse: {
+            /** Format: int32 */
+            markedCount?: number;
+        };
         UpdateOrganizationRequest: {
             name?: string;
             legalName?: string;
@@ -11622,6 +11365,203 @@ export interface components {
             /** Format: uuid */
             ownerId?: string;
         };
+        UpdateContractRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "DRAFT" | "AWARDED" | "PENDING_SIGNATURE" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "TERMINATED" | "CANCELLED" | "CLOSED";
+            agency?: string;
+            /** Format: date */
+            popStartDate?: string;
+            /** Format: date */
+            popEndDate?: string;
+            totalValue?: number;
+            fundedValue?: number;
+            contractingOfficerName?: string;
+            contractingOfficerEmail?: string;
+            corName?: string;
+            corEmail?: string;
+            /** Format: uuid */
+            programManagerId?: string;
+            /** Format: uuid */
+            contractManagerId?: string;
+            internalNotes?: string;
+        };
+        ContractDto: {
+            /** Format: uuid */
+            id?: string;
+            contractNumber?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            contractType?: "FIRM_FIXED_PRICE" | "TIME_AND_MATERIALS" | "COST_PLUS_FIXED_FEE" | "COST_PLUS_INCENTIVE_FEE" | "COST_PLUS_AWARD_FEE" | "COST_REIMBURSEMENT" | "INDEFINITE_DELIVERY" | "BLANKET_PURCHASE_AGREEMENT" | "BASIC_ORDERING_AGREEMENT" | "TASK_ORDER" | "DELIVERY_ORDER" | "GRANT" | "COOPERATIVE_AGREEMENT" | "OTHER";
+            /** @enum {string} */
+            status?: "DRAFT" | "AWARDED" | "PENDING_SIGNATURE" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "TERMINATED" | "CANCELLED" | "CLOSED";
+            /** Format: uuid */
+            parentContractId?: string;
+            opportunityId?: string;
+            agency?: string;
+            agencyCode?: string;
+            subAgency?: string;
+            office?: string;
+            /** Format: date */
+            popStartDate?: string;
+            /** Format: date */
+            popEndDate?: string;
+            /** Format: date */
+            basePeriodEndDate?: string;
+            /** Format: date */
+            finalOptionEndDate?: string;
+            baseValue?: number;
+            totalValue?: number;
+            ceilingValue?: number;
+            fundedValue?: number;
+            naicsCode?: string;
+            pscCode?: string;
+            placeOfPerformanceCity?: string;
+            placeOfPerformanceState?: string;
+            placeOfPerformanceCountry?: string;
+            contractingOfficerName?: string;
+            contractingOfficerEmail?: string;
+            corName?: string;
+            corEmail?: string;
+            primeContractor?: string;
+            isSubcontract?: boolean;
+            contractVehicle?: string;
+            setAsideType?: string;
+            requiresClearance?: boolean;
+            clearanceLevel?: string;
+            /** Format: uuid */
+            programManagerId?: string;
+            programManagerName?: string;
+            /** Format: uuid */
+            contractManagerId?: string;
+            contractManagerName?: string;
+            /** Format: date */
+            awardDate?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        UpdateClinRequest: {
+            description?: string;
+            totalValue?: number;
+            fundedAmount?: number;
+            invoicedAmount?: number;
+            notes?: string;
+        };
+        ClinDto: {
+            /** Format: uuid */
+            id?: string;
+            clinNumber?: string;
+            description?: string;
+            /** @enum {string} */
+            clinType?: "BASE" | "OPTION" | "DATA" | "SERVICES" | "SUPPLIES" | "OTHER";
+            /** @enum {string} */
+            pricingType?: "FIRM_FIXED_PRICE" | "TIME_AND_MATERIALS" | "LABOR_HOUR" | "COST_PLUS_FIXED_FEE" | "COST_PLUS_INCENTIVE_FEE" | "COST_REIMBURSEMENT";
+            unitOfIssue?: string;
+            quantity?: number;
+            unitPrice?: number;
+            totalValue?: number;
+            fundedAmount?: number;
+            obligatedAmount?: number;
+            invoicedAmount?: number;
+            remainingFunds?: number;
+            naicsCode?: string;
+            pscCode?: string;
+            isOption?: boolean;
+            /** Format: int32 */
+            optionPeriod?: number;
+            notes?: string;
+        };
+        CreateContentRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            contentType?: "PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER";
+            content?: string;
+            tags?: string;
+            keywords?: string;
+            category?: string;
+            subCategory?: string;
+            naicsCodes?: string;
+            pscCodes?: string;
+        };
+        ContentResponse: {
+            /** Format: uuid */
+            id?: string;
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            contentType?: "PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER";
+            content?: string;
+            tags?: string[];
+            keywords?: string[];
+            category?: string;
+            subCategory?: string;
+            /** Format: int32 */
+            usageCount?: number;
+            /** Format: date-time */
+            lastUsedAt?: string;
+            /** Format: int32 */
+            wordCount?: number;
+            /** Format: int32 */
+            qualityScore?: number;
+            createdByName?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        CreateCompetitorRequest: {
+            name?: string;
+            uei?: string;
+            cageCode?: string;
+            website?: string;
+            headquartersLocation?: string;
+            /** Format: int32 */
+            employeeCount?: number;
+            estimatedRevenue?: number;
+            primaryNaicsCodes?: string;
+            keyCustomers?: string;
+            contractVehicles?: string;
+            certifications?: string;
+            strengths?: string;
+            weaknesses?: string;
+            winThemes?: string;
+            notes?: string;
+        };
+        CompetitorResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            uei?: string;
+            cageCode?: string;
+            website?: string;
+            headquartersLocation?: string;
+            /** Format: int32 */
+            employeeCount?: number;
+            estimatedRevenue?: number;
+            primaryNaicsCodes?: string;
+            keyCustomers?: string;
+            contractVehicles?: string;
+            certifications?: string;
+            strengths?: string;
+            weaknesses?: string;
+            winThemes?: string;
+            notes?: string;
+            totalContractValue?: number;
+            /** Format: int32 */
+            contractCount?: number;
+            averageContractValue?: number;
+            winRate?: number;
+            isActive?: boolean;
+            /** Format: date-time */
+            lastActivityDate?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
         CaptureAction: {
             /** Format: uuid */
             id?: string;
@@ -11701,8 +11641,31 @@ export interface components {
             createdAt?: string;
             /** Format: date-time */
             updatedAt?: string;
-            lowProbability?: boolean;
             highProbability?: boolean;
+            lowProbability?: boolean;
+        };
+        UpdatePlanRequest: {
+            /** @enum {string} */
+            plan?: "FREE" | "STARTER" | "PROFESSIONAL" | "ENTERPRISE";
+        };
+        SubscriptionDto: {
+            /** Format: uuid */
+            id?: string;
+            /** @enum {string} */
+            plan?: "FREE" | "STARTER" | "PROFESSIONAL" | "ENTERPRISE";
+            /** @enum {string} */
+            status?: "ACTIVE" | "CANCELED" | "PAST_DUE" | "TRIALING" | "UNPAID" | "INCOMPLETE" | "INCOMPLETE_EXPIRED" | "PAUSED";
+            /** Format: date-time */
+            currentPeriodStart?: string;
+            /** Format: date-time */
+            currentPeriodEnd?: string;
+            cancelAtPeriodEnd?: boolean;
+            /** Format: date-time */
+            canceledAt?: string;
+            /** Format: date-time */
+            trialStart?: string;
+            /** Format: date-time */
+            trialEnd?: string;
         };
         SavedReport: {
             /** Format: uuid */
@@ -11850,6 +11813,47 @@ export interface components {
             isVisible?: boolean;
             isCollapsed?: boolean;
         };
+        TenantSettingsDTO: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            tenantId?: string;
+            timezone: string;
+            dateFormat: string;
+            currency: string;
+            mfaRequired?: boolean;
+            /** Format: int32 */
+            sessionTimeoutMinutes?: number;
+            /** Format: int32 */
+            passwordExpiryDays?: number;
+            ssoEnabled?: boolean;
+            ssoProvider?: string;
+            ssoConfig?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        TenantBrandingDTO: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            tenantId?: string;
+            logoUrl?: string;
+            faviconUrl?: string;
+            primaryColor?: string;
+            secondaryColor?: string;
+            accentColor?: string;
+            companyName?: string;
+            supportEmail?: string;
+            supportPhone?: string;
+            customCss?: string;
+            loginMessage?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
         WebhookCreatedResponse: {
             /** Format: uuid */
             id?: string;
@@ -11909,30 +11913,6 @@ export interface components {
             acceptedAt?: string;
             /** Format: date-time */
             createdAt?: string;
-        };
-        CreateSprintRequest: {
-            name: string;
-            description?: string;
-            goal?: string;
-            /** Format: date */
-            startDate?: string;
-            /** Format: date */
-            endDate?: string;
-        };
-        CreateTaskRequest: {
-            title: string;
-            description?: string;
-            /** @enum {string} */
-            status?: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            storyPoints?: number;
-            /** Format: uuid */
-            assigneeId?: string;
-            /** Format: date-time */
-            dueDate?: string;
-            labels?: string;
         };
         FacetedSearchRequest: {
             query?: string;
@@ -11994,17 +11974,115 @@ export interface components {
             /** Format: int64 */
             offset?: number;
             sort?: components["schemas"]["SortObject"];
-            unpaged?: boolean;
-            paged?: boolean;
-            /** Format: int32 */
-            pageSize?: number;
             /** Format: int32 */
             pageNumber?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            paged?: boolean;
+            unpaged?: boolean;
         };
         SortObject: {
             empty?: boolean;
             sorted?: boolean;
             unsorted?: boolean;
+        };
+        CreateSavedSearchRequest: {
+            name?: string;
+            description?: string;
+            searchCriteria?: components["schemas"]["OpportunitySearchRequest"];
+            alertEnabled?: boolean;
+            /** @enum {string} */
+            alertFrequency?: "INSTANT" | "DAILY" | "WEEKLY";
+        };
+        SaveOpportunityRequest: {
+            opportunityId?: string;
+            notes?: string;
+            tags?: string;
+        };
+        ReportExecutionResult: {
+            /** Format: uuid */
+            reportId?: string;
+            reportName?: string;
+            /** @enum {string} */
+            entityType?: "OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET";
+            columns?: components["schemas"]["ColumnDefinition"][];
+            data?: {
+                [key: string]: Record<string, never>;
+            }[];
+            /** Format: int32 */
+            totalRecords?: number;
+            /** Format: date-time */
+            executedAt?: string;
+        };
+        CreateSourceRequest: {
+            name?: string;
+            shortCode?: string;
+            description?: string;
+            /** @enum {string} */
+            contractLevel?: "FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB";
+            /** @enum {string} */
+            sourceType?: "API" | "RSS" | "WEB_SCRAPE" | "MANUAL" | "FILE_IMPORT";
+            stateCode?: string;
+            stateName?: string;
+            locality?: string;
+            apiEndpoint?: string;
+            apiKeyRequired?: boolean;
+            webPortalUrl?: string;
+            rssFeedUrl?: string;
+            scrapeEnabled?: boolean;
+            scrapeConfig?: string;
+            /** Format: int32 */
+            refreshIntervalHours?: number;
+        };
+        SourceResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            shortCode?: string;
+            description?: string;
+            /** @enum {string} */
+            contractLevel?: "FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB";
+            /** @enum {string} */
+            sourceType?: "API" | "RSS" | "WEB_SCRAPE" | "MANUAL" | "FILE_IMPORT";
+            stateCode?: string;
+            stateName?: string;
+            locality?: string;
+            apiEndpoint?: string;
+            apiKeyRequired?: boolean;
+            webPortalUrl?: string;
+            isActive?: boolean;
+            /** Format: int32 */
+            refreshIntervalHours?: number;
+            /** Format: date-time */
+            lastIngestionAt?: string;
+            /** Format: int32 */
+            lastIngestionCount?: number;
+            /** Format: int64 */
+            totalOpportunitiesIngested?: number;
+        };
+        CreateSprintRequest: {
+            name: string;
+            description?: string;
+            goal?: string;
+            /** Format: date */
+            startDate?: string;
+            /** Format: date */
+            endDate?: string;
+        };
+        CreateTaskRequest: {
+            title: string;
+            description?: string;
+            /** @enum {string} */
+            status?: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: int32 */
+            storyPoints?: number;
+            /** Format: uuid */
+            assigneeId?: string;
+            /** Format: date-time */
+            dueDate?: string;
+            labels?: string;
         };
         CreateScopeItemRequest: {
             /** Format: uuid */
@@ -12135,79 +12213,254 @@ export interface components {
             /** Format: date-time */
             updatedAt?: string;
         };
-        CreateSavedSearchRequest: {
-            name?: string;
-            description?: string;
-            searchCriteria?: components["schemas"]["OpportunitySearchRequest"];
-            alertEnabled?: boolean;
-            /** @enum {string} */
-            alertFrequency?: "INSTANT" | "DAILY" | "WEEKLY";
-        };
-        SaveOpportunityRequest: {
-            opportunityId?: string;
-            notes?: string;
-            tags?: string;
-        };
-        ReportExecutionResult: {
+        CreateMilestoneRequest: {
             /** Format: uuid */
-            reportId?: string;
-            reportName?: string;
-            /** @enum {string} */
-            entityType?: "OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET";
-            columns?: components["schemas"]["ColumnDefinition"][];
-            data?: {
-                [key: string]: Record<string, never>;
-            }[];
-            /** Format: int32 */
-            totalRecords?: number;
-            /** Format: date-time */
-            executedAt?: string;
-        };
-        CreateSourceRequest: {
+            contractId?: string;
             name?: string;
-            shortCode?: string;
             description?: string;
             /** @enum {string} */
-            contractLevel?: "FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB";
+            milestoneType?: "KICKOFF" | "DESIGN_REVIEW" | "DEVELOPMENT" | "TESTING" | "DELIVERY" | "ACCEPTANCE" | "PAYMENT" | "REPORTING" | "REVIEW" | "PHASE_GATE" | "COMPLETION" | "OTHER";
+            /** Format: date */
+            plannedStartDate?: string;
+            /** Format: date */
+            plannedEndDate?: string;
+            /** Format: date */
+            dueDate?: string;
+            isCriticalPath?: boolean;
+            paymentAmount?: number;
+            isPaymentMilestone?: boolean;
+            /** Format: uuid */
+            ownerId?: string;
             /** @enum {string} */
-            sourceType?: "API" | "RSS" | "WEB_SCRAPE" | "MANUAL" | "FILE_IMPORT";
-            stateCode?: string;
-            stateName?: string;
-            locality?: string;
-            apiEndpoint?: string;
-            apiKeyRequired?: boolean;
-            webPortalUrl?: string;
-            rssFeedUrl?: string;
-            scrapeEnabled?: boolean;
-            scrapeConfig?: string;
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
             /** Format: int32 */
-            refreshIntervalHours?: number;
+            sortOrder?: number;
+            /** Format: uuid */
+            deliverableId?: string;
+            dependsOnIds?: string[];
+            notes?: string;
         };
-        SourceResponse: {
+        CompleteMilestoneRequest: {
+            completionNotes?: string;
+        };
+        SendMessageRequest: {
+            /** Format: uuid */
+            recipientId: string;
+            subject: string;
+            content: string;
+        };
+        MessageDTO: {
             /** Format: uuid */
             id?: string;
-            name?: string;
-            shortCode?: string;
+            /** Format: uuid */
+            threadId?: string;
+            /** Format: uuid */
+            senderId?: string;
+            senderName?: string;
+            senderEmail?: string;
+            /** Format: uuid */
+            recipientId?: string;
+            recipientName?: string;
+            recipientEmail?: string;
+            content?: string;
+            isRead?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        ReplyRequest: {
+            content: string;
+        };
+        CreateInvoiceRequest: {
+            /** Format: uuid */
+            contractId?: string;
+            invoiceNumber?: string;
+            /** @enum {string} */
+            invoiceType?: "PROGRESS" | "MILESTONE" | "FIXED_PRICE" | "FINAL" | "RETAINAGE_RELEASE" | "ADJUSTMENT" | "REIMBURSEMENT";
+            /** Format: date */
+            invoiceDate?: string;
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            periodStart?: string;
+            /** Format: date */
+            periodEnd?: string;
+            lineItems?: components["schemas"]["LineItemRequest"][];
+            notes?: string;
+        };
+        LineItemRequest: {
+            description?: string;
+            /** Format: uuid */
+            clinId?: string;
+            /** @enum {string} */
+            lineType?: "DIRECT_LABOR" | "SUBCONTRACTOR_LABOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "FIXED_PRICE" | "MILESTONE" | "FEE" | "ADJUSTMENT" | "OTHER";
+            quantity?: number;
+            unitOfMeasure?: string;
+            unitPrice?: number;
+            amount?: number;
+        };
+        InvoiceResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            invoiceNumber?: string;
+            /** @enum {string} */
+            invoiceType?: "PROGRESS" | "MILESTONE" | "FIXED_PRICE" | "FINAL" | "RETAINAGE_RELEASE" | "ADJUSTMENT" | "REIMBURSEMENT";
+            /** Format: date */
+            invoiceDate?: string;
+            /** Format: date */
+            dueDate?: string;
+            /** Format: date */
+            periodStart?: string;
+            /** Format: date */
+            periodEnd?: string;
+            subtotal?: number;
+            totalAmount?: number;
+            /** @enum {string} */
+            status?: "DRAFT" | "PENDING_APPROVAL" | "SUBMITTED" | "RECEIVED" | "UNDER_REVIEW" | "APPROVED" | "DISPUTED" | "REJECTED" | "PAID" | "PARTIALLY_PAID" | "CANCELLED";
+            lineItems?: components["schemas"]["LineItemResponse"][];
+            notes?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        LineItemResponse: {
+            /** Format: uuid */
+            id?: string;
+            description?: string;
+            /** Format: uuid */
+            clinId?: string;
+            clinNumber?: string;
+            /** @enum {string} */
+            lineType?: "DIRECT_LABOR" | "SUBCONTRACTOR_LABOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "FIXED_PRICE" | "MILESTONE" | "FEE" | "ADJUSTMENT" | "OTHER";
+            quantity?: number;
+            unitOfMeasure?: string;
+            unitPrice?: number;
+            amount?: number;
+        };
+        CreateLineItemRequest: {
+            /** Format: uuid */
+            clinId?: string;
+            /** Format: int32 */
+            lineNumber?: number;
             description?: string;
             /** @enum {string} */
-            contractLevel?: "FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB";
+            lineType?: "DIRECT_LABOR" | "SUBCONTRACTOR_LABOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "FIXED_PRICE" | "MILESTONE" | "FEE" | "ADJUSTMENT" | "OTHER";
+            laborCategory?: string;
+            employeeName?: string;
+            hours?: number;
+            hourlyRate?: number;
+            quantity?: number;
+            unitOfMeasure?: string;
+            unitPrice?: number;
+            amount?: number;
+            directCost?: number;
+            indirectCost?: number;
+            fee?: number;
+            notes?: string;
+        };
+        CreateFeatureRequestRequest: {
+            title?: string;
+            description?: string;
             /** @enum {string} */
-            sourceType?: "API" | "RSS" | "WEB_SCRAPE" | "MANUAL" | "FILE_IMPORT";
-            stateCode?: string;
-            stateName?: string;
-            locality?: string;
-            apiEndpoint?: string;
-            apiKeyRequired?: boolean;
-            webPortalUrl?: string;
-            isActive?: boolean;
-            /** Format: int32 */
-            refreshIntervalHours?: number;
-            /** Format: date-time */
-            lastIngestionAt?: string;
-            /** Format: int32 */
-            lastIngestionCount?: number;
+            category?: "OPPORTUNITIES" | "CONTRACTS" | "PROPOSALS" | "COMPLIANCE" | "REPORTING" | "INTEGRATIONS" | "UI_UX" | "SECURITY" | "PERFORMANCE" | "OTHER";
+        };
+        CreateDocumentRequest: {
+            /** Format: uuid */
+            folderId?: string;
+            opportunityId?: string;
+            /** Format: uuid */
+            contractId?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            documentType?: "RFP" | "RFQ" | "RFI" | "SOURCES_SOUGHT" | "AMENDMENT" | "QUESTIONS_ANSWERS" | "PROPOSAL_VOLUME" | "PROPOSAL_TECHNICAL" | "PROPOSAL_MANAGEMENT" | "PROPOSAL_COST" | "PROPOSAL_PAST_PERFORMANCE" | "COVER_LETTER" | "EXECUTIVE_SUMMARY" | "CONTRACT" | "TASK_ORDER" | "MODIFICATION" | "STATEMENT_OF_WORK" | "PERFORMANCE_WORK_STATEMENT" | "CONTRACT_DATA_REQUIREMENTS_LIST" | "QUALITY_ASSURANCE_PLAN" | "SECURITY_PLAN" | "NDA" | "TEAMING_AGREEMENT" | "SUBCONTRACT" | "LETTER_OF_INTENT" | "ORGANIZATIONAL_CHART" | "CERTIFICATE" | "LICENSE" | "POLICY" | "PROCEDURE" | "AUDIT_REPORT" | "INVOICE" | "RECEIPT" | "PURCHASE_ORDER" | "BUDGET_DOCUMENT" | "RATE_SCHEDULE" | "RESUME" | "BIOGRAPHY" | "TRAINING_CERTIFICATE" | "CLEARANCE_VERIFICATION" | "DELIVERABLE" | "REPORT" | "PRESENTATION" | "MEETING_MINUTES" | "STATUS_REPORT" | "CORRESPONDENCE" | "EMAIL" | "ATTACHMENT" | "TEMPLATE" | "OTHER";
+            /** @enum {string} */
+            accessLevel?: "PUBLIC" | "INTERNAL" | "RESTRICTED" | "CONFIDENTIAL" | "SECRET";
+            fileName?: string;
+            filePath?: string;
             /** Format: int64 */
-            totalOpportunitiesIngested?: number;
+            fileSize?: number;
+            contentType?: string;
+            tags?: string;
+            keywords?: string;
+            author?: string;
+        };
+        CreateTemplateRequest: {
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            templateType?: "PROPOSAL_COVER_LETTER" | "PROPOSAL_EXECUTIVE_SUMMARY" | "PROPOSAL_TECHNICAL_VOLUME" | "PROPOSAL_MANAGEMENT_VOLUME" | "PROPOSAL_PAST_PERFORMANCE_VOLUME" | "PROPOSAL_COST_VOLUME" | "COMPLIANCE_MATRIX" | "STATEMENT_OF_WORK" | "PERFORMANCE_WORK_STATEMENT" | "QUALITY_ASSURANCE_PLAN" | "SECURITY_PLAN" | "PROJECT_MANAGEMENT_PLAN" | "NDA_MUTUAL" | "NDA_ONE_WAY" | "TEAMING_AGREEMENT" | "SUBCONTRACT_AGREEMENT" | "LETTER_OF_INTENT" | "CONSULTING_AGREEMENT" | "STATUS_REPORT_WEEKLY" | "STATUS_REPORT_MONTHLY" | "FINANCIAL_REPORT" | "PROGRESS_REPORT" | "INCIDENT_REPORT" | "RESUME_TEMPLATE" | "KEY_PERSONNEL_BIO" | "ORG_CHART" | "LETTER_FORMAL" | "LETTER_RESPONSE" | "EMAIL_TEMPLATE" | "CHECKLIST" | "FORM" | "OTHER";
+            /** @enum {string} */
+            templateFormat?: "WORD" | "PDF" | "EXCEL" | "POWERPOINT" | "HTML" | "MARKDOWN" | "TEXT";
+            category?: string;
+            fileName?: string;
+            filePath?: string;
+            /** Format: int64 */
+            fileSize?: number;
+            contentType?: string;
+            templateContent?: string;
+            mergeFields?: string;
+            tags?: string;
+            keywords?: string;
+        };
+        CreateFolderRequest: {
+            /** Format: uuid */
+            parentFolderId?: string;
+            opportunityId?: string;
+            /** Format: uuid */
+            contractId?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            folderType?: "ROOT" | "OPPORTUNITY" | "CONTRACT" | "PROPOSAL" | "COMPLIANCE" | "FINANCIAL" | "PERSONNEL" | "TEMPLATE" | "ARCHIVE" | "CUSTOM";
+            tags?: string;
+            /** Format: int32 */
+            retentionDays?: number;
+        };
+        CreateContentLibraryRequest: {
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            contentType?: "PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER";
+            category?: string;
+            subCategory?: string;
+            content?: string;
+            contentHtml?: string;
+            /** Format: uuid */
+            contractId?: string;
+            /** Format: uuid */
+            employeeId?: string;
+            customerName?: string;
+            customerAgency?: string;
+            contractNumber?: string;
+            contractValue?: string;
+            periodOfPerformance?: string;
+            tags?: string;
+            keywords?: string;
+            naicsCodes?: string;
+            pscCodes?: string;
+        };
+        CreateComplianceItemRequest: {
+            /** Format: uuid */
+            contractId?: string;
+            /** @enum {string} */
+            complianceType?: "FAR_CLAUSE" | "DFARS_CLAUSE" | "AGENCY_CLAUSE" | "CMMC" | "NIST_800_171" | "NIST_800_53" | "FEDRAMP" | "ITAR" | "EAR" | "PERSONNEL_CLEARANCE" | "FACILITY_CLEARANCE" | "CUI_HANDLING" | "SMALL_BUSINESS_REPORTING" | "SUBCONTRACTING_PLAN" | "COST_ACCOUNTING" | "INCURRED_COST" | "OCI" | "LOBBYING_DISCLOSURE" | "ETHICS_TRAINING" | "SERVICE_CONTRACT_ACT" | "DAVIS_BACON" | "AFFIRMATIVE_ACTION" | "INSURANCE" | "BONDING" | "SECTION_889" | "BUY_AMERICAN" | "TRADE_AGREEMENTS" | "OTHER";
+            title?: string;
+            description?: string;
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** Format: date */
+            dueDate?: string;
+            /** @enum {string} */
+            frequency?: "ONE_TIME" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
+            clauseNumber?: string;
+            clauseTitle?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            evidenceRequired?: boolean;
+            verificationMethod?: string;
+            notes?: string;
         };
         CreatePipelineRequest: {
             name?: string;
@@ -12332,36 +12585,6 @@ export interface components {
             user?: components["schemas"]["UserDto"];
             mfaRequired?: boolean;
         };
-        CreateMilestoneRequest: {
-            /** Format: uuid */
-            contractId?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            milestoneType?: "KICKOFF" | "DESIGN_REVIEW" | "DEVELOPMENT" | "TESTING" | "DELIVERY" | "ACCEPTANCE" | "PAYMENT" | "REPORTING" | "REVIEW" | "PHASE_GATE" | "COMPLETION" | "OTHER";
-            /** Format: date */
-            plannedStartDate?: string;
-            /** Format: date */
-            plannedEndDate?: string;
-            /** Format: date */
-            dueDate?: string;
-            isCriticalPath?: boolean;
-            paymentAmount?: number;
-            isPaymentMilestone?: boolean;
-            /** Format: uuid */
-            ownerId?: string;
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: int32 */
-            sortOrder?: number;
-            /** Format: uuid */
-            deliverableId?: string;
-            dependsOnIds?: string[];
-            notes?: string;
-        };
-        CompleteMilestoneRequest: {
-            completionNotes?: string;
-        };
         MfaVerifyRequest: {
             code: string;
             backupCode?: boolean;
@@ -12379,33 +12602,6 @@ export interface components {
         BackupCodesResponse: {
             codes?: string[];
         };
-        SendMessageRequest: {
-            /** Format: uuid */
-            recipientId: string;
-            subject: string;
-            content: string;
-        };
-        MessageDTO: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            threadId?: string;
-            /** Format: uuid */
-            senderId?: string;
-            senderName?: string;
-            senderEmail?: string;
-            /** Format: uuid */
-            recipientId?: string;
-            recipientName?: string;
-            recipientEmail?: string;
-            content?: string;
-            isRead?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        ReplyRequest: {
-            content: string;
-        };
         MatchResponse: {
             /** Format: uuid */
             id?: string;
@@ -12422,74 +12618,6 @@ export interface components {
             riskFactors?: string;
             /** Format: date-time */
             calculatedAt?: string;
-        };
-        CreateInvoiceRequest: {
-            /** Format: uuid */
-            contractId?: string;
-            invoiceNumber?: string;
-            /** @enum {string} */
-            invoiceType?: "PROGRESS" | "MILESTONE" | "FIXED_PRICE" | "FINAL" | "RETAINAGE_RELEASE" | "ADJUSTMENT" | "REIMBURSEMENT";
-            /** Format: date */
-            invoiceDate?: string;
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            periodStart?: string;
-            /** Format: date */
-            periodEnd?: string;
-            lineItems?: components["schemas"]["LineItemRequest"][];
-            notes?: string;
-        };
-        LineItemRequest: {
-            description?: string;
-            /** Format: uuid */
-            clinId?: string;
-            /** @enum {string} */
-            lineType?: "DIRECT_LABOR" | "SUBCONTRACTOR_LABOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "FIXED_PRICE" | "MILESTONE" | "FEE" | "ADJUSTMENT" | "OTHER";
-            quantity?: number;
-            unitOfMeasure?: string;
-            unitPrice?: number;
-            amount?: number;
-        };
-        InvoiceResponse: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            invoiceNumber?: string;
-            /** @enum {string} */
-            invoiceType?: "PROGRESS" | "MILESTONE" | "FIXED_PRICE" | "FINAL" | "RETAINAGE_RELEASE" | "ADJUSTMENT" | "REIMBURSEMENT";
-            /** Format: date */
-            invoiceDate?: string;
-            /** Format: date */
-            dueDate?: string;
-            /** Format: date */
-            periodStart?: string;
-            /** Format: date */
-            periodEnd?: string;
-            subtotal?: number;
-            totalAmount?: number;
-            /** @enum {string} */
-            status?: "DRAFT" | "PENDING_APPROVAL" | "SUBMITTED" | "RECEIVED" | "UNDER_REVIEW" | "APPROVED" | "DISPUTED" | "REJECTED" | "PAID" | "PARTIALLY_PAID" | "CANCELLED";
-            lineItems?: components["schemas"]["LineItemResponse"][];
-            notes?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        LineItemResponse: {
-            /** Format: uuid */
-            id?: string;
-            description?: string;
-            /** Format: uuid */
-            clinId?: string;
-            clinNumber?: string;
-            /** @enum {string} */
-            lineType?: "DIRECT_LABOR" | "SUBCONTRACTOR_LABOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "FIXED_PRICE" | "MILESTONE" | "FEE" | "ADJUSTMENT" | "OTHER";
-            quantity?: number;
-            unitOfMeasure?: string;
-            unitPrice?: number;
-            amount?: number;
         };
         CreateInvitationRequest: {
             email: string;
@@ -12519,11 +12647,42 @@ export interface components {
             firstName?: string;
             lastName?: string;
         };
-        CreateFeatureRequestRequest: {
-            title?: string;
-            description?: string;
+        FileDto: {
+            /** Format: uuid */
+            id?: string;
+            fileName?: string;
+            originalFileName?: string;
+            contentType?: string;
+            /** Format: int64 */
+            size?: number;
             /** @enum {string} */
-            category?: "OPPORTUNITIES" | "CONTRACTS" | "PROPOSALS" | "COMPLIANCE" | "REPORTING" | "INTEGRATIONS" | "UI_UX" | "SECURITY" | "PERFORMANCE" | "OTHER";
+            status?: "PENDING" | "UPLOADED" | "PROCESSING" | "AVAILABLE" | "QUARANTINED" | "DELETED";
+            description?: string;
+            tags?: string;
+            referenceType?: string;
+            referenceId?: string;
+            /** Format: uuid */
+            uploadedBy?: string;
+            uploadedByName?: string;
+            /** Format: date-time */
+            uploadedAt?: string;
+        };
+        FileUploadRequest: {
+            fileName?: string;
+            contentType?: string;
+            description?: string;
+            tags?: string;
+            referenceType?: string;
+            referenceId?: string;
+        };
+        FileUploadResponse: {
+            /** Format: uuid */
+            fileId?: string;
+            fileName?: string;
+            s3Key?: string;
+            uploadUrl?: string;
+            /** Format: date-time */
+            expiresAt?: string;
         };
         ScheduledExport: {
             /** Format: uuid */
@@ -12618,6 +12777,90 @@ export interface components {
             gridWidth?: number;
             /** Format: int32 */
             gridHeight?: number;
+        };
+        CreateOrganizationRequest: {
+            name?: string;
+            legalName?: string;
+            /** @enum {string} */
+            organizationType?: "GOVERNMENT_AGENCY" | "GOVERNMENT_OFFICE" | "PRIME_CONTRACTOR" | "SUBCONTRACTOR" | "TEAMING_PARTNER" | "VENDOR" | "COMPETITOR" | "PROSPECT" | "CUSTOMER" | "OTHER";
+            uei?: string;
+            cageCode?: string;
+            naicsCodes?: string;
+            pscCodes?: string;
+            phone?: string;
+            email?: string;
+            website?: string;
+            addressLine1?: string;
+            city?: string;
+            state?: string;
+            postalCode?: string;
+            country?: string;
+            capabilities?: string;
+            coreCompetencies?: string;
+            certifications?: string;
+            contractVehicles?: string;
+            relationshipTier?: string;
+            /** Format: int32 */
+            employeeCount?: number;
+            tags?: string;
+            notes?: string;
+            /** Format: uuid */
+            ownerId?: string;
+            /** Format: uuid */
+            parentOrganizationId?: string;
+        };
+        CreateInteractionRequest: {
+            /** Format: uuid */
+            contactId?: string;
+            /** Format: uuid */
+            organizationId?: string;
+            opportunityId?: string;
+            /** Format: uuid */
+            contractId?: string;
+            /** @enum {string} */
+            interactionType?: "PHONE_CALL" | "EMAIL" | "MEETING_IN_PERSON" | "MEETING_VIRTUAL" | "CONFERENCE" | "TRADE_SHOW" | "INDUSTRY_DAY" | "SITE_VISIT" | "PRESENTATION" | "PROPOSAL_SUBMISSION" | "DEBRIEF" | "NETWORKING_EVENT" | "LINKEDIN_MESSAGE" | "NOTE" | "OTHER";
+            subject?: string;
+            description?: string;
+            /** Format: date-time */
+            interactionDate?: string;
+            /** Format: int32 */
+            durationMinutes?: number;
+            /** @enum {string} */
+            outcome?: "POSITIVE" | "NEUTRAL" | "NEGATIVE" | "FOLLOW_UP_REQUIRED" | "NO_ANSWER" | "LEFT_MESSAGE" | "MEETING_SCHEDULED" | "REFERRAL_RECEIVED" | "INFORMATION_GATHERED" | "RELATIONSHIP_STRENGTHENED";
+            outcomeNotes?: string;
+            location?: string;
+            attendees?: string;
+            followUpRequired?: boolean;
+            /** Format: date */
+            followUpDate?: string;
+            followUpNotes?: string;
+            tags?: string;
+        };
+        CreateContactRequest: {
+            /** Format: uuid */
+            organizationId?: string;
+            firstName?: string;
+            lastName?: string;
+            middleName?: string;
+            prefix?: string;
+            suffix?: string;
+            /** @enum {string} */
+            contactType?: "GOVERNMENT_CUSTOMER" | "CONTRACTING_OFFICER" | "CONTRACTING_SPECIALIST" | "PROGRAM_MANAGER" | "TECHNICAL_POC" | "COR" | "PRIME_CONTRACTOR" | "SUBCONTRACTOR" | "TEAMING_PARTNER" | "VENDOR" | "CONSULTANT" | "PROSPECT" | "INTERNAL" | "OTHER";
+            jobTitle?: string;
+            department?: string;
+            email?: string;
+            phoneWork?: string;
+            phoneMobile?: string;
+            addressLine1?: string;
+            city?: string;
+            state?: string;
+            postalCode?: string;
+            country?: string;
+            linkedinUrl?: string;
+            tags?: string;
+            notes?: string;
+            /** Format: uuid */
+            ownerId?: string;
         };
         CreateContractRequest: {
             contractNumber?: string;
@@ -12813,27 +13056,6 @@ export interface components {
             optionPeriod?: number;
             notes?: string;
         };
-        CreateComplianceItemRequest: {
-            /** Format: uuid */
-            contractId?: string;
-            /** @enum {string} */
-            complianceType?: "FAR_CLAUSE" | "DFARS_CLAUSE" | "AGENCY_CLAUSE" | "CMMC" | "NIST_800_171" | "NIST_800_53" | "FEDRAMP" | "ITAR" | "EAR" | "PERSONNEL_CLEARANCE" | "FACILITY_CLEARANCE" | "CUI_HANDLING" | "SMALL_BUSINESS_REPORTING" | "SUBCONTRACTING_PLAN" | "COST_ACCOUNTING" | "INCURRED_COST" | "OCI" | "LOBBYING_DISCLOSURE" | "ETHICS_TRAINING" | "SERVICE_CONTRACT_ACT" | "DAVIS_BACON" | "AFFIRMATIVE_ACTION" | "INSURANCE" | "BONDING" | "SECTION_889" | "BUY_AMERICAN" | "TRADE_AGREEMENTS" | "OTHER";
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** Format: date */
-            dueDate?: string;
-            /** @enum {string} */
-            frequency?: "ONE_TIME" | "MONTHLY" | "QUARTERLY" | "SEMI_ANNUALLY" | "ANNUALLY" | "AS_REQUIRED";
-            clauseNumber?: string;
-            clauseTitle?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            evidenceRequired?: boolean;
-            verificationMethod?: string;
-            notes?: string;
-        };
         CreateProfileRequest: {
             legalName?: string;
             dbaName?: string;
@@ -13005,245 +13227,6 @@ export interface components {
             scopes?: string[];
             errorMessage?: string;
         };
-        AlertDto: {
-            /** Format: uuid */
-            id?: string;
-            title?: string;
-            message?: string;
-            /** @enum {string} */
-            type?: "NEW_OPPORTUNITY_MATCH" | "DEADLINE_APPROACHING" | "OPPORTUNITY_UPDATED" | "OPPORTUNITY_CLOSED" | "SYSTEM_NOTIFICATION" | "TEAM_MENTION" | "PIPELINE_UPDATE";
-            /** @enum {string} */
-            status?: "UNREAD" | "READ" | "DISMISSED";
-            /** @enum {string} */
-            priority?: "LOW" | "NORMAL" | "HIGH" | "URGENT";
-            link?: string;
-            /** Format: int32 */
-            matchCount?: number;
-            /** Format: uuid */
-            savedSearchId?: string;
-            /** Format: date-time */
-            readAt?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        CreateLineItemRequest: {
-            /** Format: uuid */
-            clinId?: string;
-            /** Format: int32 */
-            lineNumber?: number;
-            description?: string;
-            /** @enum {string} */
-            lineType?: "DIRECT_LABOR" | "SUBCONTRACTOR_LABOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "FIXED_PRICE" | "MILESTONE" | "FEE" | "ADJUSTMENT" | "OTHER";
-            laborCategory?: string;
-            employeeName?: string;
-            hours?: number;
-            hourlyRate?: number;
-            quantity?: number;
-            unitOfMeasure?: string;
-            unitPrice?: number;
-            amount?: number;
-            directCost?: number;
-            indirectCost?: number;
-            fee?: number;
-            notes?: string;
-        };
-        FileDto: {
-            /** Format: uuid */
-            id?: string;
-            fileName?: string;
-            originalFileName?: string;
-            contentType?: string;
-            /** Format: int64 */
-            size?: number;
-            /** @enum {string} */
-            status?: "PENDING" | "UPLOADED" | "PROCESSING" | "AVAILABLE" | "QUARANTINED" | "DELETED";
-            description?: string;
-            tags?: string;
-            referenceType?: string;
-            referenceId?: string;
-            /** Format: uuid */
-            uploadedBy?: string;
-            uploadedByName?: string;
-            /** Format: date-time */
-            uploadedAt?: string;
-        };
-        FileUploadRequest: {
-            fileName?: string;
-            contentType?: string;
-            description?: string;
-            tags?: string;
-            referenceType?: string;
-            referenceId?: string;
-        };
-        FileUploadResponse: {
-            /** Format: uuid */
-            fileId?: string;
-            fileName?: string;
-            s3Key?: string;
-            uploadUrl?: string;
-            /** Format: date-time */
-            expiresAt?: string;
-        };
-        CreateDocumentRequest: {
-            /** Format: uuid */
-            folderId?: string;
-            opportunityId?: string;
-            /** Format: uuid */
-            contractId?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            documentType?: "RFP" | "RFQ" | "RFI" | "SOURCES_SOUGHT" | "AMENDMENT" | "QUESTIONS_ANSWERS" | "PROPOSAL_VOLUME" | "PROPOSAL_TECHNICAL" | "PROPOSAL_MANAGEMENT" | "PROPOSAL_COST" | "PROPOSAL_PAST_PERFORMANCE" | "COVER_LETTER" | "EXECUTIVE_SUMMARY" | "CONTRACT" | "TASK_ORDER" | "MODIFICATION" | "STATEMENT_OF_WORK" | "PERFORMANCE_WORK_STATEMENT" | "CONTRACT_DATA_REQUIREMENTS_LIST" | "QUALITY_ASSURANCE_PLAN" | "SECURITY_PLAN" | "NDA" | "TEAMING_AGREEMENT" | "SUBCONTRACT" | "LETTER_OF_INTENT" | "ORGANIZATIONAL_CHART" | "CERTIFICATE" | "LICENSE" | "POLICY" | "PROCEDURE" | "AUDIT_REPORT" | "INVOICE" | "RECEIPT" | "PURCHASE_ORDER" | "BUDGET_DOCUMENT" | "RATE_SCHEDULE" | "RESUME" | "BIOGRAPHY" | "TRAINING_CERTIFICATE" | "CLEARANCE_VERIFICATION" | "DELIVERABLE" | "REPORT" | "PRESENTATION" | "MEETING_MINUTES" | "STATUS_REPORT" | "CORRESPONDENCE" | "EMAIL" | "ATTACHMENT" | "TEMPLATE" | "OTHER";
-            /** @enum {string} */
-            accessLevel?: "PUBLIC" | "INTERNAL" | "RESTRICTED" | "CONFIDENTIAL" | "SECRET";
-            fileName?: string;
-            filePath?: string;
-            /** Format: int64 */
-            fileSize?: number;
-            contentType?: string;
-            tags?: string;
-            keywords?: string;
-            author?: string;
-        };
-        CreateTemplateRequest: {
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            templateType?: "PROPOSAL_COVER_LETTER" | "PROPOSAL_EXECUTIVE_SUMMARY" | "PROPOSAL_TECHNICAL_VOLUME" | "PROPOSAL_MANAGEMENT_VOLUME" | "PROPOSAL_PAST_PERFORMANCE_VOLUME" | "PROPOSAL_COST_VOLUME" | "COMPLIANCE_MATRIX" | "STATEMENT_OF_WORK" | "PERFORMANCE_WORK_STATEMENT" | "QUALITY_ASSURANCE_PLAN" | "SECURITY_PLAN" | "PROJECT_MANAGEMENT_PLAN" | "NDA_MUTUAL" | "NDA_ONE_WAY" | "TEAMING_AGREEMENT" | "SUBCONTRACT_AGREEMENT" | "LETTER_OF_INTENT" | "CONSULTING_AGREEMENT" | "STATUS_REPORT_WEEKLY" | "STATUS_REPORT_MONTHLY" | "FINANCIAL_REPORT" | "PROGRESS_REPORT" | "INCIDENT_REPORT" | "RESUME_TEMPLATE" | "KEY_PERSONNEL_BIO" | "ORG_CHART" | "LETTER_FORMAL" | "LETTER_RESPONSE" | "EMAIL_TEMPLATE" | "CHECKLIST" | "FORM" | "OTHER";
-            /** @enum {string} */
-            templateFormat?: "WORD" | "PDF" | "EXCEL" | "POWERPOINT" | "HTML" | "MARKDOWN" | "TEXT";
-            category?: string;
-            fileName?: string;
-            filePath?: string;
-            /** Format: int64 */
-            fileSize?: number;
-            contentType?: string;
-            templateContent?: string;
-            mergeFields?: string;
-            tags?: string;
-            keywords?: string;
-        };
-        CreateFolderRequest: {
-            /** Format: uuid */
-            parentFolderId?: string;
-            opportunityId?: string;
-            /** Format: uuid */
-            contractId?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            folderType?: "ROOT" | "OPPORTUNITY" | "CONTRACT" | "PROPOSAL" | "COMPLIANCE" | "FINANCIAL" | "PERSONNEL" | "TEMPLATE" | "ARCHIVE" | "CUSTOM";
-            tags?: string;
-            /** Format: int32 */
-            retentionDays?: number;
-        };
-        CreateContentLibraryRequest: {
-            title?: string;
-            description?: string;
-            /** @enum {string} */
-            contentType?: "PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER";
-            category?: string;
-            subCategory?: string;
-            content?: string;
-            contentHtml?: string;
-            /** Format: uuid */
-            contractId?: string;
-            /** Format: uuid */
-            employeeId?: string;
-            customerName?: string;
-            customerAgency?: string;
-            contractNumber?: string;
-            contractValue?: string;
-            periodOfPerformance?: string;
-            tags?: string;
-            keywords?: string;
-            naicsCodes?: string;
-            pscCodes?: string;
-        };
-        CreateOrganizationRequest: {
-            name?: string;
-            legalName?: string;
-            /** @enum {string} */
-            organizationType?: "GOVERNMENT_AGENCY" | "GOVERNMENT_OFFICE" | "PRIME_CONTRACTOR" | "SUBCONTRACTOR" | "TEAMING_PARTNER" | "VENDOR" | "COMPETITOR" | "PROSPECT" | "CUSTOMER" | "OTHER";
-            uei?: string;
-            cageCode?: string;
-            naicsCodes?: string;
-            pscCodes?: string;
-            phone?: string;
-            email?: string;
-            website?: string;
-            addressLine1?: string;
-            city?: string;
-            state?: string;
-            postalCode?: string;
-            country?: string;
-            capabilities?: string;
-            coreCompetencies?: string;
-            certifications?: string;
-            contractVehicles?: string;
-            relationshipTier?: string;
-            /** Format: int32 */
-            employeeCount?: number;
-            tags?: string;
-            notes?: string;
-            /** Format: uuid */
-            ownerId?: string;
-            /** Format: uuid */
-            parentOrganizationId?: string;
-        };
-        CreateInteractionRequest: {
-            /** Format: uuid */
-            contactId?: string;
-            /** Format: uuid */
-            organizationId?: string;
-            opportunityId?: string;
-            /** Format: uuid */
-            contractId?: string;
-            /** @enum {string} */
-            interactionType?: "PHONE_CALL" | "EMAIL" | "MEETING_IN_PERSON" | "MEETING_VIRTUAL" | "CONFERENCE" | "TRADE_SHOW" | "INDUSTRY_DAY" | "SITE_VISIT" | "PRESENTATION" | "PROPOSAL_SUBMISSION" | "DEBRIEF" | "NETWORKING_EVENT" | "LINKEDIN_MESSAGE" | "NOTE" | "OTHER";
-            subject?: string;
-            description?: string;
-            /** Format: date-time */
-            interactionDate?: string;
-            /** Format: int32 */
-            durationMinutes?: number;
-            /** @enum {string} */
-            outcome?: "POSITIVE" | "NEUTRAL" | "NEGATIVE" | "FOLLOW_UP_REQUIRED" | "NO_ANSWER" | "LEFT_MESSAGE" | "MEETING_SCHEDULED" | "REFERRAL_RECEIVED" | "INFORMATION_GATHERED" | "RELATIONSHIP_STRENGTHENED";
-            outcomeNotes?: string;
-            location?: string;
-            attendees?: string;
-            followUpRequired?: boolean;
-            /** Format: date */
-            followUpDate?: string;
-            followUpNotes?: string;
-            tags?: string;
-        };
-        CreateContactRequest: {
-            /** Format: uuid */
-            organizationId?: string;
-            firstName?: string;
-            lastName?: string;
-            middleName?: string;
-            prefix?: string;
-            suffix?: string;
-            /** @enum {string} */
-            contactType?: "GOVERNMENT_CUSTOMER" | "CONTRACTING_OFFICER" | "CONTRACTING_SPECIALIST" | "PROGRAM_MANAGER" | "TECHNICAL_POC" | "COR" | "PRIME_CONTRACTOR" | "SUBCONTRACTOR" | "TEAMING_PARTNER" | "VENDOR" | "CONSULTANT" | "PROSPECT" | "INTERNAL" | "OTHER";
-            jobTitle?: string;
-            department?: string;
-            email?: string;
-            phoneWork?: string;
-            phoneMobile?: string;
-            addressLine1?: string;
-            city?: string;
-            state?: string;
-            postalCode?: string;
-            country?: string;
-            linkedinUrl?: string;
-            tags?: string;
-            notes?: string;
-            /** Format: uuid */
-            ownerId?: string;
-        };
         TrackEventRequest: {
             /** @enum {string} */
             eventType?: "PAGE_VIEW" | "SEARCH_PERFORMED" | "FILTER_APPLIED" | "SORT_CHANGED" | "OPPORTUNITY_VIEWED" | "OPPORTUNITY_SAVED" | "OPPORTUNITY_UNSAVED" | "OPPORTUNITY_EXPORTED" | "OPPORTUNITY_SHARED" | "PIPELINE_OPPORTUNITY_ADDED" | "PIPELINE_OPPORTUNITY_MOVED" | "PIPELINE_OPPORTUNITY_REMOVED" | "BID_DECISION_MADE" | "CONTRACT_VIEWED" | "CONTRACT_CREATED" | "CONTRACT_UPDATED" | "DELIVERABLE_COMPLETED" | "INVOICE_SUBMITTED" | "DOCUMENT_UPLOADED" | "DOCUMENT_DOWNLOADED" | "DOCUMENT_VIEWED" | "USER_LOGIN" | "USER_LOGOUT" | "PROFILE_UPDATED" | "SETTINGS_CHANGED" | "DASHBOARD_VIEWED" | "REPORT_GENERATED" | "REPORT_EXPORTED" | "WIDGET_INTERACTED" | "ALERT_CREATED" | "ALERT_TRIGGERED" | "ALERT_DISMISSED" | "CUSTOM";
@@ -13275,6 +13258,27 @@ export interface components {
             frequency?: "DAILY" | "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "QUARTERLY" | "ANNUALLY" | "CUSTOM";
             cronExpression?: string;
             recipients?: string;
+        };
+        AlertDto: {
+            /** Format: uuid */
+            id?: string;
+            title?: string;
+            message?: string;
+            /** @enum {string} */
+            type?: "NEW_OPPORTUNITY_MATCH" | "DEADLINE_APPROACHING" | "OPPORTUNITY_UPDATED" | "OPPORTUNITY_CLOSED" | "SYSTEM_NOTIFICATION" | "TEAM_MENTION" | "PIPELINE_UPDATE";
+            /** @enum {string} */
+            status?: "UNREAD" | "READ" | "DISMISSED";
+            /** @enum {string} */
+            priority?: "LOW" | "NORMAL" | "HIGH" | "URGENT";
+            link?: string;
+            /** Format: int32 */
+            matchCount?: number;
+            /** Format: uuid */
+            savedSearchId?: string;
+            /** Format: date-time */
+            readAt?: string;
+            /** Format: date-time */
+            createdAt?: string;
         };
         UpdatePipelineOpportunityRequest: {
             internalName?: string;
@@ -13404,6 +13408,217 @@ export interface components {
             billingPeriodEnd?: string;
             description?: string;
         };
+        PageTeammingPartner: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["TeammingPartner"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageTeammingAgreement: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["TeammingAgreement"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        SessionDto: {
+            /** Format: uuid */
+            id?: string;
+            deviceInfo?: string;
+            ipAddress?: string;
+            location?: string;
+            /** Format: date-time */
+            lastActivityAt?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            isCurrent?: boolean;
+        };
+        SessionCountResponse: {
+            /** Format: int64 */
+            count?: number;
+        };
+        SearchSuggestionDTO: {
+            query?: string;
+            suggestions?: components["schemas"]["Suggestion"][];
+            recentSearches?: string[];
+        };
+        Suggestion: {
+            text?: string;
+            type?: string;
+            /** Format: int32 */
+            matchCount?: number;
+            highlight?: string;
+        };
+        SbirStats: {
+            /** Format: int64 */
+            totalAwards?: number;
+            /** Format: int64 */
+            sbirCount?: number;
+            /** Format: int64 */
+            sttrCount?: number;
+            agencies?: string[];
+            phases?: string[];
+        };
+        SbirAward: {
+            id?: string;
+            firm?: string;
+            awardTitle?: string;
+            agency?: string;
+            branch?: string;
+            phase?: string;
+            program?: string;
+            agencyTrackingNumber?: string;
+            contract?: string;
+            /** Format: date */
+            proposalAwardDate?: string;
+            /** Format: date */
+            contractEndDate?: string;
+            solicitationNumber?: string;
+            /** Format: int32 */
+            solicitationYear?: number;
+            topicCode?: string;
+            /** Format: int32 */
+            awardYear?: number;
+            awardAmount?: number;
+            uei?: string;
+            hubzoneOwned?: boolean;
+            sociallyEconomicallyDisadvantaged?: boolean;
+            womenOwned?: boolean;
+            /** Format: int32 */
+            numberEmployees?: number;
+            companyUrl?: string;
+            city?: string;
+            state?: string;
+            zip?: string;
+            pocName?: string;
+            pocEmail?: string;
+            pocPhone?: string;
+            piName?: string;
+            piEmail?: string;
+            researchKeywords?: string;
+            abstractText?: string;
+            awardLink?: string;
+            isSbir?: boolean;
+            isSttr?: boolean;
+        };
+        PageSavedOpportunityDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["SavedOpportunityDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        SavedCountResponse: {
+            /** Format: int64 */
+            count?: number;
+        };
+        SavedStatusResponse: {
+            isSaved?: boolean;
+        };
+        PageReportResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ReportResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageReportDefinitionResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ReportDefinitionResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageProposal: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["Proposal"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        SourceStats: {
+            /** Format: int64 */
+            totalSources?: number;
+            /** Format: int64 */
+            activeSources?: number;
+            /** Format: int64 */
+            federalSources?: number;
+            /** Format: int64 */
+            dodSources?: number;
+            /** Format: int64 */
+            stateSources?: number;
+            /** Format: int64 */
+            localSources?: number;
+            /** Format: int32 */
+            statesCovered?: number;
+        };
         PageSprintDto: {
             /** Format: int64 */
             totalElements?: number;
@@ -13448,34 +13663,6 @@ export interface components {
             startDate?: string;
             /** Format: date */
             endDate?: string;
-        };
-        SessionDto: {
-            /** Format: uuid */
-            id?: string;
-            deviceInfo?: string;
-            ipAddress?: string;
-            location?: string;
-            /** Format: date-time */
-            lastActivityAt?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            isCurrent?: boolean;
-        };
-        SessionCountResponse: {
-            /** Format: int64 */
-            count?: number;
-        };
-        SearchSuggestionDTO: {
-            query?: string;
-            suggestions?: components["schemas"]["Suggestion"][];
-            recentSearches?: string[];
-        };
-        Suggestion: {
-            text?: string;
-            type?: string;
-            /** Format: int32 */
-            matchCount?: number;
-            highlight?: string;
         };
         ScopeTreeNodeDto: {
             /** Format: uuid */
@@ -13561,209 +13748,6 @@ export interface components {
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
         };
-        PageSavedOpportunityDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["SavedOpportunityDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        SavedCountResponse: {
-            /** Format: int64 */
-            count?: number;
-        };
-        SavedStatusResponse: {
-            isSaved?: boolean;
-        };
-        PageReportResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ReportResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageReportDefinitionResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ReportDefinitionResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        SourceStats: {
-            /** Format: int64 */
-            totalSources?: number;
-            /** Format: int64 */
-            activeSources?: number;
-            /** Format: int64 */
-            federalSources?: number;
-            /** Format: int64 */
-            dodSources?: number;
-            /** Format: int64 */
-            stateSources?: number;
-            /** Format: int64 */
-            localSources?: number;
-            /** Format: int32 */
-            statesCovered?: number;
-        };
-        PipelineSummaryDto: {
-            /** Format: uuid */
-            pipelineId?: string;
-            pipelineName?: string;
-            /** Format: int64 */
-            totalOpportunities?: number;
-            totalValue?: number;
-            totalWeightedValue?: number;
-            /** Format: int64 */
-            bidCount?: number;
-            /** Format: int64 */
-            noBidCount?: number;
-            /** Format: int64 */
-            pendingCount?: number;
-            stages?: components["schemas"]["StageSummaryDto"][];
-        };
-        StageSummaryDto: {
-            /** Format: uuid */
-            stageId?: string;
-            stageName?: string;
-            color?: string;
-            /** @enum {string} */
-            stageType?: "INITIAL" | "IN_PROGRESS" | "WON" | "LOST";
-            /** Format: int64 */
-            opportunityCount?: number;
-            totalValue?: number;
-            weightedValue?: number;
-        };
-        PagePipelineOpportunityDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["PipelineOpportunityDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PermissionDto: {
-            /** Format: uuid */
-            id?: string;
-            code?: string;
-            displayName?: string;
-            description?: string;
-            category?: string;
-        };
-        PermissionCheckResponse: {
-            permission?: string;
-            granted?: boolean;
-        };
-        PageOpportunityAlertDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["OpportunityAlertDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        DashboardStats: {
-            /** Format: int64 */
-            activeOpportunities?: number;
-            /** Format: int64 */
-            sbirOpportunities?: number;
-            /** Format: int64 */
-            sttrOpportunities?: number;
-            /** Format: int64 */
-            closingSoonOpportunities?: number;
-        };
-        FilterOptions: {
-            agencies?: string[];
-            setAsideTypes?: string[];
-            naicsCodes?: string[];
-        };
-        StepInfo: {
-            /** Format: int32 */
-            stepNumber?: number;
-            title?: string;
-            description?: string;
-            required?: boolean;
-            complete?: boolean;
-            current?: boolean;
-        };
-        ProvidersResponse: {
-            providers?: string[];
-            enabled?: boolean;
-        };
-        PageNotificationDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["NotificationDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        UnreadCountResponse: {
-            /** Format: int64 */
-            count?: number;
-        };
         DependencyDto: {
             /** Format: uuid */
             id?: string;
@@ -13819,12 +13803,9 @@ export interface components {
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
         };
-        MfaStatus: {
-            enabled?: boolean;
+        UnreadCountResponse: {
             /** Format: int64 */
-            remainingBackupCodes?: number;
-            /** Format: date-time */
-            lastVerifiedAt?: string;
+            count?: number;
         };
         MessageThreadDTO: {
             /** Format: uuid */
@@ -13902,35 +13883,6 @@ export interface components {
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
         };
-        PageMatchResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["MatchResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        MatchStats: {
-            /** Format: int64 */
-            totalMatches?: number;
-            /** Format: int64 */
-            newMatches?: number;
-            /** Format: int64 */
-            qualifiedMatches?: number;
-            /** Format: int64 */
-            pursuingMatches?: number;
-            averageScore?: number;
-        };
         PageLaborRateResponse: {
             /** Format: int64 */
             totalElements?: number;
@@ -13972,635 +13924,6 @@ export interface components {
             totalPaid?: number;
             /** Format: int64 */
             pendingCount?: number;
-        };
-        PageFeatureRequestDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["FeatureRequestDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        ExportTemplate: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            tenantId?: string;
-            name?: string;
-            description?: string;
-            entityType?: string;
-            format?: string;
-            columns?: string;
-            headerTemplate?: string;
-            footerTemplate?: string;
-            includeBranding?: boolean;
-            /** Format: uuid */
-            createdBy?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            default?: boolean;
-        };
-        PageDeliverableResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["DeliverableResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageDashboardResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["DashboardResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageContractDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ContractDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        ContractSummaryDto: {
-            /** Format: uuid */
-            contractId?: string;
-            contractNumber?: string;
-            title?: string;
-            /** @enum {string} */
-            status?: "DRAFT" | "AWARDED" | "PENDING_SIGNATURE" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "TERMINATED" | "CANCELLED" | "CLOSED";
-            totalValue?: number;
-            fundedValue?: number;
-            clinTotalValue?: number;
-            clinFundedAmount?: number;
-            clinInvoicedAmount?: number;
-            remainingFunds?: number;
-            /** Format: int64 */
-            modificationCount?: number;
-            /** Format: int64 */
-            pendingModifications?: number;
-            /** Format: int64 */
-            pendingOptions?: number;
-            pendingOptionValue?: number;
-            /** Format: int64 */
-            pendingDeliverables?: number;
-            /** Format: int64 */
-            overdueDeliverables?: number;
-            /** Format: date */
-            popStartDate?: string;
-            /** Format: date */
-            popEndDate?: string;
-        };
-        PageContentResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ContentResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        ComplianceSummaryDto: {
-            /** Format: int64 */
-            activeCertifications?: number;
-            expiringCertifications?: components["schemas"]["CertificationDto"][];
-            /** Format: int64 */
-            activePersonnelClearances?: number;
-            expiringClearances?: components["schemas"]["ClearanceDto"][];
-            /** Format: int64 */
-            compliantItems?: number;
-            /** Format: int64 */
-            nonCompliantItems?: number;
-            /** Format: int64 */
-            overdueItems?: number;
-            upcomingItems?: components["schemas"]["ComplianceItemDto"][];
-        };
-        PageComplianceItemDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ComplianceItemDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageClearanceDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ClearanceDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageCertificationDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["CertificationDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageCompetitorResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["CompetitorResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        CompetitorStats: {
-            /** Format: int64 */
-            totalCompetitors?: number;
-            /** Format: int64 */
-            activeCompetitors?: number;
-        };
-        PageClearanceResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ClearanceResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageCertificationResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["CertificationResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageBudgetItemResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["BudgetItemResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        BudgetSummary: {
-            totalBudget?: number;
-            totalActual?: number;
-            totalVariance?: number;
-            percentUsed?: number;
-            byCategory?: {
-                [key: string]: components["schemas"]["CategorySummary"];
-            };
-        };
-        CategorySummary: {
-            budgeted?: number;
-            actual?: number;
-            variance?: number;
-        };
-        PlanDetails: {
-            /** @enum {string} */
-            id?: "FREE" | "STARTER" | "PROFESSIONAL" | "ENTERPRISE";
-            name?: string;
-            description?: string;
-            price?: number;
-            interval?: string;
-            features?: string[];
-            requiresPayment?: boolean;
-            stripePriceId?: string;
-        };
-        BillingConfig: {
-            publishableKey?: string;
-            configured?: boolean;
-        };
-        ValidateTokenResponse: {
-            valid?: boolean;
-        };
-        AuditLog: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            userId?: string;
-            /** Format: uuid */
-            tenantId?: string;
-            /** @enum {string} */
-            action?: "LOGIN" | "LOGOUT" | "LOGIN_FAILED" | "PASSWORD_RESET_REQUESTED" | "PASSWORD_RESET_COMPLETED" | "PASSWORD_CHANGED" | "MFA_ENABLED" | "MFA_DISABLED" | "USER_CREATED" | "USER_UPDATED" | "USER_ACTIVATED" | "USER_SUSPENDED" | "USER_DELETED" | "USER_INVITED" | "INVITATION_ACCEPTED" | "INVITATION_CANCELLED" | "TENANT_CREATED" | "TENANT_UPDATED" | "TENANT_SUSPENDED" | "TENANT_ACTIVATED" | "TENANT_SETTINGS_CHANGED" | "ROLE_ASSIGNED" | "ROLE_REMOVED" | "ROLE_CHANGED" | "OPPORTUNITY_VIEWED" | "OPPORTUNITY_SAVED" | "OPPORTUNITY_REMOVED_FROM_SAVED" | "OPPORTUNITY_ADDED_TO_PIPELINE" | "OPPORTUNITY_STAGE_CHANGED" | "PIPELINE_CREATED" | "PIPELINE_UPDATED" | "PIPELINE_DELETED" | "PIPELINE_ARCHIVED" | "PIPELINE_DEFAULT_SET" | "OPPORTUNITY_REMOVED_FROM_PIPELINE" | "BID_DECISION_SET" | "DOCUMENT_UPLOADED" | "DOCUMENT_DOWNLOADED" | "DOCUMENT_DELETED" | "DOCUMENT_CREATED" | "DOCUMENT_UPDATED" | "FILE_UPLOADED" | "FILE_DOWNLOADED" | "FILE_DELETED" | "FILE_PURGED" | "TEMPLATE_CREATED" | "TEMPLATE_UPDATED" | "TEMPLATE_DELETED" | "CONTENT_CREATED" | "CONTENT_UPDATED" | "CONTENT_DELETED" | "CONTRACT_CREATED" | "CONTRACT_UPDATED" | "CONTRACT_DELETED" | "CONTRACT_STATUS_CHANGED" | "CLIN_CREATED" | "CLIN_UPDATED" | "MODIFICATION_CREATED" | "OPTION_EXERCISED" | "DELIVERABLE_CREATED" | "DELIVERABLE_COMPLETED" | "CERTIFICATION_CREATED" | "CERTIFICATION_UPDATED" | "CERTIFICATION_DELETED" | "CERTIFICATION_EXPIRED" | "CLEARANCE_CREATED" | "CLEARANCE_UPDATED" | "COMPLIANCE_ITEM_CREATED" | "COMPLIANCE_STATUS_CHANGED" | "INVOICE_CREATED" | "INVOICE_SUBMITTED" | "INVOICE_PAID" | "BUDGET_ITEM_CREATED" | "LABOR_RATE_CREATED" | "DATA_EXPORTED" | "REPORT_GENERATED" | "SETTINGS_CHANGED" | "API_KEY_CREATED" | "API_KEY_REVOKED" | "COMPETITOR_CREATED" | "COMPETITOR_UPDATED" | "COMPETITOR_DELETED" | "PROFILE_CREATED" | "PROFILE_UPDATED" | "SESSION_CREATED" | "SESSION_EXPIRED" | "SESSION_TERMINATED" | "ALERT_CREATED" | "ALERT_UPDATED" | "ALERT_DELETED" | "ALERT_TRIGGERED" | "SEARCH_CREATED" | "SEARCH_UPDATED" | "SEARCH_DELETED" | "LABOR_RATE_UPDATED" | "LABOR_RATE_DELETED" | "WEBHOOK_CREATED" | "WEBHOOK_UPDATED" | "WEBHOOK_DELETED" | "ROLE_CREATED" | "ROLE_UPDATED" | "ROLE_DELETED" | "REPORT_CREATED" | "REPORT_UPDATED" | "REPORT_DELETED" | "REPORT_RAN" | "MATCH_UPDATED" | "FEATURE_REQUEST_CREATED" | "FEATURE_REQUEST_UPDATED" | "FEATURE_REQUEST_DELETED" | "FEATURE_REQUEST_STATUS_CHANGED";
-            entityType?: string;
-            entityId?: string;
-            description?: string;
-            details?: string;
-            ipAddress?: string;
-            userAgent?: string;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        PageAuditLog: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["AuditLog"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        ApiKeyResponse: {
-            /** Format: uuid */
-            id?: string;
-            name?: string;
-            description?: string;
-            /** @enum {string} */
-            keyType?: "FULL_ACCESS" | "READ_ONLY" | "WEBHOOK" | "INTEGRATION" | "CUSTOM";
-            keyPrefix?: string;
-            scopes?: string[];
-            /** Format: int32 */
-            rateLimitPerMinute?: number;
-            /** Format: int32 */
-            rateLimitPerHour?: number;
-            /** Format: int32 */
-            rateLimitPerDay?: number;
-            /** Format: date-time */
-            expiresAt?: string;
-            /** Format: date-time */
-            lastUsedAt?: string;
-            /** Format: int64 */
-            totalRequests?: number;
-            isActive?: boolean;
-            /** Format: date-time */
-            createdAt?: string;
-        };
-        PageApiKeyResponse: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ApiKeyResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        ApiKeyStats: {
-            /** Format: int64 */
-            totalKeys?: number;
-            /** Format: int64 */
-            activeKeys?: number;
-            /** Format: int64 */
-            totalRequests?: number;
-        };
-        PageAlertDto: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["AlertDto"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        AlertCountResponse: {
-            /** Format: int64 */
-            count?: number;
-        };
-        /** @description AI-generated summary */
-        Summary: {
-            /** @description Executive summary (1-2 sentences) */
-            executiveSummary?: string;
-            /** @description Key points extracted */
-            keyPoints?: string[];
-            /** @description Scope of work summary */
-            scopeSummary?: string;
-            /** @description Timeline and milestones */
-            timeline?: string[];
-            /** @description Budget/value analysis */
-            budgetAnalysis?: string;
-            /**
-             * Format: int32
-             * @description Confidence score (0-100)
-             */
-            confidence?: number;
-        };
-        /** @description Identified risks */
-        Risk: {
-            category?: string;
-            description?: string;
-            /** @enum {string} */
-            severity?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            mitigation?: string;
-        };
-        /** @description Risk assessment */
-        RiskAssessment: {
-            /**
-             * @description Overall risk level
-             * @enum {string}
-             */
-            overallRisk?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-            /** @description Identified risks */
-            risks?: components["schemas"]["Risk"][];
-            /** @description Mitigation strategies */
-            mitigations?: string[];
-            /** @description Red flags found */
-            redFlags?: string[];
-            /** @description Compliance concerns */
-            complianceConcerns?: string[];
-        };
-        /** @description Proposal suggestions */
-        ProposalSuggestions: {
-            /** @description Suggested win themes */
-            winThemes?: string[];
-            /** @description Key discriminators to highlight */
-            discriminators?: string[];
-            /** @description Section-by-section suggestions */
-            sectionSuggestions?: components["schemas"]["SectionSuggestion"][];
-            /** @description Compliance checklist items */
-            complianceChecklist?: string[];
-        };
-        /** @description Section-by-section suggestions */
-        SectionSuggestion: {
-            section?: string;
-            suggestion?: string;
-            keyPoints?: string[];
-        };
-        /** @description Opportunity fit score */
-        FitScore: {
-            /**
-             * Format: int32
-             * @description Overall fit score (0-100)
-             */
-            overallScore?: number;
-            /**
-             * Format: int32
-             * @description NAICS code match score
-             */
-            naicsScore?: number;
-            /**
-             * Format: int32
-             * @description Past performance relevance
-             */
-            pastPerformanceScore?: number;
-            /**
-             * Format: int32
-             * @description Certification alignment
-             */
-            certificationScore?: number;
-            /**
-             * Format: int32
-             * @description Geographic fit
-             */
-            geographicScore?: number;
-            /** @description Reasoning for the score */
-            reasoning?: string;
-            /** @description Strengths identified */
-            strengths?: string[];
-            /** @description Weaknesses/gaps identified */
-            weaknesses?: string[];
-            /** @description Recommended actions */
-            recommendations?: string[];
-        };
-        PageTeammingPartner: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["TeammingPartner"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageTeammingAgreement: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["TeammingAgreement"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        SbirStats: {
-            /** Format: int64 */
-            totalAwards?: number;
-            /** Format: int64 */
-            sbirCount?: number;
-            /** Format: int64 */
-            sttrCount?: number;
-            agencies?: string[];
-            phases?: string[];
-        };
-        SbirAward: {
-            id?: string;
-            firm?: string;
-            awardTitle?: string;
-            agency?: string;
-            branch?: string;
-            phase?: string;
-            program?: string;
-            agencyTrackingNumber?: string;
-            contract?: string;
-            /** Format: date */
-            proposalAwardDate?: string;
-            /** Format: date */
-            contractEndDate?: string;
-            solicitationNumber?: string;
-            /** Format: int32 */
-            solicitationYear?: number;
-            topicCode?: string;
-            /** Format: int32 */
-            awardYear?: number;
-            awardAmount?: number;
-            uei?: string;
-            hubzoneOwned?: boolean;
-            sociallyEconomicallyDisadvantaged?: boolean;
-            womenOwned?: boolean;
-            /** Format: int32 */
-            numberEmployees?: number;
-            companyUrl?: string;
-            city?: string;
-            state?: string;
-            zip?: string;
-            pocName?: string;
-            pocEmail?: string;
-            pocPhone?: string;
-            piName?: string;
-            piEmail?: string;
-            researchKeywords?: string;
-            abstractText?: string;
-            awardLink?: string;
-            isSbir?: boolean;
-            isSttr?: boolean;
-        };
-        PageProposal: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["Proposal"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
         };
         TenantFinancialSummaryDto: {
             totalInvoiced?: number;
@@ -14799,7 +14122,7 @@ export interface components {
             lastUpdatedDate?: string;
             notes?: string;
         };
-        PageFileDto: {
+        PageFeatureRequestDto: {
             /** Format: int64 */
             totalElements?: number;
             /** Format: int32 */
@@ -14808,7 +14131,7 @@ export interface components {
             last?: boolean;
             /** Format: int32 */
             size?: number;
-            content?: components["schemas"]["FileDto"][];
+            content?: components["schemas"]["FeatureRequestDto"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
@@ -14816,23 +14139,6 @@ export interface components {
             numberOfElements?: number;
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
-        };
-        StorageSummary: {
-            /** Format: int64 */
-            totalFiles?: number;
-            /** Format: int64 */
-            totalSizeBytes?: number;
-            /** Format: int64 */
-            documentCount?: number;
-            /** Format: int64 */
-            imageCount?: number;
-            /** Format: int64 */
-            otherCount?: number;
-        };
-        PresignedUrlResponse: {
-            url?: string;
-            /** Format: date-time */
-            expiresAt?: string;
         };
         PageDocument: {
             /** Format: int64 */
@@ -14910,6 +14216,408 @@ export interface components {
             /** Format: int64 */
             pendingApproval?: number;
         };
+        PageDeliverableResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["DeliverableResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        UpcomingDeadlineDto: {
+            /** Format: uuid */
+            id?: string;
+            title?: string;
+            /** @enum {string} */
+            type?: "DELIVERABLE" | "INVOICE" | "MILESTONE" | "COMPLIANCE" | "MEETING" | "REVIEW";
+            contractNumber?: string;
+            /** Format: uuid */
+            contractId?: string;
+            /** Format: date */
+            dueDate?: string;
+            /** @enum {string} */
+            priority?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            status?: string;
+        };
+        ComplianceSummaryDto: {
+            /** Format: int64 */
+            activeCertifications?: number;
+            expiringCertifications?: components["schemas"]["CertificationDto"][];
+            /** Format: int64 */
+            activePersonnelClearances?: number;
+            expiringClearances?: components["schemas"]["ClearanceDto"][];
+            /** Format: int64 */
+            compliantItems?: number;
+            /** Format: int64 */
+            nonCompliantItems?: number;
+            /** Format: int64 */
+            overdueItems?: number;
+            upcomingItems?: components["schemas"]["ComplianceItemDto"][];
+        };
+        PageComplianceItemDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ComplianceItemDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageClearanceDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ClearanceDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageCertificationDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["CertificationDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageClearanceResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ClearanceResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageCertificationResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["CertificationResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageBudgetItemResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["BudgetItemResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        BudgetSummary: {
+            totalBudget?: number;
+            totalActual?: number;
+            totalVariance?: number;
+            percentUsed?: number;
+            byCategory?: {
+                [key: string]: components["schemas"]["CategorySummary"];
+            };
+        };
+        CategorySummary: {
+            budgeted?: number;
+            actual?: number;
+            variance?: number;
+        };
+        PipelineSummaryDto: {
+            /** Format: uuid */
+            pipelineId?: string;
+            pipelineName?: string;
+            /** Format: int64 */
+            totalOpportunities?: number;
+            totalValue?: number;
+            totalWeightedValue?: number;
+            /** Format: int64 */
+            bidCount?: number;
+            /** Format: int64 */
+            noBidCount?: number;
+            /** Format: int64 */
+            pendingCount?: number;
+            stages?: components["schemas"]["StageSummaryDto"][];
+        };
+        StageSummaryDto: {
+            /** Format: uuid */
+            stageId?: string;
+            stageName?: string;
+            color?: string;
+            /** @enum {string} */
+            stageType?: "INITIAL" | "IN_PROGRESS" | "WON" | "LOST";
+            /** Format: int64 */
+            opportunityCount?: number;
+            totalValue?: number;
+            weightedValue?: number;
+        };
+        PagePipelineOpportunityDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["PipelineOpportunityDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PermissionDto: {
+            /** Format: uuid */
+            id?: string;
+            code?: string;
+            displayName?: string;
+            description?: string;
+            category?: string;
+        };
+        PermissionCheckResponse: {
+            permission?: string;
+            granted?: boolean;
+        };
+        PageOpportunityAlertDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["OpportunityAlertDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        DashboardStats: {
+            /** Format: int64 */
+            activeOpportunities?: number;
+            /** Format: int64 */
+            sbirOpportunities?: number;
+            /** Format: int64 */
+            sttrOpportunities?: number;
+            /** Format: int64 */
+            closingSoonOpportunities?: number;
+        };
+        FilterOptions: {
+            agencies?: string[];
+            setAsideTypes?: string[];
+            naicsCodes?: string[];
+        };
+        StepInfo: {
+            /** Format: int32 */
+            stepNumber?: number;
+            title?: string;
+            description?: string;
+            required?: boolean;
+            complete?: boolean;
+            current?: boolean;
+        };
+        ProvidersResponse: {
+            providers?: string[];
+            enabled?: boolean;
+        };
+        PageNotificationDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["NotificationDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        MfaStatus: {
+            enabled?: boolean;
+            /** Format: int64 */
+            remainingBackupCodes?: number;
+            /** Format: date-time */
+            lastVerifiedAt?: string;
+        };
+        PageMatchResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["MatchResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        MatchStats: {
+            /** Format: int64 */
+            totalMatches?: number;
+            /** Format: int64 */
+            newMatches?: number;
+            /** Format: int64 */
+            qualifiedMatches?: number;
+            /** Format: int64 */
+            pursuingMatches?: number;
+            averageScore?: number;
+        };
+        PageFileDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["FileDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        StorageSummary: {
+            /** Format: int64 */
+            totalFiles?: number;
+            /** Format: int64 */
+            totalSizeBytes?: number;
+            /** Format: int64 */
+            documentCount?: number;
+            /** Format: int64 */
+            imageCount?: number;
+            /** Format: int64 */
+            otherCount?: number;
+        };
+        PresignedUrlResponse: {
+            url?: string;
+            /** Format: date-time */
+            expiresAt?: string;
+        };
+        ExportTemplate: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            tenantId?: string;
+            name?: string;
+            description?: string;
+            entityType?: string;
+            format?: string;
+            columns?: string;
+            headerTemplate?: string;
+            footerTemplate?: string;
+            includeBranding?: boolean;
+            /** Format: uuid */
+            createdBy?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            default?: boolean;
+        };
+        PageDashboardResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["DashboardResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
         CrmSummaryDto: {
             /** Format: int64 */
             totalContacts?: number;
@@ -14976,6 +14684,95 @@ export interface components {
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
         };
+        PageContractDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ContractDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        ContractSummaryDto: {
+            /** Format: uuid */
+            contractId?: string;
+            contractNumber?: string;
+            title?: string;
+            /** @enum {string} */
+            status?: "DRAFT" | "AWARDED" | "PENDING_SIGNATURE" | "ACTIVE" | "ON_HOLD" | "COMPLETED" | "TERMINATED" | "CANCELLED" | "CLOSED";
+            totalValue?: number;
+            fundedValue?: number;
+            clinTotalValue?: number;
+            clinFundedAmount?: number;
+            clinInvoicedAmount?: number;
+            remainingFunds?: number;
+            /** Format: int64 */
+            modificationCount?: number;
+            /** Format: int64 */
+            pendingModifications?: number;
+            /** Format: int64 */
+            pendingOptions?: number;
+            pendingOptionValue?: number;
+            /** Format: int64 */
+            pendingDeliverables?: number;
+            /** Format: int64 */
+            overdueDeliverables?: number;
+            /** Format: date */
+            popStartDate?: string;
+            /** Format: date */
+            popEndDate?: string;
+        };
+        PageContentResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ContentResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        PageCompetitorResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["CompetitorResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        CompetitorStats: {
+            /** Format: int64 */
+            totalCompetitors?: number;
+            /** Format: int64 */
+            activeCompetitors?: number;
+        };
         PageCapturePlan: {
             /** Format: int64 */
             totalElements?: number;
@@ -14993,6 +14790,111 @@ export interface components {
             numberOfElements?: number;
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
+        };
+        PlanDetails: {
+            /** @enum {string} */
+            id?: "FREE" | "STARTER" | "PROFESSIONAL" | "ENTERPRISE";
+            name?: string;
+            description?: string;
+            price?: number;
+            interval?: string;
+            features?: string[];
+            requiresPayment?: boolean;
+            stripePriceId?: string;
+        };
+        BillingConfig: {
+            publishableKey?: string;
+            configured?: boolean;
+        };
+        ValidateTokenResponse: {
+            valid?: boolean;
+        };
+        AuditLog: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            userId?: string;
+            /** Format: uuid */
+            tenantId?: string;
+            /** @enum {string} */
+            action?: "LOGIN" | "LOGOUT" | "LOGIN_FAILED" | "PASSWORD_RESET_REQUESTED" | "PASSWORD_RESET_COMPLETED" | "PASSWORD_CHANGED" | "MFA_ENABLED" | "MFA_DISABLED" | "USER_CREATED" | "USER_UPDATED" | "USER_ACTIVATED" | "USER_SUSPENDED" | "USER_DELETED" | "USER_INVITED" | "INVITATION_ACCEPTED" | "INVITATION_CANCELLED" | "TENANT_CREATED" | "TENANT_UPDATED" | "TENANT_SUSPENDED" | "TENANT_ACTIVATED" | "TENANT_SETTINGS_CHANGED" | "ROLE_ASSIGNED" | "ROLE_REMOVED" | "ROLE_CHANGED" | "OPPORTUNITY_VIEWED" | "OPPORTUNITY_SAVED" | "OPPORTUNITY_REMOVED_FROM_SAVED" | "OPPORTUNITY_ADDED_TO_PIPELINE" | "OPPORTUNITY_STAGE_CHANGED" | "PIPELINE_CREATED" | "PIPELINE_UPDATED" | "PIPELINE_DELETED" | "PIPELINE_ARCHIVED" | "PIPELINE_DEFAULT_SET" | "OPPORTUNITY_REMOVED_FROM_PIPELINE" | "BID_DECISION_SET" | "DOCUMENT_UPLOADED" | "DOCUMENT_DOWNLOADED" | "DOCUMENT_DELETED" | "DOCUMENT_CREATED" | "DOCUMENT_UPDATED" | "FILE_UPLOADED" | "FILE_DOWNLOADED" | "FILE_DELETED" | "FILE_PURGED" | "TEMPLATE_CREATED" | "TEMPLATE_UPDATED" | "TEMPLATE_DELETED" | "CONTENT_CREATED" | "CONTENT_UPDATED" | "CONTENT_DELETED" | "CONTRACT_CREATED" | "CONTRACT_UPDATED" | "CONTRACT_DELETED" | "CONTRACT_STATUS_CHANGED" | "CLIN_CREATED" | "CLIN_UPDATED" | "MODIFICATION_CREATED" | "OPTION_EXERCISED" | "DELIVERABLE_CREATED" | "DELIVERABLE_COMPLETED" | "CERTIFICATION_CREATED" | "CERTIFICATION_UPDATED" | "CERTIFICATION_DELETED" | "CERTIFICATION_EXPIRED" | "CLEARANCE_CREATED" | "CLEARANCE_UPDATED" | "COMPLIANCE_ITEM_CREATED" | "COMPLIANCE_STATUS_CHANGED" | "INVOICE_CREATED" | "INVOICE_SUBMITTED" | "INVOICE_PAID" | "BUDGET_ITEM_CREATED" | "LABOR_RATE_CREATED" | "DATA_EXPORTED" | "REPORT_GENERATED" | "SETTINGS_CHANGED" | "API_KEY_CREATED" | "API_KEY_REVOKED" | "COMPETITOR_CREATED" | "COMPETITOR_UPDATED" | "COMPETITOR_DELETED" | "PROFILE_CREATED" | "PROFILE_UPDATED" | "SESSION_CREATED" | "SESSION_EXPIRED" | "SESSION_TERMINATED" | "ALERT_CREATED" | "ALERT_UPDATED" | "ALERT_DELETED" | "ALERT_TRIGGERED" | "SEARCH_CREATED" | "SEARCH_UPDATED" | "SEARCH_DELETED" | "LABOR_RATE_UPDATED" | "LABOR_RATE_DELETED" | "WEBHOOK_CREATED" | "WEBHOOK_UPDATED" | "WEBHOOK_DELETED" | "ROLE_CREATED" | "ROLE_UPDATED" | "ROLE_DELETED" | "REPORT_CREATED" | "REPORT_UPDATED" | "REPORT_DELETED" | "REPORT_RAN" | "MATCH_UPDATED" | "FEATURE_REQUEST_CREATED" | "FEATURE_REQUEST_UPDATED" | "FEATURE_REQUEST_DELETED" | "FEATURE_REQUEST_STATUS_CHANGED";
+            entityType?: string;
+            entityId?: string;
+            description?: string;
+            details?: string;
+            ipAddress?: string;
+            userAgent?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        PageAuditLog: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["AuditLog"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        ApiKeyResponse: {
+            /** Format: uuid */
+            id?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            keyType?: "FULL_ACCESS" | "READ_ONLY" | "WEBHOOK" | "INTEGRATION" | "CUSTOM";
+            keyPrefix?: string;
+            scopes?: string[];
+            /** Format: int32 */
+            rateLimitPerMinute?: number;
+            /** Format: int32 */
+            rateLimitPerHour?: number;
+            /** Format: int32 */
+            rateLimitPerDay?: number;
+            /** Format: date-time */
+            expiresAt?: string;
+            /** Format: date-time */
+            lastUsedAt?: string;
+            /** Format: int64 */
+            totalRequests?: number;
+            isActive?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        PageApiKeyResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["ApiKeyResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        ApiKeyStats: {
+            /** Format: int64 */
+            totalKeys?: number;
+            /** Format: int64 */
+            activeKeys?: number;
+            /** Format: int64 */
+            totalRequests?: number;
         };
         TrendDataDto: {
             metricName?: string;
@@ -15012,63 +14914,6 @@ export interface components {
             /** Format: int64 */
             actionCount?: number;
             value?: number;
-        };
-        MetricDto: {
-            name?: string;
-            value?: number;
-            previousValue?: number;
-            /** Format: double */
-            changePercent?: number;
-            period?: string;
-        };
-        PageAnalyticsEvent: {
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["AnalyticsEvent"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        DashboardStatsDto: {
-            /** Format: int64 */
-            opportunitiesViewed?: number;
-            /** Format: int64 */
-            opportunitiesSaved?: number;
-            pipelineValue?: number;
-            /** Format: double */
-            winRate?: number;
-            /** Format: int64 */
-            activeUsers?: number;
-            /** Format: int64 */
-            recentActivity?: number;
-            eventCounts?: {
-                [key: string]: number;
-            };
-            viewsTrend?: components["schemas"]["TrendPointDto"][];
-        };
-        ActivityItemDto: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            userId?: string;
-            userName?: string;
-            /** @enum {string} */
-            eventType?: "PAGE_VIEW" | "SEARCH_PERFORMED" | "FILTER_APPLIED" | "SORT_CHANGED" | "OPPORTUNITY_VIEWED" | "OPPORTUNITY_SAVED" | "OPPORTUNITY_UNSAVED" | "OPPORTUNITY_EXPORTED" | "OPPORTUNITY_SHARED" | "PIPELINE_OPPORTUNITY_ADDED" | "PIPELINE_OPPORTUNITY_MOVED" | "PIPELINE_OPPORTUNITY_REMOVED" | "BID_DECISION_MADE" | "CONTRACT_VIEWED" | "CONTRACT_CREATED" | "CONTRACT_UPDATED" | "DELIVERABLE_COMPLETED" | "INVOICE_SUBMITTED" | "DOCUMENT_UPLOADED" | "DOCUMENT_DOWNLOADED" | "DOCUMENT_VIEWED" | "USER_LOGIN" | "USER_LOGOUT" | "PROFILE_UPDATED" | "SETTINGS_CHANGED" | "DASHBOARD_VIEWED" | "REPORT_GENERATED" | "REPORT_EXPORTED" | "WIDGET_INTERACTED" | "ALERT_CREATED" | "ALERT_TRIGGERED" | "ALERT_DISMISSED" | "CUSTOM";
-            entityType?: string;
-            entityId?: string;
-            description?: string;
-            /** Format: date-time */
-            timestamp?: string;
         };
         FinancialSummaryDto: {
             totalBacklog?: number;
@@ -15119,6 +14964,32 @@ export interface components {
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
         };
+        MetricDto: {
+            name?: string;
+            value?: number;
+            previousValue?: number;
+            /** Format: double */
+            changePercent?: number;
+            period?: string;
+        };
+        PageAnalyticsEvent: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["AnalyticsEvent"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
         PageDashboard: {
             /** Format: int64 */
             totalElements?: number;
@@ -15137,6 +15008,154 @@ export interface components {
             pageable?: components["schemas"]["PageableObject"];
             empty?: boolean;
         };
+        DashboardStatsDto: {
+            /** Format: int64 */
+            opportunitiesViewed?: number;
+            /** Format: int64 */
+            opportunitiesSaved?: number;
+            pipelineValue?: number;
+            /** Format: double */
+            winRate?: number;
+            /** Format: int64 */
+            activeUsers?: number;
+            /** Format: int64 */
+            recentActivity?: number;
+            eventCounts?: {
+                [key: string]: number;
+            };
+            viewsTrend?: components["schemas"]["TrendPointDto"][];
+        };
+        ActivityItemDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            userId?: string;
+            userName?: string;
+            /** @enum {string} */
+            eventType?: "PAGE_VIEW" | "SEARCH_PERFORMED" | "FILTER_APPLIED" | "SORT_CHANGED" | "OPPORTUNITY_VIEWED" | "OPPORTUNITY_SAVED" | "OPPORTUNITY_UNSAVED" | "OPPORTUNITY_EXPORTED" | "OPPORTUNITY_SHARED" | "PIPELINE_OPPORTUNITY_ADDED" | "PIPELINE_OPPORTUNITY_MOVED" | "PIPELINE_OPPORTUNITY_REMOVED" | "BID_DECISION_MADE" | "CONTRACT_VIEWED" | "CONTRACT_CREATED" | "CONTRACT_UPDATED" | "DELIVERABLE_COMPLETED" | "INVOICE_SUBMITTED" | "DOCUMENT_UPLOADED" | "DOCUMENT_DOWNLOADED" | "DOCUMENT_VIEWED" | "USER_LOGIN" | "USER_LOGOUT" | "PROFILE_UPDATED" | "SETTINGS_CHANGED" | "DASHBOARD_VIEWED" | "REPORT_GENERATED" | "REPORT_EXPORTED" | "WIDGET_INTERACTED" | "ALERT_CREATED" | "ALERT_TRIGGERED" | "ALERT_DISMISSED" | "CUSTOM";
+            entityType?: string;
+            entityId?: string;
+            description?: string;
+            /** Format: date-time */
+            timestamp?: string;
+        };
+        PageAlertDto: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["AlertDto"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            empty?: boolean;
+        };
+        AlertCountResponse: {
+            /** Format: int64 */
+            count?: number;
+        };
+        /** @description AI-generated summary */
+        Summary: {
+            /** @description Executive summary (1-2 sentences) */
+            executiveSummary?: string;
+            /** @description Key points extracted */
+            keyPoints?: string[];
+            /** @description Scope of work summary */
+            scopeSummary?: string;
+            /** @description Timeline and milestones */
+            timeline?: string[];
+            /** @description Budget/value analysis */
+            budgetAnalysis?: string;
+            /**
+             * Format: int32
+             * @description Confidence score (0-100)
+             */
+            confidence?: number;
+        };
+        /** @description Identified risks */
+        Risk: {
+            category?: string;
+            description?: string;
+            /** @enum {string} */
+            severity?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            mitigation?: string;
+        };
+        /** @description Risk assessment */
+        RiskAssessment: {
+            /**
+             * @description Overall risk level
+             * @enum {string}
+             */
+            overallRisk?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+            /** @description Identified risks */
+            risks?: components["schemas"]["Risk"][];
+            /** @description Mitigation strategies */
+            mitigations?: string[];
+            /** @description Red flags found */
+            redFlags?: string[];
+            /** @description Compliance concerns */
+            complianceConcerns?: string[];
+        };
+        /** @description Proposal suggestions */
+        ProposalSuggestions: {
+            /** @description Suggested win themes */
+            winThemes?: string[];
+            /** @description Key discriminators to highlight */
+            discriminators?: string[];
+            /** @description Section-by-section suggestions */
+            sectionSuggestions?: components["schemas"]["SectionSuggestion"][];
+            /** @description Compliance checklist items */
+            complianceChecklist?: string[];
+        };
+        /** @description Section-by-section suggestions */
+        SectionSuggestion: {
+            section?: string;
+            suggestion?: string;
+            keyPoints?: string[];
+        };
+        /** @description Opportunity fit score */
+        FitScore: {
+            /**
+             * Format: int32
+             * @description Overall fit score (0-100)
+             */
+            overallScore?: number;
+            /**
+             * Format: int32
+             * @description NAICS code match score
+             */
+            naicsScore?: number;
+            /**
+             * Format: int32
+             * @description Past performance relevance
+             */
+            pastPerformanceScore?: number;
+            /**
+             * Format: int32
+             * @description Certification alignment
+             */
+            certificationScore?: number;
+            /**
+             * Format: int32
+             * @description Geographic fit
+             */
+            geographicScore?: number;
+            /** @description Reasoning for the score */
+            reasoning?: string;
+            /** @description Strengths identified */
+            strengths?: string[];
+            /** @description Weaknesses/gaps identified */
+            weaknesses?: string[];
+            /** @description Recommended actions */
+            recommendations?: string[];
+        };
         RevokedSessionsResponse: {
             /** Format: int32 */
             revokedCount?: number;
@@ -15148,9 +15167,7 @@ export interface components {
     headers: never;
     pathItems: never;
 }
-
 export type $defs = Record<string, never>;
-
 export interface operations {
     getWebhook: {
         parameters: {
@@ -15314,83 +15331,12 @@ export interface operations {
             };
         };
     };
-    updateTask: {
+    getPartner: {
         parameters: {
             query?: never;
-            header?: never;
-            path: {
-                sprintId: string;
-                taskId: string;
+            header: {
+                "X-Tenant-ID": string;
             };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateTaskRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SprintTaskDto"];
-                };
-            };
-        };
-    };
-    deleteTask: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                sprintId: string;
-                taskId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    moveTask: {
-        parameters: {
-            query: {
-                status: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
-            };
-            header?: never;
-            path: {
-                sprintId: string;
-                taskId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SprintTaskDto"];
-                };
-            };
-        };
-    };
-    getSprint: {
-        parameters: {
-            query?: never;
-            header?: never;
             path: {
                 id: string;
             };
@@ -15404,15 +15350,17 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintDto"];
+                    "*/*": components["schemas"]["TeammingPartner"];
                 };
             };
         };
     };
-    updateSprint: {
+    updatePartner: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -15420,7 +15368,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateSprintRequest"];
+                "application/json": components["schemas"]["TeammingPartner"];
             };
         };
         responses: {
@@ -15430,15 +15378,17 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintDto"];
+                    "*/*": components["schemas"]["TeammingPartner"];
                 };
             };
         };
     };
-    deleteSprint: {
+    deletePartner: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -15455,10 +15405,12 @@ export interface operations {
             };
         };
     };
-    getScopeItem: {
+    getAgreement: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -15472,15 +15424,17 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ScopeItemDto"];
+                    "*/*": components["schemas"]["TeammingAgreement"];
                 };
             };
         };
     };
-    updateScopeItem: {
+    updateAgreement: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -15488,7 +15442,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateScopeItemRequest"];
+                "application/json": components["schemas"]["TeammingAgreement"];
             };
         };
         responses: {
@@ -15498,15 +15452,17 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ScopeItemDto"];
+                    "*/*": components["schemas"]["TeammingAgreement"];
                 };
             };
         };
     };
-    deleteScopeItem: {
+    deleteAgreement: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -15520,30 +15476,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-        };
-    };
-    updateStatus: {
-        parameters: {
-            query: {
-                status: "PENDING" | "ACTIVE" | "COMPLETED" | "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "CANCELLED" | "DEFERRED";
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ScopeItemDto"];
-                };
             };
         };
     };
@@ -15865,6 +15797,80 @@ export interface operations {
             };
         };
     };
+    getProposal: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"];
+                };
+            };
+        };
+    };
+    updateProposal: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Proposal"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"];
+                };
+            };
+        };
+    };
+    deleteProposal: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getPreferences: {
         parameters: {
             query?: never;
@@ -15909,40 +15915,19 @@ export interface operations {
             };
         };
     };
-    getPipeline: {
+    updateTask: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                pipelineId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PipelineDto"];
-                };
-            };
-        };
-    };
-    updatePipeline: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                pipelineId: string;
+                sprintId: string;
+                taskId: string;
             };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdatePipelineRequest"];
+                "application/json": components["schemas"]["UpdateTaskRequest"];
             };
         };
         responses: {
@@ -15952,17 +15937,18 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PipelineDto"];
+                    "*/*": components["schemas"]["SprintTaskDto"];
                 };
             };
         };
     };
-    deletePipeline: {
+    deleteTask: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                pipelineId: string;
+                sprintId: string;
+                taskId: string;
             };
             cookie?: never;
         };
@@ -15977,42 +15963,15 @@ export interface operations {
             };
         };
     };
-    updateStage: {
+    moveTask: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                pipelineId: string;
-                stageId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateStageRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["StageDto"];
-                };
-            };
-        };
-    };
-    deleteStage: {
-        parameters: {
-            query?: {
-                moveToStageId?: string;
+            query: {
+                status: "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE" | "BLOCKED";
             };
             header?: never;
             path: {
-                pipelineId: string;
-                stageId: string;
+                sprintId: string;
+                taskId: string;
             };
             cookie?: never;
         };
@@ -16023,11 +15982,13 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "*/*": components["schemas"]["SprintTaskDto"];
+                };
             };
         };
     };
-    getAlert: {
+    getSprint: {
         parameters: {
             query?: never;
             header?: never;
@@ -16044,12 +16005,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["OpportunityAlertDto"];
+                    "*/*": components["schemas"]["SprintDto"];
                 };
             };
         };
     };
-    updateAlert: {
+    updateSprint: {
         parameters: {
             query?: never;
             header?: never;
@@ -16060,7 +16021,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateOpportunityAlertRequest"];
+                "application/json": components["schemas"]["UpdateSprintRequest"];
             };
         };
         responses: {
@@ -16070,12 +16031,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["OpportunityAlertDto"];
+                    "*/*": components["schemas"]["SprintDto"];
                 };
             };
         };
     };
-    deleteAlert: {
+    deleteSprint: {
         parameters: {
             query?: never;
             header?: never;
@@ -16095,33 +16056,7 @@ export interface operations {
             };
         };
     };
-    completeStep: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                step: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["CompleteStepRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OnboardingStepDTO"];
-                };
-            };
-        };
-    };
-    markAsRead: {
+    getScopeItem: {
         parameters: {
             query?: never;
             header?: never;
@@ -16138,16 +16073,66 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["NotificationDto"];
+                    "*/*": components["schemas"]["ScopeItemDto"];
                 };
             };
         };
     };
-    markAllAsRead: {
+    updateScopeItem: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateScopeItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ScopeItemDto"];
+                };
+            };
+        };
+    };
+    deleteScopeItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateStatus: {
+        parameters: {
+            query: {
+                status: "PENDING" | "ACTIVE" | "COMPLETED" | "NOT_STARTED" | "IN_PROGRESS" | "ON_HOLD" | "CANCELLED" | "DEFERRED";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -16158,7 +16143,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["MarkAllReadResponse"];
+                    "*/*": components["schemas"]["ScopeItemDto"];
                 };
             };
         };
@@ -16257,7 +16242,7 @@ export interface operations {
             };
         };
     };
-    markAsRead_1: {
+    markAsRead: {
         parameters: {
             query?: never;
             header?: never;
@@ -16349,1063 +16334,6 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getFeatureRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
-                };
-            };
-        };
-    };
-    updateFeatureRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateFeatureRequestRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
-                };
-            };
-        };
-    };
-    deleteFeatureRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    updateStatus_2: {
-        parameters: {
-            query: {
-                status: "SUBMITTED" | "UNDER_REVIEW" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DECLINED" | "DUPLICATE";
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
-                };
-            };
-        };
-    };
-    updateAdminFields: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateAdminFieldsRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
-                };
-            };
-        };
-    };
-    getDeliverable: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DeliverableResponse"];
-                };
-            };
-        };
-    };
-    updateDeliverable: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateDeliverableRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DeliverableResponse"];
-                };
-            };
-        };
-    };
-    deleteDeliverable: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getContract: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContractDto"];
-                };
-            };
-        };
-    };
-    updateContract: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateContractRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContractDto"];
-                };
-            };
-        };
-    };
-    updateClin: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-                clinId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateClinRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClinDto"];
-                };
-            };
-        };
-    };
-    getContent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContentResponse"];
-                };
-            };
-        };
-    };
-    updateContent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateContentRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContentResponse"];
-                };
-            };
-        };
-    };
-    deleteContent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getComplianceItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                itemId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"];
-                };
-            };
-        };
-    };
-    updateComplianceItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                itemId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateComplianceItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"];
-                };
-            };
-        };
-    };
-    getClearance: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                clearanceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"];
-                };
-            };
-        };
-    };
-    updateClearance: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                clearanceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateClearanceRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"];
-                };
-            };
-        };
-    };
-    getCertification: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                certId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationDto"];
-                };
-            };
-        };
-    };
-    updateCertification: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                certId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateCertificationRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationDto"];
-                };
-            };
-        };
-    };
-    getCompetitor: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorResponse"];
-                };
-            };
-        };
-    };
-    updateCompetitor: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCompetitorRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorResponse"];
-                };
-            };
-        };
-    };
-    deleteCompetitor: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    updateClearance_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateClearanceRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceResponse"];
-                };
-            };
-        };
-    };
-    deleteClearance: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getCertification_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationResponse"];
-                };
-            };
-        };
-    };
-    updateCertification_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCertificationRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationResponse"];
-                };
-            };
-        };
-    };
-    deleteCertification: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getBudgetItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetItemResponse"];
-                };
-            };
-        };
-    };
-    updateBudgetItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateBudgetItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetItemResponse"];
-                };
-            };
-        };
-    };
-    deleteBudgetItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    updatePlan: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdatePlanRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SubscriptionDto"];
-                };
-            };
-        };
-    };
-    getSettings: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TenantSettingsDTO"];
-                };
-            };
-        };
-    };
-    updateSettings: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TenantSettingsDTO"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TenantSettingsDTO"];
-                };
-            };
-        };
-    };
-    getBranding: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TenantBrandingDTO"];
-                };
-            };
-        };
-    };
-    updateBranding: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TenantBrandingDTO"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TenantBrandingDTO"];
-                };
-            };
-        };
-    };
-    getPartner: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"];
-                };
-            };
-        };
-    };
-    updatePartner: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TeammingPartner"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"];
-                };
-            };
-        };
-    };
-    deletePartner: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getAgreement: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"];
-                };
-            };
-        };
-    };
-    updateAgreement: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TeammingAgreement"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"];
-                };
-            };
-        };
-    };
-    deleteAgreement: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getProposal: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"];
-                };
-            };
-        };
-    };
-    updateProposal: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Proposal"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"];
-                };
-            };
-        };
-    };
-    deleteProposal: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
             path: {
                 id: string;
             };
@@ -17606,7 +16534,7 @@ export interface operations {
             };
         };
     };
-    getBudgetItem_1: {
+    getBudgetItem: {
         parameters: {
             query?: never;
             header?: never;
@@ -17629,7 +16557,7 @@ export interface operations {
             };
         };
     };
-    updateBudgetItem_1: {
+    updateBudgetItem: {
         parameters: {
             query?: never;
             header?: never;
@@ -17656,7 +16584,7 @@ export interface operations {
             };
         };
     };
-    deleteBudgetItem_1: {
+    deleteBudgetItem: {
         parameters: {
             query?: never;
             header?: never;
@@ -17674,6 +16602,124 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    getFeatureRequest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
+            };
+        };
+    };
+    updateFeatureRequest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateFeatureRequestRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
+            };
+        };
+    };
+    deleteFeatureRequest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateStatus_2: {
+        parameters: {
+            query: {
+                status: "SUBMITTED" | "UNDER_REVIEW" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DECLINED" | "DUPLICATE";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
+            };
+        };
+    };
+    updateAdminFields: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAdminFieldsRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
             };
         };
     };
@@ -17949,6 +16995,654 @@ export interface operations {
             };
         };
     };
+    getDeliverable: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DeliverableResponse"];
+                };
+            };
+        };
+    };
+    updateDeliverable: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDeliverableRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DeliverableResponse"];
+                };
+            };
+        };
+    };
+    deleteDeliverable: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getComplianceItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                itemId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"];
+                };
+            };
+        };
+    };
+    updateComplianceItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                itemId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateComplianceItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"];
+                };
+            };
+        };
+    };
+    getClearance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clearanceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"];
+                };
+            };
+        };
+    };
+    updateClearance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clearanceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateClearanceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"];
+                };
+            };
+        };
+    };
+    getCertification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                certId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationDto"];
+                };
+            };
+        };
+    };
+    updateCertification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                certId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCertificationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationDto"];
+                };
+            };
+        };
+    };
+    updateClearance_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateClearanceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceResponse"];
+                };
+            };
+        };
+    };
+    deleteClearance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getCertification_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationResponse"];
+                };
+            };
+        };
+    };
+    updateCertification_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCertificationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationResponse"];
+                };
+            };
+        };
+    };
+    deleteCertification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getBudgetItem_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetItemResponse"];
+                };
+            };
+        };
+    };
+    updateBudgetItem_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBudgetItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetItemResponse"];
+                };
+            };
+        };
+    };
+    deleteBudgetItem_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getPipeline: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipelineId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PipelineDto"];
+                };
+            };
+        };
+    };
+    updatePipeline: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipelineId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePipelineRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PipelineDto"];
+                };
+            };
+        };
+    };
+    deletePipeline: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipelineId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateStage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipelineId: string;
+                stageId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateStageRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["StageDto"];
+                };
+            };
+        };
+    };
+    deleteStage: {
+        parameters: {
+            query?: {
+                moveToStageId?: string;
+            };
+            header?: never;
+            path: {
+                pipelineId: string;
+                stageId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getAlert: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OpportunityAlertDto"];
+                };
+            };
+        };
+    };
+    updateAlert: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateOpportunityAlertRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OpportunityAlertDto"];
+                };
+            };
+        };
+    };
+    deleteAlert: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    completeStep: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CompleteStepRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OnboardingStepDTO"];
+                };
+            };
+        };
+    };
+    markAsRead_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["NotificationDto"];
+                };
+            };
+        };
+    };
+    markAllAsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MarkAllReadResponse"];
+                };
+            };
+        };
+    };
     getOrganization: {
         parameters: {
             query?: never;
@@ -18153,6 +17847,217 @@ export interface operations {
             };
         };
     };
+    getContract: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContractDto"];
+                };
+            };
+        };
+    };
+    updateContract: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateContractRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContractDto"];
+                };
+            };
+        };
+    };
+    updateClin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+                clinId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateClinRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClinDto"];
+                };
+            };
+        };
+    };
+    getContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContentResponse"];
+                };
+            };
+        };
+    };
+    updateContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateContentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContentResponse"];
+                };
+            };
+        };
+    };
+    deleteContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getCompetitor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorResponse"];
+                };
+            };
+        };
+    };
+    updateCompetitor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCompetitorRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorResponse"];
+                };
+            };
+        };
+    };
+    deleteCompetitor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getAction: {
         parameters: {
             query?: never;
@@ -18248,7 +18153,7 @@ export interface operations {
             };
         };
     };
-    updatePlan_1: {
+    updatePlan: {
         parameters: {
             query?: never;
             header: {
@@ -18295,6 +18200,30 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    updatePlan_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePlanRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SubscriptionDto"];
+                };
             };
         };
     };
@@ -18479,6 +18408,94 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    getSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TenantSettingsDTO"];
+                };
+            };
+        };
+    };
+    updateSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantSettingsDTO"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TenantSettingsDTO"];
+                };
+            };
+        };
+    };
+    getBranding: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TenantBrandingDTO"];
+                };
+            };
+        };
+    };
+    updateBranding: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantBrandingDTO"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TenantBrandingDTO"];
+                };
             };
         };
     };
@@ -18767,15 +18784,14 @@ export interface operations {
             };
         };
     };
-    getSprints: {
+    getPartners: {
         parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-                sortBy?: string;
-                sortDir?: string;
+            query: {
+                pageable: components["schemas"]["Pageable"];
             };
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -18787,21 +18803,23 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageSprintDto"];
+                    "*/*": components["schemas"]["PageTeammingPartner"];
                 };
             };
         };
     };
-    createSprint: {
+    createPartner: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateSprintRequest"];
+                "application/json": components["schemas"]["TeammingPartner"];
             };
         };
         responses: {
@@ -18811,18 +18829,20 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintDto"];
+                    "*/*": components["schemas"]["TeammingPartner"];
                 };
             };
         };
     };
-    getSprintTasks: {
+    getAgreements: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
+            query: {
+                pageable: components["schemas"]["Pageable"];
             };
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -18833,23 +18853,23 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintTaskDto"][];
+                    "*/*": components["schemas"]["PageTeammingAgreement"];
                 };
             };
         };
     };
-    addTask: {
+    createAgreement: {
         parameters: {
             query?: never;
-            header?: never;
-            path: {
-                id: string;
+            header: {
+                "X-Tenant-ID": string;
             };
+            path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateTaskRequest"];
+                "application/json": components["schemas"]["TeammingAgreement"];
             };
         };
         responses: {
@@ -18859,15 +18879,17 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintTaskDto"];
+                    "*/*": components["schemas"]["TeammingAgreement"];
                 };
             };
         };
     };
-    startSprint: {
+    signNda: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -18881,15 +18903,17 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintDto"];
+                    "*/*": components["schemas"]["TeammingAgreement"];
                 };
             };
         };
     };
-    completeSprint: {
+    activateAgreement: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -18903,7 +18927,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintDto"];
+                    "*/*": components["schemas"]["TeammingAgreement"];
                 };
             };
         };
@@ -18932,66 +18956,9 @@ export interface operations {
             };
         };
     };
-    createScopeItem: {
+    ingestAwards: {
         parameters: {
             query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateScopeItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ScopeItemDto"];
-                };
-            };
-        };
-    };
-    requestChange: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                scopeItemId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateScopeChangeRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ScopeChangeDto"];
-                };
-            };
-        };
-    };
-    getScopeChanges: {
-        parameters: {
-            query: {
-                contractId: string;
-                status?: "PENDING" | "APPROVED" | "REJECTED" | "DRAFT" | "PENDING_APPROVAL" | "UNDER_REVIEW" | "IMPLEMENTED" | "WITHDRAWN" | "ON_HOLD";
-                page?: number;
-                size?: number;
-                sortBy?: string;
-                sortDir?: string;
-            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -19004,67 +18971,21 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageScopeChangeDto"];
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
                 };
             };
         };
     };
-    requestContractChange: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateScopeChangeRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ScopeChangeDto"];
-                };
-            };
-        };
-    };
-    rejectChange: {
-        parameters: {
-            query: {
-                reason: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ScopeChangeDto"];
-                };
-            };
-        };
-    };
-    approveChange: {
+    ingestByAgency: {
         parameters: {
             query?: {
-                comments?: string;
+                year?: number;
             };
             header?: never;
             path: {
-                id: string;
+                agency: string;
             };
             cookie?: never;
         };
@@ -19076,7 +18997,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ScopeChangeDto"];
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
                 };
             };
         };
@@ -19391,6 +19314,104 @@ export interface operations {
             };
         };
     };
+    getProposals: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageProposal"];
+                };
+            };
+        };
+    };
+    createProposal: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Proposal"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"];
+                };
+            };
+        };
+    };
+    incrementVersion: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"];
+                };
+            };
+        };
+    };
+    submitProposal: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"];
+                };
+            };
+        };
+    };
     getAllSources: {
         parameters: {
             query?: never;
@@ -19480,6 +19501,1756 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getSprints: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                sortBy?: string;
+                sortDir?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageSprintDto"];
+                };
+            };
+        };
+    };
+    createSprint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSprintRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintDto"];
+                };
+            };
+        };
+    };
+    getSprintTasks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintTaskDto"][];
+                };
+            };
+        };
+    };
+    addTask: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTaskRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintTaskDto"];
+                };
+            };
+        };
+    };
+    startSprint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintDto"];
+                };
+            };
+        };
+    };
+    completeSprint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintDto"];
+                };
+            };
+        };
+    };
+    createScopeItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateScopeItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ScopeItemDto"];
+                };
+            };
+        };
+    };
+    getScopeChanges: {
+        parameters: {
+            query: {
+                contractId: string;
+                status?: "PENDING" | "APPROVED" | "REJECTED" | "DRAFT" | "PENDING_APPROVAL" | "UNDER_REVIEW" | "IMPLEMENTED" | "WITHDRAWN" | "ON_HOLD";
+                page?: number;
+                size?: number;
+                sortBy?: string;
+                sortDir?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageScopeChangeDto"];
+                };
+            };
+        };
+    };
+    requestChange: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateScopeChangeRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ScopeChangeDto"];
+                };
+            };
+        };
+    };
+    rejectChange: {
+        parameters: {
+            query: {
+                reason: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ScopeChangeDto"];
+                };
+            };
+        };
+    };
+    approveChange: {
+        parameters: {
+            query?: {
+                comments?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ScopeChangeDto"];
+                };
+            };
+        };
+    };
+    requestChangeForScopeItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scopeItemId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateScopeChangeRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ScopeChangeDto"];
+                };
+            };
+        };
+    };
+    getMilestones: {
+        parameters: {
+            query?: {
+                contractId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MilestoneDto"][];
+                };
+            };
+        };
+    };
+    createMilestone: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMilestoneRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MilestoneDto"];
+                };
+            };
+        };
+    };
+    addDependency: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                dependsOnId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MilestoneDto"];
+                };
+            };
+        };
+    };
+    removeDependency: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                dependsOnId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MilestoneDto"];
+                };
+            };
+        };
+    };
+    completeMilestone: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CompleteMilestoneRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MilestoneDto"];
+                };
+            };
+        };
+    };
+    sendMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendMessageRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MessageDTO"];
+                };
+            };
+        };
+    };
+    replyToThread: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplyRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MessageDTO"];
+                };
+            };
+        };
+    };
+    getLaborRates: {
+        parameters: {
+            query: {
+                activeOnly?: boolean;
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageLaborRateResponse"];
+                };
+            };
+        };
+    };
+    createLaborRate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLaborRateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["LaborRateResponse"];
+                };
+            };
+        };
+    };
+    getInvoices: {
+        parameters: {
+            query: {
+                status?: "DRAFT" | "PENDING_APPROVAL" | "SUBMITTED" | "RECEIVED" | "UNDER_REVIEW" | "APPROVED" | "DISPUTED" | "REJECTED" | "PAID" | "PARTIALLY_PAID" | "CANCELLED";
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageInvoiceResponse"];
+                };
+            };
+        };
+    };
+    createInvoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInvoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["InvoiceResponse"];
+                };
+            };
+        };
+    };
+    submitInvoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    rejectInvoice: {
+        parameters: {
+            query: {
+                reason: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    markPaid: {
+        parameters: {
+            query: {
+                paidDate: string;
+                paidAmount: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    approveInvoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listLaborRates: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageLaborRate"];
+                };
+            };
+        };
+    };
+    createLaborRate_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLaborRateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["LaborRate"];
+                };
+            };
+        };
+    };
+    listInvoices: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageInvoiceDto"];
+                };
+            };
+        };
+    };
+    createInvoice_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInvoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Invoice"];
+                };
+            };
+        };
+    };
+    getInvoiceLineItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                invoiceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["InvoiceLineItem"][];
+                };
+            };
+        };
+    };
+    addLineItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                invoiceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLineItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["InvoiceLineItem"];
+                };
+            };
+        };
+    };
+    submitInvoice_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Invoice"];
+                };
+            };
+        };
+    };
+    updateInvoiceStatus: {
+        parameters: {
+            query: {
+                status: "DRAFT" | "PENDING_APPROVAL" | "SUBMITTED" | "RECEIVED" | "UNDER_REVIEW" | "APPROVED" | "DISPUTED" | "REJECTED" | "PAID" | "PARTIALLY_PAID" | "CANCELLED";
+                notes?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Invoice"];
+                };
+            };
+        };
+    };
+    recordPayment: {
+        parameters: {
+            query: {
+                amount: number;
+                paymentDate: string;
+                paymentReference?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Invoice"];
+                };
+            };
+        };
+    };
+    getContractBudget: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetItem"][];
+                };
+            };
+        };
+    };
+    createBudgetItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBudgetItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetItem"];
+                };
+            };
+        };
+    };
+    getFeatureRequests: {
+        parameters: {
+            query?: {
+                status?: "SUBMITTED" | "UNDER_REVIEW" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DECLINED" | "DUPLICATE";
+                sortBy?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageFeatureRequestDto"];
+                };
+            };
+        };
+    };
+    createFeatureRequest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateFeatureRequestRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
+            };
+        };
+    };
+    vote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
+            };
+        };
+    };
+    unvote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"];
+                };
+            };
+        };
+    };
+    listDocuments: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageDocument"];
+                };
+            };
+        };
+    };
+    createDocument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDocumentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Document"];
+                };
+            };
+        };
+    };
+    updateDocumentStatus: {
+        parameters: {
+            query: {
+                status: "DRAFT" | "PENDING_REVIEW" | "IN_REVIEW" | "APPROVED" | "REJECTED" | "ARCHIVED" | "SUPERSEDED";
+                notes?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Document"];
+                };
+            };
+        };
+    };
+    checkoutDocument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Document"];
+                };
+            };
+        };
+    };
+    checkinDocument: {
+        parameters: {
+            query: {
+                newFilePath: string;
+                newFileSize: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Document"];
+                };
+            };
+        };
+    };
+    listTemplates: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageDocumentTemplate"];
+                };
+            };
+        };
+    };
+    createTemplate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTemplateRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DocumentTemplate"];
+                };
+            };
+        };
+    };
+    recordTemplateUsage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    setDefaultTemplate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DocumentTemplate"];
+                };
+            };
+        };
+    };
+    approveTemplate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DocumentTemplate"];
+                };
+            };
+        };
+    };
+    getRootFolders: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DocumentFolder"][];
+                };
+            };
+        };
+    };
+    createFolder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateFolderRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DocumentFolder"];
+                };
+            };
+        };
+    };
+    listContentLibrary: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageContentLibraryItem"];
+                };
+            };
+        };
+    };
+    createContentLibraryItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateContentLibraryRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContentLibraryItem"];
+                };
+            };
+        };
+    };
+    recordContentWin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recordContentUsage: {
+        parameters: {
+            query: {
+                proposalName: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recordContentLoss: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    approveContentLibraryItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContentLibraryItem"];
+                };
+            };
+        };
+    };
+    getDeliverables: {
+        parameters: {
+            query: {
+                status?: "PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED";
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageDeliverableResponse"];
+                };
+            };
+        };
+    };
+    createDeliverable: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDeliverableRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DeliverableResponse"];
+                };
+            };
+        };
+    };
+    getComplianceItems: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                sortBy?: string;
+                sortDir?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageComplianceItemDto"];
+                };
+            };
+        };
+    };
+    createComplianceItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateComplianceItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"];
+                };
+            };
+        };
+    };
+    getClearances: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                sortBy?: string;
+                sortDir?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageClearanceDto"];
+                };
+            };
+        };
+    };
+    createClearance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateClearanceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"];
+                };
+            };
+        };
+    };
+    getCertifications: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                sortBy?: string;
+                sortDir?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageCertificationDto"];
+                };
+            };
+        };
+    };
+    createCertification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCertificationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationDto"];
+                };
+            };
+        };
+    };
+    getClearances_1: {
+        parameters: {
+            query: {
+                level?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageClearanceResponse"];
+                };
+            };
+        };
+    };
+    createClearance_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateClearanceRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceResponse"];
+                };
+            };
+        };
+    };
+    getCertifications_1: {
+        parameters: {
+            query: {
+                type?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageCertificationResponse"];
+                };
+            };
+        };
+    };
+    createCertification_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCertificationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationResponse"];
+                };
+            };
+        };
+    };
+    getBudgetItems: {
+        parameters: {
+            query: {
+                category?: "DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER";
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageBudgetItemResponse"];
+                };
+            };
+        };
+    };
+    createBudgetItem_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBudgetItemRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetItemResponse"];
+                };
+            };
+        };
+    };
+    recordExpense: {
+        parameters: {
+            query: {
+                amount: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -19890,124 +21661,6 @@ export interface operations {
             };
         };
     };
-    getMilestones: {
-        parameters: {
-            query?: {
-                contractId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MilestoneDto"][];
-                };
-            };
-        };
-    };
-    createMilestone: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateMilestoneRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MilestoneDto"];
-                };
-            };
-        };
-    };
-    addDependency: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-                dependsOnId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MilestoneDto"];
-                };
-            };
-        };
-    };
-    removeDependency: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-                dependsOnId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MilestoneDto"];
-                };
-            };
-        };
-    };
-    completeMilestone: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["CompleteMilestoneRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MilestoneDto"];
-                };
-            };
-        };
-    };
     verifyCode: {
         parameters: {
             query?: never;
@@ -20100,56 +21753,6 @@ export interface operations {
             };
         };
     };
-    sendMessage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SendMessageRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MessageDTO"];
-                };
-            };
-        };
-    };
-    replyToThread: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReplyRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MessageDTO"];
-                };
-            };
-        };
-    };
     addFeedback: {
         parameters: {
             query: {
@@ -20200,185 +21803,6 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getLaborRates: {
-        parameters: {
-            query: {
-                activeOnly?: boolean;
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageLaborRateResponse"];
-                };
-            };
-        };
-    };
-    createLaborRate: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateLaborRateRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["LaborRateResponse"];
-                };
-            };
-        };
-    };
-    getInvoices: {
-        parameters: {
-            query: {
-                status?: "DRAFT" | "PENDING_APPROVAL" | "SUBMITTED" | "RECEIVED" | "UNDER_REVIEW" | "APPROVED" | "DISPUTED" | "REJECTED" | "PAID" | "PARTIALLY_PAID" | "CANCELLED";
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageInvoiceResponse"];
-                };
-            };
-        };
-    };
-    createInvoice: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateInvoiceRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["InvoiceResponse"];
-                };
-            };
-        };
-    };
-    submitInvoice: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    rejectInvoice: {
-        parameters: {
-            query: {
-                reason: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    markPaid: {
-        parameters: {
-            query: {
-                paidDate: string;
-                paidAmount: number;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    approveInvoice: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
             cookie?: never;
         };
         requestBody?: never;
@@ -20462,32 +21886,97 @@ export interface operations {
             };
         };
     };
-    getFeatureRequests: {
+    uploadFile: {
         parameters: {
             query?: {
-                status?: "SUBMITTED" | "UNDER_REVIEW" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DECLINED" | "DUPLICATE";
-                sortBy?: string;
-                page?: number;
-                size?: number;
+                description?: string;
+                tags?: string;
+                referenceType?: string;
+                referenceId?: string;
             };
             header?: never;
             path?: never;
             cookie?: never;
         };
+        requestBody?: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            /** @description File uploaded successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+            /** @description File too large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+        };
+    };
+    confirmUpload: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fileId: string;
+            };
+            cookie?: never;
+        };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description Upload confirmed */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageFeatureRequestDto"];
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+            /** @description File not in pending state or not found in S3 */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+            /** @description File not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
                 };
             };
         };
     };
-    createFeatureRequest: {
+    initiatePresignedUpload: {
         parameters: {
             query?: never;
             header?: never;
@@ -20496,61 +21985,26 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateFeatureRequestRequest"];
+                "application/json": components["schemas"]["FileUploadRequest"];
             };
         };
         responses: {
-            /** @description OK */
+            /** @description Presigned URL generated */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
+                    "*/*": components["schemas"]["FileUploadResponse"];
                 };
             };
-        };
-    };
-    vote: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
+            /** @description Invalid request */
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
-                };
-            };
-        };
-    };
-    unvote: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"];
+                    "*/*": components["schemas"]["FileUploadResponse"];
                 };
             };
         };
@@ -20623,53 +22077,6 @@ export interface operations {
             };
         };
     };
-    getDeliverables: {
-        parameters: {
-            query: {
-                status?: "PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED";
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageDeliverableResponse"];
-                };
-            };
-        };
-    };
-    createDeliverable: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateDeliverableRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DeliverableResponse"];
-                };
-            };
-        };
-    };
     getDashboards: {
         parameters: {
             query: {
@@ -20738,6 +22145,164 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["WidgetResponse"];
+                };
+            };
+        };
+    };
+    listOrganizations: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOrganization"];
+                };
+            };
+        };
+    };
+    createOrganization: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateOrganizationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Organization"];
+                };
+            };
+        };
+    };
+    listInteractions: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageInteraction"];
+                };
+            };
+        };
+    };
+    createInteraction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInteractionRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Interaction"];
+                };
+            };
+        };
+    };
+    completeFollowup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listContacts: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageContact"];
+                };
+            };
+        };
+    };
+    createContact: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateContactRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Contact"];
                 };
             };
         };
@@ -21100,154 +22665,7 @@ export interface operations {
             };
         };
     };
-    getComplianceItems: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-                sortBy?: string;
-                sortDir?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageComplianceItemDto"];
-                };
-            };
-        };
-    };
-    createComplianceItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateComplianceItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"];
-                };
-            };
-        };
-    };
-    getClearances: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-                sortBy?: string;
-                sortDir?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageClearanceDto"];
-                };
-            };
-        };
-    };
-    createClearance: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateClearanceRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"];
-                };
-            };
-        };
-    };
-    getCertifications: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-                sortBy?: string;
-                sortDir?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageCertificationDto"];
-                };
-            };
-        };
-    };
-    createCertification: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCertificationRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationDto"];
-                };
-            };
-        };
-    };
-    getCompetitors: {
+    getCompetitors_1: {
         parameters: {
             query: {
                 pageable: components["schemas"]["Pageable"];
@@ -21337,13 +22755,14 @@ export interface operations {
             };
         };
     };
-    getClearances_1: {
+    getPlans: {
         parameters: {
             query: {
-                level?: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
                 pageable: components["schemas"]["Pageable"];
             };
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -21355,21 +22774,23 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageClearanceResponse"];
+                    "*/*": components["schemas"]["PageCapturePlan"];
                 };
             };
         };
     };
-    createClearance_1: {
+    createPlan: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateClearanceRequest"];
+                "application/json": components["schemas"]["CapturePlan"];
             };
         };
         responses: {
@@ -21379,19 +22800,18 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ClearanceResponse"];
+                    "*/*": components["schemas"]["CapturePlan"];
                 };
             };
         };
     };
-    getCertifications_1: {
+    getActions: {
         parameters: {
-            query: {
-                type?: "SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER";
-                pageable: components["schemas"]["Pageable"];
-            };
+            query?: never;
             header?: never;
-            path?: never;
+            path: {
+                planId: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -21402,21 +22822,25 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageCertificationResponse"];
+                    "*/*": components["schemas"]["CaptureAction"][];
                 };
             };
         };
     };
-    createCertification_1: {
+    createAction: {
         parameters: {
             query?: never;
-            header?: never;
-            path?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                planId: string;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateCertificationRequest"];
+                "application/json": components["schemas"]["CaptureAction"];
             };
         };
         responses: {
@@ -21426,19 +22850,21 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["CertificationResponse"];
+                    "*/*": components["schemas"]["CaptureAction"];
                 };
             };
         };
     };
-    getBudgetItems: {
+    completeAction: {
         parameters: {
-            query: {
-                category?: "DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER";
-                pageable: components["schemas"]["Pageable"];
+            query?: {
+                outcome?: string;
             };
             header?: never;
-            path?: never;
+            path: {
+                planId: string;
+                actionId: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -21449,41 +22875,20 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageBudgetItemResponse"];
+                    "*/*": components["schemas"]["CaptureAction"];
                 };
             };
         };
     };
-    createBudgetItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateBudgetItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetItemResponse"];
-                };
-            };
-        };
-    };
-    recordExpense: {
+    recordBidDecision: {
         parameters: {
             query: {
-                amount: number;
+                decision: "PENDING" | "BID" | "NO_BID" | "CONDITIONAL_BID";
+                rationale?: string;
             };
-            header?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
             path: {
                 id: string;
             };
@@ -21496,7 +22901,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "*/*": components["schemas"]["CapturePlan"];
+                };
             };
         };
     };
@@ -21740,455 +23147,6 @@ export interface operations {
             };
         };
     };
-    getApiKeys: {
-        parameters: {
-            query: {
-                search?: string;
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageApiKeyResponse"];
-                };
-            };
-        };
-    };
-    createApiKey: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateApiKeyRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiKeyCreatedResponse"];
-                };
-            };
-        };
-    };
-    revokeApiKey: {
-        parameters: {
-            query?: {
-                reason?: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    regenerateApiKey: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiKeyCreatedResponse"];
-                };
-            };
-        };
-    };
-    validateApiKey: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-API-Key": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiKeyValidationResult"];
-                };
-            };
-        };
-    };
-    markAsRead_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AlertDto"];
-                };
-            };
-        };
-    };
-    markAllAsRead_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MarkAllReadResponse"];
-                };
-            };
-        };
-    };
-    getPartners: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageTeammingPartner"];
-                };
-            };
-        };
-    };
-    createPartner: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TeammingPartner"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"];
-                };
-            };
-        };
-    };
-    getAgreements: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageTeammingAgreement"];
-                };
-            };
-        };
-    };
-    createAgreement: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TeammingAgreement"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"];
-                };
-            };
-        };
-    };
-    signNda: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"];
-                };
-            };
-        };
-    };
-    activateAgreement: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"];
-                };
-            };
-        };
-    };
-    ingestAwards: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    ingestByAgency: {
-        parameters: {
-            query?: {
-                year?: number;
-            };
-            header?: never;
-            path: {
-                agency: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    getProposals: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageProposal"];
-                };
-            };
-        };
-    };
-    createProposal: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Proposal"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"];
-                };
-            };
-        };
-    };
-    incrementVersion: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"];
-                };
-            };
-        };
-    };
-    submitProposal: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"];
-                };
-            };
-        };
-    };
     triggerIngestion: {
         parameters: {
             query?: never;
@@ -22325,9 +23283,10 @@ export interface operations {
             };
         };
     };
-    listLaborRates: {
+    getApiKeys: {
         parameters: {
             query: {
+                search?: string;
                 pageable: components["schemas"]["Pageable"];
             };
             header?: never;
@@ -22342,12 +23301,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageLaborRate"];
+                    "*/*": components["schemas"]["PageApiKeyResponse"];
                 };
             };
         };
     };
-    createLaborRate_1: {
+    createApiKey: {
         parameters: {
             query?: never;
             header?: never;
@@ -22356,7 +23315,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateLaborRateRequest"];
+                "application/json": components["schemas"]["CreateApiKeyRequest"];
             };
         };
         responses: {
@@ -22366,691 +23325,15 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["LaborRate"];
+                    "*/*": components["schemas"]["ApiKeyCreatedResponse"];
                 };
             };
         };
     };
-    listInvoices: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageInvoiceDto"];
-                };
-            };
-        };
-    };
-    createInvoice_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateInvoiceRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Invoice"];
-                };
-            };
-        };
-    };
-    getInvoiceLineItems: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                invoiceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["InvoiceLineItem"][];
-                };
-            };
-        };
-    };
-    addLineItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                invoiceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateLineItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["InvoiceLineItem"];
-                };
-            };
-        };
-    };
-    submitInvoice_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Invoice"];
-                };
-            };
-        };
-    };
-    updateInvoiceStatus: {
-        parameters: {
-            query: {
-                status: "DRAFT" | "PENDING_APPROVAL" | "SUBMITTED" | "RECEIVED" | "UNDER_REVIEW" | "APPROVED" | "DISPUTED" | "REJECTED" | "PAID" | "PARTIALLY_PAID" | "CANCELLED";
-                notes?: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Invoice"];
-                };
-            };
-        };
-    };
-    recordPayment: {
-        parameters: {
-            query: {
-                amount: number;
-                paymentDate: string;
-                paymentReference?: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Invoice"];
-                };
-            };
-        };
-    };
-    getContractBudget: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetItem"][];
-                };
-            };
-        };
-    };
-    createBudgetItem_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateBudgetItemRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetItem"];
-                };
-            };
-        };
-    };
-    uploadFile: {
+    revokeApiKey: {
         parameters: {
             query?: {
-                description?: string;
-                tags?: string;
-                referenceType?: string;
-                referenceId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "multipart/form-data": {
-                    /** Format: binary */
-                    file: string;
-                };
-            };
-        };
-        responses: {
-            /** @description File uploaded successfully */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-            /** @description Invalid request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-            /** @description File too large */
-            413: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-        };
-    };
-    confirmUpload: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                fileId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Upload confirmed */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-            /** @description File not in pending state or not found in S3 */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-            /** @description File not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-        };
-    };
-    initiatePresignedUpload: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FileUploadRequest"];
-            };
-        };
-        responses: {
-            /** @description Presigned URL generated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileUploadResponse"];
-                };
-            };
-            /** @description Invalid request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileUploadResponse"];
-                };
-            };
-        };
-    };
-    listDocuments: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageDocument"];
-                };
-            };
-        };
-    };
-    createDocument: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateDocumentRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Document"];
-                };
-            };
-        };
-    };
-    updateDocumentStatus: {
-        parameters: {
-            query: {
-                status: "DRAFT" | "PENDING_REVIEW" | "IN_REVIEW" | "APPROVED" | "REJECTED" | "ARCHIVED" | "SUPERSEDED";
-                notes?: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Document"];
-                };
-            };
-        };
-    };
-    checkoutDocument: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Document"];
-                };
-            };
-        };
-    };
-    checkinDocument: {
-        parameters: {
-            query: {
-                newFilePath: string;
-                newFileSize: number;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Document"];
-                };
-            };
-        };
-    };
-    listTemplates: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageDocumentTemplate"];
-                };
-            };
-        };
-    };
-    createTemplate: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateTemplateRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DocumentTemplate"];
-                };
-            };
-        };
-    };
-    recordTemplateUsage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    setDefaultTemplate: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DocumentTemplate"];
-                };
-            };
-        };
-    };
-    approveTemplate: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DocumentTemplate"];
-                };
-            };
-        };
-    };
-    getRootFolders: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DocumentFolder"][];
-                };
-            };
-        };
-    };
-    createFolder: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateFolderRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DocumentFolder"];
-                };
-            };
-        };
-    };
-    listContentLibrary: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageContentLibraryItem"];
-                };
-            };
-        };
-    };
-    createContentLibraryItem: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateContentLibraryRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContentLibraryItem"];
-                };
-            };
-        };
-    };
-    recordContentWin: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    recordContentUsage: {
-        parameters: {
-            query: {
-                proposalName: string;
+                reason?: string;
             };
             header?: never;
             path: {
@@ -23069,27 +23352,7 @@ export interface operations {
             };
         };
     };
-    recordContentLoss: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    approveContentLibraryItem: {
+    regenerateApiKey: {
         parameters: {
             query?: never;
             header?: never;
@@ -23106,228 +23369,20 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentLibraryItem"];
+                    "*/*": components["schemas"]["ApiKeyCreatedResponse"];
                 };
             };
         };
     };
-    listOrganizations: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOrganization"];
-                };
-            };
-        };
-    };
-    createOrganization: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateOrganizationRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Organization"];
-                };
-            };
-        };
-    };
-    listInteractions: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageInteraction"];
-                };
-            };
-        };
-    };
-    createInteraction: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateInteractionRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Interaction"];
-                };
-            };
-        };
-    };
-    completeFollowup: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    listContacts: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageContact"];
-                };
-            };
-        };
-    };
-    createContact: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateContactRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Contact"];
-                };
-            };
-        };
-    };
-    getPlans: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageCapturePlan"];
-                };
-            };
-        };
-    };
-    createPlan: {
+    validateApiKey: {
         parameters: {
             query?: never;
             header: {
-                "X-Tenant-ID": string;
+                "X-API-Key": string;
             };
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CapturePlan"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CapturePlan"];
-                };
-            };
-        };
-    };
-    getActions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                planId: string;
-            };
-            cookie?: never;
-        };
         requestBody?: never;
         responses: {
             /** @description OK */
@@ -23336,116 +23391,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["CaptureAction"][];
-                };
-            };
-        };
-    };
-    createAction: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                planId: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CaptureAction"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CaptureAction"];
-                };
-            };
-        };
-    };
-    completeAction: {
-        parameters: {
-            query?: {
-                outcome?: string;
-            };
-            header?: never;
-            path: {
-                planId: string;
-                actionId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CaptureAction"];
-                };
-            };
-        };
-    };
-    recordBidDecision: {
-        parameters: {
-            query: {
-                decision: "PENDING" | "BID" | "NO_BID" | "CONDITIONAL_BID";
-                rationale?: string;
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CapturePlan"];
+                    "*/*": components["schemas"]["ApiKeyValidationResult"];
                 };
             };
         };
     };
     trackEvent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TrackEventRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AnalyticsEvent"];
-                };
-            };
-        };
-    };
-    trackEvent_1: {
         parameters: {
             query?: never;
             header?: never;
@@ -23743,6 +23694,187 @@ export interface operations {
             };
         };
     };
+    markAsRead_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AlertDto"];
+                };
+            };
+        };
+    };
+    markAllAsRead_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MarkAllReadResponse"];
+                };
+            };
+        };
+    };
+    updateStatus_3: {
+        parameters: {
+            query: {
+                status: "DRAFT" | "IN_REVIEW" | "PINK_TEAM" | "RED_TEAM" | "GOLD_TEAM" | "FINAL_REVIEW" | "SUBMITTED" | "AWARDED" | "REJECTED" | "WITHDRAWN";
+            };
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"];
+                };
+            };
+        };
+    };
+    setActive: {
+        parameters: {
+            query: {
+                active: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateStatus_4: {
+        parameters: {
+            query: {
+                status: "PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateComplianceItemStatus: {
+        parameters: {
+            query: {
+                status: "PENDING" | "IN_PROGRESS" | "COMPLIANT" | "NON_COMPLIANT" | "REMEDIATION_REQUIRED" | "UNDER_REVIEW" | "NOT_APPLICABLE" | "WAIVED";
+                notes?: string;
+            };
+            header?: never;
+            path: {
+                itemId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"];
+                };
+            };
+        };
+    };
+    updateStatus_5: {
+        parameters: {
+            query: {
+                status: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateStatus_6: {
+        parameters: {
+            query: {
+                status: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getPipelineOpportunity: {
         parameters: {
             query?: never;
@@ -23836,50 +23968,6 @@ export interface operations {
             };
         };
     };
-    setActive: {
-        parameters: {
-            query: {
-                active: boolean;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    updateStatus_3: {
-        parameters: {
-            query: {
-                status: "PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED";
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     updateContractStatus: {
         parameters: {
             query: {
@@ -23927,31 +24015,6 @@ export interface operations {
             };
         };
     };
-    updateComplianceItemStatus: {
-        parameters: {
-            query: {
-                status: "PENDING" | "IN_PROGRESS" | "COMPLIANT" | "NON_COMPLIANT" | "REMEDIATION_REQUIRED" | "UNDER_REVIEW" | "NOT_APPLICABLE" | "WAIVED";
-                notes?: string;
-            };
-            header?: never;
-            path: {
-                itemId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"];
-                };
-            };
-        };
-    };
     deactivateCompetitor: {
         parameters: {
             query?: never;
@@ -23969,76 +24032,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-        };
-    };
-    updateStatus_4: {
-        parameters: {
-            query: {
-                status: "PENDING" | "INTERIM" | "ACTIVE" | "EXPIRED" | "SUSPENDED" | "REVOKED" | "INACTIVE";
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    updateStatus_5: {
-        parameters: {
-            query: {
-                status: "PENDING" | "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "RENEWAL_IN_PROGRESS" | "SUSPENDED" | "REVOKED" | "GRADUATED";
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    updateStatus_6: {
-        parameters: {
-            query: {
-                status: "DRAFT" | "IN_REVIEW" | "PINK_TEAM" | "RED_TEAM" | "GOLD_TEAM" | "FINAL_REVIEW" | "SUBMITTED" | "AWARDED" | "REJECTED" | "WITHDRAWN";
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"];
-                };
             };
         };
     };
@@ -24447,32 +24440,12 @@ export interface operations {
             };
         };
     };
-    getSprintSummary: {
+    getSmallBusinessPartners: {
         parameters: {
             query?: never;
-            header?: never;
-            path: {
-                id: string;
+            header: {
+                "X-Tenant-ID": string;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SprintSummaryDto"];
-                };
-            };
-        };
-    };
-    getActiveSprint: {
-        parameters: {
-            query?: never;
-            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -24484,7 +24457,213 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["SprintDto"];
+                    "*/*": components["schemas"]["TeammingPartner"][];
+                };
+            };
+        };
+    };
+    searchPartners: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingPartner"][];
+                };
+            };
+        };
+    };
+    getByNaicsCode: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                naicsCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingPartner"][];
+                };
+            };
+        };
+    };
+    getByCapability: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                capability: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingPartner"][];
+                };
+            };
+        };
+    };
+    getActivePartners: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingPartner"][];
+                };
+            };
+        };
+    };
+    getPendingNda: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingAgreement"][];
+                };
+            };
+        };
+    };
+    getAgreementsByPartner: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                partnerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingAgreement"][];
+                };
+            };
+        };
+    };
+    getAgreementsByOpportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingAgreement"][];
+                };
+            };
+        };
+    };
+    getExpiringSoon: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingAgreement"][];
+                };
+            };
+        };
+    };
+    getActiveAgreements: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TeammingAgreement"][];
                 };
             };
         };
@@ -24548,6 +24727,743 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["SearchSuggestionDTO"];
+                };
+            };
+        };
+    };
+    getStats_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SbirStats"];
+                };
+            };
+        };
+    };
+    searchLive: {
+        parameters: {
+            query?: {
+                agency?: string;
+                year?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    searchByFirm: {
+        parameters: {
+            query: {
+                name: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    getConfiguredAgencies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
+                };
+            };
+        };
+    };
+    getAllAwards: {
+        parameters: {
+            query?: {
+                agency?: string;
+                phase?: string;
+                year?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SbirAward"][];
+                };
+            };
+        };
+    };
+    searchAwards: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SbirAward"][];
+                };
+            };
+        };
+    };
+    getRecentAwards: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SbirAward"][];
+                };
+            };
+        };
+    };
+    getAgencies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: number;
+                    };
+                };
+            };
+        };
+    };
+    getSavedOpportunityIds: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
+                };
+            };
+        };
+    };
+    getSavedCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SavedCountResponse"];
+                };
+            };
+        };
+    };
+    checkIfSaved: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SavedStatusResponse"];
+                };
+            };
+        };
+    };
+    getAllPermissions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
+                };
+            };
+        };
+    };
+    getRoleByName: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["RoleResponse"];
+                };
+            };
+        };
+    };
+    getReportTypes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("PIPELINE_SUMMARY" | "PIPELINE_BY_STAGE" | "PIPELINE_BY_VALUE" | "PIPELINE_FORECAST" | "WIN_LOSS_ANALYSIS" | "WIN_RATE_BY_AGENCY" | "WIN_RATE_BY_NAICS" | "WIN_RATE_BY_SET_ASIDE" | "CONTRACT_PORTFOLIO" | "CONTRACT_PERFORMANCE" | "CONTRACT_EXPIRING" | "CONTRACT_VALUE_SUMMARY" | "REVENUE_FORECAST" | "BACKLOG_REPORT" | "AR_AGING" | "INVOICE_STATUS" | "BUDGET_VARIANCE" | "BURN_RATE" | "CERTIFICATION_STATUS" | "EXPIRING_CERTIFICATIONS" | "CLEARANCE_STATUS" | "COMPLIANCE_OVERVIEW" | "USER_ACTIVITY" | "OPPORTUNITY_ACTIVITY" | "BD_ACTIVITY" | "CUSTOM")[];
+                };
+            };
+        };
+    };
+    getScheduledReports: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ReportResponse"][];
+                };
+            };
+        };
+    };
+    exportReport: {
+        parameters: {
+            query?: {
+                format?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
+                };
+            };
+        };
+    };
+    getFilterOperators: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: string;
+                    }[];
+                };
+            };
+        };
+    };
+    getEntityTypes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET")[];
+                };
+            };
+        };
+    };
+    getAvailableColumns: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entityType: "OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ColumnDefinition"][];
+                };
+            };
+        };
+    };
+    getByStatus: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                status: "DRAFT" | "IN_REVIEW" | "PINK_TEAM" | "RED_TEAM" | "GOLD_TEAM" | "FINAL_REVIEW" | "SUBMITTED" | "AWARDED" | "REJECTED" | "WITHDRAWN";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"][];
+                };
+            };
+        };
+    };
+    getByOpportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"][];
+                };
+            };
+        };
+    };
+    getByManager: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                managerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"][];
+                };
+            };
+        };
+    };
+    getDueSoon: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"][];
+                };
+            };
+        };
+    };
+    countByStatus: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path: {
+                status: "DRAFT" | "IN_REVIEW" | "PINK_TEAM" | "RED_TEAM" | "GOLD_TEAM" | "FINAL_REVIEW" | "SUBMITTED" | "AWARDED" | "REJECTED" | "WITHDRAWN";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": number;
+                };
+            };
+        };
+    };
+    getActiveProposals: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Tenant-ID": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Proposal"][];
+                };
+            };
+        };
+    };
+    getSourceTypes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("API" | "RSS" | "WEB_SCRAPE" | "MANUAL" | "FILE_IMPORT")[];
+                };
+            };
+        };
+    };
+    getSourceStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SourceStats"];
+                };
+            };
+        };
+    };
+    getSourcesByState: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                stateCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SourceResponse"][];
+                };
+            };
+        };
+    };
+    getContractLevels: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB")[];
+                };
+            };
+        };
+    };
+    getSourcesByLevel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                level: "FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SourceResponse"][];
+                };
+            };
+        };
+    };
+    getSourceByCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                shortCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SourceResponse"];
+                };
+            };
+        };
+    };
+    getActiveSources: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SourceResponse"][];
+                };
+            };
+        };
+    };
+    getSprintSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintSummaryDto"];
+                };
+            };
+        };
+    };
+    getActiveSprint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SprintDto"];
                 };
             };
         };
@@ -24818,978 +25734,6 @@ export interface operations {
             };
         };
     };
-    getSavedOpportunityIds: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string[];
-                };
-            };
-        };
-    };
-    getSavedCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SavedCountResponse"];
-                };
-            };
-        };
-    };
-    checkIfSaved: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                opportunityId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SavedStatusResponse"];
-                };
-            };
-        };
-    };
-    getAllPermissions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string[];
-                };
-            };
-        };
-    };
-    getRoleByName: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                name: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["RoleResponse"];
-                };
-            };
-        };
-    };
-    getReportTypes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("PIPELINE_SUMMARY" | "PIPELINE_BY_STAGE" | "PIPELINE_BY_VALUE" | "PIPELINE_FORECAST" | "WIN_LOSS_ANALYSIS" | "WIN_RATE_BY_AGENCY" | "WIN_RATE_BY_NAICS" | "WIN_RATE_BY_SET_ASIDE" | "CONTRACT_PORTFOLIO" | "CONTRACT_PERFORMANCE" | "CONTRACT_EXPIRING" | "CONTRACT_VALUE_SUMMARY" | "REVENUE_FORECAST" | "BACKLOG_REPORT" | "AR_AGING" | "INVOICE_STATUS" | "BUDGET_VARIANCE" | "BURN_RATE" | "CERTIFICATION_STATUS" | "EXPIRING_CERTIFICATIONS" | "CLEARANCE_STATUS" | "COMPLIANCE_OVERVIEW" | "USER_ACTIVITY" | "OPPORTUNITY_ACTIVITY" | "BD_ACTIVITY" | "CUSTOM")[];
-                };
-            };
-        };
-    };
-    getScheduledReports: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ReportResponse"][];
-                };
-            };
-        };
-    };
-    exportReport: {
-        parameters: {
-            query?: {
-                format?: string;
-            };
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string[];
-                };
-            };
-        };
-    };
-    getFilterOperators: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: string;
-                    }[];
-                };
-            };
-        };
-    };
-    getEntityTypes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET")[];
-                };
-            };
-        };
-    };
-    getAvailableColumns: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                entityType: "OPPORTUNITY" | "CONTRACT" | "PIPELINE" | "INVOICE" | "CONTACT" | "ORGANIZATION" | "CERTIFICATION" | "COMPLIANCE" | "DELIVERABLE" | "BUDGET";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ColumnDefinition"][];
-                };
-            };
-        };
-    };
-    getSourceTypes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("API" | "RSS" | "WEB_SCRAPE" | "MANUAL" | "FILE_IMPORT")[];
-                };
-            };
-        };
-    };
-    getSourceStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SourceStats"];
-                };
-            };
-        };
-    };
-    getSourcesByState: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                stateCode: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SourceResponse"][];
-                };
-            };
-        };
-    };
-    getContractLevels: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB")[];
-                };
-            };
-        };
-    };
-    getSourcesByLevel: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                level: "FEDERAL" | "DOD" | "STATE" | "LOCAL" | "COMMERCIAL" | "PRIME_SUB";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SourceResponse"][];
-                };
-            };
-        };
-    };
-    getSourceByCode: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                shortCode: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SourceResponse"];
-                };
-            };
-        };
-    };
-    getActiveSources: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SourceResponse"][];
-                };
-            };
-        };
-    };
-    getPipelineSummary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                pipelineId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PipelineSummaryDto"];
-                };
-            };
-        };
-    };
-    getStaleOpportunities: {
-        parameters: {
-            query?: {
-                staleDays?: number;
-            };
-            header?: never;
-            path: {
-                pipelineId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PipelineOpportunityDto"][];
-                };
-            };
-        };
-    };
-    getApproachingDeadlines: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path: {
-                pipelineId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PipelineOpportunityDto"][];
-                };
-            };
-        };
-    };
-    getPermissionsByCategory: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: components["schemas"]["PermissionDto"][];
-                    };
-                };
-            };
-        };
-    };
-    getMyPermissions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string[];
-                };
-            };
-        };
-    };
-    getAllPermissionCodes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string[];
-                };
-            };
-        };
-    };
-    checkPermission: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                permissionCode: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PermissionCheckResponse"];
-                };
-            };
-        };
-    };
-    searchOpportunities: {
-        parameters: {
-            query?: {
-                keyword?: string;
-                naicsCode?: string;
-                agency?: string;
-                setAsideType?: string;
-                type?: string;
-                isSbir?: boolean;
-                isSttr?: boolean;
-                sbirOrSttr?: boolean;
-                phase?: string;
-                state?: string;
-                postedDateFrom?: string;
-                postedDateTo?: string;
-                responseDeadlineFrom?: string;
-                responseDeadlineTo?: string;
-                status?: "ACTIVE" | "CLOSED" | "CANCELLED" | "AWARDED" | "ARCHIVED";
-                activeOnly?: boolean;
-                page?: number;
-                size?: number;
-                sortBy?: string;
-                sortDirection?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getOpportunity: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OpportunityDto"];
-                };
-            };
-        };
-    };
-    getDashboardStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DashboardStats"];
-                };
-            };
-        };
-    };
-    getByState: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                state: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getOpportunityBySolicitation: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                solicitationNumber: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OpportunityDto"];
-                };
-            };
-        };
-    };
-    getBySetAsideType: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                type: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getSbirSttr: {
-        parameters: {
-            query?: {
-                phase?: string;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getRecentlyPosted: {
-        parameters: {
-            query?: {
-                days?: number;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getByNaicsCode: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                naicsCode: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getFilterOptions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FilterOptions"];
-                };
-            };
-        };
-    };
-    getClosingSoon: {
-        parameters: {
-            query?: {
-                days?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OpportunityDto"][];
-                };
-            };
-        };
-    };
-    getByAgency: {
-        parameters: {
-            query: {
-                name: string;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getActiveOpportunities: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageOpportunityDto"];
-                };
-            };
-        };
-    };
-    getSteps: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["StepInfo"][];
-                };
-            };
-        };
-    };
-    getProgress: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OnboardingStepDTO"];
-                };
-            };
-        };
-    };
-    getProviders: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProvidersResponse"];
-                };
-            };
-        };
-    };
-    getConnections: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OAuthConnectionDto"][];
-                };
-            };
-        };
-    };
-    getNotifications: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageNotificationDto"];
-                };
-            };
-        };
-    };
-    getUnreadCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["UnreadCountResponse"];
-                };
-            };
-        };
-    };
     getUpcomingMilestones: {
         parameters: {
             query?: {
@@ -25925,27 +25869,7 @@ export interface operations {
             };
         };
     };
-    getMfaStatus: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MfaStatus"];
-                };
-            };
-        };
-    };
-    getUnreadCount_1: {
+    getUnreadCount: {
         parameters: {
             query?: never;
             header?: never;
@@ -26075,114 +25999,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["PageMessageDTO"];
-                };
-            };
-        };
-    };
-    getAllMatches: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageMatchResponse"];
-                };
-            };
-        };
-    };
-    getTopMatches: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MatchResponse"][];
-                };
-            };
-        };
-    };
-    getMatchStatuses: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("NEW" | "REVIEWING" | "QUALIFIED" | "DISQUALIFIED" | "PURSUING" | "TEAMING" | "SUBMITTED" | "WON" | "LOST" | "NO_BID")[];
-                };
-            };
-        };
-    };
-    getMatchesByStatus: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path: {
-                status: "NEW" | "REVIEWING" | "QUALIFIED" | "DISQUALIFIED" | "PURSUING" | "TEAMING" | "SUBMITTED" | "WON" | "LOST" | "NO_BID";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageMatchResponse"];
-                };
-            };
-        };
-    };
-    getMatchStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MatchStats"];
                 };
             };
         };
@@ -26373,2331 +26189,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["PageInvoiceResponse"];
-                };
-            };
-        };
-    };
-    getInvitationByToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                token: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["InvitationDto"];
-                };
-            };
-        };
-    };
-    getPendingInvitations: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tenantId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["InvitationDto"][];
-                };
-            };
-        };
-    };
-    hasVoted: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: boolean;
-                    };
-                };
-            };
-        };
-    };
-    getMyVotedRequests: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageFeatureRequestDto"];
-                };
-            };
-        };
-    };
-    getTopVoted: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FeatureRequestDto"][];
-                };
-            };
-        };
-    };
-    searchFeatureRequests: {
-        parameters: {
-            query: {
-                keyword: string;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageFeatureRequestDto"];
-                };
-            };
-        };
-    };
-    getMyFeatureRequests: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageFeatureRequestDto"];
-                };
-            };
-        };
-    };
-    getTemplates: {
-        parameters: {
-            query?: {
-                entityType?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ExportTemplate"][];
-                };
-            };
-        };
-    };
-    getUpcomingDeliverables: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DeliverableResponse"][];
-                };
-            };
-        };
-    };
-    getDeliverableStatuses: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED")[];
-                };
-            };
-        };
-    };
-    getOverdueDeliverables: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DeliverableResponse"][];
-                };
-            };
-        };
-    };
-    getDeliverablesByContract: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageDeliverableResponse"];
-                };
-            };
-        };
-    };
-    getDashboard: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DashboardResponse"];
-                };
-            };
-        };
-    };
-    deleteDashboard: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getDefaultDashboard: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DashboardResponse"];
-                };
-            };
-        };
-    };
-    getContractSummary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContractSummaryDto"];
-                };
-            };
-        };
-    };
-    getOverdueDeliverables_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DeliverableDto"][];
-                };
-            };
-        };
-    };
-    searchContracts: {
-        parameters: {
-            query: {
-                keyword: string;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageContractDto"];
-                };
-            };
-        };
-    };
-    getApproachingOptionDeadlines: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["OptionDto"][];
-                };
-            };
-        };
-    };
-    getExpiringContracts: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContractDto"][];
-                };
-            };
-        };
-    };
-    getActiveContracts: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageContractDto"];
-                };
-            };
-        };
-    };
-    getContentTypes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER")[];
-                };
-            };
-        };
-    };
-    getTemplates_1: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageContentResponse"];
-                };
-            };
-        };
-    };
-    getMostUsed: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ContentResponse"][];
-                };
-            };
-        };
-    };
-    getComplianceSummary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceSummaryDto"];
-                };
-            };
-        };
-    };
-    getPendingComplianceItems: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"][];
-                };
-            };
-        };
-    };
-    getOverdueComplianceItems: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"][];
-                };
-            };
-        };
-    };
-    getNonCompliantItems: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"][];
-                };
-            };
-        };
-    };
-    getComplianceItemsByContract: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComplianceItemDto"][];
-                };
-            };
-        };
-    };
-    getActivePersonnelClearances: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"][];
-                };
-            };
-        };
-    };
-    getFacilityClearance: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"];
-                };
-            };
-        };
-    };
-    getExpiringClearances: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"][];
-                };
-            };
-        };
-    };
-    getActiveClearances: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceDto"][];
-                };
-            };
-        };
-    };
-    getSmallBusinessCertifications: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationDto"][];
-                };
-            };
-        };
-    };
-    getExpiringCertifications: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationDto"][];
-                };
-            };
-        };
-    };
-    getActiveCertifications: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationDto"][];
-                };
-            };
-        };
-    };
-    getTopCompetitorsByWinRate: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorResponse"][];
-                };
-            };
-        };
-    };
-    getTopCompetitorsByValue: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorResponse"][];
-                };
-            };
-        };
-    };
-    getCompetitorStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorStats"];
-                };
-            };
-        };
-    };
-    searchCompetitors: {
-        parameters: {
-            query?: {
-                name?: string;
-                naicsCode?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorResponse"][];
-                };
-            };
-        };
-    };
-    getActiveCompetitors: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CompetitorResponse"][];
-                };
-            };
-        };
-    };
-    getProfileByUei: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                uei: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProfileResponse"];
-                };
-            };
-        };
-    };
-    getClearanceByUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                userId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceResponse"];
-                };
-            };
-        };
-    };
-    getClearanceLevels: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE")[];
-                };
-            };
-        };
-    };
-    getClearancesAtLevelOrAbove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                minLevel: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceResponse"][];
-                };
-            };
-        };
-    };
-    getExpiringClearances_1: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ClearanceResponse"][];
-                };
-            };
-        };
-    };
-    getCertificationTypes: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER")[];
-                };
-            };
-        };
-    };
-    getExpiringCertifications_1: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["CertificationResponse"][];
-                };
-            };
-        };
-    };
-    getOverBudgetItems: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetItemResponse"][];
-                };
-            };
-        };
-    };
-    getBudgetItemsByContract: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageBudgetItemResponse"];
-                };
-            };
-        };
-    };
-    getContractBudgetSummary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                contractId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BudgetSummary"];
-                };
-            };
-        };
-    };
-    getBudgetCategories: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": ("DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER")[];
-                };
-            };
-        };
-    };
-    getCurrentSubscription: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SubscriptionDto"];
-                };
-            };
-        };
-    };
-    getAvailablePlans: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PlanDetails"][];
-                };
-            };
-        };
-    };
-    getBillingConfig: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BillingConfig"];
-                };
-            };
-        };
-    };
-    validateResetToken: {
-        parameters: {
-            query: {
-                token: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ValidateTokenResponse"];
-                };
-            };
-        };
-    };
-    getUserAuditLogs: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                userId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAuditLog"];
-                };
-            };
-        };
-    };
-    getTenantAuditLogs: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path: {
-                tenantId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAuditLog"];
-                };
-            };
-        };
-    };
-    getTenantAuditLogsByDateRange: {
-        parameters: {
-            query: {
-                startDate: string;
-                endDate: string;
-            };
-            header?: never;
-            path: {
-                tenantId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AuditLog"][];
-                };
-            };
-        };
-    };
-    getMyAuditLogs: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAuditLog"];
-                };
-            };
-        };
-    };
-    getEntityAuditLogs: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                entityType: string;
-                entityId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AuditLog"][];
-                };
-            };
-        };
-    };
-    getApiKey: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiKeyResponse"];
-                };
-            };
-        };
-    };
-    getStats_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ApiKeyStats"];
-                };
-            };
-        };
-    };
-    getMyApiKeys: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageApiKeyResponse"];
-                };
-            };
-        };
-    };
-    getExpiringKeys: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": Record<string, never>;
-                };
-            };
-        };
-    };
-    getMyAlerts: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAlertDto"];
-                };
-            };
-        };
-    };
-    getUnreadAlerts: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAlertDto"];
-                };
-            };
-        };
-    };
-    getUnreadCount_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AlertCountResponse"];
-                };
-            };
-        };
-    };
-    getOpportunitySummary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Summary"];
-                };
-            };
-        };
-    };
-    getRiskAssessment: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["RiskAssessment"];
-                };
-            };
-        };
-    };
-    getProposalSuggestions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProposalSuggestions"];
-                };
-            };
-        };
-    };
-    getFitScore: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FitScore"];
-                };
-            };
-        };
-    };
-    getPublicBranding: {
-        parameters: {
-            query?: {
-                domain?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TenantBrandingDTO"];
-                };
-            };
-        };
-    };
-    getSmallBusinessPartners: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"][];
-                };
-            };
-        };
-    };
-    searchPartners: {
-        parameters: {
-            query: {
-                q: string;
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"][];
-                };
-            };
-        };
-    };
-    getByNaicsCode_1: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                naicsCode: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"][];
-                };
-            };
-        };
-    };
-    getByCapability: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                capability: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"][];
-                };
-            };
-        };
-    };
-    getActivePartners: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingPartner"][];
-                };
-            };
-        };
-    };
-    getPendingNda: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"][];
-                };
-            };
-        };
-    };
-    getAgreementsByPartner: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                partnerId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"][];
-                };
-            };
-        };
-    };
-    getAgreementsByOpportunity: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                opportunityId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"][];
-                };
-            };
-        };
-    };
-    getExpiringSoon: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"][];
-                };
-            };
-        };
-    };
-    getActiveAgreements: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TeammingAgreement"][];
-                };
-            };
-        };
-    };
-    searchSourcesSought: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    searchOpportunities_1: {
-        parameters: {
-            query?: {
-                ptype?: string;
-                naics?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    searchSbirOpportunities: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    getStats_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SbirStats"];
-                };
-            };
-        };
-    };
-    searchLive: {
-        parameters: {
-            query?: {
-                agency?: string;
-                year?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    searchByFirm: {
-        parameters: {
-            query: {
-                name: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    getConfiguredAgencies: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string[];
-                };
-            };
-        };
-    };
-    getAllAwards: {
-        parameters: {
-            query?: {
-                agency?: string;
-                phase?: string;
-                year?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SbirAward"][];
-                };
-            };
-        };
-    };
-    searchAwards: {
-        parameters: {
-            query: {
-                q: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SbirAward"][];
-                };
-            };
-        };
-    };
-    getRecentAwards: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SbirAward"][];
-                };
-            };
-        };
-    };
-    getAgencies: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: number;
-                    };
-                };
-            };
-        };
-    };
-    getByStatus: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                status: "DRAFT" | "IN_REVIEW" | "PINK_TEAM" | "RED_TEAM" | "GOLD_TEAM" | "FINAL_REVIEW" | "SUBMITTED" | "AWARDED" | "REJECTED" | "WITHDRAWN";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"][];
-                };
-            };
-        };
-    };
-    getByOpportunity: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                opportunityId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"][];
-                };
-            };
-        };
-    };
-    getByManager: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                managerId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"][];
-                };
-            };
-        };
-    };
-    getDueSoon: {
-        parameters: {
-            query?: {
-                daysAhead?: number;
-            };
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"][];
-                };
-            };
-        };
-    };
-    countByStatus: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path: {
-                status: "DRAFT" | "IN_REVIEW" | "PINK_TEAM" | "RED_TEAM" | "GOLD_TEAM" | "FINAL_REVIEW" | "SUBMITTED" | "AWARDED" | "REJECTED" | "WITHDRAWN";
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": number;
-                };
-            };
-        };
-    };
-    getActiveProposals: {
-        parameters: {
-            query?: never;
-            header: {
-                "X-Tenant-ID": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Proposal"][];
-                };
-            };
-        };
-    };
-    getAllOpportunities: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Opportunity"][];
-                };
-            };
-        };
-    };
-    getSbirOpportunities: {
-        parameters: {
-            query?: {
-                phase?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Opportunity"][];
-                };
-            };
-        };
-    };
-    getGeocodedOpportunities: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["Opportunity"][];
-                };
-            };
-        };
-    };
-    getOpportunitiesByState: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    getUsaSpendingStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
-                };
-            };
-        };
-    };
-    getGeocodingStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": {
-                        [key: string]: Record<string, never>;
-                    };
                 };
             };
         };
@@ -29032,7 +26523,7 @@ export interface operations {
             };
         };
     };
-    getOverBudgetItems_1: {
+    getOverBudgetItems: {
         parameters: {
             query?: never;
             header?: never;
@@ -29100,29 +26591,7 @@ export interface operations {
             };
         };
     };
-    listFiles: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description List of files */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageFileDto"];
-                };
-            };
-        };
-    };
-    getFile: {
+    hasVoted: {
         parameters: {
             query?: never;
             header?: never;
@@ -29133,78 +26602,70 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description File metadata */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["FileDto"];
-                };
-            };
-            /** @description File not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["FileDto"];
+                    "*/*": {
+                        [key: string]: boolean;
+                    };
                 };
             };
         };
     };
-    deleteFile: {
+    getMyVotedRequests: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
+            query?: {
+                page?: number;
+                size?: number;
             };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description File deleted */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description File not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getStorageSummary: {
-        parameters: {
-            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Storage summary */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["StorageSummary"];
+                    "*/*": components["schemas"]["PageFeatureRequestDto"];
                 };
             };
         };
     };
-    searchFiles: {
+    getTopVoted: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FeatureRequestDto"][];
+                };
+            };
+        };
+    };
+    searchFeatureRequests: {
         parameters: {
             query: {
                 keyword: string;
-                pageable: components["schemas"]["Pageable"];
+                page?: number;
+                size?: number;
             };
             header?: never;
             path?: never;
@@ -29212,116 +26673,36 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Search results */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageFileDto"];
+                    "*/*": components["schemas"]["PageFeatureRequestDto"];
                 };
             };
         };
     };
-    listFilesByReference: {
+    getMyFeatureRequests: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                referenceType: string;
-                referenceId: string;
+            query?: {
+                page?: number;
+                size?: number;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description List of files */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["FileDto"][];
-                };
-            };
-        };
-    };
-    getPresignedDownloadUrl: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Presigned URL generated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PresignedUrlResponse"];
-                };
-            };
-            /** @description File not available for download */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PresignedUrlResponse"];
-                };
-            };
-            /** @description File not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PresignedUrlResponse"];
-                };
-            };
-        };
-    };
-    downloadFile: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description File content */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/octet-stream": unknown;
-                };
-            };
-            /** @description File not available for download */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string;
-                };
-            };
-            /** @description File not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["PageFeatureRequestDto"];
                 };
             };
         };
@@ -29413,7 +26794,7 @@ export interface operations {
             };
         };
     };
-    getStorageSummary_1: {
+    getStorageSummary: {
         parameters: {
             query?: never;
             header?: never;
@@ -29789,6 +27170,1650 @@ export interface operations {
             };
         };
     };
+    getUpcomingDeliverables: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DeliverableResponse"][];
+                };
+            };
+        };
+    };
+    getDeliverableStatuses: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("PENDING" | "IN_PROGRESS" | "SUBMITTED" | "UNDER_REVIEW" | "REVISION_REQUIRED" | "ACCEPTED" | "REJECTED" | "WAIVED")[];
+                };
+            };
+        };
+    };
+    getOverdueDeliverables: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DeliverableResponse"][];
+                };
+            };
+        };
+    };
+    getDeliverablesByContract: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageDeliverableResponse"];
+                };
+            };
+        };
+    };
+    getUpcomingDeadlines: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UpcomingDeadlineDto"][];
+                };
+            };
+        };
+    };
+    getComplianceSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceSummaryDto"];
+                };
+            };
+        };
+    };
+    getPendingComplianceItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"][];
+                };
+            };
+        };
+    };
+    getOverdueComplianceItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"][];
+                };
+            };
+        };
+    };
+    getNonCompliantItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"][];
+                };
+            };
+        };
+    };
+    getComplianceItemsByContract: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ComplianceItemDto"][];
+                };
+            };
+        };
+    };
+    getActivePersonnelClearances: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"][];
+                };
+            };
+        };
+    };
+    getFacilityClearance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"];
+                };
+            };
+        };
+    };
+    getExpiringClearances: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"][];
+                };
+            };
+        };
+    };
+    getActiveClearances: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceDto"][];
+                };
+            };
+        };
+    };
+    getSmallBusinessCertifications: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationDto"][];
+                };
+            };
+        };
+    };
+    getExpiringCertifications: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationDto"][];
+                };
+            };
+        };
+    };
+    getActiveCertifications: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationDto"][];
+                };
+            };
+        };
+    };
+    getClearanceByUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceResponse"];
+                };
+            };
+        };
+    };
+    getClearanceLevels: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE")[];
+                };
+            };
+        };
+    };
+    getClearancesAtLevelOrAbove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                minLevel: "CONFIDENTIAL" | "SECRET" | "TOP_SECRET" | "TOP_SECRET_SCI" | "Q_CLEARANCE" | "L_CLEARANCE";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceResponse"][];
+                };
+            };
+        };
+    };
+    getExpiringClearances_1: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ClearanceResponse"][];
+                };
+            };
+        };
+    };
+    getCertificationTypes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("SAM_REGISTRATION" | "EIGHT_A" | "HUBZONE" | "WOSB" | "EDWOSB" | "SDVOSB" | "VOSB" | "SBA_MENTOR_PROTEGE" | "DBE" | "MBE" | "WBE" | "SBE" | "STATE_CERTIFICATION" | "ISO_9001" | "ISO_27001" | "ISO_20000" | "CMMI" | "SOC2" | "FEDRAMP" | "FACILITY_CLEARANCE" | "CMMC" | "OTHER")[];
+                };
+            };
+        };
+    };
+    getExpiringCertifications_1: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CertificationResponse"][];
+                };
+            };
+        };
+    };
+    getOverBudgetItems_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetItemResponse"][];
+                };
+            };
+        };
+    };
+    getBudgetItemsByContract: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageBudgetItemResponse"];
+                };
+            };
+        };
+    };
+    getContractBudgetSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BudgetSummary"];
+                };
+            };
+        };
+    };
+    getBudgetCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("DIRECT_LABOR" | "SUBCONTRACTOR" | "MATERIALS" | "EQUIPMENT" | "TRAVEL" | "ODC" | "INDIRECT" | "FEE" | "CONTINGENCY" | "OTHER")[];
+                };
+            };
+        };
+    };
+    getPipelineSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipelineId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PipelineSummaryDto"];
+                };
+            };
+        };
+    };
+    getStaleOpportunities: {
+        parameters: {
+            query?: {
+                staleDays?: number;
+            };
+            header?: never;
+            path: {
+                pipelineId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PipelineOpportunityDto"][];
+                };
+            };
+        };
+    };
+    getApproachingDeadlines: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path: {
+                pipelineId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PipelineOpportunityDto"][];
+                };
+            };
+        };
+    };
+    getPermissionsByCategory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: components["schemas"]["PermissionDto"][];
+                    };
+                };
+            };
+        };
+    };
+    getMyPermissions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
+                };
+            };
+        };
+    };
+    getAllPermissionCodes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string[];
+                };
+            };
+        };
+    };
+    checkPermission: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                permissionCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PermissionCheckResponse"];
+                };
+            };
+        };
+    };
+    searchOpportunities: {
+        parameters: {
+            query?: {
+                keyword?: string;
+                naicsCode?: string;
+                agency?: string;
+                setAsideType?: string;
+                type?: string;
+                isSbir?: boolean;
+                isSttr?: boolean;
+                sbirOrSttr?: boolean;
+                phase?: string;
+                state?: string;
+                postedDateFrom?: string;
+                postedDateTo?: string;
+                responseDeadlineFrom?: string;
+                responseDeadlineTo?: string;
+                status?: "ACTIVE" | "CLOSED" | "CANCELLED" | "AWARDED" | "ARCHIVED";
+                activeOnly?: boolean;
+                page?: number;
+                size?: number;
+                sortBy?: string;
+                sortDirection?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getOpportunity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OpportunityDto"];
+                };
+            };
+        };
+    };
+    getDashboardStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DashboardStats"];
+                };
+            };
+        };
+    };
+    getByState: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                state: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getOpportunityBySolicitation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                solicitationNumber: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OpportunityDto"];
+                };
+            };
+        };
+    };
+    getBySetAsideType: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getSbirSttr: {
+        parameters: {
+            query?: {
+                phase?: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getRecentlyPosted: {
+        parameters: {
+            query?: {
+                days?: number;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getByNaicsCode_1: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                naicsCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getFilterOptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FilterOptions"];
+                };
+            };
+        };
+    };
+    getClosingSoon: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OpportunityDto"][];
+                };
+            };
+        };
+    };
+    getByAgency: {
+        parameters: {
+            query: {
+                name: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getActiveOpportunities: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageOpportunityDto"];
+                };
+            };
+        };
+    };
+    getSteps: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["StepInfo"][];
+                };
+            };
+        };
+    };
+    getProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OnboardingStepDTO"];
+                };
+            };
+        };
+    };
+    getProviders: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ProvidersResponse"];
+                };
+            };
+        };
+    };
+    getConnections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OAuthConnectionDto"][];
+                };
+            };
+        };
+    };
+    getNotifications: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageNotificationDto"];
+                };
+            };
+        };
+    };
+    getUnreadCount_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UnreadCountResponse"];
+                };
+            };
+        };
+    };
+    getMfaStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MfaStatus"];
+                };
+            };
+        };
+    };
+    getAllMatches: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageMatchResponse"];
+                };
+            };
+        };
+    };
+    getTopMatches: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MatchResponse"][];
+                };
+            };
+        };
+    };
+    getMatchStatuses: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("NEW" | "REVIEWING" | "QUALIFIED" | "DISQUALIFIED" | "PURSUING" | "TEAMING" | "SUBMITTED" | "WON" | "LOST" | "NO_BID")[];
+                };
+            };
+        };
+    };
+    getMatchesByStatus: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path: {
+                status: "NEW" | "REVIEWING" | "QUALIFIED" | "DISQUALIFIED" | "PURSUING" | "TEAMING" | "SUBMITTED" | "WON" | "LOST" | "NO_BID";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageMatchResponse"];
+                };
+            };
+        };
+    };
+    getMatchStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MatchStats"];
+                };
+            };
+        };
+    };
+    getInvitationByToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["InvitationDto"];
+                };
+            };
+        };
+    };
+    getPendingInvitations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tenantId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["InvitationDto"][];
+                };
+            };
+        };
+    };
+    listFiles: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of files */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageFileDto"];
+                };
+            };
+        };
+    };
+    getFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File metadata */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+            /** @description File not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"];
+                };
+            };
+        };
+    };
+    deleteFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description File not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getStorageSummary_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Storage summary */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["StorageSummary"];
+                };
+            };
+        };
+    };
+    searchFiles: {
+        parameters: {
+            query: {
+                keyword: string;
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Search results */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageFileDto"];
+                };
+            };
+        };
+    };
+    listFilesByReference: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                referenceType: string;
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List of files */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FileDto"][];
+                };
+            };
+        };
+    };
+    getPresignedDownloadUrl: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Presigned URL generated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PresignedUrlResponse"];
+                };
+            };
+            /** @description File not available for download */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PresignedUrlResponse"];
+                };
+            };
+            /** @description File not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PresignedUrlResponse"];
+                };
+            };
+        };
+    };
+    downloadFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File content */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": unknown;
+                };
+            };
+            /** @description File not available for download */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+            /** @description File not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
+    getTemplates: {
+        parameters: {
+            query?: {
+                entityType?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ExportTemplate"][];
+                };
+            };
+        };
+    };
+    getDashboard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DashboardResponse"];
+                };
+            };
+        };
+    };
+    deleteDashboard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getDefaultDashboard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DashboardResponse"];
+                };
+            };
+        };
+    };
     getCrmSummary: {
         parameters: {
             query?: never;
@@ -29898,7 +28923,7 @@ export interface operations {
             };
         };
     };
-    getCompetitors_1: {
+    getCompetitors: {
         parameters: {
             query: {
                 pageable: components["schemas"]["Pageable"];
@@ -30254,6 +29279,334 @@ export interface operations {
             };
         };
     };
+    getContractSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContractSummaryDto"];
+                };
+            };
+        };
+    };
+    getOverdueDeliverables_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contractId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DeliverableDto"][];
+                };
+            };
+        };
+    };
+    searchContracts: {
+        parameters: {
+            query: {
+                keyword: string;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageContractDto"];
+                };
+            };
+        };
+    };
+    getApproachingOptionDeadlines: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OptionDto"][];
+                };
+            };
+        };
+    };
+    getExpiringContracts: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContractDto"][];
+                };
+            };
+        };
+    };
+    getActiveContracts: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageContractDto"];
+                };
+            };
+        };
+    };
+    getContentTypes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": ("PAST_PERFORMANCE_NARRATIVE" | "PAST_PERFORMANCE_SUMMARY" | "PROJECT_DESCRIPTION" | "CASE_STUDY" | "RESUME" | "KEY_PERSONNEL_BIO" | "PERSONNEL_SUMMARY" | "QUALIFICATIONS_STATEMENT" | "CAPABILITY_STATEMENT" | "CORPORATE_OVERVIEW" | "COMPANY_HISTORY" | "MISSION_STATEMENT" | "VALUE_PROPOSITION" | "TECHNICAL_APPROACH" | "METHODOLOGY" | "PROCESS_DESCRIPTION" | "TOOL_DESCRIPTION" | "TECHNOLOGY_OVERVIEW" | "MANAGEMENT_APPROACH" | "ORGANIZATIONAL_STRUCTURE" | "STAFFING_PLAN" | "QUALITY_APPROACH" | "RISK_MANAGEMENT" | "CERTIFICATION_DESCRIPTION" | "COMPLIANCE_STATEMENT" | "SECURITY_STATEMENT" | "BOILERPLATE_INTRO" | "BOILERPLATE_CLOSING" | "DISCLAIMER" | "TERMS_CONDITIONS" | "WIN_THEME" | "DISCRIMINATOR" | "GRAPHIC" | "TABLE" | "OTHER")[];
+                };
+            };
+        };
+    };
+    getTemplates_1: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageContentResponse"];
+                };
+            };
+        };
+    };
+    getMostUsed: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ContentResponse"][];
+                };
+            };
+        };
+    };
+    getTopCompetitorsByWinRate: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorResponse"][];
+                };
+            };
+        };
+    };
+    getTopCompetitorsByValue: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorResponse"][];
+                };
+            };
+        };
+    };
+    getCompetitorStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorStats"];
+                };
+            };
+        };
+    };
+    searchCompetitors: {
+        parameters: {
+            query?: {
+                name?: string;
+                naicsCode?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorResponse"][];
+                };
+            };
+        };
+    };
+    getActiveCompetitors: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["CompetitorResponse"][];
+                };
+            };
+        };
+    };
+    getProfileByUei: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uei: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ProfileResponse"];
+                };
+            };
+        };
+    };
     getPendingActions: {
         parameters: {
             query?: never;
@@ -30486,12 +29839,70 @@ export interface operations {
             };
         };
     };
-    getTrends: {
+    getCurrentSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SubscriptionDto"];
+                };
+            };
+        };
+    };
+    getAvailablePlans: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PlanDetails"][];
+                };
+            };
+        };
+    };
+    getBillingConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BillingConfig"];
+                };
+            };
+        };
+    };
+    validateResetToken: {
         parameters: {
             query: {
-                metricName: "OPPORTUNITIES_VIEWED" | "OPPORTUNITIES_SAVED" | "OPPORTUNITIES_IN_PIPELINE" | "OPPORTUNITIES_WON" | "OPPORTUNITIES_LOST" | "PIPELINE_VALUE_TOTAL" | "PIPELINE_VALUE_WEIGHTED" | "PIPELINE_CONVERSION_RATE" | "AVERAGE_DEAL_SIZE" | "AVERAGE_TIME_IN_STAGE" | "ACTIVE_CONTRACTS" | "CONTRACT_VALUE_TOTAL" | "INVOICES_SUBMITTED" | "INVOICES_PAID" | "REVENUE_RECOGNIZED" | "OUTSTANDING_RECEIVABLES" | "PAGE_VIEWS" | "SEARCHES_PERFORMED" | "DOCUMENTS_DOWNLOADED" | "REPORTS_GENERATED" | "ACTIVE_USERS" | "SESSION_DURATION_AVG" | "WIN_RATE" | "WIN_VALUE" | "LOSS_VALUE" | "CUSTOM";
-                startDate: string;
-                endDate: string;
+                token: string;
             };
             header?: never;
             path?: never;
@@ -30505,12 +29916,396 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["TrendDataDto"];
+                    "*/*": components["schemas"]["ValidateTokenResponse"];
                 };
             };
         };
     };
-    getTrends_1: {
+    getUserAuditLogs: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageAuditLog"];
+                };
+            };
+        };
+    };
+    getTenantAuditLogs: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                tenantId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageAuditLog"];
+                };
+            };
+        };
+    };
+    getTenantAuditLogsByDateRange: {
+        parameters: {
+            query: {
+                startDate: string;
+                endDate: string;
+            };
+            header?: never;
+            path: {
+                tenantId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AuditLog"][];
+                };
+            };
+        };
+    };
+    getMyAuditLogs: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageAuditLog"];
+                };
+            };
+        };
+    };
+    getEntityAuditLogs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entityType: string;
+                entityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AuditLog"][];
+                };
+            };
+        };
+    };
+    searchSourcesSought: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    searchOpportunities_1: {
+        parameters: {
+            query?: {
+                ptype?: string;
+                naics?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    searchSbirOpportunities: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    getSbirOpportunities: {
+        parameters: {
+            query?: {
+                phase?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Opportunity"][];
+                };
+            };
+        };
+    };
+    getGeocodedOpportunities: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Opportunity"][];
+                };
+            };
+        };
+    };
+    getOpportunitiesByState: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    getUsaSpendingStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    getGeocodingStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": {
+                        [key: string]: Record<string, never>;
+                    };
+                };
+            };
+        };
+    };
+    getApiKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiKeyResponse"];
+                };
+            };
+        };
+    };
+    getStats_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiKeyStats"];
+                };
+            };
+        };
+    };
+    getMyApiKeys: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageApiKeyResponse"];
+                };
+            };
+        };
+    };
+    getExpiringKeys: {
+        parameters: {
+            query?: {
+                daysAhead?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": Record<string, never>;
+                };
+            };
+        };
+    };
+    getTrends: {
         parameters: {
             query: {
                 metricName: "OPPORTUNITIES_VIEWED" | "OPPORTUNITIES_SAVED" | "OPPORTUNITIES_IN_PIPELINE" | "OPPORTUNITIES_WON" | "OPPORTUNITIES_LOST" | "PIPELINE_VALUE_TOTAL" | "PIPELINE_VALUE_WEIGHTED" | "PIPELINE_CONVERSION_RATE" | "AVERAGE_DEAL_SIZE" | "AVERAGE_TIME_IN_STAGE" | "ACTIVE_CONTRACTS" | "CONTRACT_VALUE_TOTAL" | "INVOICES_SUBMITTED" | "INVOICES_PAID" | "REVENUE_RECOGNIZED" | "OUTSTANDING_RECEIVABLES" | "PAGE_VIEWS" | "SEARCHES_PERFORMED" | "DOCUMENTS_DOWNLOADED" | "REPORTS_GENERATED" | "ACTIVE_USERS" | "SESSION_DURATION_AVG" | "WIN_RATE" | "WIN_VALUE" | "LOSS_VALUE" | "CUSTOM";
@@ -30552,204 +30347,6 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["TopPerformerDto"][];
-                };
-            };
-        };
-    };
-    getTopPerformers_1: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["TopPerformerDto"][];
-                };
-            };
-        };
-    };
-    getMetrics_1: {
-        parameters: {
-            query: {
-                metricNames: ("OPPORTUNITIES_VIEWED" | "OPPORTUNITIES_SAVED" | "OPPORTUNITIES_IN_PIPELINE" | "OPPORTUNITIES_WON" | "OPPORTUNITIES_LOST" | "PIPELINE_VALUE_TOTAL" | "PIPELINE_VALUE_WEIGHTED" | "PIPELINE_CONVERSION_RATE" | "AVERAGE_DEAL_SIZE" | "AVERAGE_TIME_IN_STAGE" | "ACTIVE_CONTRACTS" | "CONTRACT_VALUE_TOTAL" | "INVOICES_SUBMITTED" | "INVOICES_PAID" | "REVENUE_RECOGNIZED" | "OUTSTANDING_RECEIVABLES" | "PAGE_VIEWS" | "SEARCHES_PERFORMED" | "DOCUMENTS_DOWNLOADED" | "REPORTS_GENERATED" | "ACTIVE_USERS" | "SESSION_DURATION_AVG" | "WIN_RATE" | "WIN_VALUE" | "LOSS_VALUE" | "CUSTOM")[];
-                startDate: string;
-                endDate: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MetricDto"][];
-                };
-            };
-        };
-    };
-    getMetrics_2: {
-        parameters: {
-            query: {
-                metricNames: ("OPPORTUNITIES_VIEWED" | "OPPORTUNITIES_SAVED" | "OPPORTUNITIES_IN_PIPELINE" | "OPPORTUNITIES_WON" | "OPPORTUNITIES_LOST" | "PIPELINE_VALUE_TOTAL" | "PIPELINE_VALUE_WEIGHTED" | "PIPELINE_CONVERSION_RATE" | "AVERAGE_DEAL_SIZE" | "AVERAGE_TIME_IN_STAGE" | "ACTIVE_CONTRACTS" | "CONTRACT_VALUE_TOTAL" | "INVOICES_SUBMITTED" | "INVOICES_PAID" | "REVENUE_RECOGNIZED" | "OUTSTANDING_RECEIVABLES" | "PAGE_VIEWS" | "SEARCHES_PERFORMED" | "DOCUMENTS_DOWNLOADED" | "REPORTS_GENERATED" | "ACTIVE_USERS" | "SESSION_DURATION_AVG" | "WIN_RATE" | "WIN_VALUE" | "LOSS_VALUE" | "CUSTOM")[];
-                startDate: string;
-                endDate: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["MetricDto"][];
-                };
-            };
-        };
-    };
-    getEvents: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAnalyticsEvent"];
-                };
-            };
-        };
-    };
-    getEvents_1: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageAnalyticsEvent"];
-                };
-            };
-        };
-    };
-    getDashboardStats_1: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DashboardStatsDto"];
-                };
-            };
-        };
-    };
-    getDashboardStats_2: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["DashboardStatsDto"];
-                };
-            };
-        };
-    };
-    getActivityFeed_1: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ActivityItemDto"][];
-                };
-            };
-        };
-    };
-    getActivityFeed_2: {
-        parameters: {
-            query?: {
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ActivityItemDto"][];
                 };
             };
         };
@@ -30921,6 +30518,52 @@ export interface operations {
             };
         };
     };
+    getMetrics_1: {
+        parameters: {
+            query: {
+                metricNames: ("OPPORTUNITIES_VIEWED" | "OPPORTUNITIES_SAVED" | "OPPORTUNITIES_IN_PIPELINE" | "OPPORTUNITIES_WON" | "OPPORTUNITIES_LOST" | "PIPELINE_VALUE_TOTAL" | "PIPELINE_VALUE_WEIGHTED" | "PIPELINE_CONVERSION_RATE" | "AVERAGE_DEAL_SIZE" | "AVERAGE_TIME_IN_STAGE" | "ACTIVE_CONTRACTS" | "CONTRACT_VALUE_TOTAL" | "INVOICES_SUBMITTED" | "INVOICES_PAID" | "REVENUE_RECOGNIZED" | "OUTSTANDING_RECEIVABLES" | "PAGE_VIEWS" | "SEARCHES_PERFORMED" | "DOCUMENTS_DOWNLOADED" | "REPORTS_GENERATED" | "ACTIVE_USERS" | "SESSION_DURATION_AVG" | "WIN_RATE" | "WIN_VALUE" | "LOSS_VALUE" | "CUSTOM")[];
+                startDate: string;
+                endDate: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MetricDto"][];
+                };
+            };
+        };
+    };
+    getEvents: {
+        parameters: {
+            query: {
+                pageable: components["schemas"]["Pageable"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageAnalyticsEvent"];
+                };
+            };
+        };
+    };
     getDashboardsByType: {
         parameters: {
             query?: never;
@@ -30982,6 +30625,224 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["Dashboard"][];
+                };
+            };
+        };
+    };
+    getDashboardStats_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DashboardStatsDto"];
+                };
+            };
+        };
+    };
+    getActivityFeed_1: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ActivityItemDto"][];
+                };
+            };
+        };
+    };
+    getMyAlerts: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageAlertDto"];
+                };
+            };
+        };
+    };
+    getUnreadAlerts: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageAlertDto"];
+                };
+            };
+        };
+    };
+    getUnreadCount_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AlertCountResponse"];
+                };
+            };
+        };
+    };
+    getOpportunitySummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["Summary"];
+                };
+            };
+        };
+    };
+    getRiskAssessment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["RiskAssessment"];
+                };
+            };
+        };
+    };
+    getProposalSuggestions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ProposalSuggestions"];
+                };
+            };
+        };
+    };
+    getFitScore: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["FitScore"];
+                };
+            };
+        };
+    };
+    getPublicBranding: {
+        parameters: {
+            query?: {
+                domain?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["TenantBrandingDTO"];
                 };
             };
         };

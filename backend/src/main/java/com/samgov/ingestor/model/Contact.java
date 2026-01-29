@@ -12,6 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Contact entity used in both Face One (Contract Intelligence) and Face Two (Portal).
+ *
+ * <p><strong>Face One (Contract Intelligence):</strong> Tracks contacts at government agencies,
+ * competitor companies, teaming partners, and prospects. Used by DoctrineOne Labs for business
+ * development and capture management.</p>
+ *
+ * <p><strong>Face Two (Portal):</strong> Tracks contacts at client organizations for contract
+ * execution and communication.</p>
+ *
+ * <p>Multi-tenant: tenant_id isolates contacts between different client organizations.</p>
+ *
+ * @see ContactType for which types belong to which system
+ */
 @Entity
 @Table(name = "contacts", indexes = {
     @Index(name = "idx_contact_tenant", columnList = "tenant_id"),
@@ -26,6 +40,33 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Contact {
 
+    /**
+     * Contact types used across both systems.
+     *
+     * <p><strong>Face One (Contract Intelligence):</strong>
+     * <ul>
+     *   <li>GOVERNMENT_CUSTOMER - Agency contacts for BD/capture</li>
+     *   <li>CONTRACTING_OFFICER - Government COs</li>
+     *   <li>CONTRACTING_SPECIALIST - Government contracting specialists</li>
+     *   <li>PROGRAM_MANAGER - Government PMs</li>
+     *   <li>TECHNICAL_POC - Government technical points of contact</li>
+     *   <li>COR - Contracting Officer's Representative</li>
+     *   <li>TEAMING_PARTNER - Partners for teaming on bids</li>
+     *   <li>CONSULTANT - External consultants</li>
+     *   <li>PROSPECT - Potential customers</li>
+     *   <li>INTERNAL - DoctrineOne Labs internal staff</li>
+     * </ul>
+     *
+     * <p><strong>Face Two (Portal):</strong>
+     * <ul>
+     *   <li>GOVERNMENT_CUSTOMER - Client agency contacts</li>
+     *   <li>PRIME_CONTRACTOR - Prime contractor on client's contract</li>
+     *   <li>SUBCONTRACTOR - Subcontractors on client's contract</li>
+     *   <li>VENDOR - Vendors for client projects</li>
+     * </ul>
+     *
+     * <p><strong>Shared:</strong> INTERNAL (DoctrineOne Labs staff in both systems)</p>
+     */
     public enum ContactType {
         GOVERNMENT_CUSTOMER,
         CONTRACTING_OFFICER,

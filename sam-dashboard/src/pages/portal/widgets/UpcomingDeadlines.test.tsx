@@ -1,13 +1,14 @@
 import {describe, expect, it} from 'vitest';
 import {render, screen, waitFor} from '@testing-library/react';
 import {UpcomingDeadlines} from './UpcomingDeadlines';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 describe('UpcomingDeadlines', () => {
     describe('Header', () => {
         it('should render the widget title', () => {
             render(<UpcomingDeadlines/>);
 
-            expect(screen.getByText('Upcoming Deadlines')).toBeInTheDocument();
+            expect(screen.getByText(PORTAL_LABELS.UPCOMING_DEADLINES)).toBeInTheDocument();
         });
 
         it('should render View Calendar button', () => {

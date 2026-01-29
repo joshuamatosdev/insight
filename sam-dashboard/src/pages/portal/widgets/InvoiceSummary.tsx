@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 
 import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
 import {Button, Text} from '../../../components/catalyst/primitives';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 interface Invoice {
     id: string;
@@ -93,7 +94,7 @@ export function InvoiceSummary(): React.ReactElement {
             <CardBody padding="md">
                 <Stack spacing="md">
                     <Flex justify="space-between" align="center">
-                        <Text variant="heading5">Invoice Summary</Text>
+                        <Text variant="heading5">{PORTAL_LABELS.INVOICE_SUMMARY}</Text>
                         <Button variant="primary" size="sm">Create Invoice</Button>
                     </Flex>
 

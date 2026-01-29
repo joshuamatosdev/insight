@@ -2,58 +2,23 @@ import {beforeEach, describe, expect, it, vi} from 'vitest';
 import {act, renderHook, waitFor} from '@testing-library/react';
 import {useOrganizations} from './useOrganizations';
 import * as crmService from '../services/crmService';
+import {createMockOrganization} from '../test-utils/factories';
+import type {Organization} from '../types/crm';
 
 vi.mock('../services/crmService');
 
-const mockOrganizations = [
-    {
+const mockOrganizations: Organization[] = [
+    createMockOrganization({
         id: '1',
         name: 'Acme Corp',
-        organizationType: 'PRIME_CONTRACTOR' as const,
-        status: 'ACTIVE' as const,
+        organizationType: 'PRIME_CONTRACTOR',
+        status: 'ACTIVE',
         uei: 'ACME123456789',
         cageCode: 'ABC12',
         city: 'Washington',
         state: 'DC',
         contactCount: 5,
-        legalName: null,
-        dbaName: null,
-        businessSize: null,
-        duns: null,
-        taxId: null,
-        agencyCode: null,
-        parentAgency: null,
-        naicsCodes: null,
-        pscCodes: null,
-        primaryNaics: null,
-        phone: null,
-        fax: null,
-        email: null,
-        website: null,
-        addressLine1: null,
-        addressLine2: null,
-        postalCode: null,
-        country: null,
-        capabilities: null,
-        coreCompetencies: null,
-        pastPerformanceSummary: null,
-        certifications: null,
-        contractVehicles: null,
-        relationshipTier: null,
-        relationshipScore: null,
-        annualRevenue: null,
-        employeeCount: null,
-        yearFounded: null,
-        tags: null,
-        notes: null,
-        logoUrl: null,
-        parentOrganizationId: null,
-        parentOrganizationName: null,
-        ownerId: null,
-        ownerName: null,
-        createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z',
-    },
+    }),
 ];
 
 describe('useOrganizations', () => {
@@ -115,7 +80,7 @@ describe('useOrganizations', () => {
     });
 
     it('should create organization', async () => {
-        const newOrg = {...mockOrganizations[0], id: '2', name: 'New Corp'};
+        const newOrg: Organization = createMockOrganization({id: '2', name: 'New Corp'});
         vi.mocked(crmService.createOrganization).mockResolvedValue(newOrg);
 
         const {result} = renderHook(() => useOrganizations());
@@ -124,7 +89,7 @@ describe('useOrganizations', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        let createdOrg;
+        let createdOrg: Organization | undefined;
         await act(async () => {
             createdOrg = await result.current.create({
                 name: 'New Corp',
@@ -156,8 +121,9 @@ describe('useOrganizations', () => {
     });
 
     it('should search organizations', async () => {
+        const foundOrg: Organization = createMockOrganization({name: 'Found Org'});
         vi.mocked(crmService.searchOrganizations).mockResolvedValue({
-            content: [{...mockOrganizations[0], name: 'Found Org'}],
+            content: [foundOrg],
             totalElements: 1,
             totalPages: 1,
             size: 20,

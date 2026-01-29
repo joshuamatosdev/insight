@@ -196,3 +196,7 @@ export type {
     UpdatePreferencesRequest,
     UseUserPreferencesReturn,
 } from './useUserPreferences';
+
+// Analytics hooks
+export {useAnalyticsDashboard} from './useAnalytics';
+export type {UseAnalyticsDashboardReturn} from './useAnalytics';

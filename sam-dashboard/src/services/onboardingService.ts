@@ -1,9 +1,10 @@
 /**
- * Onboarding service for wizard API calls.
+ * Face Two (Portal) - Client onboarding service.
+ * Handles client onboarding wizard API calls for Portal system.
  */
 
-import {API_BASE} from './apiClient';
-const ONBOARDING_PATH = `${API_BASE}/onboarding`;
+import {get, post, put} from './apiClient';
+const ONBOARDING_PATH = '/portal/onboarding';
 
 export interface OnboardingProgress {
     id: string;
@@ -39,34 +40,26 @@ export interface CompleteStepRequest {
  * Get current onboarding progress.
  */
 export async function getOnboardingProgress(): Promise<OnboardingProgress> {
-    const response = await fetch(API_BASE + '/progress', {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
-        },
-    });
+    const result = await get<OnboardingProgress>(`${ONBOARDING_PATH}/progress`);
 
-    if (response.ok === false) {
-        throw new Error('Failed to fetch onboarding progress');
+    if (result.success === false) {
+        throw new Error(result.error ?? 'Failed to fetch onboarding progress');
     }
 
-    return response.json();
+    return result.data;
 }
 
 /**
  * Get step metadata for the wizard.
  */
 export async function getOnboardingSteps(): Promise<StepInfo[]> {
-    const response = await fetch(API_BASE + '/steps', {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
-        },
-    });
+    const result = await get<StepInfo[]>(`${ONBOARDING_PATH}/steps`);
 
-    if (response.ok === false) {
-        throw new Error('Failed to fetch onboarding steps');
+    if (result.success === false) {
+        throw new Error(result.error ?? 'Failed to fetch onboarding steps');
     }
 
-    return response.json();
+    return result.data;
 }
 
 /**
@@ -76,52 +69,35 @@ export async function completeStep(
     step: number,
     request?: CompleteStepRequest
 ): Promise<OnboardingProgress> {
-    const response = await fetch(`${ONBOARDING_PATH}/step/${step}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
-        },
-        body: JSON.stringify(request ?? {}),
-    });
+    const result = await put<OnboardingProgress>(`${ONBOARDING_PATH}/step/${step}`, request ?? {});
 
-    if (response.ok === false) {
-        throw new Error('Failed to complete step');
+    if (result.success === false) {
+        throw new Error(result.error ?? 'Failed to complete step');
     }
 
-    return response.json();
+    return result.data;
 }
 
 /**
  * Dismiss the onboarding wizard.
  */
 export async function dismissOnboarding(): Promise<OnboardingProgress> {
-    const response = await fetch(API_BASE + '/dismiss', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
-        },
-    });
+    const result = await post<OnboardingProgress>(`${ONBOARDING_PATH}/dismiss`, {});
 
-    if (response.ok === false) {
-        throw new Error('Failed to dismiss onboarding');
+    if (result.success === false) {
+        throw new Error(result.error ?? 'Failed to dismiss onboarding');
     }
 
-    return response.json();
+    return result.data;
 }
 
 /**
  * Reset onboarding progress.
  */
 export async function resetOnboarding(): Promise<void> {
-    const response = await fetch(API_BASE + '/reset', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token') ?? ''}`,
-        },
-    });
+    const result = await post<void>(`${ONBOARDING_PATH}/reset`, {});
 
-    if (response.ok === false) {
-        throw new Error('Failed to reset onboarding');
+    if (result.success === false) {
+        throw new Error(result.error ?? 'Failed to reset onboarding');
     }
 }

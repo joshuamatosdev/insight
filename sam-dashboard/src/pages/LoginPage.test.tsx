@@ -3,7 +3,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {RouterTestWrapper} from '@/test/router-test-utils';
 import {LoginPage} from './LoginPage';
-import type {AuthContextType, AuthError} from '../auth';
+import type {AuthContextType, AuthError} from '@/auth';
 
 // Mock the useNavigate hook
 const mockNavigate = vi.fn();

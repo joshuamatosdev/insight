@@ -24,7 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/onboarding")
 @RequiredArgsConstructor
-@Tag(name = "Onboarding", description = "Tenant onboarding wizard")
+@Tag(name = "Onboarding (Face Two)", description = "Face Two (Portal): Client onboarding wizard. Multi-step workflow for new clients to set up their portal access and contract tracking.")
 public class OnboardingController {
 
     private final OnboardingService onboardingService;

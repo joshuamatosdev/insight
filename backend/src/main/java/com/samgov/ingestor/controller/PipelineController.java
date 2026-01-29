@@ -1,6 +1,7 @@
 package com.samgov.ingestor.controller;
 
 import com.samgov.ingestor.service.PipelineService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.samgov.ingestor.service.PipelineService.AddOpportunityRequest;
 import com.samgov.ingestor.service.PipelineService.CreatePipelineRequest;
 import com.samgov.ingestor.service.PipelineService.CreateStageRequest;
@@ -40,6 +41,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/pipelines")
 @RequiredArgsConstructor
+@Tag(name = "Pipeline (Face One)", description = "Face One (Contract Intelligence): Opportunity pipeline management for internal BD team. Tracks opportunities through bid stages (qualify, pursue, bid, award).")
 public class PipelineController {
 
     private final PipelineService pipelineService;

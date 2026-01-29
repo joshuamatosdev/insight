@@ -360,3 +360,9 @@ export type {
     AcceptInvitationRequest,
     InvitationDetails,
 } from './invitationService';
+export {
+    fetchDashboardStats,
+    fetchActivityFeed,
+    fetchTopPerformers,
+    trackEvent,
+} from './analyticsService';

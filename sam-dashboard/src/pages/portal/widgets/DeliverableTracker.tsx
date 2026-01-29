@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 
 import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
 import {Button, Text} from '../../../components/catalyst/primitives';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 interface Deliverable {
     id: string;
@@ -104,7 +105,7 @@ export function DeliverableTracker(): React.ReactElement {
             <CardBody padding="md">
                 <Stack spacing="md">
                     <Flex justify="space-between" align="center">
-                        <Text variant="heading5">Deliverable Tracker</Text>
+                        <Text variant="heading5">{PORTAL_LABELS.DELIVERABLE_TRACKER}</Text>
                         <Button variant="ghost" size="sm">View All</Button>
                     </Flex>
 

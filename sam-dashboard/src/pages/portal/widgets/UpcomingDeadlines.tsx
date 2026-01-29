@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Box, Card, CardBody, Flex, Stack} from '../../../components/catalyst/layout';
 import {Button, Text} from '../../../components/catalyst/primitives';
 import {get} from '../../../services/apiClient';
+import {PORTAL_LABELS} from '@/constants/labels';
 
 interface Deadline {
     id: string;
@@ -93,7 +94,7 @@ export function UpcomingDeadlines(): React.ReactElement {
             <CardBody padding="md">
                 <Stack spacing="md">
                     <Flex justify="space-between" align="center">
-                        <Text variant="heading5">Upcoming Deadlines</Text>
+                        <Text variant="heading5">{PORTAL_LABELS.UPCOMING_DEADLINES}</Text>
                         <Button variant="ghost" size="sm">View Calendar</Button>
                     </Flex>
 

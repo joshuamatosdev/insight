@@ -1,3 +1,21 @@
+/**
+ * Organization types used across both systems.
+ *
+ * **Face One (Contract Intelligence):**
+ * - GOVERNMENT_AGENCY - Federal/state agencies for BD targeting
+ * - GOVERNMENT_OFFICE - Specific offices within agencies
+ * - COMPETITOR - Competing contractors (market intelligence)
+ * - PROSPECT - Potential clients
+ * - TEAMING_PARTNER - Partners for teaming on bids
+ *
+ * **Face Two (Portal):**
+ * - CUSTOMER - Client organizations (those who hired DoctrineOne Labs)
+ * - PRIME_CONTRACTOR - Prime on client's contract
+ * - SUBCONTRACTOR - Subs on client's contract
+ * - VENDOR - Vendors for client projects
+ *
+ * **Shared:** TEAMING_PARTNER, VENDOR (used in both contexts)
+ */
 export type OrganizationType =
     | 'GOVERNMENT_AGENCY'
     | 'GOVERNMENT_OFFICE'
@@ -27,6 +45,17 @@ export type BusinessSize =
     | 'VOSB'
     | 'UNKNOWN';
 
+/**
+ * Organization entity used in both Face One (Contract Intelligence) and Face Two (Portal).
+ *
+ * **Face One (Contract Intelligence):** Tracks government agencies, competitors, teaming partners,
+ * and prospects for business development and market intelligence.
+ *
+ * **Face Two (Portal):** Tracks client organizations, prime contractors, subcontractors,
+ * and vendors for contract execution.
+ *
+ * @see OrganizationType for which types belong to which system
+ */
 export interface Organization {
     id: string;
     name: string;

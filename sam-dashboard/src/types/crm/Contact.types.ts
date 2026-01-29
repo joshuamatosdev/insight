@@ -1,3 +1,26 @@
+/**
+ * Contact types used across both systems.
+ *
+ * **Face One (Contract Intelligence):**
+ * - GOVERNMENT_CUSTOMER - Agency contacts for BD/capture
+ * - CONTRACTING_OFFICER - Government COs
+ * - CONTRACTING_SPECIALIST - Government contracting specialists
+ * - PROGRAM_MANAGER - Government PMs
+ * - TECHNICAL_POC - Government technical points of contact
+ * - COR - Contracting Officer's Representative
+ * - TEAMING_PARTNER - Partners for teaming on bids
+ * - CONSULTANT - External consultants
+ * - PROSPECT - Potential customers
+ * - INTERNAL - DoctrineOne Labs internal staff
+ *
+ * **Face Two (Portal):**
+ * - GOVERNMENT_CUSTOMER - Client agency contacts
+ * - PRIME_CONTRACTOR - Prime contractor on client's contract
+ * - SUBCONTRACTOR - Subcontractors on client's contract
+ * - VENDOR - Vendors for client projects
+ *
+ * **Shared:** INTERNAL (DoctrineOne Labs staff in both systems)
+ */
 export type ContactType =
     | 'GOVERNMENT_CUSTOMER'
     | 'CONTRACTING_OFFICER'
@@ -16,6 +39,16 @@ export type ContactType =
 
 export type ContactStatus = 'ACTIVE' | 'INACTIVE' | 'DO_NOT_CONTACT' | 'ARCHIVED';
 
+/**
+ * Contact entity used in both Face One (Contract Intelligence) and Face Two (Portal).
+ *
+ * **Face One (Contract Intelligence):** Tracks contacts at government agencies, competitor companies,
+ * teaming partners, and prospects for business development and capture management.
+ *
+ * **Face Two (Portal):** Tracks contacts at client organizations for contract execution and communication.
+ *
+ * @see ContactType for which types belong to which system
+ */
 export interface Contact {
     id: string;
     firstName: string;
