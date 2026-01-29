@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("LaborRateController")
 class LaborRateControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/labor-rates";
+    private static final String BASE_URL = "/portal/labor-rates";
 
     @Autowired
     private TenantRepository tenantRepository;

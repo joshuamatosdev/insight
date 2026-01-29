@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/deliverables")
+@RequestMapping("/portal/deliverables")
 @PreAuthorize("isAuthenticated()")
 public class DeliverableController {
 

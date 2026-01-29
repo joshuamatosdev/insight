@@ -37,7 +37,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/compliance")
+@RequestMapping("/portal/compliance")
 @RequiredArgsConstructor
 public class ComplianceController {
 

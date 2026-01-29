@@ -121,4 +121,19 @@ public interface ComplianceItemRepository extends JpaRepository<ComplianceItem, 
         ORDER BY c.nextReviewDate ASC
         """)
     List<ComplianceItem> findNeedingReview(@Param("tenantId") UUID tenantId, @Param("deadline") LocalDate deadline);
+
+    // Upcoming deadlines by tenant (for portal aggregation)
+    @Query("""
+        SELECT c FROM ComplianceItem c
+        WHERE c.tenant.id = :tenantId
+        AND c.dueDate IS NOT NULL
+        AND c.dueDate >= :startDate
+        AND c.dueDate <= :endDate
+        ORDER BY c.dueDate ASC
+        """)
+    List<ComplianceItem> findUpcomingByTenantId(
+        @Param("tenantId") UUID tenantId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
 }

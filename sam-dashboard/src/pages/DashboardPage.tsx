@@ -64,14 +64,17 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
     // Fetch dashboard data from API
     const {data: dashboardData, isLoading: dashboardLoading} = useDashboardSummary();
 
+    // Ensure opportunities is an array (defensive check)
+    const safeOpportunities = opportunities ?? [];
+
     // Basic stats from opportunities
     const stats = useMemo(() => {
         const now = new Date();
-        const sourcesSought = opportunities.filter(
+        const sourcesSought = safeOpportunities.filter(
             (o) => getOpportunityType(o.type) === 'sources-sought'
         ).length;
 
-        const urgent = opportunities.filter((o) => {
+        const urgent = safeOpportunities.filter((o) => {
             if (o.responseDeadLine === undefined || o.responseDeadLine === null) return false;
             const deadline = new Date(o.responseDeadLine);
             const daysUntil = (deadline.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
@@ -79,41 +82,41 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
         }).length;
 
         const uniqueNaics = new Set(
-            opportunities
+            safeOpportunities
                 .map((o) => o.naicsCode)
                 .filter((code): code is string => code !== undefined && code !== null)
         ).size;
 
         // Calculate total estimated value
-        const totalValue = opportunities.reduce((sum, o) => {
+        const totalValue = safeOpportunities.reduce((sum, o) => {
             const value = o.estimatedValue ?? o.awardAmount ?? 0;
             return sum + value;
         }, 0);
 
         return {
-            total: opportunities.length,
+            total: safeOpportunities.length,
             sourcesSought,
             urgent,
             naicsCount: uniqueNaics,
             totalValue,
         };
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // NAICS distribution
     const naicsDistribution = useMemo(() => {
         const dist: Record<string, number> = {};
-        opportunities.forEach((o) => {
+        safeOpportunities.forEach((o) => {
             if (o.naicsCode !== undefined && o.naicsCode !== null) {
                 dist[o.naicsCode] = (dist[o.naicsCode] ?? 0) + 1;
             }
         });
         return dist;
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // Agency distribution data
     const agencyData = useMemo((): AgencyDistributionData[] => {
         const agencyMap = new Map<string, { count: number; value: number }>();
-        opportunities.forEach((o) => {
+        safeOpportunities.forEach((o) => {
             const agency = o.fullParentPathName ?? o.officeAddress?.state ?? 'Unknown';
             const existing = agencyMap.get(agency) ?? {count: 0, value: 0};
             agencyMap.set(agency, {
@@ -126,12 +129,12 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
             count: data.count,
             value: data.value,
         }));
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // Set-aside distribution data
     const setAsideData = useMemo((): SetAsideData[] => {
         const setAsideMap = new Map<string, { count: number; value: number }>();
-        opportunities.forEach((o) => {
+        safeOpportunities.forEach((o) => {
             const setAside = o.typeOfSetAside ?? 'Full & Open';
             const existing = setAsideMap.get(setAside) ?? {count: 0, value: 0};
             setAsideMap.set(setAside, {
@@ -145,12 +148,12 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
             count: data.count,
             value: data.value,
         }));
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // Pipeline stage data (simulated from opportunity types)
     const pipelineStages = useMemo((): PipelineStageData[] => {
         const stageMap = new Map<string, { count: number; value: number }>();
-        opportunities.forEach((o) => {
+        safeOpportunities.forEach((o) => {
             const type = getOpportunityType(o.type);
             const stageName = type === 'sources-sought' ? 'Sources Sought'
                 : type === 'presolicitation' ? 'Pre-Solicitation'
@@ -170,11 +173,11 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
             value: data.value,
             weightedValue: data.value * 0.5, // Simplified weighting
         }));
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // Upcoming deadlines
     const upcomingDeadlines = useMemo((): UpcomingDeadline[] => {
-        return opportunities
+        return safeOpportunities
             .filter((o) => o.responseDeadLine !== undefined && o.responseDeadLine !== null)
             .map((o) => ({
                 id: o.noticeId,
@@ -189,7 +192,7 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
             .filter((d) => d.daysRemaining >= 0 && d.daysRemaining <= 30)
             .sort((a, b) => a.daysRemaining - b.daysRemaining)
             .slice(0, 15);
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // Deadline items for timeline
     const deadlineItems = useMemo((): DeadlineItem[] => {
@@ -238,10 +241,10 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
 
     // Recent opportunities
     const recentOpportunities = useMemo(() => {
-        return [...opportunities]
+        return [...safeOpportunities]
             .sort((a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime())
             .slice(0, 10);
-    }, [opportunities]);
+    }, [safeOpportunities]);
 
     // Total pipeline value from stages
     const totalPipelineValue = useMemo(() => {
@@ -337,7 +340,7 @@ export function DashboardPage({opportunities, onNavigate}: DashboardPageProps) {
                             <CardBody>
                                 <NAICSDistribution
                                     distribution={naicsDistribution}
-                                    total={opportunities.length}
+                                    total={safeOpportunities.length}
                                     maxItems={8}
                                 />
                             </CardBody>

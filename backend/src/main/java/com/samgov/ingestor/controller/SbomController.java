@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sbom")
+@RequestMapping("/portal/sbom")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
 public class SbomController {
 

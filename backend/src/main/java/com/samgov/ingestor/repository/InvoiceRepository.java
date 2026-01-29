@@ -108,4 +108,19 @@ public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
 
     @Query("SELECT SUM(i.amountPaid) FROM Invoice i WHERE i.tenant.id = :tenantId")
     BigDecimal sumAmountPaidByTenantId(@Param("tenantId") UUID tenantId);
+
+    // Upcoming deadlines by tenant (for portal aggregation)
+    @Query("""
+        SELECT i FROM Invoice i
+        WHERE i.tenant.id = :tenantId
+        AND i.dueDate IS NOT NULL
+        AND i.dueDate >= :startDate
+        AND i.dueDate <= :endDate
+        ORDER BY i.dueDate ASC
+        """)
+    List<Invoice> findUpcomingByTenantId(
+        @Param("tenantId") UUID tenantId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
 }

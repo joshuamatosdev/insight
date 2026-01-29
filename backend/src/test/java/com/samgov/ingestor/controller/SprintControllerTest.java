@@ -60,7 +60,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SprintController")
 class SprintControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/sprints";
+    private static final String BASE_URL = "/portal/sprints";
     private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired

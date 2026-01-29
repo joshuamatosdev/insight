@@ -34,7 +34,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/sprints")
+@RequestMapping("/portal/sprints")
 @RequiredArgsConstructor
 public class SprintController {
 

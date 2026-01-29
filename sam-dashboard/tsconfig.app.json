@@ -24,18 +24,15 @@
     "jsx": "react-jsx",
     /* Strict settings */
     "strict": true,
-    // Disabled noUnusedLocals/Parameters for test files - too many false positives
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    /* Extra strictness - disabled some for Headless UI compatibility */
-    "exactOptionalPropertyTypes": false,
-    // noUncheckedIndexedAccess causes too many issues with tests
-    "noUncheckedIndexedAccess": false,
+    /* Extra strictness (high value, low regret) */
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    // noPropertyAccessFromIndexSignature causes issues with process.env
-    "noPropertyAccessFromIndexSignature": false,
+    "noPropertyAccessFromIndexSignature": true,
     "useUnknownInCatchVariables": true,
     /* Path aliases */
     "baseUrl": ".",

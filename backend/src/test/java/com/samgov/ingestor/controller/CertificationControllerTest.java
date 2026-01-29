@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("CertificationController")
 class CertificationControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/certifications";
+    private static final String BASE_URL = "/portal/certifications";
 
     @Autowired
     private TenantRepository tenantRepository;

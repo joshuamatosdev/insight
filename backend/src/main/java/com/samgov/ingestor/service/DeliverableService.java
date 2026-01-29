@@ -43,7 +43,8 @@ public class DeliverableService {
                                        String title, String description, DeliverableType deliverableType,
                                        DeliverableFrequency frequency, LocalDate dueDate, LocalDate submittedDate,
                                        LocalDate acceptedDate, DeliverableStatus status, Long daysUntilDue,
-                                       UUID ownerId, String ownerName, String notes, Instant createdAt) {}
+                                       Double progressPercentage, UUID ownerId, String ownerName, String notes,
+                                       Instant createdAt) {}
 
     public DeliverableResponse createDeliverable(UUID tenantId, UUID userId, CreateDeliverableRequest request) {
         Contract contract = contractRepository.findById(request.contractId())
@@ -185,6 +186,18 @@ public class DeliverableService {
             daysUntilDue = ChronoUnit.DAYS.between(LocalDate.now(), deliverable.getDueDate());
         }
 
+        // Calculate progress percentage based on status
+        Double progressPercentage = switch (deliverable.getStatus()) {
+            case PENDING -> 0.0;
+            case IN_PROGRESS -> 50.0;
+            case SUBMITTED -> 75.0;
+            case UNDER_REVIEW -> 80.0;
+            case REVISION_REQUIRED -> 60.0;
+            case ACCEPTED -> 100.0;
+            case REJECTED -> 0.0;
+            case WAIVED -> 100.0;
+        };
+
         String ownerName = deliverable.getOwner() != null ?
                 deliverable.getOwner().getFirstName() + " " + deliverable.getOwner().getLastName() : null;
         UUID ownerId = deliverable.getOwner() != null ? deliverable.getOwner().getId() : null;
@@ -193,7 +206,7 @@ public class DeliverableService {
                 deliverable.getContract().getContractNumber(), deliverable.getCdrlNumber(),
                 deliverable.getTitle(), deliverable.getDescription(), deliverable.getDeliverableType(),
                 deliverable.getFrequency(), deliverable.getDueDate(), deliverable.getSubmittedDate(),
-                deliverable.getAcceptedDate(), deliverable.getStatus(), daysUntilDue,
+                deliverable.getAcceptedDate(), deliverable.getStatus(), daysUntilDue, progressPercentage,
                 ownerId, ownerName, deliverable.getNotes(), deliverable.getCreatedAt());
     }
 }

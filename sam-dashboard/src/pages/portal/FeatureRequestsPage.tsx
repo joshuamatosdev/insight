@@ -69,8 +69,11 @@ export function FeatureRequestsPage(): React.ReactElement {
         }
     };
 
+    // Ensure featureRequests is an array (defensive check)
+    const safeFeatureRequests = featureRequests ?? [];
+
     // Filter and search
-    const filteredRequests = featureRequests.filter((fr) => {
+    const filteredRequests = safeFeatureRequests.filter((fr) => {
         if (statusFilter !== 'ALL' && fr.status !== statusFilter) {
             return false;
         }
@@ -252,7 +255,7 @@ export function FeatureRequestsPage(): React.ReactElement {
                                 In Development
                             </Text>
                             <Text variant="heading3">
-                                {featureRequests.filter((f) => f.status === 'IN_DEVELOPMENT').length}
+                                {safeFeatureRequests.filter((f) => f.status === 'IN_DEVELOPMENT').length}
                             </Text>
                         </Stack>
                     </CardBody>
@@ -264,7 +267,7 @@ export function FeatureRequestsPage(): React.ReactElement {
                                 Completed
                             </Text>
                             <Text variant="heading3">
-                                {featureRequests.filter((f) => f.status === 'COMPLETED').length}
+                                {safeFeatureRequests.filter((f) => f.status === 'COMPLETED').length}
                             </Text>
                         </Stack>
                     </CardBody>
@@ -276,7 +279,7 @@ export function FeatureRequestsPage(): React.ReactElement {
                                 Total Votes
                             </Text>
                             <Text variant="heading3">
-                                {featureRequests.reduce((sum, f) => sum + f.voteCount, 0)}
+                                {safeFeatureRequests.reduce((sum, f) => sum + f.voteCount, 0)}
                             </Text>
                         </Stack>
                     </CardBody>

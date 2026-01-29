@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/documents")
+@RequestMapping("/portal/documents")
 @Validated
 public class DocumentController {
 

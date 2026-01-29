@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("FinancialController")
 class FinancialControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/financials";
+    private static final String BASE_URL = "/portal/financial";
 
     @Autowired
     private TenantRepository tenantRepository;

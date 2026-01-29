@@ -30,7 +30,7 @@ export function MilestonesPage(): React.ReactElement {
 
     // Load timeline when we have milestones
     useEffect(() => {
-        if (milestones.length > 0) {
+        if (milestones !== undefined && milestones.length > 0) {
             const contractId = milestones.at(0)?.contractId;
             if (contractId !== undefined) {
                 loadTimeline(contractId);
@@ -42,8 +42,11 @@ export function MilestonesPage(): React.ReactElement {
         setSelectedMilestone(milestone);
     };
 
+    // Ensure milestones is an array (defensive check)
+    const safeMilestones = milestones ?? [];
+
     // Filter milestones
-    const filteredMilestones = milestones.filter((m) => {
+    const filteredMilestones = safeMilestones.filter((m) => {
         if (statusFilter !== 'ALL' && m.status !== statusFilter) {
             return false;
         }
@@ -52,12 +55,12 @@ export function MilestonesPage(): React.ReactElement {
 
     // Calculate stats
     const stats = {
-        total: milestones.length,
-        completed: milestones.filter((m) => m.status === 'COMPLETED').length,
-        inProgress: milestones.filter((m) => m.status === 'IN_PROGRESS').length,
-        delayed: milestones.filter((m) => m.status === 'DELAYED').length,
-        atRisk: milestones.filter((m) => m.status === 'AT_RISK').length,
-        upcoming: milestones.filter((m) => {
+        total: safeMilestones.length,
+        completed: safeMilestones.filter((m) => m.status === 'COMPLETED').length,
+        inProgress: safeMilestones.filter((m) => m.status === 'IN_PROGRESS').length,
+        delayed: safeMilestones.filter((m) => m.status === 'DELAYED').length,
+        atRisk: safeMilestones.filter((m) => m.status === 'AT_RISK').length,
+        upcoming: safeMilestones.filter((m) => {
             const planned = new Date(m.plannedDate);
             const now = new Date();
             const weekFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);

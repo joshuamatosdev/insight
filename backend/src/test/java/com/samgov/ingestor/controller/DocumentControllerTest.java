@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("DocumentController")
 class DocumentControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/documents";
+    private static final String BASE_URL = "/portal/documents";
 
     @Autowired
     private TenantRepository tenantRepository;

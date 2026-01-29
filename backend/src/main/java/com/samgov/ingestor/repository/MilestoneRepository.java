@@ -197,4 +197,19 @@ public interface MilestoneRepository extends JpaRepository<Milestone, UUID>, Jpa
         ORDER BY m.sortOrder ASC
         """)
     List<Milestone> findReadyToStartMilestones(@Param("contractId") UUID contractId);
+
+    // Upcoming deadlines by tenant (for portal aggregation)
+    @Query("""
+        SELECT m FROM Milestone m
+        WHERE m.tenant.id = :tenantId
+        AND m.dueDate IS NOT NULL
+        AND m.dueDate >= :startDate
+        AND m.dueDate <= :endDate
+        ORDER BY m.dueDate ASC
+        """)
+    List<Milestone> findUpcomingByTenantId(
+        @Param("tenantId") UUID tenantId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
 }

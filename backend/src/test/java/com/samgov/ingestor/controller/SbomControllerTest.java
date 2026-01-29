@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("SbomController")
 class SbomControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/sbom";
+    private static final String BASE_URL = "/portal/sbom";
 
     @Nested
     @DisplayName("GET /sbom")

@@ -9,9 +9,12 @@ type PhaseFilter = 'all' | 'I' | 'II' | 'III';
 export function SBIRPage({opportunities}: SBIRPageProps) {
     const [phaseFilter, setPhaseFilter] = useState<PhaseFilter>('all');
 
+    // Ensure opportunities is an array (defensive check)
+    const safeOpportunities = opportunities ?? [];
+
     const sbirOpportunities = useMemo(() => {
-        return opportunities.filter(isSbirOpportunity);
-    }, [opportunities]);
+        return safeOpportunities.filter(isSbirOpportunity);
+    }, [safeOpportunities]);
 
     const filteredOpportunities = useMemo(() => {
         if (phaseFilter === 'all') return sbirOpportunities;

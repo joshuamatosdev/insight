@@ -31,7 +31,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/feature-requests")
+@RequestMapping("/portal/feature-requests")
 @RequiredArgsConstructor
 public class FeatureRequestController {
 

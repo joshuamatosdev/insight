@@ -28,7 +28,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/portal/messages")
 @RequiredArgsConstructor
 @PreAuthorize("isAuthenticated()")
 public class MessagingController {

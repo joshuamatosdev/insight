@@ -5,9 +5,12 @@ import {getNAICSDescription, OpportunityList} from '../components/domain';
 import {NAICSPageProps} from './Pages.types';
 
 export function NAICSPage({naicsCode, opportunities}: NAICSPageProps) {
+    // Ensure opportunities is an array (defensive check)
+    const safeOpportunities = opportunities ?? [];
+
     const filteredOpportunities = useMemo(() => {
-        return opportunities.filter((o) => o.naicsCode === naicsCode);
-    }, [opportunities, naicsCode]);
+        return safeOpportunities.filter((o) => o.naicsCode === naicsCode);
+    }, [safeOpportunities, naicsCode]);
 
     const description = getNAICSDescription(naicsCode);
 

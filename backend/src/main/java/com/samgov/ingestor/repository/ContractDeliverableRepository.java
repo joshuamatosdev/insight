@@ -83,6 +83,22 @@ public interface ContractDeliverableRepository extends JpaRepository<ContractDel
     @Query("SELECT d FROM ContractDeliverable d JOIN d.contract c WHERE c.tenant.id = :tenantId")
     Page<ContractDeliverable> findByTenantId(@Param("tenantId") UUID tenantId, Pageable pageable);
 
+    // Upcoming deadlines by tenant (for portal aggregation)
+    @Query("""
+        SELECT d FROM ContractDeliverable d
+        JOIN d.contract c
+        WHERE c.tenant.id = :tenantId
+        AND d.dueDate IS NOT NULL
+        AND d.dueDate >= :startDate
+        AND d.dueDate <= :endDate
+        ORDER BY d.dueDate ASC
+        """)
+    List<ContractDeliverable> findUpcomingByTenantId(
+        @Param("tenantId") UUID tenantId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
+
     @Query("""
         SELECT d FROM ContractDeliverable d
         JOIN d.contract c

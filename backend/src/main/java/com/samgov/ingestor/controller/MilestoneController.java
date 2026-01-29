@@ -33,7 +33,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/milestones")
+@RequestMapping("/portal/milestones")
 @RequiredArgsConstructor
 public class MilestoneController {
 

@@ -1,11 +1,8 @@
 package com.samgov.ingestor.controller;
 
-import com.samgov.ingestor.model.ScopeChange.ChangeStatus;
 import com.samgov.ingestor.model.ScopeItem.ScopeStatus;
 import com.samgov.ingestor.service.ScopeService;
-import com.samgov.ingestor.service.ScopeService.CreateScopeChangeRequest;
 import com.samgov.ingestor.service.ScopeService.CreateScopeItemRequest;
-import com.samgov.ingestor.service.ScopeService.ScopeChangeDto;
 import com.samgov.ingestor.service.ScopeService.ScopeItemDto;
 import com.samgov.ingestor.service.ScopeService.ScopeSummaryDto;
 import com.samgov.ingestor.service.ScopeService.ScopeTreeNodeDto;
@@ -33,15 +30,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * REST controller for scope item management.
+ * Handles CRUD operations for scope items within contracts.
+ */
 @Slf4j
 @RestController
-@RequestMapping("/scope")
+@RequestMapping("/portal/scope-items")
 @RequiredArgsConstructor
-public class ScopeController {
+public class ScopeItemController {
 
     private final ScopeService scopeService;
-
-    // ==================== Scope Item Endpoints ====================
 
     /**
      * List all scope items for a contract.
@@ -163,135 +162,5 @@ public class ScopeController {
         log.info("Updating scope item {} status to {}", id, status);
         ScopeItemDto item = scopeService.updateStatus(id, status);
         return ResponseEntity.ok(item);
-    }
-
-    // ==================== Scope Change Endpoints ====================
-
-    /**
-     * List all scope changes (optionally filtered by status).
-     */
-    @GetMapping("/changes")
-    public ResponseEntity<Page<ScopeChangeDto>> getScopeChanges(
-        @RequestParam UUID contractId,
-        @RequestParam(required = false) ChangeStatus status,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "20") int size,
-        @RequestParam(defaultValue = "createdAt") String sortBy,
-        @RequestParam(defaultValue = "desc") String sortDir
-    ) {
-        Sort sort = sortDir.equalsIgnoreCase("asc")
-            ? Sort.by(sortBy).ascending()
-            : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<ScopeChangeDto> changes = scopeService.getScopeChanges(contractId, status, pageable);
-        return ResponseEntity.ok(changes);
-    }
-
-    /**
-     * Get all pending scope changes for review.
-     */
-    @GetMapping("/changes/pending")
-    public ResponseEntity<Page<ScopeChangeDto>> getPendingChanges(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "20") int size
-    ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("requestedDate").ascending());
-        Page<ScopeChangeDto> changes = scopeService.getPendingChanges(pageable);
-        return ResponseEntity.ok(changes);
-    }
-
-    /**
-     * Get a single scope change by ID.
-     */
-    @GetMapping("/changes/{id}")
-    public ResponseEntity<ScopeChangeDto> getScopeChange(@PathVariable UUID id) {
-        ScopeChangeDto change = scopeService.getScopeChange(id);
-        return ResponseEntity.ok(change);
-    }
-
-    /**
-     * Request a scope change.
-     */
-    @PostMapping("/{scopeItemId}/changes")
-    @PreAuthorize("@tenantSecurityService.hasPermission('CONTRACT_UPDATE')")
-    public ResponseEntity<ScopeChangeDto> requestChange(
-        @PathVariable UUID scopeItemId,
-        @Valid @RequestBody CreateScopeChangeRequest request
-    ) {
-        // Validate that the scopeItemId matches the request
-        if (request.scopeItemId() != null && !request.scopeItemId().equals(scopeItemId)) {
-            throw new IllegalArgumentException("Scope item ID in path does not match request body");
-        }
-
-        // Create a new request with the path variable scopeItemId if not provided in body
-        CreateScopeChangeRequest effectiveRequest = request.scopeItemId() != null
-            ? request
-            : new CreateScopeChangeRequest(
-                request.contractId(),
-                scopeItemId,
-                request.title(),
-                request.description(),
-                request.changeType(),
-                request.priority(),
-                request.hoursImpact(),
-                request.costImpact(),
-                request.scheduleImpactDays(),
-                request.impactAnalysis(),
-                request.justification(),
-                request.businessCase(),
-                request.previousEstimatedHours(),
-                request.newEstimatedHours(),
-                request.previousEstimatedCost(),
-                request.newEstimatedCost(),
-                request.previousEndDate(),
-                request.newEndDate(),
-                request.requestorName(),
-                request.requestorEmail(),
-                request.externalReference(),
-                request.internalNotes()
-            );
-
-        log.info("Creating scope change request for scope item: {}", scopeItemId);
-        ScopeChangeDto change = scopeService.requestChange(effectiveRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(change);
-    }
-
-    /**
-     * Request a scope change (contract-level, not tied to a specific scope item).
-     */
-    @PostMapping("/changes")
-    @PreAuthorize("@tenantSecurityService.hasPermission('CONTRACT_UPDATE')")
-    public ResponseEntity<ScopeChangeDto> requestContractChange(@Valid @RequestBody CreateScopeChangeRequest request) {
-        log.info("Creating scope change request for contract: {}", request.contractId());
-        ScopeChangeDto change = scopeService.requestChange(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(change);
-    }
-
-    /**
-     * Approve a scope change.
-     */
-    @PostMapping("/changes/{id}/approve")
-    @PreAuthorize("@tenantSecurityService.hasPermission('CONTRACT_UPDATE')")
-    public ResponseEntity<ScopeChangeDto> approveChange(
-        @PathVariable UUID id,
-        @RequestParam(required = false) String comments
-    ) {
-        log.info("Approving scope change: {}", id);
-        ScopeChangeDto change = scopeService.approveChange(id, comments);
-        return ResponseEntity.ok(change);
-    }
-
-    /**
-     * Reject a scope change.
-     */
-    @PostMapping("/changes/{id}/reject")
-    @PreAuthorize("@tenantSecurityService.hasPermission('CONTRACT_UPDATE')")
-    public ResponseEntity<ScopeChangeDto> rejectChange(
-        @PathVariable UUID id,
-        @RequestParam String reason
-    ) {
-        log.info("Rejecting scope change: {} - Reason: {}", id, reason);
-        ScopeChangeDto change = scopeService.rejectChange(id, reason);
-        return ResponseEntity.ok(change);
     }
 }

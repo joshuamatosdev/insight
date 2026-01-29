@@ -32,7 +32,7 @@ export async function fetchCertifications(
         queryParams.type = type;
     }
 
-    const {data, error} = await apiClient.GET('/certifications', {
+    const {data, error} = await apiClient.GET('/portal/certifications', {
         params: {query: queryParams},
     });
 
@@ -72,7 +72,7 @@ export async function fetchExpiringCertifications(
 export async function createCertification(
     request: CreateCertificationRequest
 ): Promise<Certification> {
-    const {data, error} = await apiClient.POST('/certifications', {
+    const {data, error} = await apiClient.POST('/portal/certifications', {
         body: request,
     });
 
@@ -145,7 +145,7 @@ export async function fetchClearances(
         queryParams.level = level;
     }
 
-    const {data, error} = await apiClient.GET('/clearances', {
+    const {data, error} = await apiClient.GET('/portal/clearances', {
         params: {query: queryParams},
     });
 
@@ -195,7 +195,7 @@ export async function fetchClearancesByMinLevel(
 }
 
 export async function createClearance(request: CreateClearanceRequest): Promise<SecurityClearance> {
-    const {data, error} = await apiClient.POST('/clearances', {
+    const {data, error} = await apiClient.POST('/portal/clearances', {
         body: request,
     });
 
@@ -256,7 +256,7 @@ export async function fetchClearanceLevels(): Promise<ClearanceLevel[]> {
 // ==================== SBOM API ====================
 
 export async function fetchSbomInfo(): Promise<SbomInfo> {
-    const {data, error} = await apiClient.GET('/sbom');
+    const {data, error} = await apiClient.GET('/portal/sbom');
 
     if (error !== undefined) {
         throw new Error(String(error));

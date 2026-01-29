@@ -153,29 +153,196 @@ npm test             # ALL tests must pass
 
 ## STRICT TYPESCRIPT PATTERNS
 
+**Critical:** These rules prevent runtime errors like "Cannot read properties of undefined (reading 'filter')".
+
 ### The "No-Any" Policy
 
 - **Absolute Ban:** Never use `any`. Use `unknown` with type guards.
-- **Exception:** None in this project.
+- **Exception:** Test files only (for mocking flexibility).
 
-### Strict Boolean Checks
+### The "Unsafe *" Family (CORE TYPE SAFETY)
 
-| Invalid | Valid |
-|---------|-------|
+These five rules are **errors** and catch the most dangerous type violations:
+
+```typescript
+@typescript-eslint/no-unsafe-argument: "error"       // No passing `any` to functions
+@typescript-eslint/no-unsafe-assignment: "error"     // No assigning `any` to typed vars
+@typescript-eslint/no-unsafe-call: "error"           // No calling methods on `any`
+@typescript-eslint/no-unsafe-member-access: "error"  // No accessing properties on `any`
+@typescript-eslint/no-unsafe-return: "error"         // No returning `any` from typed functions
+```
+
+**What This Catches:**
+- Implicit `any` types from third-party libraries
+- Unsafe type assertions
+- Missing type definitions
+- Dynamic property access without guards
+
+### Strict Boolean Checks (PREVENTS NULL/UNDEFINED CRASHES)
+
+TypeScript's `strict-boolean-expressions` rule forces explicit null/undefined checks.
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
 | `if (data)` | `if (data !== undefined && data !== null)` |
-| `!isLoading` | `isLoading === false` |
+| `if (!isLoading)` | `if (isLoading === false)` |
 | `if (items.length)` | `if (items.length > 0)` |
+| `data && data.filter()` | `data !== undefined && data !== null ? data.filter() : []` |
+| `value \|\| defaultValue` | `value ?? defaultValue` |
+
+**Rule Configuration:**
+```typescript
+@typescript-eslint/strict-boolean-expressions: [
+  "error",
+  {
+    allowString: false,
+    allowNumber: false,
+    allowNullableObject: false,
+    allowNullableBoolean: false,
+    allowNullableString: false,
+    allowNullableNumber: false,
+    allowAny: false,
+  }
+]
+```
 
 ### No Unchecked Indexing
 
-| Invalid | Valid |
-|---------|-------|
-| `items[0].id` | `items.at(0)?.id` |
-| `users[index]` | `users.at(index)` or guard first |
+With `noUncheckedIndexedAccess: true`, array/object access returns `T | undefined`.
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `items[0].id` | `items.at(0)?.id` or check first |
+| `users[index]` | `const user = users.at(index); if (user !== undefined) { ... }` |
+| `obj[key]` | Check for undefined before using |
+
+### No Non-Null Assertions
+
+The `!` operator is **banned**. Always guard properly.
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `data!.map()` | `if (data !== null && data !== undefined) { data.map() }` |
+| `user!.name` | `user?.name ?? 'Unknown'` |
+
+### Promise & Async Correctness
+
+All promises must be handled or explicitly marked as fire-and-forget:
+
+```typescript
+@typescript-eslint/no-floating-promises: "error"     // Forgotten awaits
+@typescript-eslint/await-thenable: "error"           // Awaiting non-promises
+@typescript-eslint/no-misused-promises: "error"      // Wrong promise usage
+```
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `fetchData()` | `await fetchData()` or `void fetchData()` |
+| `await nonPromise` | Only await actual promises |
+| `onClick={async () => ...}` | Use `void` or proper handler |
+
+### Type Import Consistency
+
+Enforce separation of type and value imports:
+
+```typescript
+@typescript-eslint/consistent-type-imports: [
+  "error",
+  { prefer: "type-imports", fixStyle: "separate-type-imports" }
+]
+```
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `import { User, getUser } from './api'` | `import type { User } from './api'; import { getUser } from './api'` |
+
+### Template Expression Safety
+
+Prevent coercion bugs in template strings:
+
+```typescript
+@typescript-eslint/restrict-template-expressions: [
+  "error",
+  {
+    allowNumber: true,      // Numbers OK: `${5}`
+    allowBoolean: false,    // Booleans NOT OK: `${true}` forbidden
+    allowAny: false,        // Any type NOT OK
+    allowNullish: false     // null/undefined NOT OK
+  }
+]
+```
+
+| ❌ FORBIDDEN | ✅ REQUIRED |
+|-------------|------------|
+| `` `Status: ${isActive}` `` | `` `Status: ${isActive === true ? 'active' : 'inactive'}` `` |
+| `` `Value: ${maybeNull}` `` | `` `Value: ${maybeNull ?? 'N/A'}` `` |
+
+### TypeScript Compiler Flags (Extra Strictness)
+
+These compiler options enforce additional safety:
+
+```json
+{
+  "exactOptionalPropertyTypes": true,        // `a?: string` ≠ `a?: string | undefined`
+  "noUncheckedIndexedAccess": true,          // arr[0] returns T | undefined
+  "noImplicitOverride": true,                // Must explicitly mark overrides
+  "noPropertyAccessFromIndexSignature": true, // Prevent unsafe obj[key]
+  "useUnknownInCatchVariables": true,        // catch(e) is unknown, not any
+  "noUnusedLocals": true,
+  "noUnusedParameters": true
+}
+```
 
 ### Cognitive Complexity Limit (15)
 
-If a function feels long, **stop** and split it into 2+ sub-functions.
+```typescript
+sonarjs/cognitive-complexity: ["warn", 15]
+```
+
+If a function exceeds complexity 15, **stop** and split it into 2+ sub-functions.
+
+### Switch Exhaustiveness
+
+```typescript
+@typescript-eslint/switch-exhaustiveness-check: "error"
+```
+
+All enum cases in switch statements must be handled (or have a default case).
+
+### Exceptions by File Type
+
+**Test Files** (`**/*.test.ts(x)`, `**/__tests__/**`):
+- Relaxed for mocking: `any`, `!`, unsafe-* rules OFF
+- BUT async rules stay ON (catch real test bugs)
+
+**Catalyst/UI Components** (`src/components/catalyst/**`, `src/components/ui/**`):
+- Relaxed strict-boolean and unsafe rules (third-party patterns)
+
+**Services/Pages/Domain**: Full strict rules apply.
+
+### Quick Reference Card
+
+| Pattern | Status | Fix |
+|---------|--------|-----|
+| `if (x)` | ❌ | `if (x !== undefined && x !== null)` |
+| `if (!x)` | ❌ | `if (x === undefined \|\| x === null)` |
+| `if (arr.length)` | ❌ | `if (arr.length > 0)` |
+| `x && y` | ❌ | `x !== undefined && x !== null ? y : undefined` |
+| `x \|\| y` | ❌ | `x ?? y` |
+| `any` | ❌ | Specific type or `unknown` |
+| `data!` | ❌ | `if (data !== null) { data }` |
+| `arr[0].x` | ❌ | `const a = arr.at(0); if (a !== undefined) { a.x }` |
+| Line > 120 | ⚠ | Break lines |
+| Complexity > 15 | ⚠ | Extract functions |
+
+### Why This Matters
+
+These rules **prevent runtime errors** that would otherwise crash the application.
+
+**Before:** "Cannot read properties of undefined" in production
+**After:** Compile-time errors that must be fixed before code runs
+
+**Memory:** For more details, query `.claude/memories/strict-typescript-patterns.md`
 
 ---
 

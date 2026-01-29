@@ -49,7 +49,7 @@ export async function fetchDocuments(
         queryParams.folderId = filters.folderId;
     }
 
-    const {data, error} = await apiClient.GET('/documents', {
+    const {data, error} = await apiClient.GET('/portal/documents', {
         params: {query: queryParams},
     });
 
@@ -73,7 +73,7 @@ export async function fetchDocument(id: string): Promise<Document> {
 }
 
 export async function createDocument(request: CreateDocumentRequest): Promise<Document> {
-    const {data, error} = await apiClient.POST('/documents', {
+    const {data, error} = await apiClient.POST('/portal/documents', {
         body: request,
     });
 

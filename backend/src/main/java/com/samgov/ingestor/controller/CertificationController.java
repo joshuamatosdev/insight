@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/certifications")
+@RequestMapping("/portal/certifications")
 @PreAuthorize("isAuthenticated()")
 public class CertificationController {
 

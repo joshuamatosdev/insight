@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/invoices")
+@RequestMapping("/portal/invoices")
 @PreAuthorize("isAuthenticated()")
 public class InvoiceController {
 

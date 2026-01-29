@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/budgets")
+@RequestMapping("/portal/budgets")
 @PreAuthorize("isAuthenticated()")
 public class BudgetController {
 

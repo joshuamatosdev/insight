@@ -132,7 +132,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /invoices - Create Invoice")
+    @DisplayName("POST /portal/invoices - Create Invoice")
     @WithMockUser
     class CreateInvoiceTests {
 
@@ -153,7 +153,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             );
 
             // When/Then
-            performPost("/invoices", request)
+            performPost("/portal/invoices", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.invoiceNumber").value("INV-API-001"))
@@ -201,7 +201,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             );
 
             // When/Then
-            performPost("/invoices", request)
+            performPost("/portal/invoices", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.lineItems").isArray())
                 .andExpect(jsonPath("$.lineItems", hasSize(2)))
@@ -211,7 +211,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /invoices - List Invoices")
+    @DisplayName("GET /portal/invoices - List Invoices")
     @WithMockUser
     class ListInvoicesTests {
 
@@ -224,7 +224,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             }
 
             // When/Then
-            performGet("/invoices?page=0&size=10")
+            performGet("/portal/invoices?page=0&size=10")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(5)))
@@ -241,7 +241,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             createAndSaveInvoice("INV-SUBMITTED-1", InvoiceStatus.SUBMITTED);
 
             // When/Then
-            performGet("/invoices?status=DRAFT&page=0&size=10")
+            performGet("/portal/invoices?status=DRAFT&page=0&size=10")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(jsonPath("$.content[*].status", everyItem(is("DRAFT"))));
@@ -251,7 +251,7 @@ class InvoiceControllerTest extends BaseControllerTest {
         @DisplayName("should return empty page when no invoices exist")
         void shouldReturnEmptyPageWhenNoInvoicesExist() throws Exception {
             // When/Then
-            performGet("/invoices?page=0&size=10")
+            performGet("/portal/invoices?page=0&size=10")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(0)))
@@ -260,7 +260,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /invoices/{id} - Get Invoice By ID")
+    @DisplayName("GET /portal/invoices/{id} - Get Invoice By ID")
     @WithMockUser
     class GetInvoiceByIdTests {
 
@@ -271,7 +271,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             Invoice invoice = createAndSaveInvoice("INV-GET-001");
 
             // When/Then
-            performGet("/invoices/" + invoice.getId())
+            performGet("/portal/invoices/" + invoice.getId())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(invoice.getId().toString()))
                 .andExpect(jsonPath("$.invoiceNumber").value("INV-GET-001"));
@@ -281,13 +281,13 @@ class InvoiceControllerTest extends BaseControllerTest {
         @DisplayName("should return 404 when invoice not found")
         void shouldReturn404WhenInvoiceNotFound() throws Exception {
             // When/Then
-            performGet("/invoices/" + UUID.randomUUID())
+            performGet("/portal/invoices/" + UUID.randomUUID())
                 .andExpect(status().isNotFound());
         }
     }
 
     @Nested
-    @DisplayName("GET /invoices/contract/{contractId} - Get Invoices By Contract")
+    @DisplayName("GET /portal/invoices/contract/{contractId} - Get Invoices By Contract")
     @WithMockUser
     class GetInvoicesByContractTests {
 
@@ -313,7 +313,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             invoiceRepository.save(c2Invoice);
 
             // When/Then
-            performGet("/invoices/contract/" + testContract.getId() + "?page=0&size=10")
+            performGet("/portal/invoices/contract/" + testContract.getId() + "?page=0&size=10")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(jsonPath("$.content[*].contractId",
@@ -322,7 +322,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("GET /invoices/overdue - Get Overdue Invoices")
+    @DisplayName("GET /portal/invoices/overdue - Get Overdue Invoices")
     @WithMockUser
     class GetOverdueInvoicesTests {
 
@@ -350,7 +350,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             invoiceRepository.save(currentInvoice);
 
             // When/Then
-            performGet("/invoices/overdue")
+            performGet("/portal/invoices/overdue")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -359,7 +359,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /invoices/{id}/submit - Submit Invoice")
+    @DisplayName("POST /portal/invoices/{id}/submit - Submit Invoice")
     @WithMockUser
     class SubmitInvoiceTests {
 
@@ -370,7 +370,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             Invoice invoice = createAndSaveInvoice("INV-SUBMIT-001", InvoiceStatus.DRAFT);
 
             // When/Then
-            performPost("/invoices/" + invoice.getId() + "/submit")
+            performPost("/portal/invoices/" + invoice.getId() + "/submit")
                 .andExpect(status().isOk());
 
             // Verify status changed
@@ -380,7 +380,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /invoices/{id}/approve - Approve Invoice")
+    @DisplayName("POST /portal/invoices/{id}/approve - Approve Invoice")
     @WithMockUser
     class ApproveInvoiceTests {
 
@@ -391,7 +391,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             Invoice invoice = createAndSaveInvoice("INV-APPROVE-001", InvoiceStatus.SUBMITTED);
 
             // When/Then
-            performPost("/invoices/" + invoice.getId() + "/approve")
+            performPost("/portal/invoices/" + invoice.getId() + "/approve")
                 .andExpect(status().isOk());
 
             // Verify status changed
@@ -401,7 +401,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /invoices/{id}/pay - Mark Invoice Paid")
+    @DisplayName("POST /portal/invoices/{id}/pay - Mark Invoice Paid")
     @WithMockUser
     class MarkPaidTests {
 
@@ -415,7 +415,7 @@ class InvoiceControllerTest extends BaseControllerTest {
 
             // When/Then
             mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-                    .post("/invoices/" + invoice.getId() + "/pay")
+                    .post("/portal/invoices/" + invoice.getId() + "/pay")
                     .param("paidDate", paidDate.toString())
                     .param("paidAmount", paidAmount.toString())
                     .contentType(MediaType.APPLICATION_JSON))
@@ -430,7 +430,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("POST /invoices/{id}/reject - Reject Invoice")
+    @DisplayName("POST /portal/invoices/{id}/reject - Reject Invoice")
     @WithMockUser
     class RejectInvoiceTests {
 
@@ -443,7 +443,7 @@ class InvoiceControllerTest extends BaseControllerTest {
 
             // When/Then
             mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-                    .post("/invoices/" + invoice.getId() + "/reject")
+                    .post("/portal/invoices/" + invoice.getId() + "/reject")
                     .param("reason", reason)
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -456,7 +456,7 @@ class InvoiceControllerTest extends BaseControllerTest {
     }
 
     @Nested
-    @DisplayName("DELETE /invoices/{id} - Delete Invoice")
+    @DisplayName("DELETE /portal/invoices/{id} - Delete Invoice")
     @WithMockUser
     class DeleteInvoiceTests {
 
@@ -468,7 +468,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             UUID invoiceId = invoice.getId();
 
             // When/Then
-            performDelete("/invoices/" + invoiceId)
+            performDelete("/portal/invoices/" + invoiceId)
                 .andExpect(status().isOk());
 
             // Verify deleted
@@ -482,13 +482,13 @@ class InvoiceControllerTest extends BaseControllerTest {
             Invoice invoice = createAndSaveInvoice("INV-DELETE-002", InvoiceStatus.SUBMITTED);
 
             // When/Then - API returns 409 Conflict for business rule violations
-            performDelete("/invoices/" + invoice.getId())
+            performDelete("/portal/invoices/" + invoice.getId())
                 .andExpect(status().isConflict());
         }
     }
 
     @Nested
-    @DisplayName("GET /invoices/summary - Get Invoice Summary")
+    @DisplayName("GET /portal/invoices/summary - Get Invoice Summary")
     @WithMockUser
     class GetInvoiceSummaryTests {
 
@@ -518,7 +518,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             invoiceRepository.save(submitted);
 
             // When/Then
-            performGet("/invoices/summary")
+            performGet("/portal/invoices/summary")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalBilled").value(25000.00))
                 .andExpect(jsonPath("$.totalPaid").value(10000.00))
@@ -558,7 +558,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             invoiceRepository.save(tenant2Invoice);
 
             // When/Then - Should only see tenant 1's invoice
-            performGet("/invoices?page=0&size=10")
+            performGet("/portal/invoices?page=0&size=10")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].invoiceNumber").value("INV-TENANT1-001"));
@@ -599,7 +599,7 @@ class InvoiceControllerTest extends BaseControllerTest {
             );
 
             // When/Then
-            performPost("/invoices", request)
+            performPost("/portal/invoices", request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalAmount").value(4774.88))
                 .andExpect(jsonPath("$.lineItems[0].amount").value(4774.88))

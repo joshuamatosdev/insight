@@ -57,7 +57,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("FeatureRequestController")
 class FeatureRequestControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/feature-requests";
+    private static final String BASE_URL = "/portal/feature-requests";
     private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired

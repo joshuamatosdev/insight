@@ -53,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("MessagingController")
 class MessagingControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/messages";
+    private static final String BASE_URL = "/portal/messages";
     private static final String THREADS_URL = "/threads";
     private static final String CONTRACTS_URL = "/contracts";
 

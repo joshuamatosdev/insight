@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("BudgetController")
 class BudgetControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/budgets";
+    private static final String BASE_URL = "/portal/budgets";
 
     @Autowired
     private TenantRepository tenantRepository;

@@ -1,6 +1,7 @@
 /**
  * Financial Service - API calls for financial management
  */
+import {API_BASE} from './apiClient';
 import type {
     BudgetItem,
     BudgetSummary,
@@ -87,13 +88,13 @@ export async function fetchInvoices(
     size: number = 20
 ): Promise<PaginatedResponse<Invoice>> {
     const response = await authFetch(
-        `${API_BASE}/invoices?page=${page}&size=${size}`
+        `${API_BASE}/portal/invoices?page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<Invoice>>(response);
 }
 
 export async function fetchInvoice(id: string): Promise<Invoice> {
-    const response = await authFetch(`${API_BASE}/invoices/${id}`);
+    const response = await authFetch(`${API_BASE}/portal/invoices/${id}`);
     return handleResponse<Invoice>(response);
 }
 
@@ -103,7 +104,7 @@ export async function fetchInvoicesByContract(
     size: number = 20
 ): Promise<PaginatedResponse<Invoice>> {
     const response = await authFetch(
-        `${API_BASE}/invoices/contract/${contractId}?page=${page}&size=${size}`
+        `${API_BASE}/portal/invoices/contract/${contractId}?page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<Invoice>>(response);
 }
@@ -114,18 +115,18 @@ export async function fetchInvoicesByStatus(
     size: number = 20
 ): Promise<PaginatedResponse<Invoice>> {
     const response = await authFetch(
-        `${API_BASE}/invoices?status=${status}&page=${page}&size=${size}`
+        `${API_BASE}/portal/invoices?status=${status}&page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<Invoice>>(response);
 }
 
 export async function fetchOverdueInvoices(): Promise<Invoice[]> {
-    const response = await authFetch(`${API_BASE}/invoices/overdue`);
+    const response = await authFetch(`${API_BASE}/portal/invoices/overdue`);
     return handleResponse<Invoice[]>(response);
 }
 
 export async function createInvoice(request: CreateInvoiceRequest): Promise<Invoice> {
-    const response = await authFetch(`${API_BASE}/invoices`, {
+    const response = await authFetch(`${API_BASE}/portal/invoices`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -136,7 +137,7 @@ export async function updateInvoice(
     id: string,
     request: UpdateInvoiceRequest
 ): Promise<Invoice> {
-    const response = await authFetch(`${API_BASE}/invoices/${id}`, {
+    const response = await authFetch(`${API_BASE}/portal/invoices/${id}`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });
@@ -144,7 +145,7 @@ export async function updateInvoice(
 }
 
 export async function deleteInvoice(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/invoices/${id}`, {
+    const response = await authFetch(`${API_BASE}/portal/invoices/${id}`, {
         method: 'DELETE',
     });
     if (response.ok === false) {
@@ -153,7 +154,7 @@ export async function deleteInvoice(id: string): Promise<void> {
 }
 
 export async function submitInvoice(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/invoices/${id}/submit`, {
+    const response = await authFetch(`${API_BASE}/portal/invoices/${id}/submit`, {
         method: 'POST',
     });
     if (response.ok === false) {
@@ -162,7 +163,7 @@ export async function submitInvoice(id: string): Promise<void> {
 }
 
 export async function approveInvoice(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/invoices/${id}/approve`, {
+    const response = await authFetch(`${API_BASE}/portal/invoices/${id}/approve`, {
         method: 'POST',
     });
     if (response.ok === false) {
@@ -176,7 +177,7 @@ export async function markInvoicePaid(
     paidAmount: number
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/invoices/${id}/pay?paidDate=${paidDate}&paidAmount=${paidAmount}`,
+        `${API_BASE}/portal/invoices/${id}/pay?paidDate=${paidDate}&paidAmount=${paidAmount}`,
         {method: 'POST'}
     );
     if (response.ok === false) {
@@ -186,7 +187,7 @@ export async function markInvoicePaid(
 
 export async function rejectInvoice(id: string, reason: string): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/invoices/${id}/reject?reason=${encodeURIComponent(reason)}`,
+        `${API_BASE}/portal/invoices/${id}/reject?reason=${encodeURIComponent(reason)}`,
         {method: 'POST'}
     );
     if (response.ok === false) {
@@ -202,7 +203,7 @@ export async function fetchInvoiceSummary(): Promise<{
     totalAmount: number;
     outstandingAmount: number;
 }> {
-    const response = await authFetch(`${API_BASE}/invoices/summary`);
+    const response = await authFetch(`${API_BASE}/portal/invoices/summary`);
     return handleResponse(response);
 }
 
@@ -212,7 +213,7 @@ export async function fetchInvoiceLineItems(
     invoiceId: string
 ): Promise<InvoiceLineItem[]> {
     const response = await authFetch(
-        `${API_BASE}/financial/invoices/${invoiceId}/line-items`
+        `${API_BASE}/portal/financial/invoices/${invoiceId}/line-items`
     );
     return handleResponse<InvoiceLineItem[]>(response);
 }
@@ -222,7 +223,7 @@ export async function addInvoiceLineItem(
     request: CreateLineItemRequest
 ): Promise<InvoiceLineItem> {
     const response = await authFetch(
-        `${API_BASE}/financial/invoices/${invoiceId}/line-items`,
+        `${API_BASE}/portal/financial/invoices/${invoiceId}/line-items`,
         {
             method: 'POST',
             body: JSON.stringify(request),
@@ -236,7 +237,7 @@ export async function deleteInvoiceLineItem(
     lineItemId: string
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/financial/invoices/${invoiceId}/line-items/${lineItemId}`,
+        `${API_BASE}/portal/financial/invoices/${invoiceId}/line-items/${lineItemId}`,
         {method: 'DELETE'}
     );
     if (response.ok === false) {
@@ -255,12 +256,12 @@ export async function fetchBudgets(
     if (category !== undefined) {
         params.append('category', category);
     }
-    const response = await authFetch(`${API_BASE}/budgets?${params}`);
+    const response = await authFetch(`${API_BASE}/portal/budgets?${params}`);
     return handleResponse<PaginatedResponse<BudgetItem>>(response);
 }
 
 export async function fetchBudget(id: string): Promise<BudgetItem> {
-    const response = await authFetch(`${API_BASE}/budgets/${id}`);
+    const response = await authFetch(`${API_BASE}/portal/budgets/${id}`);
     return handleResponse<BudgetItem>(response);
 }
 
@@ -270,7 +271,7 @@ export async function fetchBudgetsByContract(
     size: number = 20
 ): Promise<PaginatedResponse<BudgetItem>> {
     const response = await authFetch(
-        `${API_BASE}/budgets/contract/${contractId}?page=${page}&size=${size}`
+        `${API_BASE}/portal/budgets/contract/${contractId}?page=${page}&size=${size}`
     );
     return handleResponse<PaginatedResponse<BudgetItem>>(response);
 }
@@ -279,25 +280,25 @@ export async function fetchContractBudgetSummary(
     contractId: string
 ): Promise<BudgetSummary> {
     const response = await authFetch(
-        `${API_BASE}/budgets/contract/${contractId}/summary`
+        `${API_BASE}/portal/budgets/contract/${contractId}/summary`
     );
     return handleResponse<BudgetSummary>(response);
 }
 
 export async function fetchOverBudgetItems(): Promise<BudgetItem[]> {
-    const response = await authFetch(`${API_BASE}/budgets/over-budget`);
+    const response = await authFetch(`${API_BASE}/portal/budgets/over-budget`);
     return handleResponse<BudgetItem[]>(response);
 }
 
 export async function fetchBudgetCategories(): Promise<string[]> {
-    const response = await authFetch(`${API_BASE}/budgets/categories`);
+    const response = await authFetch(`${API_BASE}/portal/budgets/categories`);
     return handleResponse<string[]>(response);
 }
 
 export async function createBudget(
     request: CreateBudgetItemRequest
 ): Promise<BudgetItem> {
-    const response = await authFetch(`${API_BASE}/budgets`, {
+    const response = await authFetch(`${API_BASE}/portal/budgets`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -308,7 +309,7 @@ export async function updateBudget(
     id: string,
     request: UpdateBudgetItemRequest
 ): Promise<BudgetItem> {
-    const response = await authFetch(`${API_BASE}/budgets/${id}`, {
+    const response = await authFetch(`${API_BASE}/portal/budgets/${id}`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });
@@ -320,7 +321,7 @@ export async function recordExpense(
     amount: number
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/budgets/${id}/expense?amount=${amount}`,
+        `${API_BASE}/portal/budgets/${id}/expense?amount=${amount}`,
         {method: 'POST'}
     );
     if (response.ok === false) {
@@ -329,7 +330,7 @@ export async function recordExpense(
 }
 
 export async function deleteBudget(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/budgets/${id}`, {
+    const response = await authFetch(`${API_BASE}/portal/budgets/${id}`, {
         method: 'DELETE',
     });
     if (response.ok === false) {
@@ -345,13 +346,13 @@ export async function fetchLaborRates(
     activeOnly: boolean = false
 ): Promise<PaginatedResponse<LaborRate>> {
     const response = await authFetch(
-        `${API_BASE}/labor-rates?page=${page}&size=${size}&activeOnly=${activeOnly}`
+        `${API_BASE}/portal/labor-rates?page=${page}&size=${size}&activeOnly=${activeOnly}`
     );
     return handleResponse<PaginatedResponse<LaborRate>>(response);
 }
 
 export async function fetchLaborRate(id: string): Promise<LaborRate> {
-    const response = await authFetch(`${API_BASE}/labor-rates/${id}`);
+    const response = await authFetch(`${API_BASE}/portal/labor-rates/${id}`);
     return handleResponse<LaborRate>(response);
 }
 
@@ -359,25 +360,25 @@ export async function fetchLaborRatesByCategory(
     category: string
 ): Promise<LaborRate[]> {
     const response = await authFetch(
-        `${API_BASE}/labor-rates/category/${encodeURIComponent(category)}`
+        `${API_BASE}/portal/labor-rates/category/${encodeURIComponent(category)}`
     );
     return handleResponse<LaborRate[]>(response);
 }
 
 export async function fetchLaborCategories(): Promise<string[]> {
-    const response = await authFetch(`${API_BASE}/labor-rates/categories`);
+    const response = await authFetch(`${API_BASE}/portal/labor-rates/categories`);
     return handleResponse<string[]>(response);
 }
 
 export async function fetchContractVehicles(): Promise<string[]> {
-    const response = await authFetch(`${API_BASE}/labor-rates/contract-vehicles`);
+    const response = await authFetch(`${API_BASE}/portal/labor-rates/contract-vehicles`);
     return handleResponse<string[]>(response);
 }
 
 export async function createLaborRate(
     request: CreateLaborRateRequest
 ): Promise<LaborRate> {
-    const response = await authFetch(`${API_BASE}/labor-rates`, {
+    const response = await authFetch(`${API_BASE}/portal/labor-rates`, {
         method: 'POST',
         body: JSON.stringify(request),
     });
@@ -388,7 +389,7 @@ export async function updateLaborRate(
     id: string,
     request: UpdateLaborRateRequest
 ): Promise<LaborRate> {
-    const response = await authFetch(`${API_BASE}/labor-rates/${id}`, {
+    const response = await authFetch(`${API_BASE}/portal/labor-rates/${id}`, {
         method: 'PUT',
         body: JSON.stringify(request),
     });
@@ -400,7 +401,7 @@ export async function setLaborRateActive(
     active: boolean
 ): Promise<void> {
     const response = await authFetch(
-        `${API_BASE}/labor-rates/${id}/active?active=${active}`,
+        `${API_BASE}/portal/labor-rates/${id}/active?active=${active}`,
         {method: 'PATCH'}
     );
     if (response.ok === false) {
@@ -409,7 +410,7 @@ export async function setLaborRateActive(
 }
 
 export async function deleteLaborRate(id: string): Promise<void> {
-    const response = await authFetch(`${API_BASE}/labor-rates/${id}`, {
+    const response = await authFetch(`${API_BASE}/portal/labor-rates/${id}`, {
         method: 'DELETE',
     });
     if (response.ok === false) {
@@ -420,7 +421,7 @@ export async function deleteLaborRate(id: string): Promise<void> {
 // ==================== Financial Summary API ====================
 
 export async function fetchFinancialSummary(): Promise<TenantFinancialSummary> {
-    const response = await authFetch(`${API_BASE}/financial/tenant/summary`);
+    const response = await authFetch(`${API_BASE}/portal/financial/tenant/summary`);
     return handleResponse<TenantFinancialSummary>(response);
 }
 
@@ -428,7 +429,7 @@ export async function fetchContractFinancialSummary(
     contractId: string
 ): Promise<ContractFinancialSummary> {
     const response = await authFetch(
-        `${API_BASE}/financial/contracts/${contractId}/summary`
+        `${API_BASE}/portal/financial/contracts/${contractId}/summary`
     );
     return handleResponse<ContractFinancialSummary>(response);
 }
@@ -446,7 +447,7 @@ export async function fetchCostAccounting(
     total: number;
 }> {
     const response = await authFetch(
-        `${API_BASE}/financial/contracts/${contractId}/cost-accounting`
+        `${API_BASE}/portal/financial/contracts/${contractId}/cost-accounting`
     );
     return handleResponse(response);
 }

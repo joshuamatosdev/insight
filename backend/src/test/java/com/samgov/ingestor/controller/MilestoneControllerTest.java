@@ -57,7 +57,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("MilestoneController")
 class MilestoneControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/milestones";
+    private static final String BASE_URL = "/portal/milestones";
     private static final String CONTRACTS_URL = "/contracts";
 
     @Autowired

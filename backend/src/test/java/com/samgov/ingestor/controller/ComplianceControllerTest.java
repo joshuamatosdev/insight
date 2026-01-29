@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ComplianceController")
 class ComplianceControllerTest extends BaseControllerTest {
 
-    private static final String BASE_URL = "/compliance";
+    private static final String BASE_URL = "/portal/compliance";
 
     @Autowired
     private TenantRepository tenantRepository;

@@ -61,9 +61,11 @@ export function SprintTrackingPage(): React.ReactElement {
         }
     };
 
-    const activeSprints = sprints.filter((s) => s.status === 'ACTIVE');
-    const planningSprints = sprints.filter((s) => s.status === 'PLANNING');
-    const completedSprints = sprints.filter((s) => s.status === 'COMPLETED');
+    // Ensure sprints is an array (defensive check)
+    const safeSprints = sprints ?? [];
+    const activeSprints = safeSprints.filter((s) => s.status === 'ACTIVE');
+    const planningSprints = safeSprints.filter((s) => s.status === 'PLANNING');
+    const completedSprints = safeSprints.filter((s) => s.status === 'COMPLETED');
 
     if (isLoading) {
         return (
