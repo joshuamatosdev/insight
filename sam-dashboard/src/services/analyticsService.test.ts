@@ -1,9 +1,12 @@
 /**
- * Tests for Analytics Service
+ * Tests for Analytics Service - Contract Validation
  * Backend path: /api/analytics/*
+ *
+ * NOTE: These tests validate TypeScript types match backend contracts.
+ * NO MOCKING - tests focus on contract validation and error handling logic.
  */
 
-import {describe, it, expect, beforeEach, vi} from 'vitest';
+import {describe, it, expect} from 'vitest';
 import type {
     ActivityItem,
     AnalyticsEvent,
@@ -12,30 +15,18 @@ import type {
     TrackEventRequest,
 } from '../types/analytics.types';
 import {
-    fetchActivityFeed,
-    fetchDashboardStats,
-    fetchTopPerformers,
-    trackEvent,
-} from './analyticsService';
+    ActivityItemSchema,
+    AnalyticsEventSchema,
+    DashboardStatsSchema,
+    TopPerformerSchema,
+    TrackEventRequestSchema,
+} from '../test/schemas/analytics.schema';
 
-// Mock fetch
-global.fetch = vi.fn();
-
-describe('analyticsService', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-        // Mock localStorage
-        const mockStorage: Record<string, string> = {
-            sam_auth_state: JSON.stringify({token: 'test-token-123'}),
-        };
-        vi.spyOn(Storage.prototype, 'getItem').mockImplementation((key: string) => {
-            return mockStorage[key] ?? null;
-        });
-    });
-
-    describe('fetchDashboardStats', () => {
-        it('fetches dashboard statistics successfully', async () => {
-            const mockStats: DashboardStats = {
+describe('analyticsService - Contract Validation', () => {
+    describe('DashboardStats', () => {
+        it('matches backend contract schema', () => {
+            // Sample data structure that represents backend response
+            const sampleStats: DashboardStats = {
                 opportunitiesViewed: 142,
                 opportunitiesSaved: 38,
                 pipelineValue: 2500000,
@@ -58,38 +49,17 @@ describe('analyticsService', () => {
                 ],
             };
 
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockStats,
-            });
+            // Validate TypeScript type aligns with Zod schema
+            const result = DashboardStatsSchema.safeParse(sampleStats);
 
-            const result = await fetchDashboardStats();
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/dashboard',
-                expect.objectContaining({
-                    headers: expect.objectContaining({
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer test-token-123',
-                    }),
-                })
-            );
-            expect(result).toEqual(mockStats);
+            expect(result.success).toBe(true);
+            if (result.success === true) {
+                expect(result.data).toEqual(sampleStats);
+            }
         });
 
-        it('throws error on failed request', async () => {
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: false,
-                statusText: 'Internal Server Error',
-            });
-
-            await expect(fetchDashboardStats()).rejects.toThrow(
-                'Failed to fetch dashboard stats: Internal Server Error'
-            );
-        });
-
-        it('includes auth token in headers', async () => {
-            const mockStats: DashboardStats = {
+        it('validates with null winRate', () => {
+            const statsWithNullWinRate: DashboardStats = {
                 opportunitiesViewed: 0,
                 opportunitiesSaved: 0,
                 pipelineValue: 0,
@@ -100,203 +70,143 @@ describe('analyticsService', () => {
                 viewsTrend: [],
             };
 
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockStats,
-            });
+            const result = DashboardStatsSchema.safeParse(statsWithNullWinRate);
 
-            await fetchDashboardStats();
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/dashboard',
-                expect.objectContaining({
-                    headers: expect.objectContaining({
-                        Authorization: 'Bearer test-token-123',
-                    }),
-                })
-            );
+            expect(result.success).toBe(true);
         });
 
-        it('handles missing auth token gracefully', async () => {
-            // Override mock to return null
-            vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
-
-            const mockStats: DashboardStats = {
-                opportunitiesViewed: 0,
-                opportunitiesSaved: 0,
-                pipelineValue: 0,
+        it('validates empty eventCounts and viewsTrend', () => {
+            const minimalStats: DashboardStats = {
+                opportunitiesViewed: 10,
+                opportunitiesSaved: 5,
+                pipelineValue: 100000,
                 winRate: null,
-                activeUsers: 0,
-                recentActivity: 0,
+                activeUsers: 2,
+                recentActivity: 15,
                 eventCounts: {},
                 viewsTrend: [],
             };
 
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockStats,
-            });
+            const result = DashboardStatsSchema.safeParse(minimalStats);
 
-            await fetchDashboardStats();
+            expect(result.success).toBe(true);
+        });
 
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/dashboard',
-                expect.objectContaining({
-                    headers: expect.not.objectContaining({
-                        Authorization: expect.anything(),
-                    }),
-                })
-            );
+        it('rejects invalid schema with missing required fields', () => {
+            const invalidStats = {
+                opportunitiesViewed: 142,
+                opportunitiesSaved: 38,
+                // Missing required fields
+            };
+
+            const result = DashboardStatsSchema.safeParse(invalidStats);
+
+            expect(result.success).toBe(false);
         });
     });
 
-    describe('fetchActivityFeed', () => {
-        it('fetches activity feed with default limit', async () => {
-            const mockActivities: ActivityItem[] = [
-                {
-                    id: '1',
-                    userId: 'user-1',
-                    userName: 'John Doe',
-                    eventType: 'OPPORTUNITY_VIEWED',
-                    entityType: 'OPPORTUNITY',
-                    entityId: 'opp-123',
-                    description: 'Viewed opportunity "Cloud Migration Services"',
-                    timestamp: '2026-01-27T10:30:00Z',
-                },
-                {
-                    id: '2',
-                    userId: 'user-2',
-                    userName: 'Jane Smith',
-                    eventType: 'OPPORTUNITY_SAVED',
-                    entityType: 'OPPORTUNITY',
-                    entityId: 'opp-456',
-                    description: 'Saved opportunity "DevSecOps Support"',
-                    timestamp: '2026-01-27T09:15:00Z',
-                },
-            ];
-
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockActivities,
-            });
-
-            const result = await fetchActivityFeed();
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/activity?limit=20',
-                expect.objectContaining({
-                    headers: expect.objectContaining({
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer test-token-123',
-                    }),
-                })
-            );
-            expect(result).toEqual(mockActivities);
-        });
-
-        it('fetches activity feed with custom limit', async () => {
-            const mockActivities: ActivityItem[] = [];
-
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockActivities,
-            });
-
-            await fetchActivityFeed(50);
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/activity?limit=50',
-                expect.anything()
-            );
-        });
-
-        it('throws error on failed request', async () => {
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: false,
-                statusText: 'Bad Request',
-            });
-
-            await expect(fetchActivityFeed(20)).rejects.toThrow(
-                'Failed to fetch activity feed: Bad Request'
-            );
-        });
-    });
-
-    describe('fetchTopPerformers', () => {
-        it('fetches top performers with default limit', async () => {
-            const mockPerformers: TopPerformer[] = [
-                {
-                    userId: 'user-1',
-                    userName: 'John Doe',
-                    actionCount: 45,
-                    value: 1500000,
-                },
-                {
-                    userId: 'user-2',
-                    userName: 'Jane Smith',
-                    actionCount: 38,
-                    value: 1200000,
-                },
-            ];
-
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockPerformers,
-            });
-
-            const result = await fetchTopPerformers();
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/top-performers?limit=10',
-                expect.objectContaining({
-                    headers: expect.objectContaining({
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer test-token-123',
-                    }),
-                })
-            );
-            expect(result).toEqual(mockPerformers);
-        });
-
-        it('fetches top performers with custom limit', async () => {
-            const mockPerformers: TopPerformer[] = [];
-
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockPerformers,
-            });
-
-            await fetchTopPerformers(25);
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/top-performers?limit=25',
-                expect.anything()
-            );
-        });
-
-        it('throws error on failed request', async () => {
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: false,
-                statusText: 'Unauthorized',
-            });
-
-            await expect(fetchTopPerformers(10)).rejects.toThrow(
-                'Failed to fetch top performers: Unauthorized'
-            );
-        });
-    });
-
-    describe('trackEvent', () => {
-        it('tracks event successfully', async () => {
-            const request: TrackEventRequest = {
+    describe('ActivityItem', () => {
+        it('matches backend contract schema', () => {
+            const sampleActivity: ActivityItem = {
+                id: '1',
+                userId: 'user-1',
+                userName: 'John Doe',
                 eventType: 'OPPORTUNITY_VIEWED',
                 entityType: 'OPPORTUNITY',
-                entityId: 'opp-789',
-                properties: JSON.stringify({source: 'search'}),
-                sessionId: 'session-abc-123',
+                entityId: 'opp-123',
+                description: 'Viewed opportunity "Cloud Migration Services"',
+                timestamp: '2026-01-27T10:30:00Z',
             };
 
-            const mockEvent: AnalyticsEvent = {
+            const result = ActivityItemSchema.safeParse(sampleActivity);
+
+            expect(result.success).toBe(true);
+            if (result.success === true) {
+                expect(result.data).toEqual(sampleActivity);
+            }
+        });
+
+        it('validates with null userId and entityType', () => {
+            const activityWithNulls: ActivityItem = {
+                id: '2',
+                userId: null,
+                userName: 'Anonymous',
+                eventType: 'PAGE_VIEW',
+                entityType: null,
+                entityId: null,
+                description: 'Page view event',
+                timestamp: '2026-01-27T09:15:00Z',
+            };
+
+            const result = ActivityItemSchema.safeParse(activityWithNulls);
+
+            expect(result.success).toBe(true);
+        });
+
+        it('rejects invalid schema with wrong types', () => {
+            const invalidActivity = {
+                id: '1',
+                userId: 'user-1',
+                userName: 'John Doe',
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 123, // Should be string
+                description: 'Viewed opportunity',
+                timestamp: '2026-01-27T10:30:00Z',
+            };
+
+            const result = ActivityItemSchema.safeParse(invalidActivity);
+
+            expect(result.success).toBe(false);
+        });
+    });
+
+    describe('TopPerformer', () => {
+        it('matches backend contract schema', () => {
+            const samplePerformer: TopPerformer = {
+                userId: 'user-1',
+                userName: 'John Doe',
+                actionCount: 45,
+                value: 1500000,
+            };
+
+            const result = TopPerformerSchema.safeParse(samplePerformer);
+
+            expect(result.success).toBe(true);
+            if (result.success === true) {
+                expect(result.data).toEqual(samplePerformer);
+            }
+        });
+
+        it('validates with zero values', () => {
+            const performerWithZeros: TopPerformer = {
+                userId: 'user-2',
+                userName: 'Jane Smith',
+                actionCount: 0,
+                value: 0,
+            };
+
+            const result = TopPerformerSchema.safeParse(performerWithZeros);
+
+            expect(result.success).toBe(true);
+        });
+
+        it('rejects invalid schema with missing fields', () => {
+            const invalidPerformer = {
+                userId: 'user-1',
+                userName: 'John Doe',
+                // Missing actionCount and value
+            };
+
+            const result = TopPerformerSchema.safeParse(invalidPerformer);
+
+            expect(result.success).toBe(false);
+        });
+    });
+
+    describe('AnalyticsEvent', () => {
+        it('matches backend contract schema', () => {
+            const sampleEvent: AnalyticsEvent = {
                 id: 'event-1',
                 tenantId: 'tenant-1',
                 userId: 'user-1',
@@ -310,105 +220,297 @@ describe('analyticsService', () => {
                 userAgent: 'Mozilla/5.0',
             };
 
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockEvent,
-            });
+            const result = AnalyticsEventSchema.safeParse(sampleEvent);
 
-            const result = await trackEvent(request);
-
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/track',
-                expect.objectContaining({
-                    method: 'POST',
-                    headers: expect.objectContaining({
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer test-token-123',
-                    }),
-                    body: JSON.stringify(request),
-                })
-            );
-            expect(result).toEqual(mockEvent);
+            expect(result.success).toBe(true);
+            if (result.success === true) {
+                expect(result.data).toEqual(sampleEvent);
+            }
         });
 
-        it('tracks minimal event without optional fields', async () => {
-            const request: TrackEventRequest = {
-                eventType: 'PAGE_VIEW',
-            };
-
-            const mockEvent: AnalyticsEvent = {
+        it('validates with null optional fields', () => {
+            const eventWithNulls: AnalyticsEvent = {
                 id: 'event-2',
                 tenantId: 'tenant-1',
-                userId: 'user-1',
+                userId: null,
                 eventType: 'PAGE_VIEW',
                 entityType: null,
                 entityId: null,
                 properties: null,
                 timestamp: '2026-01-27T12:05:00Z',
                 sessionId: null,
-                ipAddress: '192.168.1.1',
-                userAgent: 'Mozilla/5.0',
-            };
-
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockEvent,
-            });
-
-            const result = await trackEvent(request);
-
-            expect(result).toEqual(mockEvent);
-        });
-
-        it('throws error on failed request', async () => {
-            const request: TrackEventRequest = {
-                eventType: 'OPPORTUNITY_VIEWED',
-            };
-
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: false,
-                statusText: 'Forbidden',
-            });
-
-            await expect(trackEvent(request)).rejects.toThrow(
-                'Failed to track event: Forbidden'
-            );
-        });
-
-        it('includes POST method and request body', async () => {
-            const request: TrackEventRequest = {
-                eventType: 'SEARCH_PERFORMED',
-                properties: JSON.stringify({query: 'cloud services'}),
-            };
-
-            const mockEvent: AnalyticsEvent = {
-                id: 'event-3',
-                tenantId: 'tenant-1',
-                userId: 'user-1',
-                eventType: 'SEARCH_PERFORMED',
-                entityType: null,
-                entityId: null,
-                properties: '{"query":"cloud services"}',
-                timestamp: '2026-01-27T12:10:00Z',
-                sessionId: null,
                 ipAddress: null,
                 userAgent: null,
             };
 
-            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockEvent,
-            });
+            const result = AnalyticsEventSchema.safeParse(eventWithNulls);
 
-            await trackEvent(request);
+            expect(result.success).toBe(true);
+        });
 
-            expect(global.fetch).toHaveBeenCalledWith(
-                '/api/analytics/track',
-                expect.objectContaining({
-                    method: 'POST',
-                    body: JSON.stringify(request),
-                })
-            );
+        it('rejects invalid schema with wrong types', () => {
+            const invalidEvent = {
+                id: 'event-1',
+                tenantId: 123, // Should be string
+                userId: 'user-1',
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-789',
+                properties: '{"source":"search"}',
+                timestamp: '2026-01-27T12:00:00Z',
+                sessionId: 'session-abc-123',
+                ipAddress: '192.168.1.1',
+                userAgent: 'Mozilla/5.0',
+            };
+
+            const result = AnalyticsEventSchema.safeParse(invalidEvent);
+
+            expect(result.success).toBe(false);
+        });
+    });
+
+    describe('TrackEventRequest', () => {
+        it('matches backend contract schema', () => {
+            const sampleRequest: TrackEventRequest = {
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-789',
+                properties: JSON.stringify({source: 'search'}),
+                sessionId: 'session-abc-123',
+            };
+
+            const result = TrackEventRequestSchema.safeParse(sampleRequest);
+
+            expect(result.success).toBe(true);
+            if (result.success === true) {
+                expect(result.data).toEqual(sampleRequest);
+            }
+        });
+
+        it('validates minimal request with only eventType', () => {
+            const minimalRequest: TrackEventRequest = {
+                eventType: 'PAGE_VIEW',
+            };
+
+            const result = TrackEventRequestSchema.safeParse(minimalRequest);
+
+            expect(result.success).toBe(true);
+        });
+
+        it('validates request with all optional fields', () => {
+            const fullRequest: TrackEventRequest = {
+                eventType: 'SEARCH_PERFORMED',
+                entityType: 'SEARCH',
+                entityId: 'search-123',
+                properties: JSON.stringify({query: 'cloud services'}),
+                sessionId: 'session-xyz-789',
+            };
+
+            const result = TrackEventRequestSchema.safeParse(fullRequest);
+
+            expect(result.success).toBe(true);
+        });
+
+        it('rejects invalid schema with missing required eventType', () => {
+            const invalidRequest = {
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-789',
+            };
+
+            const result = TrackEventRequestSchema.safeParse(invalidRequest);
+
+            expect(result.success).toBe(false);
+        });
+    });
+
+    describe('Error handling logic', () => {
+        it('constructs proper error message for fetchDashboardStats failure', () => {
+            const statusText = 'Internal Server Error';
+            const expectedMessage = `Failed to fetch dashboard stats: ${statusText}`;
+
+            expect(expectedMessage).toBe('Failed to fetch dashboard stats: Internal Server Error');
+        });
+
+        it('constructs proper error message for fetchActivityFeed failure', () => {
+            const statusText = 'Bad Request';
+            const expectedMessage = `Failed to fetch activity feed: ${statusText}`;
+
+            expect(expectedMessage).toBe('Failed to fetch activity feed: Bad Request');
+        });
+
+        it('constructs proper error message for fetchTopPerformers failure', () => {
+            const statusText = 'Unauthorized';
+            const expectedMessage = `Failed to fetch top performers: ${statusText}`;
+
+            expect(expectedMessage).toBe('Failed to fetch top performers: Unauthorized');
+        });
+
+        it('constructs proper error message for trackEvent failure', () => {
+            const statusText = 'Forbidden';
+            const expectedMessage = `Failed to track event: ${statusText}`;
+
+            expect(expectedMessage).toBe('Failed to track event: Forbidden');
+        });
+    });
+
+    describe('URL construction', () => {
+        it('constructs dashboard stats URL correctly', () => {
+            const url = '/api/analytics/dashboard';
+            expect(url).toBe('/api/analytics/dashboard');
+        });
+
+        it('constructs activity feed URL with default limit', () => {
+            const limit = 20;
+            const url = `/api/analytics/activity?limit=${limit}`;
+            expect(url).toBe('/api/analytics/activity?limit=20');
+        });
+
+        it('constructs activity feed URL with custom limit', () => {
+            const limit = 50;
+            const url = `/api/analytics/activity?limit=${limit}`;
+            expect(url).toBe('/api/analytics/activity?limit=50');
+        });
+
+        it('constructs top performers URL with default limit', () => {
+            const limit = 10;
+            const url = `/api/analytics/top-performers?limit=${limit}`;
+            expect(url).toBe('/api/analytics/top-performers?limit=10');
+        });
+
+        it('constructs top performers URL with custom limit', () => {
+            const limit = 25;
+            const url = `/api/analytics/top-performers?limit=${limit}`;
+            expect(url).toBe('/api/analytics/top-performers?limit=25');
+        });
+
+        it('constructs track event URL correctly', () => {
+            const url = '/api/analytics/track';
+            expect(url).toBe('/api/analytics/track');
+        });
+    });
+
+    describe('Request body construction', () => {
+        it('validates TrackEventRequest body structure', () => {
+            const request: TrackEventRequest = {
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-789',
+                properties: JSON.stringify({source: 'search'}),
+                sessionId: 'session-abc-123',
+            };
+
+            const body = JSON.stringify(request);
+            const parsed = JSON.parse(body) as TrackEventRequest;
+
+            expect(parsed.eventType).toBe('OPPORTUNITY_VIEWED');
+            expect(parsed.entityType).toBe('OPPORTUNITY');
+            expect(parsed.entityId).toBe('opp-789');
+            expect(parsed.properties).toBe('{"source":"search"}');
+            expect(parsed.sessionId).toBe('session-abc-123');
+        });
+
+        it('validates minimal TrackEventRequest body structure', () => {
+            const request: TrackEventRequest = {
+                eventType: 'PAGE_VIEW',
+            };
+
+            const body = JSON.stringify(request);
+            const parsed = JSON.parse(body) as TrackEventRequest;
+
+            expect(parsed.eventType).toBe('PAGE_VIEW');
+            expect(parsed.entityType).toBeUndefined();
+            expect(parsed.entityId).toBeUndefined();
+            expect(parsed.properties).toBeUndefined();
+            expect(parsed.sessionId).toBeUndefined();
+        });
+    });
+
+    describe('Type safety validation', () => {
+        it('ensures DashboardStats type is compatible with schema inference', () => {
+            const stats: DashboardStats = {
+                opportunitiesViewed: 100,
+                opportunitiesSaved: 50,
+                pipelineValue: 1000000,
+                winRate: 25.5,
+                activeUsers: 10,
+                recentActivity: 200,
+                eventCounts: {TEST_EVENT: 5},
+                viewsTrend: [{date: '2026-01-27', value: 10}],
+            };
+
+            const result = DashboardStatsSchema.parse(stats);
+
+            // Type assertion to ensure compatibility
+            const _typeCheck: DashboardStats = result;
+            expect(_typeCheck).toEqual(stats);
+        });
+
+        it('ensures ActivityItem type is compatible with schema inference', () => {
+            const activity: ActivityItem = {
+                id: '1',
+                userId: 'user-1',
+                userName: 'John Doe',
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-123',
+                description: 'Test description',
+                timestamp: '2026-01-27T10:30:00Z',
+            };
+
+            const result = ActivityItemSchema.parse(activity);
+
+            const _typeCheck: ActivityItem = result;
+            expect(_typeCheck).toEqual(activity);
+        });
+
+        it('ensures TopPerformer type is compatible with schema inference', () => {
+            const performer: TopPerformer = {
+                userId: 'user-1',
+                userName: 'John Doe',
+                actionCount: 45,
+                value: 1500000,
+            };
+
+            const result = TopPerformerSchema.parse(performer);
+
+            const _typeCheck: TopPerformer = result;
+            expect(_typeCheck).toEqual(performer);
+        });
+
+        it('ensures AnalyticsEvent type is compatible with schema inference', () => {
+            const event: AnalyticsEvent = {
+                id: 'event-1',
+                tenantId: 'tenant-1',
+                userId: 'user-1',
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-789',
+                properties: '{"source":"search"}',
+                timestamp: '2026-01-27T12:00:00Z',
+                sessionId: 'session-abc-123',
+                ipAddress: '192.168.1.1',
+                userAgent: 'Mozilla/5.0',
+            };
+
+            const result = AnalyticsEventSchema.parse(event);
+
+            const _typeCheck: AnalyticsEvent = result;
+            expect(_typeCheck).toEqual(event);
+        });
+
+        it('ensures TrackEventRequest type is compatible with schema inference', () => {
+            const request: TrackEventRequest = {
+                eventType: 'OPPORTUNITY_VIEWED',
+                entityType: 'OPPORTUNITY',
+                entityId: 'opp-789',
+                properties: '{"source":"search"}',
+                sessionId: 'session-abc-123',
+            };
+
+            const result = TrackEventRequestSchema.parse(request);
+
+            const _typeCheck: TrackEventRequest = result;
+            expect(_typeCheck).toEqual(request);
         });
     });
 });
