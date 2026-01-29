@@ -11,25 +11,22 @@ import {
     CurrencyIcon,
     FileCheckIcon,
     FileTextIcon,
-    KeyIcon,
     ListUlIcon,
     PlusCircleIcon,
     ShieldIcon,
     Sidebar,
     SidebarBody,
-    SidebarDivider,
     SidebarFooter,
     SidebarHeading,
     SidebarItem,
     SidebarLabel,
     SidebarSection,
     SpeedometerIcon,
-    TagIcon,
     ThemeToggleCompact,
-    UserIcon,
     UsersIcon,
 } from '@components/catalyst';
 import {DownloadIcon, LogoutIcon, RefreshIcon, Text} from '@/components';
+import {SystemSidebarSections} from './-SystemSidebar';
 
 export function SidebarIcon({children}: {children: React.ReactNode}) {
     return <span data-slot="icon">{children}</span>;
@@ -73,7 +70,7 @@ export function PortalSidebar({handleRefresh, handleExport, handleLogout}: Porta
                         <SidebarIcon>
                             <SpeedometerIcon size="sm" />
                         </SidebarIcon>
-                        <SidebarLabel>Contractor Dashboard</SidebarLabel>
+                        <SidebarLabel>Client Dashboard</SidebarLabel>
                     </SidebarLink>
                     <SidebarLink to="/portal/sprints">
                         <SidebarIcon>
@@ -176,93 +173,8 @@ export function PortalSidebar({handleRefresh, handleExport, handleLogout}: Porta
                     </SidebarLink>
                 </SidebarSection>
 
-                {/* Insights */}
-                <SidebarSection>
-                    <SidebarHeading>Insights</SidebarHeading>
-                    <SidebarLink to="/analytics">
-                        <SidebarIcon>
-                            <SpeedometerIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Analytics</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/reports">
-                        <SidebarIcon>
-                            <FileTextIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Reports</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/reports/builder">
-                        <SidebarIcon>
-                            <FileCheckIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Report Builder</SidebarLabel>
-                    </SidebarLink>
-                </SidebarSection>
-
-                {/* Document Management */}
-                <SidebarSection>
-                    <SidebarHeading>Document Management</SidebarHeading>
-                    <SidebarLink to="/documents">
-                        <SidebarIcon>
-                            <FileTextIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Documents</SidebarLabel>
-                    </SidebarLink>
-                </SidebarSection>
-
-                {/* Administration */}
-                <SidebarSection>
-                    <SidebarHeading>Administration</SidebarHeading>
-                    <SidebarLink to="/admin/roles">
-                        <SidebarIcon>
-                            <ShieldIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Roles</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/admin/permissions">
-                        <SidebarIcon>
-                            <KeyIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Permissions</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/admin/user-roles">
-                        <SidebarIcon>
-                            <UsersIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>User Roles</SidebarLabel>
-                    </SidebarLink>
-                </SidebarSection>
-
-                <SidebarDivider />
-
-                {/* Settings & Billing */}
-                <SidebarSection>
-                    <SidebarHeading>Settings & Billing</SidebarHeading>
-                    <SidebarLink to="/settings">
-                        <SidebarIcon>
-                            <UserIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Settings</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/usage">
-                        <SidebarIcon>
-                            <SpeedometerIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Usage & Limits</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/billing">
-                        <SidebarIcon>
-                            <TagIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Billing</SidebarLabel>
-                    </SidebarLink>
-                    <SidebarLink to="/audit-log">
-                        <SidebarIcon>
-                            <FileTextIcon size="sm" />
-                        </SidebarIcon>
-                        <SidebarLabel>Audit Log</SidebarLabel>
-                    </SidebarLink>
-                </SidebarSection>
+                {/* System-level features (shared across all contexts) */}
+                <SystemSidebarSections />
             </SidebarBody>
 
             <SidebarFooter>
